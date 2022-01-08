@@ -183,7 +183,7 @@ namespace MapModS.Map
             orig(self);
         }
 
-        // Adds the prefix "VMM_" to each boolName occurrence directly in the original code
+        // Adds the prefix "MMS_" to each boolName occurrence directly in the original code
         private static void ModifyMapBools(ILContext il)
         {
             ILCursor cursor = new(il);
@@ -212,15 +212,15 @@ namespace MapModS.Map
             {
                 string name = cursor.ToString().Split('\"')[1];
                 cursor.Remove();
-                cursor.Emit(OpCodes.Ldstr, "VMM_" + name);
+                cursor.Emit(OpCodes.Ldstr, "MMS_" + name);
             }
         }
 
-        // This method adds the prefix "VMM_" to each boolName, so that we can control it in BoolGetOverride
+        // This method adds the prefix "MMS_" to each boolName, so that we can control it in BoolGetOverride
         public static void ReplaceBool(PlayMakerFSM fsm, string stateName, int index)
         {
             string boolString = FsmUtil.GetAction<PlayerDataBoolTest>(fsm, stateName, index).boolName.ToString();
-            FsmUtil.GetAction<PlayerDataBoolTest>(fsm, stateName, index).boolName = "VMM_" + boolString;
+            FsmUtil.GetAction<PlayerDataBoolTest>(fsm, stateName, index).boolName = "MMS_" + boolString;
         }
 
         public static void ReplaceNumberOfBools(PlayMakerFSM fsm, string stateName, int number)
@@ -235,11 +235,11 @@ namespace MapModS.Map
         {
             orig(self);
 
-            // Replace all instances of "hasMap" with "VMM_hasMap"
+            // Replace all instances of "hasMap" with "MMS_hasMap"
             if (self.gameObject.name == "Knight" && self.FsmName == "Map Control")
             {
                 ReplaceBool(self, "Button Down Check", 1);
-                FsmUtil.GetAction<GetPlayerDataBool>(self, "Has Map?", 3).boolName = "VMM_hasMap";
+                FsmUtil.GetAction<GetPlayerDataBool>(self, "Has Map?", 3).boolName = "MMS_hasMap";
             }
 
             // Patch the zoomed out map UI when we reveal the full map
@@ -331,7 +331,7 @@ namespace MapModS.Map
                                 break;
 
                             case "Activate":
-                                FsmString[] boolStrings = { "VMM_visitedHive", "VMM_mapOutskirts" };
+                                FsmString[] boolStrings = { "MMS_visitedHive", "MMS_mapOutskirts" };
                                 FsmUtil.GetAction<PlayerDataBoolAllTrue>(self, state.Name, 8).stringVariables = boolStrings;
                                 break;
                         }
@@ -348,7 +348,7 @@ namespace MapModS.Map
 
         public static bool BoolGetOverride(string boolName, bool orig)
         {
-            if (boolName.StartsWith("VMM_"))
+            if (boolName.StartsWith("MMS_"))
             {
                 if (MapModS.LS.RevealFullMap)
                 {
@@ -385,11 +385,11 @@ namespace MapModS.Map
         // If RevealFullMap, we pass the complete list for root scenes
         public static object VariableGetOverride(System.Type type, string name, object value)
         {
-            if (name.StartsWith("VMM_"))
+            if (name.StartsWith("MMS_"))
             {
                 if (MapModS.LS.RevealFullMap)
                 {
-                    if (name == "VMM_scenesEncounteredDreamPlant")
+                    if (name == "MMS_scenesEncounteredDreamPlant")
                     {
                         return _rootScenes;
                     }

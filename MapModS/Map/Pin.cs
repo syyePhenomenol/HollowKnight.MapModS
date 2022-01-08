@@ -41,7 +41,7 @@ namespace MapModS.Map
             {
                 // Show everything if full map was revealed
                 // Or, if it's a Map, always show the pin
-                if (MapModS.LS.RevealFullMap || PinData.pool == Pool.Map)
+                if (MapModS.LS.RevealFullMap || PinData.vanillaPool == Pool.Map)
                 {
                     gameObject.SetActive(true);
                     return;
@@ -50,14 +50,14 @@ namespace MapModS.Map
                 // Show these pins if the corresponding map item has been picked up
                 if (SettingsUtil.GetVMMMapSetting(PinData.mapZone))
                 {
-                    if (PinData.pool == Pool.Skill
-                    || PinData.pool == Pool.Charm
-                    || PinData.pool == Pool.Key
-                    || PinData.pool == Pool.Notch
-                    || PinData.pool == Pool.Mask
-                    || PinData.pool == Pool.Vessel
-                    || PinData.pool == Pool.Ore
-                    || PinData.pool == Pool.EssenceBoss)
+                    if (PinData.vanillaPool == Pool.Skill
+                    || PinData.vanillaPool == Pool.Charm
+                    || PinData.vanillaPool == Pool.Key
+                    || PinData.vanillaPool == Pool.Notch
+                    || PinData.vanillaPool == Pool.Mask
+                    || PinData.vanillaPool == Pool.Vessel
+                    || PinData.vanillaPool == Pool.Ore
+                    || PinData.vanillaPool == Pool.EssenceBoss)
                     {
                         gameObject.SetActive(true);
                         return;
@@ -88,7 +88,7 @@ namespace MapModS.Map
 
         private void HideIfNotBought()
         {
-            if (!MapModS.LS.GetHasFromGroup(PinData.pool) && !MapModS.LS.RevealFullMap)
+            if (!MapModS.LS.GetHasFromGroup(PinData.vanillaPool) && !MapModS.LS.RevealFullMap)
             {
                 gameObject.SetActive(false);
             }

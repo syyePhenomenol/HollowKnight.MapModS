@@ -56,9 +56,9 @@ namespace MapModS.Data
             foreach (KeyValuePair<string, PinDef> entry in _pins)
             {
                 if (entry.Value.objectName == null
-                    && entry.Value.pool != Pool.Cocoon
-                    && entry.Value.pool != Pool.Totem
-                    && entry.Value.pool != Pool.Lore)
+                    && entry.Value.vanillaPool != Pool.Cocoon
+                    && entry.Value.vanillaPool != Pool.Totem
+                    && entry.Value.vanillaPool != Pool.Lore)
                 {
                     MapModS.Instance.LogWarn($"There is a pin with no objectName that should have one: {entry.Key}");
                 }

@@ -114,7 +114,7 @@ namespace MapModS.Map
             }
             else
             {
-                sr.sprite = SpriteManager.GetSpriteFromPool(pinData.pool);
+                sr.sprite = SpriteManager.GetSpriteFromPool(pinData.vanillaPool);
             }
             
             sr.sortingLayerName = "HUD";
@@ -133,16 +133,16 @@ namespace MapModS.Map
 
         private void AssignGroup(GameObject newPin, PinDef pinData)
         {
-            if (!_Groups.ContainsKey(pinData.pool))
+            if (!_Groups.ContainsKey(pinData.vanillaPool))
             {
-                _Groups[pinData.pool] = new GameObject("PinGroup " + pinData.pool);
-                _Groups[pinData.pool].transform.SetParent(transform);
+                _Groups[pinData.vanillaPool] = new GameObject("PinGroup " + pinData.vanillaPool);
+                _Groups[pinData.vanillaPool].transform.SetParent(transform);
 
                 // Set all true for now (doesn't really affect any behaviour)
-                _Groups[pinData.pool].SetActive(true);
+                _Groups[pinData.vanillaPool].SetActive(true);
             }
 
-            newPin.transform.SetParent(_Groups[pinData.pool].transform);
+            newPin.transform.SetParent(_Groups[pinData.vanillaPool].transform);
         }
 
         private Vector3 GetRoomPos(string roomName, GameMap gameMap)

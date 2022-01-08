@@ -19,9 +19,9 @@ namespace MapModS.Trackers
             MapModS.LS.ObtainedItems[_grd.id + _grd.sceneName] = true;
             MapModS.LS.GeoRockCounter ++;
 
-            //MapModS.Instance.Log("Geo Rock broken");
-            //MapModS.Instance.Log(" ID: " + _grd.id);
-            //MapModS.Instance.Log(" Scene: " + _grd.sceneName);
+            MapModS.Instance.Log("Geo Rock broken");
+            MapModS.Instance.Log(" ID: " + _grd.id);
+            MapModS.Instance.Log(" Scene: " + _grd.sceneName);
 
             Finish();
         }
@@ -41,9 +41,9 @@ namespace MapModS.Trackers
             string scene = GameManager.instance.sceneName;
             MapModS.LS.ObtainedItems[_oName + scene] = true;
 
-            //MapModS.Instance.Log("Item picked up");
-            //MapModS.Instance.Log(" Name: " + _oName);
-            //MapModS.Instance.Log(" Scene: " + scene);
+            MapModS.Instance.Log("Item picked up");
+            MapModS.Instance.Log(" Name: " + _oName);
+            MapModS.Instance.Log(" Scene: " + scene);
 
             Finish();
         }

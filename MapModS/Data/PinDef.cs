@@ -7,7 +7,7 @@ namespace MapModS.Data
         public string name;
 
         // The list of objects that when all found, the pin will disappear
-        public string[] objectName;
+        public string[] vanillaObjectName;
 
         // The name of the scene in which the objects are
         public string sceneName;
@@ -18,8 +18,9 @@ namespace MapModS.Data
         // The map area/zone the pin belongs to
         public MapZone mapZone;
 
-        // The pool/group the pin belongs to
-        public Pool pool;
+        // The pools/groups the pin belongs to
+        public Pool vanillaPool;
+        public Pool randoPool;
 
         // The local offset of the pin relative to its pinScene/sceneName map object
         public float offsetX;

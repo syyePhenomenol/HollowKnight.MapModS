@@ -14,7 +14,7 @@ namespace MapModS
     {
         public static MapModS Instance;
 
-        private readonly string _version = "1.0.3";
+        private readonly string _version = "PRERELEASE 1";
 
         public override string GetVersion() => _version;
 
