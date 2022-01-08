@@ -96,10 +96,10 @@ namespace MapModS.Map
 
         private void HideIfFound()
         {
-            if (PinData.objectName == null) return;
+            if (PinData.vanillaObjectName == null) return;
 
             // Don't hide pin if something isn't in the obtained items dictionary
-            foreach (string oName in PinData.objectName)
+            foreach (string oName in PinData.vanillaObjectName)
             {
                 if (!MapModS.LS.ObtainedItems.ContainsKey(oName + PinData.sceneName)) return;
             }

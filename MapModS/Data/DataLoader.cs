@@ -55,7 +55,7 @@ namespace MapModS.Data
 
             foreach (KeyValuePair<string, PinDef> entry in _pins)
             {
-                if (entry.Value.objectName == null
+                if (entry.Value.vanillaObjectName == null
                     && entry.Value.vanillaPool != Pool.Cocoon
                     && entry.Value.vanillaPool != Pool.Totem
                     && entry.Value.vanillaPool != Pool.Lore)
