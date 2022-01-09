@@ -2107,7 +2107,6 @@
     "mapZone": "CITY",
     "offsetY": -1.26
   },
-  // Set proper placements for everything
   "Split_Mothwing_Cloak": {
     "name": "Split_Mothwing_Cloak",
     "sceneName": "Fungus1_04",
@@ -2120,7 +2119,7 @@
     "sceneName": "Fungus2_14",
     "mapZone": "WASTES",
     "offsetX": -1.8,
-    "offsetY": -0.5,
+    "offsetY": -0.1,
     "offsetZ": 0.001
   },
   "Right_Mantis_Claw": {
@@ -2128,35 +2127,35 @@
     "sceneName": "Fungus2_14",
     "mapZone": "WASTES",
     "offsetX": -1.4,
-    "offsetY": -0.5,
+    "offsetY": -0.1,
     "offsetZ": 0.002
   },
-  "Leftslash": {
-    "name": "Leftslash",
-    "sceneName": "Tutorial_01",
-    "mapZone": "TOWN",
-    "offsetX": -2.0,
-    "offsetY": -1.2
-  },
-  "Rightslash": {
-    "name": "Rightslash",
-    "sceneName": "Tutorial_01",
-    "mapZone": "TOWN",
-    "offsetX": -1.7,
-    "offsetY": -1.2
-  },
-  "Upslash": {
-    "name": "Upslash",
-    "mapZone": "TOWN",
-    "sceneName": "Tutorial_01",
-    "offsetX": -1.4,
-    "offsetY": -1.2
-  },
+  //"Leftslash": {
+  //  "name": "Leftslash",
+  //  "sceneName": "Tutorial_01",
+  //  "mapZone": "TOWN",
+  //  "offsetX": -2.0,
+  //  "offsetY": -1.2
+  //},
+  //"Rightslash": {
+  //  "name": "Rightslash",
+  //  "sceneName": "Tutorial_01",
+  //  "mapZone": "TOWN",
+  //  "offsetX": -1.7,
+  //  "offsetY": -1.2
+  //},
+  //"Upslash": {
+  //  "name": "Upslash",
+  //  "mapZone": "TOWN",
+  //  "sceneName": "Tutorial_01",
+  //  "offsetX": -1.4,
+  //  "offsetY": -1.2
+  //},
   "Split_Crystal_Heart": {
     "name": "Split_Crystal_Heart",
     "sceneName": "Mines_31",
     "mapZone": "MINES",
-    "offsetX": 2.8,
+    "offsetX": 1.6,
     "offsetY": -0.55
   },
   "Geo_Rock-Broken_Elevator_1": {

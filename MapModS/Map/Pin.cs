@@ -102,14 +102,6 @@ namespace MapModS.Map
             gameObject.SetActive(false);
         }
 
-        //private void HideIfNotBought()
-        //{
-        //    if (!MapModS.LS.GetHasFromGroup(PinData.vanillaPool) && !MapModS.LS.RevealFullMap)
-        //    {
-        //        gameObject.SetActive(false);
-        //    }
-        //}
-
         private void HideIfFound()
         {
             //if (PinData.vanillaObjectName == null) return;

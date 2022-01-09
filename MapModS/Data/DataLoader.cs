@@ -78,7 +78,7 @@ namespace MapModS.Data
 
 			}
 
-			MapModS.Instance.LogWarn($"Unable to find RandomizerItemDef for {location}. Either it's not randomized or there is a bug");
+			//MapModS.Instance.LogWarn($"Unable to find RandomizerItemDef for {location}. Either it's not randomized or there is a bug");
 
 			return GetVanillaPoolGroup(location);
 		}
@@ -106,38 +106,23 @@ namespace MapModS.Data
 				}
 			}
 
-			// Handle special cases TODO FINISH
-			if (!RandomizerMod.RandomizerMod.RS.GenerationSettings.NoveltySettings.EggShop)
-            {
-				_pins["Egg_Shop"].disable = true;
-            }
+			// Handle special cases
+			_pins["Egg_Shop"].disable = !RandomizerMod.RandomizerMod.RS.GenerationSettings.NoveltySettings.EggShop;
 
-			if (!RandomizerMod.RandomizerMod.RS.GenerationSettings.NoveltySettings.RandomizeElevatorPass)
-            {
-				_pins["Elevator_Pass"].disable = true;
-            }
+			_pins["Elevator_Pass"].disable = !RandomizerMod.RandomizerMod.RS.GenerationSettings.NoveltySettings.RandomizeElevatorPass;
 
-			if (!RandomizerMod.RandomizerMod.RS.GenerationSettings.NoveltySettings.RandomizeFocus)
-			{
-				_pins["Focus"].disable = true;
-			}
+			_pins["Focus"].disable = !RandomizerMod.RandomizerMod.RS.GenerationSettings.NoveltySettings.RandomizeFocus;
 
-			//if (!RandomizerMod.RandomizerMod.RS.GenerationSettings.NoveltySettings.RandomizeNail)
-   //         {
-			//	_pins["Leftslash"].disable = true;
-			//	_pins["Rightslash"].disable = true;
-			//	_pins["Upslash"].disable = true;
-			//}
+			_pins["Mantis_Claw"].disable = RandomizerMod.RandomizerMod.RS.GenerationSettings.NoveltySettings.SplitClaw;
 
-			if (RandomizerMod.RandomizerMod.RS.GenerationSettings.NoveltySettings.SplitClaw)
-			{
-				_pins["Mantis_Claw"].disable = true;
-			}
+			_pins["Left_Mantis_Claw"].disable = !RandomizerMod.RandomizerMod.RS.GenerationSettings.NoveltySettings.SplitClaw;
+			_pins["Right_Mantis_Claw"].disable = !RandomizerMod.RandomizerMod.RS.GenerationSettings.NoveltySettings.SplitClaw;
 
-			if (!RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.Skills)
-			{
-				_pins["World_Sense"].disable = true;
-			}
+			_pins["Split_Mothwing_Cloak"].disable = !RandomizerMod.RandomizerMod.RS.GenerationSettings.NoveltySettings.SplitCloak;
+
+			_pins["Split_Crystal_Heart"].disable = !RandomizerMod.RandomizerMod.RS.GenerationSettings.NoveltySettings.SplitSuperdash;
+
+			_pins["World_Sense"].disable = !RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.Dreamers;
 
 		}
 
