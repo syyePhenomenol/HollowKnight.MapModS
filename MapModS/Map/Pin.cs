@@ -38,10 +38,23 @@ namespace MapModS.Map
         // Hides or shows the pin depending on the state of the map (NONE is World Map)
         private void ShowBasedOnMap(MapZone mapZone)
         {
-            if (mapZone == PinData.mapZone || mapZone == MapZone.NONE)
+            if (mapZone == MapZone.NONE)
             {
                 gameObject.SetActive(true);
                 return;
+            }
+           
+            if (PinData.pinSceneAM != null && mapZone == PinData.mapZoneAM)
+            {
+                gameObject.SetActive(true);
+                return;
+            }
+
+            if (mapZone == PinData.mapZone)
+            {
+                gameObject.SetActive(true);
+                return;
+            }
 
                 //// Show everything if full map was revealed
                 //// Or, if it's a Map, always show the pin
@@ -85,7 +98,6 @@ namespace MapModS.Map
                 //        }
                 //    }
                 //}
-            }
 
             gameObject.SetActive(false);
         }

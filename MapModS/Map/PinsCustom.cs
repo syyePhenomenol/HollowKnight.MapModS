@@ -108,17 +108,14 @@ namespace MapModS.Map
             // Attach sprite renderer to the GameObject
             SpriteRenderer sr = goPin.AddComponent<SpriteRenderer>();
 
-            sr.sprite = SpriteManager.GetSpriteFromPool(pinData.vanillaPool);
-
-            //// Give the Grimm Troupe Lantern its unique sprite
-            //if (pinData.name == "Grimm Troupe Lantern")
-            //{
-            //    sr.sprite = SpriteManager.GetSprite("pinFlame");
-            //}
-            //else
-            //{
-            //    sr.sprite = SpriteManager.GetSpriteFromPool(pinData.vanillaPool);
-            //}
+            if (pinData.isShop)
+            {
+                sr.sprite = SpriteManager.GetSprite("pinShop");
+            }
+            else
+            {
+                sr.sprite = SpriteManager.GetSpriteFromPool(pinData.vanillaPool);
+            }
             
             sr.sortingLayerName = "HUD";
             sr.size = new Vector2(1f, 1f);
@@ -126,11 +123,30 @@ namespace MapModS.Map
             // Set pin transform (by pool)
             AssignGroup(goPin, pinData);
 
+            string roomName;
+
             // Position the pin - if pinScene exists we set a different base offset
-            string roomName = pinData.pinScene ?? pinData.sceneName;
+            if (MapModS.AdditionalMapsInstalled && pinData.pinSceneAM != null)
+            {
+                roomName = pinData.pinSceneAM;
+            }
+            else
+            {
+                roomName = pinData.pinScene ?? pinData.sceneName;
+            }
+
             Vector3 vec = GetRoomPos(roomName, gameMap);
             vec.Scale(new Vector3(1.46f, 1.46f, 1));
-            vec += new Vector3(pinData.offsetX, pinData.offsetY, pinData.offsetZ);
+
+            if (MapModS.AdditionalMapsInstalled && pinData.pinSceneAM != null)
+            {
+                vec += new Vector3(pinData.offsetXAM, pinData.offsetYAM, 0.0f);
+            }
+            else
+            {
+                vec += new Vector3(pinData.offsetX, pinData.offsetY, pinData.offsetZ);
+            }
+
             goPin.transform.localPosition = new Vector3(vec.x, vec.y, vec.z - 0.01f);
         }
 

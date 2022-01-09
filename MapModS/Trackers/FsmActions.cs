@@ -16,7 +16,11 @@ namespace MapModS.Trackers
 
         public override void OnEnter()
         {
-            MapModS.LS.ObtainedVanillaItems[_grd.id + _grd.sceneName] = true;
+            if (!_grd.id.Contains("-"))
+            {
+                MapModS.LS.ObtainedVanillaItems[_grd.id + _grd.sceneName] = true;
+            }
+
             MapModS.LS.GeoRockCounter ++;
 
             MapModS.Instance.Log("Geo Rock broken");
@@ -39,7 +43,11 @@ namespace MapModS.Trackers
         public override void OnEnter()
         {
             string scene = GameManager.instance.sceneName;
-            MapModS.LS.ObtainedVanillaItems[_oName + scene] = true;
+
+            if (!_oName.Contains("-"))
+            {
+                MapModS.LS.ObtainedVanillaItems[_oName + scene] = true;
+            }
 
             MapModS.Instance.Log("Item picked up");
             MapModS.Instance.Log(" Name: " + _oName);
