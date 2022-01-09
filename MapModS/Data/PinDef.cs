@@ -38,5 +38,6 @@ namespace MapModS.Data
         public PoolGroup vanillaPool;
         public PoolGroup spoilerPool;
 
+        public bool disable;
     }
 }

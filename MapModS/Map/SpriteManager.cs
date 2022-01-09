@@ -39,7 +39,7 @@ namespace MapModS.Map
                 PoolGroup.Keys => "pinKey",
                 PoolGroup.MaskShards => "pinMask",
                 PoolGroup.VesselFragments => "pinVessel",
-                PoolGroup.CharmNotches => "pinCharm",
+                PoolGroup.CharmNotches => "pinNotch",
                 PoolGroup.PaleOre => "pinOre",
                 PoolGroup.GeoChests => "pinGeo",
                 PoolGroup.RancidEggs => "pinEgg",

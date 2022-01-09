@@ -44,7 +44,8 @@ namespace MapModS.Map
         {
             foreach (PoolGroup group in _Groups.Keys)
             {
-                _Groups[group].SetActive(MapModS.LS.GetOnFromGroup(group));
+                _Groups[group].SetActive(true);
+                //_Groups[group].SetActive(MapModS.LS.GetOnFromGroup(group));
             }
         }
 
@@ -139,6 +140,7 @@ namespace MapModS.Map
             {
                 _Groups[pinData.spoilerPool] = new GameObject("PinGroup " + pinData.spoilerPool);
                 _Groups[pinData.spoilerPool].transform.SetParent(transform);
+                _Groups[pinData.spoilerPool].SetActive(true);
             }
 
             newPin.transform.SetParent(_Groups[pinData.spoilerPool].transform);

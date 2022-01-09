@@ -9,7 +9,7 @@ using UnityEngine;
 using MapModS.Data;
 using MapModS.Settings;
 using MapModS.Trackers;
-using Vasi;
+using System;
 
 namespace MapModS.Map
 {
@@ -151,20 +151,28 @@ namespace MapModS.Map
         // The main method for updating map objects and pins when opening either World Map or Quick Map
         public static void UpdateMap(GameMap gameMap, MapZone mapZone)
         {
-            ItemTracker.UpdateObtainedItems();
+            try
+            {
+                ItemTracker.UpdateObtainedItems();
 
-            PinsVanilla.UpdatePins(gameMap.gameObject);
+                PinsVanilla.UpdatePins(gameMap.gameObject);
 
-            SyncMap(gameMap);
+                SyncMap(gameMap);
 
-            PinsVanilla.RefreshGroups();
-            //PinsVanilla.ResizePins();
+                PinsVanilla.RefreshGroups();
+                //PinsVanilla.ResizePins();
 
-            if (goCustomPins == null) return;
+                if (goCustomPins == null) return;
 
-            CustomPins.UpdatePins(mapZone);
-            CustomPins.RefreshGroups();
-            CustomPins.ResizePins();
+                CustomPins.UpdatePins(mapZone);
+                CustomPins.RefreshGroups();
+                CustomPins.ResizePins();
+            }
+            catch (Exception e)
+            {
+                MapModS.Instance.LogError(e);
+            }
+            
         }
 
         public static void SyncMap(GameMap gameMap)

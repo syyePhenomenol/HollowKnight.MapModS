@@ -41,6 +41,7 @@ namespace MapModS.Map
             if (mapZone == PinData.mapZone || mapZone == MapZone.NONE)
             {
                 gameObject.SetActive(true);
+                return;
 
                 //// Show everything if full map was revealed
                 //// Or, if it's a Map, always show the pin
@@ -104,7 +105,7 @@ namespace MapModS.Map
             // Don't hide pin if something isn't in the obtained items dictionary
             if (!MapModS.LS.ObtainedVanillaItems.ContainsKey(PinData.objectName + PinData.sceneName)) return;
 
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
         }
     }
 }

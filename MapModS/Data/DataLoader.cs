@@ -35,6 +35,15 @@ namespace MapModS.Data
 		//    return null;
 		//}
 
+		public static PoolGroup GetVanillaPoolGroup(string location)
+        {
+			string cleanItemName = location.Split('-')[0];
+
+			MapModS.Instance.Log(cleanItemName);
+
+			return GetPoolGroupFromName(cleanItemName);
+		}
+
 		public static PoolGroup GetRandomizerPoolGroup(string location)
 		{
 			if (RandomizerMod.RandomizerMod.RS.Context.itemPlacements.Any(pair => pair.location.Name == location))
@@ -43,15 +52,15 @@ namespace MapModS.Data
 
 				string cleanItemName = ilp.item.Name.Replace("Placeholder-", "").Split('-')[0];
 
-				MapModS.Instance.Log(cleanItemName);
+				//MapModS.Instance.Log(cleanItemName);
 
 				return GetPoolGroupFromName(cleanItemName);
 
 			}
 
-			MapModS.Instance.LogWarn($"Unable to find RandomizerItemDef for {location}.");
+			MapModS.Instance.LogWarn($"Unable to find RandomizerItemDef for {location}. Either it's not randomized or there is a bug");
 
-			return PoolGroup.Unknown;
+			return GetVanillaPoolGroup(location);
 		}
 
 		public static PoolGroup GetPoolGroupFromName(string cleanItemName)
@@ -108,9 +117,11 @@ namespace MapModS.Data
 				}
 				else
                 {
+					pinD.vanillaPool = GetVanillaPoolGroup(vanillaItem);
 					pinD.isRandomized = true;
 					pinD.spoilerPool = GetRandomizerPoolGroup(vanillaItem);
 				}
+
 				//else if (RandomizerMod.RandomizerMod.RS.Context.itemPlacements.Any(pair => pair.location.Name == vanillaItem))
 				//{
 					//RandomizerCore.ItemPlacement ilp = RandomizerMod.RandomizerMod.RS.Context.itemPlacements.First(pair => pair.location.Name == vanillaItem);
