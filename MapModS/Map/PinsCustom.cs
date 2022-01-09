@@ -30,56 +30,6 @@ namespace MapModS.Map
                 }
             }
         }
-
-        public void UpdatePins(MapZone mapZone)
-        {
-            foreach (Pin pin in _pins)
-            {
-                pin.UpdatePin(mapZone);
-            }
-        }
-
-        // Called every time the map is opened
-        public void RefreshGroups()
-        {
-            foreach (PoolGroup group in _Groups.Keys)
-            {
-                _Groups[group].SetActive(true);
-                //_Groups[group].SetActive(MapModS.LS.GetOnFromGroup(group));
-            }
-        }
-
-        public void ResizePins()
-        {
-            foreach (Pin pin in _pins)
-            {
-                ResizePin(pin.gameObject);
-            }
-        }
-
-        public static void ResizePin(GameObject go)
-        {
-            float scale = MapModS.GS.PinSizeSetting switch
-            {
-                GlobalSettings.PinSize.small => 0.31f,
-                GlobalSettings.PinSize.medium => 0.37f,
-                GlobalSettings.PinSize.large => 0.42f,
-                _ => throw new NotImplementedException()
-            };
-
-            go.transform.localScale = 1.45f * scale * new Vector2(1.0f, 1.0f);
-        }
-
-        public void DestroyPins()
-        {
-            foreach (Pin pin in _pins)
-            {
-                Destroy(pin.gameObject);
-            }
-
-            _pins.Clear();
-        }
-
         private void MakePin(PinDef pinData, GameMap gameMap)
         {
             if (_pins.Any(pin => pin.PinData.name == pinData.name))
@@ -88,11 +38,7 @@ namespace MapModS.Map
                 return;
             }
 
-            //if (pinData.additionalMaps == 1 && MapModS.AdditionalMapsInstalled
-            //|| pinData.additionalMaps == 2 && !MapModS.AdditionalMapsInstalled)
-            //{
-            //    return;
-            //}
+            if (pinData.disable) return;
 
             // Create new pin GameObject
             GameObject goPin = new($"pin_mapmod_{pinData.name}")
@@ -114,9 +60,10 @@ namespace MapModS.Map
             }
             else
             {
-                sr.sprite = SpriteManager.GetSpriteFromPool(pinData.vanillaPool);
+                //sr.sprite = SpriteManager.GetSpriteFromPool(pinData.vanillaPool);
+                sr.sprite = SpriteManager.GetSpriteFromPool(pinData.spoilerPool);
             }
-            
+
             sr.sortingLayerName = "HUD";
             sr.size = new Vector2(1f, 1f);
 
@@ -190,6 +137,95 @@ namespace MapModS.Map
 
             MapModS.Instance.LogWarn($"{roomName} is not a valid room name!");
             return new Vector3(0, 0, 0);
+        }
+
+        // Used for updating button states
+        private List<PoolGroup> _randomizedGroups = new();
+
+        private List<PoolGroup> _othersGroups = new();
+
+        internal void FindRandomizedGroups()
+        {
+            foreach (PoolGroup group in _Groups.Keys)
+            {
+                AddGroupToList(group);
+            }
+        }
+
+        // If any pin has vanillaPool != spoilerPool, consider the whole group Randomized
+        internal void AddGroupToList(PoolGroup group)
+        {
+            foreach (GameObject goPin in _Groups[group].GetComponentsInChildren<GameObject>())
+            {
+                PinDef pinD = goPin.GetComponent<PinDef>();
+
+                if (pinD.vanillaPool != pinD.spoilerPool)
+                {
+                    _randomizedGroups.Add(group);
+                    return;
+                }
+            }
+
+            _othersGroups.Add(group);
+        }
+
+        public void UpdatePins(MapZone mapZone)
+        {
+            foreach (Pin pin in _pins)
+            {
+                pin.UpdatePin(mapZone);
+            }
+        }
+
+        // Called every time the map is opened
+        public void RefreshGroups()
+        {
+            foreach (PoolGroup group in _Groups.Keys)
+            {
+                _Groups[group].SetActive(true);
+                //_Groups[group].SetActive(MapModS.LS.GetOnFromGroup(group));
+            }
+        }
+
+        //internal void ToggleSpoilers()
+        //{
+        //    MapModS.LS.SpoilerOn = !MapModS.LS.SpoilerOn;
+        //    SetSprites();
+        //    PauseGUI._SetGUI();
+        //    MapText.SetTexts();
+        //}
+
+        public void ResizePins()
+        {
+            foreach (Pin pin in _pins)
+            {
+                ResizePin(pin.gameObject);
+            }
+        }
+
+        public static void ResizePin(GameObject go)
+        {
+            float scale = MapModS.GS.PinSizeSetting switch
+            {
+                GlobalSettings.PinSize.small => 0.31f,
+                GlobalSettings.PinSize.medium => 0.37f,
+                GlobalSettings.PinSize.large => 0.42f,
+                _ => throw new NotImplementedException()
+            };
+
+            go.transform.localScale = 1.45f * scale * new Vector2(1.0f, 1.0f);
+        }
+
+        public void DestroyPins()
+        {
+            foreach (Pin pin in _pins)
+            {
+                Destroy(pin.gameObject);
+            }
+
+            _pins.Clear();
+            _randomizedGroups.Clear();
+            _othersGroups.Clear();
         }
 
         protected void Start()

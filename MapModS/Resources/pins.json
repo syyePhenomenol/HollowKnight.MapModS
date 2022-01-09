@@ -168,7 +168,8 @@
     "pinScene": "Crossroads_06",
     "mapZone": "CROSSROADS",
     "offsetX": 0,
-    "offsetY": -0.2
+    "offsetY": -0.2,
+    "offsetZ": -0.500
   },
   "Shade_Soul": {
     "name": "Shade_Soul",
@@ -229,10 +230,13 @@
     "offsetX": 0.22,
     "offsetY": 0.0
   },
-  //"Focus": {
-  //  "name": "Focus",
-  //  "sceneName": "Tutorial_01"
-  //},
+  "Focus": {
+    "name": "Focus",
+    "sceneName": "Tutorial_01",
+    "mapZone": "TOWN",
+    "offsetX": 0.4,
+    "offsetY": -0.4
+  },
   "Baldur_Shell": {
     "name": "Baldur_Shell",
     "sceneName": "Fungus1_28",
@@ -302,7 +306,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.4,
     "offsetY": -0.2,
-    "offsetZ": 0.001
+    "offsetZ": -0.499
   },
   "Soul_Eater": {
     "name": "Soul_Eater",
@@ -324,7 +328,8 @@
     "pinScene": "Town",
     "mapZone": "TOWN",
     "offsetX": -0.45,
-    "offsetY": -0.6
+    "offsetY": -0.6,
+    "offsetZ": 0.010
   },
   "Joni's_Blessing": {
     "name": "Joni's_Blessing",
@@ -432,8 +437,8 @@
     "sceneName": "Grimm_Divine",
     "pinScene": "Town",
     "mapZone": "TOWN",
-    "offsetX": -1.2,
-    "offsetY": -0.3,
+    "offsetX": -1.6,
+    "offsetY": -0.6,
     "offsetZ": 0.002
   },
   "Unbreakable_Greed": {
@@ -441,7 +446,8 @@
     "sceneName": "Grimm_Divine",
     "pinScene": "Town",
     "mapZone": "TOWN",
-    "offsetX": -1.2,
+    "offsetX": -1.6,
+    "offsetY": -0.2,
     "offsetZ": 0.003
   },
   "Unbreakable_Strength": {
@@ -449,8 +455,8 @@
     "sceneName": "Grimm_Divine",
     "pinScene": "Town",
     "mapZone": "TOWN",
-    "offsetX": -1.2,
-    "offsetY": 0.3,
+    "offsetX": -1.6,
+    "offsetY": 0.2,
     "offsetZ": 0.004
   },
   "City_Crest": {
@@ -513,7 +519,7 @@
     "name": "Godtuner",
     "sceneName": "GG_Waterways",
     "mapZone": "WATERWAYS",
-    "offsetX": -0.8,
+    "offsetX": -0.6,
     "offsetY": -0.6
   },
   "Collector's_Map": {
@@ -542,8 +548,8 @@
     "sceneName": "Fungus1_36",
     "pinScene": "Fungus1_34",
     "mapZone": "GREEN_PATH",
-    "offsetX": 1.65,
-    "offsetY": -0.05,
+    "offsetX": 1.0,
+    "offsetY": -0.1,
     "offsetZ": 0.001
   },
   "Mask_Shard-Queen's_Station": {
@@ -867,8 +873,8 @@
     "sceneName": "Deepnest_Spider_Town",
     "pinScene": "Deepnest_10",
     "mapZone": "DEEPNEST",
-    "offsetX": -0.45,
-    "offsetY": 1.2,
+    "offsetX": -0.4,
+    "offsetY": 2.1,
     "offsetZ": 0.003
   },
   "Rancid_Egg-Dark_Deepnest": {
@@ -929,13 +935,10 @@
     "offsetX": -0.5,
     "offsetY": 0.5
   },
-  // Need to place this properly
   "Rancid_Egg-Tuk_Defender's_Crest": {
     "name": "Rancid_Egg-Tuk_Defender's_Crest",
     "sceneName": "Waterways_03",
-    "mapZone": "CLIFFS",
-    "offsetX": 1.8,
-    "offsetY": -1.5
+    "mapZone": "WATERWAYS"
   },
   "Wanderer's_Journal-Cliffs": {
     "name": "Wanderer's_Journal-Cliffs",
@@ -1130,8 +1133,7 @@
     "sceneName": "Deepnest_Spider_Town",
     "pinScene": "Deepnest_10",
     "mapZone": "DEEPNEST",
-    "offsetX": -0.4,
-    "offsetY": 1.65,
+    "offsetY": 1.7,
     "offsetZ": 0.001
   },
   "Hallownest_Seal-Queen's_Gardens": {
@@ -1301,7 +1303,6 @@
     "offsetX": 0.5,
     "offsetY": -1.8
   },
-  // Probably need to fix
   "Whispering_Root-Ancestral_Mound": {
     "name": "Whispering_Root-Ancestral_Mound",
     "sceneName": "Crossroads_ShamanTemple",
@@ -1309,7 +1310,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.4,
     "offsetY": 0.6,
-    "offsetZ": 0.005
+    "offsetZ": -0.495
   },
   "Whispering_Root-Hive": {
     "name": "Whispering_Root-Hive",
@@ -1371,7 +1372,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.1,
     "offsetY": 0.5,
-    "offsetZ": 0.001
+    "offsetZ": -0.99
   },
   "Boss_Essence-Soul_Tyrant": {
     "name": "Boss_Essence-Soul_Tyrant",
@@ -1422,7 +1423,8 @@
     "sceneName": "Crossroads_03",
     "mapZone": "CROSSROADS",
     "offsetX": -0.2,
-    "offsetY": 0.2
+    "offsetY": 0.2,
+    "offsetZ": 0.010
   },
   "Grub-Crossroads_Spike": {
     "name": "Grub-Crossroads_Spike",
@@ -1852,7 +1854,8 @@
     "pinScene": "Town",
     "mapZone": "TOWN",
     "offsetX": 0.4,
-    "offsetY": -0.6
+    "offsetY": -0.6,
+    "offsetZ": 0.010
   },
   "Crossroads_Stag": {
     "name": "Crossroads_Stag",
@@ -1878,7 +1881,8 @@
     "name": "Queen's_Gardens_Stag",
     "sceneName": "Fungus3_40",
     "mapZone": "ROYAL_GARDENS",
-    "offsetX": -1.68
+    "offsetX": -1.0,
+    "offsetY": 0.3
   },
   "City_Storerooms_Stag": {
     "name": "City_Storerooms_Stag",
@@ -1934,7 +1938,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.4,
     "offsetY": 0.2,
-    "offsetZ": 0.003
+    "offsetZ": -0.497
   },
   "Lifeblood_Cocoon-Greenpath": {
     "name": "Lifeblood_Cocoon-Greenpath",
@@ -2108,39 +2112,45 @@
     "name": "Split_Mothwing_Cloak",
     "sceneName": "Fungus1_04",
     "mapZone": "GREEN_PATH",
-    "offsetX": -0.55
+    "offsetX": -0.25,
+    "offsetY": 0.4
   },
   "Left_Mantis_Claw": {
     "name": "Left_Mantis_Claw",
     "sceneName": "Fungus2_14",
     "mapZone": "WASTES",
-    "offsetX": -1.5,
-    "offsetY": -0.1
+    "offsetX": -1.8,
+    "offsetY": -0.5,
+    "offsetZ": 0.001
   },
   "Right_Mantis_Claw": {
     "name": "Right_Mantis_Claw",
     "sceneName": "Fungus2_14",
     "mapZone": "WASTES",
-    "offsetX": -1.2,
-    "offsetY": -0.1
+    "offsetX": -1.4,
+    "offsetY": -0.5,
+    "offsetZ": 0.002
   },
   "Leftslash": {
     "name": "Leftslash",
     "sceneName": "Tutorial_01",
     "mapZone": "TOWN",
-    "offsetX": 0.1
+    "offsetX": -2.0,
+    "offsetY": -1.2
   },
   "Rightslash": {
     "name": "Rightslash",
     "sceneName": "Tutorial_01",
     "mapZone": "TOWN",
-    "offsetX": 0.4
+    "offsetX": -1.7,
+    "offsetY": -1.2
   },
   "Upslash": {
     "name": "Upslash",
     "mapZone": "TOWN",
     "sceneName": "Tutorial_01",
-    "offsetX": 0.7
+    "offsetX": -1.4,
+    "offsetY": -1.2
   },
   "Split_Crystal_Heart": {
     "name": "Split_Crystal_Heart",
@@ -2339,8 +2349,7 @@
     "sceneName": "Crossroads_08",
     "mapZone": "CROSSROADS",
     "offsetX": -0.3,
-    "offsetY": -0.3,
-    "offsetZ": 0.002
+    "offsetY": -0.3
   },
   "Geo_Rock-Crossroads_Aspid_Arena_Hidden": {
     "name": "Geo_Rock-Crossroads_Aspid_Arena_Hidden",
@@ -2482,7 +2491,7 @@
     "pinScene": "Crossroads_06",
     "mapZone": "CROSSROADS",
     "offsetY": 0.2,
-    "offsetZ": 0.002
+    "offsetZ": -0.498
   },
   "Geo_Rock-Ancestral_Mound_Dupe": {
     "name": "Geo_Rock-Ancestral_Mound_Dupe",
@@ -2491,7 +2500,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.4,
     "offsetY": 0.2,
-    "offsetZ": 0.003
+    "offsetZ": -0.497
   },
   "Geo_Rock-Ancestral_Mound_Tree": {
     "name": "Geo_Rock-Ancestral_Mound_Tree",
@@ -2500,7 +2509,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.4,
     "offsetY": 0.6,
-    "offsetZ": 0.005
+    "offsetZ": -0.495
   },
   "Geo_Rock-Ancestral_Mound_Tree_Dupe": {
     "name": "Geo_Rock-Ancestral_Mound_Tree_Dupe",
@@ -2508,7 +2517,7 @@
     "pinScene": "Crossroads_06",
     "mapZone": "CROSSROADS",
     "offsetY": 0.6,
-    "offsetZ": 0.004
+    "offsetZ": -0.496
   },
   "Geo_Rock-Moss_Prophet": {
     "name": "Geo_Rock-Moss_Prophet",
@@ -3354,7 +3363,7 @@
     "sceneName": "Mines_04",
     "mapZone": "MINES",
     "offsetX": 0.1,
-    "offsetY": 1.1
+    "offsetY": 0.1
   },
   "Geo_Rock-Crystal_Peak_Before_Dark_Room_Dupe": {
     "name": "Geo_Rock-Crystal_Peak_Before_Dark_Room_Dupe",
@@ -3779,8 +3788,8 @@
     "pinScene": "Crossroads_06",
     "mapZone": "CROSSROADS",
     "offsetX": 0.4,
-    "offsetY": 0.0,
-    "offsetZ": 0.001
+    "offsetY": -0.2,
+    "offsetZ": -0.499
   },
   "Soul_Totem-Distant_Village": {
     "name": "Soul_Totem-Distant_Village",
@@ -3867,8 +3876,8 @@
     "sceneName": "Deepnest_Spider_Town",
     "pinScene": "Deepnest_10",
     "mapZone": "DEEPNEST",
-    "offsetX": 0.45,
-    "offsetY": 1.85,
+    "offsetX": 0.4,
+    "offsetY": 2.1,
     "offsetZ": 0.004
   },
   "Soul_Totem-Greenpath_Hunter's_Journal": {
@@ -4048,8 +4057,8 @@
     "offsetY": -0.2,
     "pinSceneAM": "White_Palace_02",
     "mapZoneAM": "WHITE_PALACE",
-    "offsetXAM": 0.0,
-    "offsetYAM": 0.0
+    "offsetXAM": -0.9,
+    "offsetYAM": 0.1
   },
   "Soul_Totem-White_Palace_Hub": {
     "name": "Soul_Totem-White_Palace_Hub",
@@ -4382,7 +4391,6 @@
     "name": "Lore_Tablet-King's_Pass_Focus",
     "sceneName": "Tutorial_01",
     "mapZone": "TOWN",
-    "offsetX": 0.2,
     "offsetY": -0.4
   },
   "Lore_Tablet-King's_Pass_Fury": {
@@ -4405,7 +4413,9 @@
     "sceneName": "Room_temple",
     "pinScene": "Crossroads_02",
     "mapZone": "CROSSROADS",
-    "offsetY": -0.2
+    "offsetX": -0.2,
+    "offsetY": -0.2,
+    "offsetZ": 0.001
   },
   "Lore_Tablet-Howling_Cliffs": {
     "name": "Lore_Tablet-Howling_Cliffs",

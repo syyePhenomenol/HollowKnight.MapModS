@@ -20,43 +20,12 @@ namespace MapModS.Map
 
         public static void Hook()
         {
-            //On.GameMap.Start += GameMap_Start;
             On.GameManager.SetGameMap += GameManager_SetGameMap;
             On.GameMap.WorldMap += GameMap_WorldMap;
             On.GameMap.SetupMapMarkers += GameMap_SetupMapMarkers;
             On.GameMap.DisableMarkers += GameMap_DisableMarkers;
             On.GameManager.UpdateGameMap += GameManager_UpdateGameMap;
         }
-
-        //// The function that is called every time a new GameMap is created (once per save load)
-        //private static void GameMap_Start(On.GameMap.orig_Start orig, GameMap self)
-        //{
-        //    orig(self);
-
-            //if (self == null) return;
-
-            //// Necessary if player goes straight to Pause Menu
-            //SyncMap(self);
-
-            //if (goCustomPins != null)
-            //{
-            //    goCustomPins.transform.SetParent(self.transform);
-            //    return;
-            //}
-
-            //MapModS.Instance.Log("Adding Custom Pins...");
-
-            //goCustomPins = new GameObject($"VMM Custom Pin Group");
-            //goCustomPins.AddComponent<PinsCustom>();
-
-            //// Setting parent here is only for controlling local position,
-            //// not active/not active (need separate mechanism)
-            //goCustomPins.transform.SetParent(self.transform);
-
-            //CustomPins.MakePins(self);
-
-            //MapModS.Instance.Log("Adding Custom Pins done.");
-        //}
 
         // The function that is called every time after a new GameMap is created (once per save load)
         private static void GameManager_SetGameMap(On.GameManager.orig_SetGameMap orig, GameManager self, GameObject go_gameMap)
@@ -72,8 +41,8 @@ namespace MapModS.Map
 
             if (goCustomPins != null)
             {
-                goCustomPins.transform.SetParent(go_gameMap.transform);
-                return;
+                goCustomPins.GetComponent<PinsCustom>().DestroyPins();
+                UnityEngine.Object.Destroy(goCustomPins);
             }
 
             MapModS.Instance.Log("Adding Custom Pins...");
@@ -86,6 +55,8 @@ namespace MapModS.Map
             goCustomPins.transform.SetParent(go_gameMap.transform);
 
             CustomPins.MakePins(gameMap);
+
+            CustomPins.FindRandomizedGroups();
 
             MapModS.Instance.Log("Adding Custom Pins done.");
         }

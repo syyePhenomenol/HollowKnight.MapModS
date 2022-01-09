@@ -192,28 +192,20 @@ namespace MapModS.UI
 
         private static void UpdateShowPins()
         {
-            if (!MapModS.LS.HasNoGroup())
+            if (MapModS.LS.AllGroupsOn())
             {
-                if (MapModS.LS.AllHasIsOn())
-                {
-                    _mapControlPanel.GetButton("AllPins").SetTextColor(Color.green);
-                    _mapControlPanel.GetButton("AllPins").UpdateText("Show Pins:\nall");
-                }
-                else if (MapModS.LS.AllHasIsOff())
-                {
-                    _mapControlPanel.GetButton("AllPins").SetTextColor(Color.white);
-                    _mapControlPanel.GetButton("AllPins").UpdateText("Show Pins:\nnone");
-                }
-                else
-                {
-                    _mapControlPanel.GetButton("AllPins").SetTextColor(Color.yellow);
-                    _mapControlPanel.GetButton("AllPins").UpdateText("Show Pins:\ncustom");
-                }
+                _mapControlPanel.GetButton("AllPins").SetTextColor(Color.green);
+                _mapControlPanel.GetButton("AllPins").UpdateText("Show Pins:\nall");
+            }
+            else if (MapModS.LS.AllGroupsOff())
+            {
+                _mapControlPanel.GetButton("AllPins").SetTextColor(Color.white);
+                _mapControlPanel.GetButton("AllPins").UpdateText("Show Pins:\nnone");
             }
             else
             {
-                _mapControlPanel.GetButton("AllPins").SetTextColor(Color.red);
-                _mapControlPanel.GetButton("AllPins").UpdateText("No Pins\n Unlocked");
+                _mapControlPanel.GetButton("AllPins").SetTextColor(Color.yellow);
+                _mapControlPanel.GetButton("AllPins").UpdateText("Show Pins:\ncustom");
             }
         }
 
@@ -224,20 +216,12 @@ namespace MapModS.UI
 
         private static void PoolClicked(string buttonName)
         {
-            if (!MapModS.LS.GetHasFromGroup(buttonName) && !MapModS.LS.RevealFullMap) return;
-
             MapModS.LS.SetOnFromGroup(buttonName, !MapModS.LS.GetOnFromGroup(buttonName));
             UpdateGUI();
         }
 
         private static void UpdatePool(PoolGroup pool)
         {
-            if (!MapModS.LS.GetHasFromGroup(pool) && !MapModS.LS.RevealFullMap)
-            {
-                _mapControlPanel.GetPanel("PoolsPanel").GetButton(pool.ToString()).SetTextColor(Color.red);
-                return;
-            }
-
             //if (pool == PoolGroup.Rock)
             //{
             //    _mapControlPanel.GetPanel("PoolsPanel").GetButton(pool.ToString()).UpdateText

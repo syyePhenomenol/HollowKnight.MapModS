@@ -8,6 +8,14 @@ using MapModS.Data;
 // Code borrowed from homothety: https://github.com/homothetyhk/RandomizerMod/
 namespace MapModS.Map
 {
+    public enum PinStyle
+    {
+        Normal,
+        Q_Marks_1,
+        Q_Marks_2,
+        Q_Marks_3,
+    }
+
     internal static class SpriteManager
     {
         private static Dictionary<string, Sprite> _sprites;

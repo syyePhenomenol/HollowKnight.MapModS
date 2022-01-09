@@ -24,7 +24,7 @@ namespace MapModS.Data
         public float offsetY;
         public float offsetZ;
 
-        public bool isShop;
+        public bool isShop = false;
 
         // If AdditionalMaps is installed, the pin is placed differently
         public string pinSceneAM;
@@ -32,12 +32,10 @@ namespace MapModS.Data
         public float offsetXAM;
         public float offsetYAM;
 
-        public bool isRandomized;
-
         // These are assigned during FindSpoilerPools, unusued if it's a Shop
         public PoolGroup vanillaPool;
         public PoolGroup spoilerPool;
 
-        public bool disable;
+        public bool disable = false;
     }
 }
