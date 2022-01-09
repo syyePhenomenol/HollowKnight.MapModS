@@ -135,9 +135,10 @@ namespace MapModS.Map
 
                 if (goCustomPins == null) return;
 
+                CustomPins.ResizePins();
                 CustomPins.UpdatePins(mapZone);
                 CustomPins.RefreshGroups();
-                CustomPins.ResizePins();
+
             }
             catch (Exception e)
             {

@@ -46,14 +46,10 @@ namespace MapModS.Map
                 layer = 30
             };
 
-            // Attach pin data to the GameObject
-            Pin pin = goPin.AddComponent<Pin>();
-            pin.SetPinData(pinData);
-            _pins.Add(pin);
-
             // Attach sprite renderer to the GameObject
             SpriteRenderer sr = goPin.AddComponent<SpriteRenderer>();
 
+            // Initialize sprite to vanillaPool
             if (pinData.isShop)
             {
                 sr.sprite = SpriteManager.GetSprite("pinShop");
@@ -66,6 +62,11 @@ namespace MapModS.Map
 
             sr.sortingLayerName = "HUD";
             sr.size = new Vector2(1f, 1f);
+
+            // Attach pin data to the GameObject
+            Pin pin = goPin.AddComponent<Pin>();
+            pin.SetPinData(pinData);
+            _pins.Add(pin);
 
             // Set pin transform (by pool)
             AssignGroup(goPin, pinData);

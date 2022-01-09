@@ -11,9 +11,13 @@ namespace MapModS.Map
         public PinDef PinData { get; private set; } = null;
         private SpriteRenderer _SR => gameObject.GetComponent<SpriteRenderer>();
 
+        private readonly Color _inactiveColor = Color.gray;
+        private Color _origColor;
+
         public void SetPinData(PinDef pd)
         {
             PinData = pd;
+            _origColor = _SR.color;
         }
 
         public void UpdatePin(MapZone mapZone)
@@ -26,8 +30,8 @@ namespace MapModS.Map
             try
             {
                 ShowBasedOnMap(mapZone);
-                //HideIfNotBought();
                 HideIfFound();
+                ModifyScaleAndColor();
             }
             catch (Exception e)
             {
@@ -104,12 +108,37 @@ namespace MapModS.Map
 
         private void HideIfFound()
         {
-            //if (PinData.vanillaObjectName == null) return;
+            if (RandomizerMod.RandomizerMod.RS.TrackerData.clearedLocations.Contains(PinData.name))
+            {
+                gameObject.SetActive(false);
+                return;
+            }
 
-            // Don't hide pin if something isn't in the obtained items dictionary
-            if (!MapModS.LS.ObtainedVanillaItems.ContainsKey(PinData.objectName + PinData.sceneName)) return;
+            // For non-randomized items
+            if (MapModS.LS.ObtainedVanillaItems.ContainsKey(PinData.objectName + PinData.sceneName))
+            {
+                gameObject.SetActive(false);
+            }
+        }
 
-            //gameObject.SetActive(false);
+        private void ModifyScaleAndColor()
+        {
+            if (PinData.vanillaPool == PinData.spoilerPool && !PinData.isShop)
+            {
+                transform.localScale = 0.7f * transform.localScale;
+            }
+            else
+            {
+                if (RandomizerMod.RandomizerMod.RS.TrackerData.uncheckedReachableLocations.Contains(PinData.name))
+                {
+                    _SR.color = _origColor;
+                }
+                else
+                {
+                    transform.localScale = 0.7f * transform.localScale;
+                    _SR.color = _inactiveColor;
+                }
+            }
         }
     }
 }
