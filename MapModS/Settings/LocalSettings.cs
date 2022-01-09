@@ -8,24 +8,24 @@ namespace MapModS.Settings
 	[Serializable]
 	public class LocalSettings
 	{
-		public class GroupSettingPair
-		{
-			public GroupSettingPair()
-			{
-				Has = false;
-				On = true;
-			}
+        public class GroupSettingPair
+        {
+            public GroupSettingPair()
+            {
+                Has = false;
+                On = true;
+            }
 
-			public bool Has; // The corresponding pin has been bought
-			public bool On; // The corresponding pin will be shown on the map (if Has)
-		};
+            public bool Has; // The corresponding pin has been bought
+            public bool On; // The corresponding pin will be shown on the map (if Has)
+        };
 
-		public Dictionary<string, bool> ObtainedItems = new();
+        public Dictionary<string, bool> ObtainedVanillaItems = new();
 
 		public int GeoRockCounter = 0;
 
-		public Dictionary<Pool , GroupSettingPair> GroupSettings = Enum.GetValues(typeof(Pool))
-			.Cast<Pool>().ToDictionary(t => t, t => new GroupSettingPair());
+		public Dictionary<PoolGroup , GroupSettingPair> GroupSettings = Enum.GetValues(typeof(PoolGroup))
+			.Cast<PoolGroup>().ToDictionary(t => t, t => new GroupSettingPair());
 
 		public bool RevealFullMap = false;
 
@@ -34,7 +34,7 @@ namespace MapModS.Settings
 			RevealFullMap = !RevealFullMap;
 
 			// Force all pins to show again
-			foreach (KeyValuePair<Pool, GroupSettingPair> entry in GroupSettings)
+			foreach (KeyValuePair<PoolGroup, GroupSettingPair> entry in GroupSettings)
             {
                 entry.Value.On = true;
             }
@@ -42,7 +42,7 @@ namespace MapModS.Settings
 
         public bool GetHasFromGroup(string groupName)
         {
-			if (Enum.TryParse(groupName, out Pool group))
+			if (Enum.TryParse(groupName, out PoolGroup group))
             {
 				return GroupSettings[group].Has;
 			}
@@ -50,55 +50,55 @@ namespace MapModS.Settings
             return false;
         }
 
-        public bool GetHasFromGroup(Pool group)
+        public bool GetHasFromGroup(PoolGroup group)
 		{
 			return GroupSettings[group].Has;
 		}
 
-		public void SetHasFromGroup(string groupName, bool value)
-		{
-			if (Enum.TryParse(groupName, out Pool group))
-			{
-				GroupSettings[group].Has = value;
-			}
-			else
-			{
-				// Set based on ORIGINAL PlayerData settings
-				switch (groupName)
-				{
-					case "hasPinBench":
-						GroupSettings[Pool.Bench].Has = value;
-						break;
-					case "hasPinCocoon":
-						GroupSettings[Pool.Cocoon].Has = value;
-						break;
-					case "hasPinDreamPlant":
-						GroupSettings[Pool.Root].Has = value;
-						break;
-					case "hasPinGhost":
-						GroupSettings[Pool.Grave].Has = value;
-						break;
-					case "hasPinGrub":
-						GroupSettings[Pool.Grub].Has = value;
-						break;
-					case "hasPinShop":
-						GroupSettings[Pool.Vendor].Has = value;
-						break;
-					case "hasPinSpa":
-						GroupSettings[Pool.Spa].Has = value;
-						break;
-					case "hasPinStag":
-						GroupSettings[Pool.Stag].Has = value;
-						break;
-					case "hasPinTram":
-						GroupSettings[Pool.Tram].Has = value;
-						break;
+		//public void SetHasFromGroup(string groupName, bool value)
+		//{
+		//	if (Enum.TryParse(groupName, out PoolGroup group))
+		//	{
+		//		GroupSettings[group].Has = value;
+		//	}
+		//	else
+		//	{
+		//		// Set based on ORIGINAL PlayerData settings
+		//		switch (groupName)
+		//		{
+		//			case "hasPinBench":
+		//				GroupSettings[PoolGroup.Bench].Has = value;
+		//				break;
+		//			case "hasPinCocoon":
+		//				GroupSettings[PoolGroup.Cocoon].Has = value;
+		//				break;
+		//			case "hasPinDreamPlant":
+		//				GroupSettings[PoolGroup.Root].Has = value;
+		//				break;
+		//			case "hasPinGhost":
+		//				GroupSettings[PoolGroup.Grave].Has = value;
+		//				break;
+		//			case "hasPinGrub":
+		//				GroupSettings[PoolGroup.Grub].Has = value;
+		//				break;
+		//			case "hasPinShop":
+		//				GroupSettings[PoolGroup.Vendor].Has = value;
+		//				break;
+		//			case "hasPinSpa":
+		//				GroupSettings[PoolGroup.Spa].Has = value;
+		//				break;
+		//			case "hasPinStag":
+		//				GroupSettings[PoolGroup.Stag].Has = value;
+		//				break;
+		//			case "hasPinTram":
+		//				GroupSettings[PoolGroup.Tram].Has = value;
+		//				break;
 
-					default:
-						break;
-				};
-			}
-		}
+		//			default:
+		//				break;
+		//		};
+		//	}
+		//}
 
 		public bool HasNoGroup()
 		{
@@ -120,7 +120,7 @@ namespace MapModS.Settings
 
 		public bool GetOnFromGroup(string groupName)
 		{
-			if (Enum.TryParse(groupName, out Pool group))
+			if (Enum.TryParse(groupName, out PoolGroup group))
 			{
 				return GroupSettings[group].On;
 			}
@@ -128,7 +128,7 @@ namespace MapModS.Settings
 			return false;
 		}
 
-		public bool GetOnFromGroup(Pool group)
+		public bool GetOnFromGroup(PoolGroup group)
 		{
 			if (GroupSettings.ContainsKey(group))
 			{
@@ -140,7 +140,7 @@ namespace MapModS.Settings
 
         public void SetOnFromGroup(string groupName, bool value)
         {
-			if (Enum.TryParse(groupName, out Pool group))
+			if (Enum.TryParse(groupName, out PoolGroup group))
 			{
 				GroupSettings[group].On = value;
 			}

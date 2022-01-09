@@ -10,7 +10,7 @@ namespace MapModS.Map
 {
     public class PinsCustom : MonoBehaviour
     {
-        private readonly Dictionary<Pool, GameObject> _Groups = new();
+        private readonly Dictionary<PoolGroup, GameObject> _Groups = new();
 
         private readonly List<Pin> _pins = new();
 
@@ -42,7 +42,7 @@ namespace MapModS.Map
         // Called every time the map is opened
         public void RefreshGroups()
         {
-            foreach (Pool group in _Groups.Keys)
+            foreach (PoolGroup group in _Groups.Keys)
             {
                 _Groups[group].SetActive(MapModS.LS.GetOnFromGroup(group));
             }
@@ -87,11 +87,11 @@ namespace MapModS.Map
                 return;
             }
 
-            if (pinData.additionalMaps == 1 && MapModS.AdditionalMapsInstalled
-            || pinData.additionalMaps == 2 && !MapModS.AdditionalMapsInstalled)
-            {
-                return;
-            }
+            //if (pinData.additionalMaps == 1 && MapModS.AdditionalMapsInstalled
+            //|| pinData.additionalMaps == 2 && !MapModS.AdditionalMapsInstalled)
+            //{
+            //    return;
+            //}
 
             // Create new pin GameObject
             GameObject goPin = new($"pin_mapmod_{pinData.name}")
@@ -107,15 +107,17 @@ namespace MapModS.Map
             // Attach sprite renderer to the GameObject
             SpriteRenderer sr = goPin.AddComponent<SpriteRenderer>();
 
-            // Give the Grimm Troupe Lantern its unique sprite
-            if (pinData.name == "Grimm Troupe Lantern")
-            {
-                sr.sprite = SpriteManager.GetSprite("pinFlame");
-            }
-            else
-            {
-                sr.sprite = SpriteManager.GetSpriteFromPool(pinData.vanillaPool);
-            }
+            sr.sprite = SpriteManager.GetSpriteFromPool(pinData.vanillaPool);
+
+            //// Give the Grimm Troupe Lantern its unique sprite
+            //if (pinData.name == "Grimm Troupe Lantern")
+            //{
+            //    sr.sprite = SpriteManager.GetSprite("pinFlame");
+            //}
+            //else
+            //{
+            //    sr.sprite = SpriteManager.GetSpriteFromPool(pinData.vanillaPool);
+            //}
             
             sr.sortingLayerName = "HUD";
             sr.size = new Vector2(1f, 1f);
@@ -133,16 +135,24 @@ namespace MapModS.Map
 
         private void AssignGroup(GameObject newPin, PinDef pinData)
         {
-            if (!_Groups.ContainsKey(pinData.vanillaPool))
+            if (!_Groups.ContainsKey(pinData.spoilerPool))
             {
-                _Groups[pinData.vanillaPool] = new GameObject("PinGroup " + pinData.vanillaPool);
-                _Groups[pinData.vanillaPool].transform.SetParent(transform);
-
-                // Set all true for now (doesn't really affect any behaviour)
-                _Groups[pinData.vanillaPool].SetActive(true);
+                _Groups[pinData.spoilerPool] = new GameObject("PinGroup " + pinData.spoilerPool);
+                _Groups[pinData.spoilerPool].transform.SetParent(transform);
             }
 
-            newPin.transform.SetParent(_Groups[pinData.vanillaPool].transform);
+            newPin.transform.SetParent(_Groups[pinData.spoilerPool].transform);
+
+            //if (!_Groups.ContainsKey(pinData.vanillaPool))
+            //{
+            //    _Groups[pinData.vanillaPool] = new GameObject("PinGroup " + pinData.vanillaPool);
+            //    _Groups[pinData.vanillaPool].transform.SetParent(transform);
+
+            //    // Set all true for now (doesn't really affect any behaviour)
+            //    _Groups[pinData.vanillaPool].SetActive(true);
+            //}
+
+            //newPin.transform.SetParent(_Groups[pinData.vanillaPool].transform);
         }
 
         private Vector3 GetRoomPos(string roomName, GameMap gameMap)

@@ -45,17 +45,21 @@
     <GetFileHash Files="$(ExportDir)/$(TargetName)/$(TargetName).zip" Algorithm="SHA256">
       <Output TaskParameter="Items" ItemName="FilesWithHashes" />
     </GetFileHash>
-    <WriteLinesToFile File="$(ExportDir)/$(TargetName)/SHA.txt" Lines="@(FilesWithHashes->'%(FileHash)')" Overwrite="true" Encoding="UTF-8"/>
+    <WriteLinesToFile File="$(ExportDir)/$(TargetName)/SHA.txt" Lines="@(FilesWithHashes->'%(FileHash)')" Overwrite="true" Encoding="UTF-8" />
   </Target>
 
   <ItemGroup>
+    <Compile Remove="Shop\**" />
     <Compile Remove="Unused\**" />
+    <EmbeddedResource Remove="Shop\**" />
     <EmbeddedResource Remove="Unused\**" />
+    <None Remove="Shop\**" />
     <None Remove="Unused\**" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="Compatibility.cs" />
+    <Compile Remove="Data\ShopDef.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -114,6 +118,7 @@
     <None Remove="Resources\Pins\pinUnknown_Totem.png" />
     <None Remove="Resources\Pins\pinUnknown_TotemInv.png" />
     <None Remove="Resources\Pins\pinVessel.png" />
+    <None Remove="Resources\pins_unused.json" />
     <None Remove="Resources\shop.json" />
   </ItemGroup>
 
@@ -208,6 +213,12 @@
     <Reference Include="PlayMaker">
       <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\PlayMaker.dll</HintPath>
       <Private>false</Private>
+    </Reference>
+    <Reference Include="RandomizerCore">
+      <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\RandomizerCore\RandomizerCore.dll</HintPath>
+    </Reference>
+    <Reference Include="RandomizerMod">
+      <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\RandomizerMod\RandomizerMod.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
       <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\UnityEngine.dll</HintPath>

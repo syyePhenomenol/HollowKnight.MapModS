@@ -28,29 +28,35 @@ namespace MapModS.Map
                 MapModS.Instance.Log(altName);
             }
         }
-        public static Sprite GetSpriteFromPool(Pool pool)
+        // TODO: Add switch for pin style
+        public static Sprite GetSpriteFromPool(PoolGroup pool)
         {
             string spriteName = pool switch
             {
-                Pool.Charm => "pinCharm",
-                Pool.Cocoon => "pinCocoon",
-                Pool.Egg => "pinEgg",
-                Pool.EssenceBoss => "pinEssenceBoss",
-                Pool.Geo => "pinGeo",
-                Pool.Grub => "pinGrub",
-                Pool.Key => "pinKey",
-                Pool.Lore => "pinLore",
-                Pool.Map => "pinMap",
-                Pool.Mask => "pinMask",
-                Pool.Notch => "pinNotch",
-                Pool.Ore => "pinOre",
-                Pool.Relic => "pinRelic",
-                Pool.Rock => "pinRock",
-                Pool.Root => "pinRoot",
-                Pool.Skill => "pinSkill",
-                Pool.Stag => "pinStag",
-                Pool.Totem => "pinTotem",
-                Pool.Vessel => "pinVessel",
+                PoolGroup.Dreamers => "pinDreamer",
+                PoolGroup.Skills => "pinSkill",
+                PoolGroup.Charms => "pinCharm",
+                PoolGroup.Keys => "pinKey",
+                PoolGroup.MaskShards => "pinMask",
+                PoolGroup.VesselFragments => "pinVessel",
+                PoolGroup.CharmNotches => "pinCharm",
+                PoolGroup.PaleOre => "pinOre",
+                PoolGroup.GeoChests => "pinGeo",
+                PoolGroup.RancidEggs => "pinEgg",
+                PoolGroup.Relics => "pinRelic",
+                PoolGroup.WhisperingRoots => "pinRoot",
+                PoolGroup.BossEssence => "pinEssenceBoss",
+                PoolGroup.Grubs => "pinGrub",
+                PoolGroup.Mimics => "pinGrub",
+                PoolGroup.Maps => "pinMap",
+                PoolGroup.Stags => "pinStag",
+                PoolGroup.LifebloodCocoons => "pinCocoon",
+                PoolGroup.GrimmkinFlames => "pinFlame",
+                PoolGroup.JournalEntries => "pinLore",
+                PoolGroup.GeoRocks => "pinRock",
+                PoolGroup.BossGeo => "pinGeo",
+                PoolGroup.SoulTotems => "pinTotem",
+                PoolGroup.LoreTablets => "pinLore",
                 _ => "pinUnknown",
             };
 

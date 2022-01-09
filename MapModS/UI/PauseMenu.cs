@@ -12,35 +12,35 @@ namespace MapModS.UI
     {
         public static GameObject Canvas;
 
-        private static readonly Dictionary<Pool, (string, Vector2)> _groupButtons = new()
-        {
-            [Pool.Bench] = ("Benches", new Vector2(0f, 0f)),
-            [Pool.Vendor] = ("Vendors", new Vector2(100f, 0f)),
-            [Pool.Stag] = ("Stag\nStations", new Vector2(200f, 0f)),
-            [Pool.Spa] = ("Hot\nSprings", new Vector2(300f, 0f)),
-            [Pool.Root] = ("Whispering\nRoots", new Vector2(400f, 0f)),
-            [Pool.Grave] = ("Warrior's\nGraves", new Vector2(500f, 0f)),
-            [Pool.Tram] = ("Trams", new Vector2(600f, 0f)),
-            [Pool.Grub] = ("Grubs", new Vector2(700f, 0f)),
+        //private static readonly Dictionary<PoolGroup, (string, Vector2)> _groupButtons = new()
+        //{
+        //    [PoolGroup.Bench] = ("Benches", new Vector2(0f, 0f)),
+        //    [PoolGroup.Vendor] = ("Vendors", new Vector2(100f, 0f)),
+        //    [PoolGroup.Stag] = ("Stag\nStations", new Vector2(200f, 0f)),
+        //    [PoolGroup.Spa] = ("Hot\nSprings", new Vector2(300f, 0f)),
+        //    [PoolGroup.Root] = ("Whispering\nRoots", new Vector2(400f, 0f)),
+        //    [PoolGroup.Grave] = ("Warrior's\nGraves", new Vector2(500f, 0f)),
+        //    [PoolGroup.Tram] = ("Trams", new Vector2(600f, 0f)),
+        //    [PoolGroup.Grub] = ("Grubs", new Vector2(700f, 0f)),
 
-            [Pool.Cocoon] = ("Lifeblood\nCocoons", new Vector2(0f, 30f)),
+        //    [PoolGroup.Cocoon] = ("Lifeblood\nCocoons", new Vector2(0f, 30f)),
 
-            [Pool.Skill] = ("Skills", new Vector2(100f, 30f)),
-            [Pool.Charm] = ("Charms", new Vector2(200f, 30f)),
-            [Pool.Map] = ("Maps", new Vector2(300f, 30f)),
-            [Pool.Key] = ("Keys", new Vector2(400f, 30f)),
-            [Pool.Mask] = ("Mask\nShards", new Vector2(500f, 30f)),
-            [Pool.Vessel] = ("Vessel\nFragments", new Vector2(600f, 30f)),
-            [Pool.Notch] = ("Charm\nNotches", new Vector2(700f, 30f)),
-            [Pool.Ore] = ("Pale Ore", new Vector2(0f, 60f)),
-            [Pool.Egg] = ("Rancid\nEggs", new Vector2(100f, 60f)),
-            [Pool.Relic] = ("Relics", new Vector2(200f, 60f)),
-            [Pool.EssenceBoss] = ("Hidden\nBosses", new Vector2(300f, 60f)),
-            [Pool.Geo] = ("Geo Chests", new Vector2(400f, 60f)),
-            [Pool.Rock] = ("Geo Rocks", new Vector2(500f, 60f)),
-            [Pool.Totem] = ("Soul\nTotems", new Vector2(600f, 60f)),
-            [Pool.Lore] = ("Lore\nTablets", new Vector2(700f, 60f)),
-        };
+        //    [PoolGroup.Skill] = ("Skills", new Vector2(100f, 30f)),
+        //    [PoolGroup.Charm] = ("Charms", new Vector2(200f, 30f)),
+        //    [PoolGroup.Map] = ("Maps", new Vector2(300f, 30f)),
+        //    [PoolGroup.Key] = ("Keys", new Vector2(400f, 30f)),
+        //    [PoolGroup.Mask] = ("Mask\nShards", new Vector2(500f, 30f)),
+        //    [PoolGroup.Vessel] = ("Vessel\nFragments", new Vector2(600f, 30f)),
+        //    [PoolGroup.Notch] = ("Charm\nNotches", new Vector2(700f, 30f)),
+        //    [PoolGroup.Ore] = ("Pale Ore", new Vector2(0f, 60f)),
+        //    [PoolGroup.Egg] = ("Rancid\nEggs", new Vector2(100f, 60f)),
+        //    [PoolGroup.Relic] = ("Relics", new Vector2(200f, 60f)),
+        //    [PoolGroup.EssenceBoss] = ("Hidden\nBosses", new Vector2(300f, 60f)),
+        //    [PoolGroup.GeoChest] = ("Geo Chests", new Vector2(400f, 60f)),
+        //    [PoolGroup.Rock] = ("Geo Rocks", new Vector2(500f, 60f)),
+        //    [PoolGroup.Totem] = ("Soul\nTotems", new Vector2(600f, 60f)),
+        //    [PoolGroup.Lore] = ("Lore\nTablets", new Vector2(700f, 60f)),
+        //};
 
         private static CanvasPanel _mapControlPanel;
 
@@ -94,21 +94,21 @@ namespace MapModS.UI
             pools.SetActive(false, true);
 
             // Pool buttons
-            foreach (KeyValuePair<Pool, (string, Vector2)> pair in _groupButtons)
-            {
-                pools.AddButton
-                (
-                    pair.Key.ToString(),
-                    GUIController.Instance.Images["ButtonRectEmpty"],
-                    pair.Value.Item2,
-                    Vector2.zero,
-                    PoolClicked,
-                    buttonRect,
-                    GUIController.Instance.TrajanBold,
-                    pair.Value.Item1,
-                    fontSize: 10
-                );
-            }
+            //foreach (KeyValuePair<PoolGroup, (string, Vector2)> pair in _groupButtons)
+            //{
+            //    pools.AddButton
+            //    (
+            //        pair.Key.ToString(),
+            //        GUIController.Instance.Images["ButtonRectEmpty"],
+            //        pair.Value.Item2,
+            //        Vector2.zero,
+            //        PoolClicked,
+            //        buttonRect,
+            //        GUIController.Instance.TrajanBold,
+            //        pair.Value.Item1,
+            //        fontSize: 10
+            //    );
+            //}
 
             // Adjust pin size
             _mapControlPanel.AddButton
@@ -174,10 +174,10 @@ namespace MapModS.UI
         // Update all the buttons (text, color)
         public static void UpdateGUI()
         {
-            foreach (Pool group in _groupButtons.Keys)
-            {
-                UpdatePool(group);
-            }
+            //foreach (PoolGroup group in _groupButtons.Keys)
+            //{
+            //    UpdatePool(group);
+            //}
 
             UpdateShowPins();
             UpdateRevealFullMap();
@@ -230,7 +230,7 @@ namespace MapModS.UI
             UpdateGUI();
         }
 
-        private static void UpdatePool(Pool pool)
+        private static void UpdatePool(PoolGroup pool)
         {
             if (!MapModS.LS.GetHasFromGroup(pool) && !MapModS.LS.RevealFullMap)
             {
@@ -238,14 +238,14 @@ namespace MapModS.UI
                 return;
             }
 
-            if (pool == Pool.Rock)
-            {
-                _mapControlPanel.GetPanel("PoolsPanel").GetButton(pool.ToString()).UpdateText
-                    (
-                        _groupButtons[pool].Item1 + "\n"
-                        + MapModS.LS.GeoRockCounter + " / " + "207"
-                    );
-            }
+            //if (pool == PoolGroup.Rock)
+            //{
+            //    _mapControlPanel.GetPanel("PoolsPanel").GetButton(pool.ToString()).UpdateText
+            //        (
+            //            _groupButtons[pool].Item1 + "\n"
+            //            + MapModS.LS.GeoRockCounter + " / " + "207"
+            //        );
+            //}
 
             bool setting = MapModS.LS.GetOnFromGroup(pool);
 

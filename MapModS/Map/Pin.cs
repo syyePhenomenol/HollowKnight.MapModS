@@ -9,6 +9,7 @@ namespace MapModS.Map
     internal class Pin : MonoBehaviour
     {
         public PinDef PinData { get; private set; } = null;
+        private SpriteRenderer _SR => gameObject.GetComponent<SpriteRenderer>();
 
         public void SetPinData(PinDef pd)
         {
@@ -25,7 +26,7 @@ namespace MapModS.Map
             try
             {
                 ShowBasedOnMap(mapZone);
-                HideIfNotBought();
+                //HideIfNotBought();
                 HideIfFound();
             }
             catch (Exception e)
@@ -39,70 +40,69 @@ namespace MapModS.Map
         {
             if (mapZone == PinData.mapZone || mapZone == MapZone.NONE)
             {
-                // Show everything if full map was revealed
-                // Or, if it's a Map, always show the pin
-                if (MapModS.LS.RevealFullMap || PinData.vanillaPool == Pool.Map)
-                {
-                    gameObject.SetActive(true);
-                    return;
-                }
+                gameObject.SetActive(true);
 
-                // Show these pins if the corresponding map item has been picked up
-                if (SettingsUtil.GetVMMMapSetting(PinData.mapZone))
-                {
-                    if (PinData.vanillaPool == Pool.Skill
-                    || PinData.vanillaPool == Pool.Charm
-                    || PinData.vanillaPool == Pool.Key
-                    || PinData.vanillaPool == Pool.Notch
-                    || PinData.vanillaPool == Pool.Mask
-                    || PinData.vanillaPool == Pool.Vessel
-                    || PinData.vanillaPool == Pool.Ore
-                    || PinData.vanillaPool == Pool.EssenceBoss)
-                    {
-                        gameObject.SetActive(true);
-                        return;
-                    }
+                //// Show everything if full map was revealed
+                //// Or, if it's a Map, always show the pin
+                //if (MapModS.LS.RevealFullMap || PinData.vanillaPool == Pool.Map)
+                //{
+                //    gameObject.SetActive(true);
+                //    return;
+                //}
 
-                    // Only show the rest if the corresponding scene/room has been mapped
-                    if (PinData.pinScene != null)
-                    {
-                        if (PlayerData.instance.scenesMapped.Contains(PinData.pinScene))
-                        {
-                            gameObject.SetActive(true);
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        if (PlayerData.instance.scenesMapped.Contains(PinData.sceneName))
-                        {
-                            gameObject.SetActive(true);
-                            return;
-                        }
-                    }
-                }
+                //// Show these pins if the corresponding map item has been picked up
+                //if (SettingsUtil.GetMMSMapSetting(PinData.mapZone))
+                //{
+                //    if (PinData.vanillaPool == Pool.Skill
+                //    || PinData.vanillaPool == Pool.Charm
+                //    || PinData.vanillaPool == Pool.Key
+                //    || PinData.vanillaPool == Pool.Notch
+                //    || PinData.vanillaPool == Pool.Mask
+                //    || PinData.vanillaPool == Pool.Vessel
+                //    || PinData.vanillaPool == Pool.Ore
+                //    || PinData.vanillaPool == Pool.EssenceBoss)
+                //    {
+                //        gameObject.SetActive(true);
+                //        return;
+                //    }
+
+                //    // Only show the rest if the corresponding scene/room has been mapped
+                //    if (PinData.pinScene != null)
+                //    {
+                //        if (PlayerData.instance.scenesMapped.Contains(PinData.pinScene))
+                //        {
+                //            gameObject.SetActive(true);
+                //            return;
+                //        }
+                //    }
+                //    else
+                //    {
+                //        if (PlayerData.instance.scenesMapped.Contains(PinData.sceneName))
+                //        {
+                //            gameObject.SetActive(true);
+                //            return;
+                //        }
+                //    }
+                //}
             }
 
             gameObject.SetActive(false);
         }
 
-        private void HideIfNotBought()
-        {
-            if (!MapModS.LS.GetHasFromGroup(PinData.vanillaPool) && !MapModS.LS.RevealFullMap)
-            {
-                gameObject.SetActive(false);
-            }
-        }
+        //private void HideIfNotBought()
+        //{
+        //    if (!MapModS.LS.GetHasFromGroup(PinData.vanillaPool) && !MapModS.LS.RevealFullMap)
+        //    {
+        //        gameObject.SetActive(false);
+        //    }
+        //}
 
         private void HideIfFound()
         {
-            if (PinData.vanillaObjectName == null) return;
+            //if (PinData.vanillaObjectName == null) return;
 
             // Don't hide pin if something isn't in the obtained items dictionary
-            foreach (string oName in PinData.vanillaObjectName)
-            {
-                if (!MapModS.LS.ObtainedItems.ContainsKey(oName + PinData.sceneName)) return;
-            }
+            if (!MapModS.LS.ObtainedVanillaItems.ContainsKey(PinData.objectName + PinData.sceneName)) return;
 
             gameObject.SetActive(false);
         }

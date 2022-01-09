@@ -6,6 +6,7 @@ using Modding;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using UnityEngine;
+using MapModS.Data;
 using MapModS.Settings;
 using MapModS.Trackers;
 using Vasi;
@@ -67,6 +68,8 @@ namespace MapModS.Map
             // Necessary if player goes straight to Pause Menu
             SyncMap(gameMap);
 
+            DataLoader.FindPoolGroups();
+
             if (goCustomPins != null)
             {
                 goCustomPins.transform.SetParent(go_gameMap.transform);
@@ -75,7 +78,7 @@ namespace MapModS.Map
 
             MapModS.Instance.Log("Adding Custom Pins...");
 
-            goCustomPins = new GameObject($"VMM Custom Pin Group");
+            goCustomPins = new GameObject($"MMS Custom Pin Group");
             goCustomPins.AddComponent<PinsCustom>();
 
             // Setting parent here is only for controlling local position,
@@ -155,7 +158,7 @@ namespace MapModS.Map
             SyncMap(gameMap);
 
             PinsVanilla.RefreshGroups();
-            PinsVanilla.ResizePins();
+            //PinsVanilla.ResizePins();
 
             if (goCustomPins == null) return;
 
@@ -167,7 +170,7 @@ namespace MapModS.Map
         public static void SyncMap(GameMap gameMap)
         {
             // If the mod is installed for an existing game
-            SettingsUtil.SyncPlayerDataSettings();
+            //SettingsUtil.SyncPlayerDataSettings();
 
             // Refresh map
             gameMap.SetupMap();
