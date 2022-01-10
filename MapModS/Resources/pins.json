@@ -448,7 +448,7 @@
   "Void_Heart": {
     "name": "Void_Heart",
     "pdInt": "royalCharmState",
-    "pdIntValue": "royalCharmState",
+    "pdIntValue": 4,
     "sceneName": "Abyss_15",
     "pinScene": "Abyss_06_Core",
     "mapZone": "ABYSS",

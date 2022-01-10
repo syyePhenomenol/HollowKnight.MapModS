@@ -384,10 +384,11 @@ namespace MapModS.Trackers
 
             foreach (PersistentBoolData pbd in GameManager.instance.sceneData.persistentBoolItems)
             {
-                if (pbd.id.Contains("Shiny Item") && pbd.activated
+                if ((pbd.id.Contains("Shiny Item") && pbd.activated
                     || pbd.id == "Heart Piece" && pbd.activated
                     || pbd.id == "Vessel Fragment" && pbd.activated
                     || pbd.id.Contains("Chest") && pbd.activated)
+                    && !pbd.id.Contains("-"))
                 {
                     MapModS.LS.ObtainedVanillaItems[pbd.id + pbd.sceneName] = true;
                 }
