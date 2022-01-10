@@ -1,6 +1,4 @@
 ﻿using System.Collections;
-using Modding;
-using UnityEngine.SceneManagement;
 
 namespace MapModS.UI
 {

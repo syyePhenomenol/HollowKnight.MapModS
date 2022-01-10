@@ -1,9 +1,7 @@
-﻿using System;
+﻿using MapModS.Settings;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using MapModS.Settings;
-using MapModS.Data;
 
 namespace MapModS.Map
 {
@@ -91,8 +89,6 @@ namespace MapModS.Map
         {
             orig(self, go_gameMap);
 
-
-
             // At this point, if AdditionalMaps is installed, the new custom areas have been added
 
             //// Clear all pin references from previous save load
@@ -119,8 +115,8 @@ namespace MapModS.Map
         //    { Pool.Vendor, new() },
         //};
 
-        private static List<GameObject> _BenchPins = new();
-        private static List<GameObject> _PinsToDisable = new();
+        private static readonly List<GameObject> _BenchPins = new();
+        private static readonly List<GameObject> _PinsToDisable = new();
 
         // Add pins to their respective groups for easier reference later.
         // This is recursive and is done once per save load
@@ -145,88 +141,89 @@ namespace MapModS.Map
                             _BenchPins.Add(child.gameObject);
                             //_Groups[Pool.Bench].Add(child.gameObject);
                             break;
+
                         case "Pin_Backer Ghost":
-                            //SetNewSprite(child.gameObject, "pinBackerGhost");
-                            //_Groups[Pool.Grave].Add(child.gameObject);
-                            //break;
+                        //SetNewSprite(child.gameObject, "pinBackerGhost");
+                        //_Groups[Pool.Grave].Add(child.gameObject);
+                        //break;
                         case "pin_dream_tree":
-                            //SetNewSprite(child.gameObject, "pinRoot");
-                            //_Groups[Pool.Root].Add(child.gameObject);
+                        //SetNewSprite(child.gameObject, "pinRoot");
+                        //_Groups[Pool.Root].Add(child.gameObject);
 
-                            //// Move Ancestral Mound root pin
-                            //if (child.transform.parent.name == "Crossroads_ShamanTemple")
-                            //{
-                            //    MoveSprite(child.gameObject, new Vector3(0.15f, -0.3f));
-                            //}
+                        //// Move Ancestral Mound root pin
+                        //if (child.transform.parent.name == "Crossroads_ShamanTemple")
+                        //{
+                        //    MoveSprite(child.gameObject, new Vector3(0.15f, -0.3f));
+                        //}
 
-                            //// Move Hive root pin (vanilla bug)
-                            //if (child.transform.parent.name == "Hive_02")
-                            //{
-                            //    MoveSprite(child.gameObject, new Vector3(0.4f, -0.32f));
-                            //}
+                        //// Move Hive root pin (vanilla bug)
+                        //if (child.transform.parent.name == "Hive_02")
+                        //{
+                        //    MoveSprite(child.gameObject, new Vector3(0.4f, -0.32f));
+                        //}
 
-                            //break;
+                        //break;
                         case "pin_spa":
-                            //SetNewSprite(child.gameObject, "pinSpa");
-                            //_Groups[Pool.Spa].Add(child.gameObject);
-                            //break;
+                        //SetNewSprite(child.gameObject, "pinSpa");
+                        //_Groups[Pool.Spa].Add(child.gameObject);
+                        //break;
                         case "pin_stag_station":
                         case "pin_stag_station (7)":
-                            //SetNewSprite(child.gameObject, "pinStag");
-                            //_Groups[Pool.Stag].Add(child.gameObject);
-                            //break;
+                        //SetNewSprite(child.gameObject, "pinStag");
+                        //_Groups[Pool.Stag].Add(child.gameObject);
+                        //break;
                         case "pin_tram":
-                            //SetNewSprite(child.gameObject, "pinTramLocation");
-                            //_Groups[Pool.Tram].Add(child.gameObject);
-                            //break;
+                        //SetNewSprite(child.gameObject, "pinTramLocation");
+                        //_Groups[Pool.Tram].Add(child.gameObject);
+                        //break;
                         case "pin_banker":
-                            //SetNewSprite(child.gameObject, "pinShopBanker");
-                            //_Groups[Pool.Vendor].Add(child.gameObject);
-                            //break;
+                        //SetNewSprite(child.gameObject, "pinShopBanker");
+                        //_Groups[Pool.Vendor].Add(child.gameObject);
+                        //break;
                         case "pin_charm_slug":
-                            //SetNewSprite(child.gameObject, "pinCharmSlug");
-                            //_Groups[Pool.Vendor].Add(child.gameObject);
-                            //break;
+                        //SetNewSprite(child.gameObject, "pinCharmSlug");
+                        //_Groups[Pool.Vendor].Add(child.gameObject);
+                        //break;
                         case "pin_colosseum":
-                            //SetNewSprite(child.gameObject, "pinColosseum");
-                            //_Groups[Pool.Vendor].Add(child.gameObject);
-                            //break;
+                        //SetNewSprite(child.gameObject, "pinColosseum");
+                        //_Groups[Pool.Vendor].Add(child.gameObject);
+                        //break;
                         case "pin_dream moth":
-                            //SetNewSprite(child.gameObject, "pinEssenceBoss");
-                            //_Groups[Pool.Vendor].Add(child.gameObject);
-                            //break;
+                        //SetNewSprite(child.gameObject, "pinEssenceBoss");
+                        //_Groups[Pool.Vendor].Add(child.gameObject);
+                        //break;
                         case "pin_grub_king":
-                            //SetNewSprite(child.gameObject, "pinGrubKing");
-                            //_Groups[Pool.Vendor].Add(child.gameObject);
-                            //break;
+                        //SetNewSprite(child.gameObject, "pinGrubKing");
+                        //_Groups[Pool.Vendor].Add(child.gameObject);
+                        //break;
                         case "pin_hunter":
-                            //SetNewSprite(child.gameObject, "pinShopHunter");
-                            //_Groups[Pool.Vendor].Add(child.gameObject);
-                            //break;
+                        //SetNewSprite(child.gameObject, "pinShopHunter");
+                        //_Groups[Pool.Vendor].Add(child.gameObject);
+                        //break;
                         case "pin_jiji":
-                            //SetNewSprite(child.gameObject, "pinShopJiji");
-                            //_Groups[Pool.Vendor].Add(child.gameObject);
-                            //break;
+                        //SetNewSprite(child.gameObject, "pinShopJiji");
+                        //_Groups[Pool.Vendor].Add(child.gameObject);
+                        //break;
                         case "pin_leg eater":
-                            //SetNewSprite(child.gameObject, "pinShopLegEater");
-                            //_Groups[Pool.Vendor].Add(child.gameObject);
-                            //break;
+                        //SetNewSprite(child.gameObject, "pinShopLegEater");
+                        //_Groups[Pool.Vendor].Add(child.gameObject);
+                        //break;
                         case "pin_mapper":
-                            //SetNewSprite(child.gameObject, "pinShopMapper");
-                            //_Groups[Pool.Vendor].Add(child.gameObject);
-                            //break;
+                        //SetNewSprite(child.gameObject, "pinShopMapper");
+                        //_Groups[Pool.Vendor].Add(child.gameObject);
+                        //break;
                         case "pin_nailsmith":
-                            //SetNewSprite(child.gameObject, "pinShopNailsmith");
-                            //_Groups[Pool.Vendor].Add(child.gameObject);
-                            //break;
+                        //SetNewSprite(child.gameObject, "pinShopNailsmith");
+                        //_Groups[Pool.Vendor].Add(child.gameObject);
+                        //break;
                         case "pin_relic_dealer":
-                            //SetNewSprite(child.gameObject, "pinShopRelicDealer");
-                            //_Groups[Pool.Vendor].Add(child.gameObject);
-                            //break;
+                        //SetNewSprite(child.gameObject, "pinShopRelicDealer");
+                        //_Groups[Pool.Vendor].Add(child.gameObject);
+                        //break;
                         case "pin_sly":
-                            //SetNewSprite(child.gameObject, "pinShopSly");
-                            //_Groups[Pool.Vendor].Add(child.gameObject);
-                            //break;
+                        //SetNewSprite(child.gameObject, "pinShopSly");
+                        //_Groups[Pool.Vendor].Add(child.gameObject);
+                        //break;
                         // This is actually Godtuner
                         case "pin_sly (1)":
                             //SetNewSprite(child.gameObject, "pinGodSeeker");
@@ -237,6 +234,7 @@ namespace MapModS.Map
                         case "Map Markers":
                             child.gameObject.SetActive(false);
                             break;
+
                         default:
                             break;
                     }
@@ -335,7 +333,7 @@ namespace MapModS.Map
                 // mapKey.transform.parent = null;
                 mapKey.SetActive(false);
             }
-            
+
             //foreach (Pool group in _Groups.Keys)
             //{
             //    _Groups[group].RemoveAll(item => item == null);

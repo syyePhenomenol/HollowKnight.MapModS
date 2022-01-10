@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using HutongGames.PlayMaker;
+﻿using HutongGames.PlayMaker;
 using HutongGames.PlayMaker.Actions;
+using MapModS.Settings;
 using Modding;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
+using System.Collections.Generic;
 using UnityEngine;
-using MapModS.Settings;
 using Vasi;
 
 namespace MapModS.Map
@@ -20,7 +20,6 @@ namespace MapModS.Map
             IL.RoughMapRoom.OnEnable += ModifyMapBools;
             On.PlayMakerFSM.OnEnable += PlayMakerFSM_OnEnable;
             ModHooks.GetPlayerBoolHook += BoolGetOverride;
-            //ModHooks.GetPlayerVariableHook += VariableGetOverride;
         }
 
         // The objects that make up the minimal map state
@@ -199,9 +198,6 @@ namespace MapModS.Map
             (
                 i => i.MatchLdstr("hasQuill")
                 || i.MatchLdstr("mapAllRooms")
-                //|| i.MatchLdstr("hasPinCocooon")
-                //|| i.MatchLdstr("hasPinDreamPlant")
-                //|| i.MatchLdstr("scenesEncounteredDreamPlant")
                 || i.MatchLdstr("mapAbyss")
                 || i.MatchLdstr("mapCity")
                 || i.MatchLdstr("mapCliffs")
@@ -364,7 +360,6 @@ namespace MapModS.Map
             if (boolName.StartsWith("MMS_"))
             {
                 if (MapModS.LS.ModEnabled && MapModS.LS.mapState == Mode.FullMap)
-                //if (MapModS.LS.RevealFullMap)
                 {
                     return true;
                 }
@@ -376,46 +371,5 @@ namespace MapModS.Map
 
             return orig;
         }
-
-        //private static readonly List<string> _rootScenes = new()
-        //{
-        //    "Crossroads_07",
-        //    "Fungus1_13",
-        //    "Fungus2_33",
-        //    "Fungus2_17",
-        //    "Deepnest_39",
-        //    "Fungus3_11",
-        //    "Deepnest_East_07",
-        //    "Abyss_01",
-        //    "Ruins1_17",
-        //    "RestingGrounds_05",
-        //    "RestingGrounds_08",
-        //    "Mines_23",
-        //    "Cliffs_01",
-        //    "Crossroads_ShamanTemple",
-        //    "Hive_02"
-        //};
-
-        //// If RevealFullMap, we pass the complete list for root scenes
-        //public static object VariableGetOverride(System.Type type, string name, object value)
-        //{
-        //    if (name.StartsWith("MMS_"))
-        //    {
-        //        //if (MapModS.LS.ModEnabled && MapModS.LS.mapState == MapState.FullMap)
-        //        if (MapModS.LS.RevealFullMap)
-        //        {
-        //            if (name == "MMS_scenesEncounteredDreamPlant")
-        //            {
-        //                return _rootScenes;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            return PlayerData.instance.GetVariable<List<string>>(name.Remove(0, 4));
-        //        }
-        //    }
-
-        //    return value;
-        //}
     }
 }

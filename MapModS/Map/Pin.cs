@@ -1,8 +1,8 @@
 ﻿using GlobalEnums;
-using System;
-using UnityEngine;
 using MapModS.Data;
 using MapModS.Settings;
+using System;
+using UnityEngine;
 
 namespace MapModS.Map
 {
@@ -44,8 +44,6 @@ namespace MapModS.Map
         {
             if (mapZone == MapZone.NONE)
             {
-                //gameObject.SetActive(true); return;
-
                 if (MapModS.LS.mapState != Mode.PinsOverMap)
                 {
                     gameObject.SetActive(true); return;
@@ -71,7 +69,7 @@ namespace MapModS.Map
                     gameObject.SetActive(true); return;
                 }
             }
-           
+
             if (PinData.pinSceneAM != null && mapZone == PinData.mapZoneAM)
             {
                 gameObject.SetActive(true); return;
@@ -81,49 +79,6 @@ namespace MapModS.Map
             {
                 gameObject.SetActive(true); return;
             }
-
-                //// Show everything if full map was revealed
-                //// Or, if it's a Map, always show the pin
-                //if (MapModS.LS.RevealFullMap || PinData.vanillaPool == Pool.Map)
-                //{
-                //    gameObject.SetActive(true);
-                //    return;
-                //}
-
-                //// Show these pins if the corresponding map item has been picked up
-                //if (SettingsUtil.GetMMSMapSetting(PinData.mapZone))
-                //{
-                //    if (PinData.vanillaPool == Pool.Skill
-                //    || PinData.vanillaPool == Pool.Charm
-                //    || PinData.vanillaPool == Pool.Key
-                //    || PinData.vanillaPool == Pool.Notch
-                //    || PinData.vanillaPool == Pool.Mask
-                //    || PinData.vanillaPool == Pool.Vessel
-                //    || PinData.vanillaPool == Pool.Ore
-                //    || PinData.vanillaPool == Pool.EssenceBoss)
-                //    {
-                //        gameObject.SetActive(true);
-                //        return;
-                //    }
-
-                //    // Only show the rest if the corresponding scene/room has been mapped
-                //    if (PinData.pinScene != null)
-                //    {
-                //        if (PlayerData.instance.scenesMapped.Contains(PinData.pinScene))
-                //        {
-                //            gameObject.SetActive(true);
-                //            return;
-                //        }
-                //    }
-                //    else
-                //    {
-                //        if (PlayerData.instance.scenesMapped.Contains(PinData.sceneName))
-                //        {
-                //            gameObject.SetActive(true);
-                //            return;
-                //        }
-                //    }
-                //}
 
             gameObject.SetActive(false);
         }

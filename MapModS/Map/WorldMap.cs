@@ -1,15 +1,9 @@
 ﻿using GlobalEnums;
-using System.Collections.Generic;
-using HutongGames.PlayMaker;
-using HutongGames.PlayMaker.Actions;
-using Modding;
-using Mono.Cecil.Cil;
-using MonoMod.Cil;
-using UnityEngine;
 using MapModS.Data;
 using MapModS.Settings;
 using MapModS.Trackers;
 using System;
+using UnityEngine;
 
 namespace MapModS.Map
 {
@@ -143,13 +137,11 @@ namespace MapModS.Map
                 CustomPins.ResizePins();
                 CustomPins.UpdatePins(mapZone);
                 CustomPins.RefreshGroups();
-
             }
             catch (Exception e)
             {
                 MapModS.Instance.LogError(e);
             }
-            
         }
 
         public static void SyncMap(GameMap gameMap)
@@ -160,7 +152,5 @@ namespace MapModS.Map
             // Refresh map
             gameMap.SetupMap();
         }
-
-        
     }
 }

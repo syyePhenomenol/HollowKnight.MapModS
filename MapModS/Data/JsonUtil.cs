@@ -1,6 +1,6 @@
-﻿using System.IO;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System.IO;
 
 // Code taken from homothety: https://github.com/homothetyhk/RandomizerMod/
 

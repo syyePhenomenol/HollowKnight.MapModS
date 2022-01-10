@@ -1,11 +1,10 @@
 ﻿using GlobalEnums;
+using MapModS.Data;
+using MapModS.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using MapModS.Data;
-using MapModS.Settings;
-using MapModS.UI;
 
 namespace MapModS.Map
 {
@@ -31,6 +30,7 @@ namespace MapModS.Map
                 }
             }
         }
+
         private void MakePin(PinDef pinData, GameMap gameMap)
         {
             if (_pins.Any(pin => pin.PinData.name == pinData.name))
@@ -145,7 +145,7 @@ namespace MapModS.Map
                 RandomizedGroups.Add(group);
                 return;
             }
-            
+
             foreach (Transform pinT in _Groups[group].GetComponentsInChildren<Transform>())
             {
                 Pin pin = pinT.GetComponent<Pin>();
@@ -229,12 +229,8 @@ namespace MapModS.Map
         {
             foreach (PoolGroup group in _Groups.Keys)
             {
-                //_Groups[group].SetActive(true);
                 _Groups[group].SetActive(MapModS.LS.GetOnFromGroup(group));
             }
-
-            //PauseMenu.UpdateGUI();
-            //MapText.SetTexts();
         }
 
         public void RefreshSprites()
@@ -250,9 +246,6 @@ namespace MapModS.Map
                     pin.SR.sprite = SpriteManager.GetSpriteFromPool(pin.PinData.vanillaPool);
                 }
             }
-
-            //PauseMenu.UpdateGUI();
-            //MapText.SetTexts();
         }
 
         public void ResizePins()

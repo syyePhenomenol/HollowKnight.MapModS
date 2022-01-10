@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using MapModS.Data;
-using MapModS.Map;
 
 // This code was heavily borrowed from RandomizerMod 3.0
 namespace MapModS.Shop

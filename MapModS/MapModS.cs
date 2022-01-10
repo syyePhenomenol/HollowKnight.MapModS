@@ -1,12 +1,12 @@
-﻿using System;
-using System.Reflection;
-using Modding;
-using MapModS.Data;
+﻿using MapModS.Data;
 using MapModS.Map;
 using MapModS.Settings;
 using MapModS.Shop;
 using MapModS.Trackers;
 using MapModS.UI;
+using Modding;
+using System;
+using System.Reflection;
 
 namespace MapModS
 {
@@ -98,10 +98,10 @@ namespace MapModS
                         return true;
                     }
 
-                        //foreach (FieldInfo field in type.GetFields())
-                        //{
-                        //    MapModS.Instance.Log(field.Name);
-                        //}
+                    //foreach (FieldInfo field in type.GetFields())
+                    //{
+                    //    MapModS.Instance.Log(field.Name);
+                    //}
                 }
             }
 

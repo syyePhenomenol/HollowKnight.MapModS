@@ -1,5 +1,4 @@
-﻿using Modding;
-using Vasi;
+﻿using Vasi;
 
 namespace MapModS.Trackers
 {

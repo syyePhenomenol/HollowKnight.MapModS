@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-using MapModS.CanvasUtil;
+﻿using MapModS.CanvasUtil;
 using MapModS.Data;
 using MapModS.Map;
 using MapModS.Settings;
-using UnityEngine.Events;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
+using UnityEngine;
+using UnityEngine.Events;
 
 namespace MapModS.UI
 {
@@ -16,7 +16,7 @@ namespace MapModS.UI
     {
         public static GameObject Canvas;
 
-        private static readonly Dictionary<string, (UnityAction<string>, Vector2)> _mainButtons = new Dictionary<string, (UnityAction<string>, Vector2)>
+        private static readonly Dictionary<string, (UnityAction<string>, Vector2)> _mainButtons = new()
         {
             ["Spoilers"] = (SpoilersClicked, new Vector2(100f, 0f)),
             ["Style"] = (StyleClicked, new Vector2(200f, 0f)),
@@ -113,8 +113,8 @@ namespace MapModS.UI
             {
                 if (group == PoolGroup.Unknown) continue;
 
-                float x_offset = (float) (group - 1) % 9 * 90;
-                float y_offset = (int) (group - 1) / 9 * 30;
+                float x_offset = (float)(group - 1) % 9 * 90;
+                float y_offset = (int)(group - 1) / 9 * 30;
                 string[] splitGroup = Regex.Split(group.ToString(), @"(?<!^)(?=[A-Z])");
                 string cleanGroup;
 
@@ -329,13 +329,15 @@ namespace MapModS.UI
             switch (MapModS.GS.PinSizeSetting)
             {
                 case Settings.GlobalSettings.PinSize.small:
-                    _mapControlPanel.GetButton("Size").UpdateText("Pin Size\nsmall");
+                    _mapControlPanel.GetButton("Size").UpdateText("Pin Size:\nsmall");
                     break;
+
                 case Settings.GlobalSettings.PinSize.medium:
-                    _mapControlPanel.GetButton("Size").UpdateText("Pin Size\nmedium");
+                    _mapControlPanel.GetButton("Size").UpdateText("Pin Size:\nmedium");
                     break;
+
                 case Settings.GlobalSettings.PinSize.large:
-                    _mapControlPanel.GetButton("Size").UpdateText("Pin Size\nlarge");
+                    _mapControlPanel.GetButton("Size").UpdateText("Pin Size:\nlarge");
                     break;
             }
         }
@@ -354,10 +356,12 @@ namespace MapModS.UI
                     _mapControlPanel.GetButton("Mode").SetTextColor(Color.green);
                     _mapControlPanel.GetButton("Mode").UpdateText("Mode:\n Full Map");
                     break;
+
                 case Mode.AllPins:
                     _mapControlPanel.GetButton("Mode").SetTextColor(Color.white);
                     _mapControlPanel.GetButton("Mode").UpdateText("Mode:\n All Pins");
                     break;
+
                 default:
                     _mapControlPanel.GetButton("Mode").SetTextColor(Color.white);
                     _mapControlPanel.GetButton("Mode").UpdateText("Mode:\n Pins Over Map");

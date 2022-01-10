@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using MapModS.Data;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
-using MapModS.Data;
 
 // Code borrowed from homothety: https://github.com/homothetyhk/RandomizerMod/
 namespace MapModS.Map
@@ -36,7 +36,7 @@ namespace MapModS.Map
                 MapModS.Instance.Log(altName);
             }
         }
-        // TODO: Add switch for pin style
+
         public static Sprite GetSpriteFromPool(PoolGroup pool)
         {
             string spriteName = "undefined";
@@ -74,6 +74,7 @@ namespace MapModS.Map
                         _ => "pinUnknown",
                     };
                     break;
+
                 case PinStyle.Q_Marks_1:
                     spriteName = pool switch
                     {
@@ -81,6 +82,7 @@ namespace MapModS.Map
                         _ => "pinUnknown",
                     };
                     break;
+
                 case PinStyle.Q_Marks_2:
                     spriteName = pool switch
                     {
@@ -93,6 +95,7 @@ namespace MapModS.Map
                         _ => "pinUnknown",
                     };
                     break;
+
                 case PinStyle.Q_Marks_3:
                     spriteName = pool switch
                     {

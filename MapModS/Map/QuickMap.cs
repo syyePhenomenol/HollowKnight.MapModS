@@ -1,9 +1,9 @@
-﻿using System.Linq;
-using GlobalEnums;
+﻿using GlobalEnums;
 using HutongGames.PlayMaker;
 using HutongGames.PlayMaker.Actions;
-using UnityEngine;
 using MapModS.Settings;
+using System.Linq;
+using UnityEngine;
 using Vasi;
 
 namespace MapModS.Map
@@ -35,7 +35,7 @@ namespace MapModS.Map
             orig(self);
 
             if (!MapModS.LS.ModEnabled) return;
-            
+
             WorldMap.UpdateMap(self, MapZone.ABYSS);
         }
 
@@ -44,7 +44,7 @@ namespace MapModS.Map
             orig(self);
 
             if (!MapModS.LS.ModEnabled) return;
-            
+
             WorldMap.UpdateMap(self, MapZone.CITY);
         }
 
@@ -197,6 +197,7 @@ namespace MapModS.Map
     {
         private readonly MapZone _customMapZone;
         private readonly GameMap _GameMap;
+
         public QuickMapCustomArea(MapZone mapZone, GameMap gameMap)
         {
             _customMapZone = mapZone;
