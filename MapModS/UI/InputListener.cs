@@ -40,7 +40,7 @@ namespace MapModS.UI
 			{
                 if (Input.GetKeyDown(KeyCode.M))
                 {
-					MapModS.LS.EnableMod();
+					MapModS.LS.ToggleModEnabled();
                 }
 
                 //if (MapModS.Instance.Settings.MapsGiven)

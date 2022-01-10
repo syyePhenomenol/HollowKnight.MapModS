@@ -205,14 +205,20 @@ namespace MapModS.Map
 
         public override void OnEnter()
         {
-            // Need to force show the map for RevealFullMap
-            foreach (Transform child in _GameMap.transform)
+            if (!MapModS.LS.ModEnabled)
             {
-                if (child.name == _customMapZone.ToString())
-                {
-                    child.gameObject.SetActive(true);
-                }
+                Finish();
+                return;
             }
+
+            //// Need to force show the map for RevealFullMap
+            //foreach (Transform child in _GameMap.transform)
+            //{
+            //    if (child.name == _customMapZone.ToString())
+            //    {
+            //        child.gameObject.SetActive(true);
+            //    }
+            //}
 
             WorldMap.UpdateMap(_GameMap, _customMapZone);
             _GameMap.SetupMapMarkers();

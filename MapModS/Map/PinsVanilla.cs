@@ -306,7 +306,8 @@ namespace MapModS.Map
                 }
                 else if (child.gameObject.name == "Pin_Black_Egg")
                 {
-                    child.gameObject.SetActive(PlayerData.instance.GetBool("VMM_hasPinBlackEgg"));
+                    child.gameObject.SetActive(false);
+                    //child.gameObject.SetActive(PlayerData.instance.GetBool("MMS_hasPinBlackEgg"));
                 }
                 // Disable vanilla cocoon pins, make our own
                 else if (child.gameObject.name == "pin_blue_health")
@@ -331,7 +332,7 @@ namespace MapModS.Map
 
             if (mapKey != null)
             {
-                mapKey.transform.parent = null;
+                // mapKey.transform.parent = null;
                 mapKey.SetActive(false);
             }
             

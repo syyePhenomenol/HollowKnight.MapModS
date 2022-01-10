@@ -49,9 +49,9 @@ namespace MapModS.Settings
 
 		public bool OthersOn = true;
 
-		public void EnableMod()
+		public void ToggleModEnabled()
         {
-			ModEnabled = true;
+			ModEnabled = !ModEnabled;
 		}
 
 		public void ToggleFullMap()
@@ -59,6 +59,7 @@ namespace MapModS.Settings
 			switch (mapState)
             {
 				case MapState.FullMap:
+					FullMap.PurgeMap();
 					mapState = MapState.AllPins;
 					break;
 				case MapState.AllPins:
@@ -71,7 +72,7 @@ namespace MapModS.Settings
 
 			if (MapModS.LS.mapState != MapState.FullMap)
 			{
-				FullMap.PurgeMap();
+				
 			}
 
 			//// Force all pins to show again

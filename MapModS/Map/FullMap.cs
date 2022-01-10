@@ -136,6 +136,11 @@ namespace MapModS.Map
             {
                 GameObject gameObject = go_gameMap.transform.GetChild(i).gameObject;
 
+                if (gameObject.name == "WHITE_PALACE" || gameObject.name == "GODS_GLORY")
+                {
+                    continue;
+                }
+
                 for (int j = 0; j < gameObject.transform.childCount; j++)
                 {
                     GameObject gameObject2 = gameObject.transform.GetChild(j).gameObject;
@@ -151,6 +156,8 @@ namespace MapModS.Map
                         || gameObject.name == "Map Mod Pin Group") continue;
 
                     if (_persistentMapObjects.Contains(gameObject2.name)) continue;
+
+                    //MapModS.Instance.Log(gameObject.name);
 
                     gameObject2.SetActive(false);
                 }
@@ -348,6 +355,12 @@ namespace MapModS.Map
 
         public static bool BoolGetOverride(string boolName, bool orig)
         {
+            // Always have a map when the mod is enabled
+            if (boolName == "MMS_hasMap" && MapModS.LS.ModEnabled)
+            {
+                return true;
+            }
+
             if (boolName.StartsWith("MMS_"))
             {
                 if (MapModS.LS.ModEnabled && MapModS.LS.mapState == MapState.FullMap)

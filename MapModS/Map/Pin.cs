@@ -53,17 +53,22 @@ namespace MapModS.Map
 
                 if (MapModS.AdditionalMapsInstalled)
                 {
-                    if (SettingsUtil.GetMapSetting(PinData.mapZoneAM))
+                    if (PinData.pinSceneAM != null)
+                    {
+                        if (SettingsUtil.GetMapSetting(PinData.mapZoneAM))
+                        {
+                            gameObject.SetActive(true); return;
+                        }
+                    }
+                    else if (SettingsUtil.GetMapSetting(PinData.mapZone))
                     {
                         gameObject.SetActive(true); return;
                     }
                 }
-                else
+
+                if (SettingsUtil.GetMapSetting(PinData.mapZone))
                 {
-                    if (SettingsUtil.GetMapSetting(PinData.mapZone))
-                    {
-                        gameObject.SetActive(true); return;
-                    }
+                    gameObject.SetActive(true); return;
                 }
             }
            
