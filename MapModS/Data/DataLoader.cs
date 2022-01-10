@@ -8,6 +8,7 @@ namespace MapModS.Data
     public static class DataLoader
     {
         private static Dictionary<string, PinDef> _pins;
+        //private static Dictionary<string, PinDefUnused> _pins_unused;
 
         public static PinDef[] GetPinArray()
         {
@@ -137,14 +138,34 @@ namespace MapModS.Data
         public static void Load()
         {
             _pins = JsonUtil.Deserialize<Dictionary<string, PinDef>>("MapModS.Resources.pins.json");
+            //_pins_unused = JsonUtil.Deserialize<Dictionary<string, PinDefUnused>>("MapModS.Resources.pins_unused.json");
 
-            foreach (KeyValuePair<string, PinDef> pin in _pins)
-            {
-                if (pin.Value.mapZone == GlobalEnums.MapZone.NONE)
-                {
-                    MapModS.Instance.Log($"{pin.Value.name} is missing mapZone");
-                }
-            }
+
+            //foreach (KeyValuePair<string, PinDef> pin in _pins)
+            //{
+            //    if (_pins_unused.ContainsKey(pin.Key))
+            //    {
+            //        if (pin.Value.mapZone != _pins_unused[pin.Key].mapZone)
+            //        {
+            //            MapModS.Instance.Log($"{pin.Key}: mismatched mapZone");
+            //        }
+
+            //        if (pin.Value.pinScene != _pins_unused[pin.Key].pinScene)
+            //        {
+            //            MapModS.Instance.Log($"{pin.Key}: mismatched pinScene");
+            //        }
+
+            //        if (pin.Value.objectName != _pins_unused[pin.Key].vanillaObjectName[0])
+            //        {
+            //            MapModS.Instance.Log($"{pin.Key}: mismatched objectName");
+            //        }
+            //    }
+
+            //    if (pin.Value.mapZone == GlobalEnums.MapZone.NONE)
+            //    {
+            //        MapModS.Instance.Log($"{pin.Key} is missing mapZone");
+            //    }
+            //}
         }
     }
 }

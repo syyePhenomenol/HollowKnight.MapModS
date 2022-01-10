@@ -11,8 +11,9 @@ namespace MapModS.Data
 
         // For non-randomized item tracking
         public string objectName;
-
-        public string playerDataSetting;
+        public string pdBool;
+        public string pdInt;
+        public int pdIntValue;
 
         // The name of the scene the pin belongs to, an override to sceneName in some cases
         public string pinScene;

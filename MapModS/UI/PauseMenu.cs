@@ -19,9 +19,9 @@ namespace MapModS.UI
         private static readonly Dictionary<string, (UnityAction<string>, Vector2)> _mainButtons = new()
         {
             ["Spoilers"] = (SpoilersClicked, new Vector2(100f, 0f)),
-            ["Style"] = (StyleClicked, new Vector2(200f, 0f)),
-            ["Randomized"] = (RandomizedClicked, new Vector2(300f, 0f)),
-            ["Others"] = (OthersClicked, new Vector2(0f, 30f)),
+            ["Randomized"] = (RandomizedClicked, new Vector2(200f, 0f)),
+            ["Others"] = (OthersClicked, new Vector2(300f, 0f)),
+            ["Style"] = (StyleClicked, new Vector2(0f, 30f)),
             ["Size"] = (SizeClicked, new Vector2(100f, 30f)),
             ["Mode"] = (ModeClicked, new Vector2(200f, 30f)),
         };
@@ -179,9 +179,9 @@ namespace MapModS.UI
         {
             UpdateEnable();
             UpdateSpoilers();
-            UpdateStyle();
             UpdateRandomized();
             UpdateOthers();
+            UpdateStyle();
             UpdateSize();
             UpdateMode();
 
@@ -215,6 +215,7 @@ namespace MapModS.UI
         public static void SpoilersClicked(string buttonName)
         {
             WorldMap.CustomPins.ToggleSpoilers();
+
             UpdateGUI();
         }
 
@@ -230,37 +231,10 @@ namespace MapModS.UI
                 );
         }
 
-        public static void StyleClicked(string buttonName)
-        {
-            WorldMap.CustomPins.TogglePinStyle();
-            UpdateGUI();
-        }
-
-        private static void UpdateStyle()
-        {
-            switch (MapModS.LS.pinStyle)
-            {
-                case PinStyle.Normal:
-                    _mapControlPanel.GetButton("Style").UpdateText("Style:\nnormal");
-                    break;
-
-                case PinStyle.Q_Marks_1:
-                    _mapControlPanel.GetButton("Style").UpdateText("Style:\nq marks 1");
-                    break;
-
-                case PinStyle.Q_Marks_2:
-                    _mapControlPanel.GetButton("Style").UpdateText("Style:\nq marks 2");
-                    break;
-
-                case PinStyle.Q_Marks_3:
-                    _mapControlPanel.GetButton("Style").UpdateText("Style:\nq marks 3");
-                    break;
-            }
-        }
-
         public static void RandomizedClicked(string buttonName)
         {
             WorldMap.CustomPins.ToggleRandomized();
+
             UpdateGUI();
         }
 
@@ -291,6 +265,7 @@ namespace MapModS.UI
         public static void OthersClicked(string buttonName)
         {
             WorldMap.CustomPins.ToggleOthers();
+
             UpdateGUI();
         }
 
@@ -318,9 +293,44 @@ namespace MapModS.UI
             }
         }
 
+        public static void StyleClicked(string buttonName)
+        {
+            WorldMap.CustomPins.TogglePinStyle();
+
+            UpdateGUI();
+        }
+
+        private static void UpdateStyle()
+        {
+            switch (MapModS.LS.pinStyle)
+            {
+                case PinStyle.Normal:
+                    _mapControlPanel.GetButton("Style").UpdateText("Pin Style:\nnormal");
+                    break;
+
+                case PinStyle.Q_Marks_1:
+                    _mapControlPanel.GetButton("Style").UpdateText("Pin Style:\nq marks 1");
+                    break;
+
+                case PinStyle.Q_Marks_2:
+                    _mapControlPanel.GetButton("Style").UpdateText("Pin Style:\nq marks 2");
+                    break;
+
+                case PinStyle.Q_Marks_3:
+                    _mapControlPanel.GetButton("Style").UpdateText("Pin Style:\nq marks 3");
+                    break;
+            }
+        }
+
         public static void SizeClicked(string buttonName)
         {
             MapModS.GS.TogglePinSize();
+
+            if (WorldMap.CustomPins != null)
+            {
+                WorldMap.CustomPins.ResizePins();
+            }
+            
             UpdateGUI();
         }
 
@@ -328,15 +338,15 @@ namespace MapModS.UI
         {
             switch (MapModS.GS.PinSizeSetting)
             {
-                case Settings.GlobalSettings.PinSize.small:
+                case PinSize.Small:
                     _mapControlPanel.GetButton("Size").UpdateText("Pin Size:\nsmall");
                     break;
 
-                case Settings.GlobalSettings.PinSize.medium:
+                case PinSize.Medium:
                     _mapControlPanel.GetButton("Size").UpdateText("Pin Size:\nmedium");
                     break;
 
-                case Settings.GlobalSettings.PinSize.large:
+                case PinSize.Large:
                     _mapControlPanel.GetButton("Size").UpdateText("Pin Size:\nlarge");
                     break;
             }
@@ -345,6 +355,7 @@ namespace MapModS.UI
         public static void ModeClicked(string buttonName)
         {
             MapModS.LS.ToggleFullMap();
+
             UpdateGUI();
         }
 
@@ -377,19 +388,20 @@ namespace MapModS.UI
         public static void PoolClicked(string buttonName)
         {
             MapModS.LS.SetOnFromGroup(buttonName, !MapModS.LS.GetOnFromGroup(buttonName));
+
             UpdateGUI();
         }
 
         private static void UpdatePool(PoolGroup pool)
         {
-            //if (pool == PoolGroup.Rock)
-            //{
-            //    _mapControlPanel.GetPanel("PoolsPanel").GetButton(pool.ToString()).UpdateText
-            //        (
-            //            _groupButtons[pool].Item1 + "\n"
-            //            + MapModS.LS.GeoRockCounter + " / " + "207"
-            //        );
-            //}
+            if (pool == PoolGroup.GeoRocks && !RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.GeoRocks)
+            {
+                _mapControlPanel.GetPanel("PoolsPanel").GetButton(pool.ToString()).UpdateText
+                    (
+                        "Geo Rocks:\n"
+                        + MapModS.LS.GeoRockCounter + " / " + "207"
+                    );
+            }
 
             bool setting = MapModS.LS.GetOnFromGroup(pool);
 

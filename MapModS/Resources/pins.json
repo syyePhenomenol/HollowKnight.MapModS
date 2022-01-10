@@ -116,12 +116,14 @@
   },
   "Mothwing_Cloak": {
     "name": "Mothwing_Cloak",
+    "pdBool": "hasDash",
     "sceneName": "Fungus1_04",
     "mapZone": "GREEN_PATH",
     "offsetX": -0.25
   },
   "Mantis_Claw": {
     "name": "Mantis_Claw",
+    "pdBool": "hasWalljump",
     "sceneName": "Fungus2_14",
     "mapZone": "WASTES",
     "offsetX": -1.8,
@@ -129,6 +131,7 @@
   },
   "Crystal_Heart": {
     "name": "Crystal_Heart",
+    "pdBool": "hasSuperDash",
     "sceneName": "Mines_31",
     "mapZone": "MINES",
     "offsetX": 2.5,
@@ -136,6 +139,7 @@
   },
   "Monarch_Wings": {
     "name": "Monarch_Wings",
+    "pdBool": "hasDoubleJump",
     "sceneName": "Abyss_21",
     "mapZone": "ABYSS",
     "offsetX": -1.2,
@@ -143,6 +147,7 @@
   },
   "Shade_Cloak": {
     "name": "Shade_Cloak",
+    "pdBool": "hasShadowDash",
     "sceneName": "Abyss_10",
     "mapZone": "ABYSS",
     "offsetX": 1.05,
@@ -150,6 +155,7 @@
   },
   "Isma's_Tear": {
     "name": "Isma's_Tear",
+    "pdBool": "hasAcidArmour",
     "sceneName": "Waterways_13",
     "mapZone": "WATERWAYS",
     "offsetX": 0.6,
@@ -157,6 +163,7 @@
   },
   "Dream_Nail": {
     "name": "Dream_Nail",
+    "pdBool": "hasDreamNail",
     "sceneName": "RestingGrounds_04",
     "mapZone": "RESTING_GROUNDS",
     "offsetX": -0.13,
@@ -164,6 +171,8 @@
   },
   "Vengeful_Spirit": {
     "name": "Vengeful_Spirit",
+    "pdInt": "fireballLevel",
+    "pdIntValue": 1,
     "sceneName": "Crossroads_ShamanTemple",
     "pinScene": "Crossroads_06",
     "mapZone": "CROSSROADS",
@@ -173,6 +182,8 @@
   },
   "Shade_Soul": {
     "name": "Shade_Soul",
+    "pdInt": "fireballLevel",
+    "pdIntValue": 2,
     "sceneName": "Ruins1_31b",
     "mapZone": "CITY",
     "offsetX": -0.1,
@@ -180,6 +191,8 @@
   },
   "Desolate_Dive": {
     "name": "Desolate_Dive",
+    "pdInt": "quakeLevel",
+    "pdIntValue": 1,
     "sceneName": "Ruins1_24",
     "mapZone": "CITY",
     "offsetX": -0.1,
@@ -187,6 +200,8 @@
   },
   "Descending_Dark": {
     "name": "Descending_Dark",
+    "pdInt": "quakeLevel",
+    "pdIntValue": 2,
     "sceneName": "Mines_35",
     "pinScene": "Mines_28",
     "mapZone": "MINES",
@@ -195,6 +210,8 @@
   },
   "Howling_Wraiths": {
     "name": "Howling_Wraiths",
+    "pdInt": "screamLevel",
+    "pdIntValue": 1,
     "sceneName": "Room_Fungus_Shaman",
     "pinScene": "Fungus3_44",
     "mapZone": "FOG_CANYON",
@@ -203,20 +220,25 @@
   },
   "Abyss_Shriek": {
     "name": "Abyss_Shriek",
+    "pdInt": "screamLevel",
+    "pdIntValue": 2,
     "sceneName": "Abyss_12",
     "mapZone": "ABYSS",
     "offsetX": -1.5
   },
   "Cyclone_Slash": {
     "name": "Cyclone_Slash",
+    "pdBool": "hasCyclone",
     "sceneName": "Room_nailmaster",
     "pinScene": "Cliffs_02",
     "mapZone": "CLIFFS",
     "offsetX": 0.24,
     "offsetY": 0.32
   },
+  // PlayerData has these two the wrong way around
   "Dash_Slash": {
     "name": "Dash_Slash",
+    "pdBool": "hasUpwardSlash",
     "sceneName": "Room_nailmaster_03",
     "pinScene": "Deepnest_East_16",
     "mapZone": "OUTSKIRTS",
@@ -224,6 +246,7 @@
   },
   "Great_Slash": {
     "name": "Great_Slash",
+    "pdBool": "hasDashSlash",
     "sceneName": "Room_nailmaster_02",
     "pinScene": "Fungus1_15",
     "mapZone": "GREEN_PATH",
@@ -239,6 +262,7 @@
   },
   "Baldur_Shell": {
     "name": "Baldur_Shell",
+    "pdBool": "gotCharm_5",
     "sceneName": "Fungus1_28",
     "mapZone": "CLIFFS",
     "offsetX": 0.2,
@@ -246,6 +270,7 @@
   },
   "Fury_of_the_Fallen": {
     "name": "Fury_of_the_Fallen",
+    "pdBool": "gotCharm_6",
     "sceneName": "Tutorial_01",
     "mapZone": "TOWN",
     "offsetX": 1.3,
@@ -254,6 +279,7 @@
   },
   "Lifeblood_Core": {
     "name": "Lifeblood_Core",
+    "pdBool": "gotCharm_9",
     "sceneName": "Abyss_08",
     "mapZone": "ABYSS",
     "offsetX": 0.4,
@@ -261,6 +287,7 @@
   },
   "Defender's_Crest": {
     "name": "Defender's_Crest",
+    "pdBool": "gotCharm_10",
     "sceneName": "Waterways_05",
     "mapZone": "WATERWAYS",
     "offsetX": 0.35,
@@ -268,6 +295,7 @@
   },
   "Flukenest": {
     "name": "Flukenest",
+    "pdBool": "gotCharm_11",
     "sceneName": "Waterways_12",
     "mapZone": "WATERWAYS",
     "offsetX": -0.85,
@@ -275,6 +303,7 @@
   },
   "Thorns_of_Agony": {
     "name": "Thorns_of_Agony",
+    "pdBool": "gotCharm_12",
     "sceneName": "Fungus1_14",
     "mapZone": "GREEN_PATH",
     "offsetX": 0.75,
@@ -282,18 +311,21 @@
   },
   "Mark_of_Pride": {
     "name": "Mark_of_Pride",
+    "pdBool": "gotCharm_13",
     "sceneName": "Fungus2_31",
     "mapZone": "WASTES",
     "offsetX": -0.25
   },
   "Sharp_Shadow": {
     "name": "Sharp_Shadow",
+    "pdBool": "gotCharm_16",
     "sceneName": "Deepnest_44",
     "mapZone": "DEEPNEST",
     "offsetY": -0.5
   },
   "Spore_Shroom": {
     "name": "Spore_Shroom",
+    "pdBool": "gotCharm_17",
     "sceneName": "Fungus2_20",
     "mapZone": "WASTES",
     "offsetX": 0.35,
@@ -301,6 +333,7 @@
   },
   "Soul_Catcher": {
     "name": "Soul_Catcher",
+    "pdBool": "gotCharm_20",
     "sceneName": "Crossroads_ShamanTemple",
     "pinScene": "Crossroads_06",
     "mapZone": "CROSSROADS",
@@ -310,6 +343,7 @@
   },
   "Soul_Eater": {
     "name": "Soul_Eater",
+    "pdBool": "gotCharm_21",
     "sceneName": "RestingGrounds_10",
     "mapZone": "RESTING_GROUNDS",
     "offsetX": 3.4,
@@ -317,6 +351,7 @@
   },
   "Glowing_Womb": {
     "name": "Glowing_Womb",
+    "pdBool": "gotCharm_22",
     "sceneName": "Crossroads_22",
     "mapZone": "CROSSROADS",
     "offsetX": 0.8,
@@ -324,6 +359,7 @@
   },
   "Nailmaster's_Glory": {
     "name": "Nailmaster's_Glory",
+    "pdBool": "gotCharm_26",
     "sceneName": "Room_shop",
     "pinScene": "Town",
     "mapZone": "TOWN",
@@ -333,6 +369,7 @@
   },
   "Joni's_Blessing": {
     "name": "Joni's_Blessing",
+    "pdBool": "gotCharm_27",
     "sceneName": "Cliffs_05",
     "mapZone": "CLIFFS",
     "offsetX": 0.6,
@@ -340,6 +377,7 @@
   },
   "Shape_of_Unn": {
     "name": "Shape_of_Unn",
+    "pdBool": "gotCharm_28",
     "sceneName": "Fungus1_Slug",
     "mapZone": "GREEN_PATH",
     "offsetX": -0.3,
@@ -347,12 +385,14 @@
   },
   "Hiveblood": {
     "name": "Hiveblood",
+    "pdBool": "gotCharm_29",
     "sceneName": "Hive_05",
     "mapZone": "OUTSKIRTS",
     "offsetY": -0.25
   },
   "Dashmaster": {
     "name": "Dashmaster",
+    "pdBool": "gotCharm_30",
     "sceneName": "Fungus2_23",
     "mapZone": "WASTES",
     "offsetX": -0.4,
@@ -360,6 +400,7 @@
   },
   "Quick_Slash": {
     "name": "Quick_Slash",
+    "pdBool": "gotCharm_32",
     "sceneName": "Deepnest_East_14b",
     "mapZone": "OUTSKIRTS",
     "offsetX": 0.4,
@@ -367,6 +408,7 @@
   },
   "Spell_Twister": {
     "name": "Spell_Twister",
+    "pdBool": "gotCharm_33",
     "sceneName": "Ruins1_30",
     "mapZone": "CITY",
     "offsetX": 0.55,
@@ -374,6 +416,7 @@
   },
   "Deep_Focus": {
     "name": "Deep_Focus",
+    "pdBool": "gotCharm_34",
     "sceneName": "Mines_36",
     "mapZone": "MINES",
     "offsetX": -0.1,
@@ -381,6 +424,7 @@
   },
   "Queen_Fragment": {
     "name": "Queen_Fragment",
+    "pdBool": "gotQueenFragment",
     "sceneName": "Room_Queen",
     "pinScene": "Fungus3_48",
     "mapZone": "ROYAL_GARDENS",
@@ -389,6 +433,7 @@
   },
   "King_Fragment": {
     "name": "King_Fragment",
+    "pdBool": "gotKingFragment",
     "sceneName": "White_Palace_09",
     "pinScene": "Abyss_05",
     "mapZone": "ABYSS",
@@ -402,6 +447,8 @@
   },
   "Void_Heart": {
     "name": "Void_Heart",
+    "pdInt": "royalCharmState",
+    "pdIntValue": "royalCharmState",
     "sceneName": "Abyss_15",
     "pinScene": "Abyss_06_Core",
     "mapZone": "ABYSS",
@@ -410,6 +457,7 @@
   },
   "Dreamshield": {
     "name": "Dreamshield",
+    "pdBool": "gotCharm_38",
     "sceneName": "RestingGrounds_17",
     "mapZone": "RESTING_GROUNDS",
     "offsetX": -0.6,
@@ -417,6 +465,7 @@
   },
   "Weaversong": {
     "name": "Weaversong",
+    "pdBool": "gotCharm_39",
     "sceneName": "Deepnest_45_v02",
     "pinScene": "Deepnest_39",
     "mapZone": "DEEPNEST",
@@ -425,6 +474,7 @@
   },
   "Grimmchild": {
     "name": "Grimmchild",
+    "pdBool": "gotCharm_40",
     "sceneName": "Grimm_Main_Tent",
     "pinScene": "Town",
     "mapZone": "TOWN",
@@ -434,6 +484,7 @@
   },
   "Unbreakable_Heart": {
     "name": "Unbreakable_Heart",
+    "pdBool": "fragileHeart_unbreakable",
     "sceneName": "Grimm_Divine",
     "pinScene": "Town",
     "mapZone": "TOWN",
@@ -443,6 +494,7 @@
   },
   "Unbreakable_Greed": {
     "name": "Unbreakable_Greed",
+    "pdBool": "fragileGreed_unbreakable",
     "sceneName": "Grimm_Divine",
     "pinScene": "Town",
     "mapZone": "TOWN",
@@ -452,6 +504,7 @@
   },
   "Unbreakable_Strength": {
     "name": "Unbreakable_Strength",
+    "pdBool": "fragileStrength_unbreakable",
     "sceneName": "Grimm_Divine",
     "pinScene": "Town",
     "mapZone": "TOWN",
@@ -461,6 +514,7 @@
   },
   "City_Crest": {
     "name": "City_Crest",
+    "pdBool": "hasCityKey",
     "sceneName": "Crossroads_10",
     "mapZone": "CROSSROADS",
     "offsetX": 0.1,
@@ -468,6 +522,7 @@
   },
   "Tram_Pass": {
     "name": "Tram_Pass",
+    "pdBool": "hasTramPass",
     "sceneName": "Deepnest_26b",
     "mapZone": "DEEPNEST",
     "offsetX": -0.7,
@@ -489,12 +544,14 @@
   },
   "Simple_Key-Lurker": {
     "name": "Simple_Key-Lurker",
+    "pdBool": "gotLurkerKey",
     "sceneName": "GG_Lurker",
     "mapZone": "OUTSKIRTS",
     "offsetX": 0.8
   },
   "Shopkeeper's_Key": {
     "name": "Shopkeeper's_Key",
+    "pdBool": "hasSlykey",
     "sceneName": "Mines_11",
     "mapZone": "MINES",
     "offsetX": 0.15,
@@ -502,6 +559,7 @@
   },
   "Love_Key": {
     "name": "Love_Key",
+    "pdBool": "hasLoveKey",
     "sceneName": "Fungus3_39",
     "mapZone": "ROYAL_GARDENS",
     "offsetX": 1.1,
@@ -509,6 +567,7 @@
   },
   "King's_Brand": {
     "name": "King's_Brand",
+    "pdBool": "hasKingsBrand",
     "sceneName": "Room_Wyrm",
     "pinScene": "Deepnest_East_Hornet",
     "mapZone": "OUTSKIRTS",
@@ -524,6 +583,7 @@
   },
   "Collector's_Map": {
     "name": "Collector's_Map",
+    "pdBool": "hasPinGrub",
     "sceneName": "Ruins2_11",
     "mapZone": "CITY",
     "offsetX": -0.6,
@@ -640,6 +700,7 @@
   },
   "Vessel_Fragment-Stag_Nest": {
     "name": "Vessel_Fragment-Stag_Nest",
+    "pdBool": "vesselFragStagNest",
     "sceneName": "Cliffs_03",
     "pinScene": "Cliffs_02",
     "mapZone": "CLIFFS",
@@ -655,6 +716,7 @@
   },
   "Charm_Notch-Fog_Canyon": {
     "name": "Charm_Notch-Fog_Canyon",
+    "pdBool": "notchFogCanyon",
     "sceneName": "Fungus3_28",
     "mapZone": "FOG_CANYON",
     "offsetX": 0.0,
@@ -1368,6 +1430,7 @@
   },
   "Boss_Essence-Failed_Champion": {
     "name": "Boss_Essence-Failed_Champion",
+    "pdBool": "falseKnightOrbsCollected",
     "sceneName": "Crossroads_10",
     "mapZone": "CROSSROADS",
     "offsetX": -0.1,
@@ -1376,6 +1439,7 @@
   },
   "Boss_Essence-Soul_Tyrant": {
     "name": "Boss_Essence-Soul_Tyrant",
+    "pdBool": "mageLordOrbsCollected",
     "sceneName": "Ruins1_24",
     "mapZone": "CITY",
     "offsetX": 0.3,
@@ -1384,6 +1448,7 @@
   },
   "Boss_Essence-Lost_Kin": {
     "name": "Boss_Essence-Lost_Kin",
+    "pdBool": "infectedKnightOrbsCollected",
     "sceneName": "Abyss_19",
     "mapZone": "ABYSS",
     "offsetX": -1.35,
@@ -1391,12 +1456,14 @@
   },
   "Boss_Essence-White_Defender": {
     "name": "Boss_Essence-White_Defender",
+    "pdBool": "whiteDefenderOrbsCollected",
     "sceneName": "Waterways_15",
     "mapZone": "WATERWAYS",
     "offsetX": -0.2
   },
   "Boss_Essence-Grey_Prince_Zote": {
     "name": "Boss_Essence-Grey_Prince_Zote",
+    "pdBool": "greyPrinceOrbsCollected",
     "sceneName": "Room_Bretta",
     "pinScene": "Town",
     "mapZone": "TOWN",
@@ -1751,6 +1818,7 @@
   },
   "Crossroads_Map": {
     "name": "Crossroads_Map",
+    "pdBool": "mapCrossroads",
     "sceneName": "Crossroads_33",
     "mapZone": "CROSSROADS",
     "offsetX": 0.1,
@@ -1758,6 +1826,7 @@
   },
   "Greenpath_Map": {
     "name": "Greenpath_Map",
+    "pdBool": "mapGreenpath",
     "sceneName": "Fungus1_06",
     "mapZone": "GREEN_PATH",
     "offsetX": 1.45,
@@ -1765,6 +1834,7 @@
   },
   "Fog_Canyon_Map": {
     "name": "Fog_Canyon_Map",
+    "pdBool": "mapFogCanyon",
     "sceneName": "Fungus3_25",
     "mapZone": "FOG_CANYON",
     "offsetX": -0.3,
@@ -1772,6 +1842,7 @@
   },
   "Fungal_Wastes_Map": {
     "name": "Fungal_Wastes_Map",
+    "pdBool": "mapFungalWastes",
     "sceneName": "Fungus2_18",
     "mapZone": "WASTES",
     "offsetX": -1.55,
@@ -1779,6 +1850,7 @@
   },
   "Deepnest_Map-Upper": {
     "name": "Deepnest_Map-Upper",
+    "pdBool": "mapDeepnest",
     "sceneName": "Deepnest_01b",
     "mapZone": "DEEPNEST",
     "offsetX": -0.45,
@@ -1786,6 +1858,7 @@
   },
   "Deepnest_Map-Right": {
     "name": "Deepnest_Map-Right",
+    "pdBool": "mapDeepnest",
     "sceneName": "Fungus2_25",
     "mapZone": "DEEPNEST",
     "offsetX": -0.7,
@@ -1793,6 +1866,7 @@
   },
   "Ancient_Basin_Map": {
     "name": "Ancient_Basin_Map",
+    "pdBool": "mapAbyss",
     "sceneName": "Abyss_04",
     "mapZone": "ABYSS",
     "offsetX": 0.5,
@@ -1801,6 +1875,7 @@
   },
   "Kingdom's_Edge_Map": {
     "name": "Kingdom's_Edge_Map",
+    "pdBool": "mapOutskirts",
     "sceneName": "Deepnest_East_03",
     "mapZone": "OUTSKIRTS",
     "offsetX": -0.7,
@@ -1808,6 +1883,7 @@
   },
   "City_of_Tears_Map": {
     "name": "City_of_Tears_Map",
+    "pdBool": "mapCity",
     "sceneName": "Ruins1_31",
     "mapZone": "CITY",
     "offsetX": 0.2,
@@ -1815,6 +1891,7 @@
   },
   "Royal_Waterways_Map": {
     "name": "Royal_Waterways_Map",
+    "pdBool": "mapWaterways",
     "sceneName": "Waterways_09",
     "mapZone": "WATERWAYS",
     "offsetX": -0.2,
@@ -1822,6 +1899,7 @@
   },
   "Howling_Cliffs_Map": {
     "name": "Howling_Cliffs_Map",
+    "pdBool": "mapCliffs",
     "sceneName": "Cliffs_01",
     "mapZone": "CLIFFS",
     "offsetX": 1.8,
@@ -1829,6 +1907,7 @@
   },
   "Crystal_Peak_Map": {
     "name": "Crystal_Peak_Map",
+    "pdBool": "mapMines",
     "sceneName": "Mines_30",
     "mapZone": "MINES",
     "offsetX": 1.35,
@@ -1836,6 +1915,7 @@
   },
   "Queen's_Gardens_Map": {
     "name": "Queen's_Gardens_Map",
+    "pdBool": "mapRoyalGardens",
     "sceneName": "Fungus1_24",
     "mapZone": "ROYAL_GARDENS",
     "offsetX": 0.4,
@@ -1843,6 +1923,7 @@
   },
   "Resting_Grounds_Map": {
     "name": "Resting_Grounds_Map",
+    "pdBool": "mapRestingGrounds",
     "sceneName": "RestingGrounds_09",
     "mapZone": "RESTING_GROUNDS",
     "offsetX": -0.8,

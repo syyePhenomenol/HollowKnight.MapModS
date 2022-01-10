@@ -91,7 +91,34 @@ namespace MapModS.Map
                 return;
             }
 
+            if (PinData.vanillaPool != PinData.spoilerPool) return;
+
             // For non-randomized items
+
+            if (PinData.pdBool != null)
+            {
+                if (PlayerData.instance.GetBool(PinData.pdBool))
+                {
+                    gameObject.SetActive(false); return;
+                }
+            }
+
+            if (PinData.pdInt != null)
+            {
+                if (PlayerData.instance.GetInt(PinData.pdInt) >= PinData.pdIntValue)
+                {
+                    gameObject.SetActive(false); return;
+                }
+            }
+
+            if (PinData.vanillaPool == PoolGroup.WhisperingRoots)
+            {
+                if (PlayerData.instance.scenesEncounteredDreamPlantC.Contains(PinData.sceneName))
+                {
+                    gameObject.SetActive(false); return;
+                }
+            }
+
             if (MapModS.LS.ObtainedVanillaItems.ContainsKey(PinData.objectName + PinData.sceneName))
             {
                 gameObject.SetActive(false);

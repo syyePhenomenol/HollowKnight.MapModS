@@ -40,29 +40,34 @@ namespace MapModS.UI
             {
                 if (Input.GetKeyDown(KeyCode.M))
                 {
-                    PauseMenu.EnableClicked("");
+                    PauseMenu.EnableClicked("Enable");
                 }
 
                 if (MapModS.LS.ModEnabled)
                 {
                     if (Input.GetKeyDown(KeyCode.Alpha1))
                     {
-                        PauseMenu.SpoilersClicked("");
+                        PauseMenu.SpoilersClicked("Spoilers");
                     }
 
                     if (Input.GetKeyDown(KeyCode.Alpha2))
                     {
-                        PauseMenu.StyleClicked("");
+                        PauseMenu.RandomizedClicked("Randomized");
                     }
 
                     if (Input.GetKeyDown(KeyCode.Alpha3))
                     {
-                        PauseMenu.RandomizedClicked("");
+                        PauseMenu.OthersClicked("Others");
                     }
 
                     if (Input.GetKeyDown(KeyCode.Alpha4))
                     {
-                        PauseMenu.OthersClicked("");
+                        PauseMenu.StyleClicked("Style");
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.Alpha5))
+                    {
+                        PauseMenu.SizeClicked("Size");
                     }
                 }
             }

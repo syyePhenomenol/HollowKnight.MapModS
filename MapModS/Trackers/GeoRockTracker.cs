@@ -1,4 +1,5 @@
-﻿using Vasi;
+﻿using Modding;
+using Vasi;
 
 namespace MapModS.Trackers
 {
@@ -7,12 +8,14 @@ namespace MapModS.Trackers
         public static void Hook()
         {
             On.GeoRock.OnEnable += GeoRock_OnEnable;
-            //ModHooks.AfterSavegameLoadHook += AfterSavegameLoadHook;
+            ModHooks.AfterSavegameLoadHook += AfterSavegameLoadHook;
         }
 
         private static void GeoRock_OnEnable(On.GeoRock.orig_OnEnable orig, GeoRock self)
         {
             orig(self);
+
+            if (RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.GeoRocks) return;
 
             PlayMakerFSM geoRockFSM = self.gameObject.LocateMyFSM("Geo Rock");
 
@@ -36,18 +39,20 @@ namespace MapModS.Trackers
             FsmUtil.AddAction(FsmUtil.GetState(geoRockFSM, "Destroy"), new TrackGeoRock(self.gameObject));
         }
 
-        //private static void AfterSavegameLoadHook(SaveGameData self)
-        //{
-        //    // Update Geo Rock counter
-        //    MapModS.LS.GeoRockCounter = 0;
+        private static void AfterSavegameLoadHook(SaveGameData self)
+        {
+            if (RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.GeoRocks) return;
 
-        //    foreach (GeoRockData grd in self.sceneData.geoRocks)
-        //    {
-        //        if (grd.hitsLeft == 0)
-        //        {
-        //            MapModS.LS.GeoRockCounter++;
-        //        }
-        //    }
-        //}
+            // Update Geo Rock counter (vanilla Geo Rocks only)
+            MapModS.LS.GeoRockCounter = 0;
+
+            foreach (GeoRockData grd in self.sceneData.geoRocks)
+            {
+                if (grd.hitsLeft == 0)
+                {
+                    MapModS.LS.GeoRockCounter++;
+                }
+            }
+        }
     }
 }

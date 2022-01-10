@@ -1,28 +1,29 @@
-﻿namespace MapModS.Settings
+﻿using MapModS.Map;
+
+namespace MapModS.Settings
 {
+    public enum PinSize
+    {
+        Small,
+        Medium,
+        Large
+    }
     public class GlobalSettings
     {
-        public enum PinSize
-        {
-            small,
-            medium,
-            large
-        }
-
         //public float PinScaleSize = 0.36f;
 
-        public PinSize PinSizeSetting = PinSize.medium;
+        public PinSize PinSizeSetting = PinSize.Medium;
 
         public void TogglePinSize()
         {
             switch (PinSizeSetting)
             {
-                case PinSize.small:
-                case PinSize.medium:
+                case PinSize.Small:
+                case PinSize.Medium:
                     PinSizeSetting += 1;
                     break;
                 default:
-                    PinSizeSetting = PinSize.small;
+                    PinSizeSetting = PinSize.Small;
                     break;
             }
         }

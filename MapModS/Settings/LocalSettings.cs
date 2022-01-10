@@ -31,7 +31,8 @@ namespace MapModS.Settings
 
         public Dictionary<string, bool> ObtainedVanillaItems = new();
 
-        //public int GeoRockCounter = 0;
+        // Vanilla only
+        public int GeoRockCounter = 0;
 
         public bool RevealFullMap = false;
 

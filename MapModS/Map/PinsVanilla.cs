@@ -405,9 +405,9 @@ namespace MapModS.Map
         {
             float scale = MapModS.GS.PinSizeSetting switch
             {
-                GlobalSettings.PinSize.small => 0.31f,
-                GlobalSettings.PinSize.medium => 0.37f,
-                GlobalSettings.PinSize.large => 0.42f,
+                PinSize.Small => 0.31f,
+                PinSize.Medium => 0.37f,
+                PinSize.Large => 0.42f,
                 _ => throw new NotImplementedException()
             };
 
