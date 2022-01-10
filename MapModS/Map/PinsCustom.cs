@@ -252,21 +252,8 @@ namespace MapModS.Map
         {
             foreach (Pin pin in _pins)
             {
-                ResizePin(pin.gameObject);
+                pin.SetSizeAndColor();
             }
-        }
-
-        public static void ResizePin(GameObject go)
-        {
-            float scale = MapModS.GS.PinSizeSetting switch
-            {
-                PinSize.Small => 0.31f,
-                PinSize.Medium => 0.37f,
-                PinSize.Large => 0.42f,
-                _ => throw new NotImplementedException()
-            };
-
-            go.transform.localScale = 1.45f * scale * new Vector2(1.0f, 1.0f);
         }
 
         public void DestroyPins()

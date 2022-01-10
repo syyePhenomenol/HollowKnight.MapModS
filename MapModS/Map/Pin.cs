@@ -31,7 +31,7 @@ namespace MapModS.Map
             {
                 ShowBasedOnMap(mapZone);
                 HideIfFound();
-                ModifyScaleAndColor();
+                //ModifyScaleAndColor();
             }
             catch (Exception e)
             {
@@ -125,8 +125,18 @@ namespace MapModS.Map
             }
         }
 
-        private void ModifyScaleAndColor()
+        public void SetSizeAndColor()
         {
+            float scale = MapModS.GS.PinSizeSetting switch
+            {
+                PinSize.Small => 0.31f,
+                PinSize.Medium => 0.37f,
+                PinSize.Large => 0.42f,
+                _ => throw new NotImplementedException()
+            };
+
+            transform.localScale = 1.45f * scale * new Vector2(1.0f, 1.0f);
+
             if (RandomizerMod.RandomizerMod.RS.TrackerData.uncheckedReachableLocations.Contains(PinData.name))
             {
                 SR.color = _origColor;
