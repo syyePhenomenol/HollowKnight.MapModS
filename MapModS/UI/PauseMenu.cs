@@ -3,7 +3,7 @@ using UnityEngine;
 using MapModS.CanvasUtil;
 using MapModS.Data;
 using MapModS.Map;
-using MapModS.Trackers;
+using MapModS.Settings;
 
 namespace MapModS.UI
 {
@@ -243,25 +243,41 @@ namespace MapModS.UI
         {
             MapModS.LS.ToggleFullMap();
 
-            if (!MapModS.LS.RevealFullMap)
-            {
-                FullMap.PurgeMap();
-            }
+            //if (!MapModS.LS.RevealFullMap)
+            //{
+            //    FullMap.PurgeMap();
+            //}
 
             UpdateGUI();
         }
 
         private static void UpdateRevealFullMap()
         {
-            switch (MapModS.LS.RevealFullMap)
+            switch (MapModS.LS.mapState)
             {
-                case true:
+                case MapState.FullMap:
                     _mapControlPanel.GetButton("Reveal\nFull Map").SetTextColor(Color.green);
+                    _mapControlPanel.GetButton("Reveal\nFull Map").UpdateText("Mode:\n Full Map");
                     break;
-                case false:
+                case MapState.AllPins:
                     _mapControlPanel.GetButton("Reveal\nFull Map").SetTextColor(Color.white);
+                    _mapControlPanel.GetButton("Reveal\nFull Map").UpdateText("Mode:\n All Pins");
+                    break;
+                default:
+                    _mapControlPanel.GetButton("Reveal\nFull Map").SetTextColor(Color.white);
+                    _mapControlPanel.GetButton("Reveal\nFull Map").UpdateText("Mode:\n Pins Over Map");
                     break;
             }
+
+            //switch (MapModS.LS.RevealFullMap)
+            //{
+            //    case true:
+            //        _mapControlPanel.GetButton("Reveal\nFull Map").SetTextColor(Color.green);
+            //        break;
+            //    case false:
+            //        _mapControlPanel.GetButton("Reveal\nFull Map").SetTextColor(Color.white);
+            //        break;
+            //}
         }
 
         private static void PinSizeClicked(string buttonName)

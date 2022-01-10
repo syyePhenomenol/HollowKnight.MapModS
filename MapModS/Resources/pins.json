@@ -2404,6 +2404,7 @@
   "Geo_Rock-Crossroads_Before_Fungal_Dupe_1": {
     "name": "Geo_Rock-Crossroads_Before_Fungal_Dupe_1",
     "sceneName": "Crossroads_18",
+    "mapZone": "CROSSROADS",
     "offsetX": -0.4,
     "offsetY": 0.2,
     "offsetZ": 0.002
@@ -2411,6 +2412,7 @@
   "Geo_Rock-Crossroads_Before_Fungal_Dupe_2": {
     "name": "Geo_Rock-Crossroads_Before_Fungal_Dupe_2",
     "sceneName": "Crossroads_18",
+    "mapZone": "CROSSROADS",
     "offsetX": 0.2,
     "offsetY": 0.2
   },
@@ -3104,6 +3106,7 @@
   "Geo_Rock-Mantis_Village_Above_Claw_Dupe": {
     "name": "Geo_Rock-Mantis_Village_Above_Claw_Dupe",
     "sceneName": "Fungus2_14",
+    "mapZone": "WASTES",
     "offsetX": -1.8,
     "offsetY": 0.3,
     "offsetZ": -0.97
@@ -3367,6 +3370,7 @@
   "Geo_Rock-Crystal_Peak_Before_Dark_Room_Dupe": {
     "name": "Geo_Rock-Crystal_Peak_Before_Dark_Room_Dupe",
     "sceneName": "Mines_04",
+    "mapZone": "MINES",
     "offsetX": 0.1,
     "offsetY": -0.3,
     "offsetZ": 0.001

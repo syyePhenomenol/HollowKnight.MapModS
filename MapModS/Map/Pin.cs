@@ -44,20 +44,37 @@ namespace MapModS.Map
         {
             if (mapZone == MapZone.NONE)
             {
-                gameObject.SetActive(true);
-                return;
+                //gameObject.SetActive(true); return;
+
+                if (MapModS.LS.mapState != MapState.PinsOverMap)
+                {
+                    gameObject.SetActive(true); return;
+                }
+
+                if (MapModS.AdditionalMapsInstalled)
+                {
+                    if (SettingsUtil.GetMapSetting(PinData.mapZoneAM))
+                    {
+                        gameObject.SetActive(true); return;
+                    }
+                }
+                else
+                {
+                    if (SettingsUtil.GetMapSetting(PinData.mapZone))
+                    {
+                        gameObject.SetActive(true); return;
+                    }
+                }
             }
            
             if (PinData.pinSceneAM != null && mapZone == PinData.mapZoneAM)
             {
-                gameObject.SetActive(true);
-                return;
+                gameObject.SetActive(true); return;
             }
 
             if (mapZone == PinData.mapZone)
             {
-                gameObject.SetActive(true);
-                return;
+                gameObject.SetActive(true); return;
             }
 
                 //// Show everything if full map was revealed
@@ -123,21 +140,15 @@ namespace MapModS.Map
 
         private void ModifyScaleAndColor()
         {
-            if (PinData.vanillaPool == PinData.spoilerPool && !PinData.isShop)
+            if (RandomizerMod.RandomizerMod.RS.TrackerData.uncheckedReachableLocations.Contains(PinData.name))
             {
-                transform.localScale = 0.7f * transform.localScale;
+                _SR.color = _origColor;
             }
             else
             {
-                if (RandomizerMod.RandomizerMod.RS.TrackerData.uncheckedReachableLocations.Contains(PinData.name))
-                {
-                    _SR.color = _origColor;
-                }
-                else
-                {
-                    transform.localScale = 0.7f * transform.localScale;
-                    _SR.color = _inactiveColor;
-                }
+                // Non-randomized items also fall here
+                transform.localScale = 0.7f * transform.localScale;
+                _SR.color = _inactiveColor;
             }
         }
     }

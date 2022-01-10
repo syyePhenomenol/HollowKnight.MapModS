@@ -34,6 +34,8 @@ namespace MapModS.Map
         {
             orig(self);
 
+            if (!MapModS.LS.ModEnabled) return;
+            
             WorldMap.UpdateMap(self, MapZone.ABYSS);
         }
 
@@ -41,12 +43,16 @@ namespace MapModS.Map
         {
             orig(self);
 
+            if (!MapModS.LS.ModEnabled) return;
+            
             WorldMap.UpdateMap(self, MapZone.CITY);
         }
 
         private static void GameMap_QuickMapCliffs(On.GameMap.orig_QuickMapCliffs orig, GameMap self)
         {
             orig(self);
+
+            if (!MapModS.LS.ModEnabled) return;
 
             WorldMap.UpdateMap(self, MapZone.CLIFFS);
         }
@@ -55,12 +61,16 @@ namespace MapModS.Map
         {
             orig(self);
 
+            if (!MapModS.LS.ModEnabled) return;
+
             WorldMap.UpdateMap(self, MapZone.CROSSROADS);
         }
 
         private static void GameMap_QuickMapCrystalPeak(On.GameMap.orig_QuickMapCrystalPeak orig, GameMap self)
         {
             orig(self);
+
+            if (!MapModS.LS.ModEnabled) return;
 
             WorldMap.UpdateMap(self, MapZone.MINES);
         }
@@ -69,12 +79,16 @@ namespace MapModS.Map
         {
             orig(self);
 
+            if (!MapModS.LS.ModEnabled) return;
+
             WorldMap.UpdateMap(self, MapZone.DEEPNEST);
         }
 
         private static void GameMap_QuickMapDirtmouth(On.GameMap.orig_QuickMapDirtmouth orig, GameMap self)
         {
             orig(self);
+
+            if (!MapModS.LS.ModEnabled) return;
 
             WorldMap.UpdateMap(self, MapZone.TOWN);
         }
@@ -83,12 +97,16 @@ namespace MapModS.Map
         {
             orig(self);
 
+            if (!MapModS.LS.ModEnabled) return;
+
             WorldMap.UpdateMap(self, MapZone.FOG_CANYON);
         }
 
         private static void GameMap_QuickMapFungalWastes(On.GameMap.orig_QuickMapFungalWastes orig, GameMap self)
         {
             orig(self);
+
+            if (!MapModS.LS.ModEnabled) return;
 
             WorldMap.UpdateMap(self, MapZone.WASTES);
         }
@@ -97,12 +115,16 @@ namespace MapModS.Map
         {
             orig(self);
 
+            if (!MapModS.LS.ModEnabled) return;
+
             WorldMap.UpdateMap(self, MapZone.GREEN_PATH);
         }
 
         private static void GameMap_QuickMapKingdomsEdge(On.GameMap.orig_QuickMapKingdomsEdge orig, GameMap self)
         {
             orig(self);
+
+            if (!MapModS.LS.ModEnabled) return;
 
             WorldMap.UpdateMap(self, MapZone.OUTSKIRTS);
         }
@@ -111,6 +133,8 @@ namespace MapModS.Map
         {
             orig(self);
 
+            if (!MapModS.LS.ModEnabled) return;
+
             WorldMap.UpdateMap(self, MapZone.ROYAL_GARDENS);
         }
 
@@ -118,12 +142,16 @@ namespace MapModS.Map
         {
             orig(self);
 
+            if (!MapModS.LS.ModEnabled) return;
+
             WorldMap.UpdateMap(self, MapZone.RESTING_GROUNDS);
         }
 
         private static void GameMap_QuickMapWaterways(On.GameMap.orig_QuickMapWaterways orig, GameMap self)
         {
             orig(self);
+
+            if (!MapModS.LS.ModEnabled) return;
 
             WorldMap.UpdateMap(self, MapZone.WATERWAYS);
         }

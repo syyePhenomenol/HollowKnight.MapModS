@@ -66,9 +66,12 @@ namespace MapModS.Map
         {
             orig(self);
 
+            if (!MapModS.LS.ModEnabled) return;
+
             // Easiest way to force AdditionalMaps custom areas to show
+            //if (MapModS.LS.mapState == MapState.FullMap)
             if (MapModS.LS.RevealFullMap)
-            {
+                {
                 foreach (Transform child in self.transform)
                 {
                     if (child.name == "WHITE_PALACE"
@@ -97,6 +100,8 @@ namespace MapModS.Map
         {
             orig(self);
 
+            if (!MapModS.LS.ModEnabled) return;
+
             if (goCustomPins == null) return;
 
             CustomPins.gameObject.SetActive(true);
@@ -104,9 +109,10 @@ namespace MapModS.Map
 
         private static void GameMap_DisableMarkers(On.GameMap.orig_DisableMarkers orig, GameMap self)
         {
-            if (goCustomPins == null) return;
-
-            CustomPins.gameObject.SetActive(false);
+            if (goCustomPins != null)
+            {
+                CustomPins.gameObject.SetActive(false);
+            }
 
             orig(self);
         }

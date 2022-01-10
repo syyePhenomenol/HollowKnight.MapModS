@@ -56,8 +56,8 @@ namespace MapModS.Map
             }
             else
             {
-                //sr.sprite = SpriteManager.GetSpriteFromPool(pinData.vanillaPool);
-                sr.sprite = SpriteManager.GetSpriteFromPool(pinData.spoilerPool);
+                sr.sprite = SpriteManager.GetSpriteFromPool(pinData.vanillaPool);
+                //sr.sprite = SpriteManager.GetSpriteFromPool(pinData.spoilerPool);
             }
 
             sr.sortingLayerName = "HUD";

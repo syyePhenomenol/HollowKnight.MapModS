@@ -129,6 +129,15 @@ namespace MapModS.Data
 		public static void Load()
         {
             _pins = JsonUtil.Deserialize<Dictionary<string, PinDef>>("MapModS.Resources.pins.json");
-        }
+			
+			foreach (KeyValuePair<string, PinDef> pin in _pins)
+            {
+				if (pin.Value.mapZone == GlobalEnums.MapZone.NONE)
+                {
+					MapModS.Instance.Log($"{pin.Value.name} is missing mapZone");
+                }
+            }
+
+		}
     }
 }

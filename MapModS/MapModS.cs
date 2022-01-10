@@ -4,7 +4,7 @@ using Modding;
 using MapModS.Data;
 using MapModS.Map;
 using MapModS.Settings;
-//using MapModS.Shop;
+using MapModS.Shop;
 using MapModS.Trackers;
 using MapModS.UI;
 
@@ -66,9 +66,9 @@ namespace MapModS
             ItemTracker.Hook();
             GeoRockTracker.Hook();
 
-            //// Add new Pins to the Shop
+            // Remove Vanilla Pins and Markers from the Shop
             //ShopHooks.Hook();
-            //ShopChanger.Hook();
+            ShopChanger.Hook();
 
             // Modify overall Map behaviour
             WorldMap.Hook();
@@ -79,6 +79,9 @@ namespace MapModS
 
             // Add a Pause Menu GUI
             GUI.Hook();
+
+            // Add keyboard shortcut control
+            InputListener.InstantiateSingleton();
 
             Log("Initialization complete.");
         }

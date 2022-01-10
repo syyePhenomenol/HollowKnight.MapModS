@@ -20,7 +20,7 @@ namespace MapModS.Map
             IL.RoughMapRoom.OnEnable += ModifyMapBools;
             On.PlayMakerFSM.OnEnable += PlayMakerFSM_OnEnable;
             ModHooks.GetPlayerBoolHook += BoolGetOverride;
-            ModHooks.GetPlayerVariableHook += VariableGetOverride;
+            //ModHooks.GetPlayerVariableHook += VariableGetOverride;
         }
 
         // The objects that make up the minimal map state
@@ -192,9 +192,9 @@ namespace MapModS.Map
             (
                 i => i.MatchLdstr("hasQuill")
                 || i.MatchLdstr("mapAllRooms")
-                || i.MatchLdstr("hasPinCocooon")
-                || i.MatchLdstr("hasPinDreamPlant")
-                || i.MatchLdstr("scenesEncounteredDreamPlant")
+                //|| i.MatchLdstr("hasPinCocooon")
+                //|| i.MatchLdstr("hasPinDreamPlant")
+                //|| i.MatchLdstr("scenesEncounteredDreamPlant")
                 || i.MatchLdstr("mapAbyss")
                 || i.MatchLdstr("mapCity")
                 || i.MatchLdstr("mapCliffs")
@@ -350,7 +350,8 @@ namespace MapModS.Map
         {
             if (boolName.StartsWith("MMS_"))
             {
-                if (MapModS.LS.RevealFullMap)
+                if (MapModS.LS.ModEnabled && MapModS.LS.mapState == MapState.FullMap)
+                //if (MapModS.LS.RevealFullMap)
                 {
                     return true;
                 }
@@ -382,25 +383,26 @@ namespace MapModS.Map
             "Hive_02"
         };
 
-        // If RevealFullMap, we pass the complete list for root scenes
-        public static object VariableGetOverride(System.Type type, string name, object value)
-        {
-            if (name.StartsWith("MMS_"))
-            {
-                if (MapModS.LS.RevealFullMap)
-                {
-                    if (name == "MMS_scenesEncounteredDreamPlant")
-                    {
-                        return _rootScenes;
-                    }
-                }
-                else
-                {
-                    return PlayerData.instance.GetVariable<List<string>>(name.Remove(0, 4));
-                }
-            }
+        //// If RevealFullMap, we pass the complete list for root scenes
+        //public static object VariableGetOverride(System.Type type, string name, object value)
+        //{
+        //    if (name.StartsWith("MMS_"))
+        //    {
+        //        //if (MapModS.LS.ModEnabled && MapModS.LS.mapState == MapState.FullMap)
+        //        if (MapModS.LS.RevealFullMap)
+        //        {
+        //            if (name == "MMS_scenesEncounteredDreamPlant")
+        //            {
+        //                return _rootScenes;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            return PlayerData.instance.GetVariable<List<string>>(name.Remove(0, 4));
+        //        }
+        //    }
 
-            return value;
-        }
+        //    return value;
+        //}
     }
 }

@@ -6,6 +6,13 @@ using MapModS.Map;
 
 namespace MapModS.Settings
 {
+	public enum MapState
+    {
+		FullMap,
+		AllPins,
+		PinsOverMap
+	}
+
 	[Serializable]
 	public class LocalSettings
 	{
@@ -30,25 +37,48 @@ namespace MapModS.Settings
 
 		public bool RevealFullMap = false;
 
+		public bool ModEnabled = false;
+
+		public MapState mapState = MapState.FullMap;
+
 		public PinStyle pinStyle = PinStyle.Normal;
 
-		public bool ShowAllPins;
-
-		public bool SpoilerOn;
+		public bool SpoilerOn = false;
 
 		public bool RandomizedOn = true;
 
 		public bool OthersOn = true;
 
+		public void EnableMod()
+        {
+			ModEnabled = true;
+		}
+
 		public void ToggleFullMap()
         {
-			RevealFullMap = !RevealFullMap;
-
-			// Force all pins to show again
-			foreach (KeyValuePair<PoolGroup, GroupSetting> entry in GroupSettings)
+			switch (mapState)
             {
-                entry.Value.On = true;
+				case MapState.FullMap:
+					mapState = MapState.AllPins;
+					break;
+				case MapState.AllPins:
+					mapState = MapState.PinsOverMap;
+					break;
+				default:
+					mapState = MapState.FullMap;
+					break;
             }
+
+			if (MapModS.LS.mapState != MapState.FullMap)
+			{
+				FullMap.PurgeMap();
+			}
+
+			//// Force all pins to show again
+			//foreach (KeyValuePair<PoolGroup, GroupSetting> entry in GroupSettings)
+   //         {
+   //             entry.Value.On = true;
+   //         }
         }
 
 		public bool GetOnFromGroup(string groupName)

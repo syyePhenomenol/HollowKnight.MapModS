@@ -34,35 +34,37 @@ namespace MapModS.UI
 
 		protected void Update()
 		{
+			if (!GameManager.instance.IsGameplayScene() && !GameManager.instance.IsGamePaused()) return;
+
 			if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
 			{
-                //if (Input.GetKeyDown(KeyCode.M))
-                //{
-                //MapModS.EnableMapMod("Hotkey");
-                //}
+                if (Input.GetKeyDown(KeyCode.M))
+                {
+					MapModS.LS.EnableMod();
+                }
 
                 //if (MapModS.Instance.Settings.MapsGiven)
                 //{
 
-     //           if (Input.GetKeyDown(KeyCode.Alpha1))
-     //           {
-     //               WorldMap.CustomPins.ToggleSpoilers();
-     //           }
+                //           if (Input.GetKeyDown(KeyCode.Alpha1))
+                //           {
+                //               WorldMap.CustomPins.ToggleSpoilers();
+                //           }
 
-     //           if (Input.GetKeyDown(KeyCode.Alpha2))
-     //           {
-					//WorldMap.CustomPins.TogglePinStyle();
-     //           }
+                //           if (Input.GetKeyDown(KeyCode.Alpha2))
+                //           {
+                //WorldMap.CustomPins.TogglePinStyle();
+                //           }
 
-     //           if (Input.GetKeyDown(KeyCode.Alpha3))
-     //           {
-					//WorldMap.CustomPins.ToggleRandomized();
-     //           }
+                //           if (Input.GetKeyDown(KeyCode.Alpha3))
+                //           {
+                //WorldMap.CustomPins.ToggleRandomized();
+                //           }
 
-     //           if (Input.GetKeyDown(KeyCode.Alpha4))
-     //           {
-					//WorldMap.CustomPins.ToggleOthers();
-     //           }
+                //           if (Input.GetKeyDown(KeyCode.Alpha4))
+                //           {
+                //WorldMap.CustomPins.ToggleOthers();
+                //           }
             }
 
             //Used for various debugging tasks

@@ -9,7 +9,7 @@ namespace MapModS.Map
 {
     public static class PinsVanilla
     {
-        // For MapModS, just disable all vanilla pins except for benches
+        // For MapModS, just disable all vanilla pins for now
 
         public static void Hook()
         {
@@ -91,12 +91,9 @@ namespace MapModS.Map
         {
             orig(self, go_gameMap);
 
-            // At this point, if AdditionalMaps is installed, the new custom areas have been added
 
-            // Disable map key since the UI is too busy otherwise
-            GameObject mapKey = GameObject.Find("Map Key");
-            mapKey.transform.parent = null;
-            mapKey.SetActive(false);
+
+            // At this point, if AdditionalMaps is installed, the new custom areas have been added
 
             //// Clear all pin references from previous save load
             //foreach (Pool group in _Groups.Keys)
@@ -267,6 +264,8 @@ namespace MapModS.Map
         {
             orig(self);
 
+            if (!MapModS.LS.ModEnabled) return;
+
             self.gameObject.SetActive(false);
 
             //if (!MapModS.LS.GetOnFromGroup(Pool.Grub))
@@ -327,6 +326,15 @@ namespace MapModS.Map
         // Called every time the map is opened
         public static void RefreshGroups()
         {
+            // Disable map key since the UI is too busy otherwise
+            GameObject mapKey = GameObject.Find("Map Key");
+
+            if (mapKey != null)
+            {
+                mapKey.transform.parent = null;
+                mapKey.SetActive(false);
+            }
+            
             //foreach (Pool group in _Groups.Keys)
             //{
             //    _Groups[group].RemoveAll(item => item == null);
