@@ -363,7 +363,7 @@ namespace MapModS.Map
 
             if (boolName.StartsWith("MMS_"))
             {
-                if (MapModS.LS.ModEnabled && MapModS.LS.mapState == MapState.FullMap)
+                if (MapModS.LS.ModEnabled && MapModS.LS.mapState == Mode.FullMap)
                 //if (MapModS.LS.RevealFullMap)
                 {
                     return true;

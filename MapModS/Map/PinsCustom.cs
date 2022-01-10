@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using MapModS.Data;
 using MapModS.Settings;
+using MapModS.UI;
 
 namespace MapModS.Map
 {
@@ -121,14 +122,14 @@ namespace MapModS.Map
         }
 
         // Used for updating button states
-        private readonly List<PoolGroup> _RandomizedGroups = new();
+        public List<PoolGroup> RandomizedGroups = new();
 
-        private readonly List<PoolGroup> _OthersGroups = new();
+        public List<PoolGroup> OthersGroups = new();
 
         internal void FindRandomizedGroups()
         {
-            _RandomizedGroups.Clear();
-            _OthersGroups.Clear();
+            RandomizedGroups.Clear();
+            OthersGroups.Clear();
 
             foreach (PoolGroup group in _Groups.Keys)
             {
@@ -141,7 +142,7 @@ namespace MapModS.Map
         {
             if (group == PoolGroup.Shop)
             {
-                _RandomizedGroups.Add(group);
+                RandomizedGroups.Add(group);
                 return;
             }
             
@@ -155,12 +156,12 @@ namespace MapModS.Map
 
                 if (pin.PinData.vanillaPool != pin.PinData.spoilerPool)
                 {
-                    _RandomizedGroups.Add(group);
+                    RandomizedGroups.Add(group);
                     return;
                 }
             }
 
-            _OthersGroups.Add(group);
+            OthersGroups.Add(group);
         }
 
         internal void ToggleSpoilers()
@@ -196,7 +197,7 @@ namespace MapModS.Map
         internal void ToggleRandomized()
         {
             MapModS.LS.RandomizedOn = !MapModS.LS.RandomizedOn;
-            foreach (PoolGroup group in _RandomizedGroups)
+            foreach (PoolGroup group in RandomizedGroups)
             {
                 MapModS.LS.SetOnFromGroup(group, MapModS.LS.RandomizedOn);
             }
@@ -207,7 +208,7 @@ namespace MapModS.Map
         internal void ToggleOthers()
         {
             MapModS.LS.OthersOn = !MapModS.LS.OthersOn;
-            foreach (PoolGroup group in _OthersGroups)
+            foreach (PoolGroup group in OthersGroups)
             {
                 MapModS.LS.SetOnFromGroup(group, MapModS.LS.OthersOn);
             }
@@ -232,7 +233,7 @@ namespace MapModS.Map
                 _Groups[group].SetActive(MapModS.LS.GetOnFromGroup(group));
             }
 
-            //PauseGUI._SetGUI();
+            //PauseMenu.UpdateGUI();
             //MapText.SetTexts();
         }
 
@@ -250,7 +251,7 @@ namespace MapModS.Map
                 }
             }
 
-            //PauseGUI._SetGUI();
+            //PauseMenu.UpdateGUI();
             //MapText.SetTexts();
         }
 
@@ -283,8 +284,8 @@ namespace MapModS.Map
             }
 
             _pins.Clear();
-            _RandomizedGroups.Clear();
-            _OthersGroups.Clear();
+            RandomizedGroups.Clear();
+            OthersGroups.Clear();
         }
 
         protected void Start()

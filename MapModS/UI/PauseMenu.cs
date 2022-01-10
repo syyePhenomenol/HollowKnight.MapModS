@@ -1,9 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using MapModS.CanvasUtil;
 using MapModS.Data;
 using MapModS.Map;
 using MapModS.Settings;
+using UnityEngine.Events;
+using System;
+using System.Text.RegularExpressions;
 
 namespace MapModS.UI
 {
@@ -12,35 +16,15 @@ namespace MapModS.UI
     {
         public static GameObject Canvas;
 
-        //private static readonly Dictionary<PoolGroup, (string, Vector2)> _groupButtons = new()
-        //{
-        //    [PoolGroup.Bench] = ("Benches", new Vector2(0f, 0f)),
-        //    [PoolGroup.Vendor] = ("Vendors", new Vector2(100f, 0f)),
-        //    [PoolGroup.Stag] = ("Stag\nStations", new Vector2(200f, 0f)),
-        //    [PoolGroup.Spa] = ("Hot\nSprings", new Vector2(300f, 0f)),
-        //    [PoolGroup.Root] = ("Whispering\nRoots", new Vector2(400f, 0f)),
-        //    [PoolGroup.Grave] = ("Warrior's\nGraves", new Vector2(500f, 0f)),
-        //    [PoolGroup.Tram] = ("Trams", new Vector2(600f, 0f)),
-        //    [PoolGroup.Grub] = ("Grubs", new Vector2(700f, 0f)),
-
-        //    [PoolGroup.Cocoon] = ("Lifeblood\nCocoons", new Vector2(0f, 30f)),
-
-        //    [PoolGroup.Skill] = ("Skills", new Vector2(100f, 30f)),
-        //    [PoolGroup.Charm] = ("Charms", new Vector2(200f, 30f)),
-        //    [PoolGroup.Map] = ("Maps", new Vector2(300f, 30f)),
-        //    [PoolGroup.Key] = ("Keys", new Vector2(400f, 30f)),
-        //    [PoolGroup.Mask] = ("Mask\nShards", new Vector2(500f, 30f)),
-        //    [PoolGroup.Vessel] = ("Vessel\nFragments", new Vector2(600f, 30f)),
-        //    [PoolGroup.Notch] = ("Charm\nNotches", new Vector2(700f, 30f)),
-        //    [PoolGroup.Ore] = ("Pale Ore", new Vector2(0f, 60f)),
-        //    [PoolGroup.Egg] = ("Rancid\nEggs", new Vector2(100f, 60f)),
-        //    [PoolGroup.Relic] = ("Relics", new Vector2(200f, 60f)),
-        //    [PoolGroup.EssenceBoss] = ("Hidden\nBosses", new Vector2(300f, 60f)),
-        //    [PoolGroup.GeoChest] = ("Geo Chests", new Vector2(400f, 60f)),
-        //    [PoolGroup.Rock] = ("Geo Rocks", new Vector2(500f, 60f)),
-        //    [PoolGroup.Totem] = ("Soul\nTotems", new Vector2(600f, 60f)),
-        //    [PoolGroup.Lore] = ("Lore\nTablets", new Vector2(700f, 60f)),
-        //};
+        private static readonly Dictionary<string, (UnityAction<string>, Vector2)> _mainButtons = new Dictionary<string, (UnityAction<string>, Vector2)>
+        {
+            ["Spoilers"] = (SpoilersClicked, new Vector2(100f, 0f)),
+            ["Style"] = (StyleClicked, new Vector2(200f, 0f)),
+            ["Randomized"] = (RandomizedClicked, new Vector2(300f, 0f)),
+            ["Others"] = (OthersClicked, new Vector2(0f, 30f)),
+            ["Size"] = (SizeClicked, new Vector2(100f, 30f)),
+            ["Mode"] = (ModeClicked, new Vector2(200f, 30f)),
+        };
 
         private static CanvasPanel _mapControlPanel;
 
@@ -50,30 +34,60 @@ namespace MapModS.UI
 
             _mapControlPanel = new CanvasPanel
                 (_canvas, GUIController.Instance.Images["ButtonsMenuBG"], new Vector2(10f, 870f), new Vector2(1346f, 0f), new Rect(0f, 0f, 0f, 0f));
-            _mapControlPanel.AddText("MapModLabel", "Map Mod S", new Vector2(0f, -25f), Vector2.zero, GUIController.Instance.TrajanNormal, 18);
+            _mapControlPanel.AddText("MapModLabel", "MapMod S", new Vector2(0f, -25f), Vector2.zero, GUIController.Instance.TrajanNormal, 18);
 
             Rect buttonRect = new(0, 0, GUIController.Instance.Images["ButtonRect"].width, GUIController.Instance.Images["ButtonRect"].height);
 
-            // Toggle pool buttons panel on and off
+            // Main settings
+
+            // Toggle the mod on or off
             _mapControlPanel.AddButton
                 (
-                    "AllPins",
+                    "Enable",
                     GUIController.Instance.Images["ButtonRect"],
-                    new Vector2(200f, -30f),
+                    new Vector2(0f, 0f),
                     Vector2.zero,
-                    ShowPinsClicked,
+                    EnableClicked,
                     buttonRect,
                     GUIController.Instance.TrajanBold,
-                    "Show Pins:\nall",
+                    "Enable",
                     fontSize: 10
                 );
+
+            if (!MapModS.LS.ModEnabled)
+            {
+                UpdateEnable();
+
+                if (GameManager.instance.IsGamePaused())
+                {
+                    _mapControlPanel.SetActive(true, false);
+                }
+
+                return;
+            }
+
+            foreach (KeyValuePair<string, (UnityAction<string>, Vector2)> pair in _mainButtons)
+            {
+                _mapControlPanel.AddButton
+                (
+                    pair.Key,
+                    GUIController.Instance.Images["ButtonRect"],
+                    pair.Value.Item2,
+                    Vector2.zero,
+                    pair.Value.Item1,
+                    buttonRect,
+                    GUIController.Instance.TrajanBold,
+                    pair.Key,
+                    fontSize: 10
+                );
+            }
 
             // New panel for pool buttons
             CanvasPanel pools = _mapControlPanel.AddPanel
             (
                 "PoolsPanel",
                 GUIController.Instance.Images["ButtonRectEmpty"],
-                new Vector2(0f, 0f),
+                new Vector2(400f, 0f),
                 Vector2.zero,
                 new Rect(0f, 0f, GUIController.Instance.Images["DropdownBG"].width, 270f)
             );
@@ -81,7 +95,7 @@ namespace MapModS.UI
             (
                 "PoolsToggle",
                 GUIController.Instance.Images["ButtonRect"],
-                new Vector2(300f, -30f),
+                new Vector2(300f, 30f),
                 Vector2.zero,
                 s => PoolsPanelClicked(),
                 buttonRect,
@@ -95,48 +109,37 @@ namespace MapModS.UI
 
             // Pool buttons
             //foreach (KeyValuePair<PoolGroup, (string, Vector2)> pair in _groupButtons)
-            //{
-            //    pools.AddButton
-            //    (
-            //        pair.Key.ToString(),
-            //        GUIController.Instance.Images["ButtonRectEmpty"],
-            //        pair.Value.Item2,
-            //        Vector2.zero,
-            //        PoolClicked,
-            //        buttonRect,
-            //        GUIController.Instance.TrajanBold,
-            //        pair.Value.Item1,
-            //        fontSize: 10
-            //    );
-            //}
+            foreach (PoolGroup group in Enum.GetValues(typeof(PoolGroup)))
+            {
+                if (group == PoolGroup.Unknown) continue;
 
-            // Adjust pin size
-            _mapControlPanel.AddButton
+                float x_offset = (float) (group - 1) % 9 * 90;
+                float y_offset = (int) (group - 1) / 9 * 30;
+                string[] splitGroup = Regex.Split(group.ToString(), @"(?<!^)(?=[A-Z])");
+                string cleanGroup;
+
+                if (splitGroup.Length == 1)
+                {
+                    cleanGroup = splitGroup[0];
+                }
+                else
+                {
+                    cleanGroup = splitGroup[0] + "\n" + splitGroup[1];
+                }
+
+                pools.AddButton
                 (
-                    "Pin Size",
-                    GUIController.Instance.Images["ButtonRect"],
-                    new Vector2(400, -30f),
+                    group.ToString(),
+                    GUIController.Instance.Images["ButtonRectEmpty"],
+                    new Vector2(x_offset, y_offset),
                     Vector2.zero,
-                    PinSizeClicked,
+                    PoolClicked,
                     buttonRect,
                     GUIController.Instance.TrajanBold,
-                    "Pin Size\nsmall",
+                    cleanGroup,
                     fontSize: 10
                 );
-
-            // Toggle full map on and off
-            _mapControlPanel.AddButton
-                (
-                    "Reveal\nFull Map",
-                    GUIController.Instance.Images["ButtonRect"],
-                    new Vector2(500, -30f),
-                    Vector2.zero,
-                    RevealFullMapClicked,
-                    buttonRect,
-                    GUIController.Instance.TrajanBold,
-                    "Reveal\nFull Map",
-                    fontSize: 10
-                );
+            }
 
             UpdateGUI();
 
@@ -174,47 +177,200 @@ namespace MapModS.UI
         // Update all the buttons (text, color)
         public static void UpdateGUI()
         {
-            //foreach (PoolGroup group in _groupButtons.Keys)
-            //{
-            //    UpdatePool(group);
-            //}
+            UpdateEnable();
+            UpdateSpoilers();
+            UpdateStyle();
+            UpdateRandomized();
+            UpdateOthers();
+            UpdateSize();
+            UpdateMode();
 
-            UpdateShowPins();
-            UpdateRevealFullMap();
-            UpdatePinSize();
+            foreach (PoolGroup group in Enum.GetValues(typeof(PoolGroup)))
+            {
+                if (group == PoolGroup.Unknown) continue;
+
+                UpdatePool(group);
+            }
         }
 
-        private static void ShowPinsClicked(string buttonName)
+        public static void EnableClicked(string buttonName)
         {
-            MapModS.LS.ToggleGroups();
+            MapModS.LS.ToggleModEnabled();
+            _mapControlPanel.Destroy();
+            BuildMenu(Canvas);
+        }
+
+        private static void UpdateEnable()
+        {
+            _mapControlPanel.GetButton("Enable").SetTextColor
+                (
+                    MapModS.LS.ModEnabled ? Color.green : Color.red
+                );
+            _mapControlPanel.GetButton("Enable").UpdateText
+                (
+                    MapModS.LS.ModEnabled ? ("Mod\nEnabled") : ("Mod\nDisabled")
+                );
+        }
+
+        public static void SpoilersClicked(string buttonName)
+        {
+            WorldMap.CustomPins.ToggleSpoilers();
             UpdateGUI();
         }
 
-        private static void UpdateShowPins()
+        private static void UpdateSpoilers()
         {
-            if (MapModS.LS.AllGroupsOn())
+            _mapControlPanel.GetButton("Spoilers").SetTextColor
+                (
+                    MapModS.LS.SpoilerOn ? Color.green : Color.white
+                );
+            _mapControlPanel.GetButton("Spoilers").UpdateText
+                (
+                    MapModS.LS.SpoilerOn ? ("Spoilers:\non") : ("Spoilers:\noff")
+                );
+        }
+
+        public static void StyleClicked(string buttonName)
+        {
+            WorldMap.CustomPins.TogglePinStyle();
+            UpdateGUI();
+        }
+
+        private static void UpdateStyle()
+        {
+            switch (MapModS.LS.pinStyle)
             {
-                _mapControlPanel.GetButton("AllPins").SetTextColor(Color.green);
-                _mapControlPanel.GetButton("AllPins").UpdateText("Show Pins:\nall");
-            }
-            else if (MapModS.LS.AllGroupsOff())
-            {
-                _mapControlPanel.GetButton("AllPins").SetTextColor(Color.white);
-                _mapControlPanel.GetButton("AllPins").UpdateText("Show Pins:\nnone");
-            }
-            else
-            {
-                _mapControlPanel.GetButton("AllPins").SetTextColor(Color.yellow);
-                _mapControlPanel.GetButton("AllPins").UpdateText("Show Pins:\ncustom");
+                case PinStyle.Normal:
+                    _mapControlPanel.GetButton("Style").UpdateText("Style:\nnormal");
+                    break;
+
+                case PinStyle.Q_Marks_1:
+                    _mapControlPanel.GetButton("Style").UpdateText("Style:\nq marks 1");
+                    break;
+
+                case PinStyle.Q_Marks_2:
+                    _mapControlPanel.GetButton("Style").UpdateText("Style:\nq marks 2");
+                    break;
+
+                case PinStyle.Q_Marks_3:
+                    _mapControlPanel.GetButton("Style").UpdateText("Style:\nq marks 3");
+                    break;
             }
         }
 
-        private static void PoolsPanelClicked()
+        public static void RandomizedClicked(string buttonName)
+        {
+            WorldMap.CustomPins.ToggleRandomized();
+            UpdateGUI();
+        }
+
+        private static void UpdateRandomized()
+        {
+            if (WorldMap.CustomPins == null) return;
+
+            if (!WorldMap.CustomPins.RandomizedGroups.Any(MapModS.LS.GetOnFromGroup))
+            {
+                _mapControlPanel.GetButton("Randomized").SetTextColor(Color.white);
+                _mapControlPanel.GetButton("Randomized").UpdateText("Randomized:\noff");
+                MapModS.LS.RandomizedOn = false;
+            }
+            else if (WorldMap.CustomPins.RandomizedGroups.All(MapModS.LS.GetOnFromGroup))
+            {
+                _mapControlPanel.GetButton("Randomized").SetTextColor(Color.green);
+                _mapControlPanel.GetButton("Randomized").UpdateText("Randomized:\non");
+                MapModS.LS.RandomizedOn = true;
+            }
+            else
+            {
+                _mapControlPanel.GetButton("Randomized").SetTextColor(Color.yellow);
+                _mapControlPanel.GetButton("Randomized").UpdateText("Randomized:\ncustom");
+                MapModS.LS.RandomizedOn = true;
+            }
+        }
+
+        public static void OthersClicked(string buttonName)
+        {
+            WorldMap.CustomPins.ToggleOthers();
+            UpdateGUI();
+        }
+
+        private static void UpdateOthers()
+        {
+            if (WorldMap.CustomPins == null) return;
+
+            if (!WorldMap.CustomPins.OthersGroups.Any(MapModS.LS.GetOnFromGroup))
+            {
+                _mapControlPanel.GetButton("Others").SetTextColor(Color.white);
+                _mapControlPanel.GetButton("Others").UpdateText("Others:\noff");
+                MapModS.LS.OthersOn = false;
+            }
+            else if (WorldMap.CustomPins.OthersGroups.All(MapModS.LS.GetOnFromGroup))
+            {
+                _mapControlPanel.GetButton("Others").SetTextColor(Color.green);
+                _mapControlPanel.GetButton("Others").UpdateText("Others:\non");
+                MapModS.LS.OthersOn = true;
+            }
+            else
+            {
+                _mapControlPanel.GetButton("Others").SetTextColor(Color.yellow);
+                _mapControlPanel.GetButton("Others").UpdateText("Others:\ncustom");
+                MapModS.LS.OthersOn = true;
+            }
+        }
+
+        public static void SizeClicked(string buttonName)
+        {
+            MapModS.GS.TogglePinSize();
+            UpdateGUI();
+        }
+
+        private static void UpdateSize()
+        {
+            switch (MapModS.GS.PinSizeSetting)
+            {
+                case Settings.GlobalSettings.PinSize.small:
+                    _mapControlPanel.GetButton("Size").UpdateText("Pin Size\nsmall");
+                    break;
+                case Settings.GlobalSettings.PinSize.medium:
+                    _mapControlPanel.GetButton("Size").UpdateText("Pin Size\nmedium");
+                    break;
+                case Settings.GlobalSettings.PinSize.large:
+                    _mapControlPanel.GetButton("Size").UpdateText("Pin Size\nlarge");
+                    break;
+            }
+        }
+
+        public static void ModeClicked(string buttonName)
+        {
+            MapModS.LS.ToggleFullMap();
+            UpdateGUI();
+        }
+
+        private static void UpdateMode()
+        {
+            switch (MapModS.LS.mapState)
+            {
+                case Mode.FullMap:
+                    _mapControlPanel.GetButton("Mode").SetTextColor(Color.green);
+                    _mapControlPanel.GetButton("Mode").UpdateText("Mode:\n Full Map");
+                    break;
+                case Mode.AllPins:
+                    _mapControlPanel.GetButton("Mode").SetTextColor(Color.white);
+                    _mapControlPanel.GetButton("Mode").UpdateText("Mode:\n All Pins");
+                    break;
+                default:
+                    _mapControlPanel.GetButton("Mode").SetTextColor(Color.white);
+                    _mapControlPanel.GetButton("Mode").UpdateText("Mode:\n Pins Over Map");
+                    break;
+            }
+        }
+
+        public static void PoolsPanelClicked()
         {
             _mapControlPanel.TogglePanel("PoolsPanel");
         }
 
-        private static void PoolClicked(string buttonName)
+        public static void PoolClicked(string buttonName)
         {
             MapModS.LS.SetOnFromGroup(buttonName, !MapModS.LS.GetOnFromGroup(buttonName));
             UpdateGUI();
@@ -237,70 +393,6 @@ namespace MapModS.UI
                 (
                     setting ? Color.green : Color.white
                 );
-        }
-
-        private static void RevealFullMapClicked(string buttonName)
-        {
-            MapModS.LS.ToggleFullMap();
-
-            //if (!MapModS.LS.RevealFullMap)
-            //{
-            //    FullMap.PurgeMap();
-            //}
-
-            UpdateGUI();
-        }
-
-        private static void UpdateRevealFullMap()
-        {
-            switch (MapModS.LS.mapState)
-            {
-                case MapState.FullMap:
-                    _mapControlPanel.GetButton("Reveal\nFull Map").SetTextColor(Color.green);
-                    _mapControlPanel.GetButton("Reveal\nFull Map").UpdateText("Mode:\n Full Map");
-                    break;
-                case MapState.AllPins:
-                    _mapControlPanel.GetButton("Reveal\nFull Map").SetTextColor(Color.white);
-                    _mapControlPanel.GetButton("Reveal\nFull Map").UpdateText("Mode:\n All Pins");
-                    break;
-                default:
-                    _mapControlPanel.GetButton("Reveal\nFull Map").SetTextColor(Color.white);
-                    _mapControlPanel.GetButton("Reveal\nFull Map").UpdateText("Mode:\n Pins Over Map");
-                    break;
-            }
-
-            //switch (MapModS.LS.RevealFullMap)
-            //{
-            //    case true:
-            //        _mapControlPanel.GetButton("Reveal\nFull Map").SetTextColor(Color.green);
-            //        break;
-            //    case false:
-            //        _mapControlPanel.GetButton("Reveal\nFull Map").SetTextColor(Color.white);
-            //        break;
-            //}
-        }
-
-        private static void PinSizeClicked(string buttonName)
-        {
-            MapModS.GS.TogglePinSize();
-
-            UpdateGUI();
-        }
-
-        private static void UpdatePinSize()
-        {
-            switch (MapModS.GS.PinSizeSetting)
-            {
-                case Settings.GlobalSettings.PinSize.small:
-                    _mapControlPanel.GetButton("Pin Size").UpdateText("Pin Size\nsmall");
-                    break;
-                case Settings.GlobalSettings.PinSize.medium:
-                    _mapControlPanel.GetButton("Pin Size").UpdateText("Pin Size\nmedium");
-                    break;
-                case Settings.GlobalSettings.PinSize.large:
-                    _mapControlPanel.GetButton("Pin Size").UpdateText("Pin Size\nlarge");
-                    break;
-            }
         }
     }
 }

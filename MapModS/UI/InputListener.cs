@@ -41,30 +41,30 @@ namespace MapModS.UI
 			if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
 			{
 				if (Input.GetKeyDown(KeyCode.M))
-				{
-					MapModS.LS.ToggleModEnabled();
-				}
+                {
+                    PauseMenu.EnableClicked("");
+                }
 
-				if (MapModS.LS.ModEnabled)
+                if (MapModS.LS.ModEnabled)
 				{
 					if (Input.GetKeyDown(KeyCode.Alpha1))
 					{
-						WorldMap.CustomPins.ToggleSpoilers();
+						PauseMenu.SpoilersClicked("");
 					}
 
 					if (Input.GetKeyDown(KeyCode.Alpha2))
 					{
-						WorldMap.CustomPins.TogglePinStyle();
+						PauseMenu.StyleClicked("");
 					}
 
 					if (Input.GetKeyDown(KeyCode.Alpha3))
 					{
-						WorldMap.CustomPins.ToggleRandomized();
+						PauseMenu.RandomizedClicked("");
 					}
 
 					if (Input.GetKeyDown(KeyCode.Alpha4))
 					{
-						WorldMap.CustomPins.ToggleOthers();
+						PauseMenu.OthersClicked("");
 					}
 				}
 			}

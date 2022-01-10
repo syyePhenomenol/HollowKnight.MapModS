@@ -69,7 +69,7 @@ namespace MapModS.Map
             if (!MapModS.LS.ModEnabled) return;
 
             // Easiest way to force AdditionalMaps custom areas to show
-            if (MapModS.LS.mapState == MapState.FullMap)
+            if (MapModS.LS.mapState == Mode.FullMap)
             {
                 foreach (Transform child in self.transform)
                 {

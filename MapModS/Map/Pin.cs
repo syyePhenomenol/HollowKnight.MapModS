@@ -46,7 +46,7 @@ namespace MapModS.Map
             {
                 //gameObject.SetActive(true); return;
 
-                if (MapModS.LS.mapState != MapState.PinsOverMap)
+                if (MapModS.LS.mapState != Mode.PinsOverMap)
                 {
                     gameObject.SetActive(true); return;
                 }

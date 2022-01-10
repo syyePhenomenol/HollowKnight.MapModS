@@ -6,7 +6,7 @@ using MapModS.Map;
 
 namespace MapModS.Settings
 {
-	public enum MapState
+	public enum Mode
     {
 		FullMap,
 		AllPins,
@@ -39,7 +39,7 @@ namespace MapModS.Settings
 
 		public bool ModEnabled = false;
 
-		public MapState mapState = MapState.FullMap;
+		public Mode mapState = Mode.FullMap;
 
 		public PinStyle pinStyle = PinStyle.Normal;
 
@@ -52,21 +52,22 @@ namespace MapModS.Settings
 		public void ToggleModEnabled()
         {
 			ModEnabled = !ModEnabled;
+			//GameManager.instance.SaveGame();
 		}
 
 		public void ToggleFullMap()
         {
 			switch (mapState)
             {
-				case MapState.FullMap:
+				case Mode.FullMap:
 					FullMap.PurgeMap();
-					mapState = MapState.AllPins;
+					mapState = Mode.AllPins;
 					break;
-				case MapState.AllPins:
-					mapState = MapState.PinsOverMap;
+				case Mode.AllPins:
+					mapState = Mode.PinsOverMap;
 					break;
-				case MapState.PinsOverMap:
-					mapState = MapState.FullMap;
+				case Mode.PinsOverMap:
+					mapState = Mode.FullMap;
 					break;
             }
 
