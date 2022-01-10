@@ -34,39 +34,40 @@ namespace MapModS.UI
 
 		protected void Update()
 		{
+			if (GameManager.instance == null) return;
+
 			if (!GameManager.instance.IsGameplayScene() && !GameManager.instance.IsGamePaused()) return;
 
 			if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
 			{
-                if (Input.GetKeyDown(KeyCode.M))
-                {
+				if (Input.GetKeyDown(KeyCode.M))
+				{
 					MapModS.LS.ToggleModEnabled();
-                }
+				}
 
-                //if (MapModS.Instance.Settings.MapsGiven)
-                //{
+				if (MapModS.LS.ModEnabled)
+				{
+					if (Input.GetKeyDown(KeyCode.Alpha1))
+					{
+						WorldMap.CustomPins.ToggleSpoilers();
+					}
 
-                //           if (Input.GetKeyDown(KeyCode.Alpha1))
-                //           {
-                //               WorldMap.CustomPins.ToggleSpoilers();
-                //           }
+					if (Input.GetKeyDown(KeyCode.Alpha2))
+					{
+						WorldMap.CustomPins.TogglePinStyle();
+					}
 
-                //           if (Input.GetKeyDown(KeyCode.Alpha2))
-                //           {
-                //WorldMap.CustomPins.TogglePinStyle();
-                //           }
+					if (Input.GetKeyDown(KeyCode.Alpha3))
+					{
+						WorldMap.CustomPins.ToggleRandomized();
+					}
 
-                //           if (Input.GetKeyDown(KeyCode.Alpha3))
-                //           {
-                //WorldMap.CustomPins.ToggleRandomized();
-                //           }
-
-                //           if (Input.GetKeyDown(KeyCode.Alpha4))
-                //           {
-                //WorldMap.CustomPins.ToggleOthers();
-                //           }
-            }
-
+					if (Input.GetKeyDown(KeyCode.Alpha4))
+					{
+						WorldMap.CustomPins.ToggleOthers();
+					}
+				}
+			}
             //Used for various debugging tasks
             //if (Input.GetKeyDown(KeyCode.O)) {
             //	//MapModS.ReloadGameMapPins();

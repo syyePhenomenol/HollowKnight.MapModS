@@ -28,12 +28,12 @@ namespace MapModS.Settings
             public bool On; // The corresponding pin will be shown on the map (if Has)
         };
 
-        public Dictionary<string, bool> ObtainedVanillaItems = new();
-
-		public int GeoRockCounter = 0;
-
-		public Dictionary<PoolGroup , GroupSetting> GroupSettings = Enum.GetValues(typeof(PoolGroup))
+		public Dictionary<PoolGroup, GroupSetting> GroupSettings = Enum.GetValues(typeof(PoolGroup))
 			.Cast<PoolGroup>().ToDictionary(t => t, t => new GroupSetting());
+
+		public Dictionary<string, bool> ObtainedVanillaItems = new();
+
+		//public int GeoRockCounter = 0;
 
 		public bool RevealFullMap = false;
 
@@ -65,15 +65,10 @@ namespace MapModS.Settings
 				case MapState.AllPins:
 					mapState = MapState.PinsOverMap;
 					break;
-				default:
+				case MapState.PinsOverMap:
 					mapState = MapState.FullMap;
 					break;
             }
-
-			if (MapModS.LS.mapState != MapState.FullMap)
-			{
-				
-			}
 
 			//// Force all pins to show again
 			//foreach (KeyValuePair<PoolGroup, GroupSetting> entry in GroupSettings)
@@ -105,6 +100,14 @@ namespace MapModS.Settings
         public void SetOnFromGroup(string groupName, bool value)
         {
 			if (Enum.TryParse(groupName, out PoolGroup group))
+			{
+				GroupSettings[group].On = value;
+			}
+		}
+
+		public void SetOnFromGroup(PoolGroup group, bool value)
+		{
+			if (GroupSettings.ContainsKey(group))
 			{
 				GroupSettings[group].On = value;
 			}

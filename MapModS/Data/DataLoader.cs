@@ -95,12 +95,12 @@ namespace MapModS.Data
 				// First check if this is a shop pin
 				if (pinD.isShop)
 				{
-					continue;
-
-					// Then check if this item is randomized
+					pinD.vanillaPool = PoolGroup.Shop;
+					pinD.spoilerPool = PoolGroup.Shop;
 				}
+				// Then check if this item is randomized
 				else
-                {
+				{
 					pinD.vanillaPool = GetVanillaPoolGroup(vanillaItem);
 					pinD.spoilerPool = GetRandomizerPoolGroup(vanillaItem);
 				}

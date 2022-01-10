@@ -50,16 +50,7 @@ namespace MapModS.Map
             SpriteRenderer sr = goPin.AddComponent<SpriteRenderer>();
 
             // Initialize sprite to vanillaPool
-            if (pinData.isShop)
-            {
-                sr.sprite = SpriteManager.GetSprite("pinShop");
-            }
-            else
-            {
-                sr.sprite = SpriteManager.GetSpriteFromPool(pinData.vanillaPool);
-                //sr.sprite = SpriteManager.GetSpriteFromPool(pinData.spoilerPool);
-            }
-
+            sr.sprite = SpriteManager.GetSpriteFromPool(pinData.vanillaPool);
             sr.sortingLayerName = "HUD";
             sr.size = new Vector2(1f, 1f);
 
@@ -108,17 +99,6 @@ namespace MapModS.Map
             }
 
             newPin.transform.SetParent(_Groups[pinData.spoilerPool].transform);
-
-            //if (!_Groups.ContainsKey(pinData.vanillaPool))
-            //{
-            //    _Groups[pinData.vanillaPool] = new GameObject("PinGroup " + pinData.vanillaPool);
-            //    _Groups[pinData.vanillaPool].transform.SetParent(transform);
-
-            //    // Set all true for now (doesn't really affect any behaviour)
-            //    _Groups[pinData.vanillaPool].SetActive(true);
-            //}
-
-            //newPin.transform.SetParent(_Groups[pinData.vanillaPool].transform);
         }
 
         private Vector3 GetRoomPos(string roomName, GameMap gameMap)
@@ -141,12 +121,15 @@ namespace MapModS.Map
         }
 
         // Used for updating button states
-        private List<PoolGroup> _randomizedGroups = new();
+        private readonly List<PoolGroup> _RandomizedGroups = new();
 
-        private List<PoolGroup> _othersGroups = new();
+        private readonly List<PoolGroup> _OthersGroups = new();
 
         internal void FindRandomizedGroups()
         {
+            _RandomizedGroups.Clear();
+            _OthersGroups.Clear();
+
             foreach (PoolGroup group in _Groups.Keys)
             {
                 AddGroupToList(group);
@@ -156,18 +139,80 @@ namespace MapModS.Map
         // If any pin has vanillaPool != spoilerPool, consider the whole group Randomized
         internal void AddGroupToList(PoolGroup group)
         {
-            foreach (GameObject goPin in _Groups[group].GetComponentsInChildren<GameObject>())
+            if (group == PoolGroup.Shop)
             {
-                PinDef pinD = goPin.GetComponent<PinDef>();
+                _RandomizedGroups.Add(group);
+                return;
+            }
+            
+            foreach (Transform pinT in _Groups[group].GetComponentsInChildren<Transform>())
+            {
+                Pin pin = pinT.GetComponent<Pin>();
 
-                if (pinD.vanillaPool != pinD.spoilerPool)
+                if (pin == null) continue;
+
+                //MapModS.Instance.Log(pin.PinData.name);
+
+                if (pin.PinData.vanillaPool != pin.PinData.spoilerPool)
                 {
-                    _randomizedGroups.Add(group);
+                    _RandomizedGroups.Add(group);
                     return;
                 }
             }
 
-            _othersGroups.Add(group);
+            _OthersGroups.Add(group);
+        }
+
+        internal void ToggleSpoilers()
+        {
+            MapModS.LS.SpoilerOn = !MapModS.LS.SpoilerOn;
+            RefreshSprites();
+        }
+
+        internal void TogglePinStyle()
+        {
+            switch (MapModS.LS.pinStyle)
+            {
+                case PinStyle.Normal:
+                    MapModS.LS.pinStyle = PinStyle.Q_Marks_1;
+                    break;
+
+                case PinStyle.Q_Marks_1:
+                    MapModS.LS.pinStyle = PinStyle.Q_Marks_2;
+                    break;
+
+                case PinStyle.Q_Marks_2:
+                    MapModS.LS.pinStyle = PinStyle.Q_Marks_3;
+                    break;
+
+                case PinStyle.Q_Marks_3:
+                    MapModS.LS.pinStyle = PinStyle.Normal;
+                    break;
+            }
+
+            RefreshSprites();
+        }
+
+        internal void ToggleRandomized()
+        {
+            MapModS.LS.RandomizedOn = !MapModS.LS.RandomizedOn;
+            foreach (PoolGroup group in _RandomizedGroups)
+            {
+                MapModS.LS.SetOnFromGroup(group, MapModS.LS.RandomizedOn);
+            }
+
+            RefreshGroups();
+        }
+
+        internal void ToggleOthers()
+        {
+            MapModS.LS.OthersOn = !MapModS.LS.OthersOn;
+            foreach (PoolGroup group in _OthersGroups)
+            {
+                MapModS.LS.SetOnFromGroup(group, MapModS.LS.OthersOn);
+            }
+
+            RefreshGroups();
         }
 
         public void UpdatePins(MapZone mapZone)
@@ -178,23 +223,36 @@ namespace MapModS.Map
             }
         }
 
-        // Called every time the map is opened
+        // Called every time when any relevant setting is changed, or when the Map is opened
         public void RefreshGroups()
         {
             foreach (PoolGroup group in _Groups.Keys)
             {
-                _Groups[group].SetActive(true);
-                //_Groups[group].SetActive(MapModS.LS.GetOnFromGroup(group));
+                //_Groups[group].SetActive(true);
+                _Groups[group].SetActive(MapModS.LS.GetOnFromGroup(group));
             }
+
+            //PauseGUI._SetGUI();
+            //MapText.SetTexts();
         }
 
-        //internal void ToggleSpoilers()
-        //{
-        //    MapModS.LS.SpoilerOn = !MapModS.LS.SpoilerOn;
-        //    SetSprites();
-        //    PauseGUI._SetGUI();
-        //    MapText.SetTexts();
-        //}
+        public void RefreshSprites()
+        {
+            foreach (Pin pin in _pins)
+            {
+                if (MapModS.LS.SpoilerOn)
+                {
+                    pin.SR.sprite = SpriteManager.GetSpriteFromPool(pin.PinData.spoilerPool);
+                }
+                else
+                {
+                    pin.SR.sprite = SpriteManager.GetSpriteFromPool(pin.PinData.vanillaPool);
+                }
+            }
+
+            //PauseGUI._SetGUI();
+            //MapText.SetTexts();
+        }
 
         public void ResizePins()
         {
@@ -225,8 +283,8 @@ namespace MapModS.Map
             }
 
             _pins.Clear();
-            _randomizedGroups.Clear();
-            _othersGroups.Clear();
+            _RandomizedGroups.Clear();
+            _OthersGroups.Clear();
         }
 
         protected void Start()

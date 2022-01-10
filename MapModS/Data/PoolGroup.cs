@@ -29,5 +29,7 @@
         BossGeo,
         SoulTotems,
         LoreTablets,
+
+        Shop
     }
 }

@@ -9,7 +9,7 @@ namespace MapModS.Map
     internal class Pin : MonoBehaviour
     {
         public PinDef PinData { get; private set; } = null;
-        private SpriteRenderer _SR => gameObject.GetComponent<SpriteRenderer>();
+        public SpriteRenderer SR => gameObject.GetComponent<SpriteRenderer>();
 
         private readonly Color _inactiveColor = Color.gray;
         private Color _origColor;
@@ -17,7 +17,7 @@ namespace MapModS.Map
         public void SetPinData(PinDef pd)
         {
             PinData = pd;
-            _origColor = _SR.color;
+            _origColor = SR.color;
         }
 
         public void UpdatePin(MapZone mapZone)
@@ -147,13 +147,13 @@ namespace MapModS.Map
         {
             if (RandomizerMod.RandomizerMod.RS.TrackerData.uncheckedReachableLocations.Contains(PinData.name))
             {
-                _SR.color = _origColor;
+                SR.color = _origColor;
             }
             else
             {
                 // Non-randomized items also fall here
                 transform.localScale = 0.7f * transform.localScale;
-                _SR.color = _inactiveColor;
+                SR.color = _inactiveColor;
             }
         }
     }

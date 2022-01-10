@@ -21,7 +21,7 @@ namespace MapModS.Trackers
                 MapModS.LS.ObtainedVanillaItems[_grd.id + _grd.sceneName] = true;
             }
 
-            MapModS.LS.GeoRockCounter ++;
+            //MapModS.LS.GeoRockCounter ++;
 
             MapModS.Instance.Log("Geo Rock broken");
             MapModS.Instance.Log(" ID: " + _grd.id);

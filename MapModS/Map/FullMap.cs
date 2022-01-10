@@ -377,24 +377,24 @@ namespace MapModS.Map
             return orig;
         }
 
-        private static readonly List<string> _rootScenes = new()
-        {
-            "Crossroads_07",
-            "Fungus1_13",
-            "Fungus2_33",
-            "Fungus2_17",
-            "Deepnest_39",
-            "Fungus3_11",
-            "Deepnest_East_07",
-            "Abyss_01",
-            "Ruins1_17",
-            "RestingGrounds_05",
-            "RestingGrounds_08",
-            "Mines_23",
-            "Cliffs_01",
-            "Crossroads_ShamanTemple",
-            "Hive_02"
-        };
+        //private static readonly List<string> _rootScenes = new()
+        //{
+        //    "Crossroads_07",
+        //    "Fungus1_13",
+        //    "Fungus2_33",
+        //    "Fungus2_17",
+        //    "Deepnest_39",
+        //    "Fungus3_11",
+        //    "Deepnest_East_07",
+        //    "Abyss_01",
+        //    "Ruins1_17",
+        //    "RestingGrounds_05",
+        //    "RestingGrounds_08",
+        //    "Mines_23",
+        //    "Cliffs_01",
+        //    "Crossroads_ShamanTemple",
+        //    "Hive_02"
+        //};
 
         //// If RevealFullMap, we pass the complete list for root scenes
         //public static object VariableGetOverride(System.Type type, string name, object value)
