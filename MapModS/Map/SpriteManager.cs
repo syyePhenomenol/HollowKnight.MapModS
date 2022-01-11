@@ -33,7 +33,7 @@ namespace MapModS.Map
                 Sprite sprite = FromStream(a.GetManifestResourceStream(name));
                 _sprites[altName] = sprite;
 
-                MapModS.Instance.Log(altName);
+                //MapModS.Instance.Log(altName);
             }
         }
 

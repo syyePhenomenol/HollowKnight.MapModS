@@ -198,6 +198,8 @@ namespace MapModS.UI
             MapModS.LS.ToggleModEnabled();
             _mapControlPanel.Destroy();
             BuildMenu(Canvas);
+            MapText.LockToRefresh();
+            MapText.RebuildText();
         }
 
         private static void UpdateEnable()
@@ -217,6 +219,7 @@ namespace MapModS.UI
             WorldMap.CustomPins.ToggleSpoilers();
 
             UpdateGUI();
+            MapText.SetTexts();
         }
 
         private static void UpdateSpoilers()
@@ -236,11 +239,12 @@ namespace MapModS.UI
             WorldMap.CustomPins.ToggleRandomized();
 
             UpdateGUI();
+            MapText.SetTexts();
         }
 
         private static void UpdateRandomized()
         {
-            if (WorldMap.CustomPins == null) return;
+            //if (WorldMap.CustomPins == null) return;
 
             if (!WorldMap.CustomPins.RandomizedGroups.Any(MapModS.LS.GetOnFromGroup))
             {
@@ -267,11 +271,12 @@ namespace MapModS.UI
             WorldMap.CustomPins.ToggleOthers();
 
             UpdateGUI();
+            MapText.SetTexts();
         }
 
         private static void UpdateOthers()
         {
-            if (WorldMap.CustomPins == null) return;
+            //if (WorldMap.CustomPins == null) return;
 
             if (!WorldMap.CustomPins.OthersGroups.Any(MapModS.LS.GetOnFromGroup))
             {
@@ -298,6 +303,7 @@ namespace MapModS.UI
             WorldMap.CustomPins.TogglePinStyle();
 
             UpdateGUI();
+            MapText.SetTexts();
         }
 
         private static void UpdateStyle()
@@ -332,6 +338,7 @@ namespace MapModS.UI
             }
             
             UpdateGUI();
+            MapText.SetTexts();
         }
 
         private static void UpdateSize()
@@ -357,18 +364,19 @@ namespace MapModS.UI
             MapModS.LS.ToggleFullMap();
 
             UpdateGUI();
+            MapText.SetTexts();
         }
 
         private static void UpdateMode()
         {
-            switch (MapModS.LS.mapState)
+            switch (MapModS.LS.mapMode)
             {
-                case Mode.FullMap:
+                case MapMode.FullMap:
                     _mapControlPanel.GetButton("Mode").SetTextColor(Color.green);
                     _mapControlPanel.GetButton("Mode").UpdateText("Mode:\n Full Map");
                     break;
 
-                case Mode.AllPins:
+                case MapMode.AllPins:
                     _mapControlPanel.GetButton("Mode").SetTextColor(Color.white);
                     _mapControlPanel.GetButton("Mode").UpdateText("Mode:\n All Pins");
                     break;
@@ -390,6 +398,7 @@ namespace MapModS.UI
             MapModS.LS.SetOnFromGroup(buttonName, !MapModS.LS.GetOnFromGroup(buttonName));
 
             UpdateGUI();
+            MapText.SetTexts();
         }
 
         private static void UpdatePool(PoolGroup pool)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MapModS.Map;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace MapModS.UI
         private static GUIController _instance;
 
         private GameObject _pauseCanvas;
+        private GameObject _mapCanvas;
 
         public static GUIController Instance
         {
@@ -55,6 +57,7 @@ namespace MapModS.UI
             if (_instance != null)
             {
                 Destroy(_instance._pauseCanvas);
+                Destroy(_instance._mapCanvas);
                 Destroy(_instance.gameObject);
             }
         }
@@ -73,6 +76,21 @@ namespace MapModS.UI
             PauseMenu.BuildMenu(_pauseCanvas);
 
             DontDestroyOnLoad(_pauseCanvas);
+
+            _mapCanvas = new GameObject();
+            _mapCanvas.AddComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
+            CanvasScaler mapScaler = _mapCanvas.AddComponent<CanvasScaler>();
+            mapScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            mapScaler.referenceResolution = new Vector2(1920f, 1080f);
+            _pauseCanvas.AddComponent<GraphicRaycaster>();
+
+            MapText.BuildText(_mapCanvas);
+
+            DontDestroyOnLoad(_mapCanvas);
+
+            _mapCanvas.SetActive(false);
+
+            //_mapCanvas.transform.SetParent(WorldMap.CustomPins.transform);
         }
 
         public void Update()
@@ -80,6 +98,7 @@ namespace MapModS.UI
             try
             {
                 PauseMenu.Update();
+                //MapText.Update();
             }
             catch (Exception e)
             {

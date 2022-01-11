@@ -6,13 +6,29 @@ namespace MapModS.UI
     {
         public static void Hook()
         {
-            On.GameMap.Start += GameMap_Start;
+            On.GameManager.SetGameMap += GameManager_SetGameMap;
+            On.GameMap.SetupMapMarkers += SetupMapMarkers;
+            On.GameMap.DisableMarkers += GameMap_DisableMarkers;
             On.QuitToMenu.Start += OnQuitToMenu;
         }
 
-        private static void GameMap_Start(On.GameMap.orig_Start orig, GameMap self)
+        private static void SetupMapMarkers(On.GameMap.orig_SetupMapMarkers orig, GameMap self)
         {
             orig(self);
+
+            MapText.Show();
+        }
+
+        private static void GameMap_DisableMarkers(On.GameMap.orig_DisableMarkers orig, GameMap self)
+        {
+            orig(self);
+
+            MapText.Hide();
+        }
+
+        private static void GameManager_SetGameMap(On.GameManager.orig_SetGameMap orig, GameManager self, UnityEngine.GameObject go_gameMap)
+        {
+            orig(self, go_gameMap);
 
             GUIController.Setup();
             GUIController.Instance.BuildMenus();

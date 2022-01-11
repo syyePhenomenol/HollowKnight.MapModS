@@ -44,7 +44,7 @@ namespace MapModS.Map
         {
             if (mapZone == MapZone.NONE)
             {
-                if (MapModS.LS.mapState != Mode.PinsOverMap)
+                if (MapModS.LS.mapMode != MapMode.PinsOverMap)
                 {
                     gameObject.SetActive(true); return;
                 }

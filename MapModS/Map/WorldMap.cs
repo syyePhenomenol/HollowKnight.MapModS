@@ -2,6 +2,7 @@
 using MapModS.Data;
 using MapModS.Settings;
 using MapModS.Trackers;
+using MapModS.UI;
 using System;
 using UnityEngine;
 
@@ -63,7 +64,7 @@ namespace MapModS.Map
             if (!MapModS.LS.ModEnabled) return;
 
             // Easiest way to force AdditionalMaps custom areas to show
-            if (MapModS.LS.mapState == Mode.FullMap)
+            if (MapModS.LS.mapMode == MapMode.FullMap)
             {
                 foreach (Transform child in self.transform)
                 {
