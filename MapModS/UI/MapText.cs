@@ -10,22 +10,26 @@ namespace MapModS.UI
 	{
 		public static GameObject Canvas;
 
+		public static bool LockToggleEnable;
+
 		private static CanvasPanel _mapDisplayPanel;
 		private static CanvasPanel _refreshDisplayPanel;
-		private static bool _lockRefresh = false;
-
-		private static readonly string _textRefresh = "MapMod S enabled/disabled. Close map to refresh";
 
 		public static void Show()
         {
+			if (Canvas == null) return;
+
 			Canvas.SetActive(true);
-			_lockRefresh = false;
+			LockToggleEnable = false;
 			RebuildText();
 		}
 
 		public static void Hide()
 		{
+			if (Canvas == null) return;
+			
 			Canvas.SetActive(false);
+			LockToggleEnable = false;
 		}
 
 		public static void BuildText(GameObject _canvas)
@@ -42,7 +46,7 @@ namespace MapModS.UI
 
 			_refreshDisplayPanel = new CanvasPanel
 				(_canvas, GUIController.Instance.Images["ButtonsMenuBG"], new Vector2(10f, 1040f), new Vector2(1346f, 0f), new Rect(0f, 0f, 0f, 0f));
-			_refreshDisplayPanel.AddText("Refresh", _textRefresh, new Vector2(750f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14);
+			_refreshDisplayPanel.AddText("Refresh", "", new Vector2(750f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14);
 
 			SetTexts();
 		}
@@ -54,43 +58,28 @@ namespace MapModS.UI
 
 			BuildText(Canvas);
 
-			_mapDisplayPanel.SetActive(!_lockRefresh && MapModS.LS.ModEnabled, false);
-			_refreshDisplayPanel.SetActive(_lockRefresh, false);
+			_mapDisplayPanel.SetActive(!LockToggleEnable && MapModS.LS.ModEnabled, false);
+			_refreshDisplayPanel.SetActive(LockToggleEnable, false);
+
+			if (MapModS.LS.ModEnabled)
+            {
+				_refreshDisplayPanel.GetText("Refresh").UpdateText("MapMod S enabled. Close map to refresh");
+			}
+			else
+            {
+				_refreshDisplayPanel.GetText("Refresh").UpdateText("MapMod S disabled. Close map to refresh");
+			}
+			
 		}
 
 		public static void SetTexts()
 		{
-			//if (WorldMap.CustomPins == null) return;
-
 			SetSpoilers();
 			SetStyle();
 			SetRandomized();
 			SetOthers();
 			SetSize();
 		}
-
-		//public static void Update()
-		//{
-		//	if (_mapDisplayPanel == null || GameManager.instance == null
-		//		|| RandomizerMod.RandomizerMod.RS.GenerationSettings == null)
-		//		//|| !MapModS.LS.ModEnabled)
-		//	{
-		//		return;
-		//	}
-
-		//	if (HeroController.instance == null || !GameManager.instance.IsGameplayScene() || GameManager.instance.IsGamePaused())
-		//	{
-		//		if (_mapDisplayPanel.Active) _mapDisplayPanel.SetActive(false, true);
-		//		return;
-		//	}
-		//	else
-		//	{
-		//		if (!_mapDisplayPanel.Active)
-		//		{
-		//			RebuildText();
-		//		}
-		//	}
-		//}
 
 		private static void SetSpoilers()
 		{
@@ -168,7 +157,7 @@ namespace MapModS.UI
 
 		private static void SetSize()
 		{
-			switch (MapModS.GS.PinSizeSetting)
+			switch (MapModS.GS.pinSize)
 			{
 				case PinSize.Small:
 					_mapDisplayPanel.GetText("Size").UpdateText("Size (ctrl-5): small");
@@ -182,11 +171,6 @@ namespace MapModS.UI
 					_mapDisplayPanel.GetText("Size").UpdateText("Size (ctrl-5): large");
 					break;
 			}
-		}
-
-		public static void LockToRefresh()
-        {
-			_lockRefresh = true;
 		}
 	}
 }

@@ -24,14 +24,14 @@ namespace MapModS.Shop
 
         private static readonly List<string> ShopItemsToRemove = new()
         {
-            "Shop Item PinBench",
-            "Shop Item PinCocoon",
-            "Shop Item PinDreamPlant",
-            "Shop Item PinGhost",
-            "Shop Item PinShop",
-            "Shop Item PinStag",
-            "Shop Item PinTram",
-            "Shop Item PinSpa",
+            //"Shop Item PinBench",
+            //"Shop Item PinCocoon",
+            //"Shop Item PinDreamPlant",
+            //"Shop Item PinGhost",
+            //"Shop Item PinShop",
+            //"Shop Item PinStag",
+            //"Shop Item PinTram",
+            //"Shop Item PinSpa",
             "Shop Item MarkerB",
             "Shop Item MarkerR",
             "Shop Item MarkerY",
@@ -50,9 +50,7 @@ namespace MapModS.Shop
 
             foreach (GameObject item in shop.stock)
             {
-                // (specialType: 0 = lantern, elegant key, quill; 1 = mask, 2 = charm, 3 = vessel, 4-7 = relics, 8 = notch, 9 = map, 10 = simple key, 11 = egg, 12-14 = repair fragile, 15 = salubra blessing, 16 = map pin, 17 = map marker)
-
-                // Remove Vanilla Pins and Map Markers from the shop
+                // Remove Map Markers from the shop
                 if (!ShopItemsToRemove.Contains(item.GetComponent<ShopItemStats>().name))
                 {
                     newStock.Add(item);

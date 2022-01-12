@@ -11,25 +11,6 @@ namespace MapModS.Trackers
             On.PlayMakerFSM.OnEnable += PlayMakerFSM_OnEnable;
         }
 
-        private static void HealthManager_SendDeathEvent(On.HealthManager.orig_SendDeathEvent orig, HealthManager self)
-        {
-            orig(self);
-
-            switch (self.gameObject.name)
-            {
-                case "Mage Knight":
-                case "Mega Zombie Beam Miner (1)":
-                case "Zombie Beam Miner Rematch":
-                case "Giant Fly":
-                    MapModS.LS.ObtainedVanillaItems[self.gameObject.name + GameManager.instance.sceneName] = true;
-                    break;
-                default:
-                    break;
-            }
-
-            //MapModS.Instance.Log($"{self.gameObject.name} died");
-        }
-
         // Called after every time the map is opened
         public static void UpdateObtainedItems()
         {
@@ -50,24 +31,24 @@ namespace MapModS.Trackers
                     || pbd.id == "Heart Piece"
                     || pbd.id == "Vessel Fragment"
                     || pbd.id.Contains("Chest")
-                    // Crystal/Enraged Guardian
+                    // Crystal/Enraged Guardian Boss Geo
                     || pbd.id == "Mega Zombie Beam Miner (1)"
                     || pbd.id == "Zombie Beam Miner Rematch")
                     && !pbd.id.Contains("-"))
                 {
                     MapModS.LS.ObtainedVanillaItems[pbd.id + pbd.sceneName] = true;
                 }
-                // Soul Warrior Sanctum
+                // Soul Warrior Sanctum Boss Geo
                 else if (pbd.id == "Battle Scene v2" && pbd.sceneName == "Ruins1_23")
                 {
                     MapModS.LS.ObtainedVanillaItems["Mage Knight" + pbd.sceneName] = true;
                 }
-                // Soul Warrior Elegant Key
+                // Soul Warrior Elegant Key Boss Geo
                 else if (pbd.id == "Battle Scene v2" && pbd.sceneName == "Ruins1_31")
                 {
                     MapModS.LS.ObtainedVanillaItems["Mage Knight" + pbd.sceneName + "b"] = true;
                 }
-                // Gruz Mother
+                // Gruz Mother Boss Geo
                 else if (pbd.id == "Battle Scene" && pbd.sceneName == "Crossroads_04")
                 {
                     MapModS.LS.ObtainedVanillaItems["Giant Fly" + pbd.sceneName] = true;
@@ -75,8 +56,25 @@ namespace MapModS.Trackers
             }
         }
 
-        // sceneData doesn't immediately get updated when items are picked up,
-        // therefore we need to use the item FSMs to determine this
+        // For Boss Geo
+        private static void HealthManager_SendDeathEvent(On.HealthManager.orig_SendDeathEvent orig, HealthManager self)
+        {
+            orig(self);
+
+            switch (self.gameObject.name)
+            {
+                case "Mage Knight":
+                case "Mega Zombie Beam Miner (1)":
+                case "Zombie Beam Miner Rematch":
+                case "Giant Fly":
+                    MapModS.LS.ObtainedVanillaItems[self.gameObject.name + GameManager.instance.sceneName] = true;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        
         private static void PlayMakerFSM_OnEnable(On.PlayMakerFSM.orig_OnEnable orig, PlayMakerFSM self)
         {
             orig(self);

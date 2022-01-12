@@ -34,16 +34,12 @@ namespace MapModS.Map
         {
             orig(self);
 
-            if (!MapModS.LS.ModEnabled) return;
-
             WorldMap.UpdateMap(self, MapZone.ABYSS);
         }
 
         private static void GameMap_QuickMapCity(On.GameMap.orig_QuickMapCity orig, GameMap self)
         {
             orig(self);
-
-            if (!MapModS.LS.ModEnabled) return;
 
             WorldMap.UpdateMap(self, MapZone.CITY);
         }
@@ -52,16 +48,12 @@ namespace MapModS.Map
         {
             orig(self);
 
-            if (!MapModS.LS.ModEnabled) return;
-
             WorldMap.UpdateMap(self, MapZone.CLIFFS);
         }
 
         private static void GameMap_QuickMapCrossroads(On.GameMap.orig_QuickMapCrossroads orig, GameMap self)
         {
             orig(self);
-
-            if (!MapModS.LS.ModEnabled) return;
 
             WorldMap.UpdateMap(self, MapZone.CROSSROADS);
         }
@@ -70,16 +62,12 @@ namespace MapModS.Map
         {
             orig(self);
 
-            if (!MapModS.LS.ModEnabled) return;
-
             WorldMap.UpdateMap(self, MapZone.MINES);
         }
 
         private static void GameMap_QuickMapDeepnest(On.GameMap.orig_QuickMapDeepnest orig, GameMap self)
         {
             orig(self);
-
-            if (!MapModS.LS.ModEnabled) return;
 
             WorldMap.UpdateMap(self, MapZone.DEEPNEST);
         }
@@ -88,16 +76,12 @@ namespace MapModS.Map
         {
             orig(self);
 
-            if (!MapModS.LS.ModEnabled) return;
-
             WorldMap.UpdateMap(self, MapZone.TOWN);
         }
 
         private static void GameMap_QuickMapFogCanyon(On.GameMap.orig_QuickMapFogCanyon orig, GameMap self)
         {
             orig(self);
-
-            if (!MapModS.LS.ModEnabled) return;
 
             WorldMap.UpdateMap(self, MapZone.FOG_CANYON);
         }
@@ -106,16 +90,12 @@ namespace MapModS.Map
         {
             orig(self);
 
-            if (!MapModS.LS.ModEnabled) return;
-
             WorldMap.UpdateMap(self, MapZone.WASTES);
         }
 
         private static void GameMap_QuickMapGreenpath(On.GameMap.orig_QuickMapGreenpath orig, GameMap self)
         {
             orig(self);
-
-            if (!MapModS.LS.ModEnabled) return;
 
             WorldMap.UpdateMap(self, MapZone.GREEN_PATH);
         }
@@ -124,16 +104,12 @@ namespace MapModS.Map
         {
             orig(self);
 
-            if (!MapModS.LS.ModEnabled) return;
-
             WorldMap.UpdateMap(self, MapZone.OUTSKIRTS);
         }
 
         private static void GameMap_QuickMapQueensGardens(On.GameMap.orig_QuickMapQueensGardens orig, GameMap self)
         {
             orig(self);
-
-            if (!MapModS.LS.ModEnabled) return;
 
             WorldMap.UpdateMap(self, MapZone.ROYAL_GARDENS);
         }
@@ -142,16 +118,12 @@ namespace MapModS.Map
         {
             orig(self);
 
-            if (!MapModS.LS.ModEnabled) return;
-
             WorldMap.UpdateMap(self, MapZone.RESTING_GROUNDS);
         }
 
         private static void GameMap_QuickMapWaterways(On.GameMap.orig_QuickMapWaterways orig, GameMap self)
         {
             orig(self);
-
-            if (!MapModS.LS.ModEnabled) return;
 
             WorldMap.UpdateMap(self, MapZone.WATERWAYS);
         }
@@ -211,15 +183,6 @@ namespace MapModS.Map
                 Finish();
                 return;
             }
-
-            //// Need to force show the map for RevealFullMap
-            //foreach (Transform child in _GameMap.transform)
-            //{
-            //    if (child.name == _customMapZone.ToString())
-            //    {
-            //        child.gameObject.SetActive(true);
-            //    }
-            //}
 
             WorldMap.UpdateMap(_GameMap, _customMapZone);
             _GameMap.SetupMapMarkers();

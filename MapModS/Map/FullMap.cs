@@ -129,7 +129,7 @@ namespace MapModS.Map
         // We need to purge the map after turning RevealFullMap off. Essentially the opposite of SetupMap()
         public static void PurgeMap()
         {
-            GameObject go_gameMap = GameObject.Find("Game_Map(Clone)");
+            GameObject go_gameMap = GameManager.instance.gameMap;
 
             for (int i = 0; i < go_gameMap.transform.childCount; i++)
             {
@@ -155,8 +155,6 @@ namespace MapModS.Map
                         || gameObject.name == "Map Mod Pin Group") continue;
 
                     if (_persistentMapObjects.Contains(gameObject2.name)) continue;
-
-                    //MapModS.Instance.Log(gameObject.name);
 
                     gameObject2.SetActive(false);
                 }

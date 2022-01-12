@@ -14,7 +14,7 @@ namespace MapModS
     {
         public static MapModS Instance;
 
-        private readonly string _version = "PRERELEASE 1";
+        private readonly string _version = "Rando 4 PRERELEASE 1";
 
         public override string GetVersion() => _version;
 
@@ -66,15 +66,22 @@ namespace MapModS
             ItemTracker.Hook();
             GeoRockTracker.Hook();
 
-            // Remove Vanilla Pins and Markers from the Shop
-            //ShopHooks.Hook();
+            // Remove Map Markers from the Shop
             ShopChanger.Hook();
 
             // Modify overall Map behaviour
             WorldMap.Hook();
+
+            // Modify overall Quick Map behaviour
             QuickMap.Hook();
+
+            // Allow the full Map to be toggled
             FullMap.Hook();
+
+            // Disable Vanilla Pins when mod is enabled
             PinsVanilla.Hook();
+
+            // Immediately update Map on scene change
             Quill.Hook();
 
             // Add a Pause Menu GUI
@@ -97,11 +104,6 @@ namespace MapModS
                         Instance.Log("Additional Maps detected");
                         return true;
                     }
-
-                    //foreach (FieldInfo field in type.GetFields())
-                    //{
-                    //    MapModS.Instance.Log(field.Name);
-                    //}
                 }
             }
 

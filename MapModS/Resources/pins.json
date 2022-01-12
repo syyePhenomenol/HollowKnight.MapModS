@@ -2586,7 +2586,7 @@
     "name": "Rancid_Egg-Tuk_Defender's_Crest",
     "sceneName": "Waterways_03",
     "objectName": null,
-    "pdBool": null,
+    "pdBool": "tukMet",
     "pdInt": null,
     "pdIntValue": 0,
     "pinScene": null,
@@ -9137,7 +9137,7 @@
   "Geo_Rock-Deepnest_Lower_Cornifer": {
     "name": "Geo_Rock-Deepnest_Lower_Cornifer",
     "sceneName": "Fungus2_25",
-    "objectName": null,
+    "objectName": "Geo Rock Deepnest (1)",
     "pdBool": null,
     "pdInt": null,
     "pdIntValue": 0,

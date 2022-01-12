@@ -48,8 +48,6 @@ namespace MapModS.Data
                     {
                         PoolGroup group = (PoolGroup)Enum.Parse(typeof(PoolGroup), poolDef.Group);
 
-                        // MapModS.Instance.Log(group);
-
                         return group;
                     }
                 }
@@ -64,8 +62,6 @@ namespace MapModS.Data
         {
             string cleanItemName = location.Split('-')[0];
 
-            //MapModS.Instance.Log(cleanItemName);
-
             return GetPoolGroup(cleanItemName);
         }
 
@@ -77,12 +73,8 @@ namespace MapModS.Data
 
                 string cleanItemName = ilp.item.Name.Replace("Placeholder-", "").Split('-')[0];
 
-                //MapModS.Instance.Log(cleanItemName);
-
                 return GetPoolGroup(cleanItemName);
             }
-
-            //MapModS.Instance.LogWarn($"Unable to find RandomizerItemDef for {location}. Either it's not randomized or there is a bug");
 
             return GetVanillaPoolGroup(location);
         }
@@ -115,7 +107,7 @@ namespace MapModS.Data
                 }
             }
 
-            // Handle special cases
+            // Disable pins based on Randomizer settings
             _pins["Egg_Shop"].disable = !RandomizerMod.RandomizerMod.RS.GenerationSettings.NoveltySettings.EggShop;
 
             _pins["Elevator_Pass"].disable = !RandomizerMod.RandomizerMod.RS.GenerationSettings.NoveltySettings.RandomizeElevatorPass;
@@ -137,14 +129,6 @@ namespace MapModS.Data
         public static void Load()
         {
             _pins = JsonUtil.Deserialize<Dictionary<string, PinDef>>("MapModS.Resources.pins.json");
-
-            //foreach (KeyValuePair<string, PinDef> pin in _pins)
-            //{
-            //    if (pin.Value.pdBool == null && pin.Value.pdInt == null && pin.Value.objectName == null)
-            //    {
-            //        MapModS.Instance.Log($"{pin.Key}: no tracking data");
-            //    }
-            //}
         }
     }
 }

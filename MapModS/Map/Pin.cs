@@ -22,11 +22,6 @@ namespace MapModS.Map
 
         public void UpdatePin(MapZone mapZone)
         {
-            if (PinData == null)
-            {
-                throw new Exception("Cannot enable pin with null pindata. Ensure game object is disabled before adding as component, then call SetPinData(<pd>) before enabling.");
-            }
-
             try
             {
                 ShowBasedOnMap(mapZone);
@@ -56,6 +51,8 @@ namespace MapModS.Map
                         {
                             gameObject.SetActive(true); return;
                         }
+
+                        gameObject.SetActive(false); return;
                     }
                     else if (SettingsUtil.GetMapSetting(PinData.mapZone))
                     {
@@ -142,7 +139,7 @@ namespace MapModS.Map
 
         public void SetSizeAndColor()
         {
-            float scale = MapModS.GS.PinSizeSetting switch
+            float scale = MapModS.GS.pinSize switch
             {
                 PinSize.Small => 0.31f,
                 PinSize.Medium => 0.37f,

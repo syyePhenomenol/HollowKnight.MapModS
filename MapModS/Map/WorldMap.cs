@@ -29,9 +29,6 @@ namespace MapModS.Map
 
             GameMap gameMap = go_gameMap.GetComponent<GameMap>();
 
-            // Necessary if player goes straight to Pause Menu
-            SyncMap(gameMap);
-
             DataLoader.FindPoolGroups();
 
             if (goCustomPins != null)
@@ -61,10 +58,8 @@ namespace MapModS.Map
         {
             orig(self);
 
-            if (!MapModS.LS.ModEnabled) return;
-
             // Easiest way to force AdditionalMaps custom areas to show
-            if (MapModS.LS.mapMode == MapMode.FullMap)
+            if (MapModS.LS.ModEnabled && MapModS.LS.mapMode == MapMode.FullMap)
             {
                 foreach (Transform child in self.transform)
                 {
@@ -77,16 +72,6 @@ namespace MapModS.Map
             }
 
             UpdateMap(self, MapZone.NONE);
-
-            //foreach (Transform areaObj in self.transform)
-            //{
-            //    MapModS.Instance.Log(areaObj.name);
-
-            //    foreach (Transform roomObj in areaObj.transform)
-            //    {
-            //        MapModS.Instance.Log($"- {roomObj.name}");
-            //    }
-            //}
         }
 
         // Following two behaviours necessary since GameMap is actually persistently active
@@ -126,14 +111,11 @@ namespace MapModS.Map
             {
                 ItemTracker.UpdateObtainedItems();
 
-                PinsVanilla.UpdatePins(gameMap.gameObject);
+                gameMap.SetupMap();
 
-                SyncMap(gameMap);
+                PinsVanilla.ForceDisablePins(gameMap.gameObject);
 
-                PinsVanilla.RefreshGroups();
-                //PinsVanilla.ResizePins();
-
-                if (goCustomPins == null) return;
+                if (goCustomPins == null || !MapModS.LS.ModEnabled) return;
 
                 CustomPins.ResizePins();
                 CustomPins.UpdatePins(mapZone);
@@ -143,15 +125,6 @@ namespace MapModS.Map
             {
                 MapModS.Instance.LogError(e);
             }
-        }
-
-        public static void SyncMap(GameMap gameMap)
-        {
-            // If the mod is installed for an existing game
-            //SettingsUtil.SyncPlayerDataSettings();
-
-            // Refresh map
-            gameMap.SetupMap();
         }
     }
 }

@@ -89,8 +89,6 @@ namespace MapModS.UI
             DontDestroyOnLoad(_mapCanvas);
 
             _mapCanvas.SetActive(false);
-
-            //_mapCanvas.transform.SetParent(WorldMap.CustomPins.transform);
         }
 
         public void Update()
@@ -98,7 +96,6 @@ namespace MapModS.UI
             try
             {
                 PauseMenu.Update();
-                //MapText.Update();
             }
             catch (Exception e)
             {

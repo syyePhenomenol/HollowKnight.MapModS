@@ -23,7 +23,7 @@ namespace MapModS.Settings
                 On = true;
             }
 
-            public bool On; // The corresponding pin will be shown on the map (if Has)
+            public bool On;
         };
 
         public Dictionary<PoolGroup, GroupSetting> GroupSettings = Enum.GetValues(typeof(PoolGroup))
@@ -51,6 +51,17 @@ namespace MapModS.Settings
         public void ToggleModEnabled()
         {
             ModEnabled = !ModEnabled;
+
+            if (!GameManager.instance.IsGamePaused() && !HeroController.instance.controlReqlinquished)
+            {
+                UIManager.instance.checkpointSprite.Show();
+                UIManager.instance.checkpointSprite.Hide();
+            }
+
+            if (!ModEnabled)
+            {
+                FullMap.PurgeMap();
+            }
         }
 
         public void ToggleFullMap()
@@ -107,48 +118,5 @@ namespace MapModS.Settings
                 GroupSettings[group].On = value;
             }
         }
-
-        //public void ToggleGroups()
-        //{
-        //	if (AllGroupsOff())
-        //	{
-        //		foreach (GroupSetting setting in GroupSettings.Values)
-        //		{
-        //			setting.On = true;
-        //		}
-        //	}
-        //	else
-        //	{
-        //		foreach (GroupSetting setting in GroupSettings.Values)
-        //		{
-        //			setting.On = false;
-        //		}
-        //	}
-        //}
-
-        //public bool AllGroupsOn()
-        //{
-        //	foreach (GroupSetting setting in GroupSettings.Values)
-        //	{
-        //		if (!setting.On)
-        //		{
-        //			return false;
-        //		}
-        //	}
-
-        //	return true;
-        //}
-
-        //public bool AllGroupsOff()
-        //{
-        //	foreach (GroupSetting setting in GroupSettings.Values)
-        //	{
-        //		if (setting.On)
-        //		{
-        //			return false;
-        //		}
-        //	}
-        //	return true;
-        //}
     }
 }

@@ -39,7 +39,6 @@ namespace MapModS.UI
             Rect buttonRect = new(0, 0, GUIController.Instance.Images["ButtonRect"].width, GUIController.Instance.Images["ButtonRect"].height);
 
             // Main settings
-
             // Toggle the mod on or off
             _mapControlPanel.AddButton
                 (
@@ -104,11 +103,9 @@ namespace MapModS.UI
                 fontSize: 10
             );
 
-            // Collapse panel
             pools.SetActive(false, true);
 
             // Pool buttons
-            //foreach (KeyValuePair<PoolGroup, (string, Vector2)> pair in _groupButtons)
             foreach (PoolGroup group in Enum.GetValues(typeof(PoolGroup)))
             {
                 if (group == PoolGroup.Unknown) continue;
@@ -195,11 +192,14 @@ namespace MapModS.UI
 
         public static void EnableClicked(string buttonName)
         {
-            MapModS.LS.ToggleModEnabled();
-            _mapControlPanel.Destroy();
-            BuildMenu(Canvas);
-            MapText.LockToRefresh();
-            MapText.RebuildText();
+            if (!(MapText.LockToggleEnable && MapText.Canvas.activeSelf))
+            {
+                MapModS.LS.ToggleModEnabled();
+                _mapControlPanel.Destroy();
+                BuildMenu(Canvas);
+                MapText.LockToggleEnable = true;
+                MapText.RebuildText();
+            }
         }
 
         private static void UpdateEnable()
@@ -244,8 +244,6 @@ namespace MapModS.UI
 
         private static void UpdateRandomized()
         {
-            //if (WorldMap.CustomPins == null) return;
-
             if (!WorldMap.CustomPins.RandomizedGroups.Any(MapModS.LS.GetOnFromGroup))
             {
                 _mapControlPanel.GetButton("Randomized").SetTextColor(Color.white);
@@ -276,8 +274,6 @@ namespace MapModS.UI
 
         private static void UpdateOthers()
         {
-            //if (WorldMap.CustomPins == null) return;
-
             if (!WorldMap.CustomPins.OthersGroups.Any(MapModS.LS.GetOnFromGroup))
             {
                 _mapControlPanel.GetButton("Others").SetTextColor(Color.white);
@@ -343,7 +339,7 @@ namespace MapModS.UI
 
         private static void UpdateSize()
         {
-            switch (MapModS.GS.PinSizeSetting)
+            switch (MapModS.GS.pinSize)
             {
                 case PinSize.Small:
                     _mapControlPanel.GetButton("Size").UpdateText("Pin Size:\nsmall");

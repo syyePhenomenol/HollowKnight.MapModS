@@ -71,11 +71,6 @@ namespace MapModS.UI
                     }
                 }
             }
-            //Used for various debugging tasks
-            //if (Input.GetKeyDown(KeyCode.O)) {
-            //	//MapModS.ReloadGameMapPins();
-            //	MapModS.GetAllActiveObjects();
-            //}
         }
     }
 }

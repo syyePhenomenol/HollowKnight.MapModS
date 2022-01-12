@@ -152,8 +152,6 @@ namespace MapModS.Map
 
                 if (pin == null) continue;
 
-                //MapModS.Instance.Log(pin.PinData.name);
-
                 if (pin.PinData.vanillaPool != pin.PinData.spoilerPool)
                 {
                     RandomizedGroups.Add(group);
