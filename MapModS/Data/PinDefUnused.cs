@@ -7,7 +7,7 @@ namespace MapModS.Data
         public string name;
 
         // The list of objects that when all found, the pin will disappear
-        public string[] vanillaObjectName = {""};
+        public string[] vanillaObjectName;
 
         // The name of the scene in which the objects are
         public string sceneName;

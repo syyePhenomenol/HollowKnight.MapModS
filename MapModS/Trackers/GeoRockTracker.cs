@@ -29,7 +29,7 @@ namespace MapModS.Trackers
 
             if (RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.GeoRocks) return;
 
-            // Rename duplicate GameObjects (GeoRockData gets created later and its id is also the GameObject name)
+            // Rename duplicate ids
             if (self.gameObject.scene.name == "Crossroads_ShamanTemple" && self.gameObject.name == "Geo Rock 2")
             {
                 if (self.transform.parent != null)

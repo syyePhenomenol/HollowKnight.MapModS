@@ -31,7 +31,6 @@ namespace MapModS.Map
             {
                 ShowBasedOnMap(mapZone);
                 HideIfFound();
-                //ModifyScaleAndColor();
             }
             catch (Exception e)
             {
@@ -114,6 +113,22 @@ namespace MapModS.Map
             if (PinData.vanillaPool == PoolGroup.WhisperingRoots)
             {
                 if (PlayerData.instance.scenesEncounteredDreamPlantC.Contains(PinData.sceneName))
+                {
+                    gameObject.SetActive(false); return;
+                }
+            }
+
+            if (PinData.vanillaPool == PoolGroup.Grubs)
+            {
+                if (PlayerData.instance.scenesGrubRescued.Contains(PinData.sceneName))
+                {
+                    gameObject.SetActive(false); return;
+                }
+            }
+
+            if (PinData.vanillaPool == PoolGroup.GrimmkinFlames)
+            {
+                if (PlayerData.instance.scenesFlameCollected.Contains(PinData.sceneName))
                 {
                     gameObject.SetActive(false); return;
                 }

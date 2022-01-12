@@ -15,6 +15,8 @@ namespace MapModS.Map
             On.GameManager.SetGameMap += GameManager_SetGameMap;
             //On.GrubPin.Start += On_GrubPin_Start;
             On.GrubPin.OnEnable += On_GrubPin_OnEnable;
+            On.FlamePin.OnEnable += On_FlamePin_Enable;
+            On.BrummFlamePin.OnEnable += On_BrummFlamePin_Enable;
         }
 
         //// Replace all PlayerData boolNames with our own so we can force enable all pins,
@@ -270,6 +272,24 @@ namespace MapModS.Map
             //{
             //    self.gameObject.SetActive(false);
             //}
+        }
+
+        private static void On_FlamePin_Enable(On.FlamePin.orig_OnEnable orig, FlamePin self)
+        {
+            orig(self);
+
+            if (!MapModS.LS.ModEnabled) return;
+
+            self.gameObject.SetActive(false);
+        }
+
+        private static void On_BrummFlamePin_Enable(On.BrummFlamePin.orig_OnEnable orig, BrummFlamePin self)
+        {
+            orig(self);
+
+            if (!MapModS.LS.ModEnabled) return;
+
+            self.gameObject.SetActive(false);
         }
 
         // Recursive function that sets/adjusts pins every time the map is opened
