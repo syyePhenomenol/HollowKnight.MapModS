@@ -174,6 +174,8 @@ namespace MapModS.UI
         // Update all the buttons (text, color)
         public static void UpdateGUI()
         {
+            if (GameManager.instance.gameMap == null) return;
+
             UpdateEnable();
             UpdateSpoilers();
             UpdateRandomized();

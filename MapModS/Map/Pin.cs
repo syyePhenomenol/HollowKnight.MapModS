@@ -81,6 +81,17 @@ namespace MapModS.Map
 
         private void HideIfFound()
         {
+            //if (PinData.spoilerItem != null)
+            //{
+            //    if (RandomizerMod.RandomizerMod.RS.TrackerData.ob
+            //    {
+            //        gameObject.SetActive(false);
+            //        return;
+            //    }
+
+            //    return;
+            //}
+
             if (RandomizerMod.RandomizerMod.RS.TrackerData.clearedLocations.Contains(PinData.name))
             {
                 gameObject.SetActive(false);

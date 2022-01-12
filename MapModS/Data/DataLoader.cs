@@ -65,11 +65,20 @@ namespace MapModS.Data
             return GetPoolGroup(cleanItemName);
         }
 
-        public static PoolGroup GetRandomizerPoolGroup(string location)
+        public static PoolGroup GetRandomizerPoolGroup(string location, bool getLast)
         {
             if (RandomizerMod.RandomizerMod.RS.Context.itemPlacements.Any(pair => pair.location.Name == location))
             {
-                RandomizerCore.ItemPlacement ilp = RandomizerMod.RandomizerMod.RS.Context.itemPlacements.First(pair => pair.location.Name == location);
+                RandomizerCore.ItemPlacement ilp;
+
+                if (getLast)
+                {
+                    ilp = RandomizerMod.RandomizerMod.RS.Context.itemPlacements.Last(pair => pair.location.Name == location);
+                }
+                else
+                {
+                    ilp = RandomizerMod.RandomizerMod.RS.Context.itemPlacements.First(pair => pair.location.Name == location);
+                }
 
                 string cleanItemName = ilp.item.Name.Replace("Placeholder-", "").Split('-')[0];
 
@@ -98,12 +107,17 @@ namespace MapModS.Data
                 else
                 {
                     pinD.vanillaPool = GetVanillaPoolGroup(vanillaItem);
-                    pinD.spoilerPool = GetRandomizerPoolGroup(vanillaItem);
+                    pinD.spoilerPool = GetRandomizerPoolGroup(vanillaItem, false);
 
                     if (pinD.vanillaPool == PoolGroup.Unknown || pinD.spoilerPool == PoolGroup.Unknown)
                     {
                         MapModS.Instance.LogWarn($"Location {pinD.name} doesn't seem to have a valid pool.");
                     }
+                }
+
+                if (pinD.name == "Focus")
+                {
+                    pinD.spoilerPool = GetRandomizerPoolGroup("Lore_Tablet-King's_Pass_Focus", true);
                 }
             }
 
@@ -123,7 +137,16 @@ namespace MapModS.Data
 
             _pins["Split_Crystal_Heart"].disable = !RandomizerMod.RandomizerMod.RS.GenerationSettings.NoveltySettings.SplitSuperdash;
 
-            _pins["World_Sense"].disable = !RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.Dreamers;
+            _pins["World_Sense"].disable = !RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.Dreamers
+                || (RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.Dreamers && RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.LoreTablets);
+        
+            //foreach (RandomizerCore.ItemPlacement pair in RandomizerMod.RandomizerMod.RS.Context.itemPlacements)
+            //{
+            //    if (pair.location.Name.Contains("Focus")) {
+            //        MapModS.Instance.Log(pair.location.Name);
+            //        MapModS.Instance.Log(pair.item.Name);
+            //    }
+            //}
         }
 
         public static void Load()

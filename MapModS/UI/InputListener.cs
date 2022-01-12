@@ -34,6 +34,8 @@ namespace MapModS.UI
         {
             if (GameManager.instance == null) return;
 
+            if (GameManager.instance.gameMap == null) return;
+
             if (!GameManager.instance.IsGameplayScene() && !GameManager.instance.IsGamePaused()) return;
 
             if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))

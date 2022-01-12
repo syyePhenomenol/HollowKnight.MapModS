@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using RandomizerCore;
+using RandomizerMod;
 
 namespace MapModS.Map
 {
@@ -13,6 +15,11 @@ namespace MapModS.Map
         private readonly Dictionary<PoolGroup, GameObject> _Groups = new();
 
         private readonly List<Pin> _pins = new();
+
+        //public void Hook()
+        //{
+        //    RandomizerMod.RandomizerMod.RS.TrackerData.On
+        //}
 
         public void MakePins(GameMap gameMap)
         {
@@ -33,11 +40,11 @@ namespace MapModS.Map
 
         private void MakePin(PinDef pinData, GameMap gameMap)
         {
-            if (_pins.Any(pin => pin.PinData.name == pinData.name))
-            {
-                MapModS.Instance.LogWarn($"Duplicate pin found for group: {pinData.name} - Skipped.");
-                return;
-            }
+            //if (_pins.Any(pin => pin.PinData.name == pinData.name))
+            //{
+            //    MapModS.Instance.LogWarn($"Duplicate pin found for group: {pinData.name} - Skipped.");
+            //    return;
+            //}
 
             if (pinData.disable) return;
 
@@ -59,6 +66,14 @@ namespace MapModS.Map
             Pin pin = goPin.AddComponent<Pin>();
             pin.SetPinData(pinData);
             _pins.Add(pin);
+
+            // Rename pin if there are two items at the same location
+            if (RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.LoreTablets
+                && RandomizerMod.RandomizerMod.RS.GenerationSettings.NoveltySettings.RandomizeFocus
+                && pin.PinData.name == "Focus")
+            {
+                pin.PinData.name = "Lore_Tablet-King's_Pass_Focus";
+            }
 
             // Set pin transform (by pool)
             AssignGroup(goPin, pinData);

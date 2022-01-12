@@ -38,7 +38,6 @@ namespace MapModS.Data
 
         // These are assigned during FindSpoilerPools, unusued if it's a Shop
         public PoolGroup vanillaPool;
-
         public PoolGroup spoilerPool;
 
         public bool disable = false;

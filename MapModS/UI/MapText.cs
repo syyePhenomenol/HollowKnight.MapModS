@@ -48,6 +48,9 @@ namespace MapModS.UI
 				(_canvas, GUIController.Instance.Images["ButtonsMenuBG"], new Vector2(10f, 1040f), new Vector2(1346f, 0f), new Rect(0f, 0f, 0f, 0f));
 			_refreshDisplayPanel.AddText("Refresh", "", new Vector2(750f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14);
 
+			_mapDisplayPanel.SetActive(false, false);
+			_refreshDisplayPanel.SetActive(false, false);
+
 			SetTexts();
 		}
 
@@ -57,28 +60,21 @@ namespace MapModS.UI
 			_refreshDisplayPanel.Destroy();
 
 			BuildText(Canvas);
-
-			_mapDisplayPanel.SetActive(!LockToggleEnable && MapModS.LS.ModEnabled, false);
-			_refreshDisplayPanel.SetActive(LockToggleEnable, false);
-
-			if (MapModS.LS.ModEnabled)
-            {
-				_refreshDisplayPanel.GetText("Refresh").UpdateText("MapMod S enabled. Close map to refresh");
-			}
-			else
-            {
-				_refreshDisplayPanel.GetText("Refresh").UpdateText("MapMod S disabled. Close map to refresh");
-			}
-			
 		}
 
 		public static void SetTexts()
 		{
+			if (GameManager.instance.gameMap == null) return;
+
+			_mapDisplayPanel.SetActive(!LockToggleEnable && MapModS.LS.ModEnabled, false);
+			_refreshDisplayPanel.SetActive(LockToggleEnable, false);
+
 			SetSpoilers();
 			SetStyle();
 			SetRandomized();
 			SetOthers();
 			SetSize();
+			SetRefresh();
 		}
 
 		private static void SetSpoilers()
@@ -170,6 +166,18 @@ namespace MapModS.UI
 				case PinSize.Large:
 					_mapDisplayPanel.GetText("Size").UpdateText("Size (ctrl-5): large");
 					break;
+			}
+		}
+
+		private static void SetRefresh()
+        {
+			if (MapModS.LS.ModEnabled)
+			{
+				_refreshDisplayPanel.GetText("Refresh").UpdateText("MapMod S enabled. Close map to refresh");
+			}
+			else
+			{
+				_refreshDisplayPanel.GetText("Refresh").UpdateText("MapMod S disabled. Close map to refresh");
 			}
 		}
 	}
