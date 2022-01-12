@@ -197,12 +197,15 @@
     </Reference>
     <Reference Include="RandomizerCore">
       <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\RandomizerCore\RandomizerCore.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
     </Reference>
     <Reference Include="RandomizerMod">
       <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\Randomizer 4\RandomizerMod.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
     </Reference>
     <Reference Include="UnityEngine">
       <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\UnityEngine.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
@@ -214,6 +217,7 @@
     </Reference>
     <Reference Include="UnityEngine.InputLegacyModule">
       <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
+      <CopyLocal>False</CopyLocal>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
       <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
