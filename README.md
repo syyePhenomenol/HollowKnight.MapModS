@@ -11,7 +11,9 @@ This fork of CaptainDapper's original mod has been expanded on with more feature
 - ItemSync 2.0.0
 
 https://github.com/homothetyhk/RandomizerMod
+
 https://github.com/SFGrenade/AdditionalMaps
+
 https://github.com/Shadudev/HollowKnight.MultiWorld/tree/itemsync
 
 # Quick Start Guide
