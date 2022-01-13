@@ -40,6 +40,16 @@ namespace MapModS.Data
                 case "Mr_Mushroom":
                     return PoolGroup.LoreTablets;
 
+                case "DirectionalDash":
+                case "DownwardFireball":
+                case "ExtraAirDash":
+                case "HorizontalDive":
+                case "SpiralScream":
+                case "TripleJump":
+                case "VerticalSuperdash":
+                case "WallClimb":
+                    return PoolGroup.Skills;
+
                 default:
                     break;
             }
