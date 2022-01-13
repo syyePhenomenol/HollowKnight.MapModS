@@ -250,7 +250,7 @@ namespace MapModS.Map
         {
             foreach (Pin pin in _pins)
             {
-                if (MapModS.LS.SpoilerOn)
+                if (MapModS.LS.SpoilerOn || RandomizerMod.RandomizerMod.RS.TrackerData.previewedLocations.Contains(pin.PinData.name))
                 {
                     pin.SR.sprite = SpriteManager.GetSpriteFromPool(pin.PinData.spoilerPool);
                 }

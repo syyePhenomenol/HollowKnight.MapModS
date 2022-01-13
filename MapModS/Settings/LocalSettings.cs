@@ -34,8 +34,6 @@ namespace MapModS.Settings
         // Vanilla only
         public int GeoRockCounter = 0;
 
-        public bool RevealFullMap = false;
-
         public bool ModEnabled = false;
 
         public MapMode mapMode = MapMode.FullMap;

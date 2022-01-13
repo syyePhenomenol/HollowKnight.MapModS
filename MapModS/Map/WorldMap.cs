@@ -120,6 +120,7 @@ namespace MapModS.Map
                 CustomPins.ResizePins();
                 CustomPins.UpdatePins(mapZone);
                 CustomPins.RefreshGroups();
+                CustomPins.RefreshSprites();
             }
             catch (Exception e)
             {

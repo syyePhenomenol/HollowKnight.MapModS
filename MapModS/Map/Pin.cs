@@ -12,6 +12,7 @@ namespace MapModS.Map
         public SpriteRenderer SR => gameObject.GetComponent<SpriteRenderer>();
 
         private readonly Color _inactiveColor = Color.gray;
+        private readonly Color _previewedColor = Color.yellow;
         private Color _origColor;
 
         public void SetPinData(PinDef pd)
@@ -159,6 +160,11 @@ namespace MapModS.Map
             };
 
             transform.localScale = 1.45f * scale * new Vector2(1.0f, 1.0f);
+
+            if (RandomizerMod.RandomizerMod.RS.TrackerData.previewedLocations.Contains(PinData.name))
+            {
+                SR.color = _previewedColor; return;
+            }
 
             if (RandomizerMod.RandomizerMod.RS.TrackerData.uncheckedReachableLocations.Contains(PinData.name))
             {
