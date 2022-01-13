@@ -17,8 +17,6 @@ namespace MapModS.UI
         {
             orig(self);
 
-            MapModS.Instance.Log("GameMap Start");
-
             try
             {
                 GUIController.Setup();

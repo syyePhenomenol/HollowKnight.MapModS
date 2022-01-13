@@ -36,6 +36,10 @@ namespace MapModS.Data
                 case "One_Geo":
                     return PoolGroup.GeoChests;
 
+                case "Mr_Mushroom_Level_Up":
+                case "Mr_Mushroom":
+                    return PoolGroup.LoreTablets;
+
                 default:
                     break;
             }
@@ -139,14 +143,16 @@ namespace MapModS.Data
 
             _pins["World_Sense"].disable = !RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.Dreamers
                 || (RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.Dreamers && RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.LoreTablets);
-        
-            //foreach (RandomizerCore.ItemPlacement pair in RandomizerMod.RandomizerMod.RS.Context.itemPlacements)
-            //{
-            //    if (pair.location.Name.Contains("Focus")) {
-            //        MapModS.Instance.Log(pair.location.Name);
-            //        MapModS.Instance.Log(pair.item.Name);
-            //    }
-            //}
+
+            bool disableMushroomLocations = !RandomizerMod.RandomizerMod.RS.Context.itemPlacements.Any(pair => pair.location.Name.Contains("Mr_Mushroom"));
+
+            _pins["Mr_Mushroom-Fungal_Wastes"].disable = disableMushroomLocations;
+            _pins["Mr_Mushroom-Kingdom's_Edge"].disable = disableMushroomLocations;
+            _pins["Mr_Mushroom-Deepnest"].disable = disableMushroomLocations;
+            _pins["Mr_Mushroom-Howling_Cliffs"].disable = disableMushroomLocations;
+            _pins["Mr_Mushroom-Ancient_Basin"].disable = disableMushroomLocations;
+            _pins["Mr_Mushroom-Fog_Canyon"].disable = disableMushroomLocations;
+            _pins["Mr_Mushroom-King's_Pass"].disable = disableMushroomLocations;
         }
 
         public static void Load()
