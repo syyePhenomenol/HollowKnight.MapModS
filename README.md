@@ -9,12 +9,18 @@ This fork of CaptainDapper's original mod has been expanded on with more feature
 - RandomizerMod v4.0.1
 - AdditionalMaps v1.5.1.0
 - ItemSync 2.0.0
+- RandoPlus
+- SkillUpgrades
 
 https://github.com/homothetyhk/RandomizerMod
 
 https://github.com/SFGrenade/AdditionalMaps
 
 https://github.com/Shadudev/HollowKnight.MultiWorld/tree/itemsync
+
+https://github.com/flibber-hk/HollowKnight.RandoPlus
+
+https://github.com/flibber-hk/HollowKnight.SkillUpgrades
 
 # Quick Start Guide
 - Press `CTRL-M` during a game to enable the mod. Alternatively, enable it from the Pause Menu.
