@@ -10,7 +10,8 @@ namespace MapModS.Settings
     {
         FullMap,
         AllPins,
-        PinsOverMap
+        PinsOverMap,
+        TransitionRando
     }
 
     [Serializable]
@@ -49,17 +50,6 @@ namespace MapModS.Settings
         public void ToggleModEnabled()
         {
             ModEnabled = !ModEnabled;
-
-            if (!GameManager.instance.IsGamePaused() && !HeroController.instance.controlReqlinquished)
-            {
-                UIManager.instance.checkpointSprite.Show();
-                UIManager.instance.checkpointSprite.Hide();
-            }
-
-            if (!ModEnabled)
-            {
-                FullMap.PurgeMap();
-            }
         }
 
         public void ToggleFullMap()
@@ -67,7 +57,6 @@ namespace MapModS.Settings
             switch (mapMode)
             {
                 case MapMode.FullMap:
-                    FullMap.PurgeMap();
                     mapMode = MapMode.AllPins;
                     break;
 
@@ -76,6 +65,17 @@ namespace MapModS.Settings
                     break;
 
                 case MapMode.PinsOverMap:
+                    if (RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode != RandomizerMod.Settings.TransitionSettings.TransitionMode.None)
+                    {
+                        mapMode = MapMode.TransitionRando;
+                    }
+                    else
+                    {
+                        mapMode = MapMode.FullMap;
+                    }
+                    break;
+
+                case MapMode.TransitionRando:
                     mapMode = MapMode.FullMap;
                     break;
             }

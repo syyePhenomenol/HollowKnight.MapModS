@@ -197,6 +197,13 @@ namespace MapModS.UI
             if (!(MapText.LockToggleEnable && MapText.Canvas.activeSelf))
             {
                 MapModS.LS.ToggleModEnabled();
+
+                if (!GameManager.instance.IsGamePaused() && !HeroController.instance.controlReqlinquished)
+                {
+                    UIManager.instance.checkpointSprite.Show();
+                    UIManager.instance.checkpointSprite.Hide();
+                }
+
                 _mapControlPanel.Destroy();
                 BuildMenu(Canvas);
                 MapText.LockToggleEnable = true;
@@ -334,7 +341,7 @@ namespace MapModS.UI
             {
                 WorldMap.CustomPins.ResizePins();
             }
-            
+
             UpdateGUI();
             MapText.SetTexts();
         }
@@ -371,17 +378,22 @@ namespace MapModS.UI
             {
                 case MapMode.FullMap:
                     _mapControlPanel.GetButton("Mode").SetTextColor(Color.green);
-                    _mapControlPanel.GetButton("Mode").UpdateText("Mode:\n Full Map");
+                    _mapControlPanel.GetButton("Mode").UpdateText("Mode:\nFull Map");
                     break;
 
                 case MapMode.AllPins:
                     _mapControlPanel.GetButton("Mode").SetTextColor(Color.white);
-                    _mapControlPanel.GetButton("Mode").UpdateText("Mode:\n All Pins");
+                    _mapControlPanel.GetButton("Mode").UpdateText("Mode:\nAll Pins");
                     break;
 
-                default:
+                case MapMode.PinsOverMap:
                     _mapControlPanel.GetButton("Mode").SetTextColor(Color.white);
-                    _mapControlPanel.GetButton("Mode").UpdateText("Mode:\n Pins Over Map");
+                    _mapControlPanel.GetButton("Mode").UpdateText("Mode:\nPins Over Map");
+                    break;
+
+                case MapMode.TransitionRando:
+                    _mapControlPanel.GetButton("Mode").SetTextColor(Color.cyan);
+                    _mapControlPanel.GetButton("Mode").UpdateText("Mode:\nTransition");
                     break;
             }
         }

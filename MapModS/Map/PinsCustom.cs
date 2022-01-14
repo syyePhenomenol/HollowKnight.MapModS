@@ -1,12 +1,8 @@
 ﻿using GlobalEnums;
 using MapModS.Data;
-using MapModS.Settings;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using RandomizerCore;
-using RandomizerMod;
 
 namespace MapModS.Map
 {
@@ -15,11 +11,6 @@ namespace MapModS.Map
         private readonly Dictionary<PoolGroup, GameObject> _Groups = new();
 
         private readonly List<Pin> _pins = new();
-
-        //public void Hook()
-        //{
-        //    RandomizerMod.RandomizerMod.RS.TrackerData.On
-        //}
 
         public void MakePins(GameMap gameMap)
         {
@@ -40,12 +31,6 @@ namespace MapModS.Map
 
         private void MakePin(PinDef pinData, GameMap gameMap)
         {
-            //if (_pins.Any(pin => pin.PinData.name == pinData.name))
-            //{
-            //    MapModS.Instance.LogWarn($"Duplicate pin found for group: {pinData.name} - Skipped.");
-            //    return;
-            //}
-
             if (pinData.disable) return;
 
             // Create new pin GameObject
@@ -78,29 +63,27 @@ namespace MapModS.Map
             // Set pin transform (by pool)
             AssignGroup(goPin, pinData);
 
-            string roomName;
+            if (MapModS.AdditionalMapsInstalled)
+            {
+                foreach (PinDef pinDataAM in DataLoader.GetPinAMArray())
+                {
+                    if (pinDataAM.name == pin.PinData.name)
+                    {
+                        pin.PinData.pinScene = pinDataAM.pinScene;
+                        pin.PinData.mapZone = pinDataAM.mapZone;
+                        pin.PinData.offsetX = pinDataAM.offsetX;
+                        pin.PinData.offsetY = pinDataAM.offsetY;
+                        break;
+                    }
+                }
+            }
 
-            // Position the pin - if pinScene exists we set a different base offset
-            if (MapModS.AdditionalMapsInstalled && pinData.pinSceneAM != null)
-            {
-                roomName = pinData.pinSceneAM;
-            }
-            else
-            {
-                roomName = pinData.pinScene ?? pinData.sceneName;
-            }
+            string roomName = pinData.pinScene ?? pinData.sceneName;
 
             Vector3 vec = GetRoomPos(roomName, gameMap);
             vec.Scale(new Vector3(1.46f, 1.46f, 1));
 
-            if (MapModS.AdditionalMapsInstalled && pinData.pinSceneAM != null)
-            {
-                vec += new Vector3(pinData.offsetXAM, pinData.offsetYAM, 0.0f);
-            }
-            else
-            {
-                vec += new Vector3(pinData.offsetX, pinData.offsetY, pinData.offsetZ);
-            }
+            vec += new Vector3(pinData.offsetX, pinData.offsetY, pinData.offsetZ);
 
             goPin.transform.localPosition = new Vector3(vec.x, vec.y, vec.z - 0.01f);
         }
@@ -229,11 +212,11 @@ namespace MapModS.Map
             RefreshGroups();
         }
 
-        public void UpdatePins(MapZone mapZone)
+        public void UpdatePins(MapZone mapZone, HashSet<string> transitionPinScenes)
         {
             foreach (Pin pin in _pins)
             {
-                pin.UpdatePin(mapZone);
+                pin.UpdatePin(mapZone, transitionPinScenes);
             }
         }
 

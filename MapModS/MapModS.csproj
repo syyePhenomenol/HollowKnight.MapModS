@@ -69,6 +69,8 @@
     <None Remove="Resources\GUI\DropdownBG.png" />
     <None Remove="Resources\language.json" />
     <None Remove="Resources\pins.json" />
+    <None Remove="Resources\pinsAM.json" />
+    <None Remove="Resources\pinsold.json" />
     <None Remove="Resources\Pins\pinBackerGhost.png" />
     <None Remove="Resources\Pins\pinBench.png" />
     <None Remove="Resources\Pins\pinBenchGrey.png" />
@@ -129,6 +131,7 @@
     <EmbeddedResource Include="Resources\GUI\ButtonsMenuBG.png" />
     <EmbeddedResource Include="Resources\GUI\DropdownBG.png" />
     <EmbeddedResource Include="Resources\pins.json" />
+    <EmbeddedResource Include="Resources\pinsAM.json" />
     <EmbeddedResource Include="Resources\Pins\pinCharm.png" />
     <EmbeddedResource Include="Resources\Pins\pinCocoon.png" />
     <EmbeddedResource Include="Resources\Pins\pinDreamer.png" />

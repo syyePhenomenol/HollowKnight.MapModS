@@ -8,10 +8,16 @@ namespace MapModS.Data
     public static class DataLoader
     {
         private static Dictionary<string, PinDef> _pins;
+        private static Dictionary<string, PinDef> _pinsAM;
 
         public static PinDef[] GetPinArray()
         {
             return _pins.Values.ToArray();
+        }
+
+        public static PinDef[] GetPinAMArray()
+        {
+            return _pinsAM.Values.ToArray();
         }
 
         // Uses RandomizerData to get the PoolGroup from an item name
@@ -168,6 +174,7 @@ namespace MapModS.Data
         public static void Load()
         {
             _pins = JsonUtil.Deserialize<Dictionary<string, PinDef>>("MapModS.Resources.pins.json");
+            _pinsAM = JsonUtil.Deserialize<Dictionary<string, PinDef>>("MapModS.Resources.pinsAM.json");
         }
     }
 }

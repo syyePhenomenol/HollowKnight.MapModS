@@ -2,6 +2,7 @@
 using MapModS.Data;
 using MapModS.Settings;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace MapModS.Map
@@ -21,12 +22,12 @@ namespace MapModS.Map
             _origColor = SR.color;
         }
 
-        public void UpdatePin(MapZone mapZone)
+        public void UpdatePin(MapZone mapZone, HashSet<string> transitionPinScenes)
         {
             try
             {
                 ShowBasedOnMap(mapZone);
-                HideIfFound();
+                HideIfFound(transitionPinScenes);
             }
             catch (Exception e)
             {
@@ -44,32 +45,10 @@ namespace MapModS.Map
                     gameObject.SetActive(true); return;
                 }
 
-                if (MapModS.AdditionalMapsInstalled)
-                {
-                    if (PinData.pinSceneAM != null)
-                    {
-                        if (SettingsUtil.GetMapSetting(PinData.mapZoneAM))
-                        {
-                            gameObject.SetActive(true); return;
-                        }
-
-                        gameObject.SetActive(false); return;
-                    }
-                    else if (SettingsUtil.GetMapSetting(PinData.mapZone))
-                    {
-                        gameObject.SetActive(true); return;
-                    }
-                }
-
                 if (SettingsUtil.GetMapSetting(PinData.mapZone))
                 {
                     gameObject.SetActive(true); return;
                 }
-            }
-
-            if (PinData.pinSceneAM != null && mapZone == PinData.mapZoneAM)
-            {
-                gameObject.SetActive(true); return;
             }
 
             if (mapZone == PinData.mapZone)
@@ -80,18 +59,16 @@ namespace MapModS.Map
             gameObject.SetActive(false);
         }
 
-        private void HideIfFound()
+        private void HideIfFound(HashSet<string> transitionPinScenes)
         {
-            //if (PinData.spoilerItem != null)
-            //{
-            //    if (RandomizerMod.RandomizerMod.RS.TrackerData.ob
-            //    {
-            //        gameObject.SetActive(false);
-            //        return;
-            //    }
-
-            //    return;
-            //}
+            if (transitionPinScenes.Count != 0)
+            {
+                if (!transitionPinScenes.Contains(PinData.pinScene ?? PinData.sceneName)
+                    && !PlayerData.instance.scenesVisited.Contains(PinData.pinScene ?? PinData.sceneName))
+                {
+                    gameObject.SetActive(false);
+                }
+            }
 
             if (RandomizerMod.RandomizerMod.RS.TrackerData.clearedLocations.Contains(PinData.name))
             {

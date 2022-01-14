@@ -2,8 +2,9 @@
 using MapModS.Data;
 using MapModS.Settings;
 using MapModS.Trackers;
-using MapModS.UI;
+using RandomizerCore;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace MapModS.Map
@@ -30,6 +31,13 @@ namespace MapModS.Map
             GameMap gameMap = go_gameMap.GetComponent<GameMap>();
 
             DataLoader.FindPoolGroups();
+
+            StoreOrigMapColors(gameMap);
+
+            if (RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode != RandomizerMod.Settings.TransitionSettings.TransitionMode.None)
+            {
+                MapModS.LS.mapMode = MapMode.TransitionRando;
+            }
 
             if (goCustomPins != null)
             {
@@ -59,7 +67,7 @@ namespace MapModS.Map
             orig(self);
 
             // Easiest way to force AdditionalMaps custom areas to show
-            if (MapModS.LS.ModEnabled && MapModS.LS.mapMode == MapMode.FullMap)
+            if (MapModS.LS.ModEnabled && (MapModS.LS.mapMode == MapMode.FullMap || MapModS.LS.mapMode == MapMode.TransitionRando))
             {
                 foreach (Transform child in self.transform)
                 {
@@ -111,20 +119,138 @@ namespace MapModS.Map
             {
                 ItemTracker.UpdateObtainedItems();
 
-                gameMap.SetupMap();
+                HashSet<string> transitionPinScenes = new();
+
+                FullMap.PurgeMap();
+
+                if (RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode != RandomizerMod.Settings.TransitionSettings.TransitionMode.None
+                    && MapModS.LS.ModEnabled && MapModS.LS.mapMode == MapMode.TransitionRando)
+                {
+                    //gameMap.SetupMap();
+                    transitionPinScenes = SetupMapTransitionRando(gameMap);
+                }
+                else
+                {
+                    ResetMapColors(gameMap);
+                    gameMap.SetupMap();
+                }
 
                 PinsVanilla.ForceDisablePins(gameMap.gameObject);
 
                 if (goCustomPins == null || !MapModS.LS.ModEnabled) return;
 
                 CustomPins.ResizePins();
-                CustomPins.UpdatePins(mapZone);
+                CustomPins.UpdatePins(mapZone, transitionPinScenes);
                 CustomPins.RefreshGroups();
                 CustomPins.RefreshSprites();
             }
             catch (Exception e)
             {
                 MapModS.Instance.LogError(e);
+            }
+        }
+
+        private static HashSet<string> SetupMapTransitionRando(GameMap gameMap)
+        {
+            HashSet<string> adjacentReachableScenes = new();
+            HashSet<string> unreachedReachableScenes = new();
+
+            foreach (TransitionPlacement tp in RandomizerMod.RandomizerMod.RS.Context.transitionPlacements)
+            {
+                string tpSourceClean = tp.source.Name.Split('[')[0];
+                string tpTargetClean = tp.target.Name.Split('[')[0];
+
+                if (RandomizerMod.RandomizerMod.RS.TrackerData.uncheckedReachableTransitions.Contains(tp.source.Name))
+                {
+                    if (tpSourceClean == GameManager.instance.sceneName)
+                    {
+                        adjacentReachableScenes.Add(tpTargetClean);
+                        continue;
+                    }
+
+                    unreachedReachableScenes.Add(tpTargetClean);
+                }
+
+                if (PlayerData.instance.scenesVisited.Contains(tpTargetClean) && tpSourceClean == GameManager.instance.sceneName)
+                {
+                    adjacentReachableScenes.Add(tpTargetClean);
+                }
+            }
+
+            foreach (Transform areaObj in gameMap.transform)
+            {
+                foreach (Transform roomObj in areaObj.transform)
+                {
+                    if (roomObj.name == GameManager.instance.sceneName)
+                    {
+                        roomObj.gameObject.SetActive(true);
+                        roomObj.GetComponent<SpriteRenderer>().color = Color.green;
+                    }
+                    else if (adjacentReachableScenes.Contains(roomObj.name))
+                    {
+                        roomObj.gameObject.SetActive(true);
+                        roomObj.GetComponent<SpriteRenderer>().color = Color.cyan;
+                    }
+                    else if (unreachedReachableScenes.Contains(roomObj.name))
+                    {
+                        roomObj.gameObject.SetActive(true);
+                        roomObj.GetComponent<SpriteRenderer>().color = Color.blue;
+                    }
+                    else if (PlayerData.instance.scenesVisited.Contains(roomObj.name))
+                    {
+                        roomObj.gameObject.SetActive(true);
+                        roomObj.GetComponent<SpriteRenderer>().color = Color.white;
+                    }
+                    else
+                    {
+                        roomObj.gameObject.SetActive(false);
+                    }
+                }
+            }
+
+            unreachedReachableScenes.Add(GameManager.instance.sceneName);
+
+            return unreachedReachableScenes;
+        }
+
+        private class ColorCopy : MonoBehaviour
+        {
+            public Color origColor;
+        }
+
+        private static void StoreOrigMapColors(GameMap gameMap)
+        {
+            foreach (Transform areaObj in gameMap.transform)
+            {
+                foreach (Transform roomObj in areaObj.transform)
+                {
+                    ColorCopy colorCopy = roomObj.GetComponent<ColorCopy>();
+                    SpriteRenderer SR = roomObj.GetComponent<SpriteRenderer>();
+
+                    if (SR == null) continue;
+
+                    if (colorCopy == null)
+                    {
+                        colorCopy = roomObj.gameObject.AddComponent<ColorCopy>();
+                        colorCopy.origColor = SR.color;
+                    }
+                }
+            }
+        }
+
+        private static void ResetMapColors(GameMap gameMap)
+        {
+            foreach (Transform areaObj in gameMap.transform)
+            {
+                foreach (Transform roomObj in areaObj.transform)
+                {
+                    ColorCopy colorCopy = roomObj.GetComponent<ColorCopy>();
+                    SpriteRenderer SR = roomObj.GetComponent<SpriteRenderer>();
+
+                    if (SR == null || colorCopy == null) continue;
+
+                    SR.color = colorCopy.origColor;
+                }
             }
         }
     }

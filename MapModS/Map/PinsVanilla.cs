@@ -1,10 +1,6 @@
 ﻿using HutongGames.PlayMaker.Actions;
-using MapModS.Settings;
 using Modding;
-using MonoMod.Cil;
-using Mono.Cecil.Cil;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Vasi;

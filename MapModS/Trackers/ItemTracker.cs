@@ -74,7 +74,6 @@ namespace MapModS.Trackers
             }
         }
 
-        
         private static void PlayMakerFSM_OnEnable(On.PlayMakerFSM.orig_OnEnable orig, PlayMakerFSM self)
         {
             orig(self);
