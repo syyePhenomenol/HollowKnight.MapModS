@@ -242,6 +242,12 @@ namespace MapModS.Map
                 ReplaceBool(self, "Button Down Check", 1);
                 FsmUtil.GetAction<GetPlayerDataBool>(self, "Has Map?", 3).boolName = "MMS_hasMap";
             }
+            else if (self.gameObject.name == "Inventory" && self.FsmName == "Inventory Control")
+            {
+                ReplaceBool(self, "Next Map", 0);
+                ReplaceBool(self, "Next Map 2", 0);
+                ReplaceBool(self, "Next Map 3", 0);
+            }
 
             // Patch the zoomed out map UI when we reveal the full map
             else if (self.gameObject.name == "World Map" && self.FsmName == "UI Control")
