@@ -9,12 +9,18 @@ This fork of CaptainDapper's original mod has been expanded on with more feature
 - RandomizerMod v4.0.1
 - AdditionalMaps v1.5.1.0
 - ItemSync 2.0.0
+- RandoPlus
+- SkillUpgrades
 
 https://github.com/homothetyhk/RandomizerMod
 
 https://github.com/SFGrenade/AdditionalMaps
 
 https://github.com/Shadudev/HollowKnight.MultiWorld/tree/itemsync
+
+https://github.com/flibber-hk/HollowKnight.RandoPlus
+
+https://github.com/flibber-hk/HollowKnight.SkillUpgrades
 
 # Quick Start Guide
 - Press `CTRL-M` during a game to enable the mod. Alternatively, enable it from the Pause Menu.
@@ -49,13 +55,3 @@ Or, you can install manually:
 - CaptainDapper for making the original mod
 - PimpasPimpinela for helping to port the mod from Rando 3 to Rando 4
 - Chaktis for helping with sprite art
-
-# Version Prelease 1 Changes
-- AdditionalMaps compatibility
-- CTRL-M is now a toggle, PlayerData is unaffected by the mod
-- Improved UI features
-- Non-randomized locations get cleared from the map (not including lore tablets and soul totems for now)
-- Some other niceties carried over from VanillaMapMod
-
-# Known Bugs / Missing Features
-- Transition randomizer support
