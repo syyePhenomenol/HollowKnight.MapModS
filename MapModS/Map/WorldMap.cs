@@ -2,6 +2,7 @@
 using MapModS.Data;
 using MapModS.Settings;
 using MapModS.Trackers;
+using MapModS.UI;
 using RandomizerCore;
 using System;
 using System.Collections.Generic;
@@ -59,6 +60,17 @@ namespace MapModS.Map
             CustomPins.FindRandomizedGroups();
 
             MapModS.Instance.Log("Adding Custom Pins done.");
+
+            //string startScene = PlayerData.instance.scenesVisited[1];
+            //string finalScene = PlayerData.instance.scenesVisited[6];
+
+            //MapModS.Instance.Log(startScene);
+            //MapModS.Instance.Log(finalScene);
+
+            //foreach (string transition in TransitionHelper.ShortestRoute(startScene, finalScene))
+            //{
+            //    MapModS.Instance.Log(transition);
+            //}
         }
 
         // Called every time we open the World Map

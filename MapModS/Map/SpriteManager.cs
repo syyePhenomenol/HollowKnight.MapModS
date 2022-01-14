@@ -35,7 +35,7 @@ namespace MapModS.Map
             }
         }
 
-        public static Sprite GetSpriteFromPool(PoolGroup pool)
+        public static Sprite GetSpriteFromPool(PoolGroup pool, bool yellow)
         {
             string spriteName = "undefined";
 
@@ -106,6 +106,11 @@ namespace MapModS.Map
                         _ => "pinUnknown",
                     };
                     break;
+            }
+
+            if (yellow)
+            {
+                spriteName += "Yellow";
             }
 
             return GetSprite(spriteName);

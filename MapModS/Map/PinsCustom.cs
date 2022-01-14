@@ -43,7 +43,7 @@ namespace MapModS.Map
             SpriteRenderer sr = goPin.AddComponent<SpriteRenderer>();
 
             // Initialize sprite to vanillaPool
-            sr.sprite = SpriteManager.GetSpriteFromPool(pinData.vanillaPool);
+            sr.sprite = SpriteManager.GetSpriteFromPool(pinData.vanillaPool, false);
             sr.sortingLayerName = "HUD";
             sr.size = new Vector2(1f, 1f);
 
@@ -233,13 +233,18 @@ namespace MapModS.Map
         {
             foreach (Pin pin in _pins)
             {
-                if (MapModS.LS.SpoilerOn || RandomizerMod.RandomizerMod.RS.TrackerData.previewedLocations.Contains(pin.PinData.name))
+                if (RandomizerMod.RandomizerMod.RS.TrackerData.previewedLocations.Contains(pin.PinData.name))
                 {
-                    pin.SR.sprite = SpriteManager.GetSpriteFromPool(pin.PinData.spoilerPool);
+                    pin.SR.sprite = SpriteManager.GetSpriteFromPool(pin.PinData.spoilerPool, true);
+                    continue;
+                }
+                if (MapModS.LS.SpoilerOn)
+                {
+                    pin.SR.sprite = SpriteManager.GetSpriteFromPool(pin.PinData.spoilerPool, false);
                 }
                 else
                 {
-                    pin.SR.sprite = SpriteManager.GetSpriteFromPool(pin.PinData.vanillaPool);
+                    pin.SR.sprite = SpriteManager.GetSpriteFromPool(pin.PinData.vanillaPool, false);
                 }
             }
         }
