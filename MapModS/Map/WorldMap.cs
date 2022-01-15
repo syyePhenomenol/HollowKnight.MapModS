@@ -2,7 +2,6 @@
 using MapModS.Data;
 using MapModS.Settings;
 using MapModS.Trackers;
-using MapModS.UI;
 using RandomizerCore;
 using System;
 using System.Collections.Generic;
@@ -33,7 +32,7 @@ namespace MapModS.Map
 
             DataLoader.FindPoolGroups();
 
-            StoreOrigMapColors(gameMap);
+            Transition.StoreOrigMapColors(gameMap);
 
             if (RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode != RandomizerMod.Settings.TransitionSettings.TransitionMode.None)
             {
@@ -61,22 +60,22 @@ namespace MapModS.Map
 
             MapModS.Instance.Log("Adding Custom Pins done.");
 
-            string startScene = "";
-            string finalScene = "";
+            //string startScene = "";
+            //string finalScene = "";
 
-            MapModS.Instance.Log(startScene);
-            MapModS.Instance.Log(finalScene);
-            try
-            {
-                foreach (string transition in TransitionHelper.ShortestRoute(startScene, finalScene))
-                {
-                    MapModS.Instance.Log(transition);
-                }
-            }
-            catch (Exception e)
-            {
-                MapModS.Instance.LogError(e);
-            }
+            //MapModS.Instance.Log(startScene);
+            //MapModS.Instance.Log(finalScene);
+            //try
+            //{
+            //    foreach (string transition in TransitionHelper.ShortestRoute(startScene, finalScene))
+            //    {
+            //        MapModS.Instance.Log(transition);
+            //    }
+            //}
+            //catch (Exception e)
+            //{
+            //    MapModS.Instance.LogError(e);
+            //}
         }
 
         // Called every time we open the World Map
@@ -144,11 +143,11 @@ namespace MapModS.Map
                 if (RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode != RandomizerMod.Settings.TransitionSettings.TransitionMode.None
                     && MapModS.LS.ModEnabled && MapModS.LS.mapMode == MapMode.TransitionRando)
                 {
-                    transitionPinScenes = SetupMapTransitionRando(gameMap);
+                    transitionPinScenes = Transition.SetupMapTransitionMode(gameMap);
                 }
                 else
                 {
-                    ResetMapColors(gameMap);
+                    Transition.ResetMapColors(gameMap);
                     gameMap.SetupMap();
                 }
 
@@ -165,220 +164,6 @@ namespace MapModS.Map
             {
                 MapModS.Instance.LogError(e);
             }
-        }
-
-        private static string dropSuffix(string scene)
-        {
-            if (scene == "") return "";
-
-            string[] sceneSplit = scene.Split('_');
-
-            if (sceneSplit.Length < 2) return "";
-
-            return sceneSplit[0] + "_" + sceneSplit[1];
-        }
-
-        private static HashSet<string> SetupMapTransitionRando(GameMap gameMap)
-        {
-            HashSet<string> visitedMapAreas = new();
-            HashSet<string> visitedTitledAreas = new();
-
-            // Get all map areas and titled areas visited
-            foreach (string scene in PlayerData.instance.scenesVisited)
-            {
-                RandomizerMod.RandomizerData.RoomDef roomDef = RandomizerMod.RandomizerData.Data.GetRoomDef(scene);
-                if (roomDef == null) continue;
-
-                visitedMapAreas.Add(roomDef.MapArea);
-                visitedTitledAreas.Add(roomDef.TitledArea);
-            }
-
-            HashSet<string> visitedAdjacentScenes = new();
-            HashSet<string> uncheckedReachableScenes = new();
-
-            foreach (string sourceTransition in RandomizerMod.RandomizerMod.RS.TrackerData.uncheckedReachableTransitions)
-            {
-                string tpSourceClean = sourceTransition.Split('[')[0];
-                uncheckedReachableScenes.Add(tpSourceClean);
-            }
-
-            foreach (TransitionPlacement tp in RandomizerMod.RandomizerMod.RS.Context.transitionPlacements)
-            {
-                string tpSourceClean = tp.source.Name.Split('[')[0];
-                string tpTargetClean = tp.target.Name.Split('[')[0];
-
-                if (tpSourceClean == GameManager.instance.sceneName && PlayerData.instance.scenesVisited.Contains(tpTargetClean))
-                {
-                    visitedAdjacentScenes.Add(tpTargetClean);
-                }
-            }
-
-            HashSet<string> activeScenes = new();
-
-            foreach (Transform areaObj in gameMap.transform)
-            {
-                foreach (Transform roomObj in areaObj.transform)
-                {
-                    string roomName = roomObj.name;
-                    RandomizerMod.RandomizerData.RoomDef roomDef = null;
-
-                    // Some room objects have non-standard scene names, so we truncate the name
-                    // in these situations
-                    if (RandomizerMod.RandomizerData.Data.IsRoom(roomName))
-                    {
-                        roomDef = RandomizerMod.RandomizerData.Data.GetRoomDef(roomName);
-                    }
-                    else
-                    {
-                        if (RandomizerMod.RandomizerData.Data.IsRoom(dropSuffix(roomName)))
-                        {
-                            roomName = dropSuffix(roomName);
-                            roomDef = RandomizerMod.RandomizerData.Data.GetRoomDef(roomName);
-                        }
-                    }
-
-                    SpriteRenderer SR = roomObj.GetComponent<SpriteRenderer>();
-
-                    if (SR == null)
-                    {
-                        roomObj.gameObject.SetActive(false);
-                        continue;
-                    }
-
-                    if (roomName.Contains("White_Palace"))
-                    {
-                        foreach (Transform roomObj2 in roomObj.transform)
-                        {
-                            if (roomObj2.name.Contains("RWP"))
-                            {
-                                SR = roomObj2.GetComponent<SpriteRenderer>();
-                                break;
-                            }
-                            else
-                            {
-                                continue;
-                            }
-                        }
-                    }
-
-                    if (visitedAdjacentScenes.Contains(roomName))
-                    {
-                        roomObj.gameObject.SetActive(true);
-                        SR.color = Color.blue;
-                    }
-                    else if (uncheckedReachableScenes.Contains(roomName))
-                    {
-                        roomObj.gameObject.SetActive(true);
-                        SR.color = Color.cyan;
-                    }
-                    else if (roomName == GameManager.instance.sceneName)
-                    {
-                        roomObj.gameObject.SetActive(true);
-                        SR.color = Color.green;
-                    }
-                    else if (PlayerData.instance.scenesVisited.Contains(roomName))
-                    {
-                        roomObj.gameObject.SetActive(true);
-                        SR.color = Color.white;
-                    }
-                    else if (RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode == RandomizerMod.Settings.TransitionSettings.TransitionMode.MapAreaRandomizer
-                        && roomDef != null)
-                    {
-                        roomObj.gameObject.SetActive(visitedMapAreas.Contains(roomDef.MapArea));
-                        SR.color = Color.white;
-                    }
-                    else if (RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode == RandomizerMod.Settings.TransitionSettings.TransitionMode.FullAreaRandomizer
-                        && roomDef != null)
-                    {
-                        roomObj.gameObject.SetActive(visitedTitledAreas.Contains(roomDef.TitledArea));
-                        SR.color = Color.white;
-                    }
-                    else
-                    {
-                        roomObj.gameObject.SetActive(false);
-                    }
-
-                    if (roomObj.gameObject.activeSelf)
-                    {
-                        activeScenes.Add(roomObj.name);
-                    }
-                }
-            }
-
-            //GameObject deepnest = GameObject.Find("Deepnest_30");
-            //GameObject deepnest_b = GameObject.Find("Deepnest_30_b");
-
-            //if (deepnest != null && deepnest_b != null)
-            //{
-            //    deepnest_b.GetComponent<SpriteRenderer>().color = deepnest.GetComponent<SpriteRenderer>().color;
-            //}
-
-            return activeScenes;
-        }
-
-        private class ColorCopy : MonoBehaviour
-        {
-            public Color origColor;
-        }
-
-        private static void StoreOrigMapColors(GameMap gameMap)
-        {
-            foreach (Transform areaObj in gameMap.transform)
-            {
-                foreach (Transform roomObj in areaObj.transform)
-                {
-                    ColorCopy colorCopy = roomObj.GetComponent<ColorCopy>();
-                    SpriteRenderer SR = roomObj.GetComponent<SpriteRenderer>();
-
-                    if (SR == null) continue;
-
-                    if (colorCopy == null)
-                    {
-                        colorCopy = roomObj.gameObject.AddComponent<ColorCopy>();
-                        colorCopy.origColor = SR.color;
-                    }
-                }
-            }
-        }
-
-        private static void ResetMapColors(GameMap gameMap)
-        {
-            foreach (Transform areaObj in gameMap.transform)
-            {
-                foreach (Transform roomObj in areaObj.transform)
-                {
-                    ColorCopy colorCopy = roomObj.GetComponent<ColorCopy>();
-                    SpriteRenderer SR = roomObj.GetComponent<SpriteRenderer>();
-
-                    if (SR == null || colorCopy == null) continue;
-
-                    if (roomObj.name.Contains("White_Palace"))
-                    {
-                        foreach (Transform roomObj2 in roomObj.transform)
-                        {
-                            if (roomObj2.name.Contains("RWP"))
-                            {
-                                SR = roomObj2.GetComponent<SpriteRenderer>();
-                                break;
-                            }
-                            else
-                            {
-                                continue;
-                            }
-                        }
-                    }
-
-                    SR.color = colorCopy.origColor;
-                }
-            }
-
-            //GameObject deepnest = GameObject.Find("Deepnest_30");
-            //GameObject deepnest_b = GameObject.Find("Deepnest_30_b");
-
-            //if (deepnest != null && deepnest_b != null)
-            //{
-            //    deepnest_b.GetComponent<SpriteRenderer>().color = deepnest.GetComponent<SpriteRenderer>().color;
-            //}
         }
     }
 }
