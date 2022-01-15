@@ -14,7 +14,7 @@ namespace MapModS
     {
         public static MapModS Instance;
 
-        private readonly string _version = "Rando 4 PRERELEASE 3";
+        private readonly string _version = "Rando 4 PRERELEASE 4";
 
         public override string GetVersion() => _version;
 

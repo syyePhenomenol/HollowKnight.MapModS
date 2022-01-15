@@ -60,7 +60,6 @@
     <Compile Remove="Data\Pool.cs" />
     <Compile Remove="Data\ShopDef.cs" />
     <Compile Remove="Shop\ShopHooks.cs" />
-    <Compile Remove="UI\TransitionHelper.cs" />
   </ItemGroup>
 
   <ItemGroup>

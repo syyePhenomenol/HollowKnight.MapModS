@@ -61,15 +61,21 @@ namespace MapModS.Map
 
             MapModS.Instance.Log("Adding Custom Pins done.");
 
-            //string startScene = PlayerData.instance.scenesVisited[1];
-            //string finalScene = PlayerData.instance.scenesVisited[6];
+            //string startScene = "";
+            //string finalScene = "";
 
             //MapModS.Instance.Log(startScene);
             //MapModS.Instance.Log(finalScene);
-
-            //foreach (string transition in TransitionHelper.ShortestRoute(startScene, finalScene))
+            //try
             //{
-            //    MapModS.Instance.Log(transition);
+            //    foreach (string transition in TransitionHelper.ShortestRoute(startScene, finalScene))
+            //    {
+            //        MapModS.Instance.Log(transition);
+            //    }
+            //}
+            //catch (Exception e)
+            //{
+            //    MapModS.Instance.LogError(e);
             //}
         }
 
@@ -193,25 +199,33 @@ namespace MapModS.Map
             {
                 foreach (Transform roomObj in areaObj.transform)
                 {
+                    SpriteRenderer SR = roomObj.GetComponent<SpriteRenderer>();
+
+                    if (SR == null)
+                    {
+                        roomObj.gameObject.SetActive(false);
+                        continue;
+                    }
+
                     if (roomObj.name == GameManager.instance.sceneName)
                     {
                         roomObj.gameObject.SetActive(true);
-                        roomObj.GetComponent<SpriteRenderer>().color = Color.green;
+                        SR.color = Color.green;
                     }
                     else if (adjacentReachableScenes.Contains(roomObj.name))
                     {
                         roomObj.gameObject.SetActive(true);
-                        roomObj.GetComponent<SpriteRenderer>().color = Color.cyan;
+                        SR.color = Color.cyan;
                     }
                     else if (unreachedReachableScenes.Contains(roomObj.name))
                     {
                         roomObj.gameObject.SetActive(true);
-                        roomObj.GetComponent<SpriteRenderer>().color = Color.blue;
+                        SR.color = Color.blue;
                     }
                     else if (PlayerData.instance.scenesVisited.Contains(roomObj.name))
                     {
                         roomObj.gameObject.SetActive(true);
-                        roomObj.GetComponent<SpriteRenderer>().color = Color.white;
+                        SR.color = Color.white;
                     }
                     else
                     {
