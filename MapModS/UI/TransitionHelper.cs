@@ -50,9 +50,6 @@ namespace MapModS.UI
                 pm.Add(items);
                 pm.Add(transitions);
 
-                // note: location costs are ignored in the tracking, to prevent providing unintended information, by using p.location.logic rather than p.location
-                // it is assumed that no information is divulged from the regular location logic and transition logic
-
                 mu = new(lm);
                 mu.AddEntries(lm.Waypoints.Select(w => new DelegateUpdateEntry(w, pm =>
                 {
@@ -103,6 +100,30 @@ namespace MapModS.UI
                         pm.Add(target);
                     }
                 };
+            }
+
+            public void OnTransitionVisited(string source, string target)
+            {
+                visitedTransitions[source] = target;
+
+                LogicTransition st = lm.GetTransition(source);
+                if (st.CanGet(pm))
+                {
+                    LogicTransition tt = lm.GetTransition(target);
+                    if (!pm.Has(st.term))
+                    {
+                        pm.Add(st);
+                    }
+
+                    if (!pm.Has(tt.term))
+                    {
+                        pm.Add(tt);
+                    }
+                }
+                else
+                {
+                    outOfLogicVisitedTransitions.Add(source);
+                }
             }
 
             public class DelegateUpdateEntry : UpdateEntry
@@ -205,6 +226,8 @@ namespace MapModS.UI
             }
 
             tt.pm.StartTemp();
+
+            
 
             tt.pm.RemoveTempItems();
 
