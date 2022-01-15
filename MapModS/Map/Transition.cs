@@ -1,9 +1,5 @@
 ﻿using RandomizerCore;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace MapModS.Map
@@ -58,7 +54,11 @@ namespace MapModS.Map
 
         private static void SetActiveColor(Transform transform, SpriteRenderer sr, Color color)
         {
-            if (sr == null) return;
+            if (sr == null)
+            {
+                transform.gameObject.SetActive(false);
+                return;
+            }
 
             transform.gameObject.SetActive(true);
             sr.color = color;
