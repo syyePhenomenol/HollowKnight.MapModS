@@ -81,10 +81,7 @@ namespace MapModS.UI
 
                 mu = new(lm);
 
-                mu.AddEntries(lm.Waypoints.Select(w => new DelegateUpdateEntry(w, pm => 
-                {
-                    pm.Add(w); 
-                })));
+                mu.AddEntries(lm.Waypoints.Select(w => new DelegateUpdateEntry(w, pm => { pm.Add(w); }, lm)));
 
                 if (ctx.transitionPlacements != null)
                 {
@@ -101,7 +98,7 @@ namespace MapModS.UI
                         {
                             pm.Add(target);
                         }
-                    })));
+                    }, lm)));
                 }
 
                 mu.Hook(pm);
@@ -121,15 +118,23 @@ namespace MapModS.UI
             {
                 readonly Action<ProgressionManager> onAdd;
                 readonly ILogicDef location;
+                readonly LogicManager lm;
 
-                public DelegateUpdateEntry(ILogicDef location, Action<ProgressionManager> onAdd)
+                public DelegateUpdateEntry(ILogicDef location, Action<ProgressionManager> onAdd, LogicManager lm)
                 {
                     this.location = location;
                     this.onAdd = onAdd;
+                    this.lm = lm;
                 }
 
+                // Lazy evaluation for transitions
                 public override bool CanGet(ProgressionManager pm)
                 {
+                    if (lm.TransitionLookup.ContainsKey(location.Name))
+                    {
+                        if (lm.GetTransition(location.Name).data.SceneName != searchScene) return false;
+                    }
+
                     return location.CanGet(pm);
                 }
 
@@ -146,6 +151,8 @@ namespace MapModS.UI
                 public override void OnRemove(ProgressionManager pm) { }
             }
         }
+
+        private static string searchScene;
 
         // Calculates the shortest route (by number of transitions) from startScene to finalScene.
         // The search space will be purely limited to rooms that have been visited + unreached reachable locations
@@ -188,6 +195,8 @@ namespace MapModS.UI
             {
                 currentNode = queue.First();
                 queue.RemoveFirst();
+
+                searchScene = currentNode.currentScene;
 
                 currentNode.PrintRoute();
 
