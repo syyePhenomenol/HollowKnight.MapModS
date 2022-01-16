@@ -2,6 +2,7 @@
 using MapModS.Data;
 using MapModS.Settings;
 using MapModS.Trackers;
+using MapModS.UI;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -59,22 +60,20 @@ namespace MapModS.Map
 
             MapModS.Instance.Log("Adding Custom Pins done.");
 
-            //string startScene = "";
-            //string finalScene = "";
+            string startScene = "Ruins2_04";
+            string finalScene = "Tutorial_01";
 
-            //MapModS.Instance.Log(startScene);
-            //MapModS.Instance.Log(finalScene);
-            //try
-            //{
-            //    foreach (string transition in TransitionHelper.ShortestRoute(startScene, finalScene))
-            //    {
-            //        MapModS.Instance.Log(transition);
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    MapModS.Instance.LogError(e);
-            //}
+            try
+            {
+                foreach (string transition in TransitionHelper.ShortestRoute(startScene, finalScene))
+                {
+                    MapModS.Instance.Log(transition);
+                }
+            }
+            catch (Exception e)
+            {
+                MapModS.Instance.LogError(e);
+            }
         }
 
         // Called every time we open the World Map
@@ -94,6 +93,8 @@ namespace MapModS.Map
                     }
                 }
             }
+
+            //PrintPMLogic();
 
             UpdateMap(self, MapZone.NONE);
         }
@@ -164,5 +165,16 @@ namespace MapModS.Map
                 MapModS.Instance.LogError(e);
             }
         }
+
+        //public static void PrintPMLogic()
+        //{
+        //    foreach (KeyValuePair<string, RandomizerCore.Logic.OptimizedLogicDef> transitionEntry in RandomizerMod.RandomizerMod.RS.TrackerData.lm.LogicLookup)
+        //    {
+        //        if (transitionEntry.Value.CanGet(RandomizerMod.RandomizerMod.RS.TrackerData.pm))
+        //        {
+        //            MapModS.Instance.Log(transitionEntry.Key);
+        //        }
+        //    }
+        //}
     }
 }

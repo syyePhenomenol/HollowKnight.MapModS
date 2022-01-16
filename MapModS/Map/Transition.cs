@@ -30,9 +30,14 @@ namespace MapModS.Map
 
             string[] sceneSplit = scene.Split('_');
 
-            if (sceneSplit.Length < 2) return "";
+            string truncatedScene = sceneSplit[0];
 
-            return sceneSplit[0] + "_" + sceneSplit[1];
+            for (int i = 1; i < sceneSplit.Length - 1; i++)
+            {
+                truncatedScene += "_" + sceneSplit[i];
+            }
+
+            return truncatedScene;
         }
 
         private static string GetTruncatedScene(string roomName)
