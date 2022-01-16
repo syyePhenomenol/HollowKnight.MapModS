@@ -110,7 +110,7 @@ namespace MapModS.Map
 
             if (yellow)
             {
-                spriteName += "Yellow";
+                spriteName += "Green";
             }
 
             return GetSprite(spriteName);

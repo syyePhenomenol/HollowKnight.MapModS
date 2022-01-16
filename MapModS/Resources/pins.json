@@ -2698,7 +2698,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.2,
     "offsetY": 0.2,
-    "offsetZ": 0.01,
+    "offsetZ": 0.001,
     "isShop": false
   },
   "Grub-Crossroads_Spike": {

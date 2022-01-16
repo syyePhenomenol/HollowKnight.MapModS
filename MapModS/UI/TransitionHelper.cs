@@ -82,21 +82,31 @@ namespace MapModS.UI
                 pm.Add(items);
                 pm.Add(transitions);
 
-                foreach (KeyValuePair<string, string> visitedTransition in visitedTransitions)
+                //foreach (KeyValuePair<string, string> visitedTransition in visitedTransitions)
+                //{
+                //    pm.Set(lm.GetTransition(visitedTransition.Key).term.Id, 0);
+                //}
+
+                // Get the scenes that are visited or connected in vanilla fashion to other visited scenes
+                foreach (KeyValuePair<string, LogicTransition> transitionEntry in RandomizerMod.RandomizerMod.RS.TrackerData.lm.TransitionLookup)
                 {
-                    pm.Set(lm.GetTransition(visitedTransition.Key).term.Id, 0);
+                    if (pm.Has(transitionEntry.Value.term.Id))
+                    {
+                        RandomizerMod.RandomizerData.TransitionDef transitionDef = RandomizerMod.RandomizerData.Data.GetTransitionDef(transitionEntry.Key);
+                        pm.Set(lm.GetTerm(transitionDef.SceneName), 0);
+                    }
                 }
 
                 mu = new(lm);
 
-                //mu.AddEntries(lm.Waypoints.Select(w => new DelegateUpdateEntry(w, pm => {pm.Add(w);})));
+                mu.AddEntries(lm.Waypoints.Select(w => new DelegateUpdateEntry(w, pm => {pm.Add(w);})));
 
-                //mu.AddEntries(ctx.Vanilla.Select(v => new DelegateUpdateEntry(v.Location, pm => {pm.Add(v.Item);})));
+                mu.AddEntries(ctx.Vanilla.Select(v => new DelegateUpdateEntry(v.Location, pm => {pm.Add(v.Item);})));
 
-                //if (ctx.itemPlacements != null)
-                //{
-                //    mu.AddEntries(ctx.itemPlacements.Select((p, id) => new DelegateUpdateEntry(p.location.logic, OnCanGetLocation(id))));
-                //}
+                if (ctx.itemPlacements != null)
+                {
+                    mu.AddEntries(ctx.itemPlacements.Select((p, id) => new DelegateUpdateEntry(p.location.logic, OnCanGetLocation(id))));
+                }
 
                 if (ctx.transitionPlacements != null)
                 {
@@ -146,7 +156,7 @@ namespace MapModS.UI
             {
                 return pm =>
                 {
-                    MapModS.Instance.Log(" - - OnCanGetTransition " + id);
+                    //MapModS.Instance.Log(" - - OnCanGetTransition " + id);
 
                     (RandoTransition source, RandoTransition target) = ctx.transitionPlacements[id];
 
@@ -218,11 +228,11 @@ namespace MapModS.UI
             //    MapModS.Instance.Log($"{transitionEntry.Key}: {transitionEntry.Value.CanGet(tt.pm)}");
             //}
 
-            MapModS.Instance.Log(tt.lm.LogicLookup["Tutorial_01[right1]"].CanGet(tt.pm));
-            MapModS.Instance.Log(tt.lm.LogicLookup["Ruins2_04[right1]"].CanGet(tt.pm));
+            //MapModS.Instance.Log(tt.lm.LogicLookup["Tutorial_01[right1]"].CanGet(tt.pm));
+            //MapModS.Instance.Log(tt.lm.LogicLookup["Ruins2_04[right1]"].CanGet(tt.pm));
 
-            //startScene = GetScene(transitionSpace.First());
-            //finalScene = GetScene(transitionSpace.Last());
+            startScene = GetScene(transitionSpace.First());
+            finalScene = GetScene(transitionSpace.Last());
             MapModS.Instance.Log($"Start scene: {startScene}");
             MapModS.Instance.Log($"Final scene: {finalScene}");
 
@@ -258,15 +268,17 @@ namespace MapModS.UI
 
                     tt.pm.StartTemp();
 
+                    //tt.pm.Add(tt.lm.GetItem(currentNode.currentScene));
+
                     //foreach (string routeTransition in currentNode.currentRoute)
                     //{
                     //    tt.pm.Add(tt.lm.GetTransition(routeTransition));
                     //}
-                    
-                    MapModS.Instance.Log($"- Adding transition {transition} to pm");
+
+                    //MapModS.Instance.Log($"- Adding transition {transition} to pm");
 
                     // Add transition to update pm
-                    tt.pm.Add(tt.lm.GetTransition(transition));
+                    //tt.pm.Add(tt.lm.GetTransition(transition));
 
                     foreach (KeyValuePair<string, OptimizedLogicDef> transitionEntry in tt.lm.LogicLookup)
                     {

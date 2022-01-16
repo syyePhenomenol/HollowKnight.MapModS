@@ -59,21 +59,6 @@ namespace MapModS.Map
             CustomPins.FindRandomizedGroups();
 
             MapModS.Instance.Log("Adding Custom Pins done.");
-
-            string startScene = "Ruins2_04";
-            string finalScene = "Tutorial_01";
-
-            try
-            {
-                foreach (string transition in TransitionHelper.ShortestRoute(startScene, finalScene))
-                {
-                    MapModS.Instance.Log(transition);
-                }
-            }
-            catch (Exception e)
-            {
-                MapModS.Instance.LogError(e);
-            }
         }
 
         // Called every time we open the World Map
@@ -95,6 +80,21 @@ namespace MapModS.Map
             }
 
             //PrintPMLogic();
+
+            //string startScene = "Ruins2_04";
+            //string finalScene = "Tutorial_01";
+
+            //try
+            //{
+            //    foreach (string transition in TransitionHelper.ShortestRoute(startScene, finalScene))
+            //    {
+            //        MapModS.Instance.Log(transition);
+            //    }
+            //}
+            //catch (Exception e)
+            //{
+            //    MapModS.Instance.LogError(e);
+            //}
 
             UpdateMap(self, MapZone.NONE);
         }
