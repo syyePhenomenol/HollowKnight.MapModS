@@ -80,21 +80,7 @@ namespace MapModS.Map
             }
 
             //PrintPMLogic();
-
-            //string startScene = "Ruins2_04";
-            //string finalScene = "Tutorial_01";
-
-            //try
-            //{
-            //    foreach (string transition in TransitionHelper.ShortestRoute(startScene, finalScene))
-            //    {
-            //        MapModS.Instance.Log(transition);
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    MapModS.Instance.LogError(e);
-            //}
+            TransitionHelper.TestAlgorithm();
 
             UpdateMap(self, MapZone.NONE);
         }
@@ -166,15 +152,6 @@ namespace MapModS.Map
             }
         }
 
-        //public static void PrintPMLogic()
-        //{
-        //    foreach (KeyValuePair<string, RandomizerCore.Logic.OptimizedLogicDef> transitionEntry in RandomizerMod.RandomizerMod.RS.TrackerData.lm.LogicLookup)
-        //    {
-        //        if (transitionEntry.Value.CanGet(RandomizerMod.RandomizerMod.RS.TrackerData.pm))
-        //        {
-        //            MapModS.Instance.Log(transitionEntry.Key);
-        //        }
-        //    }
-        //}
+        
     }
 }
