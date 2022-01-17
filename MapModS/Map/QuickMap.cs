@@ -29,6 +29,25 @@ namespace MapModS.Map
             On.GameManager.SetGameMap += GameManager_SetGameMap;
         }
 
+        public static void Unhook()
+        {
+            On.GameMap.QuickMapAncientBasin -= GameMap_QuickMapAncientBasin;
+            On.GameMap.QuickMapCity -= GameMap_QuickMapCity;
+            On.GameMap.QuickMapCliffs -= GameMap_QuickMapCliffs;
+            On.GameMap.QuickMapCrossroads -= GameMap_QuickMapCrossroads;
+            On.GameMap.QuickMapCrystalPeak -= GameMap_QuickMapCrystalPeak;
+            On.GameMap.QuickMapDeepnest -= GameMap_QuickMapDeepnest;
+            On.GameMap.QuickMapDirtmouth -= GameMap_QuickMapDirtmouth;
+            On.GameMap.QuickMapFogCanyon -= GameMap_QuickMapFogCanyon;
+            On.GameMap.QuickMapFungalWastes -= GameMap_QuickMapFungalWastes;
+            On.GameMap.QuickMapGreenpath -= GameMap_QuickMapGreenpath;
+            On.GameMap.QuickMapKingdomsEdge -= GameMap_QuickMapKingdomsEdge;
+            On.GameMap.QuickMapQueensGardens -= GameMap_QuickMapQueensGardens;
+            On.GameMap.QuickMapRestingGrounds -= GameMap_QuickMapRestingGrounds;
+            On.GameMap.QuickMapWaterways -= GameMap_QuickMapWaterways;
+            On.GameManager.SetGameMap -= GameManager_SetGameMap;
+        }
+
         // These are called every time we open the respective Quick Map
         private static void GameMap_QuickMapAncientBasin(On.GameMap.orig_QuickMapAncientBasin orig, GameMap self)
         {

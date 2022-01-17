@@ -9,75 +9,28 @@ using RandomizerMod.Settings;
 
 namespace MapModS.UI
 {
-    public static class TransitionHelper
+    public class TransitionHelper
     {
-        private static string GetScene(string transition)
+        public TransitionHelper()
         {
-            return RandomizerMod.RandomizerData.Data.GetTransitionDef(transition).SceneName;
-        }
-
-        private static string GetAdjacentTransition(string transition)
-        {
-            foreach (TransitionPlacement tp in RandomizerMod.RandomizerMod.RS.Context.transitionPlacements)
-            {
-                if (tp.source.Name == transition)
-                {
-                    return tp.target.Name;
-                }
-            }
-
-            RandomizerMod.RandomizerData.TransitionDef transitionDef = RandomizerMod.RandomizerData.Data.GetTransitionDef(transition);
-
-            if (transitionDef == null) return null;
-
-            // If it's not in TransitionPlacements, it's the vanilla target
-            return transitionDef.VanillaTarget;
-        }
-
-        class SearchNode
-        {
-            public SearchNode(string scene, List<string> route)
-            {
-                currentScene = scene;
-                currentRoute = new(route);
-            }
-
-            public void PrintRoute()
-            {
-                string text = "Current route:";
-
-                foreach (string transition in currentRoute)
-                {
-                    text += " -> " + transition;
-                }
-
-                MapModS.Instance.Log(text);
-            }
-
-            public string currentScene;
-            public List<string> currentRoute = new();
+            tt = new();
         }
 
         // Code based on homothety's implementation of RandomizerMod's TrackerData
         class TransitionTracker
         {
-            public HashSet<int> obtainedItems = new(RandomizerMod.RandomizerMod.RS.TrackerData.obtainedItems);
-            public HashSet<int> outOfLogicObtainedItems = new(RandomizerMod.RandomizerMod.RS.TrackerData.outOfLogicObtainedItems);
-            public Dictionary<string, string> visitedTransitions = new(RandomizerMod.RandomizerMod.RS.TrackerData.visitedTransitions);
-            public HashSet<string> outOfLogicVisitedTransitions = new(RandomizerMod.RandomizerMod.RS.TrackerData.outOfLogicVisitedTransitions);
+            public readonly HashSet<int> obtainedItems = RandomizerMod.RandomizerMod.RS.TrackerData.obtainedItems;
+            public readonly HashSet<int> outOfLogicObtainedItems = RandomizerMod.RandomizerMod.RS.TrackerData.outOfLogicObtainedItems;
+            //public HashSet<string> outOfLogicVisitedTransitions = new();
 
-            public ProgressionManager pm;
             public LogicManager lm = RandomizerMod.RandomizerMod.RS.Context.LM;
             public RandoContext ctx = RandomizerMod.RandomizerMod.RS.Context;
-            private MainUpdater mu;
+            public ProgressionManager pm;
+            private readonly MainUpdater mu;
 
-            public void Setup(string startScene)
+            public TransitionTracker()
             {
-                List<RandoItem> items = obtainedItems.Where(i => !outOfLogicObtainedItems.Contains(i)).Select(i => ctx.itemPlacements[i].item).ToList();
-                List<LogicTransition> transitions = visitedTransitions.Keys.Concat(visitedTransitions.Values).Where(t => !outOfLogicVisitedTransitions.Contains(t)).Distinct().Select(t => lm.GetTransition(t)).ToList();
-
                 pm = new(lm, ctx);
-                pm.Add(items);
 
                 mu = new(lm);
 
@@ -94,24 +47,23 @@ namespace MapModS.UI
                             pm.Add(source);
                         }
 
-                        if (outOfLogicVisitedTransitions.Remove(source.Name) && !pm.Has(target.lt.term))
-                        {
-                            pm.Add(target);
-                        }
+                        //if (outOfLogicVisitedTransitions.Remove(source.Name) && !pm.Has(target.lt.term))
+                        //{
+                        //    pm.Add(target);
+                        //}
                     }, lm)));
                 }
 
                 mu.Hook(pm);
+            }
 
-                // Add transitions for current room
-                foreach (LogicTransition transition in transitions)
-                {
-                    if (transition.data.SceneName == startScene || GetScene(GetAdjacentTransition(transition.Name)) == startScene)
-                    {
-                        MapModS.Instance.Log($"Starting by adding {transition.Name}");
-                        pm.Add(transition);
-                    }
-                }
+            public void GetNewItems()
+            {
+                //outOfLogicVisitedTransitions = new(RandomizerMod.RandomizerMod.RS.TrackerData.outOfLogicVisitedTransitions);
+
+                // Get new progression since last time Setup() was called
+                List<RandoItem> items = obtainedItems.Where(i => !outOfLogicObtainedItems.Contains(i)).Select(i => ctx.itemPlacements[i].item).ToList();
+                pm.Add(items);
             }
 
             public class DelegateUpdateEntry : UpdateEntry
@@ -152,16 +104,64 @@ namespace MapModS.UI
             }
         }
 
+        private static string GetScene(string transition)
+        {
+            return RandomizerMod.RandomizerData.Data.GetTransitionDef(transition).SceneName;
+        }
+
+        private static string GetAdjacentTransition(string source)
+        {
+            if (transitionPlacementsDict.ContainsKey(source))
+            {
+                return transitionPlacementsDict[source];
+            }
+
+            RandomizerMod.RandomizerData.TransitionDef transitionDef = RandomizerMod.RandomizerData.Data.GetTransitionDef(source);
+
+            if (transitionDef == null) return null;
+
+            // If it's not in TransitionPlacements, it's the vanilla target
+            return transitionDef.VanillaTarget;
+        }
+
+        class SearchNode
+        {
+            public SearchNode(string scene, List<string> route)
+            {
+                currentScene = scene;
+                currentRoute = new(route);
+            }
+
+            public void PrintRoute()
+            {
+                string text = "Current route:";
+
+                foreach (string transition in currentRoute)
+                {
+                    text += " -> " + transition;
+                }
+
+                MapModS.Instance.Log(text);
+            }
+
+            public string currentScene;
+            public List<string> currentRoute = new();
+        }
+
+        private TransitionTracker tt;
+        private static Dictionary<string, string> transitionPlacementsDict = new();
         private static string searchScene;
 
         // Calculates the shortest route (by number of transitions) from startScene to finalScene.
         // The search space will be purely limited to rooms that have been visited + unreached reachable locations
         // A ProgressionManager is used to track logic while traversing through the search space
-        public static List<string> ShortestRoute(string startScene, string finalScene)
-        {
-            List<string> shortestRoute = new();
-            HashSet<string> transitionSpace = new();
+        public List<string> ShortestRoute(string startScene, string finalScene, List<string> triedStartTransitions)
+        {   
+            transitionPlacementsDict = RandomizerMod.RandomizerMod.RS.Context.transitionPlacements.ToDictionary(tp => tp.source.Name, tp => tp.target.Name);
 
+            HashSet<string> transitionSpace = new();
+            Dictionary<string, string> startTransitionPlacements = new();
+            
             // Get all relevant transitions
             foreach (KeyValuePair<string, LogicTransition> transitionEntry in RandomizerMod.RandomizerMod.RS.TrackerData.lm.TransitionLookup)
             {
@@ -171,29 +171,57 @@ namespace MapModS.UI
                 }
             }
 
-            // Sample two scenes
-            if (startScene == "" && finalScene == "")
+            // Remove rejected start transitions
+            foreach (var key in transitionSpace.Intersect(triedStartTransitions).ToList())
             {
-                startScene = GetScene(transitionSpace.First());
-                finalScene = GetScene(transitionSpace.Last());
+                transitionSpace.Remove(key);
+            }
+
+            // Sample two scenes if not specified
+            if (startScene == null || finalScene == null)
+            {
+                Random random = new();
+                string startTransition = transitionSpace.ElementAt(random.Next(transitionSpace.Count()));
+                
+                startScene = GetScene(startTransition);
+                transitionSpace.Remove(startTransition);
+                finalScene = GetScene(transitionSpace.ElementAt(random.Next(transitionSpace.Count())));
+                transitionSpace.Add(startTransition);
             }
 
             MapModS.Instance.Log($"Start scene: {startScene}");
             MapModS.Instance.Log($"Final scene: {finalScene}");
 
-            TransitionTracker tt = new();
-            tt.Setup(startScene);
+            if (startScene == finalScene)
+            {
+                MapModS.Instance.Log("Start scene is the same as final scene");
+                return new();
+            }
+
+            // Get starting transitions
+            foreach (string transition in transitionSpace)
+            {
+                if (GetScene(transition) == startScene)
+                {
+                    startTransitionPlacements.Add(transition, GetAdjacentTransition(transition));
+                }
+            }
+
+            tt.GetNewItems();
 
             // Algorithm (BFS)
             HashSet<string> visitedTransitions = new();
             LinkedList<SearchNode> queue = new();
 
-            SearchNode currentNode = new(startScene, new());
-            queue.AddLast(currentNode);
+            foreach (KeyValuePair<string, string> tp in startTransitionPlacements)
+            {
+                SearchNode startNode = new(GetScene(tp.Value), new() { tp.Key });
+                queue.AddLast(startNode);
+            }
 
             while (queue.Any())
             {
-                currentNode = queue.First();
+                SearchNode currentNode = queue.First();
                 queue.RemoveFirst();
 
                 searchScene = currentNode.currentScene;
@@ -234,15 +262,16 @@ namespace MapModS.UI
                 }
             }
 
-            return shortestRoute;
+            MapModS.Instance.Log("No route found, or the parameters are invalid");
+            return new();
         }
 
-        public static void TestAlgorithm()
+        public void TestAlgorithm()
         {
-            string startScene = "Tutorial_01";
-            string finalScene = "Deepnest_10";
+            string startScene = null;
+            string finalScene = null;
 
-            foreach (string transition in ShortestRoute(startScene, finalScene))
+            foreach (string transition in ShortestRoute(startScene, finalScene, new()))
             {
                 MapModS.Instance.Log(transition);
             }

@@ -12,6 +12,12 @@ namespace MapModS.Trackers
             On.PlayMakerFSM.OnEnable += PlayMakerFSM_OnEnable;
         }
 
+        public static void Unhook()
+        {
+            On.HealthManager.SendDeathEvent -= HealthManager_SendDeathEvent;
+            On.PlayMakerFSM.OnEnable -= PlayMakerFSM_OnEnable;
+        }
+
         // Called after every time the map is opened
         public static void UpdateObtainedItems()
         {
@@ -61,6 +67,8 @@ namespace MapModS.Trackers
         private static void HealthManager_SendDeathEvent(On.HealthManager.orig_SendDeathEvent orig, HealthManager self)
         {
             orig(self);
+
+            if (RandomizerMod.RandomizerMod.RS.GenerationSettings == null) return;
 
             switch (self.gameObject.name)
             {

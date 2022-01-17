@@ -7,16 +7,23 @@ namespace MapModS.Trackers
     {
         public static void Hook()
         {
+            if (RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.GeoRocks) return;
+
             On.GeoRock.OnEnable += GeoRock_OnEnable;
             On.GeoRock.SetMyID += GeoRock_SetMyID;
             ModHooks.AfterSavegameLoadHook += AfterSavegameLoadHook;
         }
 
+        public static void Unhook()
+        {
+            On.GeoRock.OnEnable -= GeoRock_OnEnable;
+            On.GeoRock.SetMyID -= GeoRock_SetMyID;
+            ModHooks.AfterSavegameLoadHook -= AfterSavegameLoadHook;
+        }
+
         private static void GeoRock_OnEnable(On.GeoRock.orig_OnEnable orig, GeoRock self)
         {
             orig(self);
-
-            if (RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.GeoRocks) return;
 
             PlayMakerFSM geoRockFSM = self.gameObject.LocateMyFSM("Geo Rock");
 
@@ -26,8 +33,6 @@ namespace MapModS.Trackers
         private static void GeoRock_SetMyID(On.GeoRock.orig_SetMyID orig, GeoRock self)
         {
             orig(self);
-
-            if (RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.GeoRocks) return;
 
             // Rename duplicate ids
             if (self.gameObject.scene.name == "Crossroads_ShamanTemple" && self.gameObject.name == "Geo Rock 2")
@@ -49,8 +54,6 @@ namespace MapModS.Trackers
 
         private static void AfterSavegameLoadHook(SaveGameData self)
         {
-            if (RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.GeoRocks) return;
-
             // Update Geo Rock counter (vanilla Geo Rocks only)
             MapModS.LS.GeoRockCounter = 0;
 

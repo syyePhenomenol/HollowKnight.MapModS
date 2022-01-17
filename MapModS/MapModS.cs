@@ -3,10 +3,12 @@ using MapModS.Map;
 using MapModS.Settings;
 using MapModS.Shop;
 using MapModS.Trackers;
+using MenuChanger;
 using MapModS.UI;
 using Modding;
 using System;
 using System.Reflection;
+using System.Collections;
 
 namespace MapModS
 {
@@ -40,7 +42,18 @@ namespace MapModS
 
             Instance = this;
 
-            AdditionalMapsInstalled = HasAdditionalMaps();
+            if (ModHooks.GetMod("Randomizer 4") is not Mod)
+            {
+                Log("Randomizer 4 was not detected. MapModS disabled");
+                return;
+            }
+
+            AdditionalMapsInstalled = ModHooks.GetMod("Additional Maps") is Mod;
+
+            if (AdditionalMapsInstalled)
+            {
+                Instance.Log("Additional Maps detected");
+            }
 
             try
             {
@@ -62,6 +75,42 @@ namespace MapModS
                 throw;
             }
 
+            ModHooks.NewGameHook += ModHooks_NewGameHook;
+            On.GameManager.LoadGame += GameManager_LoadGame;
+            On.QuitToMenu.Start += QuitToMenu_Start;
+
+            Log("Initialization complete.");
+        }
+
+        private void ModHooks_NewGameHook()
+        {
+            if (RandomizerMod.RandomizerMod.RS.GenerationSettings == null) return;
+
+            Log("Activating mod");
+
+            Hook();
+        }
+
+        private void GameManager_LoadGame(On.GameManager.orig_LoadGame orig, GameManager self, int saveSlot, Action<bool> callback)
+        {
+            orig(self, saveSlot, callback);
+
+            if (RandomizerMod.RandomizerMod.RS.GenerationSettings == null) return;
+
+            Log("Activating mod");
+
+            Hook();
+        }
+
+        private IEnumerator QuitToMenu_Start(On.QuitToMenu.orig_Start orig, QuitToMenu self)
+        {
+            Unhook();
+
+            return orig(self);
+        }
+
+        private void Hook()
+        {
             // Track when items are picked up/Geo Rocks are broken
             ItemTracker.Hook();
             GeoRockTracker.Hook();
@@ -84,30 +133,25 @@ namespace MapModS
             // Immediately update Map on scene change
             Quill.Hook();
 
-            // Add a Pause Menu GUI
+            // Add a Pause Menu GUI, map text UI and transition helper text
             GUI.Hook();
 
             // Add keyboard shortcut control
             InputListener.InstantiateSingleton();
-
-            Log("Initialization complete.");
         }
 
-        public static bool HasAdditionalMaps()
+        private void Unhook()
         {
-            foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
-            {
-                foreach (Type type in assembly.GetTypes())
-                {
-                    if (type.Name == "AdditionalMaps")
-                    {
-                        Instance.Log("Additional Maps detected");
-                        return true;
-                    }
-                }
-            }
-
-            return false;
+            ItemTracker.Unhook();
+            GeoRockTracker.Unhook();
+            ShopChanger.Unhook();
+            WorldMap.Unhook();
+            QuickMap.Unhook();
+            FullMap.Unhook();
+            PinsVanilla.Unhook();
+            Quill.Unhook();
+            GUI.Unhook();
+            InputListener.DestroySingleton();
         }
     }
 }

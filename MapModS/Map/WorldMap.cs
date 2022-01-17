@@ -23,6 +23,15 @@ namespace MapModS.Map
             On.GameManager.UpdateGameMap += GameManager_UpdateGameMap;
         }
 
+        public static void Unhook()
+        {
+            On.GameManager.SetGameMap -= GameManager_SetGameMap;
+            On.GameMap.WorldMap -= GameMap_WorldMap;
+            On.GameMap.SetupMapMarkers -= GameMap_SetupMapMarkers;
+            On.GameMap.DisableMarkers -= GameMap_DisableMarkers;
+            On.GameManager.UpdateGameMap -= GameManager_UpdateGameMap;
+        }
+
         // The function that is called every time after a new GameMap is created (once per save load)
         private static void GameManager_SetGameMap(On.GameManager.orig_SetGameMap orig, GameManager self, GameObject go_gameMap)
         {
@@ -32,7 +41,7 @@ namespace MapModS.Map
 
             DataLoader.FindPoolGroups();
 
-            Transition.StoreOrigMapColors(gameMap);
+            Transition.AddExtraComponentsToMap(gameMap);
 
             if (RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode != RandomizerMod.Settings.TransitionSettings.TransitionMode.None)
             {
@@ -80,8 +89,6 @@ namespace MapModS.Map
             }
 
             //PrintPMLogic();
-            TransitionHelper.TestAlgorithm();
-
             UpdateMap(self, MapZone.NONE);
         }
 

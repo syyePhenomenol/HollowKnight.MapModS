@@ -17,6 +17,7 @@ namespace MapModS.UI
 
         private GameObject _pauseCanvas;
         private GameObject _mapCanvas;
+        private GameObject _transitionCanvas;
 
         public static GUIController Instance
         {
@@ -57,6 +58,7 @@ namespace MapModS.UI
             {
                 Destroy(_instance._pauseCanvas);
                 Destroy(_instance._mapCanvas);
+                //Destroy(_instance._transitionCanvas);
                 Destroy(_instance.gameObject);
             }
         }
@@ -81,13 +83,30 @@ namespace MapModS.UI
             CanvasScaler mapScaler = _mapCanvas.AddComponent<CanvasScaler>();
             mapScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
             mapScaler.referenceResolution = new Vector2(1920f, 1080f);
-            _pauseCanvas.AddComponent<GraphicRaycaster>();
+            //_mapCanvas.AddComponent<GraphicRaycaster>();
 
             MapText.BuildText(_mapCanvas);
 
             DontDestroyOnLoad(_mapCanvas);
 
             _mapCanvas.SetActive(false);
+
+            //_transitionCanvas = new GameObject();
+            //_transitionCanvas.AddComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
+            //CanvasScaler transitionScaler = _transitionCanvas.AddComponent<CanvasScaler>();
+            //transitionScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            //transitionScaler.referenceResolution = new Vector2(1920f, 1080f);
+            //_transitionCanvas.AddComponent<Camera>();
+
+            //TransitionText.BuildText(_transitionCanvas);
+
+            //DontDestroyOnLoad(_transitionCanvas);
+
+            //_transitionCanvas.SetActive(false);
+
+            TransitionText.th = new();
+
+            //TransitionText.th.TestAlgorithm();
         }
 
         public void Update()
@@ -95,6 +114,7 @@ namespace MapModS.UI
             try
             {
                 PauseMenu.Update();
+                //TransitionText.Update();
             }
             catch (Exception e)
             {

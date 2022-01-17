@@ -10,7 +10,17 @@ namespace MapModS.UI
             On.GameMap.Start += GameMap_Start;
             On.GameMap.SetupMapMarkers += SetupMapMarkers;
             On.GameMap.DisableMarkers += GameMap_DisableMarkers;
-            On.QuitToMenu.Start += OnQuitToMenu;
+            //On.QuitToMenu.Start += OnQuitToMenu;
+        }
+
+        public static void Unhook()
+        {
+            On.GameMap.Start -= GameMap_Start;
+            On.GameMap.SetupMapMarkers -= SetupMapMarkers;
+            On.GameMap.DisableMarkers -= GameMap_DisableMarkers;
+            //On.QuitToMenu.Start -= OnQuitToMenu;
+
+            GUIController.Unload();
         }
 
         private static void GameMap_Start(On.GameMap.orig_Start orig, GameMap self)
@@ -33,6 +43,7 @@ namespace MapModS.UI
             orig(self);
 
             MapText.Show();
+            //TransitionText.Show();
         }
 
         private static void GameMap_DisableMarkers(On.GameMap.orig_DisableMarkers orig, GameMap self)
@@ -40,13 +51,12 @@ namespace MapModS.UI
             orig(self);
 
             MapText.Hide();
+            //TransitionText.Hide();
         }
 
-        private static IEnumerator OnQuitToMenu(On.QuitToMenu.orig_Start orig, QuitToMenu self)
-        {
-            GUIController.Unload();
-
-            return orig(self);
-        }
+        //private static IEnumerator OnQuitToMenu(On.QuitToMenu.orig_Start orig, QuitToMenu self)
+        //{
+        //    return orig(self);
+        //}
     }
 }

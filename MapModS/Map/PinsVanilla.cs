@@ -19,6 +19,16 @@ namespace MapModS.Map
             ModHooks.GetPlayerBoolHook += BoolGetOverride;
         }
 
+        public static void Unhook()
+        {
+            On.PlayMakerFSM.OnEnable -= PlayMakerFSM_OnEnable;
+            On.GameManager.SetGameMap -= GameManager_SetGameMap;
+            On.GrubPin.OnEnable -= On_GrubPin_OnEnable;
+            On.FlamePin.OnEnable -= On_FlamePin_Enable;
+            On.BrummFlamePin.OnEnable -= On_BrummFlamePin_Enable;
+            ModHooks.GetPlayerBoolHook -= BoolGetOverride;
+        }
+
         public static void ReplaceBoolX(PlayMakerFSM fsm, string stateName, int index)
         {
             string boolString = FsmUtil.GetAction<PlayerDataBoolTest>(fsm, stateName, index).boolName.ToString();

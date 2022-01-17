@@ -1,5 +1,7 @@
 ﻿using RandomizerCore;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace MapModS.Map
@@ -157,13 +159,22 @@ namespace MapModS.Map
 
             return inLogicScenes;
         }
+        //private static Mesh SpriteToMesh(Sprite sprite)
+        //{
+        //    Mesh mesh = new Mesh();
+        //    mesh.SetVertices(Array.ConvertAll(sprite.vertices, i => (Vector3)i).ToList());
+        //    mesh.SetUVs(0, sprite.uv.ToList());
+        //    mesh.SetTriangles(Array.ConvertAll(sprite.triangles, i => (int)i), 0);
+
+        //    return mesh;
+        //}
 
         private class ColorCopy : MonoBehaviour
         {
             public Color origColor;
         }
 
-        public static void StoreOrigMapColors(GameMap gameMap)
+        public static void AddExtraComponentsToMap(GameMap gameMap)
         {
             foreach (Transform areaObj in gameMap.transform)
             {
@@ -178,6 +189,8 @@ namespace MapModS.Map
                     {
                         colorCopy = roomObj.gameObject.AddComponent<ColorCopy>();
                         colorCopy.origColor = SR.color;
+                        //MeshCollider meshCollider = roomObj.gameObject.AddComponent<MeshCollider>();
+                        //meshCollider.sharedMesh = SpriteToMesh(SR.sprite);
                     }
                 }
             }
@@ -189,10 +202,10 @@ namespace MapModS.Map
             {
                 foreach (Transform roomObj in areaObj.transform)
                 {
-                    ColorCopy colorCopy = roomObj.GetComponent<ColorCopy>();
+                    ColorCopy extra = roomObj.GetComponent<ColorCopy>();
                     SpriteRenderer sr = roomObj.GetComponent<SpriteRenderer>();
 
-                    if (sr == null || colorCopy == null) continue;
+                    if (sr == null || extra == null) continue;
 
                     if (roomObj.name.Contains("White_Palace"))
                     {
@@ -204,7 +217,7 @@ namespace MapModS.Map
                         }
                     }
 
-                    sr.color = colorCopy.origColor;
+                    sr.color = extra.origColor;
                 }
             }
         }

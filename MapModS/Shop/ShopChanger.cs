@@ -11,6 +11,11 @@ namespace MapModS.Shop
             On.PlayMakerFSM.OnEnable += PlayMakerFSM_OnEnable;
         }
 
+        public static void Unhook()
+        {
+            On.PlayMakerFSM.OnEnable -= PlayMakerFSM_OnEnable;
+        }
+
         private static void PlayMakerFSM_OnEnable(On.PlayMakerFSM.orig_OnEnable orig, PlayMakerFSM self)
         {
             orig(self);

@@ -32,9 +32,7 @@ namespace MapModS.UI
 
         protected void Update()
         {
-            if (GameManager.instance == null) return;
-
-            if (GameManager.instance.gameMap == null) return;
+            if (GameManager.instance == null || GameManager.instance.gameMap == null) return;
 
             if (!GameManager.instance.IsGameplayScene() && !GameManager.instance.IsGamePaused()) return;
 

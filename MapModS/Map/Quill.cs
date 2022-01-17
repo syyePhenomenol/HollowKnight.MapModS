@@ -11,6 +11,12 @@ namespace MapModS.Map
             ModHooks.SetPlayerBoolHook += BoolSetOverride;
         }
 
+        public static void Unhook()
+        {
+            UnityEngine.SceneManagement.SceneManager.activeSceneChanged -= HandleSceneChanges;
+            ModHooks.SetPlayerBoolHook -= BoolSetOverride;
+        }
+
         // Force map to update every time we enter a new scene
         private static void HandleSceneChanges(Scene from, Scene to)
         {

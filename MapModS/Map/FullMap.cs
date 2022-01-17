@@ -22,6 +22,16 @@ namespace MapModS.Map
             ModHooks.GetPlayerBoolHook += BoolGetOverride;
         }
 
+        public static void Unhook()
+        {
+            On.RoughMapRoom.OnEnable -= RoughMapRoom_OnEnable;
+            IL.GameMap.WorldMap -= ModifyMapBools;
+            IL.GameMap.SetupMap -= ModifyMapBools;
+            IL.RoughMapRoom.OnEnable -= ModifyMapBools;
+            On.PlayMakerFSM.OnEnable -= PlayMakerFSM_OnEnable;
+            ModHooks.GetPlayerBoolHook -= BoolGetOverride;
+        }
+
         // The objects that make up the minimal map state
         private static readonly List<string> _persistentMapObjects = new()
         {
