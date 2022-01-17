@@ -41,6 +41,12 @@ https://github.com/flibber-hk/HollowKnight.SkillUpgrades
     - "Pin Size" `CTRL-5`: Toggle the style of the Pins
     - "Customize Pins": Open/close a panel with a toggle for each spoiler item pool
 
+- The mod currently has four main modes:
+   - "Full Map": Shows the full map regardless of map items obtained
+   - "Transition": For transition rando runs only, displays only in-logic rooms with color-coding for current (green), adjacent (blue) and unchecked rooms (cyan)
+   - "All Pins": Shows all pins, but only show map areas for obtained map items
+   - "Pins Over Map": Only show pins over where the corresponding map item has been obtained
+
 # How To Install
 Use Scarab: https://github.com/fifty-six/Scarab
 
@@ -52,6 +58,8 @@ Or, you can install manually:
 
 # Acknowledgements
 - The Hollow Knight/Hollow Knight Speedrun Discord Channels for always giving very sound advice and suggestions
+- Special thanks to Homothety and Flib for significant coding help
 - CaptainDapper for making the original mod
 - PimpasPimpinela for helping to port the mod from Rando 3 to Rando 4
-- Chaktis for helping with sprite art
+- Chaktis, KingKiller39 and Ender Onryo for helping with sprite art
+- ColetteMSLP for testing out the mod during livestreams
