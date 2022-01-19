@@ -42,23 +42,6 @@ namespace MapModS.Map
             return truncatedScene;
         }
 
-        private static string GetTruncatedScene(string roomName)
-        {
-            // Some room objects have non-standard scene names, so we truncate the name
-            // in these situations
-            if (RandomizerMod.RandomizerData.Data.IsRoom(roomName))
-            {
-                return roomName;
-            }
-
-            if (RandomizerMod.RandomizerData.Data.IsRoom(DropSuffix(roomName)))
-            {
-                return DropSuffix(roomName);
-            }
-
-            return roomName;
-        }
-
         private static void SetActiveColor(Transform transform, SpriteRenderer sr, Color color)
         {
             if (sr == null)
@@ -120,11 +103,17 @@ namespace MapModS.Map
             {
                 foreach (Transform roomObj in areaObj.transform)
                 {
-                    string roomName = GetTruncatedScene(roomObj.name);
+                    ExtraMapData emd = roomObj.GetComponent<ExtraMapData>();
+
+                    if (emd == null)
+                    {
+                        roomObj.gameObject.SetActive(false);
+                        continue;
+                    }
 
                     SpriteRenderer sr = roomObj.GetComponent<SpriteRenderer>();
 
-                    if (roomName.Contains("White_Palace"))
+                    if (emd.sceneName.Contains("White_Palace"))
                     {
                         foreach (Transform roomObj2 in roomObj.transform)
                         {
@@ -134,19 +123,19 @@ namespace MapModS.Map
                         }
                     }
 
-                    if (visitedAdjacentScenes.Contains(roomName))
+                    if (visitedAdjacentScenes.Contains(emd.sceneName))
                     {
                         SetActiveColor(roomObj, sr, Color.blue);
                     }
-                    else if (uncheckedReachableScenes.Contains(roomName))
+                    else if (uncheckedReachableScenes.Contains(emd.sceneName))
                     {
                         SetActiveColor(roomObj, sr, Color.cyan);
                     }
-                    else if (roomName == GameManager.instance.sceneName)
+                    else if (emd.sceneName == GameManager.instance.sceneName)
                     {
                         SetActiveColor(roomObj, sr, Color.green);
                     }
-                    else if (inLogicScenes.Contains(roomName))
+                    else if (inLogicScenes.Contains(emd.sceneName))
                     {
                         SetActiveColor(roomObj, sr, Color.white);
                     }
@@ -159,38 +148,51 @@ namespace MapModS.Map
 
             return inLogicScenes;
         }
-        //private static Mesh SpriteToMesh(Sprite sprite)
-        //{
-        //    Mesh mesh = new Mesh();
-        //    mesh.SetVertices(Array.ConvertAll(sprite.vertices, i => (Vector3)i).ToList());
-        //    mesh.SetUVs(0, sprite.uv.ToList());
-        //    mesh.SetTriangles(Array.ConvertAll(sprite.triangles, i => (int)i), 0);
 
-        //    return mesh;
-        //}
-
-        private class ColorCopy : MonoBehaviour
+        private static string GetActualSceneName(string objName)
         {
-            public Color origColor;
+            // Some room objects have non-standard scene names, so we truncate the name
+            // in these situations
+            if (RandomizerMod.RandomizerData.Data.IsRoom(objName))
+            {
+                return objName;
+            }
+
+            if (RandomizerMod.RandomizerData.Data.IsRoom(DropSuffix(objName)))
+            {
+                return DropSuffix(objName);
+            }
+
+            return null;
         }
 
+        public class ExtraMapData : MonoBehaviour
+        {
+            public Color origColor;
+            public string sceneName;
+        }
+
+        // Store original color, also store the sceneName for the room object for convenience
         public static void AddExtraComponentsToMap(GameMap gameMap)
         {
             foreach (Transform areaObj in gameMap.transform)
             {
                 foreach (Transform roomObj in areaObj.transform)
                 {
-                    ColorCopy colorCopy = roomObj.GetComponent<ColorCopy>();
+                    string sceneName = GetActualSceneName(roomObj.name);
+
+                    if (sceneName == null) continue;
+
+                    ExtraMapData extraData = roomObj.GetComponent<ExtraMapData>();
                     SpriteRenderer SR = roomObj.GetComponent<SpriteRenderer>();
 
                     if (SR == null) continue;
 
-                    if (colorCopy == null)
+                    if (extraData == null)
                     {
-                        colorCopy = roomObj.gameObject.AddComponent<ColorCopy>();
-                        colorCopy.origColor = SR.color;
-                        //MeshCollider meshCollider = roomObj.gameObject.AddComponent<MeshCollider>();
-                        //meshCollider.sharedMesh = SpriteToMesh(SR.sprite);
+                        extraData = roomObj.gameObject.AddComponent<ExtraMapData>();
+                        extraData.origColor = SR.color;
+                        extraData.sceneName = sceneName;
                     }
                 }
             }
@@ -202,7 +204,7 @@ namespace MapModS.Map
             {
                 foreach (Transform roomObj in areaObj.transform)
                 {
-                    ColorCopy extra = roomObj.GetComponent<ColorCopy>();
+                    ExtraMapData extra = roomObj.GetComponent<ExtraMapData>();
                     SpriteRenderer sr = roomObj.GetComponent<SpriteRenderer>();
 
                     if (sr == null || extra == null) continue;

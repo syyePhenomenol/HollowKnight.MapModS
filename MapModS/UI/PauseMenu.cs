@@ -208,8 +208,8 @@ namespace MapModS.UI
                 BuildMenu(Canvas);
                 MapText.LockToggleEnable = true;
                 MapText.RebuildText();
-                //TransitionText.LockToggleEnable = true;
-                //TransitionText.RebuildText();
+                TransitionText.LockToggleEnable = true;
+                TransitionText.SetTexts();
             }
         }
 

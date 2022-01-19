@@ -21,7 +21,6 @@ namespace MapModS.UI
         {
             public readonly HashSet<int> obtainedItems = RandomizerMod.RandomizerMod.RS.TrackerData.obtainedItems;
             public readonly HashSet<int> outOfLogicObtainedItems = RandomizerMod.RandomizerMod.RS.TrackerData.outOfLogicObtainedItems;
-            //public HashSet<string> outOfLogicVisitedTransitions = new();
 
             public LogicManager lm = RandomizerMod.RandomizerMod.RS.Context.LM;
             public RandoContext ctx = RandomizerMod.RandomizerMod.RS.Context;
@@ -46,11 +45,6 @@ namespace MapModS.UI
                         {
                             pm.Add(source);
                         }
-
-                        //if (outOfLogicVisitedTransitions.Remove(source.Name) && !pm.Has(target.lt.term))
-                        //{
-                        //    pm.Add(target);
-                        //}
                     }, lm)));
                 }
 
@@ -59,8 +53,6 @@ namespace MapModS.UI
 
             public void GetNewItems()
             {
-                //outOfLogicVisitedTransitions = new(RandomizerMod.RandomizerMod.RS.TrackerData.outOfLogicVisitedTransitions);
-
                 // Get new progression since last time Setup() was called
                 List<RandoItem> items = obtainedItems.Where(i => !outOfLogicObtainedItems.Contains(i)).Select(i => ctx.itemPlacements[i].item).ToList();
                 pm.Add(items);
@@ -148,14 +140,14 @@ namespace MapModS.UI
             public List<string> currentRoute = new();
         }
 
-        private TransitionTracker tt;
+        private readonly TransitionTracker tt;
         private static Dictionary<string, string> transitionPlacementsDict = new();
         private static string searchScene;
 
         // Calculates the shortest route (by number of transitions) from startScene to finalScene.
         // The search space will be purely limited to rooms that have been visited + unreached reachable locations
         // A ProgressionManager is used to track logic while traversing through the search space
-        public List<string> ShortestRoute(string startScene, string finalScene, List<string> triedStartTransitions)
+        public List<string> ShortestRoute(string startScene, string finalScene, HashSet<string> rejectedTransitions)
         {   
             transitionPlacementsDict = RandomizerMod.RandomizerMod.RS.Context.transitionPlacements.ToDictionary(tp => tp.source.Name, tp => tp.target.Name);
 
@@ -172,9 +164,12 @@ namespace MapModS.UI
             }
 
             // Remove rejected start transitions
-            foreach (var key in transitionSpace.Intersect(triedStartTransitions).ToList())
+            if (rejectedTransitions != null)
             {
-                transitionSpace.Remove(key);
+                foreach (var key in transitionSpace.Intersect(rejectedTransitions).ToList())
+                {
+                    transitionSpace.Remove(key);
+                }
             }
 
             // Sample two scenes if not specified
@@ -189,12 +184,12 @@ namespace MapModS.UI
                 transitionSpace.Add(startTransition);
             }
 
-            MapModS.Instance.Log($"Start scene: {startScene}");
-            MapModS.Instance.Log($"Final scene: {finalScene}");
+            //MapModS.Instance.Log($"Start scene: {startScene}");
+            //MapModS.Instance.Log($"Final scene: {finalScene}");
 
             if (startScene == finalScene)
             {
-                MapModS.Instance.Log("Start scene is the same as final scene");
+                //MapModS.Instance.Log("Route search: Start scene is the same as final scene");
                 return new();
             }
 
@@ -226,11 +221,11 @@ namespace MapModS.UI
 
                 searchScene = currentNode.currentScene;
 
-                currentNode.PrintRoute();
+                //currentNode.PrintRoute();
 
                 if (currentNode.currentScene == finalScene)
                 {
-                    MapModS.Instance.Log("Successful termination");
+                    //MapModS.Instance.Log("Route search: Successful termination");
                     return currentNode.currentRoute;
                 }
 
@@ -262,19 +257,19 @@ namespace MapModS.UI
                 }
             }
 
-            MapModS.Instance.Log("No route found, or the parameters are invalid");
+            //MapModS.Instance.Log("Route search: No route found, or the parameters are invalid");
             return new();
         }
 
-        public void TestAlgorithm()
-        {
-            string startScene = null;
-            string finalScene = null;
+        //public void TestAlgorithm()
+        //{
+        //    string startScene = PlayerData.instance.scenesVisited.First();
+        //    string finalScene = PlayerData.instance.scenesVisited.Last();
 
-            foreach (string transition in ShortestRoute(startScene, finalScene, new()))
-            {
-                MapModS.Instance.Log(transition);
-            }
-        }
+        //    foreach (string transition in ShortestRoute(startScene, finalScene, new()))
+        //    {
+        //        MapModS.Instance.Log(transition);
+        //    }
+        //}
     }
 }

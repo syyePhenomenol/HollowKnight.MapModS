@@ -17,12 +17,15 @@ namespace MapModS.UI
 
         public static bool LockToggleEnable;
 
-        private static CanvasPanel _instructionPanel;
-        private static CanvasPanel _routePanel;
-        private static Camera camera => Canvas?.GetComponent<Camera>();
+        private static CanvasPanel _transitionPanel;
 
         public static TransitionHelper th;
-        public static string centeredScene = "";
+
+        public static string lastStartScene = null;
+        public static string lastFinalScene = null;
+        public static string selectedScene = "None";
+        public static List<string> selectedRoute = new();
+        public static HashSet<string> rejectedTransitions = new();
 
         public static void Show()
         {
@@ -41,104 +44,212 @@ namespace MapModS.UI
             LockToggleEnable = false;
         }
 
+        public static void Initialize()
+        {
+            th = new();
+
+            lastStartScene = null;
+            lastFinalScene = null;
+            selectedScene = "None";
+            selectedRoute = new();
+            rejectedTransitions = new();
+        }
+
         public static void BuildText(GameObject _canvas)
         {
             Canvas = _canvas;
-            _instructionPanel = new CanvasPanel
-                (_canvas, GUIController.Instance.Images["ButtonsMenuBG"], new Vector2(10f, 40f), new Vector2(1346f, 0f), new Rect(0f, 0f, 0f, 0f));
-            _instructionPanel.AddText("Instruction", "Display instruction here " + centeredScene, new Vector2(430f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14);
+            _transitionPanel = new CanvasPanel
+                (_canvas, GUIController.Instance.Images["ButtonsMenuBG"], new Vector2(10f, 20f), new Vector2(1346f, 0f), new Rect(0f, 0f, 0f, 0f));
+            _transitionPanel.AddText("SceneName", "None", new Vector2(20f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14);
+            _transitionPanel.AddText("Route", "Route: None", new Vector2(-37f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14, FontStyle.Normal, TextAnchor.UpperRight);
+            _transitionPanel.AddText("Transitions", "Transitions: None", new Vector2(20f, 20f), Vector2.zero, GUIController.Instance.TrajanNormal, 14);
 
-            _routePanel = new CanvasPanel
-                (_canvas, GUIController.Instance.Images["ButtonsMenuBG"], new Vector2(10f, 40f), new Vector2(1346f, 0f), new Rect(0f, 0f, 0f, 0f));
-            _routePanel.AddText("Route", "Display route here", new Vector2(430f, 40f), Vector2.zero, GUIController.Instance.TrajanNormal, 14);
-
-            _instructionPanel.SetActive(false, false);
-            _routePanel.SetActive(false, false);
+            _transitionPanel.SetActive(false, false);
 
             SetTexts();
         }
 
         public static void RebuildText()
         {
-            _instructionPanel.Destroy();
-            _routePanel.Destroy();
+            _transitionPanel.Destroy();
 
             BuildText(Canvas);
         }
 
         public static void SetTexts()
         {
-            if (GameManager.instance.gameMap == null) return;
+            if (GameManager.instance.gameMap == null
+                || _transitionPanel == null) return;
 
-            _instructionPanel.SetActive(true, false);
-            _routePanel.SetActive(true, false);
-
-            _instructionPanel.SetActive(!LockToggleEnable && MapModS.LS.ModEnabled
+            bool isActive = !LockToggleEnable && MapModS.LS.ModEnabled
                 && RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode != RandomizerMod.Settings.TransitionSettings.TransitionMode.None
-                && MapModS.LS.mapMode == MapMode.TransitionRando, false);
-            _routePanel.SetActive(!LockToggleEnable && MapModS.LS.ModEnabled
-                && RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode != RandomizerMod.Settings.TransitionSettings.TransitionMode.None
-                && MapModS.LS.mapMode == MapMode.TransitionRando, false);
+                && MapModS.LS.mapMode == MapMode.TransitionRando;
 
-            //SetSpoilers();
-            //SetStyle();
-            //SetRandomized();
-            //SetOthers(); 
-            //SetSize();
-            //SetRefresh();
+            _transitionPanel.SetActive(isActive, isActive);
+
+            SetTransitionsText();
+            SetRouteText();
         }
 
         // Called every frame
         public static void Update()
         {
-            if (_instructionPanel == null
-                || _routePanel == null
+            if (_transitionPanel == null
+                || !_transitionPanel.Active
                 || HeroController.instance == null
                 || GameManager.instance.IsGamePaused())
             {
                 return;
             }
 
-            RaycastHit hit;
-
-            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 100.0f))
+            if (GetRoomClosestToMiddle(selectedScene, out selectedScene))
             {
-                MapModS.Instance.Log("hit detected");
-                centeredScene = hit.transform.name;
+                SetSceneNameText();
+            }
+        }
+
+        private static double DistanceToMiddle(Transform transform)
+        {
+            return Math.Pow(transform.position.x, 2) + Math.Pow(transform.position.y, 2);
+        }
+
+        public static bool GetRoomClosestToMiddle(string previousScene, out string selectedScene)
+        {
+            selectedScene = null;
+            double minDistance = double.PositiveInfinity;
+
+            GameObject go_GameMap = GameManager.instance.gameMap;
+
+            if (go_GameMap == null) return false;
+
+            foreach (Transform areaObj in go_GameMap.transform)
+            {
+                foreach (Transform roomObj in areaObj.transform)
+                {
+                    if (!roomObj.gameObject.activeSelf) continue;
+
+                    Transition.ExtraMapData extra = roomObj.GetComponent<Transition.ExtraMapData>();
+
+                    if (extra == null) continue;
+
+                    double distance = DistanceToMiddle(roomObj);
+
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                        selectedScene = extra.sceneName;
+                    }
+                }
             }
 
-            Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * 100.0f, Color.yellow);
+            // True if the scene name has changed
+            return selectedScene != previousScene;
+        }
 
-            //Ray ray = camera.ViewportPointToRay(new Vector3(960f, 540f, 0));
+        public static void SetSceneNameText()
+        {
+            string sceneNameText = $"Selected room: {selectedScene}.";
 
+            if (selectedScene == GameManager.instance.sceneName)
+            {
+                sceneNameText += " You are here.";
+            }
+            else
+            {
+                sceneNameText += " Press CTRL-T to find new route to here / switch starting transition for existing route.";
+            }
 
+            _transitionPanel.GetText("SceneName").UpdateText(sceneNameText);
+        }
 
-            //if (Physics.Raycast(ray, out hit))
-            //{
-            //    MapModS.Instance.Log("hit detected");
-            //    centeredScene = hit.transform.name;
-            //}
+        public static void SetRouteText()
+        {
+            string routeText = "Current route: ";
 
-            //RaycastHit[] hits = Physics.RaycastAll(Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0)));
+            if (lastStartScene != null && lastFinalScene != null && selectedRoute.Any())
+            {
+                routeText += $"{lastStartScene} -> {lastFinalScene}";
+            }
+            else
+            {
+                routeText += "None";
+            }
 
-            //foreach (RaycastHit hit in hits)
-            //{
-            //    centeredScene = hit.transform.name;
-            //    break;
-            //    //if (hit.transform.parent.transform.parent.GetComponent<GameMap>() != null)
-            //    //{
-            //    //    centeredScene = hit.transform.name;
-            //    //}
-            //}
+            _transitionPanel.GetText("Route").UpdateText(routeText);
+        }
 
-            _instructionPanel.GetText("Instruction").UpdateText("Display instruction here " + centeredScene);
-            // SetTexts();
+        public static void SetTransitionsText()
+        {
+            string transitionsText = "None found";
 
-            //if (!_mapControlPanel.Active)
-            //{
-            //    _mapControlPanel.Destroy();
-            //    BuildMenu(Canvas);
-            //}
+            if (selectedRoute.Any())
+            {
+                transitionsText = "";
+                int maxDisplayedTransitions = 9;
+                int displayedTransitionCounter = 0;
+
+                foreach (string transition in selectedRoute)
+                {
+                    if (displayedTransitionCounter == maxDisplayedTransitions)
+                    {
+                        transitionsText += " -> ";
+                        break;
+                    }
+
+                    transitionsText += " -> " + transition;
+                    displayedTransitionCounter ++;
+                }
+            }
+
+            _transitionPanel.GetText("Transitions").UpdateText($"Transitions: {transitionsText}");
+        }
+
+        public static void GetRoute()
+        {
+            if (_transitionPanel == null
+                || !_transitionPanel.Active
+                || HeroController.instance == null
+                || GameManager.instance.IsGamePaused()
+                || selectedScene == "None"
+                || th == null)
+            {
+                return;
+            }
+
+            if (lastStartScene != GameManager.instance.sceneName || lastFinalScene != selectedScene)
+            {
+                rejectedTransitions = new();
+            }
+
+            selectedRoute = th.ShortestRoute(GameManager.instance.sceneName, selectedScene, rejectedTransitions);
+
+            if (!selectedRoute.Any())
+            {
+                lastFinalScene = null;
+                rejectedTransitions = new();
+            }
+            else
+            {
+                lastStartScene = GameManager.instance.sceneName;
+                lastFinalScene = selectedScene;
+                rejectedTransitions.Add(selectedRoute.First());
+            }
+
+            SetTexts();
+        }
+
+        public static void RemoveTraversedTransition(string previousScene, string currentScene)
+        {
+            if ((selectedRoute.Count >= 2
+                && RandomizerMod.RandomizerData.Data.GetTransitionDef(selectedRoute.First()).SceneName == previousScene
+                && RandomizerMod.RandomizerData.Data.GetTransitionDef(selectedRoute.ElementAt(1)).SceneName == currentScene)
+                || (selectedRoute.Count == 1
+                && RandomizerMod.RandomizerData.Data.GetTransitionDef(selectedRoute.First()).SceneName == previousScene
+                && lastFinalScene == currentScene))
+            {
+                selectedRoute.Remove(selectedRoute.First());
+                SetTexts();
+            }
         }
     }
 }

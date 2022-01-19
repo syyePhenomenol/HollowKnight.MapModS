@@ -56,6 +56,7 @@
 
   <ItemGroup>
     <Compile Remove="Compatibility.cs" />
+    <Compile Remove="Data\PinDefNew.cs" />
     <Compile Remove="Data\PinDefUnused.cs" />
     <Compile Remove="Data\Pool.cs" />
     <Compile Remove="Data\ShopDef.cs" />
@@ -319,8 +320,8 @@
       <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
       <CopyLocal>False</CopyLocal>
     </Reference>
-    <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+    <Reference Include="UnityEngine.Physics2DModule">
+      <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\UnityEngine.Physics2DModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
       <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
