@@ -43,7 +43,7 @@ namespace MapModS.Map
             SpriteRenderer sr = goPin.AddComponent<SpriteRenderer>();
 
             // Initialize sprite to vanillaPool
-            sr.sprite = SpriteManager.GetSpriteFromPool(pinData.vanillaPool, false);
+            sr.sprite = SpriteManager.GetSpriteFromPool(pinData.vanillaPool, PinBorderColor.Normal);
             sr.sortingLayerName = "HUD";
             sr.size = new Vector2(1f, 1f);
 
@@ -235,16 +235,25 @@ namespace MapModS.Map
             {
                 if (RandomizerMod.RandomizerMod.RS.TrackerData.previewedLocations.Contains(pin.PinData.name))
                 {
-                    pin.SR.sprite = SpriteManager.GetSpriteFromPool(pin.PinData.spoilerPool, true);
+                    pin.SR.sprite = SpriteManager.GetSpriteFromPool(pin.PinData.spoilerPool, PinBorderColor.Previewed);
                     continue;
                 }
+
+                PinBorderColor pinColor = PinBorderColor.Normal;
+
+                if (RandomizerMod.RandomizerMod.RS.TrackerData.uncheckedReachableLocations.Contains(pin.PinData.name)
+                    && !RandomizerMod.RandomizerMod.RS.TrackerDataWithoutSequenceBreaks.uncheckedReachableLocations.Contains(pin.PinData.name))
+                {
+                    pinColor = PinBorderColor.OutOfLogic;
+                }
+
                 if (MapModS.LS.SpoilerOn)
                 {
-                    pin.SR.sprite = SpriteManager.GetSpriteFromPool(pin.PinData.spoilerPool, false);
+                    pin.SR.sprite = SpriteManager.GetSpriteFromPool(pin.PinData.spoilerPool, pinColor);
                 }
                 else
                 {
-                    pin.SR.sprite = SpriteManager.GetSpriteFromPool(pin.PinData.vanillaPool, false);
+                    pin.SR.sprite = SpriteManager.GetSpriteFromPool(pin.PinData.vanillaPool, pinColor);
                 }
             }
         }

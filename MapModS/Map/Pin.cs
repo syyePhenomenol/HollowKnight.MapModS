@@ -62,8 +62,7 @@ namespace MapModS.Map
         {
             if (transitionPinScenes.Count != 0)
             {
-                if (!transitionPinScenes.Contains(PinData.pinScene ?? PinData.sceneName)
-                    && !PlayerData.instance.scenesVisited.Contains(PinData.pinScene ?? PinData.sceneName))
+                if (!transitionPinScenes.Contains(PinData.pinScene ?? PinData.sceneName))
                 {
                     gameObject.SetActive(false);
                 }

@@ -8,6 +8,22 @@ namespace MapModS.Map
 {
     internal static class Transition
     {
+        enum RoomState
+        {
+            Default,
+            Current,
+            Adjacent,
+            OutOfLogic
+        }
+
+        readonly static Dictionary<RoomState, Vector4> roomColor = new()
+        {
+            { RoomState.Default, new(255, 255, 255, 0.3f) }, // white
+            { RoomState.Current, new(0, 255, 0, 0.6f) }, // green
+            { RoomState.Adjacent, new(0, 255, 255, 0.6f) }, // cyan
+            { RoomState.OutOfLogic, new(255, 0, 0, 0.3f) } // yellow
+        };
+
         private static string GetAdjacentScene(RandomizerMod.RandomizerData.TransitionDef transitionDef)
         {
             foreach (TransitionPlacement tp in RandomizerMod.RandomizerMod.RS.Context.transitionPlacements)
@@ -42,7 +58,7 @@ namespace MapModS.Map
             return truncatedScene;
         }
 
-        private static void SetActiveColor(Transform transform, SpriteRenderer sr, Color color)
+        private static void SetActiveColor(Transform transform, bool active, SpriteRenderer sr, Vector4 color)
         {
             if (sr == null)
             {
@@ -50,7 +66,7 @@ namespace MapModS.Map
                 return;
             }
 
-            transform.gameObject.SetActive(true);
+            transform.gameObject.SetActive(active);
             sr.color = color;
         }
 
@@ -58,19 +74,29 @@ namespace MapModS.Map
         {
             HashSet<string> inLogicScenes = new();
 
+            HashSet<string> outOfLogicScenes = new();
+
             HashSet<string> visitedAdjacentScenes = new();
 
             HashSet<string> uncheckedReachableScenes = new();
+            
 
             RandomizerCore.Logic.ProgressionManager pm = RandomizerMod.RandomizerMod.RS.TrackerData.pm;
 
             // Get the scenes that are visited or connected in vanilla fashion to other visited scenes
             foreach (KeyValuePair<string, RandomizerCore.Logic.LogicTransition> transitionEntry in RandomizerMod.RandomizerMod.RS.TrackerData.lm.TransitionLookup)
             {
+                RandomizerMod.RandomizerData.TransitionDef transitionDef = RandomizerMod.RandomizerData.Data.GetTransitionDef(transitionEntry.Key);
+
                 if (pm.Has(transitionEntry.Value.term.Id))
                 {
-                    RandomizerMod.RandomizerData.TransitionDef transitionDef = RandomizerMod.RandomizerData.Data.GetTransitionDef(transitionEntry.Key);
                     inLogicScenes.Add(transitionDef.SceneName);
+                    continue;
+                }
+
+                if (PlayerData.instance.scenesVisited.Contains(transitionDef.SceneName))
+                {
+                    outOfLogicScenes.Add(transitionDef.SceneName);
                 }
             }
 
@@ -113,6 +139,7 @@ namespace MapModS.Map
 
                     SpriteRenderer sr = roomObj.GetComponent<SpriteRenderer>();
 
+                    // For AdditionalMaps room objects, the child has the SR
                     if (emd.sceneName.Contains("White_Palace"))
                     {
                         foreach (Transform roomObj2 in roomObj.transform)
@@ -123,30 +150,41 @@ namespace MapModS.Map
                         }
                     }
 
+                    bool active = false;
+                    Vector4 color = roomColor[RoomState.Default];
+
+                    if (outOfLogicScenes.Contains(emd.sceneName))
+                    {
+                        color = roomColor[RoomState.OutOfLogic];
+                        active = true;
+                    }
+
+                    if (inLogicScenes.Contains(emd.sceneName))
+                    {
+                        color = roomColor[RoomState.Default];
+                        active = true;
+                    }
+
+                    if (emd.sceneName == GameManager.instance.sceneName)
+                    {
+                        color = roomColor[RoomState.Current];
+                    }
+
                     if (visitedAdjacentScenes.Contains(emd.sceneName))
                     {
-                        SetActiveColor(roomObj, sr, Color.blue);
+                        color = roomColor[RoomState.Adjacent];
                     }
-                    else if (uncheckedReachableScenes.Contains(emd.sceneName))
+                    
+                    if (uncheckedReachableScenes.Contains(emd.sceneName))
                     {
-                        SetActiveColor(roomObj, sr, Color.cyan);
+                        color.w = 1f;
                     }
-                    else if (emd.sceneName == GameManager.instance.sceneName)
-                    {
-                        SetActiveColor(roomObj, sr, Color.green);
-                    }
-                    else if (inLogicScenes.Contains(emd.sceneName))
-                    {
-                        SetActiveColor(roomObj, sr, Color.white);
-                    }
-                    else
-                    {
-                        roomObj.gameObject.SetActive(false);
-                    }
+
+                    SetActiveColor(roomObj, active, sr, color);
                 }
             }
 
-            return inLogicScenes;
+            return new(inLogicScenes.Union(outOfLogicScenes));
         }
 
         private static string GetActualSceneName(string objName)

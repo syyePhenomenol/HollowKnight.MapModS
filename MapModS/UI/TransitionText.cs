@@ -156,7 +156,7 @@ namespace MapModS.UI
             }
             else
             {
-                sceneNameText += " Press CTRL-T to find new route to here / switch starting transition for existing route.";
+                sceneNameText += " Press CTRL-T to find new route / switch starting transition for current route.";
             }
 
             _transitionPanel.GetText("SceneName").UpdateText(sceneNameText);

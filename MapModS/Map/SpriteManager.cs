@@ -16,6 +16,13 @@ namespace MapModS.Map
         Q_Marks_3,
     }
 
+    public enum PinBorderColor
+    {
+        Normal,
+        Previewed,
+        OutOfLogic
+    }
+
     internal static class SpriteManager
     {
         private static Dictionary<string, Sprite> _sprites;
@@ -35,7 +42,7 @@ namespace MapModS.Map
             }
         }
 
-        public static Sprite GetSpriteFromPool(PoolGroup pool, bool yellow)
+        public static Sprite GetSpriteFromPool(PoolGroup pool, PinBorderColor color)
         {
             string spriteName = "undefined";
 
@@ -108,9 +115,14 @@ namespace MapModS.Map
                     break;
             }
 
-            if (yellow)
+            switch (color)
             {
-                spriteName += "Green";
+                case PinBorderColor.Previewed:
+                    spriteName += "Green";
+                    break;
+                case PinBorderColor.OutOfLogic:
+                    spriteName += "Red";
+                    break;
             }
 
             return GetSprite(spriteName);
