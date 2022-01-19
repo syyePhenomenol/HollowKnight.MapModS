@@ -56,6 +56,7 @@ https://github.com/flibber-hk/HollowKnight.SkillUpgrades
     - Adjacent visited rooms are cyan
     - Rooms containing unchecked reachable transitions are brighter
     - Out of logic/sequence break rooms are red
+    - Other visited rooms are a standard grey/white
  
 - In "Transition" mode, you also have a route searcher in the World Map that allows you to find a sequence of transitions to get to any other selected room on the map.
     - Hover over the desired room and press `CTRL-T` to attempt a route search.
