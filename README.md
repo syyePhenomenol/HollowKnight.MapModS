@@ -43,11 +43,12 @@ https://github.com/flibber-hk/HollowKnight.SkillUpgrades
     - "Others" `Ctrl-3`: Toggle all Pins for non-randomized items on/off
     - "Pin Style" `CTRL-4`: Toggle the style of the Pins
     - "Pin Size" `CTRL-5`: Toggle the style of the Pins
+    - "Mode": Toggle the map mode
     - "Customize Pins": Open/close a panel with a toggle for each spoiler item pool
 
 - The mod currently has four main modes:
    - "Transition": For transition rando runs only
-   - "Full Map": Shows the full map regardless of map items obtained
+   - "Full Map": Shows the full map regardless of map items obtained, with all pins
    - "All Pins": Shows all pins, but only show map areas for obtained map items
    - "Pins Over Map": Only show pins over where the corresponding map item has been obtained
 
