@@ -48,7 +48,7 @@ https://github.com/flibber-hk/HollowKnight.SkillUpgrades
 
 - The mod currently has four main modes:
    - "Transition": For transition rando runs only
-   - "Full Map": Shows the full map regardless of map items obtained, with all pins
+   - "Full Map": Shows all pins and the full map regardless of map items obtained
    - "All Pins": Shows all pins, but only show map areas for obtained map items
    - "Pins Over Map": Only show pins over where the corresponding map item has been obtained
 
