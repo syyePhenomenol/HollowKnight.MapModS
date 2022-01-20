@@ -141,32 +141,35 @@ namespace MapModS.Map
         {
             GameObject go_gameMap = GameManager.instance.gameMap;
 
-            for (int i = 0; i < go_gameMap.transform.childCount; i++)
+            foreach (Transform areaObj in go_gameMap.transform)
             {
-                GameObject gameObject = go_gameMap.transform.GetChild(i).gameObject;
+                if (areaObj.name == "Grub Pins"
+                        || areaObj.name == "Dream_Gate_Pin"
+                        || areaObj.name == "Compass Icon"
+                        || areaObj.name == "Shade Pos"
+                        || areaObj.name == "Flame Pins"
+                        || areaObj.name == "Dreamer Pins"
+                        || areaObj.name == "Map Markers"
+                        || areaObj.name == "Map Mod Pin Group"
+                        || areaObj.name == "WHITE_PALACE"
+                        || areaObj.name == "GODS_GLORY") continue;
 
-                if (gameObject.name == "WHITE_PALACE" || gameObject.name == "GODS_GLORY")
+                foreach (Transform roomObj in areaObj.transform)
                 {
-                    continue;
-                }
+                    roomObj.gameObject.SetActive(_persistentMapObjects.Contains(roomObj.name));
 
-                for (int j = 0; j < gameObject.transform.childCount; j++)
-                {
-                    GameObject gameObject2 = gameObject.transform.GetChild(j).gameObject;
+                    if (roomObj.name.Contains("Area Name"))
+                    {
+                        roomObj.gameObject.SetActive(true);
+                    }
 
-                    if (gameObject2.name.Contains("Area Name")
-                        || gameObject2.name == "Grub Pins"
-                        || gameObject.name == "Dream_Gate_Pin"
-                        || gameObject.name == "Compass Icon"
-                        || gameObject.name == "Shade Pos"
-                        || gameObject.name == "Flame Pins"
-                        || gameObject.name == "Dreamer Pins"
-                        || gameObject.name == "Map Markers"
-                        || gameObject.name == "Map Mod Pin Group") continue;
-
-                    if (_persistentMapObjects.Contains(gameObject2.name)) continue;
-
-                    gameObject2.SetActive(false);
+                    foreach (Transform roomObj2 in roomObj.transform)
+                    {
+                        if (roomObj2.name.Contains("Area Name"))
+                        {
+                            roomObj2.gameObject.SetActive(true);
+                        }
+                    }
                 }
             }
         }
@@ -267,91 +270,90 @@ namespace MapModS.Map
                     if (SettingsUtil.IsFSMMapState(state.Name))
                     {
                         ReplaceBool(self, state.Name, 0);
+                        continue;
                     }
-                    else
+
+                    switch (state.Name)
                     {
-                        switch (state.Name)
-                        {
-                            case "Mi Right":
-                            case "GP Up":
-                            case "GP Right":
-                            case "RG Up":
-                            case "RG Right":
-                            case "FG Left":
-                            case "C Right":
-                            case "Hive Down":
-                            case "Wat Right":
-                            case "Ab Right":
-                                ReplaceNumberOfBools(self, state.Name, 1);
-                                break;
+                        case "Mi Right":
+                        case "GP Up":
+                        case "GP Right":
+                        case "RG Up":
+                        case "RG Right":
+                        case "FG Left":
+                        case "C Right":
+                        case "Hive Down":
+                        case "Wat Right":
+                        case "Ab Right":
+                            ReplaceNumberOfBools(self, state.Name, 1);
+                            break;
 
-                            case "QG Up":
-                            case "Out Down":
-                            case "Wat Down":
-                                ReplaceNumberOfBools(self, state.Name, 2);
-                                break;
+                        case "QG Up":
+                        case "Out Down":
+                        case "Wat Down":
+                            ReplaceNumberOfBools(self, state.Name, 2);
+                            break;
 
-                            case "FG Up":
-                            case "C Up":
-                            case "Out Up":
-                            case "FW Up":
-                            case "FW Down":
-                                ReplaceNumberOfBools(self, state.Name, 3);
-                                break;
+                        case "FG Up":
+                        case "C Up":
+                        case "Out Up":
+                        case "FW Up":
+                        case "FW Down":
+                            ReplaceNumberOfBools(self, state.Name, 3);
+                            break;
 
-                            case "QG Down":
-                            case "C Down":
-                            case "FW Left":
-                            case "Wat Up":
-                                ReplaceNumberOfBools(self, state.Name, 4);
-                                break;
+                        case "QG Down":
+                        case "C Down":
+                        case "FW Left":
+                        case "Wat Up":
+                            ReplaceNumberOfBools(self, state.Name, 4);
+                            break;
 
-                            case "T Left":
-                            case "T Right":
-                            case "CR Right":
-                            case "RG Left":
-                            case "FG Down":
-                            case "FW Right":
-                            case "Wat Left":
-                            case "Ab Left":
-                                ReplaceNumberOfBools(self, state.Name, 5);
-                                break;
+                        case "T Left":
+                        case "T Right":
+                        case "CR Right":
+                        case "RG Left":
+                        case "FG Down":
+                        case "FW Right":
+                        case "Wat Left":
+                        case "Ab Left":
+                            ReplaceNumberOfBools(self, state.Name, 5);
+                            break;
 
-                            case "CR Left":
-                            case "RG Down":
-                            case "FG Right":
-                            case "C Left":
-                            case "D Up":
-                            case "Ab Up":
-                                ReplaceNumberOfBools(self, state.Name, 6);
-                                break;
+                        case "CR Left":
+                        case "RG Down":
+                        case "FG Right":
+                        case "C Left":
+                        case "D Up":
+                        case "Ab Up":
+                            ReplaceNumberOfBools(self, state.Name, 6);
+                            break;
 
-                            case "CR Down":
-                                ReplaceNumberOfBools(self, state.Name, 7);
-                                break;
+                        case "CR Down":
+                            ReplaceNumberOfBools(self, state.Name, 7);
+                            break;
 
-                            case "Mi Down":
-                            case "GP Down":
-                            case "QG Right":
-                            case "Out Left":
-                            case "D Right":
-                            case "Pos Check":
-                                ReplaceNumberOfBools(self, state.Name, 8);
-                                break;
+                        case "Mi Down":
+                        case "GP Down":
+                        case "QG Right":
+                        case "Out Left":
+                        case "D Right":
+                        case "Pos Check":
+                            ReplaceNumberOfBools(self, state.Name, 8);
+                            break;
 
-                            case "Cl Down":
-                                ReplaceNumberOfBools(self, state.Name, 9);
-                                break;
+                        case "Cl Down":
+                            ReplaceNumberOfBools(self, state.Name, 9);
+                            break;
 
-                            case "T Down":
-                                ReplaceNumberOfBools(self, state.Name, 10);
-                                break;
+                        case "T Down":
+                            ReplaceNumberOfBools(self, state.Name, 10);
+                            break;
 
-                            case "Activate":
-                                FsmString[] boolStrings = { "MMS_visitedHive", "MMS_mapOutskirts" };
-                                FsmUtil.GetAction<PlayerDataBoolAllTrue>(self, state.Name, 8).stringVariables = boolStrings;
-                                break;
-                        }
+                        case "Activate":
+                            FsmString[] boolStrings = { "MMS_visitedHive", "MMS_mapOutskirts" };
+                            FsmUtil.GetAction<PlayerDataBoolAllTrue>(self, state.Name, 8).stringVariables = boolStrings;
+                            break;
                     }
                 }
             }

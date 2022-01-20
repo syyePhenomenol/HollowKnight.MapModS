@@ -19,9 +19,9 @@ namespace MapModS.Map
         readonly static Dictionary<RoomState, Vector4> roomColor = new()
         {
             { RoomState.Default, new(255, 255, 255, 0.3f) }, // white
-            { RoomState.Current, new(0, 255, 0, 0.6f) }, // green
-            { RoomState.Adjacent, new(0, 255, 255, 0.6f) }, // cyan
-            { RoomState.OutOfLogic, new(255, 0, 0, 0.3f) } // yellow
+            { RoomState.Current, new(0, 255, 0, 0.4f) }, // green
+            { RoomState.Adjacent, new(0, 255, 255, 0.4f) }, // cyan
+            { RoomState.OutOfLogic, new(255, 0, 0, 0.3f) } // red
         };
 
         private static string GetAdjacentScene(RandomizerMod.RandomizerData.TransitionDef transitionDef)
@@ -127,6 +127,15 @@ namespace MapModS.Map
             // Show rooms with custom colors
             foreach (Transform areaObj in gameMap.transform)
             {
+                if (areaObj.name == "Grub Pins"
+                        || areaObj.name == "Dream_Gate_Pin"
+                        || areaObj.name == "Compass Icon"
+                        || areaObj.name == "Shade Pos"
+                        || areaObj.name == "Flame Pins"
+                        || areaObj.name == "Dreamer Pins"
+                        || areaObj.name == "Map Markers"
+                        || areaObj.name == "Map Mod Pin Group") continue;
+
                 foreach (Transform roomObj in areaObj.transform)
                 {
                     ExtraMapData emd = roomObj.GetComponent<ExtraMapData>();
@@ -181,6 +190,17 @@ namespace MapModS.Map
                     }
 
                     SetActiveColor(roomObj, active, sr, color);
+
+                    if (!active) continue;
+
+                    // Force disable sub area names
+                    foreach (Transform roomObj2 in roomObj.transform)
+                    {
+                        if (roomObj2.name.Contains("Area Name"))
+                        {
+                            roomObj2.gameObject.SetActive(false);
+                        }
+                    }
                 }
             }
 
