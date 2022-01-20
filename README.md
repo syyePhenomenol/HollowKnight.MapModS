@@ -6,11 +6,11 @@ Randomizer Map S is a Hollow Knight mod used with Randomizer 4. It gives the opt
 ![Example Screenshot](./pause.jpg)
 
 This fork of CaptainDapper's original mod has been expanded on with more features, bug fixes and a Pause Menu UI. It is currently compatible with:
-- RandomizerMod v4.0.1
+- RandomizerMod v4.0.2
 - AdditionalMaps v1.5.1.0
-- ItemSync 2.0.0
-- RandoPlus
-- SkillUpgrades
+- ItemSync 2.1.1
+- RandoPlus v1.1.0
+- SkillUpgrades v0.9.3
 
 https://github.com/homothetyhk/RandomizerMod
 
@@ -32,6 +32,10 @@ https://github.com/flibber-hk/HollowKnight.SkillUpgrades
     - Pins will disappear as you check their locations
     - MapMod S settings are displayed at the bottom
 
+- New to MapModS for Rando 4:
+    - Previewed items will appear as pins with a green border
+    - Out-of-logic items will appear as pins with a red border
+
 - The Pause Menu UI has the following buttons:
     - "Mod Enabled/Disabled": Toggle the mod on/off
     - "Spoilers" `CTRL-1`: Toggle Pins between vanilla (non-spoiler) and spoiler item pools
@@ -39,13 +43,26 @@ https://github.com/flibber-hk/HollowKnight.SkillUpgrades
     - "Others" `Ctrl-3`: Toggle all Pins for non-randomized items on/off
     - "Pin Style" `CTRL-4`: Toggle the style of the Pins
     - "Pin Size" `CTRL-5`: Toggle the style of the Pins
+    - "Mode": Toggle the map mode
     - "Customize Pins": Open/close a panel with a toggle for each spoiler item pool
 
 - The mod currently has four main modes:
-   - "Full Map": Shows the full map regardless of map items obtained
-   - "Transition": For transition rando runs only, displays only in-logic rooms with color-coding for current (green), adjacent (blue) and unchecked rooms (cyan)
+   - "Transition": For transition rando runs only
+   - "Full Map": Shows all pins and the full map regardless of map items obtained
    - "All Pins": Shows all pins, but only show map areas for obtained map items
    - "Pins Over Map": Only show pins over where the corresponding map item has been obtained
+
+- "Transition" mode is a new mode in MapModS for Rando 4 that displays visited rooms with color-coding:
+    - Current room is green
+    - Adjacent visited rooms are cyan
+    - Rooms containing unchecked reachable transitions are brighter
+    - Out of logic/sequence break rooms are red
+    - Other visited rooms are a standard grey/white
+ 
+- In "Transition" mode, you also have a route searcher in the World Map that allows you to find a sequence of transitions to get to any other selected room on the map.
+    - Hover over the desired room and press `CTRL-T` to attempt a route search.
+    - If successful, the route will be displayed.
+    - You can try again (press `CTRL-T` again) to change the starting transition if you cannot reach it at the moment.
 
 # How To Install
 Use Scarab: https://github.com/fifty-six/Scarab
