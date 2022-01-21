@@ -17,6 +17,7 @@ namespace MapModS.UI
 
         public static bool LockToggleEnable;
 
+        private static CanvasPanel _instructionPanel;
         private static CanvasPanel _transitionPanel;
 
         public static TransitionHelper th;
@@ -33,15 +34,26 @@ namespace MapModS.UI
 
             Canvas.SetActive(true);
             LockToggleEnable = false;
-            RebuildText();
+            SetTexts();
+        }
+
+        public static void ShowInstructions()
+        {
+            bool isActive = !LockToggleEnable && MapModS.LS.ModEnabled
+                && RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode != RandomizerMod.Settings.TransitionSettings.TransitionMode.None
+                && MapModS.LS.mapMode == MapMode.TransitionRando;
+
+            _instructionPanel.SetActive(isActive, isActive);
         }
 
         public static void Hide()
         {
-            if (Canvas == null) return;
+            if (Canvas == null || _instructionPanel == null) return;
 
             Canvas.SetActive(false);
             LockToggleEnable = false;
+
+            _instructionPanel.SetActive(false, false);
         }
 
         public static void Initialize()
@@ -58,10 +70,15 @@ namespace MapModS.UI
         public static void BuildText(GameObject _canvas)
         {
             Canvas = _canvas;
+            _instructionPanel = new CanvasPanel
+                (_canvas, GUIController.Instance.Images["ButtonsMenuBG"], new Vector2(10f, 20f), new Vector2(1346f, 0f), new Rect(0f, 0f, 0f, 0f));
+            _instructionPanel.AddText("Instructions", "None", new Vector2(20f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14);
+            _instructionPanel.AddText("Route", "", new Vector2(-37f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14, FontStyle.Normal, TextAnchor.UpperRight);
+
+            _instructionPanel.SetActive(false, false);
+
             _transitionPanel = new CanvasPanel
                 (_canvas, GUIController.Instance.Images["ButtonsMenuBG"], new Vector2(10f, 20f), new Vector2(1346f, 0f), new Rect(0f, 0f, 0f, 0f));
-            _transitionPanel.AddText("SceneName", "None", new Vector2(20f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14);
-            _transitionPanel.AddText("Route", "Route: None", new Vector2(-37f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14, FontStyle.Normal, TextAnchor.UpperRight);
             _transitionPanel.AddText("Transitions", "Transitions: None", new Vector2(20f, 20f), Vector2.zero, GUIController.Instance.TrajanNormal, 14);
 
             _transitionPanel.SetActive(false, false);
@@ -69,17 +86,10 @@ namespace MapModS.UI
             SetTexts();
         }
 
-        public static void RebuildText()
-        {
-            _transitionPanel.Destroy();
-
-            BuildText(Canvas);
-        }
-
         public static void SetTexts()
         {
             if (GameManager.instance.gameMap == null
-                || _transitionPanel == null) return;
+                || _instructionPanel == null) return;
 
             bool isActive = !LockToggleEnable && MapModS.LS.ModEnabled
                 && RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode != RandomizerMod.Settings.TransitionSettings.TransitionMode.None
@@ -94,7 +104,9 @@ namespace MapModS.UI
         // Called every frame
         public static void Update()
         {
-            if (_transitionPanel == null
+            if (Canvas == null
+                || !Canvas.activeSelf
+                || !_instructionPanel.Active
                 || !_transitionPanel.Active
                 || HeroController.instance == null
                 || GameManager.instance.IsGamePaused())
@@ -104,7 +116,7 @@ namespace MapModS.UI
 
             if (GetRoomClosestToMiddle(selectedScene, out selectedScene))
             {
-                SetSceneNameText();
+                SetInstructionsText();
             }
         }
 
@@ -146,20 +158,20 @@ namespace MapModS.UI
             return selectedScene != previousScene;
         }
 
-        public static void SetSceneNameText()
+        public static void SetInstructionsText()
         {
-            string sceneNameText = $"Selected room: {selectedScene}.";
+            string instructionsText = $"Selected room: {selectedScene}.";
 
             if (selectedScene == GameManager.instance.sceneName)
             {
-                sceneNameText += " You are here.";
+                instructionsText += " You are here.";
             }
             else
             {
-                sceneNameText += " Press CTRL-T to find new route / switch starting transition for current route.";
+                instructionsText += " Press CTRL-T to find new route / switch starting transition for current route.";
             }
 
-            _transitionPanel.GetText("SceneName").UpdateText(sceneNameText);
+            _instructionPanel.GetText("Instructions").UpdateText(instructionsText);
         }
 
         public static void SetRouteText()
@@ -168,24 +180,24 @@ namespace MapModS.UI
 
             if (lastStartScene != null && lastFinalScene != null && selectedRoute.Any())
             {
-                routeText += $"{lastStartScene} -> {lastFinalScene}";
+                routeText += $"{lastStartScene} -> {lastFinalScene}      ";
+                routeText += $"Transitions: {selectedRoute.Count()}";
             }
             else
             {
                 routeText += "None";
             }
 
-            _transitionPanel.GetText("Route").UpdateText(routeText);
+            _instructionPanel.GetText("Route").UpdateText(routeText);
         }
 
         public static void SetTransitionsText()
         {
-            string transitionsText = "None found";
+            string transitionsText = "";
 
             if (selectedRoute.Any())
             {
-                transitionsText = "";
-                int maxDisplayedTransitions = 9;
+                int maxDisplayedTransitions = 10;
                 int displayedTransitionCounter = 0;
 
                 foreach (string transition in selectedRoute)
@@ -201,12 +213,14 @@ namespace MapModS.UI
                 }
             }
 
-            _transitionPanel.GetText("Transitions").UpdateText($"Transitions: {transitionsText}");
+            _transitionPanel.GetText("Transitions").UpdateText(transitionsText);
         }
 
         public static void GetRoute()
         {
-            if (_transitionPanel == null
+            if (_instructionPanel == null
+                || _transitionPanel == null
+                || !_instructionPanel.Active
                 || !_transitionPanel.Active
                 || HeroController.instance == null
                 || GameManager.instance.IsGamePaused()

@@ -44,19 +44,19 @@ namespace MapModS.UI
         private static void GameMap_WorldMap (On.GameMap.orig_WorldMap orig, GameMap self)
         {
             orig(self);
-            TransitionText.Show();
+            TransitionText.ShowInstructions();
         }
 
         private static void SetupMapMarkers(On.GameMap.orig_SetupMapMarkers orig, GameMap self)
         {
             orig(self);
             MapText.Show();
+            TransitionText.Show();
         }
 
         private static void GameMap_DisableMarkers(On.GameMap.orig_DisableMarkers orig, GameMap self)
         {
             orig(self);
-
             MapText.Hide();
             TransitionText.Hide();
         }

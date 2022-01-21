@@ -172,6 +172,12 @@ namespace MapModS.UI
                 }
             }
 
+            // Remove unchecked reachable transitions to avoid spoilers
+            foreach (var transition in RandomizerMod.RandomizerMod.RS.TrackerData.uncheckedReachableTransitions)
+            {
+                transitionSpace.Remove(transition);
+            }
+
             // Sample two scenes if not specified
             if (startScene == null || finalScene == null)
             {
