@@ -2,7 +2,7 @@
 Randomizer Map S is a Hollow Knight mod used with Randomizer 4. It gives the option to show the player where items are on the World Map, and optionally what they are.
 
 ![Example Screenshot](./worldmap.jpg)
-![Example Screenshot](./quickmap.jpg)
+![Example Screenshot](./transition.jpg)
 ![Example Screenshot](./pause.jpg)
 
 This fork of CaptainDapper's original mod has been expanded on with more features, bug fixes and a Pause Menu UI. It is currently compatible with:
@@ -60,21 +60,19 @@ https://github.com/flibber-hk/HollowKnight.SkillUpgrades
     - Other visited rooms are a standard grey/white
  
 - In "Transition" mode, you also have a route searcher in the World Map that allows you to find a sequence of transitions to get to any other selected room on the map.
-    - Hover over the desired room and press `CTRL-T` to attempt a route search.
-    - If successful, the route will be displayed.
-    - You can try again (press `CTRL-T` again) to change the starting transition if you cannot reach it at the moment.
+    - Hover over the desired room (in yellow) and press your bound `Menu Select` button to attempt a route search.
+    - If successful, the route will be displayed. If not successful, try bench warping to a different location.
+    - You can try again to change the starting transition if you cannot reach it at the moment.
+    - The route will be visible from the Quick Map for easy access, and gets updated as you make the suggested transitions.
 
 # How To Install
 Use Scarab: https://github.com/fifty-six/Scarab
-
-(if the latest version of MapMod S is a pre-release, it will not be on Scarab yet)
 
 Or, you can install manually:
 1. Download the latest release of `MapModS.zip`.
 2. Unzip and copy the folder 'MapModS' to `...\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods`.
 
 # Acknowledgements
-- The Hollow Knight/Hollow Knight Speedrun Discord Channels for always giving very sound advice and suggestions
 - Special thanks to Homothety and Flib for significant coding help
 - CaptainDapper for making the original mod
 - PimpasPimpinela for helping to port the mod from Rando 3 to Rando 4
