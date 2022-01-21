@@ -62,7 +62,7 @@ https://github.com/flibber-hk/HollowKnight.SkillUpgrades
 - In "Transition" mode, you also have a route searcher in the World Map that allows you to find a sequence of transitions to get to any other selected room on the map.
     - Hover over the desired room (in yellow) and press your bound `Menu Select` button to attempt a route search.
     - If successful, the route will be displayed. If not successful, try bench warping to a different location.
-    - You can try again to change the starting transition if you cannot reach it at the moment.
+    - You can try again to change the starting transition if you cannot reach from your location in the scene.
     - The route will be visible from the Quick Map for easy access, and gets updated as you make the suggested transitions.
 
 # How To Install
