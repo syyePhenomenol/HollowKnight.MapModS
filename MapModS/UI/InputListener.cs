@@ -70,10 +70,10 @@ namespace MapModS.UI
                         PauseMenu.SizeClicked("Size");
                     }
 
-                    if (Input.GetKeyDown(KeyCode.T) && MapModS.LS.mapMode == Settings.MapMode.TransitionRando)
-                    {
-                        TransitionText.GetRoute();
-                    }
+                    //if (Input.GetKeyDown(KeyCode.T) && MapModS.LS.mapMode == Settings.MapMode.TransitionRando)
+                    //{
+                    //    TransitionText.GetRoute();
+                    //}
                 }
             }
         }

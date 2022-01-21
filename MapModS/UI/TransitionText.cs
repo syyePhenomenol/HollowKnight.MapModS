@@ -37,13 +37,43 @@ namespace MapModS.UI
             SetTexts();
         }
 
-        public static void ShowInstructions()
+        public static void ShowWorldMap(GameMap gameMap)
         {
             bool isActive = !LockToggleEnable && MapModS.LS.ModEnabled
                 && RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode != RandomizerMod.Settings.TransitionSettings.TransitionMode.None
                 && MapModS.LS.mapMode == MapMode.TransitionRando;
 
             _instructionPanel.SetActive(isActive, isActive);
+
+            // The following stores the colors of the rooms prior to selection
+            if (gameMap == null) return;
+
+            foreach (Transform areaObj in gameMap.transform)
+            {
+                foreach (Transform roomObj in areaObj.transform)
+                {
+                    Transition.ExtraMapData extra = roomObj.GetComponent<Transition.ExtraMapData>();
+
+                    if (extra == null) continue;
+
+                    SpriteRenderer sr = roomObj.GetComponent<SpriteRenderer>();
+
+                    // For AdditionalMaps room objects, the child has the SR
+                    if (extra.sceneName.Contains("White_Palace"))
+                    {
+                        foreach (Transform roomObj2 in roomObj.transform)
+                        {
+                            if (!roomObj2.name.Contains("RWP")) continue;
+                            sr = roomObj2.GetComponent<SpriteRenderer>();
+                            break;
+                        }
+                    }
+
+                    if (sr == null) continue;
+
+                    extra.origTransitionColor = sr.color;
+                }
+            }
         }
 
         public static void Hide()
@@ -116,6 +146,12 @@ namespace MapModS.UI
                 return;
             }
 
+            // Use menu selection button for control
+            if (InputHandler.Instance != null && InputHandler.Instance.inputActions.menuSubmit.WasPressed)
+            {
+                GetRoute();
+            }
+
             frameCounter = (frameCounter + 1) % 24;
 
             if (frameCounter == 0)
@@ -123,6 +159,7 @@ namespace MapModS.UI
                 if (GetRoomClosestToMiddle(selectedScene, out selectedScene))
                 {
                     SetInstructionsText();
+                    SetRoomColors();
                 }
             }
         }
@@ -132,6 +169,9 @@ namespace MapModS.UI
             return Math.Pow(transform.position.x, 2) + Math.Pow(transform.position.y, 2);
         }
 
+        private static readonly Vector4 selectionColor = new(255, 255, 0, 0.5f);
+
+        // This method also handles highlighting the selected room
         public static bool GetRoomClosestToMiddle(string previousScene, out string selectedScene)
         {
             selectedScene = null;
@@ -165,6 +205,49 @@ namespace MapModS.UI
             return selectedScene != previousScene;
         }
 
+        private static void SetRoomColors()
+        {
+            GameObject go_GameMap = GameManager.instance.gameMap;
+
+            if (go_GameMap == null) return;
+
+            foreach (Transform areaObj in go_GameMap.transform)
+            {
+                foreach (Transform roomObj in areaObj.transform)
+                {
+                    if (!roomObj.gameObject.activeSelf) continue;
+
+                    Transition.ExtraMapData extra = roomObj.GetComponent<Transition.ExtraMapData>();
+
+                    if (extra == null) continue;
+
+                    SpriteRenderer sr = roomObj.GetComponent<SpriteRenderer>();
+
+                    // For AdditionalMaps room objects, the child has the SR
+                    if (extra.sceneName.Contains("White_Palace"))
+                    {
+                        foreach (Transform roomObj2 in roomObj.transform)
+                        {
+                            if (!roomObj2.name.Contains("RWP")) continue;
+                            sr = roomObj2.GetComponent<SpriteRenderer>();
+                            break;
+                        }
+                    }
+
+                    if (sr == null) continue;
+
+                    if (extra.sceneName == selectedScene)
+                    {
+                        sr.color = selectionColor;
+                    }
+                    else
+                    {
+                        sr.color = extra.origTransitionColor;
+                    }
+                }
+            }
+        }
+
         public static void SetInstructionsText()
         {
             string instructionsText = $"Selected room: {selectedScene}.";
@@ -175,7 +258,7 @@ namespace MapModS.UI
             }
             else
             {
-                instructionsText += " Press CTRL-T to find new route / switch starting transition for current route.";
+                instructionsText += $" Press [Menu Select] to find new route / switch starting transition for current route.";
             }
 
             _instructionPanel.GetText("Instructions").UpdateText(instructionsText);

@@ -226,6 +226,7 @@ namespace MapModS.Map
         public class ExtraMapData : MonoBehaviour
         {
             public Color origColor;
+            public Color origTransitionColor;
             public string sceneName;
         }
 
