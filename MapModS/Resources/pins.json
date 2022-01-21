@@ -8171,7 +8171,7 @@
     "pinScene": null,
     "mapZone": "GREEN_PATH",
     "offsetX": 0.9,
-    "offsetY": 0.4,
+    "offsetY": 0.0,
     "offsetZ": 0.001,
     "isShop": false
   },

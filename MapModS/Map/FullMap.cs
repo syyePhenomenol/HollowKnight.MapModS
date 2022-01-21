@@ -150,7 +150,6 @@ namespace MapModS.Map
                         || areaObj.name == "Flame Pins"
                         || areaObj.name == "Dreamer Pins"
                         || areaObj.name == "Map Markers"
-                        || areaObj.name == "Map Mod Pin Group"
                         || areaObj.name == "WHITE_PALACE"
                         || areaObj.name == "GODS_GLORY") continue;
 

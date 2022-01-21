@@ -133,8 +133,7 @@ namespace MapModS.Map
                         || areaObj.name == "Shade Pos"
                         || areaObj.name == "Flame Pins"
                         || areaObj.name == "Dreamer Pins"
-                        || areaObj.name == "Map Markers"
-                        || areaObj.name == "Map Mod Pin Group") continue;
+                        || areaObj.name == "Map Markers") continue;
 
                 foreach (Transform roomObj in areaObj.transform)
                 {

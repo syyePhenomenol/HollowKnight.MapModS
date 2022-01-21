@@ -88,7 +88,6 @@ namespace MapModS.Map
                 }
             }
 
-            //PrintPMLogic();
             UpdateMap(self, MapZone.NONE);
         }
 
@@ -97,9 +96,7 @@ namespace MapModS.Map
         {
             orig(self);
 
-            if (!MapModS.LS.ModEnabled) return;
-
-            if (goCustomPins == null) return;
+            if (!MapModS.LS.ModEnabled || goCustomPins == null) return;
 
             CustomPins.gameObject.SetActive(true);
         }

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-// This code was heavily borrowed from RandomizerMod 3.0
 namespace MapModS.Shop
 {
     public static class ShopChanger
