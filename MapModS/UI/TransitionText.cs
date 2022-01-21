@@ -101,6 +101,8 @@ namespace MapModS.UI
             SetRouteText();
         }
 
+        private static int frameCounter = 0;
+
         // Called every frame
         public static void Update()
         {
@@ -114,9 +116,14 @@ namespace MapModS.UI
                 return;
             }
 
-            if (GetRoomClosestToMiddle(selectedScene, out selectedScene))
+            frameCounter = (frameCounter + 1) % 24;
+
+            if (frameCounter == 0)
             {
-                SetInstructionsText();
+                if (GetRoomClosestToMiddle(selectedScene, out selectedScene))
+                {
+                    SetInstructionsText();
+                }
             }
         }
 
