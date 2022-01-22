@@ -1,5 +1,6 @@
 ﻿using GlobalEnums;
 using MapModS.Data;
+using MapModS.Settings;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -229,11 +230,20 @@ namespace MapModS.Map
             }
         }
 
+        private bool CanBePreviewed(Pin pin)
+        {
+            if (!RandomizerMod.RandomizerMod.RS.TrackerData.previewedLocations.Contains(pin.PinData.name)) return false;
+
+            if (pin.PinData.isShop) return true;
+
+            return SettingsUtil.GetPreviewSetting(pin.PinData.previewGroup);
+        }
+
         public void RefreshSprites()
         {
             foreach (Pin pin in _pins)
             {
-                if (RandomizerMod.RandomizerMod.RS.TrackerData.previewedLocations.Contains(pin.PinData.name))
+                if (CanBePreviewed(pin))
                 {
                     pin.SR.sprite = SpriteManager.GetSpriteFromPool(pin.PinData.spoilerPool, PinBorderColor.Previewed);
                     continue;

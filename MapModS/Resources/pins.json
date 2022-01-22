@@ -123,7 +123,8 @@
     "offsetX": 0.47,
     "offsetY": 1.3,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Dreamer"
   },
   "Monomon": {
     "name": "Monomon",
@@ -137,7 +138,8 @@
     "offsetX": 0.19,
     "offsetY": -0.15,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Dreamer"
   },
   "Herrah": {
     "name": "Herrah",
@@ -151,7 +153,8 @@
     "offsetX": 0.0,
     "offsetY": 1.3,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Dreamer"
   },
   "World_Sense": {
     "name": "World_Sense",
@@ -347,7 +350,8 @@
     "offsetX": -1.5,
     "offsetY": 0.0,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "AbyssShriek"
   },
   "Cyclone_Slash": {
     "name": "Cyclone_Slash",
@@ -361,7 +365,8 @@
     "offsetX": 0.24,
     "offsetY": 0.32,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Nailmaster"
   },
   "Dash_Slash": {
     "name": "Dash_Slash",
@@ -375,7 +380,8 @@
     "offsetX": -1.3,
     "offsetY": 0.0,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Nailmaster"
   },
   "Great_Slash": {
     "name": "Great_Slash",
@@ -389,7 +395,8 @@
     "offsetX": 0.22,
     "offsetY": 0.0,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Nailmaster"
   },
   "Focus": {
     "name": "Focus",
@@ -711,7 +718,8 @@
     "offsetX": 0.8,
     "offsetY": -0.2,
     "offsetZ": 0.005,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "KingFragment"
   },
   "Void_Heart": {
     "name": "Void_Heart",
@@ -725,7 +733,8 @@
     "offsetX": 1.0,
     "offsetY": -4.0,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "VoidHeart"
   },
   "Dreamshield": {
     "name": "Dreamshield",
@@ -781,7 +790,8 @@
     "offsetX": -1.6,
     "offsetY": -0.6,
     "offsetZ": 0.002,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Divine"
   },
   "Unbreakable_Greed": {
     "name": "Unbreakable_Greed",
@@ -795,7 +805,8 @@
     "offsetX": -1.6,
     "offsetY": -0.2,
     "offsetZ": 0.003,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Divine"
   },
   "Unbreakable_Strength": {
     "name": "Unbreakable_Strength",
@@ -809,7 +820,8 @@
     "offsetX": -1.6,
     "offsetY": 0.2,
     "offsetZ": 0.004,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Divine"
   },
   "City_Crest": {
     "name": "City_Crest",
@@ -935,7 +947,8 @@
     "offsetX": -0.6,
     "offsetY": -0.6,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Godtuner"
   },
   "Collector's_Map": {
     "name": "Collector's_Map",
@@ -1075,7 +1088,8 @@
     "offsetX": 0.1,
     "offsetY": -0.25,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "FlowerQuest"
   },
   "Mask_Shard-Bretta": {
     "name": "Mask_Shard-Bretta",
@@ -1145,7 +1159,8 @@
     "offsetX": 0.5,
     "offsetY": 0.8,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "BasinFountain"
   },
   "Vessel_Fragment-Deepnest": {
     "name": "Vessel_Fragment-Deepnest",
@@ -1215,7 +1230,8 @@
     "offsetX": 3.1,
     "offsetY": 0.0,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Colosseum"
   },
   "Charm_Notch-Grimm": {
     "name": "Charm_Notch-Grimm",
@@ -1285,7 +1301,8 @@
     "offsetX": 3.5,
     "offsetY": 0.0,
     "offsetZ": 0.001,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Colosseum"
   },
   "Geo_Chest-False_Knight": {
     "name": "Geo_Chest-False_Knight",
@@ -2293,7 +2310,8 @@
     "offsetX": -0.5,
     "offsetY": 1.1,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "WhisperingRoot"
   },
   "Whispering_Root-Greenpath": {
     "name": "Whispering_Root-Greenpath",
@@ -2307,7 +2325,8 @@
     "offsetX": -1.9,
     "offsetY": 0.1,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "WhisperingRoot"
   },
   "Whispering_Root-Leg_Eater": {
     "name": "Whispering_Root-Leg_Eater",
@@ -2321,7 +2340,8 @@
     "offsetX": 0.3,
     "offsetY": -0.7,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "WhisperingRoot"
   },
   "Whispering_Root-Mantis_Village": {
     "name": "Whispering_Root-Mantis_Village",
@@ -2335,7 +2355,8 @@
     "offsetX": 0.1,
     "offsetY": -0.25,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "WhisperingRoot"
   },
   "Whispering_Root-Deepnest": {
     "name": "Whispering_Root-Deepnest",
@@ -2349,7 +2370,8 @@
     "offsetX": -1.8,
     "offsetY": -0.2,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "WhisperingRoot"
   },
   "Whispering_Root-Queens_Gardens": {
     "name": "Whispering_Root-Queens_Gardens",
@@ -2363,7 +2385,8 @@
     "offsetX": 0.3,
     "offsetY": -0.5,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "WhisperingRoot"
   },
   "Whispering_Root-Kingdoms_Edge": {
     "name": "Whispering_Root-Kingdoms_Edge",
@@ -2377,7 +2400,8 @@
     "offsetX": 0.2,
     "offsetY": -2.0,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "WhisperingRoot"
   },
   "Whispering_Root-Waterways": {
     "name": "Whispering_Root-Waterways",
@@ -2391,7 +2415,8 @@
     "offsetX": 0.5,
     "offsetY": -1.7,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "WhisperingRoot"
   },
   "Whispering_Root-City": {
     "name": "Whispering_Root-City",
@@ -2405,7 +2430,8 @@
     "offsetX": 0.8,
     "offsetY": 0.0,
     "offsetZ": 0.001,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "WhisperingRoot"
   },
   "Whispering_Root-Resting_Grounds": {
     "name": "Whispering_Root-Resting_Grounds",
@@ -2419,7 +2445,8 @@
     "offsetX": -0.3,
     "offsetY": 0.5,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "WhisperingRoot"
   },
   "Whispering_Root-Spirits_Glade": {
     "name": "Whispering_Root-Spirits_Glade",
@@ -2433,7 +2460,8 @@
     "offsetX": 1.5,
     "offsetY": 0.7,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "WhisperingRoot"
   },
   "Whispering_Root-Crystal_Peak": {
     "name": "Whispering_Root-Crystal_Peak",
@@ -2447,7 +2475,8 @@
     "offsetX": 0.2,
     "offsetY": -0.4,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "WhisperingRoot"
   },
   "Whispering_Root-Howling_Cliffs": {
     "name": "Whispering_Root-Howling_Cliffs",
@@ -2461,7 +2490,8 @@
     "offsetX": 0.5,
     "offsetY": -1.8,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "WhisperingRoot"
   },
   "Whispering_Root-Ancestral_Mound": {
     "name": "Whispering_Root-Ancestral_Mound",
@@ -2475,7 +2505,8 @@
     "offsetX": -0.4,
     "offsetY": 0.6,
     "offsetZ": -0.495,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "WhisperingRoot"
   },
   "Whispering_Root-Hive": {
     "name": "Whispering_Root-Hive",
@@ -2489,7 +2520,8 @@
     "offsetX": 0.5,
     "offsetY": -0.4,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "WhisperingRoot"
   },
   "Boss_Essence-Elder_Hu": {
     "name": "Boss_Essence-Elder_Hu",
@@ -2657,7 +2689,8 @@
     "offsetX": 0.68,
     "offsetY": -0.6,
     "offsetZ": 0.001,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "GreyPrinceZote"
   },
   "Grub-Crossroads_Acid": {
     "name": "Grub-Crossroads_Acid",
@@ -3371,7 +3404,8 @@
     "offsetX": 0.1,
     "offsetY": 0.2,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Map"
   },
   "Greenpath_Map": {
     "name": "Greenpath_Map",
@@ -3385,7 +3419,8 @@
     "offsetX": 1.45,
     "offsetY": -0.3,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Map"
   },
   "Fog_Canyon_Map": {
     "name": "Fog_Canyon_Map",
@@ -3399,7 +3434,8 @@
     "offsetX": -0.3,
     "offsetY": 0.2,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Map"
   },
   "Fungal_Wastes_Map": {
     "name": "Fungal_Wastes_Map",
@@ -3413,7 +3449,8 @@
     "offsetX": -1.55,
     "offsetY": 0.2,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Map"
   },
   "Deepnest_Map-Upper": {
     "name": "Deepnest_Map-Upper",
@@ -3427,7 +3464,8 @@
     "offsetX": -0.45,
     "offsetY": -0.8,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Map"
   },
   "Deepnest_Map-Right": {
     "name": "Deepnest_Map-Right",
@@ -3441,7 +3479,8 @@
     "offsetX": -0.7,
     "offsetY": 0.2,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Map"
   },
   "Ancient_Basin_Map": {
     "name": "Ancient_Basin_Map",
@@ -3455,7 +3494,8 @@
     "offsetX": 0.5,
     "offsetY": 0.4,
     "offsetZ": 0.001,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Map"
   },
   "Kingdom's_Edge_Map": {
     "name": "Kingdom's_Edge_Map",
@@ -3469,7 +3509,8 @@
     "offsetX": -0.7,
     "offsetY": -0.1,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Map"
   },
   "City_of_Tears_Map": {
     "name": "City_of_Tears_Map",
@@ -3483,7 +3524,8 @@
     "offsetX": 0.2,
     "offsetY": -0.375,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Map"
   },
   "Royal_Waterways_Map": {
     "name": "Royal_Waterways_Map",
@@ -3497,7 +3539,8 @@
     "offsetX": -0.2,
     "offsetY": 0.2,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Map"
   },
   "Howling_Cliffs_Map": {
     "name": "Howling_Cliffs_Map",
@@ -3511,7 +3554,8 @@
     "offsetX": 1.8,
     "offsetY": -0.1,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Map"
   },
   "Crystal_Peak_Map": {
     "name": "Crystal_Peak_Map",
@@ -3525,7 +3569,8 @@
     "offsetX": 1.35,
     "offsetY": 0.0,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Map"
   },
   "Queen's_Gardens_Map": {
     "name": "Queen's_Gardens_Map",
@@ -3539,7 +3584,8 @@
     "offsetX": 0.4,
     "offsetY": 0.1,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Map"
   },
   "Resting_Grounds_Map": {
     "name": "Resting_Grounds_Map",
@@ -3553,7 +3599,8 @@
     "offsetX": -0.8,
     "offsetY": -0.05,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Map"
   },
   "Dirtmouth_Stag": {
     "name": "Dirtmouth_Stag",
@@ -3567,7 +3614,8 @@
     "offsetX": 0.4,
     "offsetY": -0.6,
     "offsetZ": 0.01,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Stag"
   },
   "Crossroads_Stag": {
     "name": "Crossroads_Stag",
@@ -3581,7 +3629,8 @@
     "offsetX": -0.3,
     "offsetY": 0.05,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Stag"
   },
   "Greenpath_Stag": {
     "name": "Greenpath_Stag",
@@ -3595,7 +3644,8 @@
     "offsetX": -0.15,
     "offsetY": -0.1,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Stag"
   },
   "Queen's_Station_Stag": {
     "name": "Queen's_Station_Stag",
@@ -3609,7 +3659,8 @@
     "offsetX": -0.2,
     "offsetY": 0.0,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Stag"
   },
   "Queen's_Gardens_Stag": {
     "name": "Queen's_Gardens_Stag",
@@ -3623,7 +3674,8 @@
     "offsetX": 1.68,
     "offsetY": 0.0,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Stag"
   },
   "City_Storerooms_Stag": {
     "name": "City_Storerooms_Stag",
@@ -3637,7 +3689,8 @@
     "offsetX": 0.2,
     "offsetY": 0.0,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Stag"
   },
   "King's_Station_Stag": {
     "name": "King's_Station_Stag",
@@ -3651,7 +3704,8 @@
     "offsetX": 0.3,
     "offsetY": -0.3,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Stag"
   },
   "Resting_Grounds_Stag": {
     "name": "Resting_Grounds_Stag",
@@ -3665,7 +3719,8 @@
     "offsetX": 0.15,
     "offsetY": 0.0,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Stag"
   },
   "Distant_Village_Stag": {
     "name": "Distant_Village_Stag",
@@ -3679,7 +3734,8 @@
     "offsetX": 0.6,
     "offsetY": 0.0,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Stag"
   },
   "Hidden_Station_Stag": {
     "name": "Hidden_Station_Stag",
@@ -3693,7 +3749,8 @@
     "offsetX": 0.1,
     "offsetY": 0.1,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Stag"
   },
   "Stag_Nest_Stag": {
     "name": "Stag_Nest_Stag",
@@ -3707,7 +3764,8 @@
     "offsetX": -3.3,
     "offsetY": 1.5,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Stag"
   },
   "Lifeblood_Cocoon-King's_Pass": {
     "name": "Lifeblood_Cocoon-King's_Pass",
@@ -4057,7 +4115,8 @@
     "offsetX": 0.0,
     "offsetY": -1.26,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "Stag"
   },
   "Split_Mothwing_Cloak": {
     "name": "Split_Mothwing_Cloak",
@@ -7963,7 +8022,8 @@
     "offsetX": 0.0,
     "offsetY": -0.1,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-Pleasure_House": {
     "name": "Lore_Tablet-Pleasure_House",
@@ -7977,7 +8037,8 @@
     "offsetX": 0.4,
     "offsetY": -1.0,
     "offsetZ": 0.001,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-Sanctum_Entrance": {
     "name": "Lore_Tablet-Sanctum_Entrance",
@@ -7991,7 +8052,8 @@
     "offsetX": 0.2,
     "offsetY": 0.6,
     "offsetZ": 0.001,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-Sanctum_Past_Soul_Master": {
     "name": "Lore_Tablet-Sanctum_Past_Soul_Master",
@@ -8005,7 +8067,8 @@
     "offsetX": 0.2,
     "offsetY": 0.4,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-Watcher's_Spire": {
     "name": "Lore_Tablet-Watcher's_Spire",
@@ -8019,7 +8082,8 @@
     "offsetX": 0.0,
     "offsetY": 0.7,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-Archives_Upper": {
     "name": "Lore_Tablet-Archives_Upper",
@@ -8033,7 +8097,8 @@
     "offsetX": 0.19,
     "offsetY": 0.25,
     "offsetZ": 0.001,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-Archives_Left": {
     "name": "Lore_Tablet-Archives_Left",
@@ -8047,7 +8112,8 @@
     "offsetX": -0.21,
     "offsetY": 0.25,
     "offsetZ": 0.002,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-Archives_Right": {
     "name": "Lore_Tablet-Archives_Right",
@@ -8061,7 +8127,8 @@
     "offsetX": 0.59,
     "offsetY": 0.25,
     "offsetZ": 0.002,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-Pilgrim's_Way_1": {
     "name": "Lore_Tablet-Pilgrim's_Way_1",
@@ -8075,7 +8142,8 @@
     "offsetX": 1.4,
     "offsetY": 0.0,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-Pilgrim's_Way_2": {
     "name": "Lore_Tablet-Pilgrim's_Way_2",
@@ -8089,7 +8157,8 @@
     "offsetX": -1.3,
     "offsetY": -0.4,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-Mantis_Outskirts": {
     "name": "Lore_Tablet-Mantis_Outskirts",
@@ -8103,7 +8172,8 @@
     "offsetX": 1.7,
     "offsetY": -0.1,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-Mantis_Village": {
     "name": "Lore_Tablet-Mantis_Village",
@@ -8117,7 +8187,8 @@
     "offsetX": -1.0,
     "offsetY": 0.3,
     "offsetZ": -0.97,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-Greenpath_Upper_Hidden": {
     "name": "Lore_Tablet-Greenpath_Upper_Hidden",
@@ -8131,7 +8202,8 @@
     "offsetX": 0.7,
     "offsetY": 0.2,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-Greenpath_Below_Toll": {
     "name": "Lore_Tablet-Greenpath_Below_Toll",
@@ -8145,7 +8217,8 @@
     "offsetX": -0.3,
     "offsetY": -0.2,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-Greenpath_Lifeblood": {
     "name": "Lore_Tablet-Greenpath_Lifeblood",
@@ -8159,7 +8232,8 @@
     "offsetX": -0.5,
     "offsetY": 0.1,
     "offsetZ": 0.001,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-Greenpath_Stag": {
     "name": "Lore_Tablet-Greenpath_Stag",
@@ -8173,7 +8247,8 @@
     "offsetX": 0.9,
     "offsetY": 0.0,
     "offsetZ": 0.001,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-Greenpath_QG": {
     "name": "Lore_Tablet-Greenpath_QG",
@@ -8187,7 +8262,8 @@
     "offsetX": -1.3,
     "offsetY": -0.2,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-Greenpath_Lower_Hidden": {
     "name": "Lore_Tablet-Greenpath_Lower_Hidden",
@@ -8201,7 +8277,8 @@
     "offsetX": 1.2,
     "offsetY": -0.14,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-Dung_Defender": {
     "name": "Lore_Tablet-Dung_Defender",
@@ -8215,7 +8292,8 @@
     "offsetX": 0.9,
     "offsetY": -0.1,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-Spore_Shroom": {
     "name": "Lore_Tablet-Spore_Shroom",
@@ -8229,7 +8307,8 @@
     "offsetX": 0.6,
     "offsetY": 0.3,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-Fungal_Wastes_Hidden": {
     "name": "Lore_Tablet-Fungal_Wastes_Hidden",
@@ -8243,7 +8322,8 @@
     "offsetX": -0.6,
     "offsetY": 0.7,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-Fungal_Wastes_Below_Shrumal_Ogres": {
     "name": "Lore_Tablet-Fungal_Wastes_Below_Shrumal_Ogres",
@@ -8257,7 +8337,8 @@
     "offsetX": 0.2,
     "offsetY": -0.6,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-Fungal_Core": {
     "name": "Lore_Tablet-Fungal_Core",
@@ -8271,7 +8352,8 @@
     "offsetX": 0.4,
     "offsetY": 0.6,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-Ancient_Basin": {
     "name": "Lore_Tablet-Ancient_Basin",
@@ -8285,7 +8367,8 @@
     "offsetX": 0.3,
     "offsetY": 2.7,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-King's_Pass_Focus": {
     "name": "Lore_Tablet-King's_Pass_Focus",
@@ -8299,7 +8382,8 @@
     "offsetX": 0.0,
     "offsetY": -0.4,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-King's_Pass_Fury": {
     "name": "Lore_Tablet-King's_Pass_Fury",
@@ -8313,7 +8397,8 @@
     "offsetX": 1.7,
     "offsetY": -0.8,
     "offsetZ": 0.002,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-King's_Pass_Exit": {
     "name": "Lore_Tablet-King's_Pass_Exit",
@@ -8327,7 +8412,8 @@
     "offsetX": 1.5,
     "offsetY": 0.4,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-World_Sense": {
     "name": "Lore_Tablet-World_Sense",
@@ -8341,7 +8427,8 @@
     "offsetX": -0.2,
     "offsetY": -0.2,
     "offsetZ": 0.001,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-Howling_Cliffs": {
     "name": "Lore_Tablet-Howling_Cliffs",
@@ -8355,7 +8442,8 @@
     "offsetX": 1.8,
     "offsetY": -1.1,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-Kingdom's_Edge": {
     "name": "Lore_Tablet-Kingdom's_Edge",
@@ -8369,7 +8457,8 @@
     "offsetX": 1.2,
     "offsetY": -0.5,
     "offsetZ": 0.0,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-Palace_Workshop": {
     "name": "Lore_Tablet-Palace_Workshop",
@@ -8383,7 +8472,8 @@
     "offsetX": 1.2,
     "offsetY": -0.2,
     "offsetZ": 0.006,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-Palace_Throne": {
     "name": "Lore_Tablet-Palace_Throne",
@@ -8397,7 +8487,8 @@
     "offsetX": 1.6,
     "offsetY": -0.2,
     "offsetZ": 0.007,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Lore_Tablet-Path_of_Pain_Entrance": {
     "name": "Lore_Tablet-Path_of_Pain_Entrance",
@@ -8411,7 +8502,8 @@
     "offsetX": 1.4,
     "offsetY": 0.3,
     "offsetZ": 0.007,
-    "isShop": false
+    "isShop": false,
+    "previewGroup": "LoreTablet"
   },
   "Mr_Mushroom-Fungal_Wastes": {
     "name": "Mr_Mushroom-Fungal_Wastes",
