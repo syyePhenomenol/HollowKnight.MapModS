@@ -170,8 +170,7 @@ namespace MapModS.UI
         }
 
         private static readonly Vector4 selectionColor = new(255, 255, 0, 0.5f);
-
-        // This method also handles highlighting the selected room
+        
         public static bool GetRoomClosestToMiddle(string previousScene, out string selectedScene)
         {
             selectedScene = null;
@@ -205,6 +204,7 @@ namespace MapModS.UI
             return selectedScene != previousScene;
         }
 
+        // This method handles highlighting the selected room
         private static void SetRoomColors()
         {
             GameObject go_GameMap = GameManager.instance.gameMap;

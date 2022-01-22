@@ -178,26 +178,15 @@ namespace MapModS.UI
                 transitionSpace.Remove(transition);
             }
 
-            // Sample two scenes if not specified
-            if (startScene == null || finalScene == null)
+            // Just in case
+            if (startScene == null || finalScene == null
+                || startScene == finalScene)
             {
-                Random random = new();
-                string startTransition = transitionSpace.ElementAt(random.Next(transitionSpace.Count()));
-                
-                startScene = GetScene(startTransition);
-                transitionSpace.Remove(startTransition);
-                finalScene = GetScene(transitionSpace.ElementAt(random.Next(transitionSpace.Count())));
-                transitionSpace.Add(startTransition);
-            }
-
-            //MapModS.Instance.Log($"Start scene: {startScene}");
-            //MapModS.Instance.Log($"Final scene: {finalScene}");
-
-            if (startScene == finalScene)
-            {
-                //MapModS.Instance.Log("Route search: Start scene is the same as final scene");
                 return new();
             }
+
+            // Just in case
+            transitionSpace.Remove(null);
 
             // Get starting transitions
             foreach (string transition in transitionSpace)
@@ -216,6 +205,8 @@ namespace MapModS.UI
 
             foreach (KeyValuePair<string, string> tp in startTransitionPlacements)
             {
+                if (tp.Value == null) continue;
+
                 SearchNode startNode = new(GetScene(tp.Value), new() { tp.Key });
                 queue.AddLast(startNode);
             }
@@ -231,7 +222,6 @@ namespace MapModS.UI
 
                 if (currentNode.currentScene == finalScene)
                 {
-                    //MapModS.Instance.Log("Route search: Successful termination");
                     return currentNode.currentRoute;
                 }
 
@@ -251,7 +241,9 @@ namespace MapModS.UI
                         tt.pm.Add(tt.lm.GetTransition(GetAdjacentTransition(currentNode.currentRoute.Last())));
                     }
 
-                    if (!visitedTransitions.Contains(transition) && tt.lm.TransitionLookup[transition].CanGet(tt.pm))
+                    if (GetAdjacentTransition(transition) != null
+                        && !visitedTransitions.Contains(transition)
+                        && tt.lm.TransitionLookup[transition].CanGet(tt.pm))
                     {
                         SearchNode newNode = new(GetScene(GetAdjacentTransition(transition)), currentNode.currentRoute);
                         newNode.currentRoute.Add(transition);
@@ -263,19 +255,8 @@ namespace MapModS.UI
                 }
             }
 
-            //MapModS.Instance.Log("Route search: No route found, or the parameters are invalid");
+            // No route found, or the parameters are invalid
             return new();
         }
-
-        //public void TestAlgorithm()
-        //{
-        //    string startScene = PlayerData.instance.scenesVisited.First();
-        //    string finalScene = PlayerData.instance.scenesVisited.Last();
-
-        //    foreach (string transition in ShortestRoute(startScene, finalScene, new()))
-        //    {
-        //        MapModS.Instance.Log(transition);
-        //    }
-        //}
     }
 }
