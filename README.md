@@ -42,7 +42,7 @@ https://github.com/flibber-hk/HollowKnight.SkillUpgrades
     - "Randomized" `Ctrl-2`: Toggle all Pins for randomized items on/off
     - "Others" `Ctrl-3`: Toggle all Pins for non-randomized items on/off
     - "Pin Style" `CTRL-4`: Toggle the style of the Pins
-    - "Pin Size" `CTRL-5`: Toggle the style of the Pins
+    - "Pin Size" `CTRL-5`: Toggle the size of the Pins
     - "Mode": Toggle the map mode
     - "Customize Pins": Open/close a panel with a toggle for each spoiler item pool
 
