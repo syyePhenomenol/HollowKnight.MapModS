@@ -26,7 +26,7 @@ namespace MapModS.UI
         public static string lastFinalScene = null;
         public static string selectedScene = "None";
         public static List<string> selectedRoute = new();
-        public static HashSet<string> rejectedTransitions = new();
+        public static HashSet<KeyValuePair<string, string>> rejectedTransitionPairs = new();
 
         public static void Show()
         {
@@ -94,7 +94,7 @@ namespace MapModS.UI
             lastFinalScene = null;
             selectedScene = "None";
             selectedRoute = new();
-            rejectedTransitions = new();
+            rejectedTransitionPairs = new();
         }
 
         public static void BuildText(GameObject _canvas)
@@ -150,6 +150,12 @@ namespace MapModS.UI
             if (InputHandler.Instance != null && InputHandler.Instance.inputActions.menuSubmit.WasPressed)
             {
                 GetRoute();
+            }
+
+            if (InputHandler.Instance != null && InputHandler.Instance.inputActions.pause.WasPressed)
+            {
+                MapModS.GS.ToggleAllowBenchWarp();
+                SetRouteText();
             }
 
             frameCounter = (frameCounter + 1) % 24;
@@ -258,7 +264,7 @@ namespace MapModS.UI
             }
             else
             {
-                instructionsText += $" Press [Menu Select] to find new route / switch starting transition for current route.";
+                instructionsText += $" Press [Menu Select] to find new route or to switch starting / final transitions for current route.";
             }
 
             _instructionPanel.GetText("Instructions").UpdateText(instructionsText);
@@ -266,7 +272,16 @@ namespace MapModS.UI
 
         public static void SetRouteText()
         {
-            string routeText = "Current route: ";
+            string routeText = "";
+
+            if (MapModS.GS.allowBenchWarpSearch)
+            {
+                routeText += $"Benchwarps (pause button): On      Current route: ";
+            }
+            else
+            {
+                routeText += $"Benchwarps (pause button): Off      Current route: ";
+            }
 
             if (lastStartScene != null && lastFinalScene != null && selectedRoute.Any())
             {
@@ -287,14 +302,14 @@ namespace MapModS.UI
 
             if (selectedRoute.Any())
             {
-                int maxDisplayedTransitions = 10;
+                int maxDisplayedTransitions = 9;
                 int displayedTransitionCounter = 0;
 
                 foreach (string transition in selectedRoute)
                 {
                     if (displayedTransitionCounter == maxDisplayedTransitions)
                     {
-                        transitionsText += " -> ";
+                        transitionsText += " -> ... -> " + selectedRoute.Last();
                         break;
                     }
 
@@ -322,21 +337,21 @@ namespace MapModS.UI
 
             if (lastStartScene != GameManager.instance.sceneName || lastFinalScene != selectedScene)
             {
-                rejectedTransitions = new();
+                rejectedTransitionPairs = new();
             }
 
-            selectedRoute = th.ShortestRoute(GameManager.instance.sceneName, selectedScene, rejectedTransitions);
+            selectedRoute = th.ShortestRoute(GameManager.instance.sceneName, selectedScene, rejectedTransitionPairs, false);
 
             if (!selectedRoute.Any())
             {
                 lastFinalScene = null;
-                rejectedTransitions = new();
+                rejectedTransitionPairs = new();
             }
             else
             {
                 lastStartScene = GameManager.instance.sceneName;
                 lastFinalScene = selectedScene;
-                rejectedTransitions.Add(selectedRoute.First());
+                rejectedTransitionPairs.Add(new(selectedRoute.First(), selectedRoute.Last()));
             }
 
             SetTexts();

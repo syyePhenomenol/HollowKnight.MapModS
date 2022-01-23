@@ -11,6 +11,31 @@ namespace MapModS.UI
 {
     public class TransitionHelper
     {
+        //// if Key is true, then Has(Value) should be true for the TransitionTracker to think CanGet(Key) is true
+        //private static readonly Dictionary<string, string> waypointLogicPairs = new()
+        //{
+        //    { "Abyss_01[left1]", "Opened_Dung_Defender_Wall" },
+        //    { "Crossroads_09[left1]", "Defeated_Brooding_Mawlek" },
+        //    { "Crossroads_09[right1]", "Defeated_Brooding_Mawlek" },
+        //    { "Crossroads_33[left1]", "Opened_Mawlek_Wall" },
+        //    { "Crossroads_33[right1]", "Opened_Shaman_Pillar" },
+        //    { "Deepnest_East_03[left2]", "Opened_Lower_Kingdom's_Edge_Wall" },
+        //    { "Fungus3_02[right1]", "Opened_Archives_Exit_Wall" },
+        //    { "Fungus3_13[left2]", "Opened_Gardens_Stag_Exit" },
+        //    { "RestingGrounds_02[bot1]", "Opened_Resting_Grounds_Floor" },
+        //    { "RestingGrounds_05[right1]", "Opened_Glade_Door" },
+        //    { "Ruins1_05b[bot1]", "Opened_Waterways_Manhole" },
+        //    { "Ruins1_31[left2]", "Lever-Shade_Soul" },
+        //    { "Ruins2_04[door_Ruin_House_03]", "Opened_Emilitia_Door" },
+        //    { "Ruins2_10[right1]", "Right_Elevator" },
+        //    { "Ruins2_10[right1]", "Opened_Resting_Grounds_Catacombs_Wall" },
+        //    { "Ruins2_10b[left1]", "Opened_Pleasure_House_Wall" },
+        //    { "Ruins2_11_b[left1]", "LOVE" },
+        //    { "Town[door_station]", "Dirtmouth_Stag" },
+        //    { "Town[door_sly]", "Rescued_Sly" },
+        //    { "Town[door_mapper]", "Town" },
+        //};
+
         public TransitionHelper()
         {
             tt = new();
@@ -151,7 +176,7 @@ namespace MapModS.UI
         // Calculates the shortest route (by number of transitions) from startScene to finalScene.
         // The search space will be purely limited to rooms that have been visited + unreached reachable locations
         // A ProgressionManager is used to track logic while traversing through the search space
-        public List<string> ShortestRoute(string startScene, string finalScene, HashSet<string> rejectedTransitions)
+        public List<string> ShortestRoute(string startScene, string finalScene, HashSet<KeyValuePair<string, string>> rejectedTransitionPairs, bool allowBenchWarp)
         {   
             transitionPlacementsDict = RandomizerMod.RandomizerMod.RS.Context.transitionPlacements.ToDictionary(tp => tp.source.Name, tp => tp.target.Name);
 
@@ -164,15 +189,6 @@ namespace MapModS.UI
                 if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Has(transitionEntry.Value.term.Id))
                 {
                     transitionSpace.Add(transitionEntry.Key);
-                }
-            }
-
-            // Remove rejected start transitions
-            if (rejectedTransitions != null)
-            {
-                foreach (var key in transitionSpace.Intersect(rejectedTransitions).ToList())
-                {
-                    transitionSpace.Remove(key);
                 }
             }
 
@@ -227,6 +243,11 @@ namespace MapModS.UI
 
                 if (currentNode.currentScene == finalScene)
                 {
+                    if (rejectedTransitionPairs.Any(pair => pair.Key == currentNode.currentRoute.First() && pair.Value == currentNode.currentRoute.Last()))
+                    {
+                        continue;
+                    }
+
                     return currentNode.currentRoute;
                 }
 
