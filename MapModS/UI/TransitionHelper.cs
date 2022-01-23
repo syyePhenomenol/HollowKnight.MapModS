@@ -22,30 +22,28 @@ namespace MapModS.UI
             public readonly HashSet<int> obtainedItems = RandomizerMod.RandomizerMod.RS.TrackerData.obtainedItems;
             public readonly HashSet<int> outOfLogicObtainedItems = RandomizerMod.RandomizerMod.RS.TrackerData.outOfLogicObtainedItems;
 
-            public LogicManager lm = RandomizerMod.RandomizerMod.RS.Context.LM;
-            public RandoContext ctx = RandomizerMod.RandomizerMod.RS.Context;
             public ProgressionManager pm;
             private readonly MainUpdater mu;
 
             public TransitionTracker()
             {
-                pm = new(lm, ctx);
+                pm = new(RandomizerMod.RandomizerMod.RS.Context.LM, RandomizerMod.RandomizerMod.RS.Context);
 
-                mu = new(lm);
+                mu = new(pm.lm);
 
-                mu.AddEntries(lm.Waypoints.Select(w => new DelegateUpdateEntry(w, pm => { pm.Add(w); }, lm)));
+                mu.AddEntries(pm.lm.Waypoints.Select(w => new DelegateUpdateEntry(w, pm => { pm.Add(w); }, pm.lm)));
 
-                if (ctx.transitionPlacements != null)
+                if (pm.ctx.transitionPlacements != null)
                 {
-                    mu.AddEntries(ctx.transitionPlacements.Select((p, id) => new DelegateUpdateEntry(p.source, pm =>
+                    mu.AddEntries(pm.ctx.transitionPlacements.Select((p, id) => new DelegateUpdateEntry(p.source, pm =>
                     {
-                        (RandoTransition source, RandoTransition target) = ctx.transitionPlacements[id];
+                        (RandoTransition source, RandoTransition target) = pm.ctx.transitionPlacements[id];
 
                         if (!pm.Has(source.lt.term))
                         {
                             pm.Add(source);
                         }
-                    }, lm)));
+                    }, pm.lm)));
                 }
 
                 mu.Hook(pm);
@@ -54,8 +52,8 @@ namespace MapModS.UI
             public void GetNewItems()
             {
                 // Get new progression since last time Setup() was called
-                List<RandoItem> items = obtainedItems.Where(i => !outOfLogicObtainedItems.Contains(i)).Select(i => ctx.itemPlacements[i].item).ToList();
-                pm.Add(items);
+                pm.Add(obtainedItems.Select(i => pm.ctx.itemPlacements[i].item).ToList());
+                pm.Add(outOfLogicObtainedItems.Select(i => pm.ctx.itemPlacements[i].item).ToList());
             }
 
             public class DelegateUpdateEntry : UpdateEntry
@@ -112,7 +110,8 @@ namespace MapModS.UI
 
             if (transitionDef == null) return null;
 
-            // If it's not in TransitionPlacements, it's the vanilla target
+            // If it's not in TransitionPlacements, it's the vanilla target.
+            // NOTE that this can be null
             return transitionDef.VanillaTarget;
         }
 
@@ -153,7 +152,7 @@ namespace MapModS.UI
 
             HashSet<string> transitionSpace = new();
             Dictionary<string, string> startTransitionPlacements = new();
-            
+
             // Get all relevant transitions
             foreach (KeyValuePair<string, LogicTransition> transitionEntry in RandomizerMod.RandomizerMod.RS.TrackerData.lm.TransitionLookup)
             {
@@ -185,12 +184,16 @@ namespace MapModS.UI
                 return new();
             }
 
+            //MapModS.Instance.Log($"Start scene: {startScene}");
+            //MapModS.Instance.Log($"Final scene: {finalScene}");
+
             // Just in case
             transitionSpace.Remove(null);
 
             // Get starting transitions
             foreach (string transition in transitionSpace)
             {
+
                 if (GetScene(transition) == startScene)
                 {
                     startTransitionPlacements.Add(transition, GetAdjacentTransition(transition));
@@ -209,6 +212,7 @@ namespace MapModS.UI
 
                 SearchNode startNode = new(GetScene(tp.Value), new() { tp.Key });
                 queue.AddLast(startNode);
+                visitedTransitions.Add(tp.Key);
             }
 
             while (queue.Any())
@@ -231,19 +235,14 @@ namespace MapModS.UI
 
                     tt.pm.StartTemp();
 
-                    foreach (string routeTransition in currentNode.currentRoute)
-                    {
-                        tt.pm.Add(tt.lm.GetTransition(routeTransition));
-                    }
-
                     if (currentNode.currentRoute.Count != 0)
                     {
-                        tt.pm.Add(tt.lm.GetTransition(GetAdjacentTransition(currentNode.currentRoute.Last())));
+                        tt.pm.Add(tt.pm.lm.GetTransition(GetAdjacentTransition(currentNode.currentRoute.Last())));
                     }
 
                     if (GetAdjacentTransition(transition) != null
                         && !visitedTransitions.Contains(transition)
-                        && tt.lm.TransitionLookup[transition].CanGet(tt.pm))
+                        && tt.pm.lm.TransitionLookup[transition].CanGet(tt.pm))
                     {
                         SearchNode newNode = new(GetScene(GetAdjacentTransition(transition)), currentNode.currentRoute);
                         newNode.currentRoute.Add(transition);
