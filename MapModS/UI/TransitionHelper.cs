@@ -19,8 +19,7 @@ namespace MapModS.UI
         // Code based on homothety's implementation of RandomizerMod's TrackerData
         class TransitionTracker
         {
-            public readonly HashSet<int> obtainedItems = RandomizerMod.RandomizerMod.RS.TrackerData.obtainedItems;
-            public readonly HashSet<int> outOfLogicObtainedItems = RandomizerMod.RandomizerMod.RS.TrackerData.outOfLogicObtainedItems;
+            public readonly HashSet<int> addedItems = new();
 
             public ProgressionManager pm;
             private readonly MainUpdater mu;
@@ -51,9 +50,15 @@ namespace MapModS.UI
 
             public void GetNewItems()
             {
-                // Get new progression since last time Setup() was called
-                pm.Add(obtainedItems.Select(i => pm.ctx.itemPlacements[i].item).ToList());
-                pm.Add(outOfLogicObtainedItems.Select(i => pm.ctx.itemPlacements[i].item).ToList());
+                // Get new progression since last time GetNewItems() was called
+                foreach (int id in RandomizerMod.RandomizerMod.RS.TrackerData.obtainedItems.Union(RandomizerMod.RandomizerMod.RS.TrackerData.outOfLogicObtainedItems))
+                {
+                    if (!addedItems.Contains(id))
+                    {
+                        addedItems.Add(id);
+                        pm.Add(pm.ctx.itemPlacements[id].item);
+                    }
+                }
             }
 
             public class DelegateUpdateEntry : UpdateEntry
@@ -190,29 +195,25 @@ namespace MapModS.UI
             // Just in case
             transitionSpace.Remove(null);
 
-            // Get starting transitions
-            foreach (string transition in transitionSpace)
-            {
-
-                if (GetScene(transition) == startScene)
-                {
-                    startTransitionPlacements.Add(transition, GetAdjacentTransition(transition));
-                }
-            }
-
             tt.GetNewItems();
 
             // Algorithm (BFS)
             HashSet<string> visitedTransitions = new();
             LinkedList<SearchNode> queue = new();
 
-            foreach (KeyValuePair<string, string> tp in startTransitionPlacements)
+            // Get starting transitions
+            foreach (string transition in transitionSpace)
             {
-                if (tp.Value == null) continue;
+                if (GetScene(transition) == startScene)
+                {
+                    string target = GetAdjacentTransition(transition);
 
-                SearchNode startNode = new(GetScene(tp.Value), new() { tp.Key });
-                queue.AddLast(startNode);
-                visitedTransitions.Add(tp.Key);
+                    if (target == null) continue;
+
+                    SearchNode startNode = new(GetScene(target), new() { transition });
+                    queue.AddLast(startNode);
+                    visitedTransitions.Add(transition);
+                }
             }
 
             while (queue.Any())
