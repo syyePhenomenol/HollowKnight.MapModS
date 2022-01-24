@@ -200,6 +200,8 @@ namespace MapModS.Map
                             roomObj2.gameObject.SetActive(false);
                         }
                     }
+
+                    emd.origTransitionColor = sr.color;
                 }
             }
 

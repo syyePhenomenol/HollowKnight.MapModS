@@ -44,36 +44,6 @@ namespace MapModS.UI
                 && MapModS.LS.mapMode == MapMode.TransitionRando;
 
             _instructionPanel.SetActive(isActive, isActive);
-
-            // The following stores the colors of the rooms prior to selection
-            if (gameMap == null) return;
-
-            foreach (Transform areaObj in gameMap.transform)
-            {
-                foreach (Transform roomObj in areaObj.transform)
-                {
-                    Transition.ExtraMapData extra = roomObj.GetComponent<Transition.ExtraMapData>();
-
-                    if (extra == null) continue;
-
-                    SpriteRenderer sr = roomObj.GetComponent<SpriteRenderer>();
-
-                    // For AdditionalMaps room objects, the child has the SR
-                    if (extra.sceneName.Contains("White_Palace"))
-                    {
-                        foreach (Transform roomObj2 in roomObj.transform)
-                        {
-                            if (!roomObj2.name.Contains("RWP")) continue;
-                            sr = roomObj2.GetComponent<SpriteRenderer>();
-                            break;
-                        }
-                    }
-
-                    if (sr == null) continue;
-
-                    extra.origTransitionColor = sr.color;
-                }
-            }
         }
 
         public static void Hide()
@@ -152,10 +122,12 @@ namespace MapModS.UI
                 GetRoute();
             }
 
-            if (InputHandler.Instance != null && InputHandler.Instance.inputActions.pause.WasPressed)
+            if ((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
+                && Input.GetKeyDown(KeyCode.B))
             {
                 MapModS.GS.ToggleAllowBenchWarp();
                 SetRouteText();
+                rejectedTransitionPairs = new();
             }
 
             frameCounter = (frameCounter + 1) % 24;
@@ -272,16 +244,7 @@ namespace MapModS.UI
 
         public static void SetRouteText()
         {
-            string routeText = "";
-
-            if (MapModS.GS.allowBenchWarpSearch)
-            {
-                routeText += $"Benchwarps (pause button): On      Current route: ";
-            }
-            else
-            {
-                routeText += $"Benchwarps (pause button): Off      Current route: ";
-            }
+            string routeText = "Current route: ";
 
             if (lastStartScene != null && lastFinalScene != null && selectedRoute.Any())
             {
@@ -293,6 +256,15 @@ namespace MapModS.UI
                 routeText += "None";
             }
 
+            if (MapModS.GS.allowBenchWarpSearch)
+            {
+                routeText += "\nInclude benchwarp (Ctrl-B): On";
+            }
+            else
+            {
+                routeText += "\nInclude benchwarp (Ctrl-B): Off";
+            }
+
             _instructionPanel.GetText("Route").UpdateText(routeText);
         }
 
@@ -302,12 +274,13 @@ namespace MapModS.UI
 
             if (selectedRoute.Any())
             {
-                int maxDisplayedTransitions = 9;
+                //int maxDisplayedTransitions = 8;
                 int displayedTransitionCounter = 0;
 
                 foreach (string transition in selectedRoute)
                 {
-                    if (displayedTransitionCounter == maxDisplayedTransitions)
+                    //if (displayedTransitionCounter == maxDisplayedTransitions)
+                    if (transitionsText.Length > 128)
                     {
                         transitionsText += " -> ... -> " + selectedRoute.Last();
                         break;
@@ -340,7 +313,7 @@ namespace MapModS.UI
                 rejectedTransitionPairs = new();
             }
 
-            selectedRoute = th.ShortestRoute(GameManager.instance.sceneName, selectedScene, rejectedTransitionPairs, false);
+            selectedRoute = th.ShortestRoute(GameManager.instance.sceneName, selectedScene, rejectedTransitionPairs, MapModS.GS.allowBenchWarpSearch);
 
             if (!selectedRoute.Any())
             {
@@ -351,6 +324,7 @@ namespace MapModS.UI
             {
                 lastStartScene = GameManager.instance.sceneName;
                 lastFinalScene = selectedScene;
+
                 rejectedTransitionPairs.Add(new(selectedRoute.First(), selectedRoute.Last()));
             }
 
@@ -360,12 +334,20 @@ namespace MapModS.UI
         public static void RemoveTraversedTransition(string previousScene, string currentScene)
         {
             if ((selectedRoute.Count >= 2
-                && RandomizerMod.RandomizerData.Data.GetTransitionDef(selectedRoute.First()).SceneName == previousScene
-                && RandomizerMod.RandomizerData.Data.GetTransitionDef(selectedRoute.ElementAt(1)).SceneName == currentScene)
+                    && RandomizerMod.RandomizerData.Data.GetTransitionDef(selectedRoute.First()).SceneName == previousScene
+                    && RandomizerMod.RandomizerData.Data.GetTransitionDef(selectedRoute.ElementAt(1)).SceneName == currentScene)
                 || (selectedRoute.Count == 1
-                && RandomizerMod.RandomizerData.Data.GetTransitionDef(selectedRoute.First()).SceneName == previousScene
-                && lastFinalScene == currentScene))
+                    && RandomizerMod.RandomizerData.Data.GetTransitionDef(selectedRoute.First()).SceneName == previousScene
+                    && lastFinalScene == currentScene))
             {
+                selectedRoute.Remove(selectedRoute.First());
+                SetTexts();
+            }
+            else if (selectedRoute.Count >= 2
+                && selectedRoute.First().Contains("Warp")
+                && RandomizerMod.RandomizerData.Data.GetTransitionDef(selectedRoute.ElementAt(1)).SceneName == previousScene)
+            {
+                selectedRoute.Remove(selectedRoute.First());
                 selectedRoute.Remove(selectedRoute.First());
                 SetTexts();
             }
