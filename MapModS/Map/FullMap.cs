@@ -374,7 +374,10 @@ namespace MapModS.Map
 
             if (boolName.StartsWith("MMS_"))
             {
-                if (MapModS.LS.ModEnabled && (MapModS.LS.mapMode == MapMode.FullMap || MapModS.LS.mapMode == MapMode.TransitionRando))
+                if (MapModS.LS.ModEnabled &&
+                    (MapModS.LS.mapMode == MapMode.FullMap
+                        || MapModS.LS.mapMode == MapMode.TransitionRando
+                        || MapModS.LS.mapMode == MapMode.TransitionRandoAlt))
                 {
                     return true;
                 }

@@ -76,7 +76,10 @@ namespace MapModS.Map
             orig(self);
 
             // Easiest way to force AdditionalMaps custom areas to show
-            if (MapModS.LS.ModEnabled && (MapModS.LS.mapMode == MapMode.FullMap || MapModS.LS.mapMode == MapMode.TransitionRando))
+            if (MapModS.LS.ModEnabled
+                && (MapModS.LS.mapMode == MapMode.FullMap
+                    || MapModS.LS.mapMode == MapMode.TransitionRando
+                    || MapModS.LS.mapMode == MapMode.TransitionRandoAlt))
             {
                 foreach (Transform child in self.transform)
                 {
@@ -131,9 +134,21 @@ namespace MapModS.Map
                 FullMap.PurgeMap();
 
                 if (RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode != RandomizerMod.Settings.TransitionSettings.TransitionMode.None
-                    && MapModS.LS.ModEnabled && MapModS.LS.mapMode == MapMode.TransitionRando)
+                    && MapModS.LS.ModEnabled)
                 {
-                    transitionPinScenes = Transition.SetupMapTransitionMode(gameMap);
+                    if (MapModS.LS.mapMode == MapMode.TransitionRando)
+                    {
+                        transitionPinScenes = Transition.SetupMapTransitionMode(gameMap, false);
+                    }
+                    else if (MapModS.LS.mapMode == MapMode.TransitionRandoAlt)
+                    {
+                        transitionPinScenes = Transition.SetupMapTransitionMode(gameMap, true);
+                    }
+                    else
+                    {
+                        Transition.ResetMapColors(gameMap);
+                        gameMap.SetupMap();
+                    }
                 }
                 else
                 {

@@ -70,7 +70,7 @@ namespace MapModS.Map
             sr.color = color;
         }
 
-        public static HashSet<string> SetupMapTransitionMode(GameMap gameMap)
+        public static HashSet<string> SetupMapTransitionMode(GameMap gameMap, bool isAlt)
         {
             HashSet<string> inLogicScenes = new();
 
@@ -79,7 +79,9 @@ namespace MapModS.Map
             HashSet<string> visitedAdjacentScenes = new();
 
             HashSet<string> uncheckedReachableScenes = new();
-            
+
+            HashSet<string> visitedScenes = new(PlayerData.instance.scenesVisited);
+            visitedScenes.Add(GameManager.instance.sceneName);
 
             RandomizerCore.Logic.ProgressionManager pm = RandomizerMod.RandomizerMod.RS.TrackerData.pm;
 
@@ -167,10 +169,21 @@ namespace MapModS.Map
                         active = true;
                     }
 
-                    if (inLogicScenes.Contains(emd.sceneName))
+                    if (isAlt)
                     {
-                        color = roomColor[RoomState.Default];
-                        active = true;
+                        if (visitedScenes.Contains(emd.sceneName))
+                        {
+                            color = roomColor[RoomState.Default];
+                            active = true;
+                        }
+                    }
+                    else
+                    {
+                        if (inLogicScenes.Contains(emd.sceneName))
+                        {
+                            color = roomColor[RoomState.Default];
+                            active = true;
+                        }
                     }
 
                     if (emd.sceneName == GameManager.instance.sceneName)
@@ -203,6 +216,11 @@ namespace MapModS.Map
 
                     emd.origTransitionColor = sr.color;
                 }
+            }
+
+            if (isAlt)
+            {
+                return visitedScenes;
             }
 
             return new(inLogicScenes.Union(outOfLogicScenes));

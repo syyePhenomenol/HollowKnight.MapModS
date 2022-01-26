@@ -397,6 +397,11 @@ namespace MapModS.UI
                     _mapControlPanel.GetButton("Mode").SetTextColor(Color.cyan);
                     _mapControlPanel.GetButton("Mode").UpdateText("Mode:\nTransition");
                     break;
+
+                case MapMode.TransitionRandoAlt:
+                    _mapControlPanel.GetButton("Mode").SetTextColor(Color.cyan);
+                    _mapControlPanel.GetButton("Mode").UpdateText("Mode:\nTransition 2");
+                    break;
             }
         }
 

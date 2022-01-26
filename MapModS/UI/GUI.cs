@@ -63,6 +63,8 @@ namespace MapModS.UI
 
         private static void HandleSceneChanges(Scene from, Scene to)
         {
+            //MapModS.Instance.Log($"{from.name} to {to.name}");
+
             if (GameManager.instance.sceneName != to.name) return;
 
             TransitionText.RemoveTraversedTransition(from.name, to.name);

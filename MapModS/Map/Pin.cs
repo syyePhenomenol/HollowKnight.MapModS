@@ -3,6 +3,7 @@ using MapModS.Data;
 using MapModS.Settings;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace MapModS.Map
@@ -62,7 +63,7 @@ namespace MapModS.Map
         {
             if (transitionPinScenes.Count != 0)
             {
-                if (!transitionPinScenes.Contains(PinData.pinScene ?? PinData.sceneName))
+                if (!transitionPinScenes.Contains(PinData.sceneName))
                 {
                     gameObject.SetActive(false);
                 }
@@ -74,7 +75,7 @@ namespace MapModS.Map
                 return;
             }
 
-            if (PinData.vanillaPool != PinData.spoilerPool) return;
+            if (RandomizerMod.RandomizerMod.RS.Context.itemPlacements.Any(ip => ip.location.Name == PinData.name)) return;
 
             // For non-randomized items
 

@@ -41,7 +41,8 @@ namespace MapModS.UI
         {
             bool isActive = !LockToggleEnable && MapModS.LS.ModEnabled
                 && RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode != RandomizerMod.Settings.TransitionSettings.TransitionMode.None
-                && MapModS.LS.mapMode == MapMode.TransitionRando;
+                && (MapModS.LS.mapMode == MapMode.TransitionRando
+                    || MapModS.LS.mapMode == MapMode.TransitionRandoAlt);
 
             _instructionPanel.SetActive(isActive, isActive);
         }
@@ -93,7 +94,8 @@ namespace MapModS.UI
 
             bool isActive = !LockToggleEnable && MapModS.LS.ModEnabled
                 && RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode != RandomizerMod.Settings.TransitionSettings.TransitionMode.None
-                && MapModS.LS.mapMode == MapMode.TransitionRando;
+                && (MapModS.LS.mapMode == MapMode.TransitionRando
+                    || MapModS.LS.mapMode == MapMode.TransitionRandoAlt);
 
             _transitionPanel.SetActive(isActive, isActive);
 
@@ -274,12 +276,8 @@ namespace MapModS.UI
 
             if (selectedRoute.Any())
             {
-                //int maxDisplayedTransitions = 8;
-                int displayedTransitionCounter = 0;
-
                 foreach (string transition in selectedRoute)
                 {
-                    //if (displayedTransitionCounter == maxDisplayedTransitions)
                     if (transitionsText.Length > 128)
                     {
                         transitionsText += " -> ... -> " + selectedRoute.Last();
@@ -287,7 +285,6 @@ namespace MapModS.UI
                     }
 
                     transitionsText += " -> " + transition;
-                    displayedTransitionCounter ++;
                 }
             }
 
@@ -310,7 +307,7 @@ namespace MapModS.UI
 
             if (lastStartScene != GameManager.instance.sceneName || lastFinalScene != selectedScene)
             {
-                rejectedTransitionPairs = new();
+                rejectedTransitionPairs.Clear();
             }
 
             selectedRoute = th.ShortestRoute(GameManager.instance.sceneName, selectedScene, rejectedTransitionPairs, MapModS.GS.allowBenchWarpSearch);
@@ -318,7 +315,7 @@ namespace MapModS.UI
             if (!selectedRoute.Any())
             {
                 lastFinalScene = null;
-                rejectedTransitionPairs = new();
+                rejectedTransitionPairs.Clear();
             }
             else
             {
@@ -331,26 +328,50 @@ namespace MapModS.UI
             SetTexts();
         }
 
+        
+
         public static void RemoveTraversedTransition(string previousScene, string currentScene)
         {
-            if ((selectedRoute.Count >= 2
-                    && RandomizerMod.RandomizerData.Data.GetTransitionDef(selectedRoute.First()).SceneName == previousScene
-                    && RandomizerMod.RandomizerData.Data.GetTransitionDef(selectedRoute.ElementAt(1)).SceneName == currentScene)
-                || (selectedRoute.Count == 1
-                    && RandomizerMod.RandomizerData.Data.GetTransitionDef(selectedRoute.First()).SceneName == previousScene
-                    && lastFinalScene == currentScene))
+            if (selectedRoute == null || !selectedRoute.Any()) return;
+
+            if (TransitionHelper.IsSpecialTransition(selectedRoute.First()))
+            {
+                if (currentScene == TransitionHelper.GetScene(TransitionHelper.GetAdjacentTransition(selectedRoute.First())))
+                {
+                    selectedRoute.Remove(selectedRoute.First());
+                    SetTexts();
+                }
+
+                return;
+            }
+
+            if (selectedRoute.Count >= 2 && previousScene == RandomizerMod.RandomizerData.Data.GetTransitionDef(selectedRoute.First()).SceneName)
+            {
+                if (TransitionHelper.IsSpecialTransition(selectedRoute.ElementAt(1)))
+                {
+                    if (TransitionHelper.VerifySpecialTransition(selectedRoute.ElementAt(1), currentScene))
+                    {
+                        selectedRoute.Remove(selectedRoute.First());
+                        SetTexts();
+                    }
+                }
+                else if (currentScene == RandomizerMod.RandomizerData.Data.GetTransitionDef(selectedRoute.ElementAt(1)).SceneName)
+                {
+                    selectedRoute.Remove(selectedRoute.First());
+                    SetTexts();
+                }
+
+                return;
+            }
+
+            if (previousScene == RandomizerMod.RandomizerData.Data.GetTransitionDef(selectedRoute.First()).SceneName
+                && currentScene == lastFinalScene)
             {
                 selectedRoute.Remove(selectedRoute.First());
+                rejectedTransitionPairs.Clear();
                 SetTexts();
             }
-            else if (selectedRoute.Count >= 2
-                && selectedRoute.First().Contains("Warp")
-                && RandomizerMod.RandomizerData.Data.GetTransitionDef(selectedRoute.ElementAt(1)).SceneName == previousScene)
-            {
-                selectedRoute.Remove(selectedRoute.First());
-                selectedRoute.Remove(selectedRoute.First());
-                SetTexts();
-            }
+
         }
     }
 }
