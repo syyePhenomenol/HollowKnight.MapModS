@@ -1220,7 +1220,7 @@
   },
   "Charm_Notch-Colosseum": {
     "name": "Charm_Notch-Colosseum",
-    "sceneName": "Room_Colosseum_Bronze",
+    "sceneName": "Room_Colosseum_01",
     "objectName": "Shiny Item",
     "pdBool": null,
     "pdInt": null,
@@ -1291,7 +1291,7 @@
   },
   "Pale_Ore-Colosseum": {
     "name": "Pale_Ore-Colosseum",
-    "sceneName": "Room_Colosseum_Silver",
+    "sceneName": "Room_Colosseum_01",
     "objectName": "Shiny Item",
     "pdBool": null,
     "pdInt": null,
@@ -2814,7 +2814,7 @@
     "pinScene": null,
     "mapZone": "GREEN_PATH",
     "offsetX": 0.9,
-    "offsetY": 0.4,
+    "offsetY": 0.0,
     "offsetZ": 0.0,
     "isShop": false
   },
@@ -7656,7 +7656,7 @@
     "pinScene": null,
     "mapZone": "MINES",
     "offsetX": 1.2,
-    "offsetY": 0.7,
+    "offsetY": 0.8,
     "offsetZ": 0.002,
     "isShop": false
   },
@@ -7698,7 +7698,7 @@
     "pinScene": "Mines_28",
     "mapZone": "MINES",
     "offsetX": 0.8,
-    "offsetY": 0.7,
+    "offsetY": 0.8,
     "offsetZ": 0.002,
     "isShop": false
   },
@@ -8245,7 +8245,7 @@
     "pinScene": null,
     "mapZone": "GREEN_PATH",
     "offsetX": 0.9,
-    "offsetY": 0.0,
+    "offsetY": 0.4,
     "offsetZ": 0.001,
     "isShop": false,
     "previewGroup": "LoreTablet"

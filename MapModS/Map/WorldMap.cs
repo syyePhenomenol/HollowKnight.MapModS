@@ -120,10 +120,10 @@ namespace MapModS.Map
             goCustomPins.SetActive(true);
 
             // For debugging purposes
-            if (goExtraRooms != null)
-            {
-                goExtraRooms.SetActive(true);
-            }
+            //if (goExtraRooms != null)
+            //{
+            //    goExtraRooms.SetActive(true);
+            //}
         }
 
         private static void GameMap_DisableMarkers(On.GameMap.orig_DisableMarkers orig, GameMap self)

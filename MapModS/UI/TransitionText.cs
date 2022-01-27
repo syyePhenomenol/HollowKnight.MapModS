@@ -1,4 +1,5 @@
 ﻿using MapModS.CanvasUtil;
+using MapModS.Data;
 using MapModS.Map;
 using MapModS.Settings;
 using System;
@@ -35,7 +36,7 @@ namespace MapModS.UI
             SetTexts();
         }
 
-        public static void ShowWorldMap(GameMap gameMap)
+        public static void ShowWorldMap()
         {
             bool isActive = !LockToggleEnable && MapModS.LS.ModEnabled
                 && RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode != RandomizerMod.Settings.TransitionSettings.TransitionMode.None
@@ -152,7 +153,7 @@ namespace MapModS.UI
             return Math.Pow(transform.position.x, 2) + Math.Pow(transform.position.y, 2);
         }
 
-        private static readonly Vector4 selectionColor = new(255, 255, 0, 0.5f);
+        private static readonly Vector4 selectionColor = new(255, 255, 0, 0.8f);
         
         public static bool GetRoomClosestToMiddle(string previousScene, out string selectedScene)
         {
@@ -253,7 +254,7 @@ namespace MapModS.UI
         {
             string instructionsText = $"Selected room: {selectedScene}.";
 
-            if (selectedScene == GameManager.instance.sceneName)
+            if (selectedScene == StringUtils.CurrentNormalScene())
             {
                 instructionsText += " You are here.";
             }
@@ -326,12 +327,12 @@ namespace MapModS.UI
                 return;
             }
 
-            if (lastStartScene != GameManager.instance.sceneName || lastFinalScene != selectedScene)
+            if (lastStartScene != StringUtils.CurrentNormalScene() || lastFinalScene != selectedScene)
             {
                 rejectedTransitionPairs.Clear();
             }
 
-            selectedRoute = th.ShortestRoute(GameManager.instance.sceneName, selectedScene, rejectedTransitionPairs, MapModS.GS.allowBenchWarpSearch);
+            selectedRoute = th.ShortestRoute(StringUtils.CurrentNormalScene(), selectedScene, rejectedTransitionPairs, MapModS.GS.allowBenchWarpSearch);
 
             if (!selectedRoute.Any())
             {
@@ -340,7 +341,7 @@ namespace MapModS.UI
             }
             else
             {
-                lastStartScene = GameManager.instance.sceneName;
+                lastStartScene = StringUtils.CurrentNormalScene();
                 lastFinalScene = selectedScene;
 
                 rejectedTransitionPairs.Add(new(selectedRoute.First(), selectedRoute.Last()));
@@ -349,11 +350,12 @@ namespace MapModS.UI
             SetTexts();
         }
 
-        
-
         public static void RemoveTraversedTransition(string previousScene, string currentScene)
         {
             if (selectedRoute == null || !selectedRoute.Any()) return;
+
+            previousScene = StringUtils.RemoveBossSuffix(previousScene);
+            currentScene = StringUtils.RemoveBossSuffix(currentScene);
 
             if (TransitionHelper.IsSpecialTransition(selectedRoute.First()))
             {

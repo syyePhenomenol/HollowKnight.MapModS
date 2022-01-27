@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using MapModS.UI;
+using MapModS.Data;
 using UnityEngine.UI;
 using TMPro;
 
@@ -62,7 +62,7 @@ namespace MapModS.Map
             GameObject go_extraMapRooms = new GameObject("MMS Custom Map Rooms");
             go_extraMapRooms.layer = 5;
             go_extraMapRooms.transform.SetParent(gameMap.transform);
-            go_extraMapRooms.transform.localPosition = new Vector3(-16f, 16f, 0);
+            go_extraMapRooms.transform.localPosition = new Vector3(-13f, 16f, 0);
             go_extraMapRooms.SetActive(true);
 
             var areaNamePrefab = UnityEngine.Object.Instantiate(gameMap.areaCliffs.transform.GetChild(0).gameObject);
@@ -137,21 +137,7 @@ namespace MapModS.Map
             return RandomizerMod.RandomizerData.Data.GetTransitionDef(transitionDef.VanillaTarget).SceneName;
         }
 
-        private static string DropSuffix(string scene)
-        {
-            if (scene == "") return "";
-
-            string[] sceneSplit = scene.Split('_');
-
-            string truncatedScene = sceneSplit[0];
-
-            for (int i = 1; i < sceneSplit.Length - 1; i++)
-            {
-                truncatedScene += "_" + sceneSplit[i];
-            }
-
-            return truncatedScene;
-        }
+        
 
         private static void SetActiveSRColor(Transform transform, bool active, SpriteRenderer sr, Vector4 color)
         {
@@ -188,7 +174,7 @@ namespace MapModS.Map
             HashSet<string> uncheckedReachableScenes = new();
 
             HashSet<string> visitedScenes = new(PlayerData.instance.scenesVisited);
-            visitedScenes.Add(GameManager.instance.sceneName);
+            visitedScenes.Add(StringUtils.CurrentNormalScene());
 
             RandomizerCore.Logic.ProgressionManager pm = RandomizerMod.RandomizerMod.RS.TrackerData.pm;
 
@@ -216,7 +202,7 @@ namespace MapModS.Map
                 {
                     RandomizerMod.RandomizerData.TransitionDef transitionDef = RandomizerMod.RandomizerData.Data.GetTransitionDef(transitionEntry.Key);
 
-                    if (transitionDef.SceneName == GameManager.instance.sceneName
+                    if (transitionDef.SceneName == StringUtils.CurrentNormalScene()
                         && !RandomizerMod.RandomizerMod.RS.TrackerData.uncheckedReachableTransitions.Contains(transitionDef.Name))
                     {
                         string adjacentScene = GetAdjacentScene(transitionDef);
@@ -292,7 +278,7 @@ namespace MapModS.Map
                         }
                     }
 
-                    if (emd.sceneName == GameManager.instance.sceneName)
+                    if (emd.sceneName == StringUtils.CurrentNormalScene())
                     {
                         color = roomColor[RoomState.Current];
                     }
@@ -347,7 +333,7 @@ namespace MapModS.Map
 
             gameMap.panMinX = -28f;
             gameMap.panMaxX = 26f;
-            gameMap.panMinY = -24f;
+            gameMap.panMinY = -25f;
             gameMap.panMaxY = 20f;
 
             if (isAlt)
@@ -367,9 +353,9 @@ namespace MapModS.Map
                 return objName;
             }
 
-            if (RandomizerMod.RandomizerData.Data.IsRoom(DropSuffix(objName)))
+            if (RandomizerMod.RandomizerData.Data.IsRoom(StringUtils.DropSuffix(objName)))
             {
-                return DropSuffix(objName);
+                return StringUtils.DropSuffix(objName);
             }
 
             return null;

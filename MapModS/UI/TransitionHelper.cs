@@ -132,7 +132,6 @@ namespace MapModS.UI
             { "Right Elevator Down", new("Right_Elevator", "Ruins2_10", "Ruins2_10b[right2]") }
         };
 
-        // Uses .StartsWith() to string check the scene
         public static Dictionary<string, Tuple<string, string>> tramTransitions = new()
         {
             { "Upper Tram -> Exit Left", new("Upper_Tram", "Crossroads_46[left1]") },
@@ -141,6 +140,11 @@ namespace MapModS.UI
             { "Lower Tram -> Exit Middle", new("Lower_Tram", "Abyss_03[top1]") },
             { "Lower Tram -> Exit Right", new("Lower_Tram", "Abyss_03_c[right1]") }
         };
+
+        //public static Dictionary<string, Tuple<string, string, string>> otherTransitions = new()
+        //{
+        //    { "Dream Nail Kingsmould", new("Awoken_Dream_Nail", "Abyss_05", "White_Palace_11[door2]") },
+        //};
 
         public TransitionHelper()
         {
@@ -579,12 +583,7 @@ namespace MapModS.UI
                         && !rejectedTransitionPairs.Any(pair => pair.Key == currentNode.currentRoute.First() && pair.Value == transition)
                         && ((tt.pm.lm.TransitionLookup.ContainsKey(transition)
                                 && tt.pm.lm.TransitionLookup[transition].CanGet(tt.pm))
-                            || (stagTransitions.ContainsKey(transition)
-                                && stagTransitions.Any(t => GetScene(t.Value.Item2) == currentNode.currentScene))
-                            || (elevatorTransitions.ContainsKey(transition)
-                                && elevatorTransitions[transition].Item2 == currentNode.currentScene)
-                            || (tramTransitions.ContainsKey(transition)
-                                && tramTransitions[transition].Item2.StartsWith(currentNode.currentScene))))
+                            || VerifySpecialTransition(transition, currentNode.currentScene)))
                     {
                         SearchNode newNode = new(GetScene(GetAdjacentTransition(transition)), currentNode.currentRoute, GetAdjacentTransition(transition));
                         newNode.currentRoute.Add(transition);
