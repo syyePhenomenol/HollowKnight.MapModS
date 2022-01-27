@@ -20,6 +20,8 @@ namespace MapModS.UI
         private static readonly Dictionary<string, string> waypointFixes = new()
         {
             { "Abyss_01[left1]", "Opened_Dung_Defender_Wall" },
+            //{ "Crossroads_09[left1]", "Defeated_Brooding_Mawlek" },
+            //{ "Crossroads_09[right1]", "Defeated_Brooding_Mawlek" },
             { "Crossroads_33[left1]", "Opened_Mawlek_Wall" },
             { "Crossroads_33[right1]", "Opened_Shaman_Pillar" },
             { "Deepnest_East_03[left2]", "Opened_Lower_Kingdom's_Edge_Wall" },
@@ -44,7 +46,9 @@ namespace MapModS.UI
             { "Town[door_jiji]" },
             { "Town[door_bretta]" },
             { "Town[room_divine]" },
-            { "Town[room_grimm]" }
+            { "Town[room_grimm]" },
+            { "Crossroads_09[left1]" },
+            { "Crossroads_09[right1]" }
         };
 
         // Pair of bench warp instruction + logically equivalent transition
@@ -207,6 +211,7 @@ namespace MapModS.UI
                     if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Has(keyId)
                         && !addedItems.Contains(ValueId))
                     {
+                        //MapModS.Instance.Log("Has " + pair.Value);
                         addedItems.Add(ValueId);
                         pm.Add(pm.ctx.itemPlacements[keyId].item);
                     }
@@ -234,6 +239,8 @@ namespace MapModS.UI
                     {
                         if (!addedItems.Contains(id))
                         {
+                            //MapModS.Instance.Log("Has " + waypoint.Name + " with id " + waypoint.term.Id);
+
                             addedItems.Add(id);
                             pm.Add(waypoint);
                         }
@@ -249,6 +256,8 @@ namespace MapModS.UI
                     if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Has(keyId)
                         && !addedItems.Contains(ValueId))
                     {
+                        //MapModS.Instance.Log("Waypoint fix:" + pair.Value + " with id " + pm.lm.TermLookup[pair.Value].Id);
+
                         addedItems.Add(ValueId);
                         pm.Add(new LogicWaypoint(pm.lm.TermLookup[pair.Value], pm.lm.LogicLookup[pair.Value]));
                     }
@@ -262,6 +271,8 @@ namespace MapModS.UI
                     if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Has(id)
                         && !addedItems.Contains(id))
                     {
+                        //MapModS.Instance.Log("Persistent transition: " + transition);
+
                         addedItems.Add(id);
                         pm.Add(pm.lm.TransitionLookup[transition]);
                     }
@@ -422,6 +433,7 @@ namespace MapModS.UI
 
                 if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Has(transitionEntry.Value.term.Id))
                 {
+                    //MapModS.Instance.Log(transitionEntry.Key);
                     transitionSpace.Add(transitionEntry.Key);
                 }
             }

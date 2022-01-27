@@ -152,6 +152,12 @@ namespace MapModS.Map
                         || areaObj.name == "Map Markers"
                         || areaObj.name == "WHITE_PALACE"
                         || areaObj.name == "GODS_GLORY") continue;
+                        //|| areaObj.name == "MMS Custom Map Rooms") continue;
+
+                if (areaObj.name == "MMS Custom Map Rooms")
+                {
+                    areaObj.gameObject.SetActive(false);
+                }
 
                 foreach (Transform roomObj in areaObj.transform)
                 {

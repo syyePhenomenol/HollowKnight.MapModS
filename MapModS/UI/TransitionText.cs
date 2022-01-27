@@ -1,12 +1,10 @@
 ﻿using MapModS.CanvasUtil;
-using MapModS.Data;
 using MapModS.Map;
 using MapModS.Settings;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
+using TMPro;
 using UnityEngine;
 
 namespace MapModS.UI
@@ -144,8 +142,13 @@ namespace MapModS.UI
             }
         }
 
-        private static double DistanceToMiddle(Transform transform)
+        private static double DistanceToMiddle(Transform transform, bool shift)
         {
+            if (shift)
+            {
+                return Math.Pow(transform.position.x - 4.5f, 2) + Math.Pow(transform.position.y + 1.2f, 2);
+            }
+
             return Math.Pow(transform.position.x, 2) + Math.Pow(transform.position.y, 2);
         }
 
@@ -162,6 +165,8 @@ namespace MapModS.UI
 
             foreach (Transform areaObj in go_GameMap.transform)
             {
+                bool shift = areaObj.name == "MMS Custom Map Rooms";
+
                 foreach (Transform roomObj in areaObj.transform)
                 {
                     if (!roomObj.gameObject.activeSelf) continue;
@@ -170,7 +175,7 @@ namespace MapModS.UI
 
                     if (extra == null) continue;
 
-                    double distance = DistanceToMiddle(roomObj);
+                    double distance = DistanceToMiddle(roomObj, shift);
 
                     if (distance < minDistance)
                     {
@@ -200,6 +205,22 @@ namespace MapModS.UI
                     Transition.ExtraMapData extra = roomObj.GetComponent<Transition.ExtraMapData>();
 
                     if (extra == null) continue;
+
+                    if (areaObj.name == "MMS Custom Map Rooms")
+                    {
+                        TextMeshPro tmp = roomObj.gameObject.GetComponent<TextMeshPro>();
+
+                        if (extra.sceneName == selectedScene)
+                        {
+                            tmp.color = selectionColor;
+                        }
+                        else
+                        {
+                            tmp.color = extra.origTransitionColor;
+                        }
+
+                        continue;
+                    }
 
                     SpriteRenderer sr = roomObj.GetComponent<SpriteRenderer>();
 
