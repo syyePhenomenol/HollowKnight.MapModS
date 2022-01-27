@@ -32,6 +32,14 @@ namespace MapModS.Data
                 case "Split_Crystal_Heart":
                     return PoolGroup.Skills;
 
+                case "Double_Mask_Shard":
+                case "Full_Mask":
+                    return PoolGroup.MaskShards;
+
+                case "Double_Vessel_Fragment":
+                case "Full_Soul_Vessel":
+                    return PoolGroup.VesselFragments;
+
                 case "Grimmchild1":
                 case "Grimmchild2":
                     return PoolGroup.Charms;
@@ -73,7 +81,7 @@ namespace MapModS.Data
                 }
             }
 
-            MapModS.Instance.LogWarn($"{cleanItemName} not found in PoolDefs");
+            MapModS.Instance.LogWarn($"PoolGroup not found for an item");
 
             return PoolGroup.Unknown;
         }
@@ -131,7 +139,7 @@ namespace MapModS.Data
 
                     if (pinD.vanillaPool == PoolGroup.Unknown || pinD.spoilerPool == PoolGroup.Unknown)
                     {
-                        MapModS.Instance.LogWarn($"Location {pinD.name} doesn't seem to have a valid pool.");
+                        MapModS.Instance.LogWarn($"A location doesn't seem to have a valid pool.");
                     }
                 }
 
