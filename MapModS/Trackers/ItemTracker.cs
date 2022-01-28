@@ -1,5 +1,5 @@
 ﻿using HutongGames.PlayMaker;
-using Modding;
+using MapModS.Data;
 using Vasi;
 
 namespace MapModS.Trackers
@@ -76,7 +76,7 @@ namespace MapModS.Trackers
                 case "Mega Zombie Beam Miner (1)":
                 case "Zombie Beam Miner Rematch":
                 case "Giant Fly":
-                    MapModS.LS.ObtainedVanillaItems[self.gameObject.name + GameManager.instance.sceneName] = true;
+                    MapModS.LS.ObtainedVanillaItems[self.gameObject.name + StringUtils.CurrentNormalScene()??""] = true;
                     break;
                 default:
                     break;

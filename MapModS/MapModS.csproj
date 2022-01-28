@@ -83,6 +83,7 @@
     <None Remove="Resources\Pins\pinCharmSlug.png" />
     <None Remove="Resources\Pins\pinCharmYellow.png" />
     <None Remove="Resources\Pins\pinCocoon.png" />
+    <None Remove="Resources\Pins\pinCocoonCyan.png" />
     <None Remove="Resources\Pins\pinCocoonGreen.png" />
     <None Remove="Resources\Pins\pinCocoonRed.png" />
     <None Remove="Resources\Pins\pinCocoonYellow.png" />
@@ -172,6 +173,7 @@
     <None Remove="Resources\Pins\pinStagRed.png" />
     <None Remove="Resources\Pins\pinStagYellow.png" />
     <None Remove="Resources\Pins\pinTotem.png" />
+    <None Remove="Resources\Pins\pinTotemCyan.png" />
     <None Remove="Resources\Pins\pinTotemGreen.png" />
     <None Remove="Resources\Pins\pinTotemRed.png" />
     <None Remove="Resources\Pins\pinTotemYellow.png" />
@@ -234,6 +236,7 @@
     <EmbeddedResource Include="Resources\Pins\pinCharmGreen.png" />
     <EmbeddedResource Include="Resources\Pins\pinCharmRed.png" />
     <EmbeddedResource Include="Resources\Pins\pinCocoon.png" />
+    <EmbeddedResource Include="Resources\Pins\pinCocoonCyan.png" />
     <EmbeddedResource Include="Resources\Pins\pinCocoonGreen.png" />
     <EmbeddedResource Include="Resources\Pins\pinCocoonRed.png" />
     <EmbeddedResource Include="Resources\Pins\pinDreamer.png" />
@@ -291,6 +294,7 @@
     <EmbeddedResource Include="Resources\Pins\pinStagGreen.png" />
     <EmbeddedResource Include="Resources\Pins\pinStagRed.png" />
     <EmbeddedResource Include="Resources\Pins\pinTotem.png" />
+    <EmbeddedResource Include="Resources\Pins\pinTotemCyan.png" />
     <EmbeddedResource Include="Resources\Pins\pinTotemGreen.png" />
     <EmbeddedResource Include="Resources\Pins\pinTotemRed.png" />
     <EmbeddedResource Include="Resources\Pins\pinUnknown.png" />
@@ -330,8 +334,8 @@
       <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>false</Private>
     </Reference>
-    <Reference Include="MenuChanger">
-      <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\MenuChanger\MenuChanger.dll</HintPath>
+    <Reference Include="Benchwarp">
+      <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\Benchwarp\Benchwarp.dll</HintPath>
     </Reference>
     <Reference Include="MMHOOK_Assembly-CSharp">
       <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\MMHOOK_Assembly-CSharp.dll</HintPath>

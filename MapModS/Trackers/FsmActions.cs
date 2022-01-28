@@ -1,4 +1,5 @@
 ﻿using HutongGames.PlayMaker;
+using MapModS.Data;
 using UnityEngine;
 
 namespace MapModS.Trackers
@@ -42,7 +43,7 @@ namespace MapModS.Trackers
 
         public override void OnEnter()
         {
-            string scene = GameManager.instance.sceneName;
+            string scene = StringUtils.CurrentNormalScene()??"";
 
             if (!_oName.Contains("-"))
             {

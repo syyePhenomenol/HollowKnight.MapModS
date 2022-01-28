@@ -74,6 +74,11 @@ namespace MapModS.UI
                     //{
                     //    TransitionText.GetRoute();
                     //}
+
+                    //if (Input.GetKeyDown(KeyCode.B) && MapModS.LS.mapMode == Settings.MapMode.TransitionRando)
+                    //{
+                    //    MapModS.GS.ToggleAllowBenchWarp();
+                    //}
                 }
             }
         }

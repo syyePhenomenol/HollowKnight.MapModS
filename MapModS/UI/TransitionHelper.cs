@@ -1,16 +1,148 @@
-﻿using System;
+﻿using RandomizerCore;
+using RandomizerCore.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RandomizerCore;
-using RandomizerCore.Logic;
-using RandomizerMod.Settings;
 
 namespace MapModS.UI
 {
     public class TransitionHelper
     {
+        private static readonly Dictionary<string, string> itemFixes = new()
+        {
+            { "Ruins1_31[left3]", "ELEGANT" },
+            { "Ruins2_11_b[left1]", "LOVE" }
+        };
+
+        private static readonly Dictionary<string, string> waypointFixes = new()
+        {
+            { "Abyss_01[left1]", "Opened_Dung_Defender_Wall" },
+            //{ "Crossroads_09[left1]", "Defeated_Brooding_Mawlek" },
+            //{ "Crossroads_09[right1]", "Defeated_Brooding_Mawlek" },
+            { "Crossroads_33[left1]", "Opened_Mawlek_Wall" },
+            { "Crossroads_33[right1]", "Opened_Shaman_Pillar" },
+            { "Deepnest_East_03[left2]", "Opened_Lower_Kingdom's_Edge_Wall" },
+            { "Fungus3_02[right1]", "Opened_Archives_Exit_Wall" },
+            { "Fungus3_13[left2]", "Opened_Gardens_Stag_Exit" },
+            { "RestingGrounds_02[bot1]", "Opened_Resting_Grounds_Floor" },
+            { "RestingGrounds_05[right1]", "Opened_Glade_Door" },
+            { "Ruins1_05b[bot1]", "Opened_Waterways_Manhole" },
+            { "Ruins1_31[left2]", "Lever-Shade_Soul" },
+            { "Ruins2_04[door_Ruin_House_03]", "Opened_Emilitia_Door" },
+            { "Ruins2_10[right1]", "Opened_Resting_Grounds_Catacombs_Wall" },
+            { "Ruins2_10b[left1]", "Opened_Pleasure_House_Wall" },
+            { "Waterways_01[top1]", "Opened_Waterways_Manhole" },
+            { "Waterways_07[right1]", "Lever-Dung_Defender" }
+        };
+
+        private static readonly HashSet<string> persistentTransitions = new()
+        {
+            { "Town[door_station]" },
+            { "Town[door_sly]" },
+            { "Town[door_mapper]" },
+            { "Town[door_jiji]" },
+            { "Town[door_bretta]" },
+            { "Town[room_divine]" },
+            { "Town[room_grimm]" },
+            { "Crossroads_09[left1]" },
+            { "Crossroads_09[right1]" }
+        };
+
+        // Pair of bench warp instruction + logically equivalent transition
+        public static Dictionary<string, string> warpTransitions = new()
+        {
+            { "Warp Dirtmouth", "Town[bot1]" },
+            { "Warp Mato", "Room_nailmaster[left1]" },
+            { "Warp Crossroads Hot Springs", "Crossroads_30[left1]" },
+            { "Warp Crossroads Stag", "Crossroads_47[right1]" },
+            { "Warp Salubra", "Crossroads_04[door_charmshop]" },
+            { "Warp Ancestral Mound", "Crossroads_ShamanTemple[left1]" },
+            { "Warp Black Egg Temple", "Room_temple[left1]" },
+            { "Warp Waterfall", "Fungus1_01b[left1]" },
+            { "Warp Stone Sanctuary", "Fungus1_37[left1]" },
+            { "Warp Greenpath Toll", "Fungus1_31[top1]" },
+            { "Warp Greenpath Stag", "Fungus1_16_alt[right1]" },
+            { "Warp Lake of Unn", "Room_Slug_Shrine[left1]" },
+            { "Warp Sheo", "Fungus1_15[door1]" },
+            { "Warp Archives", "Fungus3_archive[left1]" },
+            { "Warp Queens Station", "Fungus2_02[right1]" },
+            { "Warp Leg Eater", "Fungus2_26[left1]" },
+            { "Warp Bretta", "Fungus2_13[left2]" },
+            { "Warp Mantis Village", "Fungus2_31[left1]" },
+            { "Warp Quirrel", "Ruins1_02[top1]" },
+            { "Warp City Toll", "Ruins1_31[left1]" },
+            { "Warp City Storerooms", "Ruins1_29[left1]" },
+            { "Warp Watcher's Spire", "Ruins1_18[right2]" },
+            { "Warp King's Station", "Ruins2_08[left1]" },
+            { "Warp Pleasure House", "Ruins_Bathhouse[door1]" },
+            // Need to handle logic from here in a special manner. Going to leave it out for now...
+            { "Warp Waterways?", "Waterways_02[top1]" },
+            { "Warp Deepnest Hot Springs", "Deepnest_30[left1]" },
+            { "Warp Failed Tramway", "Deepnest_14[left1]" },
+            { "Warp Beast's Den", "Deepnest_Spider_Town[left1]" },
+            { "Warp Ancient Basin Toll", "Abyss_18[right1]" },
+            { "Warp Hidden Station", "Abyss_22[left1]" },
+            { "Warp Oro", "Deepnest_East_06[door1]" },
+            { "Warp Kingdom's Edge Camp", "Deepnest_East_13[bot1]" },
+            // Probably needs its own special waypoint too, if player falls in from top and has no claw or wings
+            { "Warp Colosseum?", "Room_Colosseum_02[top1]" },
+            { "Warp Hive", "Hive_01[right2]" },
+            { "Warp Crystal Peak Dark Room", "Mines_29[left1]" },
+            { "Warp Crystal Guardian", "Mines_18[left1]" },
+            { "Warp Resting Grounds Stag", "RestingGrounds_09[left1]" },
+            { "Warp Grey Mourner", "RestingGrounds_12[door_Mansion]" },
+            { "Warp Queen's Gardens Cornifer", "Fungus1_24[left1]" },
+            { "Warp Queen's Gardens Toll", "Fungus3_50[right1]" },
+            { "Warp Queen's Gardens Stag", "Fungus3_40[right1]" },
+            // Special waypoint needed
+            { "Warp White Palace Entrance?", "White_Palace_01[left1]" },
+            { "Warp White Palace Atrium", "White_Palace_03_hub[right1]" },
+            { "Warp White Palace Balcony", "White_Palace_06[top1]" },
+            { "Warp Upper Tram -> Exit Left", "Crossroads_46[left1]" },
+            { "Warp Upper Tram -> Exit Right", "Crossroads_46b[right1]" },
+            { "Warp Lower Tram -> Exit Left", "Abyss_03_b[left1]" },
+            { "Warp Lower Tram -> Exit Middle", "Abyss_03[top1]" },
+            { "Warp Lower Tram -> Exit Right", "Abyss_03_c[right1]" }
+        };
+
+        public static Dictionary<string, Tuple<string, string>> stagTransitions = new()
+        {
+            { "Stag Dirtmouth", new("Dirtmouth_Stag", "Room_Town_Stag_Station[left1]") },
+            { "Stag Crossroads", new("Crossroads_Stag", "Crossroads_47[right1]") },
+            { "Stag Greenpath", new("Greenpath_Stag", "Fungus1_16_alt[right1]") },
+            { "Stag Queen's Station", new("Queen's_Station_Stag", "Fungus2_02[right1]") },
+            { "Stag Distant Village", new("Distant_Village_Stag", "Deepnest_09[left1]") },
+            { "Stag Hidden Station", new("Hidden_Station_Stag", "Abyss_22[left1]") },
+            { "Stag City Storerooms", new("City_Storerooms_Stag", "Ruins1_29[left1]") },
+            { "Stag King's Station", new("King's_Station_Stag", "Ruins2_08[left1]") },
+            { "Stag Resting Grounds", new("Resting_Grounds_Stag", "RestingGrounds_09[left1]") },
+            { "Stag Queen's Gardens", new("Queen's_Gardens_Stag", "Fungus3_40[right1]") },
+            { "Stag Stag Nest", new("Stag_Nest_Stag", "Cliffs_03[right1]") }
+        };
+
+        // Tuple is (waypoint requirement, scene requirement, adjacent transition)
+        public static Dictionary<string, Tuple<string, string, string>> elevatorTransitions = new()
+        {
+            { "Left Elevator Up", new("Left_Elevator", "Crossroads_49b", "Crossroads_49[right1]") },
+            { "Left Elevator Down", new("Left_Elevator", "Crossroads_49", "Crossroads_49b[right1]") },
+            { "Right Elevator Up", new("Right_Elevator", "Ruins2_10b", "Ruins2_10[left1]") },
+            { "Right Elevator Down", new("Right_Elevator", "Ruins2_10", "Ruins2_10b[right2]") }
+        };
+
+        public static Dictionary<string, Tuple<string, string>> tramTransitions = new()
+        {
+            { "Upper Tram -> Exit Left", new("Upper_Tram", "Crossroads_46[left1]") },
+            { "Upper Tram -> Exit Right", new("Upper_Tram", "Crossroads_46b[right1]") },
+            { "Lower Tram -> Exit Left", new("Lower_Tram", "Abyss_03_b[left1]") },
+            { "Lower Tram -> Exit Middle", new("Lower_Tram", "Abyss_03[top1]") },
+            { "Lower Tram -> Exit Right", new("Lower_Tram", "Abyss_03_c[right1]") }
+        };
+
+        //public static Dictionary<string, Tuple<string, string, string>> otherTransitions = new()
+        //{
+        //    { "Dream Nail Kingsmould", new("Awoken_Dream_Nail", "Abyss_05", "White_Palace_11[door2]") },
+        //};
+
         public TransitionHelper()
         {
             tt = new();
@@ -19,33 +151,31 @@ namespace MapModS.UI
         // Code based on homothety's implementation of RandomizerMod's TrackerData
         class TransitionTracker
         {
-            public readonly HashSet<int> obtainedItems = RandomizerMod.RandomizerMod.RS.TrackerData.obtainedItems;
-            public readonly HashSet<int> outOfLogicObtainedItems = RandomizerMod.RandomizerMod.RS.TrackerData.outOfLogicObtainedItems;
+            public readonly HashSet<int> addedItems = new();
+            public readonly HashSet<int> addedTerms = new();
 
-            public LogicManager lm = RandomizerMod.RandomizerMod.RS.Context.LM;
-            public RandoContext ctx = RandomizerMod.RandomizerMod.RS.Context;
             public ProgressionManager pm;
             private readonly MainUpdater mu;
 
             public TransitionTracker()
             {
-                pm = new(lm, ctx);
+                pm = new(RandomizerMod.RandomizerMod.RS.Context.LM, RandomizerMod.RandomizerMod.RS.Context);
 
-                mu = new(lm);
+                mu = new(pm.lm);
 
-                mu.AddEntries(lm.Waypoints.Select(w => new DelegateUpdateEntry(w, pm => { pm.Add(w); }, lm)));
+                mu.AddEntries(pm.lm.Waypoints.Select(w => new DelegateUpdateEntry(w, pm => { pm.Add(w); }, pm.lm)));
 
-                if (ctx.transitionPlacements != null)
+                if (pm.ctx.transitionPlacements != null)
                 {
-                    mu.AddEntries(ctx.transitionPlacements.Select((p, id) => new DelegateUpdateEntry(p.source, pm =>
+                    mu.AddEntries(pm.ctx.transitionPlacements.Select((p, id) => new DelegateUpdateEntry(p.source, pm =>
                     {
-                        (RandoTransition source, RandoTransition target) = ctx.transitionPlacements[id];
+                        (RandoTransition source, RandoTransition target) = pm.ctx.transitionPlacements[id];
 
                         if (!pm.Has(source.lt.term))
                         {
                             pm.Add(source);
                         }
-                    }, lm)));
+                    }, pm.lm)));
                 }
 
                 mu.Hook(pm);
@@ -53,9 +183,91 @@ namespace MapModS.UI
 
             public void GetNewItems()
             {
-                // Get new progression since last time Setup() was called
-                List<RandoItem> items = obtainedItems.Where(i => !outOfLogicObtainedItems.Contains(i)).Select(i => ctx.itemPlacements[i].item).ToList();
-                pm.Add(items);
+                // Get new progression since last time GetNewItems() was called
+                foreach (int id in RandomizerMod.RandomizerMod.RS.TrackerData.obtainedItems.Union(RandomizerMod.RandomizerMod.RS.TrackerData.outOfLogicObtainedItems))
+                {
+                    if (!addedItems.Contains(id))
+                    {
+                        // MapModS.Instance.Log("Adding " + pm.ctx.itemPlacements[id].item.Name + " with id " + id);
+                        addedItems.Add(id);
+                        pm.Add(pm.ctx.itemPlacements[id].item);
+                    }
+                }
+
+                // Emulate a transition being possibly available via having the required item
+                foreach (KeyValuePair<string, string> pair in itemFixes)
+                {
+                    int keyId = pm.lm.TermLookup[pair.Key];
+                    int ValueId = pm.lm.TermLookup[pair.Value];
+
+                    if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Has(keyId)
+                        && !addedItems.Contains(ValueId))
+                    {
+                        // MapModS.Instance.Log("Has " + pair.Value);
+                        addedItems.Add(ValueId);
+                        pm.Add(pm.ctx.itemPlacements[keyId].item);
+                    }
+                }
+
+                // Persistent waypoints should always be added
+                foreach (LogicWaypoint waypoint in pm.lm.Waypoints)
+                {
+                    int id = waypoint.term.Id;
+
+                    if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Has(id)
+                        && (waypoint.Name.Contains("Rescued_")
+                        || waypoint.Name.Contains("Defeated_")
+                        || waypoint.Name.Contains("Lever-")
+                        || waypoint.Name.Contains("Completed_")
+                        || waypoint.Name.Contains("Warp-")
+                        || waypoint.Name.Contains("_Tram")
+                        || waypoint.Name.Contains("_Elevator")
+                        || waypoint.Name.Contains("Grimmchild_Upgrade")
+                        || waypoint.Name.Contains("Lit_")
+                        || waypoint.Name.Contains("_Lit")
+                        || waypoint.Name.Contains("Opened_")
+                        || waypoint.Name.Contains("_Opened")
+                        || waypoint.Name.Contains("Broke_")))
+                    {
+                        if (!addedTerms.Contains(id))
+                        {
+                            // MapModS.Instance.Log("Has " + waypoint.Name + " with id " + waypoint.term.Id);
+
+                            addedTerms.Add(id);
+                            pm.Add(waypoint);
+                        }
+                    }
+                }
+
+                // Emulate a transition being possibly available via having the required waypoint
+                foreach (KeyValuePair<string, string> pair in waypointFixes)
+                {
+                    Term waypointTerm = pm.lm.TermLookup[pair.Value];
+
+                    if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Get(pair.Key) > 0
+                        && !addedTerms.Contains(waypointTerm.Id))
+                    {
+                        // MapModS.Instance.Log("Adding " + pair.Value + " with id " + waypointTerm.Id);
+
+                        addedTerms.Add(waypointTerm.Id);
+                        pm.Add(new LogicWaypoint(waypointTerm, pm.lm.LogicLookup[pair.Value]));
+                    }
+                }
+
+                // Persistent transitions should always be added
+                foreach (string transition in persistentTransitions)
+                {
+                    int id = pm.lm.TermLookup[transition];
+
+                    if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Has(id)
+                        && !addedTerms.Contains(id))
+                    {
+                        //MapModS.Instance.Log("Persistent transition: " + transition);
+
+                        addedTerms.Add(id);
+                        pm.Add(pm.lm.TransitionLookup[transition]);
+                    }
+                }
             }
 
             public class DelegateUpdateEntry : UpdateEntry
@@ -96,32 +308,70 @@ namespace MapModS.UI
             }
         }
 
-        private static string GetScene(string transition)
+        public static string GetScene(string transition)
         {
+            if (warpTransitions.ContainsKey(transition))
+            {
+                return GetScene(warpTransitions[transition]);
+            }
+
+            // Handle in a special way
+            if (stagTransitions.ContainsKey(transition)) return null;
+
+            if (elevatorTransitions.ContainsKey(transition))
+            {
+                return elevatorTransitions[transition].Item2;
+            }
+
+            // Handle in a special way
+            if (tramTransitions.ContainsKey(transition)) return null;
+
             return RandomizerMod.RandomizerData.Data.GetTransitionDef(transition).SceneName;
         }
 
-        private static string GetAdjacentTransition(string source)
+        public static string GetAdjacentTransition(string source)
         {
             if (transitionPlacementsDict.ContainsKey(source))
             {
                 return transitionPlacementsDict[source];
             }
 
+            if (warpTransitions.ContainsKey(source))
+            {
+                return warpTransitions[source];
+            }
+
+            if (stagTransitions.ContainsKey(source))
+            {
+                return stagTransitions[source].Item2;
+            }
+
+            if (elevatorTransitions.ContainsKey(source))
+            {
+                return elevatorTransitions[source].Item3;
+            }
+
+            if (tramTransitions.ContainsKey(source))
+            {
+                return tramTransitions[source].Item2;
+            }
+
             RandomizerMod.RandomizerData.TransitionDef transitionDef = RandomizerMod.RandomizerData.Data.GetTransitionDef(source);
 
             if (transitionDef == null) return null;
 
-            // If it's not in TransitionPlacements, it's the vanilla target
+            // If it's not in TransitionPlacements, it's the vanilla target.
+            // NOTE that this can be null
             return transitionDef.VanillaTarget;
         }
 
         class SearchNode
         {
-            public SearchNode(string scene, List<string> route)
+            public SearchNode(string scene, List<string> route, string lat)
             {
                 currentScene = scene;
                 currentRoute = new(route);
+                lastAdjacentTransition = lat;
             }
 
             public void PrintRoute()
@@ -138,6 +388,7 @@ namespace MapModS.UI
 
             public string currentScene;
             public List<string> currentRoute = new();
+            public string lastAdjacentTransition;
         }
 
         private readonly TransitionTracker tt;
@@ -147,35 +398,77 @@ namespace MapModS.UI
         // Calculates the shortest route (by number of transitions) from startScene to finalScene.
         // The search space will be purely limited to rooms that have been visited + unreached reachable locations
         // A ProgressionManager is used to track logic while traversing through the search space
-        public List<string> ShortestRoute(string startScene, string finalScene, HashSet<string> rejectedTransitions)
-        {   
+        public List<string> ShortestRoute(string startScene, string finalScene, HashSet<KeyValuePair<string, string>> rejectedTransitionPairs, bool allowBenchWarp)
+        {
+            if (!warpTransitions.ContainsKey("Warp Start"))
+            {
+                warpTransitions.Add("Warp Start", RandomizerMod.RandomizerData.Data.GetStartDef(RandomizerMod.RandomizerMod.RS.GenerationSettings.StartLocationSettings.StartLocation).Transition);
+            }
+
             transitionPlacementsDict = RandomizerMod.RandomizerMod.RS.Context.transitionPlacements.ToDictionary(tp => tp.source.Name, tp => tp.target.Name);
 
             HashSet<string> transitionSpace = new();
             Dictionary<string, string> startTransitionPlacements = new();
-            
+
             // Get all relevant transitions
             foreach (KeyValuePair<string, LogicTransition> transitionEntry in RandomizerMod.RandomizerMod.RS.TrackerData.lm.TransitionLookup)
             {
+                string scene = GetScene(transitionEntry.Key);
+
+                if (RandomizerMod.RandomizerMod.RS.TrackerData.uncheckedReachableTransitions.Contains(transitionEntry.Key)) continue;
+
+                if (MapModS.LS.mapMode == Settings.MapMode.TransitionRandoAlt
+                    && !PlayerData.instance.scenesVisited.Contains(scene)) continue;
+
                 if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Has(transitionEntry.Value.term.Id))
                 {
+                    //MapModS.Instance.Log("Search space includes: " + transitionEntry.Key);
                     transitionSpace.Add(transitionEntry.Key);
                 }
             }
 
-            // Remove rejected start transitions
-            if (rejectedTransitions != null)
+            // Add stag transitions
+            foreach (KeyValuePair<string, Tuple<string, string>> stagTransition in stagTransitions)
             {
-                foreach (var key in transitionSpace.Intersect(rejectedTransitions).ToList())
+                string adjacentScene = GetScene(stagTransition.Value.Item2);
+
+                if (allowBenchWarp
+                    && Benchwarp.Benchwarp.LS.visitedBenchScenes.ContainsKey(adjacentScene)
+                    && Benchwarp.Benchwarp.LS.visitedBenchScenes[adjacentScene]) continue;
+
+                if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Get(stagTransition.Value.Item1) > 0)
                 {
-                    transitionSpace.Remove(key);
+                    //MapModS.Instance.Log("Adding " + stagTransition.Key);
+                    transitionSpace.Add(stagTransition.Key);
                 }
             }
 
-            // Remove unchecked reachable transitions to avoid spoilers
-            foreach (var transition in RandomizerMod.RandomizerMod.RS.TrackerData.uncheckedReachableTransitions)
+            // Add elevator transitions
+            foreach (KeyValuePair<string, Tuple<string, string, string>> elevatorTransition in elevatorTransitions)
             {
-                transitionSpace.Remove(transition);
+                if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Get(elevatorTransition.Value.Item1) > 0)
+                {
+                    //MapModS.Instance.Log("Adding " + elevatorTransition.Key);
+                    transitionSpace.Add(elevatorTransition.Key);
+                }
+            }
+
+            // Add tram transitions
+            foreach (KeyValuePair<string, Tuple<string, string>> tramTransition in tramTransitions)
+            {
+                if (allowBenchWarp
+                    && ((tramTransition.Key.StartsWith("Upper Tram")
+                            && Benchwarp.Benchwarp.LS.visitedBenchScenes.ContainsKey("Room_Tram_RG")
+                            && Benchwarp.Benchwarp.LS.visitedBenchScenes["Room_Tram_RG"])
+                        || (tramTransition.Key.StartsWith("Lower Tram")
+                            && Benchwarp.Benchwarp.LS.visitedBenchScenes.ContainsKey("Room_Tram")
+                            && Benchwarp.Benchwarp.LS.visitedBenchScenes["Room_Tram"]))) continue;
+
+                if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Get(tramTransition.Value.Item1) > 0)
+                {
+                    //MapModS.Instance.Log("Adding " + tramTransition.Key);
+                    transitionSpace.Add(tramTransition.Key);
+                }
             }
 
             // Just in case
@@ -185,17 +478,11 @@ namespace MapModS.UI
                 return new();
             }
 
+            //MapModS.Instance.Log($"Start scene: {startScene}");
+            //MapModS.Instance.Log($"Final scene: {finalScene}");
+
             // Just in case
             transitionSpace.Remove(null);
-
-            // Get starting transitions
-            foreach (string transition in transitionSpace)
-            {
-                if (GetScene(transition) == startScene)
-                {
-                    startTransitionPlacements.Add(transition, GetAdjacentTransition(transition));
-                }
-            }
 
             tt.GetNewItems();
 
@@ -203,12 +490,52 @@ namespace MapModS.UI
             HashSet<string> visitedTransitions = new();
             LinkedList<SearchNode> queue = new();
 
-            foreach (KeyValuePair<string, string> tp in startTransitionPlacements)
+            // Add initial bench warp transitions if setting is enabled
+            if (allowBenchWarp)
             {
-                if (tp.Value == null) continue;
+                foreach (KeyValuePair<string, string> warpPair in warpTransitions)
+                {
+                    string scene = GetScene(warpPair.Value);
 
-                SearchNode startNode = new(GetScene(tp.Value), new() { tp.Key });
-                queue.AddLast(startNode);
+                    // Remove the single transition rejected routes
+                    if (rejectedTransitionPairs.Any(p => p.Key == warpPair.Key && p.Value == warpPair.Key)) continue;
+
+                    if ((Benchwarp.Benchwarp.LS.visitedBenchScenes.ContainsKey(scene) &&
+                        Benchwarp.Benchwarp.LS.visitedBenchScenes[scene])
+                        || (warpPair.Key.StartsWith("Warp Upper Tram")
+                            && Benchwarp.Benchwarp.LS.visitedBenchScenes.ContainsKey("Room_Tram_RG")
+                            && Benchwarp.Benchwarp.LS.visitedBenchScenes["Room_Tram_RG"])
+                        || (warpPair.Key.StartsWith("Warp Lower Tram")
+                            && Benchwarp.Benchwarp.LS.visitedBenchScenes.ContainsKey("Room_Tram")
+                            && Benchwarp.Benchwarp.LS.visitedBenchScenes["Room_Tram"])
+                        || (warpPair.Key == "Warp Start"))
+                    {
+                        SearchNode startNode = new(scene, new() { warpPair.Key }, warpPair.Value);
+                        queue.AddLast(startNode);
+                    }
+                }
+            }
+
+            // Get other starting transitions
+            foreach (string transition in transitionSpace)
+            {
+                if (GetScene(transition) == startScene
+                    || (stagTransitions.ContainsKey(transition)
+                        && stagTransitions.Any(t => GetScene(t.Value.Item2) == startScene))
+                    || (transition.StartsWith("Upper Tram") && startScene.StartsWith("Crossroads_46"))
+                    || (transition.StartsWith("Lower Tram") && startScene.StartsWith("Abyss_03")))
+                {
+                    string target = GetAdjacentTransition(transition);
+
+                    if (target == null) continue;
+
+                    // Remove the single transition rejected routes
+                    if (rejectedTransitionPairs.Any(p => p.Key == transition && p.Value == transition)) continue;
+
+                    SearchNode startNode = new(GetScene(target), new() { transition }, target);
+                    queue.AddLast(startNode);
+                    visitedTransitions.Add(transition);
+                }
             }
 
             while (queue.Any())
@@ -220,32 +547,30 @@ namespace MapModS.UI
 
                 //currentNode.PrintRoute();
 
-                if (currentNode.currentScene == finalScene)
-                {
-                    return currentNode.currentRoute;
-                }
+                if (currentNode.currentScene == finalScene) return currentNode.currentRoute;
 
                 foreach (string transition in transitionSpace)
                 {
-                    if (GetScene(transition) != currentNode.currentScene) continue;
+                    if (GetScene(transition) != currentNode.currentScene
+                        && !stagTransitions.ContainsKey(transition)
+                        && !elevatorTransitions.ContainsKey(transition)
+                        && !tramTransitions.ContainsKey(transition)) continue;
 
                     tt.pm.StartTemp();
 
-                    foreach (string routeTransition in currentNode.currentRoute)
-                    {
-                        tt.pm.Add(tt.lm.GetTransition(routeTransition));
-                    }
-
                     if (currentNode.currentRoute.Count != 0)
                     {
-                        tt.pm.Add(tt.lm.GetTransition(GetAdjacentTransition(currentNode.currentRoute.Last())));
+                        tt.pm.Add(tt.pm.lm.GetTransition(currentNode.lastAdjacentTransition));
                     }
 
                     if (GetAdjacentTransition(transition) != null
                         && !visitedTransitions.Contains(transition)
-                        && tt.lm.TransitionLookup[transition].CanGet(tt.pm))
+                        && !rejectedTransitionPairs.Any(pair => pair.Key == currentNode.currentRoute.First() && pair.Value == transition)
+                        && ((tt.pm.lm.TransitionLookup.ContainsKey(transition)
+                                && tt.pm.lm.TransitionLookup[transition].CanGet(tt.pm))
+                            || VerifySpecialTransition(transition, currentNode.currentScene)))
                     {
-                        SearchNode newNode = new(GetScene(GetAdjacentTransition(transition)), currentNode.currentRoute);
+                        SearchNode newNode = new(GetScene(GetAdjacentTransition(transition)), currentNode.currentRoute, GetAdjacentTransition(transition));
                         newNode.currentRoute.Add(transition);
                         visitedTransitions.Add(transition);
                         queue.AddLast(newNode);
@@ -257,6 +582,30 @@ namespace MapModS.UI
 
             // No route found, or the parameters are invalid
             return new();
+        }
+
+        public static bool IsSpecialTransition(string transition)
+        {
+            return transition.StartsWith("Warp")
+                || transition.StartsWith("Stag")
+                || transition.StartsWith("Left Elevator")
+                || transition.StartsWith("Right Elevator")
+                || transition.StartsWith("Upper Tram")
+                || transition.StartsWith("Lower Tram");
+        }
+
+        // Checks if the player has transitioned into a scene with the special transition
+        public static bool VerifySpecialTransition(string transition, string currentScene)
+        {
+            if (transition.StartsWith("Stag") && stagTransitions.Any(t => t.Value.Item2.StartsWith(currentScene))) return true;
+
+            if ((transition.StartsWith("Left Elevator") || transition.StartsWith("Right Elevator"))
+                && currentScene == elevatorTransitions[transition].Item2) return true;
+
+            if ((transition.StartsWith("Upper Tram") && currentScene.StartsWith("Crossroads_46"))
+                || (transition.StartsWith("Lower Tram") && currentScene.StartsWith("Abyss_03"))) return true;
+
+            return false;
         }
     }
 }

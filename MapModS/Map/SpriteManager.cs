@@ -20,7 +20,8 @@ namespace MapModS.Map
     {
         Normal,
         Previewed,
-        OutOfLogic
+        OutOfLogic,
+        Persistent
     }
 
     internal static class SpriteManager
@@ -122,6 +123,9 @@ namespace MapModS.Map
                     break;
                 case PinBorderColor.OutOfLogic:
                     spriteName += "Red";
+                    break;
+                case PinBorderColor.Persistent:
+                    spriteName += "Cyan";
                     break;
             }
 

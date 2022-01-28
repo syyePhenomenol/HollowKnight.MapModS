@@ -151,7 +151,13 @@ namespace MapModS.Map
                         || areaObj.name == "Dreamer Pins"
                         || areaObj.name == "Map Markers"
                         || areaObj.name == "WHITE_PALACE"
-                        || areaObj.name == "GODS_GLORY") continue;
+                        || areaObj.name == "GODS_GLORY"
+                        || areaObj.name == "MMS Custom Map Rooms") continue;
+
+                //if (areaObj.name == "MMS Custom Map Rooms")
+                //{
+                //    areaObj.gameObject.SetActive(false);
+                //}
 
                 foreach (Transform roomObj in areaObj.transform)
                 {
@@ -374,7 +380,10 @@ namespace MapModS.Map
 
             if (boolName.StartsWith("MMS_"))
             {
-                if (MapModS.LS.ModEnabled && (MapModS.LS.mapMode == MapMode.FullMap || MapModS.LS.mapMode == MapMode.TransitionRando))
+                if (MapModS.LS.ModEnabled &&
+                    (MapModS.LS.mapMode == MapMode.FullMap
+                        || MapModS.LS.mapMode == MapMode.TransitionRando
+                        || MapModS.LS.mapMode == MapMode.TransitionRandoAlt))
                 {
                     return true;
                 }

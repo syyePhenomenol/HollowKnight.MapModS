@@ -2,7 +2,7 @@
 using MapModS.Data;
 using MapModS.Settings;
 using MapModS.Trackers;
-using MapModS.UI;
+using Modding;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +14,8 @@ namespace MapModS.Map
         public static GameObject goCustomPins = null;
         public static PinsCustom CustomPins => goCustomPins?.GetComponent<PinsCustom>();
 
+        public static GameObject goExtraRooms = null;
+
         public static void Hook()
         {
             On.GameManager.SetGameMap += GameManager_SetGameMap;
@@ -21,6 +23,7 @@ namespace MapModS.Map
             On.GameMap.SetupMapMarkers += GameMap_SetupMapMarkers;
             On.GameMap.DisableMarkers += GameMap_DisableMarkers;
             On.GameManager.UpdateGameMap += GameManager_UpdateGameMap;
+            ModHooks.LanguageGetHook += OnLanguageGetHook;
         }
 
         public static void Unhook()
@@ -30,6 +33,17 @@ namespace MapModS.Map
             On.GameMap.SetupMapMarkers -= GameMap_SetupMapMarkers;
             On.GameMap.DisableMarkers -= GameMap_DisableMarkers;
             On.GameManager.UpdateGameMap -= GameManager_UpdateGameMap;
+            ModHooks.LanguageGetHook -= OnLanguageGetHook;
+        }
+
+        private static string OnLanguageGetHook(string key, string sheet, string orig)
+        {
+            if (sheet == "MMS" && Transition.nonMapScenes.Contains(key))
+            {
+                return key;
+            }
+
+            return orig;
         }
 
         // The function that is called every time after a new GameMap is created (once per save load)
@@ -46,6 +60,7 @@ namespace MapModS.Map
             if (RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode != RandomizerMod.Settings.TransitionSettings.TransitionMode.None)
             {
                 MapModS.LS.mapMode = MapMode.TransitionRando;
+                goExtraRooms = Transition.CreateExtraMapRooms(gameMap);
             }
 
             if (goCustomPins != null)
@@ -76,7 +91,10 @@ namespace MapModS.Map
             orig(self);
 
             // Easiest way to force AdditionalMaps custom areas to show
-            if (MapModS.LS.ModEnabled && (MapModS.LS.mapMode == MapMode.FullMap || MapModS.LS.mapMode == MapMode.TransitionRando))
+            if (MapModS.LS.ModEnabled
+                && (MapModS.LS.mapMode == MapMode.FullMap
+                    || MapModS.LS.mapMode == MapMode.TransitionRando
+                    || MapModS.LS.mapMode == MapMode.TransitionRandoAlt))
             {
                 foreach (Transform child in self.transform)
                 {
@@ -98,14 +116,25 @@ namespace MapModS.Map
 
             if (!MapModS.LS.ModEnabled || goCustomPins == null) return;
 
-            CustomPins.gameObject.SetActive(true);
+            goCustomPins.SetActive(true);
+
+            // For debugging purposes
+            //if (goExtraRooms != null)
+            //{
+            //    goExtraRooms.SetActive(true);
+            //}
         }
 
         private static void GameMap_DisableMarkers(On.GameMap.orig_DisableMarkers orig, GameMap self)
         {
             if (goCustomPins != null)
             {
-                CustomPins.gameObject.SetActive(false);
+                goCustomPins.SetActive(false);
+            }
+
+            if (goExtraRooms != null)
+            {
+                goExtraRooms.SetActive(false);
             }
 
             orig(self);
@@ -131,9 +160,21 @@ namespace MapModS.Map
                 FullMap.PurgeMap();
 
                 if (RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode != RandomizerMod.Settings.TransitionSettings.TransitionMode.None
-                    && MapModS.LS.ModEnabled && MapModS.LS.mapMode == MapMode.TransitionRando)
+                    && MapModS.LS.ModEnabled)
                 {
-                    transitionPinScenes = Transition.SetupMapTransitionMode(gameMap);
+                    if (MapModS.LS.mapMode == MapMode.TransitionRando)
+                    {
+                        transitionPinScenes = Transition.SetupMapTransitionMode(gameMap, false);
+                    }
+                    else if (MapModS.LS.mapMode == MapMode.TransitionRandoAlt)
+                    {
+                        transitionPinScenes = Transition.SetupMapTransitionMode(gameMap, true);
+                    }
+                    else
+                    {
+                        Transition.ResetMapColors(gameMap);
+                        gameMap.SetupMap();
+                    }
                 }
                 else
                 {

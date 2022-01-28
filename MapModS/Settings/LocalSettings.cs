@@ -11,7 +11,8 @@ namespace MapModS.Settings
         FullMap,
         AllPins,
         PinsOverMap,
-        TransitionRando
+        TransitionRando,
+        TransitionRandoAlt
     }
 
     [Serializable]
@@ -76,6 +77,18 @@ namespace MapModS.Settings
                     break;
 
                 case MapMode.TransitionRando:
+                    if (RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode == RandomizerMod.Settings.TransitionSettings.TransitionMode.MapAreaRandomizer
+                        || RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode == RandomizerMod.Settings.TransitionSettings.TransitionMode.FullAreaRandomizer)
+                    {
+                        mapMode = MapMode.TransitionRandoAlt;
+                    }
+                    else
+                    {
+                        mapMode = MapMode.FullMap;
+                    }
+                    break;
+
+                case MapMode.TransitionRandoAlt:
                     mapMode = MapMode.FullMap;
                     break;
             }

@@ -3,11 +3,9 @@ using MapModS.Map;
 using MapModS.Settings;
 using MapModS.Shop;
 using MapModS.Trackers;
-using MenuChanger;
 using MapModS.UI;
 using Modding;
 using System;
-using System.Reflection;
 using System.Collections;
 
 namespace MapModS
@@ -16,7 +14,7 @@ namespace MapModS
     {
         public static MapModS Instance;
 
-        private readonly string _version = "2.0.2";
+        private readonly string _version = "2.1.0";
 
         public override string GetVersion() => _version;
 

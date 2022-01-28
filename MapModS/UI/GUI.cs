@@ -44,7 +44,7 @@ namespace MapModS.UI
         private static void GameMap_WorldMap (On.GameMap.orig_WorldMap orig, GameMap self)
         {
             orig(self);
-            TransitionText.ShowWorldMap(self);
+            TransitionText.ShowWorldMap();
         }
 
         private static void SetupMapMarkers(On.GameMap.orig_SetupMapMarkers orig, GameMap self)
@@ -63,6 +63,8 @@ namespace MapModS.UI
 
         private static void HandleSceneChanges(Scene from, Scene to)
         {
+            //MapModS.Instance.Log($"{from.name} to {to.name}");
+
             if (GameManager.instance.sceneName != to.name) return;
 
             TransitionText.RemoveTraversedTransition(from.name, to.name);
