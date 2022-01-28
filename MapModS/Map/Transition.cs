@@ -248,15 +248,14 @@ namespace MapModS.Map
 
                     if (isAlt)
                     {
-                        if (visitedScenes.Contains(emd.sceneName))
-                        {
-                            color = roomColor[RoomState.Default];
-                            active = true;
-                        }
-
                         if (outOfLogicScenes.Contains(emd.sceneName))
                         {
                             color = roomColor[RoomState.OutOfLogic];
+                        }
+
+                        if (visitedScenes.Contains(emd.sceneName))
+                        {
+                            color = roomColor[RoomState.Default];
                             active = true;
                         }
                     }

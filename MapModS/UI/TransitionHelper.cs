@@ -152,6 +152,7 @@ namespace MapModS.UI
         class TransitionTracker
         {
             public readonly HashSet<int> addedItems = new();
+            public readonly HashSet<int> addedTerms = new();
 
             public ProgressionManager pm;
             private readonly MainUpdater mu;
@@ -180,24 +181,14 @@ namespace MapModS.UI
                 mu.Hook(pm);
             }
 
-            //public void Unhook()
-            //{
-            //    pm.AfterAddItem -= mu.EnqueueUpdates;
-            //    pm.AfterAddRange -= mu.EnqueueUpdates;
-            //    pm.AfterEndTemp -= mu.OnEndTemp;
-            //    pm.OnRemove -= mu.OnRemove;
-            //    pm.AfterRemove -= mu.DoRecalculate;
-            //}
-
             public void GetNewItems()
             {
-                //Unhook();
-
                 // Get new progression since last time GetNewItems() was called
                 foreach (int id in RandomizerMod.RandomizerMod.RS.TrackerData.obtainedItems.Union(RandomizerMod.RandomizerMod.RS.TrackerData.outOfLogicObtainedItems))
                 {
                     if (!addedItems.Contains(id))
                     {
+                        // MapModS.Instance.Log("Adding " + pm.ctx.itemPlacements[id].item.Name + " with id " + id);
                         addedItems.Add(id);
                         pm.Add(pm.ctx.itemPlacements[id].item);
                     }
@@ -212,7 +203,7 @@ namespace MapModS.UI
                     if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Has(keyId)
                         && !addedItems.Contains(ValueId))
                     {
-                        //MapModS.Instance.Log("Has " + pair.Value);
+                        // MapModS.Instance.Log("Has " + pair.Value);
                         addedItems.Add(ValueId);
                         pm.Add(pm.ctx.itemPlacements[keyId].item);
                     }
@@ -238,12 +229,12 @@ namespace MapModS.UI
                         || waypoint.Name.Contains("_Opened")
                         || waypoint.Name.Contains("Broke_")))
                     {
-                        if (!addedItems.Contains(id))
+                        if (!addedTerms.Contains(id))
                         {
-                            //MapModS.Instance.Log("Has " + waypoint.Name + " with id " + waypoint.term.Id);
+                            // MapModS.Instance.Log("Has " + waypoint.Name + " with id " + waypoint.term.Id);
 
-                            addedItems.Add(id);
-                            pm.Incr(id, 1);
+                            addedTerms.Add(id);
+                            pm.Add(waypoint);
                         }
                     }
                 }
@@ -251,14 +242,15 @@ namespace MapModS.UI
                 // Emulate a transition being possibly available via having the required waypoint
                 foreach (KeyValuePair<string, string> pair in waypointFixes)
                 {
-                    int KeyId = pm.lm.TermLookup[pair.Key];
-                    int ValueId = pm.lm.TermLookup[pair.Value];
+                    Term waypointTerm = pm.lm.TermLookup[pair.Value];
 
-                    if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Has(KeyId)
-                        && !addedItems.Contains(ValueId))
+                    if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Get(pair.Key) > 0
+                        && !addedTerms.Contains(waypointTerm.Id))
                     {
-                        addedItems.Add(ValueId);
-                        pm.Incr(pair.Key, 1);
+                        // MapModS.Instance.Log("Adding " + pair.Value + " with id " + waypointTerm.Id);
+
+                        addedTerms.Add(waypointTerm.Id);
+                        pm.Add(new LogicWaypoint(waypointTerm, pm.lm.LogicLookup[pair.Value]));
                     }
                 }
 
@@ -268,16 +260,14 @@ namespace MapModS.UI
                     int id = pm.lm.TermLookup[transition];
 
                     if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Has(id)
-                        && !addedItems.Contains(id))
+                        && !addedTerms.Contains(id))
                     {
                         //MapModS.Instance.Log("Persistent transition: " + transition);
 
-                        addedItems.Add(id);
+                        addedTerms.Add(id);
                         pm.Add(pm.lm.TransitionLookup[transition]);
                     }
                 }
-
-                //mu.Hook(pm);
             }
 
             public class DelegateUpdateEntry : UpdateEntry
