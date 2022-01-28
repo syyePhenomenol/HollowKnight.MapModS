@@ -3,11 +3,9 @@ using MapModS.Map;
 using MapModS.Settings;
 using MapModS.Shop;
 using MapModS.Trackers;
-using MenuChanger;
 using MapModS.UI;
 using Modding;
 using System;
-using System.Reflection;
 using System.Collections;
 
 namespace MapModS

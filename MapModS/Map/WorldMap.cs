@@ -2,7 +2,6 @@
 using MapModS.Data;
 using MapModS.Settings;
 using MapModS.Trackers;
-using MapModS.UI;
 using Modding;
 using System;
 using System.Collections.Generic;

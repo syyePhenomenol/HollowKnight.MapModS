@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MapModS.Data
+﻿namespace MapModS.Data
 {
     public static class StringUtils
     {
@@ -26,6 +20,8 @@ namespace MapModS.Data
 
         public static string RemoveBossSuffix(string scene)
         {
+            if (scene == null) return null;
+
             if (scene.EndsWith("_boss") || scene.EndsWith("_preload"))
             {
                 return DropSuffix(scene);

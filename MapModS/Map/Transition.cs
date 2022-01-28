@@ -1,11 +1,9 @@
-﻿using RandomizerCore;
-using System;
+﻿using MapModS.Data;
+using RandomizerCore;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
-using MapModS.Data;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
 
 namespace MapModS.Map
 {
@@ -137,8 +135,6 @@ namespace MapModS.Map
             return RandomizerMod.RandomizerData.Data.GetTransitionDef(transitionDef.VanillaTarget).SceneName;
         }
 
-        
-
         private static void SetActiveSRColor(Transform transform, bool active, SpriteRenderer sr, Vector4 color)
         {
             if (sr == null)
@@ -242,6 +238,7 @@ namespace MapModS.Map
 
                     if (emd == null)
                     {
+                        //MapModS.Instance.Log(roomObj.name);
                         roomObj.gameObject.SetActive(false);
                         continue;
                     }
@@ -348,14 +345,17 @@ namespace MapModS.Map
         {
             // Some room objects have non-standard scene names, so we truncate the name
             // in these situations
-            if (RandomizerMod.RandomizerData.Data.IsRoom(objName))
-            {
-                return objName;
-            }
 
-            if (RandomizerMod.RandomizerData.Data.IsRoom(StringUtils.DropSuffix(objName)))
+            if (objName == "Ruins1_31_top_2") return "Ruins1_31b";
+
+            for (int i = 0; i < 2; i++)
             {
-                return StringUtils.DropSuffix(objName);
+                if (RandomizerMod.RandomizerData.Data.IsRoom(objName))
+                {
+                    return objName;
+                }
+
+                objName = StringUtils.DropSuffix(objName);
             }
 
             return null;
@@ -375,6 +375,8 @@ namespace MapModS.Map
             {
                 foreach (Transform roomObj in areaObj.transform)
                 {
+                    //MapModS.Instance.Log(roomObj.name);
+
                     string sceneName = GetActualSceneName(roomObj.name);
 
                     if (sceneName == null) continue;

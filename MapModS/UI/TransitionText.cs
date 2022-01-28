@@ -5,6 +5,7 @@ using MapModS.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 
@@ -103,6 +104,8 @@ namespace MapModS.UI
         }
 
         private static int frameCounter = 0;
+        private static Thread searchThread;
+        private static Thread colorUpdateThread;
 
         // Called every frame
         public static void Update()
@@ -120,7 +123,8 @@ namespace MapModS.UI
             // Use menu selection button for control
             if (InputHandler.Instance != null && InputHandler.Instance.inputActions.menuSubmit.WasPressed)
             {
-                GetRoute();
+                searchThread = new(GetRoute);
+                searchThread.Start();
             }
 
             if ((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
@@ -135,11 +139,16 @@ namespace MapModS.UI
 
             if (frameCounter == 0)
             {
-                if (GetRoomClosestToMiddle(selectedScene, out selectedScene))
+                colorUpdateThread = new(() =>
                 {
-                    SetInstructionsText();
-                    SetRoomColors();
-                }
+                    if (GetRoomClosestToMiddle(selectedScene, out selectedScene))
+                    {
+                        SetInstructionsText();
+                        SetRoomColors();
+                    }
+                });
+
+                colorUpdateThread.Start();
             }
         }
 

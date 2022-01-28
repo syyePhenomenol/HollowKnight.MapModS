@@ -4001,7 +4001,7 @@
     "pinScene": null,
     "mapZone": "OUTSKIRTS",
     "offsetX": 0.4,
-    "offsetY": -0.5,
+    "offsetY": 0.3,
     "offsetZ": 0.0,
     "isShop": false
   },
@@ -6382,7 +6382,7 @@
     "pinScene": null,
     "mapZone": "OUTSKIRTS",
     "offsetX": 0.8,
-    "offsetY": 0.2,
+    "offsetY": 0.3,
     "offsetZ": 0.0,
     "isShop": false
   },

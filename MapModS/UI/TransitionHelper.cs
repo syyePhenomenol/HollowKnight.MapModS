@@ -1,11 +1,8 @@
-﻿using System;
+﻿using RandomizerCore;
+using RandomizerCore.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RandomizerCore;
-using RandomizerCore.Logic;
-using RandomizerMod.Settings;
 
 namespace MapModS.UI
 {
@@ -246,7 +243,7 @@ namespace MapModS.UI
                             //MapModS.Instance.Log("Has " + waypoint.Name + " with id " + waypoint.term.Id);
 
                             addedItems.Add(id);
-                            pm.Add(waypoint);
+                            pm.Incr(id, 1);
                         }
                     }
                 }
@@ -254,16 +251,14 @@ namespace MapModS.UI
                 // Emulate a transition being possibly available via having the required waypoint
                 foreach (KeyValuePair<string, string> pair in waypointFixes)
                 {
-                    int keyId = pm.lm.TermLookup[pair.Key];
+                    int KeyId = pm.lm.TermLookup[pair.Key];
                     int ValueId = pm.lm.TermLookup[pair.Value];
 
-                    if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Has(keyId)
+                    if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Has(KeyId)
                         && !addedItems.Contains(ValueId))
                     {
-                        //MapModS.Instance.Log("Waypoint fix:" + pair.Value + " with id " + pm.lm.TermLookup[pair.Value].Id);
-
                         addedItems.Add(ValueId);
-                        pm.Add(new LogicWaypoint(pm.lm.TermLookup[pair.Value], pm.lm.LogicLookup[pair.Value]));
+                        pm.Incr(pair.Key, 1);
                     }
                 }
 
@@ -437,7 +432,7 @@ namespace MapModS.UI
 
                 if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Has(transitionEntry.Value.term.Id))
                 {
-                    //MapModS.Instance.Log(transitionEntry.Key);
+                    //MapModS.Instance.Log("Search space includes: " + transitionEntry.Key);
                     transitionSpace.Add(transitionEntry.Key);
                 }
             }
