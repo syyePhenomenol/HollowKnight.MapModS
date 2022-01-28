@@ -254,7 +254,8 @@ namespace MapModS.Map
                             active = true;
                         }
 
-                        if (outOfLogicScenes.Contains(emd.sceneName))
+                        if (outOfLogicScenes.Contains(emd.sceneName)
+                            && !inLogicScenes.Contains(emd.sceneName))
                         {
                             color = roomColor[RoomState.OutOfLogic];
                         }

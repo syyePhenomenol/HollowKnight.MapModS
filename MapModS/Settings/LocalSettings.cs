@@ -48,6 +48,8 @@ namespace MapModS.Settings
 
         public bool OthersOn = true;
 
+        public bool NewSettings = true;
+
         public void ToggleModEnabled()
         {
             ModEnabled = !ModEnabled;

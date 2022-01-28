@@ -59,8 +59,13 @@ namespace MapModS.Map
 
             if (RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode != RandomizerMod.Settings.TransitionSettings.TransitionMode.None)
             {
-                MapModS.LS.mapMode = MapMode.TransitionRando;
                 goExtraRooms = Transition.CreateExtraMapRooms(gameMap);
+
+                if (MapModS.LS.NewSettings)
+                {
+                    MapModS.LS.mapMode = MapMode.TransitionRando;
+                    MapModS.LS.NewSettings = false;
+                }
             }
 
             if (goCustomPins != null)
