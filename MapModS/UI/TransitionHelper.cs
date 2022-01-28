@@ -400,10 +400,10 @@ namespace MapModS.UI
         // A ProgressionManager is used to track logic while traversing through the search space
         public List<string> ShortestRoute(string startScene, string finalScene, HashSet<KeyValuePair<string, string>> rejectedTransitionPairs, bool allowBenchWarp)
         {
-            if (!warpTransitions.ContainsKey("Warp Start"))
-            {
-                warpTransitions.Add("Warp Start", RandomizerMod.RandomizerData.Data.GetStartDef(RandomizerMod.RandomizerMod.RS.GenerationSettings.StartLocationSettings.StartLocation).Transition);
-            }
+            //if (!warpTransitions.ContainsKey("Warp Start"))
+            //{
+            //    warpTransitions.Add("Warp Start", RandomizerMod.RandomizerData.Data.GetStartDef(RandomizerMod.RandomizerMod.RS.GenerationSettings.StartLocationSettings.StartLocation).Transition);
+            //}
 
             transitionPlacementsDict = RandomizerMod.RandomizerMod.RS.Context.transitionPlacements.ToDictionary(tp => tp.source.Name, tp => tp.target.Name);
 
@@ -493,7 +493,9 @@ namespace MapModS.UI
             // Add initial bench warp transitions if setting is enabled
             if (allowBenchWarp)
             {
-                foreach (KeyValuePair<string, string> warpPair in warpTransitions)
+                Dictionary<string, string> startWarp = new() { { "Warp Start", RandomizerMod.RandomizerData.Data.GetStartDef(RandomizerMod.RandomizerMod.RS.GenerationSettings.StartLocationSettings.StartLocation).Transition } };
+
+                foreach (KeyValuePair<string, string> warpPair in warpTransitions.Union(startWarp))
                 {
                     string scene = GetScene(warpPair.Value);
 
