@@ -331,6 +331,11 @@ namespace MapModS.UI
 
         public static string GetAdjacentTransition(string source)
         {
+            if (source == "Warp Start")
+            {
+                return RandomizerMod.RandomizerData.Data.GetStartDef(RandomizerMod.RandomizerMod.RS.GenerationSettings.StartLocationSettings.StartLocation).Transition;
+            }
+
             if (transitionPlacementsDict.ContainsKey(source))
             {
                 return transitionPlacementsDict[source];

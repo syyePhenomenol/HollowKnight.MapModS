@@ -10,7 +10,7 @@ namespace MapModS.Settings
     }
     public class GlobalSettings
     {
-        public bool allowBenchWarpSearch = false;
+        public bool allowBenchWarpSearch = true;
         
         public PinSize pinSize = PinSize.Medium;
 

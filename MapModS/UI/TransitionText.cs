@@ -39,6 +39,8 @@ namespace MapModS.UI
 
         public static void ShowWorldMap()
         {
+            if (Canvas == null || _instructionPanel == null) return;
+
             bool isActive = !LockToggleEnable && MapModS.LS.ModEnabled
                 && RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode != RandomizerMod.Settings.TransitionSettings.TransitionMode.None
                 && (MapModS.LS.mapMode == MapMode.TransitionRando
