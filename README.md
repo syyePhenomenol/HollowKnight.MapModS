@@ -7,7 +7,7 @@ Randomizer Map S is a Hollow Knight mod used with Randomizer 4. It helps to find
 
 This fork of CaptainDapper's original mod has been expanded on with more features, bug fixes and a Pause Menu UI. It is currently compatible with:
 - RandomizerMod v4.0.2
-- AdditionalMaps v1.5.1.0
+- AdditionalMaps v1.5.1.0. This mod is optional, however *highly* recommended to unlock the full potential of the map features
 - ItemSync 2.1.1
 - RandoPlus v1.1.0
 - SkillUpgrades v0.9.3
