@@ -65,7 +65,7 @@ https://github.com/flibber-hk/HollowKnight.SkillUpgrades
     - If successful, the route will be displayed.
     - You can toggle including benchwarp in the route search on/off with `CTRL-B`.
     - You can try again (pressing the button) to change the start/final transition.
-    - The route will be visible from the Quick Map for easy access, and gets updated as you make the suggested transitions.
+    - The route will also be visible from the Quick Map for easy access, and gets updated as you make the suggested transitions.
 
 # How To Install
 Use Scarab: https://github.com/fifty-six/Scarab
