@@ -7,10 +7,10 @@ Randomizer Map S is a Hollow Knight mod used with Randomizer 4. It helps to find
 
 This fork of CaptainDapper's original mod has been expanded on with more features, bug fixes and a Pause Menu UI. It is currently compatible with:
 - RandomizerMod v4.0.2
-- AdditionalMaps v1.5.1.0
-- ItemSync 2.1.1
+- AdditionalMaps v1.5.1.0. This mod is optional, however *highly* recommended to unlock the full potential of the map features
+- ItemSync v2.2.0
 - RandoPlus v1.1.0
-- SkillUpgrades v0.9.3
+- SkillUpgrades v0.9.4.1
 
 https://github.com/homothetyhk/RandomizerMod
 
@@ -48,6 +48,7 @@ https://github.com/flibber-hk/HollowKnight.SkillUpgrades
 
 - The mod currently has four main modes:
    - "Transition": For transition rando runs only
+   - "Transition 2": For area rando runs only. Instead of showing all in-logic + visited rooms, only visited rooms appear
    - "Full Map": Shows all pins and the full map regardless of map items obtained
    - "All Pins": Shows all pins, but only show map areas for obtained map items
    - "Pins Over Map": Only show pins over where the corresponding map item has been obtained
@@ -61,9 +62,10 @@ https://github.com/flibber-hk/HollowKnight.SkillUpgrades
  
 - In "Transition" mode, you also have a route searcher in the World Map that allows you to find a sequence of transitions to get to any other selected room on the map.
     - Hover over the desired room (in yellow) and press your bound `Menu Select` button to attempt a route search.
-    - If successful, the route will be displayed. If not successful, try bench warping to a different location.
-    - You can try again (pressing the button) to change the starting transition if you cannot reach from your location in the scene.
-    - The route will be visible from the Quick Map for easy access, and gets updated as you make the suggested transitions.
+    - If successful, the route will be displayed.
+    - You can toggle including benchwarp in the route search on/off with `CTRL-B`.
+    - You can try again (pressing the button) to change the start/final transition.
+    - The route will also be visible from the Quick Map for easy access, and gets updated as you make the suggested transitions.
 
 # How To Install
 Use Scarab: https://github.com/fifty-six/Scarab
