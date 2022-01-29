@@ -268,6 +268,11 @@ namespace MapModS.UI
                         pm.Add(pm.lm.TransitionLookup[transition]);
                     }
                 }
+
+               if (GameManager.instance.sceneData.persistentBoolItems.Any(pbi => pbi.id == "Mines Lever" &&  pbi.sceneName == "Town" && pbi.activated == true))
+               {
+                    pm.Add(pm.lm.TransitionLookup["Town[right1]"]);
+               }
             }
 
             public class DelegateUpdateEntry : UpdateEntry

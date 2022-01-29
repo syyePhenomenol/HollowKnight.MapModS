@@ -165,8 +165,7 @@ namespace MapModS.Data
 
             _pins["Split_Crystal_Heart"].disable = !RandomizerMod.RandomizerMod.RS.GenerationSettings.NoveltySettings.SplitSuperdash;
 
-            _pins["World_Sense"].disable = !RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.Dreamers
-                || (RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.Dreamers && RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.LoreTablets);
+            _pins["World_Sense"].disable = !RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.Dreamers;
 
             bool disableMushroomLocations = !RandomizerMod.RandomizerMod.RS.Context.itemPlacements.Any(pair => pair.location.Name.Contains("Mr_Mushroom"));
 
