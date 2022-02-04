@@ -225,7 +225,8 @@ namespace MapModS.Map
                         || areaObj.name == "Shade Pos"
                         || areaObj.name == "Flame Pins"
                         || areaObj.name == "Dreamer Pins"
-                        || areaObj.name == "Map Markers") continue;
+                        || areaObj.name == "Map Markers"
+                        || areaObj.name == "MMS Custom Pin Group") continue;
 
                 if (areaObj.name == "MMS Custom Map Rooms")
                 {
@@ -275,16 +276,16 @@ namespace MapModS.Map
                         }
                     }
 
+                    if (visitedAdjacentScenes.Contains(emd.sceneName))
+                    {
+                        color = roomColor[RoomState.Adjacent];
+                    }
+
                     if (emd.sceneName == StringUtils.CurrentNormalScene())
                     {
                         color = roomColor[RoomState.Current];
                     }
 
-                    if (visitedAdjacentScenes.Contains(emd.sceneName))
-                    {
-                        color = roomColor[RoomState.Adjacent];
-                    }
-                    
                     if (uncheckedReachableScenes.Contains(emd.sceneName))
                     {
                         color.w = 1f;
@@ -401,6 +402,15 @@ namespace MapModS.Map
         {
             foreach (Transform areaObj in gameMap.transform)
             {
+                if (areaObj.name == "Grub Pins"
+                        || areaObj.name == "Dream_Gate_Pin"
+                        || areaObj.name == "Compass Icon"
+                        || areaObj.name == "Shade Pos"
+                        || areaObj.name == "Flame Pins"
+                        || areaObj.name == "Dreamer Pins"
+                        || areaObj.name == "Map Markers"
+                        || areaObj.name == "MMS Custom Pin Group") continue;
+
                 foreach (Transform roomObj in areaObj.transform)
                 {
                     ExtraMapData extra = roomObj.GetComponent<ExtraMapData>();

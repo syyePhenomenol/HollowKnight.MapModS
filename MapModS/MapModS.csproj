@@ -56,10 +56,12 @@
 
   <ItemGroup>
     <Compile Remove="Compatibility.cs" />
-    <Compile Remove="Data\PinDefNew.cs" />
+    <Compile Remove="Data\PinDefOld.cs" />
     <Compile Remove="Data\PinDefUnused.cs" />
     <Compile Remove="Data\Pool.cs" />
+    <Compile Remove="Data\PreviewGroup.cs" />
     <Compile Remove="Data\ShopDef.cs" />
+    <Compile Remove="Map\PinOld.cs" />
     <Compile Remove="Shop\ShopHooks.cs" />
   </ItemGroup>
 
@@ -336,6 +338,9 @@
     </Reference>
     <Reference Include="Benchwarp">
       <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\Benchwarp\Benchwarp.dll</HintPath>
+    </Reference>
+    <Reference Include="ItemChanger">
+      <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\ItemChanger\ItemChanger.dll</HintPath>
     </Reference>
     <Reference Include="MMHOOK_Assembly-CSharp">
       <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\MMHOOK_Assembly-CSharp.dll</HintPath>

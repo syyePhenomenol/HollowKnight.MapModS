@@ -1,4 +1,5 @@
 ﻿using GlobalEnums;
+using System.Collections.Generic;
 
 namespace MapModS.Data
 {
@@ -24,19 +25,17 @@ namespace MapModS.Data
 
         // The local offset of the pin relative to its pinScene/sceneName map object
         public float offsetX;
-
         public float offsetY;
         public float offsetZ;
 
         public bool isShop = false;
+        public bool randoOnly = false;
 
         // These are assigned during FindSpoilerPools, unusued if it's a Shop
-        public PoolGroup vanillaPool;
+        public PoolGroup locationPoolGroup;
 
-        public PoolGroup spoilerPool;
-
-        public PreviewGroup previewGroup;
-
-        public bool disable = false;
+        public IEnumerable<ItemDef> randoItems;
+        public bool canPreview;
+        public PinLocationState pinLocationState;
     }
 }

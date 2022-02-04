@@ -68,7 +68,7 @@ namespace MapModS.Settings
                     break;
 
                 case MapMode.PinsOverMap:
-                    if (RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode != RandomizerMod.Settings.TransitionSettings.TransitionMode.None)
+                    if (SettingsUtil.IsTransitionRando())
                     {
                         mapMode = MapMode.TransitionRando;
                     }
@@ -79,8 +79,7 @@ namespace MapModS.Settings
                     break;
 
                 case MapMode.TransitionRando:
-                    if (RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode == RandomizerMod.Settings.TransitionSettings.TransitionMode.MapAreaRandomizer
-                        || RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode == RandomizerMod.Settings.TransitionSettings.TransitionMode.FullAreaRandomizer)
+                    if (SettingsUtil.IsAreaRando())
                     {
                         mapMode = MapMode.TransitionRandoAlt;
                     }

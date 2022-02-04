@@ -63,7 +63,7 @@ namespace MapModS.UI
 
         public static void SetTexts()
         {
-            if (GameManager.instance.gameMap == null) return;
+            if (GameManager.instance.gameMap == null || WorldMap.CustomPins == null) return;
 
             _mapDisplayPanel.SetActive(!LockToggleEnable && MapModS.LS.ModEnabled, false);
             _refreshDisplayPanel.SetActive(LockToggleEnable, false);

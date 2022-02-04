@@ -30,6 +30,8 @@
         SoulTotems,
         LoreTablets,
 
-        Shop
+        Shop,
+
+        Levers
     }
 }

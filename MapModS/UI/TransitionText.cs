@@ -42,7 +42,7 @@ namespace MapModS.UI
             if (Canvas == null || _instructionPanel == null) return;
 
             bool isActive = !LockToggleEnable && MapModS.LS.ModEnabled
-                && RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode != RandomizerMod.Settings.TransitionSettings.TransitionMode.None
+                && SettingsUtil.IsTransitionRando()
                 && (MapModS.LS.mapMode == MapMode.TransitionRando
                     || MapModS.LS.mapMode == MapMode.TransitionRandoAlt);
 
@@ -95,7 +95,7 @@ namespace MapModS.UI
                 || _instructionPanel == null) return;
 
             bool isActive = !LockToggleEnable && MapModS.LS.ModEnabled
-                && RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode != RandomizerMod.Settings.TransitionSettings.TransitionMode.None
+                && SettingsUtil.IsTransitionRando()
                 && (MapModS.LS.mapMode == MapMode.TransitionRando
                     || MapModS.LS.mapMode == MapMode.TransitionRandoAlt);
 
