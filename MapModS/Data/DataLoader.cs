@@ -58,6 +58,8 @@ namespace MapModS.Data
         {
             if (shopLocations.Contains(cleanItemName)) return PoolGroup.Shop;
 
+            if (cleanItemName.EndsWith("_Geo")) return PoolGroup.GeoChests;
+
             switch (cleanItemName)
             {
                 case "Dreamer":
@@ -208,12 +210,6 @@ namespace MapModS.Data
 
                 if (locationName == "Start") continue;
 
-                if (MapModS.RandomizableLeversInstalled
-                    && locationName == "Dirtmouth_Stag" || locationName == "Resting_Grounds_Stag")
-                {
-                    continue;
-                }
-
                 if (_allPins.TryGetValue(locationName, out PinDef pinDef))
                 {
                     pinDef.randoItems = items;
@@ -229,10 +225,17 @@ namespace MapModS.Data
                 }
             }
 
+            bool leverRandoEnabled = _usedPins.Any(p => p.Key.StartsWith("Lever"));
+
             foreach (KeyValuePair<string, PinDef> pinDef in _allPins)
             {
                 if (!_usedPins.ContainsKey(pinDef.Key) && !pinDef.Value.randoOnly)
                 {
+                    if (leverRandoEnabled && (pinDef.Value.name == "Dirtmouth_Stag" || pinDef.Value.name == "Resting_Grounds_Stag"))
+                    {
+                        continue;
+                    }
+
                     pinDef.Value.pinLocationState = PinLocationState.NonRandomizedUnchecked;
                     pinDef.Value.locationPoolGroup = GetLocationPoolGroup(pinDef.Value.name);
                     _usedPins.Add(pinDef.Key, pinDef.Value);
