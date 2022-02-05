@@ -229,7 +229,9 @@ namespace MapModS.Data
 
             foreach (KeyValuePair<string, PinDef> pinDef in _allPins)
             {
-                if (!_usedPins.ContainsKey(pinDef.Key) && !pinDef.Value.randoOnly)
+                if (!_usedPins.ContainsKey(pinDef.Key)
+                    && !pinDef.Value.randoOnly
+                    && !RandomizerMod.RandomizerMod.RS.TrackerData.clearedLocations.Contains(pinDef.Key))
                 {
                     if (leverRandoEnabled && (pinDef.Value.name == "Dirtmouth_Stag" || pinDef.Value.name == "Resting_Grounds_Stag"))
                     {
