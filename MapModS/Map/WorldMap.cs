@@ -39,7 +39,7 @@ namespace MapModS.Map
 
         private static string OnLanguageGetHook(string key, string sheet, string orig)
         {
-            if (sheet == "MMS" && Transition.nonMapScenes.Contains(key))
+            if (sheet == "MMS" && (Transition.nonMapScenes.Contains(key) || Transition.whitePalaceScenes.Contains(key)))
             {
                 return key;
             }

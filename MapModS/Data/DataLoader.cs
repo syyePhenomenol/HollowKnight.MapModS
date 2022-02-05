@@ -65,6 +65,7 @@ namespace MapModS.Data
 
                 case "Split_Mothwing_Cloak":
                 case "Split_Crystal_Heart":
+                case "Downslash":
                     return PoolGroup.Skills;
 
                 case "Double_Mask_Shard":
@@ -205,6 +206,8 @@ namespace MapModS.Data
 
                 string locationName = placement.Value.Items.Where(x => !x.IsObtained()).First().RandoLocationName();
 
+                if (locationName == "Start") continue;
+
                 if (MapModS.RandomizableLeversInstalled
                     && locationName == "Dirtmouth_Stag" || locationName == "Resting_Grounds_Stag")
                 {
@@ -222,7 +225,7 @@ namespace MapModS.Data
                 }
                 else
                 {
-                    MapModS.Instance.Log("No corresponding pin location: " + locationName);
+                    MapModS.Instance.Log("No corresponding pin location for a placement");
                 }
             }
 

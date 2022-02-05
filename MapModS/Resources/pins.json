@@ -2883,8 +2883,8 @@
     "pdIntValue": 0,
     "pinScene": null,
     "mapZone": "RESTING_GROUNDS",
-    "offsetX": -0.3,
-    "offsetY": 0.9,
+    "offsetX": 0.9,
+    "offsetY": 0.0,
     "offsetZ": 0.0
   },
   "Grub-Crystal_Peak_Below_Chest": {
@@ -2896,8 +2896,8 @@
     "pdIntValue": 0,
     "pinScene": null,
     "mapZone": "MINES",
-    "offsetX": 0.0,
-    "offsetY": 1.0,
+    "offsetX": -0.3,
+    "offsetY": 0.9,
     "offsetZ": 0.0
   },
   "Grub-Crystallized_Mound": {
@@ -8034,6 +8034,15 @@
     "mapZone": "CITY",
     "offsetX": 0.6,
     "offsetY": -1.7,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Resting_Grounds_Stag": {
+    "name": "Lever-Resting_Grounds_Stag",
+    "sceneName": "RestingGrounds_09",
+    "mapZone": "ABYSS",
+    "offsetX": 0.15,
+    "offsetY": 0.0,
     "offsetZ": 0.0,
     "randoOnly": true
   },

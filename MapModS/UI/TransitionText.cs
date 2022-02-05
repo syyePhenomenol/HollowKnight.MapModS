@@ -3,6 +3,7 @@ using MapModS.Data;
 using MapModS.Map;
 using MapModS.Settings;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -47,6 +48,7 @@ namespace MapModS.UI
                     || MapModS.LS.mapMode == MapMode.TransitionRandoAlt);
 
             _instructionPanel.SetActive(isActive, isActive);
+
         }
 
         public static void Hide()
@@ -137,7 +139,34 @@ namespace MapModS.UI
                 rejectedTransitionPairs = new();
             }
 
-            frameCounter = (frameCounter + 1) % 24;
+            //frameCounter = (frameCounter + 1) % 24;
+
+            //if (frameCounter == 0)
+            //{
+            //    colorUpdateThread = new(() =>
+            //    {
+            //        if (GetRoomClosestToMiddle(selectedScene, out selectedScene))
+            //        {
+            //            SetInstructionsText();
+            //            SetRoomColors();
+            //        }
+            //    });
+
+            //    colorUpdateThread.Start();
+            //}
+        }
+
+        public static void UpdateSelectedScene()
+        {
+            if (Canvas == null
+                || !Canvas.activeSelf
+                || !_instructionPanel.Active
+                || !_transitionPanel.Active
+                || HeroController.instance == null
+                || GameManager.instance.IsGamePaused())
+            {
+                return;
+            }
 
             if (frameCounter == 0)
             {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -56,6 +57,8 @@ namespace MapModS.UI
         {
             if (_instance != null)
             {
+                _instance.StopAllCoroutines();
+
                 Destroy(_instance._pauseCanvas);
                 Destroy(_instance._mapCanvas);
                 Destroy(_instance._transitionCanvas);
@@ -103,6 +106,7 @@ namespace MapModS.UI
             _transitionCanvas.SetActive(false);
 
             TransitionText.Initialize();
+            StartCoroutine("UpdateSelectedScene");
         }
 
         public void Update()
@@ -115,6 +119,15 @@ namespace MapModS.UI
             catch (Exception e)
             {
                 MapModS.Instance.LogError(e);
+            }
+        }
+
+        IEnumerator UpdateSelectedScene()
+        {
+            while (true)
+            {
+                yield return new WaitForSecondsRealtime(0.1f);
+                TransitionText.UpdateSelectedScene();
             }
         }
 

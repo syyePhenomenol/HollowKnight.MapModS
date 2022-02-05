@@ -55,6 +55,28 @@ namespace MapModS.Map
             "White_Palace_11"
         };
 
+        public static HashSet<string> whitePalaceScenes = new()
+        {
+            "White_Palace_01",
+            "White_Palace_02",
+            "White_Palace_03_hub",
+            "White_Palace_04",
+            "White_Palace_05",
+            "White_Palace_06",
+            "White_Palace_07",
+            "White_Palace_08",
+            "White_Palace_09",
+            "White_Palace_12",
+            "White_Palace_13",
+            "White_Palace_14",
+            "White_Palace_15",
+            "White_Palace_16",
+            "White_Palace_17",
+            "White_Palace_18",
+            "White_Palace_19",
+            "White_Palace_20"
+        };
+
         public static GameObject CreateExtraMapRooms(GameMap gameMap)
         {
             GameObject go_extraMapRooms = new GameObject("MMS Custom Map Rooms");
@@ -78,14 +100,23 @@ namespace MapModS.Map
             areaNamePrefab.SetActive(false);
 
             int mapPositionCounter = 0;
+            int maxTableWidth = 4;
 
-            foreach (string scene in nonMapScenes)
+            HashSet<string> allScenes = new(nonMapScenes);
+
+            if (!MapModS.AdditionalMapsInstalled)
+            {
+                allScenes.UnionWith(whitePalaceScenes);
+                maxTableWidth = 6;
+            }
+
+            foreach (string scene in allScenes)
             {
                 GameObject go_extraMapRoom = UnityEngine.Object.Instantiate(areaNamePrefab, go_extraMapRooms.transform);
 
                 go_extraMapRoom.name = scene;
                 go_extraMapRoom.GetComponent<SetTextMeshProGameText>().convName = scene;
-                go_extraMapRoom.transform.localPosition = new Vector3((mapPositionCounter % 4) * 4f, -0.8f * (mapPositionCounter / 4), 0);
+                go_extraMapRoom.transform.localPosition = new Vector3((mapPositionCounter % maxTableWidth) * 4f, -0.8f * (mapPositionCounter / maxTableWidth), 0);
 
                 var tmp = go_extraMapRoom.GetComponent<TextMeshPro>();
 
@@ -275,6 +306,11 @@ namespace MapModS.Map
                             active = true;
                         }
                     }
+
+#if DEBUG
+                    // For debugging
+                    active = true;
+#endif
 
                     if (visitedAdjacentScenes.Contains(emd.sceneName))
                     {

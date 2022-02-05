@@ -369,6 +369,11 @@ namespace MapModS.Map
             {
                 ReplaceBool(self, "Check", 0);
             }
+
+            else if (self.FsmName == "Bench Control")
+            {
+                FsmUtil.GetAction<GetPlayerDataBool>(self, "Open Map", 0).boolName = "MMS_hasMap";
+            }
         }
 
         public static bool BoolGetOverride(string boolName, bool orig)
