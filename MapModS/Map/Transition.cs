@@ -82,7 +82,7 @@ namespace MapModS.Map
             GameObject go_extraMapRooms = new GameObject("MMS Custom Map Rooms");
             go_extraMapRooms.layer = 5;
             go_extraMapRooms.transform.SetParent(gameMap.transform);
-            go_extraMapRooms.transform.localPosition = new Vector3(-13f, 16f, 0);
+            go_extraMapRooms.transform.localPosition = new Vector3(-14f, 16f, 0);
             go_extraMapRooms.SetActive(true);
 
             var areaNamePrefab = UnityEngine.Object.Instantiate(gameMap.areaCliffs.transform.GetChild(0).gameObject);
