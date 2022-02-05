@@ -14,6 +14,20 @@ namespace MapModS.Data
         private static Dictionary<string, PinDef> _allPinsAM;
         private static Dictionary<string, PinDef> _usedPins = new();
 
+        //public static Dictionary<string, PinDef> newPins = new();
+
+        private static readonly HashSet<string> shopLocations = new()
+        {
+            "Sly",
+            "Sly_(Key)",
+            "Iselda",
+            "Salubra",
+            "Leg_Eater",
+            "Grubfather",
+            "Seer",
+            "Egg_Shop"
+        };
+
         public static PinDef[] GetPinArray()
         {
             return _allPins.Values.ToArray();
@@ -31,9 +45,7 @@ namespace MapModS.Data
 
         public static PinDef GetUsedPinDef(string locationName)
         {
-            PinDef pinDef;
-
-            if (_usedPins.TryGetValue(locationName, out pinDef))
+            if (_usedPins.TryGetValue(locationName, out PinDef pinDef))
             {
                 return pinDef;
             }
@@ -44,6 +56,8 @@ namespace MapModS.Data
         // Uses RandomizerData to get the PoolGroup from an item name
         public static PoolGroup GetPoolGroup(string cleanItemName)
         {
+            if (shopLocations.Contains(cleanItemName)) return PoolGroup.Shop;
+
             switch (cleanItemName)
             {
                 case "Dreamer":
@@ -190,22 +204,19 @@ namespace MapModS.Data
                 if (!items.Any()) continue;
 
                 string locationName = placement.Value.Items.Where(x => !x.IsObtained()).First().RandoLocationName();
-                PinDef pinDef;
 
-                if (_allPins.TryGetValue(locationName, out pinDef))
+                if (MapModS.RandomizableLeversInstalled
+                    && locationName == "Dirtmouth_Stag" || locationName == "Resting_Grounds_Stag")
+                {
+                    continue;
+                }
+
+                if (_allPins.TryGetValue(locationName, out PinDef pinDef))
                 {
                     pinDef.randoItems = items;
                     pinDef.canPreview = placement.Value.CanPreview();
                     pinDef.pinLocationState = PinLocationState.UncheckedUnreachable;
-
-                    if (pinDef.isShop)
-                    {
-                        pinDef.locationPoolGroup = PoolGroup.Shop;
-                    }
-                    else
-                    {
-                        pinDef.locationPoolGroup = GetLocationPoolGroup(pinDef.name);
-                    }
+                    pinDef.locationPoolGroup = GetLocationPoolGroup(pinDef.name);
                         
                     _usedPins.Add(locationName, pinDef);
                 }
@@ -229,9 +240,7 @@ namespace MapModS.Data
             {
                 foreach (PinDef pinDefAM in GetPinAMArray())
                 {
-                    PinDef pinDef;
-
-                    if (_usedPins.TryGetValue(pinDefAM.name, out pinDef))
+                    if (_usedPins.TryGetValue(pinDefAM.name, out PinDef pinDef))
                     {
                         pinDef.pinScene = pinDefAM.pinScene;
                         pinDef.mapZone = pinDefAM.mapZone;
@@ -247,5 +256,12 @@ namespace MapModS.Data
             _allPins = JsonUtil.Deserialize<Dictionary<string, PinDef>>("MapModS.Resources.pins.json");
             _allPinsAM = JsonUtil.Deserialize<Dictionary<string, PinDef>>("MapModS.Resources.pinsAM.json");
         }
+
+        // For debugging pins
+        //public static void LoadNewPinDef()
+        //{
+        //    newPins.Clear();
+        //    newPins = JsonUtil.DeserializeFromExternalFile<Dictionary<string, PinDef>>("newPins.json");
+        //}
     }
 }

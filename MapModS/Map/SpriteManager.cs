@@ -77,6 +77,7 @@ namespace MapModS.Map
                         PoolGroup.SoulTotems => "pinTotem",
                         PoolGroup.LoreTablets => "pinLore",
                         PoolGroup.Shop => "pinShop",
+                        PoolGroup.Levers => "pinLever",
                         _ => "pinUnknown",
                     };
                     break;

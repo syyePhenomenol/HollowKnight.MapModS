@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.IO;
+using System.Reflection;
 
 // Code taken from homothety: https://github.com/homothetyhk/RandomizerMod/
 
@@ -16,6 +17,15 @@ namespace MapModS.Data
             using JsonTextReader jtr = new(sr);
             return _js.Deserialize<T>(jtr);
         }
+
+        // For debugging pins
+        //public static T DeserializeFromExternalFile<T>(string externalFile)
+        //{
+        //    string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        //    using StreamReader sr = new(Path.Combine(assemblyFolder, externalFile));
+        //    using JsonTextReader jtr = new(sr);
+        //    return _js.Deserialize<T>(jtr);
+        //}
 
         public static T DeserializeString<T>(string json)
         {

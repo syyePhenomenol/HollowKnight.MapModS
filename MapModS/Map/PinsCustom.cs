@@ -55,15 +55,7 @@ namespace MapModS.Map
 
             // Set pin transform (by pool)
             AssignGroup(pin);
-
-            string roomName = pinDef.pinScene ?? pinDef.sceneName;
-
-            Vector3 vec = GetRoomPos(roomName, gameMap);
-            vec.Scale(new Vector3(1.46f, 1.46f, 1));
-
-            vec += new Vector3(pinDef.offsetX, pinDef.offsetY, pinDef.offsetZ);
-
-            goPin.transform.localPosition = new Vector3(vec.x, vec.y, vec.z - 0.01f);
+            SetPinPosition(pinDef, goPin, gameMap);
         }
 
         private void AssignGroup(PinAnimatedSprite pin)
@@ -88,6 +80,30 @@ namespace MapModS.Map
 
             pin.gameObject.transform.SetParent(_Groups[poolGroup].transform);
         }
+
+        private void SetPinPosition(PinDef pinDef, GameObject goPin, GameMap gameMap)
+        {
+            string roomName = pinDef.pinScene ?? pinDef.sceneName;
+
+            Vector3 vec = GetRoomPos(roomName, gameMap);
+            vec.Scale(new Vector3(1.46f, 1.46f, 1));
+
+            vec += new Vector3(pinDef.offsetX, pinDef.offsetY, pinDef.offsetZ);
+
+            goPin.transform.localPosition = new Vector3(vec.x, vec.y, vec.z - 0.01f);
+        }
+
+        // For debugging pins
+        //public void ReadjustPinPostiions()
+        //{
+        //    foreach (PinAnimatedSprite pin in _pins)
+        //    {
+        //        if (DataLoader.newPins.TryGetValue(pin.pinDef.name, out PinDef newPinDef))
+        //        {
+        //            SetPinPosition(newPinDef, pin.gameObject, GameManager.instance.gameMap.GetComponent<GameMap>());
+        //        }
+        //    }
+        //}
 
         private Vector3 GetRoomPos(string roomName, GameMap gameMap)
         {

@@ -10,8 +10,7 @@
     "mapZone": "TOWN",
     "offsetX": -0.45,
     "offsetY": -0.2,
-    "offsetZ": 0.008,
-    "isShop": true
+    "offsetZ": 0.008
   },
   "Sly_(Key)": {
     "name": "Sly_(Key)",
@@ -24,8 +23,7 @@
     "mapZone": "TOWN",
     "offsetX": -0.45,
     "offsetY": 0.2,
-    "offsetZ": 0.007,
-    "isShop": true
+    "offsetZ": 0.007
   },
   "Iselda": {
     "name": "Iselda",
@@ -38,8 +36,7 @@
     "mapZone": "TOWN",
     "offsetX": 0.4,
     "offsetY": -0.2,
-    "offsetZ": 0.009,
-    "isShop": true
+    "offsetZ": 0.008
   },
   "Salubra": {
     "name": "Salubra",
@@ -52,8 +49,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 1.35,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": true
+    "offsetZ": 0.0
   },
   "Leg_Eater": {
     "name": "Leg_Eater",
@@ -66,8 +62,7 @@
     "mapZone": "WASTES",
     "offsetX": 0.5,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": true
+    "offsetZ": 0.0
   },
   "Grubfather": {
     "name": "Grubfather",
@@ -80,8 +75,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.2,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": true
+    "offsetZ": 0.0
   },
   "Seer": {
     "name": "Seer",
@@ -94,8 +88,7 @@
     "mapZone": "RESTING_GROUNDS",
     "offsetX": -0.9,
     "offsetY": 0.9,
-    "offsetZ": 0.0,
-    "isShop": true
+    "offsetZ": 0.0
   },
   "Egg_Shop": {
     "name": "Egg_Shop",
@@ -108,8 +101,7 @@
     "mapZone": "TOWN",
     "offsetX": 2.7,
     "offsetY": -0.6,
-    "offsetZ": 0.0,
-    "isShop": true
+    "offsetZ": 0.0
   },
   "Lurien": {
     "name": "Lurien",
@@ -122,8 +114,7 @@
     "mapZone": "CITY",
     "offsetX": 0.47,
     "offsetY": 1.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Monomon": {
     "name": "Monomon",
@@ -136,8 +127,7 @@
     "mapZone": "FOG_CANYON",
     "offsetX": 0.19,
     "offsetY": -0.15,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Herrah": {
     "name": "Herrah",
@@ -150,8 +140,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 0.0,
     "offsetY": 1.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "World_Sense": {
     "name": "World_Sense",
@@ -165,7 +154,6 @@
     "offsetX": 0.2,
     "offsetY": -0.2,
     "offsetZ": 0.001,
-    "isShop": false,
     "randoOnly": true
   },
   "Mothwing_Cloak": {
@@ -179,8 +167,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": -0.25,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Mantis_Claw": {
     "name": "Mantis_Claw",
@@ -193,8 +180,7 @@
     "mapZone": "WASTES",
     "offsetX": -1.8,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Crystal_Heart": {
     "name": "Crystal_Heart",
@@ -207,8 +193,7 @@
     "mapZone": "MINES",
     "offsetX": 2.5,
     "offsetY": -0.55,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Monarch_Wings": {
     "name": "Monarch_Wings",
@@ -221,8 +206,7 @@
     "mapZone": "ABYSS",
     "offsetX": -1.2,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Shade_Cloak": {
     "name": "Shade_Cloak",
@@ -235,8 +219,7 @@
     "mapZone": "ABYSS",
     "offsetX": 1.05,
     "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Isma's_Tear": {
     "name": "Isma's_Tear",
@@ -249,8 +232,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": 0.6,
     "offsetY": -0.7,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Dream_Nail": {
     "name": "Dream_Nail",
@@ -263,8 +245,7 @@
     "mapZone": "RESTING_GROUNDS",
     "offsetX": -0.13,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Vengeful_Spirit": {
     "name": "Vengeful_Spirit",
@@ -277,8 +258,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.0,
     "offsetY": -0.2,
-    "offsetZ": -0.5,
-    "isShop": false
+    "offsetZ": -0.5
   },
   "Shade_Soul": {
     "name": "Shade_Soul",
@@ -291,8 +271,7 @@
     "mapZone": "CITY",
     "offsetX": -0.1,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Desolate_Dive": {
     "name": "Desolate_Dive",
@@ -305,8 +284,7 @@
     "mapZone": "CITY",
     "offsetX": -0.1,
     "offsetY": -0.7,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Descending_Dark": {
     "name": "Descending_Dark",
@@ -319,8 +297,7 @@
     "mapZone": "MINES",
     "offsetX": 0.0,
     "offsetY": 0.8,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Howling_Wraiths": {
     "name": "Howling_Wraiths",
@@ -333,8 +310,7 @@
     "mapZone": "FOG_CANYON",
     "offsetX": -0.5,
     "offsetY": 0.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Abyss_Shriek": {
     "name": "Abyss_Shriek",
@@ -347,8 +323,7 @@
     "mapZone": "ABYSS",
     "offsetX": -1.5,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Cyclone_Slash": {
     "name": "Cyclone_Slash",
@@ -361,8 +336,7 @@
     "mapZone": "CLIFFS",
     "offsetX": 0.24,
     "offsetY": 0.32,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Dash_Slash": {
     "name": "Dash_Slash",
@@ -375,8 +349,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": -1.3,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Great_Slash": {
     "name": "Great_Slash",
@@ -389,8 +362,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": 0.22,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Focus": {
     "name": "Focus",
@@ -404,7 +376,6 @@
     "offsetX": 0.4,
     "offsetY": -0.4,
     "offsetZ": 0.0,
-    "isShop": false,
     "randoOnly": true
   },
   "Baldur_Shell": {
@@ -418,8 +389,7 @@
     "mapZone": "CLIFFS",
     "offsetX": 0.2,
     "offsetY": -0.65,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Fury_of_the_Fallen": {
     "name": "Fury_of_the_Fallen",
@@ -432,8 +402,7 @@
     "mapZone": "TOWN",
     "offsetX": 1.3,
     "offsetY": -0.8,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Lifeblood_Core": {
     "name": "Lifeblood_Core",
@@ -446,8 +415,7 @@
     "mapZone": "ABYSS",
     "offsetX": 0.4,
     "offsetY": -0.65,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Defender's_Crest": {
     "name": "Defender's_Crest",
@@ -460,8 +428,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": 0.35,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Flukenest": {
     "name": "Flukenest",
@@ -474,8 +441,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": -0.85,
     "offsetY": 0.15,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Thorns_of_Agony": {
     "name": "Thorns_of_Agony",
@@ -488,8 +454,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": 0.75,
     "offsetY": 0.05,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Mark_of_Pride": {
     "name": "Mark_of_Pride",
@@ -502,8 +467,7 @@
     "mapZone": "WASTES",
     "offsetX": -0.25,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Sharp_Shadow": {
     "name": "Sharp_Shadow",
@@ -516,8 +480,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 0.0,
     "offsetY": -0.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Spore_Shroom": {
     "name": "Spore_Shroom",
@@ -530,8 +493,7 @@
     "mapZone": "WASTES",
     "offsetX": 0.35,
     "offsetY": -0.25,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Catcher": {
     "name": "Soul_Catcher",
@@ -544,8 +506,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.4,
     "offsetY": -0.2,
-    "offsetZ": -0.499,
-    "isShop": false
+    "offsetZ": -0.499
   },
   "Soul_Eater": {
     "name": "Soul_Eater",
@@ -558,8 +519,7 @@
     "mapZone": "RESTING_GROUNDS",
     "offsetX": 3.4,
     "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Glowing_Womb": {
     "name": "Glowing_Womb",
@@ -572,8 +532,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.8,
     "offsetY": 0.05,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Nailmaster's_Glory": {
     "name": "Nailmaster's_Glory",
@@ -586,8 +545,7 @@
     "mapZone": "TOWN",
     "offsetX": -0.45,
     "offsetY": -0.6,
-    "offsetZ": 0.009,
-    "isShop": false
+    "offsetZ": 0.009
   },
   "Joni's_Blessing": {
     "name": "Joni's_Blessing",
@@ -600,8 +558,7 @@
     "mapZone": "CLIFFS",
     "offsetX": 0.6,
     "offsetY": -0.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Shape_of_Unn": {
     "name": "Shape_of_Unn",
@@ -614,8 +571,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": -0.3,
     "offsetY": -1.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Hiveblood": {
     "name": "Hiveblood",
@@ -628,8 +584,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": 0.0,
     "offsetY": -0.25,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Dashmaster": {
     "name": "Dashmaster",
@@ -642,8 +597,7 @@
     "mapZone": "WASTES",
     "offsetX": -0.4,
     "offsetY": -0.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Quick_Slash": {
     "name": "Quick_Slash",
@@ -656,8 +610,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": 0.4,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Spell_Twister": {
     "name": "Spell_Twister",
@@ -670,8 +623,7 @@
     "mapZone": "CITY",
     "offsetX": 0.55,
     "offsetY": 0.45,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Deep_Focus": {
     "name": "Deep_Focus",
@@ -684,8 +636,7 @@
     "mapZone": "MINES",
     "offsetX": -0.1,
     "offsetY": -0.05,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Queen_Fragment": {
     "name": "Queen_Fragment",
@@ -698,8 +649,7 @@
     "mapZone": "ROYAL_GARDENS",
     "offsetX": -0.15,
     "offsetY": 1.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "King_Fragment": {
     "name": "King_Fragment",
@@ -712,8 +662,7 @@
     "mapZone": "ABYSS",
     "offsetX": 0.8,
     "offsetY": -0.2,
-    "offsetZ": 0.005,
-    "isShop": false
+    "offsetZ": 0.005
   },
   "Void_Heart": {
     "name": "Void_Heart",
@@ -726,8 +675,7 @@
     "mapZone": "ABYSS",
     "offsetX": 1.0,
     "offsetY": -4.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Dreamshield": {
     "name": "Dreamshield",
@@ -740,8 +688,7 @@
     "mapZone": "RESTING_GROUNDS",
     "offsetX": -0.6,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Weaversong": {
     "name": "Weaversong",
@@ -754,8 +701,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 2.5,
     "offsetY": 0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grimmchild": {
     "name": "Grimmchild",
@@ -768,8 +714,7 @@
     "mapZone": "TOWN",
     "offsetX": -1.2,
     "offsetY": -0.6,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Unbreakable_Heart": {
     "name": "Unbreakable_Heart",
@@ -782,8 +727,7 @@
     "mapZone": "TOWN",
     "offsetX": -1.6,
     "offsetY": -0.6,
-    "offsetZ": 0.002,
-    "isShop": false
+    "offsetZ": 0.002
   },
   "Unbreakable_Greed": {
     "name": "Unbreakable_Greed",
@@ -796,8 +740,7 @@
     "mapZone": "TOWN",
     "offsetX": -1.6,
     "offsetY": -0.2,
-    "offsetZ": 0.003,
-    "isShop": false
+    "offsetZ": 0.003
   },
   "Unbreakable_Strength": {
     "name": "Unbreakable_Strength",
@@ -810,8 +753,7 @@
     "mapZone": "TOWN",
     "offsetX": -1.6,
     "offsetY": 0.2,
-    "offsetZ": 0.004,
-    "isShop": false
+    "offsetZ": 0.004
   },
   "City_Crest": {
     "name": "City_Crest",
@@ -824,8 +766,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.1,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Tram_Pass": {
     "name": "Tram_Pass",
@@ -838,8 +779,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -0.7,
     "offsetY": -0.25,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Simple_Key-Basin": {
     "name": "Simple_Key-Basin",
@@ -852,8 +792,7 @@
     "mapZone": "ABYSS",
     "offsetX": -1.0,
     "offsetY": -0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Simple_Key-City": {
     "name": "Simple_Key-City",
@@ -866,8 +805,7 @@
     "mapZone": "CITY",
     "offsetX": 0.8,
     "offsetY": 0.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Simple_Key-Lurker": {
     "name": "Simple_Key-Lurker",
@@ -880,8 +818,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": 0.8,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Shopkeeper's_Key": {
     "name": "Shopkeeper's_Key",
@@ -894,8 +831,7 @@
     "mapZone": "MINES",
     "offsetX": 0.15,
     "offsetY": 0.35,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Love_Key": {
     "name": "Love_Key",
@@ -908,8 +844,7 @@
     "mapZone": "ROYAL_GARDENS",
     "offsetX": 1.1,
     "offsetY": 0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "King's_Brand": {
     "name": "King's_Brand",
@@ -922,8 +857,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": -0.4,
     "offsetY": -1.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Godtuner": {
     "name": "Godtuner",
@@ -936,8 +870,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": -0.6,
     "offsetY": -0.6,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Collector's_Map": {
     "name": "Collector's_Map",
@@ -950,8 +883,7 @@
     "mapZone": "CITY",
     "offsetX": -0.6,
     "offsetY": 1.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Mask_Shard-Brooding_Mawlek": {
     "name": "Mask_Shard-Brooding_Mawlek",
@@ -964,8 +896,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.5,
     "offsetY": -0.05,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Mask_Shard-Crossroads_Goam": {
     "name": "Mask_Shard-Crossroads_Goam",
@@ -978,8 +909,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.7,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Mask_Shard-Stone_Sanctuary": {
     "name": "Mask_Shard-Stone_Sanctuary",
@@ -992,8 +922,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": 1.0,
     "offsetY": -0.1,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Mask_Shard-Queen's_Station": {
     "name": "Mask_Shard-Queen's_Station",
@@ -1004,10 +933,9 @@
     "pdIntValue": 0,
     "pinScene": null,
     "mapZone": "WASTES",
-    "offsetX": 0.55,
+    "offsetX": 0.35,
     "offsetY": 0.05,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Mask_Shard-Deepnest": {
     "name": "Mask_Shard-Deepnest",
@@ -1020,8 +948,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 0.3,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Mask_Shard-Waterways": {
     "name": "Mask_Shard-Waterways",
@@ -1034,8 +961,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": -1.15,
     "offsetY": -0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Mask_Shard-Enraged_Guardian": {
     "name": "Mask_Shard-Enraged_Guardian",
@@ -1048,8 +974,7 @@
     "mapZone": "MINES",
     "offsetX": -0.45,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Mask_Shard-Hive": {
     "name": "Mask_Shard-Hive",
@@ -1062,8 +987,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": -0.8,
     "offsetY": -0.45,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Mask_Shard-Grey_Mourner": {
     "name": "Mask_Shard-Grey_Mourner",
@@ -1076,8 +1000,7 @@
     "mapZone": "RESTING_GROUNDS",
     "offsetX": 0.1,
     "offsetY": -0.25,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Mask_Shard-Bretta": {
     "name": "Mask_Shard-Bretta",
@@ -1088,10 +1011,9 @@
     "pdIntValue": 0,
     "pinScene": "Town",
     "mapZone": "TOWN",
-    "offsetX": 1.08,
-    "offsetY": -0.6,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetX": 0.8,
+    "offsetY": -0.2,
+    "offsetZ": 0.0085
   },
   "Vessel_Fragment-Greenpath": {
     "name": "Vessel_Fragment-Greenpath",
@@ -1104,8 +1026,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": -0.4,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Vessel_Fragment-City": {
     "name": "Vessel_Fragment-City",
@@ -1118,8 +1039,7 @@
     "mapZone": "CITY",
     "offsetX": 0.5,
     "offsetY": -0.05,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Vessel_Fragment-Crossroads": {
     "name": "Vessel_Fragment-Crossroads",
@@ -1132,8 +1052,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.4,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Vessel_Fragment-Basin": {
     "name": "Vessel_Fragment-Basin",
@@ -1146,8 +1065,7 @@
     "mapZone": "ABYSS",
     "offsetX": 0.5,
     "offsetY": 0.8,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Vessel_Fragment-Deepnest": {
     "name": "Vessel_Fragment-Deepnest",
@@ -1160,8 +1078,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 1.6,
     "offsetY": 0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Vessel_Fragment-Stag_Nest": {
     "name": "Vessel_Fragment-Stag_Nest",
@@ -1174,8 +1091,7 @@
     "mapZone": "CLIFFS",
     "offsetX": -2.4,
     "offsetY": 1.6,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Charm_Notch-Shrumal_Ogres": {
     "name": "Charm_Notch-Shrumal_Ogres",
@@ -1188,8 +1104,7 @@
     "mapZone": "WASTES",
     "offsetX": 0.1,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Charm_Notch-Fog_Canyon": {
     "name": "Charm_Notch-Fog_Canyon",
@@ -1202,8 +1117,7 @@
     "mapZone": "FOG_CANYON",
     "offsetX": 0.0,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Charm_Notch-Colosseum": {
     "name": "Charm_Notch-Colosseum",
@@ -1216,8 +1130,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": 3.1,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Charm_Notch-Grimm": {
     "name": "Charm_Notch-Grimm",
@@ -1230,8 +1143,7 @@
     "mapZone": "TOWN",
     "offsetX": -1.2,
     "offsetY": -0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Pale_Ore-Basin": {
     "name": "Pale_Ore-Basin",
@@ -1244,8 +1156,7 @@
     "mapZone": "ABYSS",
     "offsetX": -2.05,
     "offsetY": -0.35,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Pale_Ore-Crystal_Peak": {
     "name": "Pale_Ore-Crystal_Peak",
@@ -1258,8 +1169,7 @@
     "mapZone": "MINES",
     "offsetX": -1.9,
     "offsetY": 0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Pale_Ore-Nosk": {
     "name": "Pale_Ore-Nosk",
@@ -1272,8 +1182,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 2.0,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Pale_Ore-Colosseum": {
     "name": "Pale_Ore-Colosseum",
@@ -1286,8 +1195,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": 3.5,
     "offsetY": 0.0,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Chest-False_Knight": {
     "name": "Geo_Chest-False_Knight",
@@ -1300,8 +1208,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.4,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Chest-Soul_Master": {
     "name": "Geo_Chest-Soul_Master",
@@ -1313,9 +1220,8 @@
     "pinScene": null,
     "mapZone": "CITY",
     "offsetX": -0.4,
-    "offsetY": 1.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetY": 1.2,
+    "offsetZ": 0.0
   },
   "Geo_Chest-Watcher_Knights": {
     "name": "Geo_Chest-Watcher_Knights",
@@ -1328,8 +1234,7 @@
     "mapZone": "CITY",
     "offsetX": -0.8,
     "offsetY": 1.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Chest-Greenpath": {
     "name": "Geo_Chest-Greenpath",
@@ -1342,8 +1247,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": 1.45,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Chest-Mantis_Lords": {
     "name": "Geo_Chest-Mantis_Lords",
@@ -1356,8 +1260,7 @@
     "mapZone": "WASTES",
     "offsetX": 0.5,
     "offsetY": 0.2,
-    "offsetZ": 0.002,
-    "isShop": false
+    "offsetZ": 0.002
   },
   "Geo_Chest-Resting_Grounds": {
     "name": "Geo_Chest-Resting_Grounds",
@@ -1370,8 +1273,7 @@
     "mapZone": "RESTING_GROUNDS",
     "offsetX": 1.6,
     "offsetY": -0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Chest-Crystal_Peak": {
     "name": "Geo_Chest-Crystal_Peak",
@@ -1383,9 +1285,8 @@
     "pinScene": null,
     "mapZone": "MINES",
     "offsetX": 0.0,
-    "offsetY": -0.3,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetY": -0.4,
+    "offsetZ": 0.001
   },
   "Geo_Chest-Weavers_Den": {
     "name": "Geo_Chest-Weavers_Den",
@@ -1398,8 +1299,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 2.9,
     "offsetY": 0.4,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Chest-Junk_Pit_1": {
     "name": "Geo_Chest-Junk_Pit_1",
@@ -1412,8 +1312,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": -2.1,
     "offsetY": -0.6,
-    "offsetZ": 0.005,
-    "isShop": false
+    "offsetZ": 0.005
   },
   "Geo_Chest-Junk_Pit_2": {
     "name": "Geo_Chest-Junk_Pit_2",
@@ -1426,8 +1325,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": -1.8,
     "offsetY": -0.6,
-    "offsetZ": 0.004,
-    "isShop": false
+    "offsetZ": 0.004
   },
   "Geo_Chest-Junk_Pit_3": {
     "name": "Geo_Chest-Junk_Pit_3",
@@ -1440,8 +1338,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": -1.5,
     "offsetY": -0.6,
-    "offsetZ": 0.003,
-    "isShop": false
+    "offsetZ": 0.003
   },
   "Geo_Chest-Junk_Pit_5": {
     "name": "Geo_Chest-Junk_Pit_5",
@@ -1454,8 +1351,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": -0.9,
     "offsetY": -0.6,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Lumafly_Escape-Junk_Pit_Chest_4": {
     "name": "Lumafly_Escape-Junk_Pit_Chest_4",
@@ -1468,8 +1364,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": -1.2,
     "offsetY": -0.6,
-    "offsetZ": 0.002,
-    "isShop": false
+    "offsetZ": 0.002
   },
   "Rancid_Egg-Sheo": {
     "name": "Rancid_Egg-Sheo",
@@ -1482,8 +1377,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": -0.65,
     "offsetY": -0.45,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Rancid_Egg-Fungal_Core": {
     "name": "Rancid_Egg-Fungal_Core",
@@ -1496,8 +1390,7 @@
     "mapZone": "WASTES",
     "offsetX": -0.8,
     "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Rancid_Egg-Queen's_Gardens": {
     "name": "Rancid_Egg-Queen's_Gardens",
@@ -1510,8 +1403,7 @@
     "mapZone": "ROYAL_GARDENS",
     "offsetX": -0.8,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Rancid_Egg-Blue_Lake": {
     "name": "Rancid_Egg-Blue_Lake",
@@ -1524,8 +1416,7 @@
     "mapZone": "RESTING_GROUNDS",
     "offsetX": -0.5,
     "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Rancid_Egg-Crystal_Peak_Dive_Entrance": {
     "name": "Rancid_Egg-Crystal_Peak_Dive_Entrance",
@@ -1538,8 +1429,7 @@
     "mapZone": "MINES",
     "offsetX": 0.3,
     "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Rancid_Egg-Crystal_Peak_Dark_Room": {
     "name": "Rancid_Egg-Crystal_Peak_Dark_Room",
@@ -1552,8 +1442,7 @@
     "mapZone": "MINES",
     "offsetX": -0.4,
     "offsetY": 0.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Rancid_Egg-Crystal_Peak_Tall_Room": {
     "name": "Rancid_Egg-Crystal_Peak_Tall_Room",
@@ -1566,8 +1455,7 @@
     "mapZone": "MINES",
     "offsetX": -0.7,
     "offsetY": 1.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Rancid_Egg-City_of_Tears_Left": {
     "name": "Rancid_Egg-City_of_Tears_Left",
@@ -1580,8 +1468,7 @@
     "mapZone": "CITY",
     "offsetX": 0.0,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Rancid_Egg-City_of_Tears_Pleasure_House": {
     "name": "Rancid_Egg-City_of_Tears_Pleasure_House",
@@ -1594,8 +1481,7 @@
     "mapZone": "CITY",
     "offsetX": 0.2,
     "offsetY": 0.9,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Rancid_Egg-Beast's_Den": {
     "name": "Rancid_Egg-Beast's_Den",
@@ -1608,8 +1494,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -0.4,
     "offsetY": 2.1,
-    "offsetZ": 0.003,
-    "isShop": false
+    "offsetZ": 0.003
   },
   "Rancid_Egg-Dark_Deepnest": {
     "name": "Rancid_Egg-Dark_Deepnest",
@@ -1622,8 +1507,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -1.3,
     "offsetY": -0.6,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Rancid_Egg-Weaver's_Den": {
     "name": "Rancid_Egg-Weaver's_Den",
@@ -1636,8 +1520,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 3.3,
     "offsetY": 0.4,
-    "offsetZ": 0.002,
-    "isShop": false
+    "offsetZ": 0.002
   },
   "Rancid_Egg-Near_Quick_Slash": {
     "name": "Rancid_Egg-Near_Quick_Slash",
@@ -1650,8 +1533,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": -0.05,
     "offsetY": -0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Rancid_Egg-Upper_Kingdom's_Edge": {
     "name": "Rancid_Egg-Upper_Kingdom's_Edge",
@@ -1664,8 +1546,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": 0.2,
     "offsetY": 1.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Rancid_Egg-Waterways_East": {
     "name": "Rancid_Egg-Waterways_East",
@@ -1678,8 +1559,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": -0.1,
     "offsetY": -0.7,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Rancid_Egg-Waterways_Main": {
     "name": "Rancid_Egg-Waterways_Main",
@@ -1692,8 +1572,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": -1.25,
     "offsetY": 0.05,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Rancid_Egg-Waterways_West_Bluggsac": {
     "name": "Rancid_Egg-Waterways_West_Bluggsac",
@@ -1706,8 +1585,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": -0.7,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Rancid_Egg-Waterways_West_Pickup": {
     "name": "Rancid_Egg-Waterways_West_Pickup",
@@ -1720,8 +1598,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": -0.5,
     "offsetY": 0.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Rancid_Egg-Tuk_Defender's_Crest": {
     "name": "Rancid_Egg-Tuk_Defender's_Crest",
@@ -1734,8 +1611,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": 0.0,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Wanderer's_Journal-Cliffs": {
     "name": "Wanderer's_Journal-Cliffs",
@@ -1748,8 +1624,7 @@
     "mapZone": "CLIFFS",
     "offsetX": 1.45,
     "offsetY": -1.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Wanderer's_Journal-Greenpath_Stag": {
     "name": "Wanderer's_Journal-Greenpath_Stag",
@@ -1762,8 +1637,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": 0.1,
     "offsetY": 1.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Wanderer's_Journal-Greenpath_Lower": {
     "name": "Wanderer's_Journal-Greenpath_Lower",
@@ -1776,8 +1650,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": 0.45,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Wanderer's_Journal-Fungal_Wastes_Thorns_Gauntlet": {
     "name": "Wanderer's_Journal-Fungal_Wastes_Thorns_Gauntlet",
@@ -1788,10 +1661,9 @@
     "pdIntValue": 0,
     "pinScene": null,
     "mapZone": "WASTES",
-    "offsetX": 0.2,
+    "offsetX": 0.0,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Wanderer's_Journal-Above_Mantis_Village": {
     "name": "Wanderer's_Journal-Above_Mantis_Village",
@@ -1804,8 +1676,7 @@
     "mapZone": "WASTES",
     "offsetX": 0.4,
     "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Wanderer's_Journal-Crystal_Peak_Crawlers": {
     "name": "Wanderer's_Journal-Crystal_Peak_Crawlers",
@@ -1818,8 +1689,7 @@
     "mapZone": "MINES",
     "offsetX": 0.2,
     "offsetY": 1.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Wanderer's_Journal-Resting_Grounds_Catacombs": {
     "name": "Wanderer's_Journal-Resting_Grounds_Catacombs",
@@ -1832,8 +1702,7 @@
     "mapZone": "RESTING_GROUNDS",
     "offsetX": 3.4,
     "offsetY": -0.3,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Wanderer's_Journal-King's_Station": {
     "name": "Wanderer's_Journal-King's_Station",
@@ -1846,8 +1715,7 @@
     "mapZone": "CITY",
     "offsetX": 0.3,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Wanderer's_Journal-Pleasure_House": {
     "name": "Wanderer's_Journal-Pleasure_House",
@@ -1860,8 +1728,7 @@
     "mapZone": "CITY",
     "offsetX": 0.0,
     "offsetY": -1.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Wanderer's_Journal-City_Storerooms": {
     "name": "Wanderer's_Journal-City_Storerooms",
@@ -1874,8 +1741,7 @@
     "mapZone": "CITY",
     "offsetX": -0.2,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Wanderer's_Journal-Ancient_Basin": {
     "name": "Wanderer's_Journal-Ancient_Basin",
@@ -1888,8 +1754,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": 1.8,
     "offsetY": -0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Wanderer's_Journal-Kingdom's_Edge_Entrance": {
     "name": "Wanderer's_Journal-Kingdom's_Edge_Entrance",
@@ -1902,8 +1767,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": -0.8,
     "offsetY": -2.6,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Wanderer's_Journal-Kingdom's_Edge_Camp": {
     "name": "Wanderer's_Journal-Kingdom's_Edge_Camp",
@@ -1916,8 +1780,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": -0.6,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Wanderer's_Journal-Kingdom's_Edge_Requires_Dive": {
     "name": "Wanderer's_Journal-Kingdom's_Edge_Requires_Dive",
@@ -1930,8 +1793,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": -0.5,
     "offsetY": 0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Hallownest_Seal-Crossroads_Well": {
     "name": "Hallownest_Seal-Crossroads_Well",
@@ -1944,8 +1806,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.2,
     "offsetY": 0.25,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Hallownest_Seal-Greenpath": {
     "name": "Hallownest_Seal-Greenpath",
@@ -1958,8 +1819,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": -1.85,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Hallownest_Seal-Fog_Canyon_West": {
     "name": "Hallownest_Seal-Fog_Canyon_West",
@@ -1972,8 +1832,7 @@
     "mapZone": "FOG_CANYON",
     "offsetX": 0.2,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Hallownest_Seal-Fog_Canyon_East": {
     "name": "Hallownest_Seal-Fog_Canyon_East",
@@ -1986,8 +1845,7 @@
     "mapZone": "FOG_CANYON",
     "offsetX": -0.15,
     "offsetY": 0.9,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Hallownest_Seal-Queen's_Station": {
     "name": "Hallownest_Seal-Queen's_Station",
@@ -2000,8 +1858,7 @@
     "mapZone": "WASTES",
     "offsetX": 0.2,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Hallownest_Seal-Fungal_Wastes_Sporgs": {
     "name": "Hallownest_Seal-Fungal_Wastes_Sporgs",
@@ -2014,8 +1871,7 @@
     "mapZone": "WASTES",
     "offsetX": 0.8,
     "offsetY": 0.7,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Hallownest_Seal-Mantis_Lords": {
     "name": "Hallownest_Seal-Mantis_Lords",
@@ -2028,8 +1884,7 @@
     "mapZone": "WASTES",
     "offsetX": 0.1,
     "offsetY": 0.2,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Hallownest_Seal-Resting_Grounds_Catacombs": {
     "name": "Hallownest_Seal-Resting_Grounds_Catacombs",
@@ -2042,8 +1897,7 @@
     "mapZone": "RESTING_GROUNDS",
     "offsetX": -0.4,
     "offsetY": 0.0,
-    "offsetZ": 0.002,
-    "isShop": false
+    "offsetZ": 0.002
   },
   "Hallownest_Seal-King's_Station": {
     "name": "Hallownest_Seal-King's_Station",
@@ -2056,8 +1910,7 @@
     "mapZone": "CITY",
     "offsetX": -0.4,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Hallownest_Seal-City_Rafters": {
     "name": "Hallownest_Seal-City_Rafters",
@@ -2070,8 +1923,7 @@
     "mapZone": "CITY",
     "offsetX": 0.15,
     "offsetY": 0.6,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Hallownest_Seal-Soul_Sanctum": {
     "name": "Hallownest_Seal-Soul_Sanctum",
@@ -2083,9 +1935,8 @@
     "pinScene": null,
     "mapZone": "CITY",
     "offsetX": 0.2,
-    "offsetY": -0.7,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetY": -0.4,
+    "offsetZ": 0.0
   },
   "Hallownest_Seal-Watcher_Knight": {
     "name": "Hallownest_Seal-Watcher_Knight",
@@ -2098,8 +1949,7 @@
     "mapZone": "CITY",
     "offsetX": -0.4,
     "offsetY": 1.4,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Hallownest_Seal-Deepnest_By_Mantis_Lords": {
     "name": "Hallownest_Seal-Deepnest_By_Mantis_Lords",
@@ -2112,8 +1962,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 0.9,
     "offsetY": 0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Hallownest_Seal-Beast's_Den": {
     "name": "Hallownest_Seal-Beast's_Den",
@@ -2126,8 +1975,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 0.0,
     "offsetY": 1.7,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Hallownest_Seal-Queen's_Gardens": {
     "name": "Hallownest_Seal-Queen's_Gardens",
@@ -2140,8 +1988,7 @@
     "mapZone": "ROYAL_GARDENS",
     "offsetX": -1.0,
     "offsetY": -1.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "King's_Idol-Cliffs": {
     "name": "King's_Idol-Cliffs",
@@ -2154,8 +2001,7 @@
     "mapZone": "CLIFFS",
     "offsetX": -0.6,
     "offsetY": -2.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "King's_Idol-Crystal_Peak": {
     "name": "King's_Idol-Crystal_Peak",
@@ -2168,8 +2014,7 @@
     "mapZone": "MINES",
     "offsetX": 1.6,
     "offsetY": 0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "King's_Idol-Glade_of_Hope": {
     "name": "King's_Idol-Glade_of_Hope",
@@ -2182,8 +2027,7 @@
     "mapZone": "RESTING_GROUNDS",
     "offsetX": 1.6,
     "offsetY": -0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "King's_Idol-Dung_Defender": {
     "name": "King's_Idol-Dung_Defender",
@@ -2196,8 +2040,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": 0.2,
     "offsetY": 0.0,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "King's_Idol-Great_Hopper": {
     "name": "King's_Idol-Great_Hopper",
@@ -2210,8 +2053,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": -0.5,
     "offsetY": -0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "King's_Idol-Pale_Lurker": {
     "name": "King's_Idol-Pale_Lurker",
@@ -2224,8 +2066,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": 2.1,
     "offsetY": -0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "King's_Idol-Deepnest": {
     "name": "King's_Idol-Deepnest",
@@ -2238,8 +2079,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -0.7,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Arcane_Egg-Lifeblood_Core": {
     "name": "Arcane_Egg-Lifeblood_Core",
@@ -2252,8 +2092,7 @@
     "mapZone": "ABYSS",
     "offsetX": 0.4,
     "offsetY": -1.15,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Arcane_Egg-Shade_Cloak": {
     "name": "Arcane_Egg-Shade_Cloak",
@@ -2266,8 +2105,7 @@
     "mapZone": "ABYSS",
     "offsetX": 0.0,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Arcane_Egg-Birthplace": {
     "name": "Arcane_Egg-Birthplace",
@@ -2280,8 +2118,7 @@
     "mapZone": "ABYSS",
     "offsetX": -0.6,
     "offsetY": -4.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Whispering_Root-Crossroads": {
     "name": "Whispering_Root-Crossroads",
@@ -2294,8 +2131,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.5,
     "offsetY": 1.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Whispering_Root-Greenpath": {
     "name": "Whispering_Root-Greenpath",
@@ -2308,8 +2144,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": -1.9,
     "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Whispering_Root-Leg_Eater": {
     "name": "Whispering_Root-Leg_Eater",
@@ -2322,8 +2157,7 @@
     "mapZone": "WASTES",
     "offsetX": 0.3,
     "offsetY": -0.7,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Whispering_Root-Mantis_Village": {
     "name": "Whispering_Root-Mantis_Village",
@@ -2336,8 +2170,7 @@
     "mapZone": "WASTES",
     "offsetX": 0.1,
     "offsetY": -0.25,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Whispering_Root-Deepnest": {
     "name": "Whispering_Root-Deepnest",
@@ -2350,8 +2183,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -1.8,
     "offsetY": -0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Whispering_Root-Queens_Gardens": {
     "name": "Whispering_Root-Queens_Gardens",
@@ -2364,8 +2196,7 @@
     "mapZone": "ROYAL_GARDENS",
     "offsetX": 0.3,
     "offsetY": -0.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Whispering_Root-Kingdoms_Edge": {
     "name": "Whispering_Root-Kingdoms_Edge",
@@ -2378,8 +2209,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": 0.2,
     "offsetY": -2.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Whispering_Root-Waterways": {
     "name": "Whispering_Root-Waterways",
@@ -2392,8 +2222,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": 0.5,
     "offsetY": -1.7,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Whispering_Root-City": {
     "name": "Whispering_Root-City",
@@ -2406,8 +2235,7 @@
     "mapZone": "CITY",
     "offsetX": 0.8,
     "offsetY": 0.0,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Whispering_Root-Resting_Grounds": {
     "name": "Whispering_Root-Resting_Grounds",
@@ -2420,8 +2248,7 @@
     "mapZone": "RESTING_GROUNDS",
     "offsetX": -0.3,
     "offsetY": 0.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Whispering_Root-Spirits_Glade": {
     "name": "Whispering_Root-Spirits_Glade",
@@ -2434,8 +2261,7 @@
     "mapZone": "RESTING_GROUNDS",
     "offsetX": 1.5,
     "offsetY": 0.7,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Whispering_Root-Crystal_Peak": {
     "name": "Whispering_Root-Crystal_Peak",
@@ -2448,8 +2274,7 @@
     "mapZone": "MINES",
     "offsetX": 0.2,
     "offsetY": -0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Whispering_Root-Howling_Cliffs": {
     "name": "Whispering_Root-Howling_Cliffs",
@@ -2462,8 +2287,7 @@
     "mapZone": "CLIFFS",
     "offsetX": 0.5,
     "offsetY": -1.8,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Whispering_Root-Ancestral_Mound": {
     "name": "Whispering_Root-Ancestral_Mound",
@@ -2476,8 +2300,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.4,
     "offsetY": 0.6,
-    "offsetZ": -0.495,
-    "isShop": false
+    "offsetZ": -0.495
   },
   "Whispering_Root-Hive": {
     "name": "Whispering_Root-Hive",
@@ -2490,8 +2313,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": 0.5,
     "offsetY": -0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Boss_Essence-Elder_Hu": {
     "name": "Boss_Essence-Elder_Hu",
@@ -2504,8 +2326,7 @@
     "mapZone": "WASTES",
     "offsetX": 0.3,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Boss_Essence-Xero": {
     "name": "Boss_Essence-Xero",
@@ -2518,8 +2339,7 @@
     "mapZone": "RESTING_GROUNDS",
     "offsetX": 0.8,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Boss_Essence-Gorb": {
     "name": "Boss_Essence-Gorb",
@@ -2532,8 +2352,7 @@
     "mapZone": "CLIFFS",
     "offsetX": -1.3,
     "offsetY": 1.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Boss_Essence-Marmu": {
     "name": "Boss_Essence-Marmu",
@@ -2546,8 +2365,7 @@
     "mapZone": "ROYAL_GARDENS",
     "offsetX": -0.4,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Boss_Essence-No_Eyes": {
     "name": "Boss_Essence-No_Eyes",
@@ -2560,8 +2378,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": 1.4,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Boss_Essence-Galien": {
     "name": "Boss_Essence-Galien",
@@ -2574,8 +2391,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -0.7,
     "offsetY": -0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Boss_Essence-Markoth": {
     "name": "Boss_Essence-Markoth",
@@ -2588,8 +2404,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": -0.1,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Boss_Essence-Failed_Champion": {
     "name": "Boss_Essence-Failed_Champion",
@@ -2602,8 +2417,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.1,
     "offsetY": 0.5,
-    "offsetZ": -0.99,
-    "isShop": false
+    "offsetZ": -0.99
   },
   "Boss_Essence-Soul_Tyrant": {
     "name": "Boss_Essence-Soul_Tyrant",
@@ -2616,8 +2430,7 @@
     "mapZone": "CITY",
     "offsetX": 0.3,
     "offsetY": -0.7,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Boss_Essence-Lost_Kin": {
     "name": "Boss_Essence-Lost_Kin",
@@ -2630,8 +2443,7 @@
     "mapZone": "ABYSS",
     "offsetX": -1.35,
     "offsetY": -0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Boss_Essence-White_Defender": {
     "name": "Boss_Essence-White_Defender",
@@ -2644,8 +2456,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": -0.2,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Boss_Essence-Grey_Prince_Zote": {
     "name": "Boss_Essence-Grey_Prince_Zote",
@@ -2656,10 +2467,9 @@
     "pdIntValue": 0,
     "pinScene": "Town",
     "mapZone": "TOWN",
-    "offsetX": 0.68,
+    "offsetX": 0.8,
     "offsetY": -0.6,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.0095
   },
   "Grub-Crossroads_Acid": {
     "name": "Grub-Crossroads_Acid",
@@ -2672,8 +2482,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.7,
     "offsetY": 0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Crossroads_Center": {
     "name": "Grub-Crossroads_Center",
@@ -2686,8 +2495,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.45,
     "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Crossroads_Stag": {
     "name": "Grub-Crossroads_Stag",
@@ -2700,8 +2508,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.2,
     "offsetY": 0.2,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Grub-Crossroads_Spike": {
     "name": "Grub-Crossroads_Spike",
@@ -2714,8 +2521,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.35,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Crossroads_Guarded": {
     "name": "Grub-Crossroads_Guarded",
@@ -2728,8 +2534,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.4,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Greenpath_Cornifer": {
     "name": "Grub-Greenpath_Cornifer",
@@ -2742,8 +2547,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": 1.5,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Greenpath_Journal": {
     "name": "Grub-Greenpath_Journal",
@@ -2756,8 +2560,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": 0.2,
     "offsetY": -0.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Greenpath_MMC": {
     "name": "Grub-Greenpath_MMC",
@@ -2770,8 +2573,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": 0.5,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Greenpath_Stag": {
     "name": "Grub-Greenpath_Stag",
@@ -2784,8 +2586,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": 0.9,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Fog_Canyon": {
     "name": "Grub-Fog_Canyon",
@@ -2798,8 +2599,7 @@
     "mapZone": "FOG_CANYON",
     "offsetX": -0.85,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Fungal_Bouncy": {
     "name": "Grub-Fungal_Bouncy",
@@ -2812,8 +2612,7 @@
     "mapZone": "WASTES",
     "offsetX": 1.45,
     "offsetY": 0.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Fungal_Spore_Shroom": {
     "name": "Grub-Fungal_Spore_Shroom",
@@ -2826,8 +2625,7 @@
     "mapZone": "WASTES",
     "offsetX": -0.5,
     "offsetY": 0.35,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Deepnest_Mimic": {
     "name": "Grub-Deepnest_Mimic",
@@ -2840,8 +2638,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 0.6,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Deepnest_Nosk": {
     "name": "Grub-Deepnest_Nosk",
@@ -2854,8 +2651,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 1.3,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Deepnest_Spike": {
     "name": "Grub-Deepnest_Spike",
@@ -2868,8 +2664,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -0.4,
     "offsetY": 1.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Dark_Deepnest": {
     "name": "Grub-Dark_Deepnest",
@@ -2882,8 +2677,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 0.4,
     "offsetY": 0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Beast's_Den": {
     "name": "Grub-Beast's_Den",
@@ -2896,8 +2690,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 0.0,
     "offsetY": 2.1,
-    "offsetZ": 0.002,
-    "isShop": false
+    "offsetZ": 0.002
   },
   "Grub-Kingdom's_Edge_Oro": {
     "name": "Grub-Kingdom's_Edge_Oro",
@@ -2910,8 +2703,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": 1.6,
     "offsetY": -0.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Kingdom's_Edge_Camp": {
     "name": "Grub-Kingdom's_Edge_Camp",
@@ -2924,8 +2716,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": 0.2,
     "offsetY": -0.25,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Hive_External": {
     "name": "Grub-Hive_External",
@@ -2938,8 +2729,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": -1.2,
     "offsetY": 0.75,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Hive_Internal": {
     "name": "Grub-Hive_Internal",
@@ -2952,8 +2742,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": 0.7,
     "offsetY": 0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Basin_Requires_Wings": {
     "name": "Grub-Basin_Requires_Wings",
@@ -2966,8 +2755,7 @@
     "mapZone": "ABYSS",
     "offsetX": 0.05,
     "offsetY": 1.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Basin_Requires_Dive": {
     "name": "Grub-Basin_Requires_Dive",
@@ -2980,8 +2768,7 @@
     "mapZone": "ABYSS",
     "offsetX": 1.85,
     "offsetY": -0.6,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Waterways_Main": {
     "name": "Grub-Waterways_Main",
@@ -2994,8 +2781,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": 1.2,
     "offsetY": -0.25,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Isma's_Grove": {
     "name": "Grub-Isma's_Grove",
@@ -3008,8 +2794,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": 1.0,
     "offsetY": 0.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Waterways_Requires_Tram": {
     "name": "Grub-Waterways_Requires_Tram",
@@ -3022,8 +2807,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": 1.5,
     "offsetY": 0.25,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-City_of_Tears_Left": {
     "name": "Grub-City_of_Tears_Left",
@@ -3036,8 +2820,7 @@
     "mapZone": "CITY",
     "offsetX": 0.45,
     "offsetY": 1.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Soul_Sanctum": {
     "name": "Grub-Soul_Sanctum",
@@ -3049,9 +2832,8 @@
     "pinScene": null,
     "mapZone": "CITY",
     "offsetX": -0.4,
-    "offsetY": -0.7,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetY": -0.8,
+    "offsetZ": 0.0
   },
   "Grub-Watcher's_Spire": {
     "name": "Grub-Watcher's_Spire",
@@ -3064,8 +2846,7 @@
     "mapZone": "CITY",
     "offsetX": -0.1,
     "offsetY": -0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-City_of_Tears_Guarded": {
     "name": "Grub-City_of_Tears_Guarded",
@@ -3078,8 +2859,7 @@
     "mapZone": "CITY",
     "offsetX": 1.1,
     "offsetY": -0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-King's_Station": {
     "name": "Grub-King's_Station",
@@ -3092,8 +2872,7 @@
     "mapZone": "CITY",
     "offsetX": 0.15,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Resting_Grounds": {
     "name": "Grub-Resting_Grounds",
@@ -3104,10 +2883,9 @@
     "pdIntValue": 0,
     "pinScene": null,
     "mapZone": "RESTING_GROUNDS",
-    "offsetX": 0.9,
-    "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetX": -0.3,
+    "offsetY": 0.9,
+    "offsetZ": 0.0
   },
   "Grub-Crystal_Peak_Below_Chest": {
     "name": "Grub-Crystal_Peak_Below_Chest",
@@ -3120,8 +2898,7 @@
     "mapZone": "MINES",
     "offsetX": 0.0,
     "offsetY": 1.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Crystallized_Mound": {
     "name": "Grub-Crystallized_Mound",
@@ -3134,8 +2911,7 @@
     "mapZone": "MINES",
     "offsetX": 0.4,
     "offsetY": 0.8,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Grub-Crystal_Peak_Spike": {
     "name": "Grub-Crystal_Peak_Spike",
@@ -3148,8 +2924,7 @@
     "mapZone": "MINES",
     "offsetX": 0.1,
     "offsetY": 0.7,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Crystal_Peak_Mimic": {
     "name": "Grub-Crystal_Peak_Mimic",
@@ -3162,8 +2937,7 @@
     "mapZone": "MINES",
     "offsetX": 0.3,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Crystal_Peak_Crushers": {
     "name": "Grub-Crystal_Peak_Crushers",
@@ -3174,10 +2948,9 @@
     "pdIntValue": 0,
     "pinScene": null,
     "mapZone": "MINES",
-    "offsetX": 0.1,
+    "offsetX": 0.0,
     "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Crystal_Heart": {
     "name": "Grub-Crystal_Heart",
@@ -3190,8 +2963,7 @@
     "mapZone": "MINES",
     "offsetX": -2.5,
     "offsetY": 0.05,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Hallownest_Crown": {
     "name": "Grub-Hallownest_Crown",
@@ -3204,8 +2976,7 @@
     "mapZone": "MINES",
     "offsetX": 0.0,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Howling_Cliffs": {
     "name": "Grub-Howling_Cliffs",
@@ -3218,8 +2989,7 @@
     "mapZone": "CLIFFS",
     "offsetX": 0.2,
     "offsetY": 0.6,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Queen's_Gardens_Stag": {
     "name": "Grub-Queen's_Gardens_Stag",
@@ -3232,8 +3002,7 @@
     "mapZone": "ROYAL_GARDENS",
     "offsetX": -1.0,
     "offsetY": 0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Queen's_Gardens_Marmu": {
     "name": "Grub-Queen's_Gardens_Marmu",
@@ -3246,8 +3015,7 @@
     "mapZone": "ROYAL_GARDENS",
     "offsetX": -0.85,
     "offsetY": 1.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Queen's_Gardens_Top": {
     "name": "Grub-Queen's_Gardens_Top",
@@ -3260,8 +3028,7 @@
     "mapZone": "ROYAL_GARDENS",
     "offsetX": 0.2,
     "offsetY": 1.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Collector_1": {
     "name": "Grub-Collector_1",
@@ -3274,8 +3041,7 @@
     "mapZone": "CITY",
     "offsetX": 0.8,
     "offsetY": 1.25,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Collector_2": {
     "name": "Grub-Collector_2",
@@ -3288,8 +3054,7 @@
     "mapZone": "CITY",
     "offsetX": 0.4,
     "offsetY": 1.25,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grub-Collector_3": {
     "name": "Grub-Collector_3",
@@ -3302,8 +3067,7 @@
     "mapZone": "CITY",
     "offsetX": 0.0,
     "offsetY": 1.25,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Mimic_Grub-Deepnest_1": {
     "name": "Mimic_Grub-Deepnest_1",
@@ -3316,8 +3080,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 0.0,
     "offsetY": 0.0,
-    "offsetZ": 0.002,
-    "isShop": false
+    "offsetZ": 0.002
   },
   "Mimic_Grub-Deepnest_2": {
     "name": "Mimic_Grub-Deepnest_2",
@@ -3330,8 +3093,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -0.3,
     "offsetY": 0.0,
-    "offsetZ": 0.003,
-    "isShop": false
+    "offsetZ": 0.003
   },
   "Mimic_Grub-Deepnest_3": {
     "name": "Mimic_Grub-Deepnest_3",
@@ -3344,8 +3106,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 0.3,
     "offsetY": 0.0,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Mimic_Grub-Crystal_Peak": {
     "name": "Mimic_Grub-Crystal_Peak",
@@ -3358,8 +3119,7 @@
     "mapZone": "MINES",
     "offsetX": 0.3,
     "offsetY": -0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Crossroads_Map": {
     "name": "Crossroads_Map",
@@ -3372,8 +3132,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.1,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Greenpath_Map": {
     "name": "Greenpath_Map",
@@ -3386,8 +3145,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": 1.45,
     "offsetY": -0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Fog_Canyon_Map": {
     "name": "Fog_Canyon_Map",
@@ -3400,8 +3158,7 @@
     "mapZone": "FOG_CANYON",
     "offsetX": -0.3,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Fungal_Wastes_Map": {
     "name": "Fungal_Wastes_Map",
@@ -3414,8 +3171,7 @@
     "mapZone": "WASTES",
     "offsetX": -1.55,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Deepnest_Map-Upper": {
     "name": "Deepnest_Map-Upper",
@@ -3428,8 +3184,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -0.45,
     "offsetY": -0.8,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Deepnest_Map-Right": {
     "name": "Deepnest_Map-Right",
@@ -3442,8 +3197,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -0.7,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Ancient_Basin_Map": {
     "name": "Ancient_Basin_Map",
@@ -3456,8 +3210,7 @@
     "mapZone": "ABYSS",
     "offsetX": 0.5,
     "offsetY": 0.4,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Kingdom's_Edge_Map": {
     "name": "Kingdom's_Edge_Map",
@@ -3470,8 +3223,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": -0.7,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "City_of_Tears_Map": {
     "name": "City_of_Tears_Map",
@@ -3484,8 +3236,7 @@
     "mapZone": "CITY",
     "offsetX": 0.2,
     "offsetY": -0.375,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Royal_Waterways_Map": {
     "name": "Royal_Waterways_Map",
@@ -3497,9 +3248,8 @@
     "pinScene": null,
     "mapZone": "WATERWAYS",
     "offsetX": -0.2,
-    "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetY": 0.3,
+    "offsetZ": 0.0
   },
   "Howling_Cliffs_Map": {
     "name": "Howling_Cliffs_Map",
@@ -3512,8 +3262,7 @@
     "mapZone": "CLIFFS",
     "offsetX": 1.8,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Crystal_Peak_Map": {
     "name": "Crystal_Peak_Map",
@@ -3526,8 +3275,7 @@
     "mapZone": "MINES",
     "offsetX": 1.35,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Queen's_Gardens_Map": {
     "name": "Queen's_Gardens_Map",
@@ -3540,8 +3288,7 @@
     "mapZone": "ROYAL_GARDENS",
     "offsetX": 0.4,
     "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Resting_Grounds_Map": {
     "name": "Resting_Grounds_Map",
@@ -3554,8 +3301,7 @@
     "mapZone": "RESTING_GROUNDS",
     "offsetX": -0.8,
     "offsetY": -0.05,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Dirtmouth_Stag": {
     "name": "Dirtmouth_Stag",
@@ -3568,8 +3314,7 @@
     "mapZone": "TOWN",
     "offsetX": 0.4,
     "offsetY": -0.6,
-    "offsetZ": 0.01,
-    "isShop": false
+    "offsetZ": 0.009
   },
   "Crossroads_Stag": {
     "name": "Crossroads_Stag",
@@ -3582,8 +3327,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.3,
     "offsetY": 0.05,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Greenpath_Stag": {
     "name": "Greenpath_Stag",
@@ -3596,8 +3340,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": -0.15,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Queen's_Station_Stag": {
     "name": "Queen's_Station_Stag",
@@ -3610,8 +3353,7 @@
     "mapZone": "WASTES",
     "offsetX": -0.2,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Queen's_Gardens_Stag": {
     "name": "Queen's_Gardens_Stag",
@@ -3624,8 +3366,7 @@
     "mapZone": "ROYAL_GARDENS",
     "offsetX": 1.68,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "City_Storerooms_Stag": {
     "name": "City_Storerooms_Stag",
@@ -3638,8 +3379,7 @@
     "mapZone": "CITY",
     "offsetX": 0.2,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "King's_Station_Stag": {
     "name": "King's_Station_Stag",
@@ -3652,8 +3392,7 @@
     "mapZone": "CITY",
     "offsetX": 0.3,
     "offsetY": -0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Resting_Grounds_Stag": {
     "name": "Resting_Grounds_Stag",
@@ -3666,8 +3405,7 @@
     "mapZone": "RESTING_GROUNDS",
     "offsetX": 0.15,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Distant_Village_Stag": {
     "name": "Distant_Village_Stag",
@@ -3680,8 +3418,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 0.6,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Hidden_Station_Stag": {
     "name": "Hidden_Station_Stag",
@@ -3694,8 +3431,7 @@
     "mapZone": "ABYSS",
     "offsetX": 0.1,
     "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Stag_Nest_Stag": {
     "name": "Stag_Nest_Stag",
@@ -3708,8 +3444,7 @@
     "mapZone": "CLIFFS",
     "offsetX": -3.3,
     "offsetY": 1.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Lifeblood_Cocoon-King's_Pass": {
     "name": "Lifeblood_Cocoon-King's_Pass",
@@ -3722,8 +3457,7 @@
     "mapZone": "TOWN",
     "offsetX": -1.25,
     "offsetY": 0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Lifeblood_Cocoon-Ancestral_Mound": {
     "name": "Lifeblood_Cocoon-Ancestral_Mound",
@@ -3736,8 +3470,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.4,
     "offsetY": 0.2,
-    "offsetZ": -0.497,
-    "isShop": false
+    "offsetZ": -0.497
   },
   "Lifeblood_Cocoon-Greenpath": {
     "name": "Lifeblood_Cocoon-Greenpath",
@@ -3750,8 +3483,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": -0.1,
     "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Lifeblood_Cocoon-Fog_Canyon_West": {
     "name": "Lifeblood_Cocoon-Fog_Canyon_West",
@@ -3764,8 +3496,7 @@
     "mapZone": "FOG_CANYON",
     "offsetX": -0.3,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Lifeblood_Cocoon-Mantis_Village": {
     "name": "Lifeblood_Cocoon-Mantis_Village",
@@ -3776,10 +3507,9 @@
     "pdIntValue": 0,
     "pinScene": null,
     "mapZone": "WASTES",
-    "offsetX": -0.7,
-    "offsetY": -0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetX": -0.8,
+    "offsetY": -0.8,
+    "offsetZ": 0.0
   },
   "Lifeblood_Cocoon-Failed_Tramway": {
     "name": "Lifeblood_Cocoon-Failed_Tramway",
@@ -3792,8 +3522,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 0.4,
     "offsetY": 0.25,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Lifeblood_Cocoon-Galien": {
     "name": "Lifeblood_Cocoon-Galien",
@@ -3806,8 +3535,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -0.05,
     "offsetY": 0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Lifeblood_Cocoon-Kingdom's_Edge": {
     "name": "Lifeblood_Cocoon-Kingdom's_Edge",
@@ -3820,8 +3548,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": 0.4,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grimmkin_Flame-City_Storerooms": {
     "name": "Grimmkin_Flame-City_Storerooms",
@@ -3834,8 +3561,7 @@
     "mapZone": "CITY",
     "offsetX": 0.5,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grimmkin_Flame-Greenpath": {
     "name": "Grimmkin_Flame-Greenpath",
@@ -3848,8 +3574,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": -0.2,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grimmkin_Flame-Crystal_Peak": {
     "name": "Grimmkin_Flame-Crystal_Peak",
@@ -3862,8 +3587,7 @@
     "mapZone": "MINES",
     "offsetX": 0.2,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grimmkin_Flame-King's_Pass": {
     "name": "Grimmkin_Flame-King's_Pass",
@@ -3876,8 +3600,7 @@
     "mapZone": "TOWN",
     "offsetX": -0.5,
     "offsetY": -0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grimmkin_Flame-Resting_Grounds": {
     "name": "Grimmkin_Flame-Resting_Grounds",
@@ -3890,8 +3613,7 @@
     "mapZone": "RESTING_GROUNDS",
     "offsetX": -0.3,
     "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grimmkin_Flame-Kingdom's_Edge": {
     "name": "Grimmkin_Flame-Kingdom's_Edge",
@@ -3904,8 +3626,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": -0.3,
     "offsetY": -0.7,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grimmkin_Flame-Fungal_Core": {
     "name": "Grimmkin_Flame-Fungal_Core",
@@ -3918,8 +3639,7 @@
     "mapZone": "WASTES",
     "offsetX": -0.1,
     "offsetY": -0.7,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grimmkin_Flame-Ancient_Basin": {
     "name": "Grimmkin_Flame-Ancient_Basin",
@@ -3932,8 +3652,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": 0.2,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grimmkin_Flame-Hive": {
     "name": "Grimmkin_Flame-Hive",
@@ -3946,8 +3665,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": 0.4,
     "offsetY": 0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Grimmkin_Flame-Brumm": {
     "name": "Grimmkin_Flame-Brumm",
@@ -3960,8 +3678,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -0.3,
     "offsetY": 0.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Hunter's_Journal": {
     "name": "Hunter's_Journal",
@@ -3974,8 +3691,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": 0.3,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Journal_Entry-Void_Tendrils": {
     "name": "Journal_Entry-Void_Tendrils",
@@ -3988,8 +3704,7 @@
     "mapZone": "ABYSS",
     "offsetX": 1.8,
     "offsetY": -0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Journal_Entry-Charged_Lumafly": {
     "name": "Journal_Entry-Charged_Lumafly",
@@ -4002,8 +3717,7 @@
     "mapZone": "FOG_CANYON",
     "offsetX": -0.21,
     "offsetY": -0.15,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Journal_Entry-Goam": {
     "name": "Journal_Entry-Goam",
@@ -4016,8 +3730,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.1,
     "offsetY": -0.15,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Journal_Entry-Garpede": {
     "name": "Journal_Entry-Garpede",
@@ -4030,8 +3743,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -1.5,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Journal_Entry-Seal_of_Binding": {
     "name": "Journal_Entry-Seal_of_Binding",
@@ -4044,8 +3756,7 @@
     "mapZone": "ABYSS",
     "offsetX": 1.0,
     "offsetY": -0.2,
-    "offsetZ": 0.008,
-    "isShop": false
+    "offsetZ": 0.008
   },
   "Elevator_Pass": {
     "name": "Elevator_Pass",
@@ -4059,7 +3770,6 @@
     "offsetX": 0.0,
     "offsetY": -1.26,
     "offsetZ": 0.0,
-    "isShop": false,
     "randoOnly": true
   },
   "Split_Mothwing_Cloak": {
@@ -4074,7 +3784,6 @@
     "offsetX": -0.25,
     "offsetY": 0.4,
     "offsetZ": 0.0,
-    "isShop": false,
     "randoOnly": true
   },
   "Left_Mantis_Claw": {
@@ -4089,7 +3798,6 @@
     "offsetX": -1.8,
     "offsetY": -0.1,
     "offsetZ": 0.001,
-    "isShop": false,
     "randoOnly": true
   },
   "Right_Mantis_Claw": {
@@ -4104,7 +3812,6 @@
     "offsetX": -1.4,
     "offsetY": -0.1,
     "offsetZ": 0.002,
-    "isShop": false,
     "randoOnly": true
   },
   "Split_Crystal_Heart": {
@@ -4119,7 +3826,6 @@
     "offsetX": 1.6,
     "offsetY": -0.55,
     "offsetZ": 0.0,
-    "isShop": false,
     "randoOnly": true
   },
   "Geo_Rock-Broken_Elevator_1": {
@@ -4133,8 +3839,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": -0.3,
     "offsetY": -0.8,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Broken_Elevator_2": {
     "name": "Geo_Rock-Broken_Elevator_2",
@@ -4147,8 +3852,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": 0.1,
     "offsetY": 0.1,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Rock-Broken_Elevator_3": {
     "name": "Geo_Rock-Broken_Elevator_3",
@@ -4161,8 +3865,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": 0.1,
     "offsetY": 0.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Broken_Bridge_Upper": {
     "name": "Geo_Rock-Broken_Bridge_Upper",
@@ -4175,8 +3878,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": -0.3,
     "offsetY": 0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Broken_Bridge_Lower": {
     "name": "Geo_Rock-Broken_Bridge_Lower",
@@ -4189,8 +3891,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": -1.0,
     "offsetY": -0.3,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Rock-Broken_Bridge_Lower_Dupe": {
     "name": "Geo_Rock-Broken_Bridge_Lower_Dupe",
@@ -4203,8 +3904,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": -1.3,
     "offsetY": -0.3,
-    "offsetZ": 0.002,
-    "isShop": false
+    "offsetZ": 0.002
   },
   "Geo_Rock-Abyss_1": {
     "name": "Geo_Rock-Abyss_1",
@@ -4217,8 +3917,7 @@
     "mapZone": "ABYSS",
     "offsetX": 0.6,
     "offsetY": 1.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Abyss_2": {
     "name": "Geo_Rock-Abyss_2",
@@ -4231,8 +3930,7 @@
     "mapZone": "ABYSS",
     "offsetX": 0.3,
     "offsetY": 0.9,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Abyss_3": {
     "name": "Geo_Rock-Abyss_3",
@@ -4245,8 +3943,7 @@
     "mapZone": "ABYSS",
     "offsetX": -0.2,
     "offsetY": -1.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Basin_Tunnel": {
     "name": "Geo_Rock-Basin_Tunnel",
@@ -4259,8 +3956,7 @@
     "mapZone": "ABYSS",
     "offsetX": -0.3,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Basin_Grub": {
     "name": "Geo_Rock-Basin_Grub",
@@ -4273,8 +3969,7 @@
     "mapZone": "ABYSS",
     "offsetX": 1.4,
     "offsetY": 0.6,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Basin_Before_Broken_Vessel": {
     "name": "Geo_Rock-Basin_Before_Broken_Vessel",
@@ -4287,8 +3982,7 @@
     "mapZone": "ABYSS",
     "offsetX": 0.8,
     "offsetY": -0.8,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Cliffs_Main_1": {
     "name": "Geo_Rock-Cliffs_Main_1",
@@ -4301,8 +3995,7 @@
     "mapZone": "CLIFFS",
     "offsetX": 0.3,
     "offsetY": 0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Cliffs_Main_2": {
     "name": "Geo_Rock-Cliffs_Main_2",
@@ -4315,8 +4008,7 @@
     "mapZone": "CLIFFS",
     "offsetX": 0.1,
     "offsetY": -0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Cliffs_Main_3": {
     "name": "Geo_Rock-Cliffs_Main_3",
@@ -4329,8 +4021,7 @@
     "mapZone": "CLIFFS",
     "offsetX": 1.65,
     "offsetY": -0.5,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Rock-Cliffs_Main_4": {
     "name": "Geo_Rock-Cliffs_Main_4",
@@ -4343,8 +4034,7 @@
     "mapZone": "CLIFFS",
     "offsetX": 0.7,
     "offsetY": -1.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Below_Gorb_Dupe": {
     "name": "Geo_Rock-Below_Gorb_Dupe",
@@ -4357,8 +4047,7 @@
     "mapZone": "CLIFFS",
     "offsetX": -1.6,
     "offsetY": 0.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Below_Gorb": {
     "name": "Geo_Rock-Below_Gorb",
@@ -4371,8 +4060,7 @@
     "mapZone": "CLIFFS",
     "offsetX": -1.2,
     "offsetY": 0.5,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Rock-Crossroads_Well": {
     "name": "Geo_Rock-Crossroads_Well",
@@ -4385,8 +4073,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.1,
     "offsetY": -0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Crossroads_Center_Grub": {
     "name": "Geo_Rock-Crossroads_Center_Grub",
@@ -4399,8 +4086,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.4,
     "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Crossroads_Root": {
     "name": "Geo_Rock-Crossroads_Root",
@@ -4413,8 +4099,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.4,
     "offsetY": 1.1,
-    "offsetZ": 0.003,
-    "isShop": false
+    "offsetZ": 0.003
   },
   "Geo_Rock-Crossroads_Root_Dupe_1": {
     "name": "Geo_Rock-Crossroads_Root_Dupe_1",
@@ -4427,8 +4112,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.2,
     "offsetY": 1.1,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Rock-Crossroads_Root_Dupe_2": {
     "name": "Geo_Rock-Crossroads_Root_Dupe_2",
@@ -4441,8 +4125,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.1,
     "offsetY": 1.1,
-    "offsetZ": 0.002,
-    "isShop": false
+    "offsetZ": 0.002
   },
   "Geo_Rock-Crossroads_Aspid_Arena": {
     "name": "Geo_Rock-Crossroads_Aspid_Arena",
@@ -4455,8 +4138,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.3,
     "offsetY": 0.3,
-    "offsetZ": 0.002,
-    "isShop": false
+    "offsetZ": 0.002
   },
   "Geo_Rock-Crossroads_Aspid_Arena_Dupe_1": {
     "name": "Geo_Rock-Crossroads_Aspid_Arena_Dupe_1",
@@ -4469,8 +4151,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.3,
     "offsetY": 0.0,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Rock-Crossroads_Aspid_Arena_Dupe_2": {
     "name": "Geo_Rock-Crossroads_Aspid_Arena_Dupe_2",
@@ -4483,8 +4164,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.3,
     "offsetY": -0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Crossroads_Aspid_Arena_Hidden": {
     "name": "Geo_Rock-Crossroads_Aspid_Arena_Hidden",
@@ -4497,8 +4177,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.45,
     "offsetY": 0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Crossroads_Above_False_Knight": {
     "name": "Geo_Rock-Crossroads_Above_False_Knight",
@@ -4511,8 +4190,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.4,
     "offsetY": 0.5,
-    "offsetZ": -0.99,
-    "isShop": false
+    "offsetZ": -0.99
   },
   "Geo_Rock-Crossroads_Before_Acid_Grub": {
     "name": "Geo_Rock-Crossroads_Before_Acid_Grub",
@@ -4525,8 +4203,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.0,
     "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Crossroads_Below_Goam_Mask_Shard": {
     "name": "Geo_Rock-Crossroads_Below_Goam_Mask_Shard",
@@ -4539,8 +4216,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.4,
     "offsetY": -0.1,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Rock-Crossroads_After_Goam_Mask_Shard": {
     "name": "Geo_Rock-Crossroads_After_Goam_Mask_Shard",
@@ -4553,8 +4229,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.6,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Crossroads_Above_Lever": {
     "name": "Geo_Rock-Crossroads_Above_Lever",
@@ -4567,8 +4242,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.55,
     "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Crossroads_Before_Fungal": {
     "name": "Geo_Rock-Crossroads_Before_Fungal",
@@ -4581,8 +4255,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.1,
     "offsetY": 0.2,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Rock-Crossroads_Before_Fungal_Dupe_1": {
     "name": "Geo_Rock-Crossroads_Before_Fungal_Dupe_1",
@@ -4595,8 +4268,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.4,
     "offsetY": 0.2,
-    "offsetZ": 0.002,
-    "isShop": false
+    "offsetZ": 0.002
   },
   "Geo_Rock-Crossroads_Before_Fungal_Dupe_2": {
     "name": "Geo_Rock-Crossroads_Before_Fungal_Dupe_2",
@@ -4609,8 +4281,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.2,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Crossroads_Before_Shops": {
     "name": "Geo_Rock-Crossroads_Before_Shops",
@@ -4623,8 +4294,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.4,
     "offsetY": 0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Crossroads_Before_Glowing_Womb": {
     "name": "Geo_Rock-Crossroads_Before_Glowing_Womb",
@@ -4637,8 +4307,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.5,
     "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Crossroads_Above_Tram": {
     "name": "Geo_Rock-Crossroads_Above_Tram",
@@ -4651,8 +4320,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.1,
     "offsetY": 0.7,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Crossroads_Above_Mawlek": {
     "name": "Geo_Rock-Crossroads_Above_Mawlek",
@@ -4665,8 +4333,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.25,
     "offsetY": 0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Crossroads_Vessel_Fragment": {
     "name": "Geo_Rock-Crossroads_Vessel_Fragment",
@@ -4679,8 +4346,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.5,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Crossroads_Goam_Alcove": {
     "name": "Geo_Rock-Crossroads_Goam_Alcove",
@@ -4693,8 +4359,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.8,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Crossroads_Goam_Damage_Boost": {
     "name": "Geo_Rock-Crossroads_Goam_Damage_Boost",
@@ -4707,8 +4372,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.0,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Crossroads_Tram": {
     "name": "Geo_Rock-Crossroads_Tram",
@@ -4721,8 +4385,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.3,
     "offsetY": -0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Crossroads_Goam_Journal": {
     "name": "Geo_Rock-Crossroads_Goam_Journal",
@@ -4735,8 +4398,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.4,
     "offsetY": -0.15,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Crossroads_Goam_Journal_Dupe": {
     "name": "Geo_Rock-Crossroads_Goam_Journal_Dupe",
@@ -4749,8 +4411,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.1,
     "offsetY": -0.15,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Ancestral_Mound": {
     "name": "Geo_Rock-Ancestral_Mound",
@@ -4763,8 +4424,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.0,
     "offsetY": 0.2,
-    "offsetZ": -0.498,
-    "isShop": false
+    "offsetZ": -0.498
   },
   "Geo_Rock-Ancestral_Mound_Dupe": {
     "name": "Geo_Rock-Ancestral_Mound_Dupe",
@@ -4777,8 +4437,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.4,
     "offsetY": 0.2,
-    "offsetZ": -0.497,
-    "isShop": false
+    "offsetZ": -0.497
   },
   "Geo_Rock-Ancestral_Mound_Tree": {
     "name": "Geo_Rock-Ancestral_Mound_Tree",
@@ -4791,8 +4450,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.4,
     "offsetY": 0.6,
-    "offsetZ": -0.495,
-    "isShop": false
+    "offsetZ": -0.495
   },
   "Geo_Rock-Ancestral_Mound_Tree_Dupe": {
     "name": "Geo_Rock-Ancestral_Mound_Tree_Dupe",
@@ -4805,8 +4463,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.0,
     "offsetY": 0.6,
-    "offsetZ": -0.496,
-    "isShop": false
+    "offsetZ": -0.496
   },
   "Geo_Rock-Moss_Prophet": {
     "name": "Geo_Rock-Moss_Prophet",
@@ -4819,8 +4476,7 @@
     "mapZone": "WASTES",
     "offsetX": 0.0,
     "offsetY": -0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Moss_Prophet_Dupe": {
     "name": "Geo_Rock-Moss_Prophet_Dupe",
@@ -4833,8 +4489,7 @@
     "mapZone": "WASTES",
     "offsetX": -0.4,
     "offsetY": -0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Deepnest_Below_Mimics": {
     "name": "Geo_Rock-Deepnest_Below_Mimics",
@@ -4847,8 +4502,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 0.2,
     "offsetY": -0.6,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Deepnest_Below_Mimics_Dupe": {
     "name": "Geo_Rock-Deepnest_Below_Mimics_Dupe",
@@ -4861,8 +4515,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -0.2,
     "offsetY": -0.6,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Deepnest_Below_Spike_Grub": {
     "name": "Geo_Rock-Deepnest_Below_Spike_Grub",
@@ -4875,8 +4528,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -0.6,
     "offsetY": 0.8,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Deepnest_Below_Spike_Grub_Dupe": {
     "name": "Geo_Rock-Deepnest_Below_Spike_Grub_Dupe",
@@ -4889,8 +4541,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -0.2,
     "offsetY": 0.8,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Deepnest_Spike_Grub_Right": {
     "name": "Geo_Rock-Deepnest_Spike_Grub_Right",
@@ -4903,8 +4554,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 0.6,
     "offsetY": 1.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Deepnest_By_Mantis_Lords_Garpede_Pogo": {
     "name": "Geo_Rock-Deepnest_By_Mantis_Lords_Garpede_Pogo",
@@ -4917,8 +4567,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 0.7,
     "offsetY": -0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Deepnest_By_Mantis_Lords_Garpede_Pogo_Dupe": {
     "name": "Geo_Rock-Deepnest_By_Mantis_Lords_Garpede_Pogo_Dupe",
@@ -4931,8 +4580,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 1.1,
     "offsetY": -0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Deepnest_By_Mantis_Lords_Requires_Claw_1": {
     "name": "Geo_Rock-Deepnest_By_Mantis_Lords_Requires_Claw_1",
@@ -4945,8 +4593,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 0.2,
     "offsetY": 0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Deepnest_By_Mantis_Lords_Requires_Claw_2": {
     "name": "Geo_Rock-Deepnest_By_Mantis_Lords_Requires_Claw_2",
@@ -4959,8 +4606,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -0.3,
     "offsetY": -0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Deepnest_By_Mantis_Lords_Requires_Claw_3": {
     "name": "Geo_Rock-Deepnest_By_Mantis_Lords_Requires_Claw_3",
@@ -4973,8 +4619,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -0.7,
     "offsetY": -0.6,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Deepnest_Nosk_1": {
     "name": "Geo_Rock-Deepnest_Nosk_1",
@@ -4987,8 +4632,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -0.6,
     "offsetY": 0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Deepnest_Nosk_2": {
     "name": "Geo_Rock-Deepnest_Nosk_2",
@@ -5001,8 +4645,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -0.2,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Deepnest_Nosk_3": {
     "name": "Geo_Rock-Deepnest_Nosk_3",
@@ -5015,8 +4658,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -0.9,
     "offsetY": -0.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Deepnest_Above_Galien": {
     "name": "Geo_Rock-Deepnest_Above_Galien",
@@ -5029,8 +4671,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -0.5,
     "offsetY": 0.7,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Deepnest_Galien_Spike": {
     "name": "Geo_Rock-Deepnest_Galien_Spike",
@@ -5043,8 +4684,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 0.05,
     "offsetY": -0.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Deepnest_Garpede_1": {
     "name": "Geo_Rock-Deepnest_Garpede_1",
@@ -5057,8 +4697,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 0.3,
     "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Deepnest_Garpede_2": {
     "name": "Geo_Rock-Deepnest_Garpede_2",
@@ -5071,8 +4710,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -0.2,
     "offsetY": 0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Dark_Deepnest_Above_Grub_1": {
     "name": "Geo_Rock-Dark_Deepnest_Above_Grub_1",
@@ -5085,8 +4723,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 0.8,
     "offsetY": 0.7,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Dark_Deepnest_Above_Grub_2": {
     "name": "Geo_Rock-Dark_Deepnest_Above_Grub_2",
@@ -5099,8 +4736,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -0.1,
     "offsetY": 0.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Dark_Deepnest_Bottom_Left": {
     "name": "Geo_Rock-Dark_Deepnest_Bottom_Left",
@@ -5113,8 +4749,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -0.8,
     "offsetY": -0.6,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Above_Mask_Maker_1": {
     "name": "Geo_Rock-Above_Mask_Maker_1",
@@ -5127,8 +4762,7 @@
     "mapZone": "ROYAL_GARDENS",
     "offsetX": -0.3,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Above_Mask_Maker_2": {
     "name": "Geo_Rock-Above_Mask_Maker_2",
@@ -5141,8 +4775,7 @@
     "mapZone": "ROYAL_GARDENS",
     "offsetX": 0.0,
     "offsetY": -0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Lower_Kingdom's_Edge_1": {
     "name": "Geo_Rock-Lower_Kingdom's_Edge_1",
@@ -5155,8 +4788,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": -0.5,
     "offsetY": -0.5,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Rock-Lower_Kingdom's_Edge_2": {
     "name": "Geo_Rock-Lower_Kingdom's_Edge_2",
@@ -5169,8 +4801,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": -0.6,
     "offsetY": 0.8,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Lower_Kingdom's_Edge_3": {
     "name": "Geo_Rock-Lower_Kingdom's_Edge_3",
@@ -5183,8 +4814,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": -1.3,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Lower_Kingdom's_Edge_Dive": {
     "name": "Geo_Rock-Lower_Kingdom's_Edge_Dive",
@@ -5197,8 +4827,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": 1.2,
     "offsetY": -0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Kingdom's_Edge_Below_Bardoon": {
     "name": "Geo_Rock-Kingdom's_Edge_Below_Bardoon",
@@ -5211,8 +4840,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": -0.4,
     "offsetY": -1.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Kingdom's_Edge_Oro_Far_Left": {
     "name": "Geo_Rock-Kingdom's_Edge_Oro_Far_Left",
@@ -5225,8 +4853,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": -3.6,
     "offsetY": 0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Kingdom's_Edge_Oro_Middle_Left": {
     "name": "Geo_Rock-Kingdom's_Edge_Oro_Middle_Left",
@@ -5239,8 +4866,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": -1.4,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Kingdom's_Edge_Above_Root": {
     "name": "Geo_Rock-Kingdom's_Edge_Above_Root",
@@ -5253,8 +4879,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": 0.5,
     "offsetY": -1.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Kingdom's_Edge_Above_Tower": {
     "name": "Geo_Rock-Kingdom's_Edge_Above_Tower",
@@ -5267,8 +4892,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": -0.9,
     "offsetY": -0.8,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Kingdom's_Edge_Below_Colosseum": {
     "name": "Geo_Rock-Kingdom's_Edge_Below_Colosseum",
@@ -5281,8 +4905,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": 1.1,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Kingdom's_Edge_Above_420_Geo_Rock": {
     "name": "Geo_Rock-Kingdom's_Edge_Above_420_Geo_Rock",
@@ -5295,8 +4918,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": 1.2,
     "offsetY": -1.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Kingdom's_Edge_420_Geo_Rock": {
     "name": "Geo_Rock-Kingdom's_Edge_420_Geo_Rock",
@@ -5309,8 +4931,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": 1.6,
     "offsetY": -1.0,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Rock-Beast's_Den_Above_Trilobite": {
     "name": "Geo_Rock-Beast's_Den_Above_Trilobite",
@@ -5323,8 +4944,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 0.4,
     "offsetY": 1.7,
-    "offsetZ": 0.002,
-    "isShop": false
+    "offsetZ": 0.002
   },
   "Geo_Rock-Beast's_Den_Above_Trilobite_Dupe": {
     "name": "Geo_Rock-Beast's_Den_Above_Trilobite_Dupe",
@@ -5337,8 +4957,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 0.4,
     "offsetY": 1.3,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Rock-Beast's_Den_Below_Herrah": {
     "name": "Geo_Rock-Beast's_Den_Below_Herrah",
@@ -5351,8 +4970,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 0.8,
     "offsetY": 1.3,
-    "offsetZ": 0.003,
-    "isShop": false
+    "offsetZ": 0.003
   },
   "Geo_Rock-Beast's_Den_Below_Egg": {
     "name": "Geo_Rock-Beast's_Den_Below_Egg",
@@ -5365,8 +4983,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 0.8,
     "offsetY": 1.7,
-    "offsetZ": 0.004,
-    "isShop": false
+    "offsetZ": 0.004
   },
   "Geo_Rock-Beast's_Den_Below_Egg_Dupe": {
     "name": "Geo_Rock-Beast's_Den_Below_Egg_Dupe",
@@ -5379,8 +4996,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -0.8,
     "offsetY": 1.3,
-    "offsetZ": 0.002,
-    "isShop": false
+    "offsetZ": 0.002
   },
   "Geo_Rock-Beast's_Den_Bottom": {
     "name": "Geo_Rock-Beast's_Den_Bottom",
@@ -5393,8 +5009,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -0.8,
     "offsetY": 1.7,
-    "offsetZ": 0.003,
-    "isShop": false
+    "offsetZ": 0.003
   },
   "Geo_Rock-Beast's_Den_Bottom_Dupe": {
     "name": "Geo_Rock-Beast's_Den_Bottom_Dupe",
@@ -5407,8 +5022,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -0.4,
     "offsetY": 1.3,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Rock-Beast's_Den_After_Herrah": {
     "name": "Geo_Rock-Beast's_Den_After_Herrah",
@@ -5421,8 +5035,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -0.4,
     "offsetY": 1.7,
-    "offsetZ": 0.002,
-    "isShop": false
+    "offsetZ": 0.002
   },
   "Geo_Rock-Greenpath_Entrance": {
     "name": "Geo_Rock-Greenpath_Entrance",
@@ -5435,8 +5048,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": -1.1,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Greenpath_Waterfall": {
     "name": "Geo_Rock-Greenpath_Waterfall",
@@ -5449,8 +5061,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": -0.3,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Greenpath_Below_Skip_Squit": {
     "name": "Geo_Rock-Greenpath_Below_Skip_Squit",
@@ -5463,8 +5074,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": 0.0,
     "offsetY": -0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Greenpath_Skip_Squit": {
     "name": "Geo_Rock-Greenpath_Skip_Squit",
@@ -5477,8 +5087,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": 0.3,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Greenpath_Second_Skip_Fool_Eater": {
     "name": "Geo_Rock-Greenpath_Second_Skip_Fool_Eater",
@@ -5491,8 +5100,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": 0.7,
     "offsetY": 0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Greenpath_Second_Skip_Fool_Eater_Dupe": {
     "name": "Geo_Rock-Greenpath_Second_Skip_Fool_Eater_Dupe",
@@ -5505,8 +5113,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": 0.3,
     "offsetY": 0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Greenpath_Second_Skip_Lower": {
     "name": "Geo_Rock-Greenpath_Second_Skip_Lower",
@@ -5519,8 +5126,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": 0.7,
     "offsetY": -0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Greenpath_Below_Hornet": {
     "name": "Geo_Rock-Greenpath_Below_Hornet",
@@ -5533,8 +5139,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": -0.25,
     "offsetY": -0.4,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Rock-Greenpath_Above_Thorns": {
     "name": "Geo_Rock-Greenpath_Above_Thorns",
@@ -5547,8 +5152,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": -0.1,
     "offsetY": 0.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Greenpath_Hunter's_Journal": {
     "name": "Geo_Rock-Greenpath_Hunter's_Journal",
@@ -5561,8 +5165,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": -0.5,
     "offsetY": 0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Greenpath_Acid_Bridge": {
     "name": "Geo_Rock-Greenpath_Acid_Bridge",
@@ -5575,8 +5178,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": 1.0,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Greenpath_After_MMC_Hidden": {
     "name": "Geo_Rock-Greenpath_After_MMC_Hidden",
@@ -5589,8 +5191,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": 0.2,
     "offsetY": 0.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Greenpath_After_MMC": {
     "name": "Geo_Rock-Greenpath_After_MMC",
@@ -5603,8 +5204,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": 0.2,
     "offsetY": -0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Greenpath_After_MMC_Dupe": {
     "name": "Geo_Rock-Greenpath_After_MMC_Dupe",
@@ -5617,8 +5217,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": -0.2,
     "offsetY": -0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Greenpath_Obbles_Fool_Eater": {
     "name": "Geo_Rock-Greenpath_Obbles_Fool_Eater",
@@ -5631,8 +5230,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": -0.7,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Greenpath_Moss_Knights": {
     "name": "Geo_Rock-Greenpath_Moss_Knights",
@@ -5645,8 +5243,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": -0.6,
     "offsetY": 0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Greenpath_Moss_Knights_Dupe_1": {
     "name": "Geo_Rock-Greenpath_Moss_Knights_Dupe_1",
@@ -5659,8 +5256,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": -0.6,
     "offsetY": 0.0,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Rock-Greenpath_Moss_Knights_Dupe_2": {
     "name": "Geo_Rock-Greenpath_Moss_Knights_Dupe_2",
@@ -5673,8 +5269,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": -0.6,
     "offsetY": -0.4,
-    "offsetZ": 0.002,
-    "isShop": false
+    "offsetZ": 0.002
   },
   "Geo_Rock-Greenpath_Below_Stag": {
     "name": "Geo_Rock-Greenpath_Below_Stag",
@@ -5687,8 +5282,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": -0.2,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Greenpath_Below_Stag_Fool_Eater": {
     "name": "Geo_Rock-Greenpath_Below_Stag_Fool_Eater",
@@ -5701,8 +5295,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": -0.2,
     "offsetY": -1.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Baldur_Shell_Top_Left": {
     "name": "Geo_Rock-Baldur_Shell_Top_Left",
@@ -5715,8 +5308,7 @@
     "mapZone": "CLIFFS",
     "offsetX": -1.4,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Baldur_Shell_Alcove": {
     "name": "Geo_Rock-Baldur_Shell_Alcove",
@@ -5729,8 +5321,7 @@
     "mapZone": "CLIFFS",
     "offsetX": -0.7,
     "offsetY": -0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Greenpath_MMC": {
     "name": "Geo_Rock-Greenpath_MMC",
@@ -5743,8 +5334,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": -0.4,
     "offsetY": -0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Greenpath_Below_Toll": {
     "name": "Geo_Rock-Greenpath_Below_Toll",
@@ -5757,8 +5347,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": -0.2,
     "offsetY": -1.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Greenpath_Toll_Hidden": {
     "name": "Geo_Rock-Greenpath_Toll_Hidden",
@@ -5771,8 +5360,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": -0.2,
     "offsetY": 0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Greenpath_Toll_Hidden_Dupe": {
     "name": "Geo_Rock-Greenpath_Toll_Hidden_Dupe",
@@ -5785,8 +5373,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": -0.2,
     "offsetY": 0.0,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Rock-Fungal_Below_Shrumal_Ogres": {
     "name": "Geo_Rock-Fungal_Below_Shrumal_Ogres",
@@ -5799,8 +5386,7 @@
     "mapZone": "WASTES",
     "offsetX": 0.2,
     "offsetY": 0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Fungal_Above_Cloth": {
     "name": "Geo_Rock-Fungal_Above_Cloth",
@@ -5813,8 +5399,7 @@
     "mapZone": "WASTES",
     "offsetX": -0.25,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Fungal_After_Cloth": {
     "name": "Geo_Rock-Fungal_After_Cloth",
@@ -5827,8 +5412,7 @@
     "mapZone": "WASTES",
     "offsetX": 0.7,
     "offsetY": 0.7,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Fungal_Below_Pilgrim's_Way": {
     "name": "Geo_Rock-Fungal_Below_Pilgrim's_Way",
@@ -5841,8 +5425,7 @@
     "mapZone": "WASTES",
     "offsetX": 0.3,
     "offsetY": 0.6,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Rock-Fungal_Below_Pilgrim's_Way_Dupe": {
     "name": "Geo_Rock-Fungal_Below_Pilgrim's_Way_Dupe",
@@ -5855,8 +5438,7 @@
     "mapZone": "WASTES",
     "offsetX": 0.0,
     "offsetY": 0.6,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Mantis_Outskirts_Guarded": {
     "name": "Geo_Rock-Mantis_Outskirts_Guarded",
@@ -5869,8 +5451,7 @@
     "mapZone": "WASTES",
     "offsetX": -0.4,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Mantis_Outskirts_Guarded_Dupe": {
     "name": "Geo_Rock-Mantis_Outskirts_Guarded_Dupe",
@@ -5883,8 +5464,7 @@
     "mapZone": "WASTES",
     "offsetX": -0.1,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Mantis_Outskirts_Alcove": {
     "name": "Geo_Rock-Mantis_Outskirts_Alcove",
@@ -5897,8 +5477,7 @@
     "mapZone": "WASTES",
     "offsetX": 0.1,
     "offsetY": -0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Mantis_Village_After_Lever": {
     "name": "Geo_Rock-Mantis_Village_After_Lever",
@@ -5911,8 +5490,7 @@
     "mapZone": "WASTES",
     "offsetX": -0.5,
     "offsetY": -0.1,
-    "offsetZ": -0.95,
-    "isShop": false
+    "offsetZ": -0.95
   },
   "Geo_Rock-Mantis_Village_Above_Claw": {
     "name": "Geo_Rock-Mantis_Village_Above_Claw",
@@ -5925,8 +5503,7 @@
     "mapZone": "WASTES",
     "offsetX": -1.4,
     "offsetY": 0.3,
-    "offsetZ": -0.98,
-    "isShop": false
+    "offsetZ": -0.98
   },
   "Geo_Rock-Mantis_Village_Above_Claw_Dupe": {
     "name": "Geo_Rock-Mantis_Village_Above_Claw_Dupe",
@@ -5939,8 +5516,7 @@
     "mapZone": "WASTES",
     "offsetX": -1.8,
     "offsetY": 0.3,
-    "offsetZ": -0.97,
-    "isShop": false
+    "offsetZ": -0.97
   },
   "Geo_Rock-Mantis_Village_Below_Lore": {
     "name": "Geo_Rock-Mantis_Village_Below_Lore",
@@ -5953,8 +5529,7 @@
     "mapZone": "WASTES",
     "offsetX": -1.0,
     "offsetY": -0.1,
-    "offsetZ": -1.0,
-    "isShop": false
+    "offsetZ": -1.0
   },
   "Geo_Rock-Mantis_Village_Above_Lever": {
     "name": "Geo_Rock-Mantis_Village_Above_Lever",
@@ -5967,8 +5542,7 @@
     "mapZone": "WASTES",
     "offsetX": -0.1,
     "offsetY": 0.3,
-    "offsetZ": -0.99,
-    "isShop": false
+    "offsetZ": -0.99
   },
   "Geo_Rock-Above_Mantis_Lords_1": {
     "name": "Geo_Rock-Above_Mantis_Lords_1",
@@ -5979,10 +5553,9 @@
     "pdIntValue": 0,
     "pinScene": null,
     "mapZone": "WASTES",
-    "offsetX": 0.0,
-    "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetX": -0.8,
+    "offsetY": -0.4,
+    "offsetZ": 0.0
   },
   "Geo_Rock-Above_Mantis_Lords_2": {
     "name": "Geo_Rock-Above_Mantis_Lords_2",
@@ -5993,10 +5566,9 @@
     "pdIntValue": 0,
     "pinScene": null,
     "mapZone": "WASTES",
-    "offsetX": -0.4,
-    "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetX": 0.0,
+    "offsetY": -0.1,
+    "offsetZ": 0.0
   },
   "Geo_Rock-Fungal_After_Bouncy_Grub": {
     "name": "Geo_Rock-Fungal_After_Bouncy_Grub",
@@ -6009,8 +5581,7 @@
     "mapZone": "WASTES",
     "offsetX": 0.5,
     "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Fungal_After_Bouncy_Grub_Dupe": {
     "name": "Geo_Rock-Fungal_After_Bouncy_Grub_Dupe",
@@ -6023,8 +5594,7 @@
     "mapZone": "WASTES",
     "offsetX": 0.8,
     "offsetY": 0.1,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Rock-Fungal_Bouncy_Grub_Lever": {
     "name": "Geo_Rock-Fungal_Bouncy_Grub_Lever",
@@ -6037,8 +5607,7 @@
     "mapZone": "WASTES",
     "offsetX": -0.1,
     "offsetY": -0.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Fungal_After_Cornifer": {
     "name": "Geo_Rock-Fungal_After_Cornifer",
@@ -6051,8 +5620,7 @@
     "mapZone": "WASTES",
     "offsetX": -0.1,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Fungal_Above_City_Entrance": {
     "name": "Geo_Rock-Fungal_Above_City_Entrance",
@@ -6065,8 +5633,7 @@
     "mapZone": "WASTES",
     "offsetX": 0.5,
     "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Deepnest_By_Mantis_Lords_1": {
     "name": "Geo_Rock-Deepnest_By_Mantis_Lords_1",
@@ -6079,8 +5646,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -1.6,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Deepnest_By_Mantis_Lords_2": {
     "name": "Geo_Rock-Deepnest_By_Mantis_Lords_2",
@@ -6093,8 +5659,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -1.2,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Deepnest_Lower_Cornifer": {
     "name": "Geo_Rock-Deepnest_Lower_Cornifer",
@@ -6107,8 +5672,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -0.2,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Fungal_Core_Entrance": {
     "name": "Geo_Rock-Fungal_Core_Entrance",
@@ -6121,8 +5685,7 @@
     "mapZone": "WASTES",
     "offsetX": 0.1,
     "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Fungal_Core_Hidden": {
     "name": "Geo_Rock-Fungal_Core_Hidden",
@@ -6135,8 +5698,7 @@
     "mapZone": "WASTES",
     "offsetX": 0.0,
     "offsetY": 0.6,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Rock-Fungal_Core_Above_Elder": {
     "name": "Geo_Rock-Fungal_Core_Above_Elder",
@@ -6149,8 +5711,7 @@
     "mapZone": "WASTES",
     "offsetX": 0.4,
     "offsetY": -0.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Queen's_Gardens_Acid_Entrance": {
     "name": "Geo_Rock-Queen's_Gardens_Acid_Entrance",
@@ -6163,8 +5724,7 @@
     "mapZone": "FOG_CANYON",
     "offsetX": 1.2,
     "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Queen's_Gardens_Below_Stag": {
     "name": "Geo_Rock-Queen's_Gardens_Below_Stag",
@@ -6177,8 +5737,7 @@
     "mapZone": "ROYAL_GARDENS",
     "offsetX": -0.5,
     "offsetY": 0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Fog_Canyon_East": {
     "name": "Geo_Rock-Fog_Canyon_East",
@@ -6191,8 +5750,7 @@
     "mapZone": "FOG_CANYON",
     "offsetX": 0.3,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Love_Key": {
     "name": "Geo_Rock-Love_Key",
@@ -6205,8 +5763,7 @@
     "mapZone": "ROYAL_GARDENS",
     "offsetX": -0.4,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Love_Key_Dupe": {
     "name": "Geo_Rock-Love_Key_Dupe",
@@ -6219,8 +5776,7 @@
     "mapZone": "ROYAL_GARDENS",
     "offsetX": -1.1,
     "offsetY": -0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Queen's_Gardens_Above_Marmu": {
     "name": "Geo_Rock-Queen's_Gardens_Above_Marmu",
@@ -6233,8 +5789,7 @@
     "mapZone": "ROYAL_GARDENS",
     "offsetX": -0.2,
     "offsetY": -1.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Pale_Lurker": {
     "name": "Geo_Rock-Pale_Lurker",
@@ -6247,8 +5802,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": 0.3,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Godhome_Pipeway": {
     "name": "Geo_Rock-Godhome_Pipeway",
@@ -6261,8 +5815,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": -1.2,
     "offsetY": -0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Hive_Entrance": {
     "name": "Geo_Rock-Hive_Entrance",
@@ -6275,8 +5828,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": 1.0,
     "offsetY": 0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Hive_Outside_Bench": {
     "name": "Geo_Rock-Hive_Outside_Bench",
@@ -6289,8 +5841,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": -0.7,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Hive_Below_Root": {
     "name": "Geo_Rock-Hive_Below_Root",
@@ -6303,8 +5854,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": 0.9,
     "offsetY": -0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Hive_After_Root": {
     "name": "Geo_Rock-Hive_After_Root",
@@ -6317,8 +5867,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": -0.4,
     "offsetY": 0.8,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Hive_Below_Stash": {
     "name": "Geo_Rock-Hive_Below_Stash",
@@ -6331,8 +5880,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": 0.8,
     "offsetY": 0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Hive_Stash": {
     "name": "Geo_Rock-Hive_Stash",
@@ -6345,8 +5893,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": -0.4,
     "offsetY": 1.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Hive_Stash_Dupe": {
     "name": "Geo_Rock-Hive_Stash_Dupe",
@@ -6359,8 +5906,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": -0.4,
     "offsetY": 0.6,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Rock-Hive_Below_Grub": {
     "name": "Geo_Rock-Hive_Below_Grub",
@@ -6373,8 +5919,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": 0.2,
     "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Hive_Above_Mask": {
     "name": "Geo_Rock-Hive_Above_Mask",
@@ -6387,8 +5932,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": -1.2,
     "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Crystal_Peak_Lower_Middle": {
     "name": "Geo_Rock-Crystal_Peak_Lower_Middle",
@@ -6401,8 +5945,7 @@
     "mapZone": "MINES",
     "offsetX": 1.2,
     "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Crystal_Peak_Lower_Conveyer_1": {
     "name": "Geo_Rock-Crystal_Peak_Lower_Conveyer_1",
@@ -6415,8 +5958,7 @@
     "mapZone": "MINES",
     "offsetX": -0.2,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Crystal_Peak_Lower_Conveyer_2": {
     "name": "Geo_Rock-Crystal_Peak_Lower_Conveyer_2",
@@ -6429,8 +5971,7 @@
     "mapZone": "MINES",
     "offsetX": 0.2,
     "offsetY": -0.1,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Rock-Crystal_Peak_Before_Dark_Room": {
     "name": "Geo_Rock-Crystal_Peak_Before_Dark_Room",
@@ -6443,8 +5984,7 @@
     "mapZone": "MINES",
     "offsetX": 0.1,
     "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Crystal_Peak_Before_Dark_Room_Dupe": {
     "name": "Geo_Rock-Crystal_Peak_Before_Dark_Room_Dupe",
@@ -6457,8 +5997,7 @@
     "mapZone": "MINES",
     "offsetX": 0.1,
     "offsetY": -0.3,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Rock-Crystal_Peak_Above_Spike_Grub": {
     "name": "Geo_Rock-Crystal_Peak_Above_Spike_Grub",
@@ -6471,8 +6010,7 @@
     "mapZone": "MINES",
     "offsetX": -0.3,
     "offsetY": -0.7,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Crystal_Peak_Mimic_Grub": {
     "name": "Geo_Rock-Crystal_Peak_Mimic_Grub",
@@ -6485,8 +6023,7 @@
     "mapZone": "MINES",
     "offsetX": 0.0,
     "offsetY": -0.1,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Rock-Crystal_Peak_Dive_Egg": {
     "name": "Geo_Rock-Crystal_Peak_Dive_Egg",
@@ -6499,8 +6036,7 @@
     "mapZone": "MINES",
     "offsetX": -0.4,
     "offsetY": 1.1,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Rock-Crystal_Peak_Dive_Egg_Dupe": {
     "name": "Geo_Rock-Crystal_Peak_Dive_Egg_Dupe",
@@ -6513,8 +6049,7 @@
     "mapZone": "MINES",
     "offsetX": -0.1,
     "offsetY": 1.1,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Rock-Crystal_Peak_Conga_Line": {
     "name": "Geo_Rock-Crystal_Peak_Conga_Line",
@@ -6527,8 +6062,7 @@
     "mapZone": "MINES",
     "offsetX": 0.6,
     "offsetY": 1.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Hallownest_Crown_Dive": {
     "name": "Geo_Rock-Hallownest_Crown_Dive",
@@ -6541,8 +6075,7 @@
     "mapZone": "MINES",
     "offsetX": -0.8,
     "offsetY": -0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Hallownest_Crown_Dive_Dupe": {
     "name": "Geo_Rock-Hallownest_Crown_Dive_Dupe",
@@ -6555,8 +6088,7 @@
     "mapZone": "MINES",
     "offsetX": -0.5,
     "offsetY": -0.2,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Rock-Hallownest_Crown_Hidden": {
     "name": "Geo_Rock-Hallownest_Crown_Hidden",
@@ -6569,8 +6101,7 @@
     "mapZone": "MINES",
     "offsetX": -0.5,
     "offsetY": 0.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Hallownest_Crown_Hidden_Dupe_1": {
     "name": "Geo_Rock-Hallownest_Crown_Hidden_Dupe_1",
@@ -6583,8 +6114,7 @@
     "mapZone": "MINES",
     "offsetX": -0.2,
     "offsetY": 0.5,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Rock-Hallownest_Crown_Hidden_Dupe_2": {
     "name": "Geo_Rock-Hallownest_Crown_Hidden_Dupe_2",
@@ -6597,8 +6127,7 @@
     "mapZone": "MINES",
     "offsetX": 0.1,
     "offsetY": 0.5,
-    "offsetZ": 0.002,
-    "isShop": false
+    "offsetZ": 0.002
   },
   "Geo_Rock-Crystal_Peak_Before_Crystal_Heart": {
     "name": "Geo_Rock-Crystal_Peak_Before_Crystal_Heart",
@@ -6611,8 +6140,7 @@
     "mapZone": "MINES",
     "offsetX": -2.2,
     "offsetY": -0.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Crystal_Peak_Entrance": {
     "name": "Geo_Rock-Crystal_Peak_Entrance",
@@ -6625,8 +6153,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.3,
     "offsetY": 0.0,
-    "offsetZ": 0.002,
-    "isShop": false
+    "offsetZ": 0.002
   },
   "Geo_Rock-Crystal_Peak_Entrance_Dupe_1": {
     "name": "Geo_Rock-Crystal_Peak_Entrance_Dupe_1",
@@ -6639,8 +6166,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.0,
     "offsetY": 0.0,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Rock-Crystal_Peak_Entrance_Dupe_2": {
     "name": "Geo_Rock-Crystal_Peak_Entrance_Dupe_2",
@@ -6653,8 +6179,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.3,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Crystal_Peak_Above_Crushers_Lower": {
     "name": "Geo_Rock-Crystal_Peak_Above_Crushers_Lower",
@@ -6667,8 +6192,7 @@
     "mapZone": "MINES",
     "offsetX": -0.4,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Crystal_Peak_Above_Crushers_Higher": {
     "name": "Geo_Rock-Crystal_Peak_Above_Crushers_Higher",
@@ -6681,8 +6205,7 @@
     "mapZone": "MINES",
     "offsetX": -0.4,
     "offsetY": 0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Resting_Grounds_Catacombs_Grub": {
     "name": "Geo_Rock-Resting_Grounds_Catacombs_Grub",
@@ -6695,8 +6218,7 @@
     "mapZone": "RESTING_GROUNDS",
     "offsetX": 0.4,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Resting_Grounds_Catacombs_Left_Dupe": {
     "name": "Geo_Rock-Resting_Grounds_Catacombs_Left_Dupe",
@@ -6709,8 +6231,7 @@
     "mapZone": "RESTING_GROUNDS",
     "offsetX": -1.2,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Resting_Grounds_Catacombs_Left": {
     "name": "Geo_Rock-Resting_Grounds_Catacombs_Left",
@@ -6723,8 +6244,7 @@
     "mapZone": "RESTING_GROUNDS",
     "offsetX": -0.8,
     "offsetY": 0.0,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Rock-Overgrown_Mound": {
     "name": "Geo_Rock-Overgrown_Mound",
@@ -6737,8 +6257,7 @@
     "mapZone": "FOG_CANYON",
     "offsetX": -1.0,
     "offsetY": 0.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Fluke_Hermit_Dupe": {
     "name": "Geo_Rock-Fluke_Hermit_Dupe",
@@ -6751,8 +6270,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": 1.0,
     "offsetY": 0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Fluke_Hermit": {
     "name": "Geo_Rock-Fluke_Hermit",
@@ -6765,8 +6283,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": 0.6,
     "offsetY": 0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Pleasure_House": {
     "name": "Geo_Rock-Pleasure_House",
@@ -6779,8 +6296,7 @@
     "mapZone": "CITY",
     "offsetX": -0.4,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-City_of_Tears_Quirrel": {
     "name": "Geo_Rock-City_of_Tears_Quirrel",
@@ -6793,8 +6309,7 @@
     "mapZone": "CITY",
     "offsetX": -0.8,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-City_of_Tears_Lemm": {
     "name": "Geo_Rock-City_of_Tears_Lemm",
@@ -6805,10 +6320,9 @@
     "pdIntValue": 0,
     "pinScene": null,
     "mapZone": "CITY",
-    "offsetX": -0.5,
+    "offsetX": -0.7,
     "offsetY": 0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-City_of_Tears_Above_Lemm": {
     "name": "Geo_Rock-City_of_Tears_Above_Lemm",
@@ -6821,8 +6335,7 @@
     "mapZone": "CITY",
     "offsetX": 0.0,
     "offsetY": -0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Soul_Sanctum": {
     "name": "Geo_Rock-Soul_Sanctum",
@@ -6833,10 +6346,9 @@
     "pdIntValue": 0,
     "pinScene": null,
     "mapZone": "CITY",
-    "offsetX": 0.2,
+    "offsetX": 0.1,
     "offsetY": 0.8,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Watcher's_Spire": {
     "name": "Geo_Rock-Watcher's_Spire",
@@ -6849,8 +6361,7 @@
     "mapZone": "CITY",
     "offsetX": -0.9,
     "offsetY": 0.7,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Above_King's_Station": {
     "name": "Geo_Rock-Above_King's_Station",
@@ -6863,8 +6374,7 @@
     "mapZone": "CITY",
     "offsetX": -0.2,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-King's_Station": {
     "name": "Geo_Rock-King's_Station",
@@ -6877,8 +6387,7 @@
     "mapZone": "CITY",
     "offsetX": 0.4,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-King's_Pass_Left": {
     "name": "Geo_Rock-King's_Pass_Left",
@@ -6891,8 +6400,7 @@
     "mapZone": "TOWN",
     "offsetX": -1.9,
     "offsetY": -0.7,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-King's_Pass_Below_Fury": {
     "name": "Geo_Rock-King's_Pass_Below_Fury",
@@ -6905,8 +6413,7 @@
     "mapZone": "TOWN",
     "offsetX": 0.9,
     "offsetY": -0.8,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-King's_Pass_Hidden": {
     "name": "Geo_Rock-King's_Pass_Hidden",
@@ -6919,8 +6426,7 @@
     "mapZone": "TOWN",
     "offsetX": -1.25,
     "offsetY": -0.1,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Rock-King's_Pass_Collapse": {
     "name": "Geo_Rock-King's_Pass_Collapse",
@@ -6933,8 +6439,7 @@
     "mapZone": "TOWN",
     "offsetX": -0.1,
     "offsetY": 0.1,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Geo_Rock-King's_Pass_Above_Fury": {
     "name": "Geo_Rock-King's_Pass_Above_Fury",
@@ -6947,8 +6452,7 @@
     "mapZone": "TOWN",
     "offsetX": 1.3,
     "offsetY": -0.4,
-    "offsetZ": 0.002,
-    "isShop": false
+    "offsetZ": 0.002
   },
   "Geo_Rock-Waterways_Tuk": {
     "name": "Geo_Rock-Waterways_Tuk",
@@ -6961,8 +6465,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": 1.6,
     "offsetY": 0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Waterways_Tuk_Alcove": {
     "name": "Geo_Rock-Waterways_Tuk_Alcove",
@@ -6975,8 +6478,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": 0.7,
     "offsetY": 0.05,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Waterways_Left": {
     "name": "Geo_Rock-Waterways_Left",
@@ -6989,8 +6491,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": -0.5,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Waterways_East": {
     "name": "Geo_Rock-Waterways_East",
@@ -7003,8 +6504,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": -1.0,
     "offsetY": 0.7,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Geo_Rock-Waterways_Flukemarm": {
     "name": "Geo_Rock-Waterways_Flukemarm",
@@ -7017,8 +6517,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": -1.2,
     "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Boss_Geo-Massive_Moss_Charger": {
     "name": "Boss_Geo-Massive_Moss_Charger",
@@ -7031,8 +6530,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": 0.2,
     "offsetY": -0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Boss_Geo-Gorgeous_Husk": {
     "name": "Boss_Geo-Gorgeous_Husk",
@@ -7045,8 +6543,7 @@
     "mapZone": "CITY",
     "offsetX": -0.1,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Boss_Geo-Sanctum_Soul_Warrior": {
     "name": "Boss_Geo-Sanctum_Soul_Warrior",
@@ -7057,10 +6554,9 @@
     "pdIntValue": 0,
     "pinScene": null,
     "mapZone": "CITY",
-    "offsetX": -0.2,
-    "offsetY": 0.6,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetX": 0.1,
+    "offsetY": 0.8,
+    "offsetZ": 0.0
   },
   "Boss_Geo-Elegant_Soul_Warrior": {
     "name": "Boss_Geo-Elegant_Soul_Warrior",
@@ -7073,8 +6569,7 @@
     "mapZone": "CITY",
     "offsetX": -0.1,
     "offsetY": -0.2,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Boss_Geo-Crystal_Guardian": {
     "name": "Boss_Geo-Crystal_Guardian",
@@ -7087,8 +6582,7 @@
     "mapZone": "MINES",
     "offsetX": -0.1,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Boss_Geo-Enraged_Guardian": {
     "name": "Boss_Geo-Enraged_Guardian",
@@ -7101,8 +6595,7 @@
     "mapZone": "MINES",
     "offsetX": 0.0,
     "offsetY": 0.0,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Boss_Geo-Gruz_Mother": {
     "name": "Boss_Geo-Gruz_Mother",
@@ -7115,8 +6608,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.3,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Boss_Geo-Vengefly_King": {
     "name": "Boss_Geo-Vengefly_King",
@@ -7129,8 +6621,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": -1.0,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Basin": {
     "name": "Soul_Totem-Basin",
@@ -7143,8 +6634,7 @@
     "mapZone": "ABYSS",
     "offsetX": -1.0,
     "offsetY": 0.6,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Cliffs_Main": {
     "name": "Soul_Totem-Cliffs_Main",
@@ -7157,8 +6647,7 @@
     "mapZone": "CLIFFS",
     "offsetX": 1.45,
     "offsetY": -1.9,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Soul_Totem-Cliffs_Gorb": {
     "name": "Soul_Totem-Cliffs_Gorb",
@@ -7171,8 +6660,7 @@
     "mapZone": "CLIFFS",
     "offsetX": -2.3,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Cliffs_Joni's": {
     "name": "Soul_Totem-Cliffs_Joni's",
@@ -7185,8 +6673,7 @@
     "mapZone": "CLIFFS",
     "offsetX": 0.4,
     "offsetY": 0.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Crossroads_Goam_Journal": {
     "name": "Soul_Totem-Crossroads_Goam_Journal",
@@ -7199,8 +6686,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.2,
     "offsetY": -0.4,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Soul_Totem-Crossroads_Shops": {
     "name": "Soul_Totem-Crossroads_Shops",
@@ -7213,8 +6699,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.4,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Crossroads_Mawlek_Upper": {
     "name": "Soul_Totem-Crossroads_Mawlek_Upper",
@@ -7227,8 +6712,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.5,
     "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Crossroads_Acid": {
     "name": "Soul_Totem-Crossroads_Acid",
@@ -7241,8 +6725,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.4,
     "offsetY": -0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Crossroads_Mawlek_Lower": {
     "name": "Soul_Totem-Crossroads_Mawlek_Lower",
@@ -7255,8 +6738,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.3,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Crossroads_Myla": {
     "name": "Soul_Totem-Crossroads_Myla",
@@ -7269,8 +6751,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.0,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Ancestral_Mound": {
     "name": "Soul_Totem-Ancestral_Mound",
@@ -7283,8 +6764,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 0.4,
     "offsetY": -0.2,
-    "offsetZ": -0.499,
-    "isShop": false
+    "offsetZ": -0.499
   },
   "Soul_Totem-Distant_Village": {
     "name": "Soul_Totem-Distant_Village",
@@ -7297,8 +6777,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -1.0,
     "offsetY": -1.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Deepnest_Vessel": {
     "name": "Soul_Totem-Deepnest_Vessel",
@@ -7311,8 +6790,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 2.0,
     "offsetY": -0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Mask_Maker": {
     "name": "Soul_Totem-Mask_Maker",
@@ -7325,8 +6803,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": -0.35,
     "offsetY": -1.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Lower_Kingdom's_Edge_1": {
     "name": "Soul_Totem-Lower_Kingdom's_Edge_1",
@@ -7339,8 +6816,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": -0.5,
     "offsetY": -0.9,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Lower_Kingdom's_Edge_2": {
     "name": "Soul_Totem-Lower_Kingdom's_Edge_2",
@@ -7353,8 +6829,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": -0.05,
     "offsetY": -0.25,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Upper_Kingdom's_Edge": {
     "name": "Soul_Totem-Upper_Kingdom's_Edge",
@@ -7367,8 +6842,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": 0.7,
     "offsetY": 0.6,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Kingdom's_Edge_Camp": {
     "name": "Soul_Totem-Kingdom's_Edge_Camp",
@@ -7381,8 +6855,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": -1.25,
     "offsetY": 0.9,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Oro_Dive_2": {
     "name": "Soul_Totem-Oro_Dive_2",
@@ -7395,8 +6868,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": 0.8,
     "offsetY": 0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Oro_Dive_1": {
     "name": "Soul_Totem-Oro_Dive_1",
@@ -7409,8 +6881,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": 1.2,
     "offsetY": 0.3,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Soul_Totem-Oro": {
     "name": "Soul_Totem-Oro",
@@ -7423,8 +6894,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": 0.4,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-420_Geo_Rock": {
     "name": "Soul_Totem-420_Geo_Rock",
@@ -7437,8 +6907,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": 2.0,
     "offsetY": -1.0,
-    "offsetZ": 0.002,
-    "isShop": false
+    "offsetZ": 0.002
   },
   "Soul_Totem-Beast's_Den": {
     "name": "Soul_Totem-Beast's_Den",
@@ -7451,8 +6920,7 @@
     "mapZone": "DEEPNEST",
     "offsetX": 0.4,
     "offsetY": 2.1,
-    "offsetZ": 0.004,
-    "isShop": false
+    "offsetZ": 0.004
   },
   "Soul_Totem-Greenpath_Hunter's_Journal": {
     "name": "Soul_Totem-Greenpath_Hunter's_Journal",
@@ -7465,8 +6933,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": -0.5,
     "offsetY": 0.0,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Soul_Totem-Greenpath_MMC": {
     "name": "Soul_Totem-Greenpath_MMC",
@@ -7479,8 +6946,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": -0.4,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Greenpath_Below_Toll": {
     "name": "Soul_Totem-Greenpath_Below_Toll",
@@ -7493,8 +6959,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": 0.9,
     "offsetY": -0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Before_Pilgrim's_Way": {
     "name": "Soul_Totem-Before_Pilgrim's_Way",
@@ -7507,8 +6972,7 @@
     "mapZone": "WASTES",
     "offsetX": 0.45,
     "offsetY": -0.25,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Pilgrim's_Way": {
     "name": "Soul_Totem-Pilgrim's_Way",
@@ -7521,8 +6985,7 @@
     "mapZone": "WASTES",
     "offsetX": -0.2,
     "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Fungal_Core": {
     "name": "Soul_Totem-Fungal_Core",
@@ -7535,8 +6998,7 @@
     "mapZone": "WASTES",
     "offsetX": -0.8,
     "offsetY": 0.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Top_Left_Queen's_Gardens": {
     "name": "Soul_Totem-Top_Left_Queen's_Gardens",
@@ -7549,8 +7011,7 @@
     "mapZone": "ROYAL_GARDENS",
     "offsetX": 0.7,
     "offsetY": 0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Below_Marmu": {
     "name": "Soul_Totem-Below_Marmu",
@@ -7563,8 +7024,7 @@
     "mapZone": "ROYAL_GARDENS",
     "offsetX": -1.4,
     "offsetY": -0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Upper_Crystal_Peak": {
     "name": "Soul_Totem-Upper_Crystal_Peak",
@@ -7577,8 +7037,7 @@
     "mapZone": "MINES",
     "offsetX": -0.3,
     "offsetY": -0.7,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Hallownest_Crown": {
     "name": "Soul_Totem-Hallownest_Crown",
@@ -7591,8 +7050,7 @@
     "mapZone": "MINES",
     "offsetX": 0.1,
     "offsetY": -0.75,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Outside_Crystallized_Mound": {
     "name": "Soul_Totem-Outside_Crystallized_Mound",
@@ -7605,8 +7063,7 @@
     "mapZone": "MINES",
     "offsetX": 1.2,
     "offsetY": 0.8,
-    "offsetZ": 0.002,
-    "isShop": false
+    "offsetZ": 0.002
   },
   "Soul_Totem-Crystal_Heart_1": {
     "name": "Soul_Totem-Crystal_Heart_1",
@@ -7619,8 +7076,7 @@
     "mapZone": "MINES",
     "offsetX": -0.9,
     "offsetY": 0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Crystal_Heart_2": {
     "name": "Soul_Totem-Crystal_Heart_2",
@@ -7633,8 +7089,7 @@
     "mapZone": "MINES",
     "offsetX": 2.6,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Crystallized_Mound": {
     "name": "Soul_Totem-Crystallized_Mound",
@@ -7647,8 +7102,7 @@
     "mapZone": "MINES",
     "offsetX": 0.8,
     "offsetY": 0.8,
-    "offsetZ": 0.002,
-    "isShop": false
+    "offsetZ": 0.002
   },
   "Soul_Totem-Resting_Grounds": {
     "name": "Soul_Totem-Resting_Grounds",
@@ -7661,8 +7115,7 @@
     "mapZone": "RESTING_GROUNDS",
     "offsetX": 0.25,
     "offsetY": -0.35,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Below_Xero": {
     "name": "Soul_Totem-Below_Xero",
@@ -7674,9 +7127,8 @@
     "pinScene": null,
     "mapZone": "RESTING_GROUNDS",
     "offsetX": -1.0,
-    "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetY": -0.1,
+    "offsetZ": 0.0
   },
   "Soul_Totem-Sanctum_Below_Soul_Master": {
     "name": "Soul_Totem-Sanctum_Below_Soul_Master",
@@ -7689,8 +7141,7 @@
     "mapZone": "CITY",
     "offsetX": 0.7,
     "offsetY": -0.7,
-    "offsetZ": 0.002,
-    "isShop": false
+    "offsetZ": 0.002
   },
   "Soul_Totem-Sanctum_Below_Chest": {
     "name": "Soul_Totem-Sanctum_Below_Chest",
@@ -7702,9 +7153,8 @@
     "pinScene": null,
     "mapZone": "CITY",
     "offsetX": -0.4,
-    "offsetY": 0.9,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetY": 0.8,
+    "offsetZ": 0.001
   },
   "Soul_Totem-Sanctum_Above_Grub": {
     "name": "Soul_Totem-Sanctum_Above_Grub",
@@ -7715,10 +7165,9 @@
     "pdIntValue": 0,
     "pinScene": null,
     "mapZone": "CITY",
-    "offsetX": -0.45,
-    "offsetY": -0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetX": -0.4,
+    "offsetY": -0.4,
+    "offsetZ": 0.0
   },
   "Soul_Totem-Waterways_Entrance": {
     "name": "Soul_Totem-Waterways_Entrance",
@@ -7731,8 +7180,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": -1.4,
     "offsetY": 0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Top_Left_Waterways": {
     "name": "Soul_Totem-Top_Left_Waterways",
@@ -7745,8 +7193,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": -1.3,
     "offsetY": 0.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Waterways_East": {
     "name": "Soul_Totem-Waterways_East",
@@ -7759,8 +7206,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": -0.9,
     "offsetY": -0.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Waterways_Flukemarm": {
     "name": "Soul_Totem-Waterways_Flukemarm",
@@ -7773,8 +7219,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": 1.2,
     "offsetY": -0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-White_Palace_Entrance": {
     "name": "Soul_Totem-White_Palace_Entrance",
@@ -7787,8 +7232,7 @@
     "mapZone": "ABYSS",
     "offsetX": -1.2,
     "offsetY": -0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-White_Palace_Hub": {
     "name": "Soul_Totem-White_Palace_Hub",
@@ -7801,8 +7245,7 @@
     "mapZone": "ABYSS",
     "offsetX": -0.8,
     "offsetY": -0.2,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Soul_Totem-White_Palace_Left": {
     "name": "Soul_Totem-White_Palace_Left",
@@ -7815,8 +7258,7 @@
     "mapZone": "ABYSS",
     "offsetX": -0.4,
     "offsetY": -0.2,
-    "offsetZ": 0.002,
-    "isShop": false
+    "offsetZ": 0.002
   },
   "Soul_Totem-White_Palace_Final": {
     "name": "Soul_Totem-White_Palace_Final",
@@ -7829,8 +7271,7 @@
     "mapZone": "ABYSS",
     "offsetX": 0.0,
     "offsetY": -0.2,
-    "offsetZ": 0.003,
-    "isShop": false
+    "offsetZ": 0.003
   },
   "Soul_Totem-White_Palace_Right": {
     "name": "Soul_Totem-White_Palace_Right",
@@ -7843,8 +7284,7 @@
     "mapZone": "ABYSS",
     "offsetX": 0.4,
     "offsetY": -0.2,
-    "offsetZ": 0.004,
-    "isShop": false
+    "offsetZ": 0.004
   },
   "Soul_Totem-Path_of_Pain_Below_Lever": {
     "name": "Soul_Totem-Path_of_Pain_Below_Lever",
@@ -7857,8 +7297,7 @@
     "mapZone": "ABYSS",
     "offsetX": -1.4,
     "offsetY": 0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Soul_Totem-Path_of_Pain_Left_of_Lever": {
     "name": "Soul_Totem-Path_of_Pain_Left_of_Lever",
@@ -7871,8 +7310,7 @@
     "mapZone": "ABYSS",
     "offsetX": -1.0,
     "offsetY": 0.3,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Soul_Totem-Path_of_Pain_Entrance": {
     "name": "Soul_Totem-Path_of_Pain_Entrance",
@@ -7885,8 +7323,7 @@
     "mapZone": "ABYSS",
     "offsetX": -0.6,
     "offsetY": 0.3,
-    "offsetZ": 0.002,
-    "isShop": false
+    "offsetZ": 0.002
   },
   "Soul_Totem-Path_of_Pain_Second": {
     "name": "Soul_Totem-Path_of_Pain_Second",
@@ -7899,8 +7336,7 @@
     "mapZone": "ABYSS",
     "offsetX": -0.2,
     "offsetY": 0.3,
-    "offsetZ": 0.003,
-    "isShop": false
+    "offsetZ": 0.003
   },
   "Soul_Totem-Path_of_Pain_Hidden": {
     "name": "Soul_Totem-Path_of_Pain_Hidden",
@@ -7913,8 +7349,7 @@
     "mapZone": "ABYSS",
     "offsetX": 0.2,
     "offsetY": 0.3,
-    "offsetZ": 0.004,
-    "isShop": false
+    "offsetZ": 0.004
   },
   "Soul_Totem-Path_of_Pain_Below_Thornskip": {
     "name": "Soul_Totem-Path_of_Pain_Below_Thornskip",
@@ -7927,8 +7362,7 @@
     "mapZone": "ABYSS",
     "offsetX": 0.6,
     "offsetY": 0.3,
-    "offsetZ": 0.005,
-    "isShop": false
+    "offsetZ": 0.005
   },
   "Soul_Totem-Path_of_Pain_Final": {
     "name": "Soul_Totem-Path_of_Pain_Final",
@@ -7941,8 +7375,7 @@
     "mapZone": "ABYSS",
     "offsetX": 1.0,
     "offsetY": 0.3,
-    "offsetZ": 0.006,
-    "isShop": false
+    "offsetZ": 0.006
   },
   "Soul_Totem-Pale_Lurker": {
     "name": "Soul_Totem-Pale_Lurker",
@@ -7955,8 +7388,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": -1.1,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Lore_Tablet-City_Entrance": {
     "name": "Lore_Tablet-City_Entrance",
@@ -7969,8 +7401,7 @@
     "mapZone": "CITY",
     "offsetX": 0.0,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Lore_Tablet-Pleasure_House": {
     "name": "Lore_Tablet-Pleasure_House",
@@ -7983,8 +7414,7 @@
     "mapZone": "CITY",
     "offsetX": 0.4,
     "offsetY": -1.0,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Lore_Tablet-Sanctum_Entrance": {
     "name": "Lore_Tablet-Sanctum_Entrance",
@@ -7995,10 +7425,9 @@
     "pdIntValue": 0,
     "pinScene": null,
     "mapZone": "CITY",
-    "offsetX": 0.2,
-    "offsetY": 0.6,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetX": 0.5,
+    "offsetY": 0.5,
+    "offsetZ": 0.001
   },
   "Lore_Tablet-Sanctum_Past_Soul_Master": {
     "name": "Lore_Tablet-Sanctum_Past_Soul_Master",
@@ -8009,10 +7438,9 @@
     "pdIntValue": 0,
     "pinScene": null,
     "mapZone": "CITY",
-    "offsetX": 0.2,
-    "offsetY": 0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetX": 0.5,
+    "offsetY": 0.8,
+    "offsetZ": 0.0
   },
   "Lore_Tablet-Watcher's_Spire": {
     "name": "Lore_Tablet-Watcher's_Spire",
@@ -8025,8 +7453,7 @@
     "mapZone": "CITY",
     "offsetX": 0.0,
     "offsetY": 0.7,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Lore_Tablet-Archives_Upper": {
     "name": "Lore_Tablet-Archives_Upper",
@@ -8039,8 +7466,7 @@
     "mapZone": "FOG_CANYON",
     "offsetX": 0.19,
     "offsetY": 0.25,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Lore_Tablet-Archives_Left": {
     "name": "Lore_Tablet-Archives_Left",
@@ -8053,8 +7479,7 @@
     "mapZone": "FOG_CANYON",
     "offsetX": -0.21,
     "offsetY": 0.25,
-    "offsetZ": 0.002,
-    "isShop": false
+    "offsetZ": 0.002
   },
   "Lore_Tablet-Archives_Right": {
     "name": "Lore_Tablet-Archives_Right",
@@ -8067,8 +7492,7 @@
     "mapZone": "FOG_CANYON",
     "offsetX": 0.59,
     "offsetY": 0.25,
-    "offsetZ": 0.002,
-    "isShop": false
+    "offsetZ": 0.002
   },
   "Lore_Tablet-Pilgrim's_Way_1": {
     "name": "Lore_Tablet-Pilgrim's_Way_1",
@@ -8081,8 +7505,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": 1.4,
     "offsetY": 0.0,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Lore_Tablet-Pilgrim's_Way_2": {
     "name": "Lore_Tablet-Pilgrim's_Way_2",
@@ -8095,8 +7518,7 @@
     "mapZone": "WASTES",
     "offsetX": -1.3,
     "offsetY": -0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Lore_Tablet-Mantis_Outskirts": {
     "name": "Lore_Tablet-Mantis_Outskirts",
@@ -8109,8 +7531,7 @@
     "mapZone": "WASTES",
     "offsetX": 1.7,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Lore_Tablet-Mantis_Village": {
     "name": "Lore_Tablet-Mantis_Village",
@@ -8123,8 +7544,7 @@
     "mapZone": "WASTES",
     "offsetX": -1.0,
     "offsetY": 0.3,
-    "offsetZ": -0.97,
-    "isShop": false
+    "offsetZ": -0.97
   },
   "Lore_Tablet-Greenpath_Upper_Hidden": {
     "name": "Lore_Tablet-Greenpath_Upper_Hidden",
@@ -8137,8 +7557,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": 0.7,
     "offsetY": 0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Lore_Tablet-Greenpath_Below_Toll": {
     "name": "Lore_Tablet-Greenpath_Below_Toll",
@@ -8151,8 +7570,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": -0.3,
     "offsetY": -0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Lore_Tablet-Greenpath_Lifeblood": {
     "name": "Lore_Tablet-Greenpath_Lifeblood",
@@ -8165,8 +7583,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": -0.5,
     "offsetY": 0.1,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Lore_Tablet-Greenpath_Stag": {
     "name": "Lore_Tablet-Greenpath_Stag",
@@ -8179,8 +7596,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": 0.9,
     "offsetY": 0.4,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Lore_Tablet-Greenpath_QG": {
     "name": "Lore_Tablet-Greenpath_QG",
@@ -8193,8 +7609,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": -1.3,
     "offsetY": -0.2,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Lore_Tablet-Greenpath_Lower_Hidden": {
     "name": "Lore_Tablet-Greenpath_Lower_Hidden",
@@ -8207,8 +7622,7 @@
     "mapZone": "GREEN_PATH",
     "offsetX": 1.2,
     "offsetY": -0.14,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Lore_Tablet-Dung_Defender": {
     "name": "Lore_Tablet-Dung_Defender",
@@ -8221,8 +7635,7 @@
     "mapZone": "WATERWAYS",
     "offsetX": 0.9,
     "offsetY": -0.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Lore_Tablet-Spore_Shroom": {
     "name": "Lore_Tablet-Spore_Shroom",
@@ -8235,8 +7648,7 @@
     "mapZone": "WASTES",
     "offsetX": 0.6,
     "offsetY": 0.3,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Lore_Tablet-Fungal_Wastes_Hidden": {
     "name": "Lore_Tablet-Fungal_Wastes_Hidden",
@@ -8249,8 +7661,7 @@
     "mapZone": "WASTES",
     "offsetX": -0.6,
     "offsetY": 0.7,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Lore_Tablet-Fungal_Wastes_Below_Shrumal_Ogres": {
     "name": "Lore_Tablet-Fungal_Wastes_Below_Shrumal_Ogres",
@@ -8263,8 +7674,7 @@
     "mapZone": "WASTES",
     "offsetX": 0.2,
     "offsetY": -0.6,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Lore_Tablet-Fungal_Core": {
     "name": "Lore_Tablet-Fungal_Core",
@@ -8277,8 +7687,7 @@
     "mapZone": "WASTES",
     "offsetX": 0.4,
     "offsetY": 0.6,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Lore_Tablet-Ancient_Basin": {
     "name": "Lore_Tablet-Ancient_Basin",
@@ -8291,8 +7700,7 @@
     "mapZone": "ABYSS",
     "offsetX": 0.3,
     "offsetY": 2.7,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Lore_Tablet-King's_Pass_Focus": {
     "name": "Lore_Tablet-King's_Pass_Focus",
@@ -8305,8 +7713,7 @@
     "mapZone": "TOWN",
     "offsetX": 0.0,
     "offsetY": -0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Lore_Tablet-King's_Pass_Fury": {
     "name": "Lore_Tablet-King's_Pass_Fury",
@@ -8319,8 +7726,7 @@
     "mapZone": "TOWN",
     "offsetX": 1.7,
     "offsetY": -0.8,
-    "offsetZ": 0.002,
-    "isShop": false
+    "offsetZ": 0.002
   },
   "Lore_Tablet-King's_Pass_Exit": {
     "name": "Lore_Tablet-King's_Pass_Exit",
@@ -8333,8 +7739,7 @@
     "mapZone": "TOWN",
     "offsetX": 1.5,
     "offsetY": 0.4,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Lore_Tablet-World_Sense": {
     "name": "Lore_Tablet-World_Sense",
@@ -8347,8 +7752,7 @@
     "mapZone": "CROSSROADS",
     "offsetX": -0.2,
     "offsetY": -0.2,
-    "offsetZ": 0.001,
-    "isShop": false
+    "offsetZ": 0.001
   },
   "Lore_Tablet-Howling_Cliffs": {
     "name": "Lore_Tablet-Howling_Cliffs",
@@ -8361,8 +7765,7 @@
     "mapZone": "CLIFFS",
     "offsetX": 1.8,
     "offsetY": -1.1,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Lore_Tablet-Kingdom's_Edge": {
     "name": "Lore_Tablet-Kingdom's_Edge",
@@ -8375,8 +7778,7 @@
     "mapZone": "OUTSKIRTS",
     "offsetX": 1.2,
     "offsetY": -0.5,
-    "offsetZ": 0.0,
-    "isShop": false
+    "offsetZ": 0.0
   },
   "Lore_Tablet-Palace_Workshop": {
     "name": "Lore_Tablet-Palace_Workshop",
@@ -8389,8 +7791,7 @@
     "mapZone": "ABYSS",
     "offsetX": 1.2,
     "offsetY": -0.2,
-    "offsetZ": 0.006,
-    "isShop": false
+    "offsetZ": 0.006
   },
   "Lore_Tablet-Palace_Throne": {
     "name": "Lore_Tablet-Palace_Throne",
@@ -8403,8 +7804,7 @@
     "mapZone": "ABYSS",
     "offsetX": 1.6,
     "offsetY": -0.2,
-    "offsetZ": 0.007,
-    "isShop": false
+    "offsetZ": 0.007
   },
   "Lore_Tablet-Path_of_Pain_Entrance": {
     "name": "Lore_Tablet-Path_of_Pain_Entrance",
@@ -8417,9 +7817,9 @@
     "mapZone": "ABYSS",
     "offsetX": 1.4,
     "offsetY": 0.3,
-    "offsetZ": 0.007,
-    "isShop": false
+    "offsetZ": 0.007
   },
+  // RandoPlus interop
   "Mr_Mushroom-Fungal_Wastes": {
     "name": "Mr_Mushroom-Fungal_Wastes",
     "sceneName": "Fungus2_18",
@@ -8432,8 +7832,7 @@
     "offsetX": -1.85,
     "offsetY": 0.2,
     "offsetZ": 0.001,
-    "isShop": false,
-    "randoOnly":  true
+    "randoOnly": true
   },
   "Mr_Mushroom-Kingdom's_Edge": {
     "name": "Mr_Mushroom-Kingdom's_Edge",
@@ -8447,7 +7846,6 @@
     "offsetX": -0.9,
     "offsetY": 0.8,
     "offsetZ": 0.0,
-    "isShop": false,
     "randoOnly": true
   },
   "Mr_Mushroom-Deepnest": {
@@ -8462,7 +7860,6 @@
     "offsetX": -1.3,
     "offsetY": -0.2,
     "offsetZ": 0.0,
-    "isShop": false,
     "randoOnly": true
   },
   "Mr_Mushroom-Howling_Cliffs": {
@@ -8477,7 +7874,6 @@
     "offsetX": 0.54,
     "offsetY": 0.32,
     "offsetZ": 0.001,
-    "isShop": false,
     "randoOnly": true
   },
   "Mr_Mushroom-Ancient_Basin": {
@@ -8492,7 +7888,6 @@
     "offsetX": 0.8,
     "offsetY": 0.4,
     "offsetZ": 0.0,
-    "isShop": false,
     "randoOnly": true
   },
   "Mr_Mushroom-Fog_Canyon": {
@@ -8507,7 +7902,6 @@
     "offsetX": -0.6,
     "offsetY": -0.4,
     "offsetZ": 0.0,
-    "isShop": false,
     "randoOnly": true
   },
   "Mr_Mushroom-King's_Pass": {
@@ -8522,7 +7916,566 @@
     "offsetX": -1.4,
     "offsetY": -0.7,
     "offsetZ": 0.0,
-    "isShop": false,
+    "randoOnly": true
+  },
+  // RandomizableLevers interop
+  "Switch-Dirtmouth_Stag": {
+    "name": "Switch-Dirtmouth_Stag",
+    "sceneName": "Room_Town_Stag_Station",
+    "pinScene": "Town",
+    "mapZone": "TOWN",
+    "offsetX": 0.4,
+    "offsetY": -0.6,
+    "offsetZ": 0.009,
+    "randoOnly": true
+  },
+  "Switch-Outside_Ancestral_Mound": {
+    "name": "Switch-Outside_Ancestral_Mound",
+    "sceneName": "Crossroads_06",
+    "mapZone": "CROSSROADS",
+    "offsetX": -0.4,
+    "offsetY": -0.6,
+    "offsetZ": -0.500,
+    "randoOnly": true
+  },
+  "Switch-Greenpath_Stag": {
+    "name": "Switch-Greenpath_Stag",
+    "sceneName": "Fungus1_22",
+    "mapZone": "GREEN_PATH",
+    "offsetX": 0.4,
+    "offsetY": -1.2,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Switch-Lower_Resting_Grounds": {
+    "name": "Switch-Lower_Resting_Grounds",
+    "sceneName": "RestingGrounds_06",
+    "mapZone": "RESTING_GROUNDS",
+    "offsetX": -1.0,
+    "offsetY": 0.3,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Switch-Petra_Arena": {
+    "name": "Switch-Petra_Arena",
+    "sceneName": "Fungus3_05",
+    "mapZone": "ROYAL_GARDENS",
+    "offsetX": 0.4,
+    "offsetY": -0.5,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Switch-Queen's_Gardens_Stag": {
+    "name": "Switch-Queen's_Gardens_Stag",
+    "sceneName": "Fungus3_40",
+    "mapZone": "ROYAL_GARDENS",
+    "offsetX": 2.5,
+    "offsetY": 0.0,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Switch-Crossroads_East": {
+    "name": "Switch-Crossroads_East",
+    "sceneName": "Crossroads_03",
+    "mapZone": "CROSSROADS",
+    "offsetX": 0.0,
+    "offsetY": 0.8,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Dung_Defender": {
+    "name": "Lever-Dung_Defender",
+    "sceneName": "Waterways_05",
+    "mapZone": "WATERWAYS",
+    "offsetX": 0.9,
+    "offsetY": 0.0,
+    "offsetZ": 0.001,
+    "randoOnly": true
+  },
+  "Lever-Waterways_Hwurmp_Arena": {
+    "name": "Lever-Waterways_Hwurmp_Arena",
+    "sceneName": "Waterways_09",
+    "mapZone": "WATERWAYS",
+    "offsetX": -0.2,
+    "offsetY": -0.1,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Queen's_Station_Mask_Shard": {
+    "name": "Lever-Queen's_Station_Mask_Shard",
+    "sceneName": "Fungus2_01",
+    "mapZone": "WASTES",
+    "offsetX": 0.75,
+    "offsetY": 0.05,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Queen's_Gardens_Ground_Block": {
+    "name": "Lever-Queen's_Gardens_Ground_Block",
+    "sceneName": "Fungus3_04",
+    "mapZone": "ROYAL_GARDENS",
+    "offsetX": 0.0,
+    "offsetY": 0.4,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Below_Overgrown_Mound": {
+    "name": "Lever-Below_Overgrown_Mound",
+    "sceneName": "Fungus3_44",
+    "mapZone": "FOG_CANYON",
+    "offsetX": 0.6,
+    "offsetY": -0.3,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Tower_of_Love": {
+    "name": "Lever-Tower_of_Love",
+    "sceneName": "Ruins2_11_b",
+    "mapZone": "CITY",
+    "offsetX": 0.6,
+    "offsetY": -1.7,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Abyss_Lighthouse": {
+    "name": "Lever-Abyss_Lighthouse",
+    "sceneName": "Abyss_Lighthouse_room",
+    "pinScene": "Abyss_09",
+    "mapZone": "ABYSS",
+    "offsetX": -1.1,
+    "offsetY": 0.8,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Failed_Tramway_Right": {
+    "name": "Lever-Failed_Tramway_Right",
+    "sceneName": "Deepnest_26",
+    "mapZone": "DEEPNEST",
+    "offsetX": 0.9,
+    "offsetY": -0.4,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Failed_Tramway_Left": {
+    "name": "Lever-Failed_Tramway_Left",
+    "sceneName": "Deepnest_26b",
+    "mapZone": "DEEPNEST",
+    "offsetX": 1.4,
+    "offsetY": 0.0,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Below_Spell_Twister": {
+    "name": "Lever-Below_Spell_Twister",
+    "sceneName": "Ruins1_30",
+    "mapZone": "CITY",
+    "offsetX": -0.1,
+    "offsetY": 0.1,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Sanctum_East": {
+    "name": "Lever-Sanctum_East",
+    "sceneName": "Ruins1_25",
+    "mapZone": "CITY",
+    "offsetX": -0.1,
+    "offsetY": 0.2,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Sanctum_Soul_Warrior": {
+    "name": "Lever-Sanctum_Soul_Warrior",
+    "sceneName": "Ruins1_23",
+    "mapZone": "CITY",
+    "offsetX": -0.3,
+    "offsetY": 0.6,
+    "offsetZ": 0.002,
+    "randoOnly": true
+  },
+  "Lever-Sanctum_Bottom": {
+    "name": "Lever-Sanctum_Bottom",
+    "sceneName": "Ruins1_23",
+    "mapZone": "CITY",
+    "offsetX": 0.4,
+    "offsetY": -0.3,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Sanctum_West_Upper": {
+    "name": "Lever-Sanctum_West_Upper",
+    "sceneName": "Ruins1_32",
+    "mapZone": "CITY",
+    "offsetX": -0.4,
+    "offsetY": 0.0,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Sanctum_West_Lower": {
+    "name": "Lever-Sanctum_West_Lower",
+    "sceneName": "Ruins1_32",
+    "mapZone": "CITY",
+    "offsetX": 0.2,
+    "offsetY": -0.8,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-City_Fountain": {
+    "name": "Lever-City_Fountain",
+    "sceneName": "Ruins1_27",
+    "mapZone": "CITY",
+    "offsetX": 0.6,
+    "offsetY": -0.6,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-City_Spire_Sentry_Lower": {
+    "name": "Lever-City_Spire_Sentry_Lower",
+    "sceneName": "Ruins2_01",
+    "mapZone": "CITY",
+    "offsetX": -0.3,
+    "offsetY": 0.5,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-City_Spire_Sentry_Upper": {
+    "name": "Lever-City_Spire_Sentry_Upper",
+    "sceneName": "Ruins2_01",
+    "mapZone": "CITY",
+    "offsetX": 0.2,
+    "offsetY": 1.1,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-City_Bridge_Above_Fountain": {
+    "name": "Lever-City_Bridge_Above_Fountain",
+    "sceneName": "Ruins1_18",
+    "mapZone": "CITY",
+    "offsetX": -0.6,
+    "offsetY": 0.2,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-City_Storerooms": {
+    "name": "Lever-City_Storerooms",
+    "sceneName": "Ruins1_17",
+    "mapZone": "CITY",
+    "offsetX": -0.5,
+    "offsetY": -0.7,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-City_Lemm": {
+    "name": "Lever-City_Lemm",
+    "sceneName": "Ruins1_05b",
+    "mapZone": "CITY",
+    "offsetX": -0.3,
+    "offsetY": 0.2,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-City_Above_Lemm_Right": {
+    "name": "Lever-City_Above_Lemm_Right",
+    "sceneName": "Ruins1_05c",
+    "mapZone": "CITY",
+    "offsetX": 0.4,
+    "offsetY": -0.5,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-City_Above_Lemm_Left": {
+    "name": "Lever-City_Above_Lemm_Left",
+    "sceneName": "Ruins1_05c",
+    "mapZone": "CITY",
+    "offsetX": -0.1,
+    "offsetY": 0.6,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-City_Above_Lemm_Upper": {
+    "name": "Lever-City_Above_Lemm_Upper",
+    "sceneName": "Ruins1_05",
+    "mapZone": "CITY",
+    "offsetX": -0.1,
+    "offsetY": 1.5,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Shade_Soul_Exit": {
+    "name": "Lever-Shade_Soul_Exit",
+    "sceneName": "Ruins1_31b",
+    "mapZone": "CITY",
+    "offsetX": 0.3,
+    "offsetY": 0.2,
+    "offsetZ": 0.001,
+    "randoOnly": true
+  },
+  "Lever-Emilitia": {
+    "name": "Lever-Emilitia",
+    "sceneName": "Ruins_House_03",
+    "pinScene": "Ruins2_04",
+    "mapZone": "CITY",
+    "offsetX": 0.0,
+    "offsetY": -0.7,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Mantis_Lords_Top_Left": {
+    "name": "Lever-Mantis_Lords_Top_Left",
+    "sceneName": "Fungus2_15",
+    "mapZone": "WASTES",
+    "offsetX": -0.4,
+    "offsetY": 1.2,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Mantis_Lords_Middle_Left": {
+    "name": "Lever-Mantis_Lords_Middle_Left",
+    "sceneName": "Fungus2_15",
+    "mapZone": "WASTES",
+    "offsetX": -0.4,
+    "offsetY": 0.5,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Mantis_Lords_Bottom_Left": {
+    "name": "Lever-Mantis_Lords_Bottom_Left",
+    "sceneName": "Fungus2_15",
+    "mapZone": "WASTES",
+    "offsetX": -0.4,
+    "offsetY": -0.4,
+    "offsetZ": 0.001,
+    "randoOnly": true
+  },
+  "Lever-Mantis_Lords_Middle_Right": {
+    "name": "Lever-Mantis_Lords_Middle_Right",
+    "sceneName": "Fungus2_15",
+    "mapZone": "WASTES",
+    "offsetX": 0.3,
+    "offsetY": 0.8,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Mantis_Lords_Bottom_Right": {
+    "name": "Lever-Mantis_Lords_Bottom_Right",
+    "sceneName": "Fungus2_15",
+    "mapZone": "WASTES",
+    "offsetX": 0.5,
+    "offsetY": -0.1,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Mantis_Claw": {
+    "name": "Lever-Mantis_Claw",
+    "sceneName": "Fungus2_14",
+    "mapZone": "WASTES",
+    "offsetX": -1.8,
+    "offsetY": -0.5,
+    "offsetZ": 0.002,
+    "randoOnly": true
+  },
+  "Lever-Mantis_Lords_Access": {
+    "name": "Lever-Mantis_Lords_Access",
+    "sceneName": "Fungus2_14",
+    "mapZone": "WASTES",
+    "offsetX": -0.1,
+    "offsetY": -0.1,
+    "offsetZ": -0.96,
+    "randoOnly": true
+  },
+  "Lever-Fungal_Wastes_Thorns_Gauntlet": {
+    "name": "Lever-Fungal_Wastes_Thorns_Gauntlet",
+    "sceneName": "Fungus2_04",
+    "mapZone": "WASTES",
+    "offsetX": 0.4,
+    "offsetY": -0.1,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Fungal_Wastes_Below_Shrumal_Ogres": {
+    "name": "Lever-Fungal_Wastes_Below_Shrumal_Ogres",
+    "sceneName": "Fungus2_04",
+    "mapZone": "WASTES",
+    "offsetX": 0.2,
+    "offsetY": 0.8,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Fungal_Wastes_Bouncy_Grub": {
+    "name": "Lever-Fungal_Wastes_Bouncy_Grub",
+    "sceneName": "Fungus2_18",
+    "mapZone": "WASTES",
+    "offsetX": -0.1,
+    "offsetY": -0.1,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Dirtmouth_Elevator": {
+    "name": "Lever-Dirtmouth_Elevator",
+    "sceneName": "Town",
+    "mapZone": "TOWN",
+    "offsetX": 2.7,
+    "offsetY": 0.3,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Crystal_Peak_Tall_Room_Upper": {
+    "name": "Lever-Crystal_Peak_Tall_Room_Upper",
+    "sceneName": "Mines_20",
+    "mapZone": "MINES",
+    "offsetX": 0.2,
+    "offsetY": 0.8,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Crystal_Peak_Tall_Room_Middle": {
+    "name": "Lever-Crystal_Peak_Tall_Room_Middle",
+    "sceneName": "Mines_20",
+    "mapZone": "MINES",
+    "offsetX": -0.2,
+    "offsetY": 0.3,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Crystal_Peak_Tall_Room_Lower": {
+    "name": "Lever-Crystal_Peak_Tall_Room_Lower",
+    "sceneName": "Mines_20",
+    "mapZone": "MINES",
+    "offsetX": 0.3,
+    "offsetY": -0.8,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Crystal_Peak_Spike_Grub": {
+    "name": "Lever-Crystal_Peak_Spike_Grub",
+    "sceneName": "Mines_03",
+    "mapZone": "MINES",
+    "offsetX": -0.3,
+    "offsetY": 0.7,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Crystal_Peak_Below_Chest": {
+    "name": "Lever-Crystal_Peak_Below_Chest",
+    "sceneName": "Mines_04",
+    "mapZone": "MINES",
+    "offsetX": 0.1,
+    "offsetY": 0.9,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Crystal_Peak_Above_Chest": {
+    "name": "Lever-Crystal_Peak_Above_Chest",
+    "sceneName": "Mines_37",
+    "mapZone": "MINES",
+    "offsetX": 0.0,
+    "offsetY": 0.3,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Crystal_Peak_Crushers_Grub": {
+    "name": "Lever-Crystal_Peak_Crushers_Grub",
+    "sceneName": "Mines_19",
+    "mapZone": "MINES",
+    "offsetX": 0.4,
+    "offsetY": 0.1,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Crystal_Peak_Crushers_Chest": {
+    "name": "Lever-Crystal_Peak_Crushers_Chest",
+    "sceneName": "Mines_37",
+    "mapZone": "MINES",
+    "offsetX": -0.4,
+    "offsetY": -0.4,
+    "offsetZ": 0.002,
+    "randoOnly": true
+  },
+  "Lever-Palace_Atrium": {
+    "name": "Lever-Palace_Atrium",
+    "sceneName": "White_Palace_03_hub",
+    "pinScene": "Abyss_05",
+    "mapZone": "ABYSS",
+    "offsetX": -1.2,
+    "offsetY": 0.8,
+    "offsetZ": 0.001,
+    "randoOnly": true
+  },
+  "Lever-Palace_Right": {
+    "name": "Lever-Palace_Right",
+    "sceneName": "White_Palace_15",
+    "pinScene": "Abyss_05",
+    "mapZone": "ABYSS",
+    "offsetX": -0.8,
+    "offsetY": 0.8,
+    "offsetZ": 0.002,
+    "randoOnly": true
+  },
+  "Lever-Palace_Final": {
+    "name": "Lever-Palace_Final",
+    "sceneName": "White_Palace_12",
+    "pinScene": "Abyss_05",
+    "mapZone": "ABYSS",
+    "offsetX": -0.4,
+    "offsetY": 0.8,
+    "offsetZ": 0.003,
+    "randoOnly": true
+  },
+  "Lever-Path_of_Pain": {
+    "name": "Lever-Path_of_Pain",
+    "sceneName": "White_Palace_17",
+    "pinScene": "Abyss_05",
+    "mapZone": "ABYSS",
+    "offsetX": 0.0,
+    "offsetY": 0.8,
+    "offsetZ": 0.004,
+    "randoOnly": true
+  },
+  "Lever-Palace_Entrance_Orb": {
+    "name": "Lever-Palace_Entrance_Orb",
+    "sceneName": "White_Palace_02",
+    "pinScene": "Abyss_05",
+    "mapZone": "ABYSS",
+    "offsetX": 0.4,
+    "offsetY": 0.8,
+    "offsetZ": 0.005,
+    "randoOnly": true
+  },
+  "Lever-Palace_Left_Orb": {
+    "name": "Lever-Palace_Left_Orb",
+    "sceneName": "White_Palace_14",
+    "pinScene": "Abyss_05",
+    "mapZone": "ABYSS",
+    "offsetX": 0.8,
+    "offsetY": 0.8,
+    "offsetZ": 0.006,
+    "randoOnly": true
+  },
+  "Lever-Palace_Right_Orb": {
+    "name": "Lever-Palace_Right_Orb",
+    "sceneName": "White_Palace_15",
+    "pinScene": "Abyss_05",
+    "mapZone": "ABYSS",
+    "offsetX": 1.2,
+    "offsetY": 0.8,
+    "offsetZ": 0.007,
+    "randoOnly": true
+  },
+  "Lever-Pilgrim's_Way_Left": {
+    "name": "Lever-Pilgrim's_Way_Left",
+    "sceneName": "Fungus2_21",
+    "mapZone": "WASTES",
+    "offsetX": -0.1,
+    "offsetY": -0.4,
+    "offsetZ": 0.0,
+    "randoOnly": true
+  },
+  "Lever-Pilgrim's_Way_Right": {
+    "name": "Lever-Pilgrim's_Way_Right",
+    "sceneName": "Fungus2_21",
+    "mapZone": "WASTES",
+    "offsetX": 0.9,
+    "offsetY": -0.4,
+    "offsetZ": 0.0,
     "randoOnly": true
   }
 }

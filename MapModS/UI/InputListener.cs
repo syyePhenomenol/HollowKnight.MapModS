@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using MapModS.Data;
+using MapModS.Map;
+using UnityEngine;
 
 namespace MapModS.UI
 {
@@ -70,14 +72,11 @@ namespace MapModS.UI
                         PauseMenu.SizeClicked("Size");
                     }
 
-                    //if (Input.GetKeyDown(KeyCode.T) && MapModS.LS.mapMode == Settings.MapMode.TransitionRando)
+                    // For debugging pins
+                    //if (Input.GetKeyDown(KeyCode.R))
                     //{
-                    //    TransitionText.GetRoute();
-                    //}
-
-                    //if (Input.GetKeyDown(KeyCode.B) && MapModS.LS.mapMode == Settings.MapMode.TransitionRando)
-                    //{
-                    //    MapModS.GS.ToggleAllowBenchWarp();
+                    //    DataLoader.LoadNewPinDef();
+                    //    WorldMap.CustomPins.ReadjustPinPostiions();
                     //}
                 }
             }

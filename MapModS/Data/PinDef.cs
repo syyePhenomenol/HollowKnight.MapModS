@@ -28,7 +28,6 @@ namespace MapModS.Data
         public float offsetY;
         public float offsetZ;
 
-        public bool isShop = false;
         public bool randoOnly = false;
 
         // These are assigned during FindSpoilerPools, unusued if it's a Shop

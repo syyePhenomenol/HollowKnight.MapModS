@@ -27,6 +27,7 @@ namespace MapModS
         public GlobalSettings OnSaveGlobal() => GS;
 
         public static bool AdditionalMapsInstalled = false;
+        public static bool RandomizableLeversInstalled = false;
 
         public override void Initialize()
         {
@@ -41,11 +42,7 @@ namespace MapModS
             }
 
             AdditionalMapsInstalled = ModHooks.GetMod("Additional Maps") is Mod;
-
-            if (AdditionalMapsInstalled)
-            {
-                Instance.Log("Additional Maps detected");
-            }
+            RandomizableLeversInstalled = ModHooks.GetMod("RandomizableLevers") is Mod;
 
             try
             {
