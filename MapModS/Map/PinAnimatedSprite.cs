@@ -84,8 +84,11 @@ namespace MapModS.Map
                 pinBorderColor = PinBorderColor.Previewed;
             }
 
-            if (MapModS.LS.SpoilerOn
-                || pinDef.pinLocationState == PinLocationState.Previewed
+            if (pinDef.pinLocationState == PinLocationState.Previewed)
+            {
+                pool = pinDef.randoItems.ElementAt(spriteIndex).poolGroup;
+            }
+            else if (MapModS.LS.SpoilerOn
                 || pinDef.pinLocationState == PinLocationState.ClearedPersistent)
             {
                 pool = pinDef.randoItems.ElementAt(spriteIndex).poolGroup;
