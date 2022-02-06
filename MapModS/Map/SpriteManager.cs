@@ -141,7 +141,8 @@ namespace MapModS.Map
             }
 
             MapModS.Instance.LogWarn("Failed to load sprite named '" + name + "'");
-            return null;
+
+            return _sprites["pinUnknown"];
         }
 
         private static Sprite FromStream(Stream s)

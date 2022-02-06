@@ -3728,7 +3728,7 @@
     "pdIntValue": 0,
     "pinScene": null,
     "mapZone": "CROSSROADS",
-    "offsetX": 0.1,
+    "offsetX": -0.2,
     "offsetY": -0.15,
     "offsetZ": 0.0
   },
