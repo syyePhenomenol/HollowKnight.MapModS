@@ -14,7 +14,7 @@ namespace MapModS
     {
         public static MapModS Instance;
 
-        public override string GetVersion() => "2.2.0 refactor";
+        public override string GetVersion() => "2.2.0";
 
         public override int LoadPriority() => 10;
 
