@@ -20,6 +20,7 @@ namespace MapModS.UI
 
         private static CanvasPanel _instructionPanel;
         private static CanvasPanel _transitionPanel;
+        private static CanvasPanel _uncheckedTransitionsPanel;
 
         public static TransitionHelper th;
 
@@ -48,6 +49,7 @@ namespace MapModS.UI
                     || MapModS.LS.mapMode == MapMode.TransitionRandoAlt);
 
             _instructionPanel.SetActive(isActive, isActive);
+            _uncheckedTransitionsPanel.SetActive(false, false);
 
         }
 
@@ -88,6 +90,12 @@ namespace MapModS.UI
 
             _transitionPanel.SetActive(false, false);
 
+            _uncheckedTransitionsPanel = new CanvasPanel
+                (_canvas, GUIController.Instance.Images["ButtonsMenuBG"], new Vector2(10f, 20f), new Vector2(1346f, 0f), new Rect(0f, 0f, 0f, 0f));
+            _uncheckedTransitionsPanel.AddText("Unchecked", "Transitions: None", new Vector2(-37f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14, FontStyle.Normal, TextAnchor.UpperRight);
+
+            _uncheckedTransitionsPanel.SetActive(false, false);
+
             SetTexts();
         }
 
@@ -102,14 +110,14 @@ namespace MapModS.UI
                     || MapModS.LS.mapMode == MapMode.TransitionRandoAlt);
 
             _transitionPanel.SetActive(isActive, isActive);
-
+            _uncheckedTransitionsPanel.SetActive(isActive, isActive);
+            
             SetTransitionsText();
+            SetUncheckedTransitionsText();
             SetRouteText();
         }
 
-        private static int frameCounter = 0;
         private static Thread searchThread;
-        private static Thread colorUpdateThread;
 
         // Called every frame
         public static void Update()
@@ -138,24 +146,11 @@ namespace MapModS.UI
                 SetRouteText();
                 rejectedTransitionPairs = new();
             }
-
-            //frameCounter = (frameCounter + 1) % 24;
-
-            //if (frameCounter == 0)
-            //{
-            //    colorUpdateThread = new(() =>
-            //    {
-            //        if (GetRoomClosestToMiddle(selectedScene, out selectedScene))
-            //        {
-            //            SetInstructionsText();
-            //            SetRoomColors();
-            //        }
-            //    });
-
-            //    colorUpdateThread.Start();
-            //}
         }
 
+        private static Thread colorUpdateThread;
+
+        // Called every 0.1 seconds
         public static void UpdateSelectedScene()
         {
             if (Canvas == null
@@ -168,19 +163,16 @@ namespace MapModS.UI
                 return;
             }
 
-            if (frameCounter == 0)
+            colorUpdateThread = new(() =>
             {
-                colorUpdateThread = new(() =>
+                if (GetRoomClosestToMiddle(selectedScene, out selectedScene))
                 {
-                    if (GetRoomClosestToMiddle(selectedScene, out selectedScene))
-                    {
-                        SetInstructionsText();
-                        SetRoomColors();
-                    }
-                });
+                    SetInstructionsText();
+                    SetRoomColors();
+                }
+            });
 
-                colorUpdateThread.Start();
-            }
+            colorUpdateThread.Start();
         }
 
         private static double DistanceToMiddle(Transform transform, bool shift)
@@ -351,6 +343,33 @@ namespace MapModS.UI
             }
 
             _transitionPanel.GetText("Transitions").UpdateText(transitionsText);
+        }
+
+        public static void SetUncheckedTransitionsText()
+        {
+            string uncheckedTransitionsText = "Unchecked:";
+            IEnumerable<string> uncheckedTransitions = GetUncheckedTransitions();
+
+            if (uncheckedTransitions.Any())
+            {
+                foreach(string transition in uncheckedTransitions)
+                {
+                    uncheckedTransitionsText += "\n" + transition;
+                }
+            }
+            else
+            {
+                uncheckedTransitionsText += "\nNone";
+            }
+
+            _uncheckedTransitionsPanel.GetText("Unchecked").UpdateText(uncheckedTransitionsText);
+        }
+
+        public static IEnumerable<string> GetUncheckedTransitions()
+        {
+            return RandomizerMod.RandomizerMod.RS.TrackerData.uncheckedReachableTransitions
+                .Where(t => t.StartsWith(StringUtils.CurrentNormalScene()))
+                .Select(t => t.Substring(StringUtils.CurrentNormalScene().Length));
         }
 
         public static void GetRoute()
