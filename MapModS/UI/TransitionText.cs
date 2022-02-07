@@ -296,7 +296,7 @@ namespace MapModS.UI
             }
             else
             {
-                instructionsText += $" Press [Menu Select] to find new route or to switch starting / final transitions for current route.";
+                instructionsText += $" Press [Menu Select] to find new route or switch starting / final transitions.";
             }
 
             _instructionPanel.GetText("Instructions").UpdateText(instructionsText);
@@ -312,7 +312,7 @@ namespace MapModS.UI
                 && lastFinalTransition != ""
                 && selectedRoute.Any())
             {
-                routeText += $"{lastStartTransition} -> {lastFinalTransition}      ";
+                routeText += $"{lastStartTransition} ->...-> {lastFinalTransition}      ";
                 routeText += $"Transitions: {selectedRoute.Count()}";
             }
             else

@@ -268,7 +268,7 @@ namespace MapModS.UI
                     }
                 }
 
-                if (GameManager.instance.sceneData.persistentBoolItems.Any(pbi => pbi.id == "Mines Lever" &&  pbi.sceneName == "Town" && pbi.activated == true))
+                if (PlayerData.instance.mineLiftOpened)
                 {
                     pm.Add(pm.lm.TransitionLookup["Town[right1]"]);
                 }
