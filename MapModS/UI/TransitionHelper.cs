@@ -481,8 +481,8 @@ namespace MapModS.UI
             }
 
             // Just in case
-            if (startScene == null || finalScene == null
-                || startScene == finalScene)
+            if (startScene == null || finalScene == null)
+                //|| startScene == finalScene)
             {
                 return new();
             }
