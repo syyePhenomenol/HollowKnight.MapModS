@@ -24,8 +24,10 @@ namespace MapModS.UI
 
         public static TransitionHelper th;
 
-        public static string lastStartScene = null;
-        public static string lastFinalScene = null;
+        public static string lastStartScene = "";
+        public static string lastFinalScene = "";
+        public static string lastStartTransition = "";
+        public static string lastFinalTransition = "";
         public static string selectedScene = "None";
         public static List<string> selectedRoute = new();
         public static HashSet<KeyValuePair<string, string>> rejectedTransitionPairs = new();
@@ -67,8 +69,10 @@ namespace MapModS.UI
         {
             th = new();
 
-            lastStartScene = null;
-            lastFinalScene = null;
+            lastStartScene = "";
+            lastFinalScene = "";
+            lastStartTransition = "";
+            lastFinalTransition = "";
             selectedScene = "None";
             selectedRoute = new();
             rejectedTransitionPairs = new();
@@ -110,7 +114,7 @@ namespace MapModS.UI
                     || MapModS.LS.mapMode == MapMode.TransitionRandoAlt);
 
             _transitionPanel.SetActive(isActive, isActive);
-            _uncheckedTransitionsPanel.SetActive(isActive, isActive);
+            _uncheckedTransitionsPanel.SetActive(isActive && !_instructionPanel.Active, isActive && !_instructionPanel.Active);
             
             SetTransitionsText();
             SetUncheckedTransitionsText();
@@ -302,9 +306,13 @@ namespace MapModS.UI
         {
             string routeText = "Current route: ";
 
-            if (lastStartScene != null && lastFinalScene != null && selectedRoute.Any())
+            if (lastStartScene != ""
+                && lastFinalScene != ""
+                && lastStartTransition != ""
+                && lastFinalTransition != ""
+                && selectedRoute.Any())
             {
-                routeText += $"{lastStartScene} -> {lastFinalScene}      ";
+                routeText += $"{lastStartTransition} -> {lastFinalTransition}      ";
                 routeText += $"Transitions: {selectedRoute.Count()}";
             }
             else
@@ -345,21 +353,34 @@ namespace MapModS.UI
             _transitionPanel.GetText("Transitions").UpdateText(transitionsText);
         }
 
+        // Display both unchecked and visited transitions of current room
         public static void SetUncheckedTransitionsText()
         {
-            string uncheckedTransitionsText = "Unchecked:";
+            string uncheckedTransitionsText = "";
             IEnumerable<string> uncheckedTransitions = GetUncheckedTransitions();
 
             if (uncheckedTransitions.Any())
             {
-                foreach(string transition in uncheckedTransitions)
+                uncheckedTransitionsText += "Unchecked:";
+
+                foreach (string transition in uncheckedTransitions)
                 {
                     uncheckedTransitionsText += "\n" + transition;
                 }
+
+                uncheckedTransitionsText += "\n\n";
             }
-            else
+
+            IEnumerable<Tuple<string, string>> visitedTransitions = GetVisitedTransitions();
+
+            if (visitedTransitions.Any())
             {
-                uncheckedTransitionsText += "\nNone";
+                uncheckedTransitionsText += "Visited:";
+
+                foreach (Tuple<string, string> transition in visitedTransitions)
+                {
+                    uncheckedTransitionsText += "\n" + transition.Item1 +  " -> " + transition.Item2;
+                }
             }
 
             _uncheckedTransitionsPanel.GetText("Unchecked").UpdateText(uncheckedTransitionsText);
@@ -368,8 +389,15 @@ namespace MapModS.UI
         public static IEnumerable<string> GetUncheckedTransitions()
         {
             return RandomizerMod.RandomizerMod.RS.TrackerData.uncheckedReachableTransitions
-                .Where(t => t.StartsWith(StringUtils.CurrentNormalScene()))
-                .Select(t => t.Substring(StringUtils.CurrentNormalScene().Length));
+                .Where(t => RandomizerMod.RandomizerData.Data.GetTransitionDef(t).SceneName == StringUtils.CurrentNormalScene())
+                .Select(t => RandomizerMod.RandomizerData.Data.GetTransitionDef(t).DoorName);
+        }
+
+        public static IEnumerable<Tuple<string, string>> GetVisitedTransitions()
+        {
+            return RandomizerMod.RandomizerMod.RS.TrackerData.visitedTransitions
+                .Where(t => RandomizerMod.RandomizerData.Data.GetTransitionDef(t.Key).SceneName == StringUtils.CurrentNormalScene())
+                .Select(t => new Tuple<string, string>(RandomizerMod.RandomizerData.Data.GetTransitionDef(t.Key).DoorName, t.Value));
         }
 
         public static void GetRoute()
@@ -380,7 +408,6 @@ namespace MapModS.UI
                 || !_transitionPanel.Active
                 || HeroController.instance == null
                 || GameManager.instance.IsGamePaused()
-                || selectedScene == "None"
                 || th == null)
             {
                 return;
@@ -395,13 +422,15 @@ namespace MapModS.UI
 
             if (!selectedRoute.Any())
             {
-                lastFinalScene = null;
+                lastFinalScene = "";
                 rejectedTransitionPairs.Clear();
             }
             else
             {
                 lastStartScene = StringUtils.CurrentNormalScene();
                 lastFinalScene = selectedScene;
+                lastStartTransition = selectedRoute.First();
+                lastFinalTransition = TransitionHelper.GetAdjacentTransition(selectedRoute.Last());
 
                 rejectedTransitionPairs.Add(new(selectedRoute.First(), selectedRoute.Last()));
             }

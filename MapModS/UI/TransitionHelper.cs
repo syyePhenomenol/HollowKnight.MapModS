@@ -8,7 +8,7 @@ namespace MapModS.UI
 {
     public class TransitionHelper
     {
-        private static readonly Dictionary<string, string> itemFixes = new()
+        private static readonly Dictionary<string, string> termFixes = new()
         {
             { "Ruins1_31[left3]", "ELEGANT" },
             { "Ruins2_11_b[left1]", "LOVE" }
@@ -194,18 +194,17 @@ namespace MapModS.UI
                     }
                 }
 
-                // Emulate a transition being possibly available via having the required item
-                foreach (KeyValuePair<string, string> pair in itemFixes)
+                // Emulate a transition being possibly available via having the required term
+                foreach (KeyValuePair<string, string> pair in termFixes)
                 {
                     int keyId = pm.lm.TermLookup[pair.Key];
                     int ValueId = pm.lm.TermLookup[pair.Value];
 
                     if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Has(keyId)
-                        && !addedItems.Contains(ValueId))
+                        && !addedTerms.Contains(ValueId))
                     {
-                        // MapModS.Instance.Log("Has " + pair.Value);
-                        addedItems.Add(ValueId);
-                        pm.Add(pm.ctx.itemPlacements[keyId].item);
+                        addedTerms.Add(ValueId);
+                        pm.Set(ValueId, 1);
                     }
                 }
 
@@ -269,10 +268,10 @@ namespace MapModS.UI
                     }
                 }
 
-               if (GameManager.instance.sceneData.persistentBoolItems.Any(pbi => pbi.id == "Mines Lever" &&  pbi.sceneName == "Town" && pbi.activated == true))
-               {
+                if (GameManager.instance.sceneData.persistentBoolItems.Any(pbi => pbi.id == "Mines Lever" &&  pbi.sceneName == "Town" && pbi.activated == true))
+                {
                     pm.Add(pm.lm.TransitionLookup["Town[right1]"]);
-               }
+                }
             }
 
             public class DelegateUpdateEntry : UpdateEntry
