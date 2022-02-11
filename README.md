@@ -7,7 +7,8 @@ Randomizer Map S is a Hollow Knight mod used with Randomizer 4. It helps to find
 
 This fork of CaptainDapper's original mod has been expanded on with more features, bug fixes and a Pause Menu UI. It is currently compatible with:
 - RandomizerMod v4.0.2
-- AdditionalMaps v1.5.1.0. This mod is optional, however *highly* recommended to unlock the full potential of the map features
+- AdditionalMaps v1.5.1.0. This mod is optional, however *highly* recommended to see rooms/locations in White Palace
+- RandomizableLevers v1.1.1.0
 - ItemSync v2.2.0
 - RandoPlus v1.1.0
 - SkillUpgrades v0.9.4.1
@@ -15,6 +16,8 @@ This fork of CaptainDapper's original mod has been expanded on with more feature
 https://github.com/homothetyhk/RandomizerMod
 
 https://github.com/SFGrenade/AdditionalMaps
+
+https://github.com/flibber-hk/HollowKnight.RandomizableLevers
 
 https://github.com/Shadudev/HollowKnight.MultiWorld/tree/itemsync
 
@@ -34,6 +37,7 @@ https://github.com/flibber-hk/HollowKnight.SkillUpgrades
 
 - New to MapModS for Rando 4:
     - Previewed items will appear as pins with a green border
+    - Persistent items will appear as pins with a cyan border and remain visible after being checked
     - Out-of-logic items will appear as pins with a red border
 
 - The Pause Menu UI has the following buttons:
@@ -66,6 +70,8 @@ https://github.com/flibber-hk/HollowKnight.SkillUpgrades
     - You can toggle including benchwarp in the route search on/off with `CTRL-B`.
     - You can try again (pressing the button) to change the start/final transition.
     - The route will also be visible from the Quick Map for easy access, and gets updated as you make the suggested transitions.
+    - The World Map can list unchecked and visited transitions for any selected room, toggled with `CTRL-U`.
+    - The Quick Map lists unchecked and visited transitions for the room you are currently in.
 
 # How To Install
 Use Scarab: https://github.com/fifty-six/Scarab
