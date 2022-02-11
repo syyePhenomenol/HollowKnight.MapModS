@@ -12,6 +12,7 @@ using UnityEngine;
 
 namespace MapModS.UI
 {
+    // Spaghetti warning
     internal class TransitionText
     {
         public static GameObject Canvas;
@@ -20,7 +21,8 @@ namespace MapModS.UI
 
         private static CanvasPanel _instructionPanel;
         private static CanvasPanel _transitionPanel;
-        private static CanvasPanel _uncheckedTransitionsPanel;
+        private static CanvasPanel _uncheckedTransitionsPanelQuickMap;
+        private static CanvasPanel _uncheckedTransitionsPanelWorldMap;
 
         public static TransitionHelper th;
 
@@ -51,7 +53,8 @@ namespace MapModS.UI
                     || MapModS.LS.mapMode == MapMode.TransitionRandoAlt);
 
             _instructionPanel.SetActive(isActive, isActive);
-            _uncheckedTransitionsPanel.SetActive(false, false);
+            _uncheckedTransitionsPanelQuickMap.SetActive(false, false);
+            SetUncheckedTransitionsWorldMapText();
 
         }
 
@@ -63,6 +66,7 @@ namespace MapModS.UI
             LockToggleEnable = false;
 
             _instructionPanel.SetActive(false, false);
+            _uncheckedTransitionsPanelWorldMap.SetActive(false, false);
         }
 
         public static void Initialize()
@@ -94,11 +98,17 @@ namespace MapModS.UI
 
             _transitionPanel.SetActive(false, false);
 
-            _uncheckedTransitionsPanel = new CanvasPanel
+            _uncheckedTransitionsPanelQuickMap = new CanvasPanel
                 (_canvas, GUIController.Instance.Images["ButtonsMenuBG"], new Vector2(10f, 20f), new Vector2(1346f, 0f), new Rect(0f, 0f, 0f, 0f));
-            _uncheckedTransitionsPanel.AddText("Unchecked", "Transitions: None", new Vector2(-37f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14, FontStyle.Normal, TextAnchor.UpperRight);
+            _uncheckedTransitionsPanelQuickMap.AddText("Unchecked", "Transitions: None", new Vector2(-37f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14, FontStyle.Normal, TextAnchor.UpperRight);
 
-            _uncheckedTransitionsPanel.SetActive(false, false);
+            _uncheckedTransitionsPanelQuickMap.SetActive(false, false);
+
+            _uncheckedTransitionsPanelWorldMap = new CanvasPanel
+                (_canvas, GUIController.Instance.Images["EnemiesBg"], new Vector2(1400f, 150f), Vector2.zero, new Rect(0f, 0f, GUIController.Instance.Images["EnemiesBg"].width, GUIController.Instance.Images["EnemiesBg"].height));
+            _uncheckedTransitionsPanelWorldMap.AddText("UncheckedSelected", "Transitions: None", new Vector2(20f, 20f), Vector2.zero, GUIController.Instance.TrajanNormal, 14);
+
+            _uncheckedTransitionsPanelWorldMap.SetActive(false, false);
 
             SetTexts();
         }
@@ -114,10 +124,10 @@ namespace MapModS.UI
                     || MapModS.LS.mapMode == MapMode.TransitionRandoAlt);
 
             _transitionPanel.SetActive(isActive, isActive);
-            _uncheckedTransitionsPanel.SetActive(isActive && !_instructionPanel.Active, isActive && !_instructionPanel.Active);
+            _uncheckedTransitionsPanelQuickMap.SetActive(isActive && !_instructionPanel.Active, isActive && !_instructionPanel.Active);
             
             SetTransitionsText();
-            SetUncheckedTransitionsText();
+            SetUncheckedTransitionsQuickMapText();
             SetRouteText();
         }
 
@@ -150,6 +160,14 @@ namespace MapModS.UI
                 SetRouteText();
                 rejectedTransitionPairs = new();
             }
+
+            if ((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
+                && Input.GetKeyDown(KeyCode.U))
+            {
+                MapModS.GS.ToggleUncheckedPanel();
+                SetRouteText();
+                SetUncheckedTransitionsWorldMapText();
+            }
         }
 
         private static Thread colorUpdateThread;
@@ -172,6 +190,7 @@ namespace MapModS.UI
                 if (GetRoomClosestToMiddle(selectedScene, out selectedScene))
                 {
                     SetInstructionsText();
+                    SetUncheckedTransitionsWorldMapText();
                     SetRoomColors();
                 }
             });
@@ -329,6 +348,15 @@ namespace MapModS.UI
                 routeText += "\nInclude benchwarp (Ctrl-B): Off";
             }
 
+            if (MapModS.GS.uncheckedPanelActive)
+            {
+                routeText += "\nShow unchecked/visited (Ctrl-U): On";
+            }
+            else
+            {
+                routeText += "\nShow unchecked/visited (Ctrl-U): Off";
+            }
+
             _instructionPanel.GetText("Route").UpdateText(routeText);
         }
 
@@ -354,10 +382,27 @@ namespace MapModS.UI
         }
 
         // Display both unchecked and visited transitions of current room
-        public static void SetUncheckedTransitionsText()
+        public static void SetUncheckedTransitionsQuickMapText()
+        {
+            _uncheckedTransitionsPanelQuickMap.GetText("Unchecked").UpdateText(GetUncheckedVisited(StringUtils.CurrentNormalScene()));
+        }
+
+        public static void SetUncheckedTransitionsWorldMapText()
+        {
+            _uncheckedTransitionsPanelWorldMap.GetText("UncheckedSelected").UpdateText(GetUncheckedVisited(selectedScene));
+
+            bool active = MapModS.LS.ModEnabled
+                && (MapModS.LS.mapMode == MapMode.TransitionRando || MapModS.LS.mapMode == MapMode.TransitionRando)
+                && MapModS.GS.uncheckedPanelActive
+                && _instructionPanel != null && _instructionPanel.Active;
+
+            _uncheckedTransitionsPanelWorldMap.SetActive(active, active);
+        }
+
+        public static string GetUncheckedVisited(string scene)
         {
             string uncheckedTransitionsText = "";
-            IEnumerable<string> uncheckedTransitions = GetUncheckedTransitions();
+            IEnumerable<string> uncheckedTransitions = GetUncheckedTransitions(scene);
 
             if (uncheckedTransitions.Any())
             {
@@ -371,7 +416,7 @@ namespace MapModS.UI
                 uncheckedTransitionsText += "\n\n";
             }
 
-            IEnumerable<Tuple<string, string>> visitedTransitions = GetVisitedTransitions();
+            IEnumerable<Tuple<string, string>> visitedTransitions = GetVisitedTransitions(scene);
 
             if (visitedTransitions.Any())
             {
@@ -379,24 +424,24 @@ namespace MapModS.UI
 
                 foreach (Tuple<string, string> transition in visitedTransitions)
                 {
-                    uncheckedTransitionsText += "\n" + transition.Item1 +  " -> " + transition.Item2;
+                    uncheckedTransitionsText += "\n" + transition.Item1 + " -> " + transition.Item2;
                 }
             }
 
-            _uncheckedTransitionsPanel.GetText("Unchecked").UpdateText(uncheckedTransitionsText);
+            return uncheckedTransitionsText;
         }
 
-        public static IEnumerable<string> GetUncheckedTransitions()
+        public static IEnumerable<string> GetUncheckedTransitions(string scene)
         {
             return RandomizerMod.RandomizerMod.RS.TrackerData.uncheckedReachableTransitions
-                .Where(t => RandomizerMod.RandomizerData.Data.GetTransitionDef(t).SceneName == StringUtils.CurrentNormalScene())
+                .Where(t => RandomizerMod.RandomizerData.Data.GetTransitionDef(t).SceneName == scene)
                 .Select(t => RandomizerMod.RandomizerData.Data.GetTransitionDef(t).DoorName);
         }
 
-        public static IEnumerable<Tuple<string, string>> GetVisitedTransitions()
+        public static IEnumerable<Tuple<string, string>> GetVisitedTransitions(string scene)
         {
             return RandomizerMod.RandomizerMod.RS.TrackerData.visitedTransitions
-                .Where(t => RandomizerMod.RandomizerData.Data.GetTransitionDef(t.Key).SceneName == StringUtils.CurrentNormalScene())
+                .Where(t => RandomizerMod.RandomizerData.Data.GetTransitionDef(t.Key).SceneName == scene)
                 .Select(t => new Tuple<string, string>(RandomizerMod.RandomizerData.Data.GetTransitionDef(t.Key).DoorName, t.Value));
         }
 

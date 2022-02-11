@@ -95,7 +95,7 @@ namespace MapModS.UI
             { "Warp Queen's Gardens Toll", "Fungus3_50[right1]" },
             { "Warp Queen's Gardens Stag", "Fungus3_40[right1]" },
             // Special waypoint needed
-            { "Warp White Palace Entrance?", "White_Palace_01[left1]" },
+            { "Warp White Palace Entrance", "White_Palace_01[left1]" },
             // Special waypoint needed
             { "Warp White Palace Atrium", "White_Palace_03_hub[right1]" },
             { "Warp White Palace Balcony", "White_Palace_06[top1]" },
@@ -377,6 +377,12 @@ namespace MapModS.UI
 
         private bool ApplyAltLogic(string transition)
         {
+            if (transition == "Warp White Palace Entrace")
+            {
+                tt.pm.Add(new LogicWaypoint(tt.pm.lm.TermLookup["White_Palace_01"], tt.pm.lm.LogicLookup["White_Palace_01"]));
+                return true;
+            }
+
             if (transition == "Warp White Palace Atrium")
             {
                 tt.pm.Add(new LogicWaypoint(tt.pm.lm.TermLookup["White_Palace_03_hub"], tt.pm.lm.LogicLookup["White_Palace_03_hub"]));
