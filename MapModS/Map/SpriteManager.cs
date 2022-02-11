@@ -77,6 +77,7 @@ namespace MapModS.Map
                         PoolGroup.SoulTotems => "pinTotem",
                         PoolGroup.LoreTablets => "pinLore",
                         PoolGroup.Shop => "pinShop",
+                        PoolGroup.Levers => "pinLever",
                         _ => "pinUnknown",
                     };
                     break;
@@ -140,7 +141,8 @@ namespace MapModS.Map
             }
 
             MapModS.Instance.LogWarn("Failed to load sprite named '" + name + "'");
-            return null;
+
+            return _sprites["pinUnknown"];
         }
 
         private static Sprite FromStream(Stream s)

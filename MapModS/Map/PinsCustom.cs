@@ -1,8 +1,10 @@
 ﻿using GlobalEnums;
+using ItemChanger;
 using MapModS.Data;
 using MapModS.Settings;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace MapModS.Map
@@ -11,17 +13,17 @@ namespace MapModS.Map
     {
         private readonly Dictionary<PoolGroup, GameObject> _Groups = new();
 
-        private readonly List<Pin> _pins = new();
+        private readonly List<PinAnimatedSprite> _pins = new();
 
         public void MakePins(GameMap gameMap)
         {
             DestroyPins();
 
-            foreach (PinDef pinData in DataLoader.GetPinArray())
+            foreach (PinDef pinDef in DataLoader.GetUsedPinArray())
             {
                 try
                 {
-                    MakePin(pinData, gameMap);
+                    MakePin(pinDef, gameMap);
                 }
                 catch (Exception e)
                 {
@@ -30,12 +32,10 @@ namespace MapModS.Map
             }
         }
 
-        private void MakePin(PinDef pinData, GameMap gameMap)
+        private void MakePin(PinDef pinDef, GameMap gameMap)
         {
-            if (pinData.disable) return;
-
             // Create new pin GameObject
-            GameObject goPin = new($"pin_mapmod_{pinData.name}")
+            GameObject goPin = new($"pin_mapmod_{pinDef.name}")
             {
                 layer = 30
             };
@@ -44,62 +44,66 @@ namespace MapModS.Map
             SpriteRenderer sr = goPin.AddComponent<SpriteRenderer>();
 
             // Initialize sprite to vanillaPool
-            sr.sprite = SpriteManager.GetSpriteFromPool(pinData.vanillaPool, PinBorderColor.Normal);
+            sr.sprite = SpriteManager.GetSpriteFromPool(pinDef.locationPoolGroup, PinBorderColor.Normal);
             sr.sortingLayerName = "HUD";
             sr.size = new Vector2(1f, 1f);
 
             // Attach pin data to the GameObject
-            Pin pin = goPin.AddComponent<Pin>();
-            pin.SetPinData(pinData);
+            PinAnimatedSprite pin = goPin.AddComponent<PinAnimatedSprite>();
+            pin.SetPinData(pinDef);
             _pins.Add(pin);
 
-            // Rename pin if there are two items at the same location
-            if (RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.LoreTablets
-                && RandomizerMod.RandomizerMod.RS.GenerationSettings.NoveltySettings.RandomizeFocus
-                && pin.PinData.name == "Focus")
-            {
-                pin.PinData.name = "Lore_Tablet-King's_Pass_Focus";
-            }
-
             // Set pin transform (by pool)
-            AssignGroup(goPin, pinData);
+            AssignGroup(pin);
+            SetPinPosition(pinDef, goPin, gameMap);
+        }
 
-            if (MapModS.AdditionalMapsInstalled)
+        private void AssignGroup(PinAnimatedSprite pin)
+        {
+            PoolGroup poolGroup;
+
+            if (pin.pinDef.randoItems == null || !pin.pinDef.randoItems.Any())
             {
-                foreach (PinDef pinDataAM in DataLoader.GetPinAMArray())
-                {
-                    if (pinDataAM.name == pin.PinData.name)
-                    {
-                        pin.PinData.pinScene = pinDataAM.pinScene;
-                        pin.PinData.mapZone = pinDataAM.mapZone;
-                        pin.PinData.offsetX = pinDataAM.offsetX;
-                        pin.PinData.offsetY = pinDataAM.offsetY;
-                        break;
-                    }
-                }
+                poolGroup = pin.pinDef.locationPoolGroup;
+            }
+            else
+            {
+                poolGroup = pin.pinDef.randoItems.First().poolGroup;
             }
 
-            string roomName = pinData.pinScene ?? pinData.sceneName;
+            if (!_Groups.ContainsKey(poolGroup))
+            {
+                _Groups[poolGroup] = new GameObject("PinGroup " + poolGroup);
+                _Groups[poolGroup].transform.SetParent(transform);
+                _Groups[poolGroup].SetActive(true);
+            }
+
+            pin.gameObject.transform.SetParent(_Groups[poolGroup].transform);
+        }
+
+        private void SetPinPosition(PinDef pinDef, GameObject goPin, GameMap gameMap)
+        {
+            string roomName = pinDef.pinScene ?? pinDef.sceneName;
 
             Vector3 vec = GetRoomPos(roomName, gameMap);
             vec.Scale(new Vector3(1.46f, 1.46f, 1));
 
-            vec += new Vector3(pinData.offsetX, pinData.offsetY, pinData.offsetZ);
+            vec += new Vector3(pinDef.offsetX, pinDef.offsetY, pinDef.offsetZ);
 
             goPin.transform.localPosition = new Vector3(vec.x, vec.y, vec.z - 0.01f);
         }
 
-        private void AssignGroup(GameObject newPin, PinDef pinData)
-        {
-            if (!_Groups.ContainsKey(pinData.spoilerPool))
-            {
-                _Groups[pinData.spoilerPool] = new GameObject("PinGroup " + pinData.spoilerPool);
-                _Groups[pinData.spoilerPool].transform.SetParent(transform);
-                _Groups[pinData.spoilerPool].SetActive(true);
-            }
-
-            newPin.transform.SetParent(_Groups[pinData.spoilerPool].transform);
-        }
+        // For debugging pins
+        //public void ReadjustPinPostiions()
+        //{
+        //    foreach (PinAnimatedSprite pin in _pins)
+        //    {
+        //        if (DataLoader.newPins.TryGetValue(pin.pinDef.name, out PinDef newPinDef))
+        //        {
+        //            SetPinPosition(newPinDef, pin.gameObject, GameManager.instance.gameMap.GetComponent<GameMap>());
+        //        }
+        //    }
+        //}
 
         private Vector3 GetRoomPos(string roomName, GameMap gameMap)
         {
@@ -147,11 +151,11 @@ namespace MapModS.Map
 
             foreach (Transform pinT in _Groups[group].GetComponentsInChildren<Transform>())
             {
-                Pin pin = pinT.GetComponent<Pin>();
+                PinAnimatedSprite pin = pinT.GetComponent<PinAnimatedSprite>();
 
                 if (pin == null) continue;
 
-                if (pin.PinData.vanillaPool != pin.PinData.spoilerPool)
+                if (pin.pinDef.randoItems != null)
                 {
                     RandomizedGroups.Add(group);
                     return;
@@ -164,7 +168,7 @@ namespace MapModS.Map
         internal void ToggleSpoilers()
         {
             MapModS.LS.SpoilerOn = !MapModS.LS.SpoilerOn;
-            RefreshSprites();
+            SetSprites();
         }
 
         internal void TogglePinStyle()
@@ -188,7 +192,7 @@ namespace MapModS.Map
                     break;
             }
 
-            RefreshSprites();
+            SetSprites();
         }
 
         internal void ToggleRandomized()
@@ -215,9 +219,103 @@ namespace MapModS.Map
 
         public void UpdatePins(MapZone mapZone, HashSet<string> transitionPinScenes)
         {
-            foreach (Pin pin in _pins)
+            foreach (PinAnimatedSprite pin in _pins)
             {
-                pin.UpdatePin(mapZone, transitionPinScenes);
+                pin.ResetSpriteIndex();
+
+                PinDef pd = pin.pinDef;
+
+                // Show based on map settings
+                if ((mapZone == MapZone.NONE && (MapModS.LS.mapMode != MapMode.PinsOverMap || SettingsUtil.GetMapSetting(pd.mapZone)))
+                    || mapZone == pd.mapZone)
+                {
+                    pin.gameObject.SetActive(true);
+
+                    if (transitionPinScenes.Count != 0 && !transitionPinScenes.Contains(pd.sceneName))
+                    {
+                        pin.gameObject.SetActive(false);
+                    }
+                }
+                else
+                {
+                    pin.gameObject.SetActive(false);
+                }
+
+                if (pd.pinLocationState == PinLocationState.Cleared)
+                {
+                    pin.gameObject.SetActive(false);
+                    continue;
+                }
+
+                if (pd.pinLocationState == PinLocationState.ClearedPersistent) continue;
+
+                if (pd.pinLocationState == PinLocationState.NonRandomizedUnchecked)
+                {
+                    if ((pd.pdBool != null && PlayerData.instance.GetBool(pd.pdBool))
+                        || (pd.pdInt != null && PlayerData.instance.GetInt(pd.pdInt) >= pd.pdIntValue)
+                        || (pd.locationPoolGroup == PoolGroup.WhisperingRoots && PlayerData.instance.scenesEncounteredDreamPlantC.Contains(pd.sceneName))
+                        || (pd.locationPoolGroup == PoolGroup.Grubs && PlayerData.instance.scenesGrubRescued.Contains(pd.sceneName))
+                        || (pd.locationPoolGroup == PoolGroup.GrimmkinFlames && PlayerData.instance.scenesFlameCollected.Contains(pd.sceneName))
+                        || (MapModS.LS.ObtainedVanillaItems.ContainsKey(pd.objectName + pd.sceneName)))
+                    {
+                        pd.pinLocationState = PinLocationState.Cleared;
+                        pin.gameObject.SetActive(false);
+                    }
+                    continue;
+                }
+
+                if (RandomizerMod.RandomizerMod.RS.TrackerData.uncheckedReachableLocations.Contains(pd.name))
+                {
+                    if (RandomizerMod.RandomizerMod.RS.TrackerDataWithoutSequenceBreaks.uncheckedReachableLocations.Contains(pin.pinDef.name))
+                    {
+                        pd.pinLocationState = PinLocationState.UncheckedReachable;
+                    }
+                    else
+                    {
+                        pd.pinLocationState = PinLocationState.OutOfLogicReachable;
+                    }
+                }
+
+                if (RandomizerMod.RandomizerMod.RS.TrackerData.previewedLocations.Contains(pd.name) && pd.canPreview)
+                {
+                    pd.pinLocationState = PinLocationState.Previewed;
+                }
+
+                // Remove obtained rando items from list
+                if (pd.randoItems != null && pd.randoItems.Any())
+                {
+                    List<ItemDef> newRandoItems = new();
+
+                    foreach (ItemDef item in pd.randoItems)
+                    {
+                        if ((!RandomizerMod.RandomizerMod.RS.TrackerData.obtainedItems.Contains(item.id)
+                            && !RandomizerMod.RandomizerMod.RS.TrackerData.outOfLogicObtainedItems.Contains(item.id))
+                            || item.persistent)
+                        {
+                            newRandoItems.Add(item);
+                        }
+                    }
+
+                    pd.randoItems = newRandoItems;
+
+                    if (pd.randoItems.Any())
+                    {
+                        AssignGroup(pin);
+                    }
+                }
+
+                if (RandomizerMod.RandomizerMod.RS.TrackerData.clearedLocations.Contains(pd.name))
+                {
+                    if (pd.randoItems != null && pd.randoItems.Any(i => i.persistent))
+                    {
+                        pd.pinLocationState = PinLocationState.ClearedPersistent;
+                    }
+                    else
+                    {
+                        pd.pinLocationState = PinLocationState.Cleared;
+                        pin.gameObject.SetActive(false);
+                    }
+                }
             }
         }
 
@@ -230,47 +328,17 @@ namespace MapModS.Map
             }
         }
 
-        private bool CanBePreviewed(Pin pin)
+        public void SetSprites()
         {
-            if (!RandomizerMod.RandomizerMod.RS.TrackerData.previewedLocations.Contains(pin.PinData.name)) return false;
-
-            if (pin.PinData.isShop) return true;
-
-            return SettingsUtil.GetPreviewSetting(pin.PinData.previewGroup);
-        }
-
-        public void RefreshSprites()
-        {
-            foreach (Pin pin in _pins)
+            foreach (PinAnimatedSprite pin in _pins)
             {
-                if (CanBePreviewed(pin))
-                {
-                    pin.SR.sprite = SpriteManager.GetSpriteFromPool(pin.PinData.spoilerPool, PinBorderColor.Previewed);
-                    continue;
-                }
-
-                PinBorderColor pinColor = PinBorderColor.Normal;
-
-                if (RandomizerMod.RandomizerMod.RS.TrackerData.uncheckedReachableLocations.Contains(pin.PinData.name)
-                    && !RandomizerMod.RandomizerMod.RS.TrackerDataWithoutSequenceBreaks.uncheckedReachableLocations.Contains(pin.PinData.name))
-                {
-                    pinColor = PinBorderColor.OutOfLogic;
-                }
-
-                if (MapModS.LS.SpoilerOn)
-                {
-                    pin.SR.sprite = SpriteManager.GetSpriteFromPool(pin.PinData.spoilerPool, pinColor);
-                }
-                else
-                {
-                    pin.SR.sprite = SpriteManager.GetSpriteFromPool(pin.PinData.vanillaPool, pinColor);
-                }
+                pin.SetSprite();
             }
         }
 
         public void ResizePins()
         {
-            foreach (Pin pin in _pins)
+            foreach (PinAnimatedSprite pin in _pins)
             {
                 pin.SetSizeAndColor();
             }
@@ -278,7 +346,7 @@ namespace MapModS.Map
 
         public void DestroyPins()
         {
-            foreach (Pin pin in _pins)
+            foreach (PinAnimatedSprite pin in _pins)
             {
                 Destroy(pin.gameObject);
             }

@@ -3,6 +3,7 @@ using MapModS.Data;
 using MapModS.Map;
 using MapModS.Settings;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -11,6 +12,7 @@ using UnityEngine;
 
 namespace MapModS.UI
 {
+    // Spaghetti warning
     internal class TransitionText
     {
         public static GameObject Canvas;
@@ -19,11 +21,15 @@ namespace MapModS.UI
 
         private static CanvasPanel _instructionPanel;
         private static CanvasPanel _transitionPanel;
+        private static CanvasPanel _uncheckedTransitionsPanelQuickMap;
+        private static CanvasPanel _uncheckedTransitionsPanelWorldMap;
 
         public static TransitionHelper th;
 
-        public static string lastStartScene = null;
-        public static string lastFinalScene = null;
+        public static string lastStartScene = "";
+        public static string lastFinalScene = "";
+        public static string lastStartTransition = "";
+        public static string lastFinalTransition = "";
         public static string selectedScene = "None";
         public static List<string> selectedRoute = new();
         public static HashSet<KeyValuePair<string, string>> rejectedTransitionPairs = new();
@@ -42,11 +48,14 @@ namespace MapModS.UI
             if (Canvas == null || _instructionPanel == null) return;
 
             bool isActive = !LockToggleEnable && MapModS.LS.ModEnabled
-                && RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode != RandomizerMod.Settings.TransitionSettings.TransitionMode.None
+                && SettingsUtil.IsTransitionRando()
                 && (MapModS.LS.mapMode == MapMode.TransitionRando
                     || MapModS.LS.mapMode == MapMode.TransitionRandoAlt);
 
             _instructionPanel.SetActive(isActive, isActive);
+            _uncheckedTransitionsPanelQuickMap.SetActive(false, false);
+            SetUncheckedTransitionsWorldMapText();
+
         }
 
         public static void Hide()
@@ -57,14 +66,17 @@ namespace MapModS.UI
             LockToggleEnable = false;
 
             _instructionPanel.SetActive(false, false);
+            _uncheckedTransitionsPanelWorldMap.SetActive(false, false);
         }
 
         public static void Initialize()
         {
             th = new();
 
-            lastStartScene = null;
-            lastFinalScene = null;
+            lastStartScene = "";
+            lastFinalScene = "";
+            lastStartTransition = "";
+            lastFinalTransition = "";
             selectedScene = "None";
             selectedRoute = new();
             rejectedTransitionPairs = new();
@@ -86,6 +98,18 @@ namespace MapModS.UI
 
             _transitionPanel.SetActive(false, false);
 
+            _uncheckedTransitionsPanelQuickMap = new CanvasPanel
+                (_canvas, GUIController.Instance.Images["ButtonsMenuBG"], new Vector2(10f, 20f), new Vector2(1346f, 0f), new Rect(0f, 0f, 0f, 0f));
+            _uncheckedTransitionsPanelQuickMap.AddText("Unchecked", "Transitions: None", new Vector2(-37f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14, FontStyle.Normal, TextAnchor.UpperRight);
+
+            _uncheckedTransitionsPanelQuickMap.SetActive(false, false);
+
+            _uncheckedTransitionsPanelWorldMap = new CanvasPanel
+                (_canvas, GUIController.Instance.Images["EnemiesBg"], new Vector2(1400f, 150f), Vector2.zero, new Rect(0f, 0f, GUIController.Instance.Images["EnemiesBg"].width, GUIController.Instance.Images["EnemiesBg"].height));
+            _uncheckedTransitionsPanelWorldMap.AddText("UncheckedSelected", "Transitions: None", new Vector2(20f, 20f), Vector2.zero, GUIController.Instance.TrajanNormal, 14);
+
+            _uncheckedTransitionsPanelWorldMap.SetActive(false, false);
+
             SetTexts();
         }
 
@@ -95,19 +119,19 @@ namespace MapModS.UI
                 || _instructionPanel == null) return;
 
             bool isActive = !LockToggleEnable && MapModS.LS.ModEnabled
-                && RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode != RandomizerMod.Settings.TransitionSettings.TransitionMode.None
+                && SettingsUtil.IsTransitionRando()
                 && (MapModS.LS.mapMode == MapMode.TransitionRando
                     || MapModS.LS.mapMode == MapMode.TransitionRandoAlt);
 
             _transitionPanel.SetActive(isActive, isActive);
-
+            _uncheckedTransitionsPanelQuickMap.SetActive(isActive && !_instructionPanel.Active, isActive && !_instructionPanel.Active);
+            
             SetTransitionsText();
+            SetUncheckedTransitionsQuickMapText();
             SetRouteText();
         }
 
-        private static int frameCounter = 0;
         private static Thread searchThread;
-        private static Thread colorUpdateThread;
 
         // Called every frame
         public static void Update()
@@ -137,21 +161,41 @@ namespace MapModS.UI
                 rejectedTransitionPairs = new();
             }
 
-            frameCounter = (frameCounter + 1) % 24;
-
-            if (frameCounter == 0)
+            if ((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
+                && Input.GetKeyDown(KeyCode.U))
             {
-                colorUpdateThread = new(() =>
-                {
-                    if (GetRoomClosestToMiddle(selectedScene, out selectedScene))
-                    {
-                        SetInstructionsText();
-                        SetRoomColors();
-                    }
-                });
-
-                colorUpdateThread.Start();
+                MapModS.GS.ToggleUncheckedPanel();
+                SetRouteText();
+                SetUncheckedTransitionsWorldMapText();
             }
+        }
+
+        private static Thread colorUpdateThread;
+
+        // Called every 0.1 seconds
+        public static void UpdateSelectedScene()
+        {
+            if (Canvas == null
+                || !Canvas.activeSelf
+                || !_instructionPanel.Active
+                || !_transitionPanel.Active
+                || HeroController.instance == null
+                || GameManager.instance.IsGamePaused())
+            {
+                return;
+            }
+
+            colorUpdateThread = new(() =>
+            {
+                if (GetRoomClosestToMiddle(selectedScene, out selectedScene))
+                {
+                    SetInstructionsText();
+                    SetUncheckedTransitionsWorldMapText();
+                    SetRoomColors();
+                }
+            });
+
+            colorUpdateThread.Start();
         }
 
         private static double DistanceToMiddle(Transform transform, bool shift)
@@ -271,7 +315,7 @@ namespace MapModS.UI
             }
             else
             {
-                instructionsText += $" Press [Menu Select] to find new route or to switch starting / final transitions for current route.";
+                instructionsText += $" Press [Menu Select] to find new route or switch starting / final transitions.";
             }
 
             _instructionPanel.GetText("Instructions").UpdateText(instructionsText);
@@ -281,9 +325,13 @@ namespace MapModS.UI
         {
             string routeText = "Current route: ";
 
-            if (lastStartScene != null && lastFinalScene != null && selectedRoute.Any())
+            if (lastStartScene != ""
+                && lastFinalScene != ""
+                && lastStartTransition != ""
+                && lastFinalTransition != ""
+                && selectedRoute.Any())
             {
-                routeText += $"{lastStartScene} -> {lastFinalScene}      ";
+                routeText += $"{lastStartTransition} ->...-> {lastFinalTransition}      ";
                 routeText += $"Transitions: {selectedRoute.Count()}";
             }
             else
@@ -298,6 +346,15 @@ namespace MapModS.UI
             else
             {
                 routeText += "\nInclude benchwarp (Ctrl-B): Off";
+            }
+
+            if (MapModS.GS.uncheckedPanelActive)
+            {
+                routeText += "\nShow unchecked/visited (Ctrl-U): On";
+            }
+            else
+            {
+                routeText += "\nShow unchecked/visited (Ctrl-U): Off";
             }
 
             _instructionPanel.GetText("Route").UpdateText(routeText);
@@ -324,6 +381,70 @@ namespace MapModS.UI
             _transitionPanel.GetText("Transitions").UpdateText(transitionsText);
         }
 
+        // Display both unchecked and visited transitions of current room
+        public static void SetUncheckedTransitionsQuickMapText()
+        {
+            _uncheckedTransitionsPanelQuickMap.GetText("Unchecked").UpdateText(GetUncheckedVisited(StringUtils.CurrentNormalScene()));
+        }
+
+        public static void SetUncheckedTransitionsWorldMapText()
+        {
+            _uncheckedTransitionsPanelWorldMap.GetText("UncheckedSelected").UpdateText(GetUncheckedVisited(selectedScene));
+
+            bool active = MapModS.LS.ModEnabled
+                && (MapModS.LS.mapMode == MapMode.TransitionRando || MapModS.LS.mapMode == MapMode.TransitionRando)
+                && MapModS.GS.uncheckedPanelActive
+                && _instructionPanel != null && _instructionPanel.Active;
+
+            _uncheckedTransitionsPanelWorldMap.SetActive(active, active);
+        }
+
+        public static string GetUncheckedVisited(string scene)
+        {
+            string uncheckedTransitionsText = "";
+            IEnumerable<string> uncheckedTransitions = GetUncheckedTransitions(scene);
+
+            if (uncheckedTransitions.Any())
+            {
+                uncheckedTransitionsText += "Unchecked:";
+
+                foreach (string transition in uncheckedTransitions)
+                {
+                    uncheckedTransitionsText += "\n" + transition;
+                }
+
+                uncheckedTransitionsText += "\n\n";
+            }
+
+            IEnumerable<Tuple<string, string>> visitedTransitions = GetVisitedTransitions(scene);
+
+            if (visitedTransitions.Any())
+            {
+                uncheckedTransitionsText += "Visited:";
+
+                foreach (Tuple<string, string> transition in visitedTransitions)
+                {
+                    uncheckedTransitionsText += "\n" + transition.Item1 + " -> " + transition.Item2;
+                }
+            }
+
+            return uncheckedTransitionsText;
+        }
+
+        public static IEnumerable<string> GetUncheckedTransitions(string scene)
+        {
+            return RandomizerMod.RandomizerMod.RS.TrackerData.uncheckedReachableTransitions
+                .Where(t => RandomizerMod.RandomizerData.Data.GetTransitionDef(t).SceneName == scene)
+                .Select(t => RandomizerMod.RandomizerData.Data.GetTransitionDef(t).DoorName);
+        }
+
+        public static IEnumerable<Tuple<string, string>> GetVisitedTransitions(string scene)
+        {
+            return RandomizerMod.RandomizerMod.RS.TrackerData.visitedTransitions
+                .Where(t => RandomizerMod.RandomizerData.Data.GetTransitionDef(t.Key).SceneName == scene)
+                .Select(t => new Tuple<string, string>(RandomizerMod.RandomizerData.Data.GetTransitionDef(t.Key).DoorName, t.Value));
+        }
+
         public static void GetRoute()
         {
             if (_instructionPanel == null
@@ -332,7 +453,6 @@ namespace MapModS.UI
                 || !_transitionPanel.Active
                 || HeroController.instance == null
                 || GameManager.instance.IsGamePaused()
-                || selectedScene == "None"
                 || th == null)
             {
                 return;
@@ -347,13 +467,15 @@ namespace MapModS.UI
 
             if (!selectedRoute.Any())
             {
-                lastFinalScene = null;
+                lastFinalScene = "";
                 rejectedTransitionPairs.Clear();
             }
             else
             {
                 lastStartScene = StringUtils.CurrentNormalScene();
                 lastFinalScene = selectedScene;
+                lastStartTransition = selectedRoute.First();
+                lastFinalTransition = TransitionHelper.GetAdjacentTransition(selectedRoute.Last());
 
                 rejectedTransitionPairs.Add(new(selectedRoute.First(), selectedRoute.Last()));
             }

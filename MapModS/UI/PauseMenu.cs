@@ -255,6 +255,8 @@ namespace MapModS.UI
 
         private static void UpdateRandomized()
         {
+            if (WorldMap.CustomPins == null) return;
+
             if (!WorldMap.CustomPins.RandomizedGroups.Any(MapModS.LS.GetOnFromGroup))
             {
                 _mapControlPanel.GetButton("Randomized").SetTextColor(Color.white);
@@ -285,6 +287,8 @@ namespace MapModS.UI
 
         private static void UpdateOthers()
         {
+            if (WorldMap.CustomPins == null) return;
+
             if (!WorldMap.CustomPins.OthersGroups.Any(MapModS.LS.GetOnFromGroup))
             {
                 _mapControlPanel.GetButton("Others").SetTextColor(Color.white);

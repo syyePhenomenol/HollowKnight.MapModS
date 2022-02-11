@@ -56,10 +56,12 @@
 
   <ItemGroup>
     <Compile Remove="Compatibility.cs" />
-    <Compile Remove="Data\PinDefNew.cs" />
+    <Compile Remove="Data\PinDefOld.cs" />
     <Compile Remove="Data\PinDefUnused.cs" />
     <Compile Remove="Data\Pool.cs" />
+    <Compile Remove="Data\PreviewGroup.cs" />
     <Compile Remove="Data\ShopDef.cs" />
+    <Compile Remove="Map\PinOld.cs" />
     <Compile Remove="Shop\ShopHooks.cs" />
   </ItemGroup>
 
@@ -68,6 +70,7 @@
     <None Remove="Resources\GUI\ButtonRectEmpty.png" />
     <None Remove="Resources\GUI\ButtonsMenuBG.png" />
     <None Remove="Resources\GUI\DropdownBG.png" />
+    <None Remove="Resources\GUI\EnemiesBg.png" />
     <None Remove="Resources\language.json" />
     <None Remove="Resources\pins.json" />
     <None Remove="Resources\pinsAM.json" />
@@ -118,6 +121,9 @@
     <None Remove="Resources\Pins\pinKeyGreen.png" />
     <None Remove="Resources\Pins\pinKeyRed.png" />
     <None Remove="Resources\Pins\pinKeyYellow.png" />
+    <None Remove="Resources\Pins\pinLever.png" />
+    <None Remove="Resources\Pins\pinLeverGreen.png" />
+    <None Remove="Resources\Pins\pinLeverRed.png" />
     <None Remove="Resources\Pins\pinLore.png" />
     <None Remove="Resources\Pins\pinLoreGreen.png" />
     <None Remove="Resources\Pins\pinLoreRed.png" />
@@ -179,6 +185,7 @@
     <None Remove="Resources\Pins\pinTotemYellow.png" />
     <None Remove="Resources\Pins\pinTramLocation.png" />
     <None Remove="Resources\Pins\pinUnknown.png" />
+    <None Remove="Resources\Pins\pinUnknownCyan.png" />
     <None Remove="Resources\Pins\pinUnknownGreen.png" />
     <None Remove="Resources\Pins\pinUnknownRed.png" />
     <None Remove="Resources\Pins\pinUnknownYellow.png" />
@@ -199,16 +206,20 @@
     <None Remove="Resources\Pins\pinUnknown_GrubRed.png" />
     <None Remove="Resources\Pins\pinUnknown_GrubYellow.png" />
     <None Remove="Resources\Pins\pinUnknown_Lifeblood.png" />
+    <None Remove="Resources\Pins\pinUnknown_LifebloodCyan.png" />
     <None Remove="Resources\Pins\pinUnknown_LifebloodGreen.png" />
     <None Remove="Resources\Pins\pinUnknown_LifebloodInv.png" />
+    <None Remove="Resources\Pins\pinUnknown_LifebloodInvCyan.png" />
     <None Remove="Resources\Pins\pinUnknown_LifebloodInvGreen.png" />
     <None Remove="Resources\Pins\pinUnknown_LifebloodInvRed.png" />
     <None Remove="Resources\Pins\pinUnknown_LifebloodInvYellow.png" />
     <None Remove="Resources\Pins\pinUnknown_LifebloodRed.png" />
     <None Remove="Resources\Pins\pinUnknown_LifebloodYellow.png" />
     <None Remove="Resources\Pins\pinUnknown_Totem.png" />
+    <None Remove="Resources\Pins\pinUnknown_TotemCyan.png" />
     <None Remove="Resources\Pins\pinUnknown_TotemGreen.png" />
     <None Remove="Resources\Pins\pinUnknown_TotemInv.png" />
+    <None Remove="Resources\Pins\pinUnknown_TotemInvCyan.png" />
     <None Remove="Resources\Pins\pinUnknown_TotemInvGreen.png" />
     <None Remove="Resources\Pins\pinUnknown_TotemInvRed.png" />
     <None Remove="Resources\Pins\pinUnknown_TotemInvYellow.png" />
@@ -228,6 +239,7 @@
     <EmbeddedResource Include="Resources\GUI\ButtonRectEmpty.png" />
     <EmbeddedResource Include="Resources\GUI\ButtonsMenuBG.png" />
     <EmbeddedResource Include="Resources\GUI\DropdownBG.png" />
+    <EmbeddedResource Include="Resources\GUI\EnemiesBg.png" />
     <EmbeddedResource Include="Resources\pins.json" />
     <EmbeddedResource Include="Resources\pinsAM.json" />
     <EmbeddedResource Include="Resources\Pins\pinBlankGreen.png" />
@@ -260,6 +272,9 @@
     <EmbeddedResource Include="Resources\Pins\pinKey.png" />
     <EmbeddedResource Include="Resources\Pins\pinKeyGreen.png" />
     <EmbeddedResource Include="Resources\Pins\pinKeyRed.png" />
+    <EmbeddedResource Include="Resources\Pins\pinLever.png" />
+    <EmbeddedResource Include="Resources\Pins\pinLeverGreen.png" />
+    <EmbeddedResource Include="Resources\Pins\pinLeverRed.png" />
     <EmbeddedResource Include="Resources\Pins\pinLore.png" />
     <EmbeddedResource Include="Resources\Pins\pinLoreGreen.png" />
     <EmbeddedResource Include="Resources\Pins\pinLoreRed.png" />
@@ -298,6 +313,7 @@
     <EmbeddedResource Include="Resources\Pins\pinTotemGreen.png" />
     <EmbeddedResource Include="Resources\Pins\pinTotemRed.png" />
     <EmbeddedResource Include="Resources\Pins\pinUnknown.png" />
+    <EmbeddedResource Include="Resources\Pins\pinUnknownCyan.png" />
     <EmbeddedResource Include="Resources\Pins\pinUnknownGreen.png" />
     <EmbeddedResource Include="Resources\Pins\pinUnknownRed.png" />
     <EmbeddedResource Include="Resources\Pins\pinUnknown_GeoRock.png" />
@@ -313,14 +329,18 @@
     <EmbeddedResource Include="Resources\Pins\pinUnknown_GrubInvRed.png" />
     <EmbeddedResource Include="Resources\Pins\pinUnknown_GrubRed.png" />
     <EmbeddedResource Include="Resources\Pins\pinUnknown_Lifeblood.png" />
+    <EmbeddedResource Include="Resources\Pins\pinUnknown_LifebloodCyan.png" />
     <EmbeddedResource Include="Resources\Pins\pinUnknown_LifebloodGreen.png" />
     <EmbeddedResource Include="Resources\Pins\pinUnknown_LifebloodInv.png" />
+    <EmbeddedResource Include="Resources\Pins\pinUnknown_LifebloodInvCyan.png" />
     <EmbeddedResource Include="Resources\Pins\pinUnknown_LifebloodInvGreen.png" />
     <EmbeddedResource Include="Resources\Pins\pinUnknown_LifebloodInvRed.png" />
     <EmbeddedResource Include="Resources\Pins\pinUnknown_LifebloodRed.png" />
     <EmbeddedResource Include="Resources\Pins\pinUnknown_Totem.png" />
+    <EmbeddedResource Include="Resources\Pins\pinUnknown_TotemCyan.png" />
     <EmbeddedResource Include="Resources\Pins\pinUnknown_TotemGreen.png" />
     <EmbeddedResource Include="Resources\Pins\pinUnknown_TotemInv.png" />
+    <EmbeddedResource Include="Resources\Pins\pinUnknown_TotemInvCyan.png" />
     <EmbeddedResource Include="Resources\Pins\pinUnknown_TotemInvGreen.png" />
     <EmbeddedResource Include="Resources\Pins\pinUnknown_TotemInvRed.png" />
     <EmbeddedResource Include="Resources\Pins\pinUnknown_TotemRed.png" />
@@ -336,6 +356,9 @@
     </Reference>
     <Reference Include="Benchwarp">
       <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\Benchwarp\Benchwarp.dll</HintPath>
+    </Reference>
+    <Reference Include="ItemChanger">
+      <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\ItemChanger\ItemChanger.dll</HintPath>
     </Reference>
     <Reference Include="MMHOOK_Assembly-CSharp">
       <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\MMHOOK_Assembly-CSharp.dll</HintPath>

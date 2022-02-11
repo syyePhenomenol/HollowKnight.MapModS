@@ -14,25 +14,20 @@ namespace MapModS
     {
         public static MapModS Instance;
 
-        private readonly string _version = "2.1.2";
-
-        public override string GetVersion() => _version;
+        public override string GetVersion() => "2.2.0";
 
         public override int LoadPriority() => 10;
 
-        public static LocalSettings LS { get; set; } = new LocalSettings();
-
-        public void OnLoadLocal(LocalSettings s) => LS = s;
-
+        public static LocalSettings LS = new();
+        public void OnLoadLocal(LocalSettings ls) => LS = ls;
         public LocalSettings OnSaveLocal() => LS;
 
-        public static GlobalSettings GS { get; set; } = new GlobalSettings();
-
-        public void OnLoadGlobal(GlobalSettings s) => GS = s;
-
+        public static GlobalSettings GS = new();
+        public void OnLoadGlobal(GlobalSettings gs) => GS = gs;
         public GlobalSettings OnSaveGlobal() => GS;
 
         public static bool AdditionalMapsInstalled = false;
+        public static bool RandomizableLeversInstalled = false;
 
         public override void Initialize()
         {
@@ -47,11 +42,7 @@ namespace MapModS
             }
 
             AdditionalMapsInstalled = ModHooks.GetMod("Additional Maps") is Mod;
-
-            if (AdditionalMapsInstalled)
-            {
-                Instance.Log("Additional Maps detected");
-            }
+            RandomizableLeversInstalled = ModHooks.GetMod("RandomizableLevers") is Mod;
 
             try
             {

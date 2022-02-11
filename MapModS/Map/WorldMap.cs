@@ -5,6 +5,7 @@ using MapModS.Trackers;
 using Modding;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 namespace MapModS.Map
@@ -38,7 +39,7 @@ namespace MapModS.Map
 
         private static string OnLanguageGetHook(string key, string sheet, string orig)
         {
-            if (sheet == "MMS" && Transition.nonMapScenes.Contains(key))
+            if (sheet == "MMS" && (Transition.nonMapScenes.Contains(key) || Transition.whitePalaceScenes.Contains(key)))
             {
                 return key;
             }
@@ -51,13 +52,13 @@ namespace MapModS.Map
         {
             orig(self, go_gameMap);
 
-            GameMap gameMap = go_gameMap.GetComponent<GameMap>();
+            DataLoader.SetUsedPinDefs();
 
-            DataLoader.FindPoolGroups();
+            GameMap gameMap = go_gameMap.GetComponent<GameMap>();
 
             Transition.AddExtraComponentsToMap(gameMap);
 
-            if (RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode != RandomizerMod.Settings.TransitionSettings.TransitionMode.None)
+            if (SettingsUtil.IsTransitionRando())
             {
                 goExtraRooms = Transition.CreateExtraMapRooms(gameMap);
 
@@ -156,52 +157,43 @@ namespace MapModS.Map
         // The main method for updating map objects and pins when opening either World Map or Quick Map
         public static void UpdateMap(GameMap gameMap, MapZone mapZone)
         {
-            try
+            ItemTracker.UpdateObtainedItems();
+
+            HashSet<string> transitionPinScenes = new();
+
+            FullMap.PurgeMap();
+
+            if (SettingsUtil.IsTransitionRando()
+                && MapModS.LS.ModEnabled)
             {
-                ItemTracker.UpdateObtainedItems();
-
-                HashSet<string> transitionPinScenes = new();
-
-                FullMap.PurgeMap();
-
-                if (RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode != RandomizerMod.Settings.TransitionSettings.TransitionMode.None
-                    && MapModS.LS.ModEnabled)
+                if (MapModS.LS.mapMode == MapMode.TransitionRando)
                 {
-                    if (MapModS.LS.mapMode == MapMode.TransitionRando)
-                    {
-                        transitionPinScenes = Transition.SetupMapTransitionMode(gameMap, false);
-                    }
-                    else if (MapModS.LS.mapMode == MapMode.TransitionRandoAlt)
-                    {
-                        transitionPinScenes = Transition.SetupMapTransitionMode(gameMap, true);
-                    }
-                    else
-                    {
-                        Transition.ResetMapColors(gameMap);
-                        gameMap.SetupMap();
-                    }
+                    transitionPinScenes = Transition.SetupMapTransitionMode(gameMap, false);
+                }
+                else if (MapModS.LS.mapMode == MapMode.TransitionRandoAlt)
+                {
+                    transitionPinScenes = Transition.SetupMapTransitionMode(gameMap, true);
                 }
                 else
                 {
                     Transition.ResetMapColors(gameMap);
                     gameMap.SetupMap();
                 }
-
-                PinsVanilla.ForceDisablePins(gameMap.gameObject);
-
-                if (goCustomPins == null || !MapModS.LS.ModEnabled) return;
-
-                CustomPins.ResizePins();
-                CustomPins.UpdatePins(mapZone, transitionPinScenes);
-                CustomPins.RefreshGroups();
-                CustomPins.RefreshSprites();
             }
-            catch (Exception e)
+            else
             {
-                MapModS.Instance.LogError(e);
+                Transition.ResetMapColors(gameMap);
+                gameMap.SetupMap();
             }
-        }
 
-        
+            PinsVanilla.ForceDisablePins(gameMap.gameObject);
+
+            if (goCustomPins == null || !MapModS.LS.ModEnabled) return;
+
+            CustomPins.UpdatePins(mapZone, transitionPinScenes);
+            CustomPins.ResizePins();
+            CustomPins.RefreshGroups();
+            CustomPins.SetSprites();
+        }
     }
 }

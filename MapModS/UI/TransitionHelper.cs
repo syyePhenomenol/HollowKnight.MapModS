@@ -8,7 +8,7 @@ namespace MapModS.UI
 {
     public class TransitionHelper
     {
-        private static readonly Dictionary<string, string> itemFixes = new()
+        private static readonly Dictionary<string, string> termFixes = new()
         {
             { "Ruins1_31[left3]", "ELEGANT" },
             { "Ruins2_11_b[left1]", "LOVE" }
@@ -95,7 +95,8 @@ namespace MapModS.UI
             { "Warp Queen's Gardens Toll", "Fungus3_50[right1]" },
             { "Warp Queen's Gardens Stag", "Fungus3_40[right1]" },
             // Special waypoint needed
-            { "Warp White Palace Entrance?", "White_Palace_01[left1]" },
+            { "Warp White Palace Entrance", "White_Palace_01[left1]" },
+            // Special waypoint needed
             { "Warp White Palace Atrium", "White_Palace_03_hub[right1]" },
             { "Warp White Palace Balcony", "White_Palace_06[top1]" },
             { "Warp Upper Tram -> Exit Left", "Crossroads_46[left1]" },
@@ -194,18 +195,17 @@ namespace MapModS.UI
                     }
                 }
 
-                // Emulate a transition being possibly available via having the required item
-                foreach (KeyValuePair<string, string> pair in itemFixes)
+                // Emulate a transition being possibly available via having the required term
+                foreach (KeyValuePair<string, string> pair in termFixes)
                 {
                     int keyId = pm.lm.TermLookup[pair.Key];
                     int ValueId = pm.lm.TermLookup[pair.Value];
 
                     if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Has(keyId)
-                        && !addedItems.Contains(ValueId))
+                        && !addedTerms.Contains(ValueId))
                     {
-                        // MapModS.Instance.Log("Has " + pair.Value);
-                        addedItems.Add(ValueId);
-                        pm.Add(pm.ctx.itemPlacements[keyId].item);
+                        addedTerms.Add(ValueId);
+                        pm.Set(ValueId, 1);
                     }
                 }
 
@@ -269,10 +269,10 @@ namespace MapModS.UI
                     }
                 }
 
-               if (GameManager.instance.sceneData.persistentBoolItems.Any(pbi => pbi.id == "Mines Lever" &&  pbi.sceneName == "Town" && pbi.activated == true))
-               {
+                if (PlayerData.instance.mineLiftOpened)
+                {
                     pm.Add(pm.lm.TransitionLookup["Town[right1]"]);
-               }
+                }
             }
 
             public class DelegateUpdateEntry : UpdateEntry
@@ -373,6 +373,23 @@ namespace MapModS.UI
             // If it's not in TransitionPlacements, it's the vanilla target.
             // NOTE that this can be null
             return transitionDef.VanillaTarget;
+        }
+
+        private bool ApplyAltLogic(string transition)
+        {
+            if (transition == "Warp White Palace Entrace")
+            {
+                tt.pm.Add(new LogicWaypoint(tt.pm.lm.TermLookup["White_Palace_01"], tt.pm.lm.LogicLookup["White_Palace_01"]));
+                return true;
+            }
+
+            if (transition == "Warp White Palace Atrium")
+            {
+                tt.pm.Add(new LogicWaypoint(tt.pm.lm.TermLookup["White_Palace_03_hub"], tt.pm.lm.LogicLookup["White_Palace_03_hub"]));
+                return true;
+            }
+
+            return false;
         }
 
         class SearchNode
@@ -482,8 +499,8 @@ namespace MapModS.UI
             }
 
             // Just in case
-            if (startScene == null || finalScene == null
-                || startScene == finalScene)
+            if (startScene == null || finalScene == null)
+                //|| startScene == finalScene)
             {
                 return new();
             }
@@ -561,19 +578,19 @@ namespace MapModS.UI
 
                 if (currentNode.currentScene == finalScene) return currentNode.currentRoute;
 
+                tt.pm.StartTemp();
+
+                if (currentNode.currentRoute.Count != 0 && !ApplyAltLogic(currentNode.currentRoute.Last()))
+                {
+                    tt.pm.Add(tt.pm.lm.GetTransition(currentNode.lastAdjacentTransition));
+                }
+
                 foreach (string transition in transitionSpace)
                 {
                     if (GetScene(transition) != currentNode.currentScene
                         && !stagTransitions.ContainsKey(transition)
                         && !elevatorTransitions.ContainsKey(transition)
                         && !tramTransitions.ContainsKey(transition)) continue;
-
-                    tt.pm.StartTemp();
-
-                    if (currentNode.currentRoute.Count != 0)
-                    {
-                        tt.pm.Add(tt.pm.lm.GetTransition(currentNode.lastAdjacentTransition));
-                    }
 
                     if (GetAdjacentTransition(transition) != null
                         && !visitedTransitions.Contains(transition)
@@ -587,9 +604,9 @@ namespace MapModS.UI
                         visitedTransitions.Add(transition);
                         queue.AddLast(newNode);
                     }
-
-                    tt.pm.RemoveTempItems();
                 }
+
+                tt.pm.RemoveTempItems();
             }
 
             // No route found, or the parameters are invalid

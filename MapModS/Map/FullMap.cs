@@ -152,6 +152,7 @@ namespace MapModS.Map
                         || areaObj.name == "Map Markers"
                         || areaObj.name == "WHITE_PALACE"
                         || areaObj.name == "GODS_GLORY"
+                        || areaObj.name == "MMS Custom Pin Group"
                         || areaObj.name == "MMS Custom Map Rooms") continue;
 
                 //if (areaObj.name == "MMS Custom Map Rooms")
@@ -367,6 +368,11 @@ namespace MapModS.Map
             else if (SettingsUtil.IsFSMMapState(self.gameObject.name) && self.FsmName == "deactivate")
             {
                 ReplaceBool(self, "Check", 0);
+            }
+
+            else if (self.FsmName == "Bench Control")
+            {
+                FsmUtil.GetAction<GetPlayerDataBool>(self, "Open Map", 0).boolName = "MMS_hasMap";
             }
         }
 
