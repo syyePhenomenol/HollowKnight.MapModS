@@ -63,6 +63,8 @@ https://github.com/flibber-hk/HollowKnight.SkillUpgrades
     - Rooms containing unchecked reachable transitions are brighter
     - Out of logic/sequence break rooms are red
     - Other visited rooms are a standard grey/white
+    - The World Map can list unchecked and visited transitions for any selected room, toggled with `CTRL-U`.
+    - The Quick Map lists unchecked and visited transitions for the room you are currently in.
  
 - In "Transition" mode, you also have a route searcher in the World Map that allows you to find a sequence of transitions to get to any other selected room on the map.
     - Hover over the desired room (in yellow) and press your bound `Menu Select` button to attempt a route search.
@@ -70,8 +72,6 @@ https://github.com/flibber-hk/HollowKnight.SkillUpgrades
     - You can toggle including benchwarp in the route search on/off with `CTRL-B`.
     - You can try again (pressing the button) to change the start/final transition.
     - The route will also be visible from the Quick Map for easy access, and gets updated as you make the suggested transitions.
-    - The World Map can list unchecked and visited transitions for any selected room, toggled with `CTRL-U`.
-    - The Quick Map lists unchecked and visited transitions for the room you are currently in.
 
 # How To Install
 Use Scarab: https://github.com/fifty-six/Scarab
