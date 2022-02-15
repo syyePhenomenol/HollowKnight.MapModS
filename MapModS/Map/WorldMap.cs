@@ -5,7 +5,6 @@ using MapModS.Trackers;
 using Modding;
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 
 namespace MapModS.Map
@@ -65,7 +64,6 @@ namespace MapModS.Map
                 if (MapModS.LS.NewSettings)
                 {
                     MapModS.LS.mapMode = MapMode.TransitionRando;
-                    MapModS.LS.NewSettings = false;
                 }
             }
 
@@ -86,9 +84,14 @@ namespace MapModS.Map
 
             CustomPins.MakePins(gameMap);
 
-            CustomPins.FindRandomizedGroups();
-
+            if (MapModS.LS.NewSettings)
+            {
+                CustomPins.InitializePoolSettings();
+            }
+            
             MapModS.Instance.Log("Adding Custom Pins done.");
+
+            MapModS.LS.NewSettings = false;
         }
 
         // Called every time we open the World Map
@@ -112,7 +115,14 @@ namespace MapModS.Map
                 }
             }
 
-            UpdateMap(self, MapZone.NONE);
+            try
+            {
+                UpdateMap(self, MapZone.NONE);
+            }
+            catch (Exception e)
+            {
+                MapModS.Instance.LogError(e);
+            }
         }
 
         // Following two behaviours necessary since GameMap is actually persistently active
@@ -162,6 +172,8 @@ namespace MapModS.Map
             HashSet<string> transitionPinScenes = new();
 
             FullMap.PurgeMap();
+
+            // Need to de-spaghetti the following
 
             if (SettingsUtil.IsTransitionRando()
                 && MapModS.LS.ModEnabled)

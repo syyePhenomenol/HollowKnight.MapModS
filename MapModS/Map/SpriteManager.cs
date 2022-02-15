@@ -1,4 +1,5 @@
 ﻿using MapModS.Data;
+using MapModS.Settings;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,22 +9,6 @@ using UnityEngine;
 // Code borrowed from homothety: https://github.com/homothetyhk/RandomizerMod/
 namespace MapModS.Map
 {
-    public enum PinStyle
-    {
-        Normal,
-        Q_Marks_1,
-        Q_Marks_2,
-        Q_Marks_3,
-    }
-
-    public enum PinBorderColor
-    {
-        Normal,
-        Previewed,
-        OutOfLogic,
-        Persistent
-    }
-
     internal static class SpriteManager
     {
         private static Dictionary<string, Sprite> _sprites;
@@ -47,7 +32,7 @@ namespace MapModS.Map
         {
             string spriteName = "undefined";
 
-            switch (MapModS.LS.pinStyle)
+            switch (MapModS.GS.pinStyle)
             {
                 case PinStyle.Normal:
                     spriteName = pool switch

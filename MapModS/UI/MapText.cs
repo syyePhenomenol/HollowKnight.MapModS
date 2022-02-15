@@ -96,7 +96,7 @@ namespace MapModS.UI
                 _mapDisplayPanel.GetText("Randomized").SetTextColor(Color.yellow);
                 _mapDisplayPanel.GetText("Randomized").UpdateText("Randomized (ctrl-2): custom");
             }
-            else if (MapModS.LS.RandomizedOn)
+            else if (MapModS.GS.randomizedOn)
             {
                 _mapDisplayPanel.GetText("Randomized").SetTextColor(Color.green);
                 _mapDisplayPanel.GetText("Randomized").UpdateText("Randomized (ctrl-2): on");
@@ -116,7 +116,7 @@ namespace MapModS.UI
                 _mapDisplayPanel.GetText("Others").SetTextColor(Color.yellow);
                 _mapDisplayPanel.GetText("Others").UpdateText("Others (ctrl-3): custom");
             }
-            else if (MapModS.LS.OthersOn)
+            else if (MapModS.GS.othersOn)
             {
                 _mapDisplayPanel.GetText("Others").SetTextColor(Color.green);
                 _mapDisplayPanel.GetText("Others").UpdateText("Others (ctrl-3): on");
@@ -130,7 +130,7 @@ namespace MapModS.UI
 
         private static void SetStyle()
         {
-            switch (MapModS.LS.pinStyle)
+            switch (MapModS.GS.pinStyle)
             {
                 case PinStyle.Normal:
                     _mapDisplayPanel.GetText("Style").UpdateText("Style (ctrl-4): normal");

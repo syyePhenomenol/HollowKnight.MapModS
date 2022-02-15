@@ -58,8 +58,6 @@ namespace MapModS.Data
         {
             if (shopLocations.Contains(cleanItemName)) return PoolGroup.Shop;
 
-            if (cleanItemName.EndsWith("_Geo")) return PoolGroup.GeoChests;
-
             switch (cleanItemName)
             {
                 case "Dreamer":
@@ -122,6 +120,8 @@ namespace MapModS.Data
                     }
                 }
             }
+
+            if (cleanItemName.EndsWith("_Geo")) return PoolGroup.GeoChests;
 
             MapModS.Instance.LogWarn($"PoolGroup not found for an item: " + cleanItemName);
 
@@ -194,6 +194,16 @@ namespace MapModS.Data
             return item.HasTag<ItemChanger.Tags.PersistentItemTag>();
         }
 
+        public static bool HasObtainedVanillaItem(PinDef pd)
+        {
+            return (pd.pdBool != null && PlayerData.instance.GetBool(pd.pdBool))
+                        || (pd.pdInt != null && PlayerData.instance.GetInt(pd.pdInt) >= pd.pdIntValue)
+                        || (pd.locationPoolGroup == PoolGroup.WhisperingRoots && PlayerData.instance.scenesEncounteredDreamPlantC.Contains(pd.sceneName))
+                        || (pd.locationPoolGroup == PoolGroup.Grubs && PlayerData.instance.scenesGrubRescued.Contains(pd.sceneName))
+                        || (pd.locationPoolGroup == PoolGroup.GrimmkinFlames && PlayerData.instance.scenesFlameCollected.Contains(pd.sceneName))
+                        || MapModS.LS.ObtainedVanillaItems.ContainsKey(pd.objectName + pd.sceneName);
+        }
+
         public static void SetUsedPinDefs()
         {
             _usedPins.Clear();
@@ -201,12 +211,12 @@ namespace MapModS.Data
             foreach (KeyValuePair<string, AbstractPlacement> placement in ItemChanger.Internal.Ref.Settings.Placements)
             {
                 IEnumerable<ItemDef> items = placement.Value.Items
-                    .Where(x => !x.IsObtained())
+                    .Where(x => !x.IsObtained() || x.IsPersistent())
                     .Select(x => new ItemDef(x));
 
                 if (!items.Any()) continue;
 
-                string locationName = placement.Value.Items.Where(x => !x.IsObtained()).First().RandoLocationName();
+                string locationName = placement.Value.Items.First().RandoLocationName();
 
                 if (locationName == "Start") continue;
 
@@ -214,10 +224,13 @@ namespace MapModS.Data
                 {
                     pinDef.randoItems = items;
                     pinDef.canPreview = placement.Value.CanPreview();
+                    // UpdatePins will set it to the correct state
                     pinDef.pinLocationState = PinLocationState.UncheckedUnreachable;
                     pinDef.locationPoolGroup = GetLocationPoolGroup(pinDef.name);
                         
                     _usedPins.Add(locationName, pinDef);
+
+                    //MapModS.Instance.Log(locationName);
                 }
                 else
                 {
@@ -227,20 +240,23 @@ namespace MapModS.Data
 
             bool leverRandoEnabled = _usedPins.Any(p => p.Key.StartsWith("Lever"));
 
-            foreach (KeyValuePair<string, PinDef> pinDef in _allPins)
+            foreach (KeyValuePair<string, PinDef> pdPair in _allPins)
             {
-                if (!_usedPins.ContainsKey(pinDef.Key)
-                    && !pinDef.Value.randoOnly
-                    && !RandomizerMod.RandomizerMod.RS.TrackerData.clearedLocations.Contains(pinDef.Key))
+                if (!_usedPins.ContainsKey(pdPair.Key)
+                    && !pdPair.Value.randoOnly
+                    && !RandomizerMod.RandomizerMod.RS.TrackerData.clearedLocations.Contains(pdPair.Key)
+                    && !HasObtainedVanillaItem(pdPair.Value))
                 {
-                    if (leverRandoEnabled && (pinDef.Value.name == "Dirtmouth_Stag" || pinDef.Value.name == "Resting_Grounds_Stag"))
+                    if (leverRandoEnabled && (pdPair.Value.name == "Dirtmouth_Stag" || pdPair.Value.name == "Resting_Grounds_Stag"))
                     {
                         continue;
                     }
 
-                    pinDef.Value.pinLocationState = PinLocationState.NonRandomizedUnchecked;
-                    pinDef.Value.locationPoolGroup = GetLocationPoolGroup(pinDef.Value.name);
-                    _usedPins.Add(pinDef.Key, pinDef.Value);
+                    //MapModS.Instance.Log(pdPair.Key);
+
+                    pdPair.Value.pinLocationState = PinLocationState.NonRandomizedUnchecked;
+                    pdPair.Value.locationPoolGroup = GetLocationPoolGroup(pdPair.Value.name);
+                    _usedPins.Add(pdPair.Key, pdPair.Value);
                 }
             }
 

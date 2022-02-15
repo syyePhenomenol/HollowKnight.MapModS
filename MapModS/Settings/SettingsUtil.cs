@@ -1,5 +1,4 @@
 ﻿using GlobalEnums;
-using MapModS.Data;
 
 namespace MapModS.Settings
 {

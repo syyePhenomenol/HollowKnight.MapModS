@@ -138,6 +138,21 @@ namespace MapModS.UI
                 );
             }
 
+            int poolGroupCount = Enum.GetNames(typeof(PoolGroup)).Length;
+
+            pools.AddButton
+            (
+                "GroupBy",
+                GUIController.Instance.Images["ButtonRect"],
+                new Vector2(-100f, 60f),
+                Vector2.zero,
+                GroupByClicked,
+                buttonRect,
+                GUIController.Instance.TrajanBold,
+                "Group by\n",
+                fontSize: 10
+            );
+
             UpdateGUI();
 
             _mapControlPanel.SetActive(false, true); // collapse all subpanels
@@ -190,6 +205,8 @@ namespace MapModS.UI
 
                 UpdatePool(group);
             }
+
+            UpdateGroupBy();
         }
 
         public static void EnableClicked(string buttonName)
@@ -208,7 +225,7 @@ namespace MapModS.UI
                 BuildMenu(Canvas);
                 MapText.LockToggleEnable = true;
                 MapText.RebuildText();
-                TransitionText.LockToggleEnable = true;
+                //TransitionText.LockToggleEnable = true;
                 TransitionText.SetTexts();
             }
         }
@@ -261,19 +278,19 @@ namespace MapModS.UI
             {
                 _mapControlPanel.GetButton("Randomized").SetTextColor(Color.white);
                 _mapControlPanel.GetButton("Randomized").UpdateText("Randomized:\noff");
-                MapModS.LS.RandomizedOn = false;
+                MapModS.GS.randomizedOn = false;
             }
             else if (WorldMap.CustomPins.RandomizedGroups.All(MapModS.LS.GetOnFromGroup))
             {
                 _mapControlPanel.GetButton("Randomized").SetTextColor(Color.green);
                 _mapControlPanel.GetButton("Randomized").UpdateText("Randomized:\non");
-                MapModS.LS.RandomizedOn = true;
+                MapModS.GS.randomizedOn = true;
             }
             else
             {
                 _mapControlPanel.GetButton("Randomized").SetTextColor(Color.yellow);
                 _mapControlPanel.GetButton("Randomized").UpdateText("Randomized:\ncustom");
-                MapModS.LS.RandomizedOn = true;
+                MapModS.GS.randomizedOn = true;
             }
         }
 
@@ -293,19 +310,19 @@ namespace MapModS.UI
             {
                 _mapControlPanel.GetButton("Others").SetTextColor(Color.white);
                 _mapControlPanel.GetButton("Others").UpdateText("Others:\noff");
-                MapModS.LS.OthersOn = false;
+                MapModS.GS.othersOn = false;
             }
             else if (WorldMap.CustomPins.OthersGroups.All(MapModS.LS.GetOnFromGroup))
             {
                 _mapControlPanel.GetButton("Others").SetTextColor(Color.green);
                 _mapControlPanel.GetButton("Others").UpdateText("Others:\non");
-                MapModS.LS.OthersOn = true;
+                MapModS.GS.othersOn = true;
             }
             else
             {
                 _mapControlPanel.GetButton("Others").SetTextColor(Color.yellow);
                 _mapControlPanel.GetButton("Others").UpdateText("Others:\ncustom");
-                MapModS.LS.OthersOn = true;
+                MapModS.GS.othersOn = true;
             }
         }
 
@@ -319,7 +336,7 @@ namespace MapModS.UI
 
         private static void UpdateStyle()
         {
-            switch (MapModS.LS.pinStyle)
+            switch (MapModS.GS.pinStyle)
             {
                 case PinStyle.Normal:
                     _mapControlPanel.GetButton("Style").UpdateText("Pin Style:\nnormal");
@@ -418,12 +435,19 @@ namespace MapModS.UI
         {
             MapModS.LS.SetOnFromGroup(buttonName, !MapModS.LS.GetOnFromGroup(buttonName));
 
+            if (WorldMap.CustomPins != null)
+            {
+                WorldMap.CustomPins.ReassignGroups();
+            }
+
             UpdateGUI();
-            MapText.SetTexts();
+            //MapText.SetTexts();
         }
 
         private static void UpdatePool(PoolGroup pool)
         {
+            if (WorldMap.CustomPins == null) return;
+
             if (pool == PoolGroup.GeoRocks && !RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.GeoRocks)
             {
                 _mapControlPanel.GetPanel("PoolsPanel").GetButton(pool.ToString()).UpdateText
@@ -439,6 +463,33 @@ namespace MapModS.UI
                 (
                     setting ? Color.green : Color.white
                 );
+        }
+
+        public static void GroupByClicked(string buttonName)
+        {
+            MapModS.LS.ToggleGroupBy();
+
+            if (WorldMap.CustomPins != null)
+            {
+                WorldMap.CustomPins.ReassignGroups();
+            }
+
+            UpdateGUI();
+            //MapText.SetTexts();
+        }
+
+        private static void UpdateGroupBy()
+        {
+            switch (MapModS.LS.groupBy)
+            {
+                case GroupBy.Location:
+                    _mapControlPanel.GetPanel("PoolsPanel").GetButton("GroupBy").UpdateText("Group by:\nLocation");
+                    break;
+
+                case GroupBy.Item:
+                    _mapControlPanel.GetPanel("PoolsPanel").GetButton("GroupBy").UpdateText("Group by:\nItem");
+                    break;
+            }
         }
     }
 }

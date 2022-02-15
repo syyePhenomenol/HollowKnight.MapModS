@@ -103,7 +103,7 @@ namespace MapModS.UI
 
             DontDestroyOnLoad(_transitionCanvas);
 
-            _transitionCanvas.SetActive(false);
+            _transitionCanvas.SetActive(true);
 
             TransitionText.Initialize();
             StartCoroutine("UpdateSelectedScene");

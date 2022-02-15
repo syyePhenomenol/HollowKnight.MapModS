@@ -1,16 +1,20 @@
 ﻿using MapModS.Data;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using GlobalEnums;
 using MapModS.Settings;
 
 namespace MapModS.Map
 {
+    public enum PinBorderColor
+    {
+        Normal,
+        Previewed,
+        OutOfLogic,
+        Persistent
+    }
+
     public class PinAnimatedSprite : MonoBehaviour
     {
         public PinDef pinDef { get; private set; } = null;

@@ -1,5 +1,4 @@
 ﻿using MapModS.Data;
-using MapModS.Map;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +12,12 @@ namespace MapModS.Settings
         PinsOverMap,
         TransitionRando,
         TransitionRandoAlt
+    }
+
+    public enum GroupBy
+    {
+        Location,
+        Item
     }
 
     [Serializable]
@@ -40,13 +45,9 @@ namespace MapModS.Settings
 
         public MapMode mapMode = MapMode.FullMap;
 
-        public PinStyle pinStyle = PinStyle.Normal;
+        public GroupBy groupBy;
 
         public bool SpoilerOn = false;
-
-        public bool RandomizedOn = true;
-
-        public bool OthersOn = true;
 
         public bool NewSettings = true;
 
@@ -91,6 +92,19 @@ namespace MapModS.Settings
 
                 case MapMode.TransitionRandoAlt:
                     mapMode = MapMode.FullMap;
+                    break;
+            }
+        }
+
+        public void ToggleGroupBy()
+        {
+            switch (groupBy)
+            {
+                case GroupBy.Location:
+                    groupBy += 1;
+                    break;
+                default:
+                    groupBy = GroupBy.Location;
                     break;
             }
         }
