@@ -41,6 +41,8 @@ namespace MapModS.Settings
         // Vanilla only
         public int GeoRockCounter = 0;
 
+        public bool showBenchPins = false;
+
         public bool ModEnabled = false;
 
         public MapMode mapMode = MapMode.FullMap;
@@ -94,6 +96,11 @@ namespace MapModS.Settings
                     mapMode = MapMode.FullMap;
                     break;
             }
+        }
+
+        public void ToggleBench()
+        {
+            showBenchPins = !showBenchPins;
         }
 
         public void ToggleGroupBy()

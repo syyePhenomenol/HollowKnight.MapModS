@@ -153,6 +153,19 @@ namespace MapModS.UI
                 fontSize: 10
             );
 
+            pools.AddButton
+            (
+                "Benches",
+                GUIController.Instance.Images["ButtonRectEmpty"],
+                new Vector2((float)(poolGroupCount - 1) % 9 * 90, (int)(poolGroupCount - 1) / 9 * 30),
+                Vector2.zero,
+                BenchClicked,
+                buttonRect,
+                GUIController.Instance.TrajanBold,
+                "Benches",
+                fontSize: 10
+            );
+
             UpdateGUI();
 
             _mapControlPanel.SetActive(false, true); // collapse all subpanels
@@ -206,6 +219,7 @@ namespace MapModS.UI
                 UpdatePool(group);
             }
 
+            UpdateBench();
             UpdateGroupBy();
         }
 
@@ -462,6 +476,21 @@ namespace MapModS.UI
             _mapControlPanel.GetPanel("PoolsPanel").GetButton(pool.ToString()).SetTextColor
                 (
                     setting ? Color.green : Color.white
+                );
+        }
+
+        public static void BenchClicked(string buttonName)
+        {
+            MapModS.LS.ToggleBench();
+
+            UpdateGUI();
+        }
+
+        public static void UpdateBench()
+        {
+            _mapControlPanel.GetPanel("PoolsPanel").GetButton("Benches").SetTextColor
+                (
+                    MapModS.LS.showBenchPins ? Color.green : Color.white
                 );
         }
 

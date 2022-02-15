@@ -77,9 +77,9 @@ namespace MapModS.Map
                 ReplaceBoolX(self, "Check", 2);
             }
             else if ((self.gameObject.name == "pin_bench" && self.FsmName == "FSM")
-                // For AdditionalMaps
-                || (self.gameObject.name == "pin_bench(Clone)(Clone)" && self.FsmName == "FSM")
-                || (self.gameObject.name == "Pin_BlackEgg" && self.FsmName == "FSM"))
+            // For AdditionalMaps
+            || (self.gameObject.name == "pin_bench(Clone)(Clone)" && self.FsmName == "FSM")
+            || (self.gameObject.name == "Pin_BlackEgg" && self.FsmName == "FSM"))
             {
                 if (self.FsmStates.FirstOrDefault(t => t.Name == "Check") != null)
                 {
@@ -252,6 +252,11 @@ namespace MapModS.Map
             {
                 if (MapModS.LS.ModEnabled)
                 {
+                    if (boolName.Contains("hasPinBench") && MapModS.LS.showBenchPins)
+                    {
+                        return true;
+                    }
+
                     return false;
                 }
                 else
