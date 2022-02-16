@@ -481,6 +481,8 @@ namespace MapModS.UI
 
         public static void BenchClicked(string buttonName)
         {
+            if (!PlayerData.instance.hasPinBench) return;
+
             MapModS.LS.ToggleBench();
 
             UpdateGUI();
@@ -488,6 +490,12 @@ namespace MapModS.UI
 
         public static void UpdateBench()
         {
+            if (!PlayerData.instance.hasPinBench)
+            {
+                _mapControlPanel.GetPanel("PoolsPanel").GetButton("Benches").SetTextColor(Color.red);
+                return;
+            }
+
             _mapControlPanel.GetPanel("PoolsPanel").GetButton("Benches").SetTextColor
                 (
                     MapModS.LS.showBenchPins ? Color.green : Color.white
