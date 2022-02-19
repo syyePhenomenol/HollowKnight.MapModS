@@ -235,6 +235,13 @@ namespace MapModS.UI
                     UIManager.instance.checkpointSprite.Hide();
                 }
 
+                if (!MapModS.LS.ModEnabled
+                    && GameManager.instance.gameMap != null
+                    && SettingsUtil.IsTransitionRando())
+                {
+                    Transition.ResetMapColors(GameManager.instance.gameMap);
+                }
+
                 _mapControlPanel.Destroy();
                 BuildMenu(Canvas);
                 MapText.LockToggleEnable = true;
@@ -403,6 +410,16 @@ namespace MapModS.UI
 
         public static void ModeClicked(string buttonName)
         {
+            if (GameManager.instance.gameMap != null
+                && (RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode == RandomizerMod.Settings.TransitionSettings.TransitionMode.RoomRandomizer
+                    && MapModS.LS.mapMode == MapMode.TransitionRando)
+                || ((RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode == RandomizerMod.Settings.TransitionSettings.TransitionMode.FullAreaRandomizer
+                        || RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode == RandomizerMod.Settings.TransitionSettings.TransitionMode.MapAreaRandomizer)
+                    && MapModS.LS.mapMode == MapMode.TransitionRando))
+            {
+                Transition.ResetMapColors(GameManager.instance.gameMap);
+            }
+
             MapModS.LS.ToggleFullMap();
 
             UpdateGUI();

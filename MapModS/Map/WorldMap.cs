@@ -59,7 +59,10 @@ namespace MapModS.Map
 
             if (SettingsUtil.IsTransitionRando())
             {
-                goExtraRooms = Transition.CreateExtraMapRooms(gameMap);
+                if (GameObject.Find("MMS Custom Map Rooms") == null)
+                {
+                    goExtraRooms = Transition.CreateExtraMapRooms(gameMap);
+                }
 
                 if (MapModS.LS.NewSettings)
                 {
@@ -173,28 +176,15 @@ namespace MapModS.Map
 
             FullMap.PurgeMap();
 
-            // Need to de-spaghetti the following
-
             if (SettingsUtil.IsTransitionRando()
-                && MapModS.LS.ModEnabled)
+                && MapModS.LS.ModEnabled
+                && (MapModS.LS.mapMode == MapMode.TransitionRando
+                    || MapModS.LS.mapMode == MapMode.TransitionRandoAlt))
             {
-                if (MapModS.LS.mapMode == MapMode.TransitionRando)
-                {
-                    transitionPinScenes = Transition.SetupMapTransitionMode(gameMap, false);
-                }
-                else if (MapModS.LS.mapMode == MapMode.TransitionRandoAlt)
-                {
-                    transitionPinScenes = Transition.SetupMapTransitionMode(gameMap, true);
-                }
-                else
-                {
-                    Transition.ResetMapColors(gameMap);
-                    gameMap.SetupMap();
-                }
+                    transitionPinScenes = Transition.SetupMapTransitionMode(gameMap);
             }
             else
             {
-                Transition.ResetMapColors(gameMap);
                 gameMap.SetupMap();
             }
 

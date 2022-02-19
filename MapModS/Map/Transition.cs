@@ -190,8 +190,10 @@ namespace MapModS.Map
             tmp.color = color;
         }
 
-        public static HashSet<string> SetupMapTransitionMode(GameMap gameMap, bool isAlt)
+        public static HashSet<string> SetupMapTransitionMode(GameMap gameMap)
         {
+            bool isAlt = MapModS.LS.mapMode == Settings.MapMode.TransitionRandoAlt;
+
             HashSet<string> inLogicScenes = new();
 
             HashSet<string> outOfLogicScenes = new();
@@ -434,8 +436,12 @@ namespace MapModS.Map
             }
         }
 
-        public static void ResetMapColors(GameMap gameMap)
+        public static void ResetMapColors(GameObject goGameMap)
         {
+            GameMap gameMap = goGameMap.GetComponent<GameMap>();
+
+            if (gameMap == null) return;
+
             foreach (Transform areaObj in gameMap.transform)
             {
                 if (areaObj.name == "Grub Pins"

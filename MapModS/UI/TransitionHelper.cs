@@ -49,7 +49,7 @@ namespace MapModS.UI
         };
 
         // Pair of bench warp instruction + logically equivalent transition
-        public static Dictionary<string, string> warpTransitions = new()
+        public static Dictionary<string, string> benchWarpTransitions = new()
         {
             { "Warp Dirtmouth", "Town[bot1]" },
             { "Warp Mato", "Room_nailmaster[left1]" },
@@ -139,10 +139,14 @@ namespace MapModS.UI
             { "Lower Tram -> Exit Right", new("Lower_Tram", "Abyss_03_c[right1]") }
         };
 
-        //public static Dictionary<string, Tuple<string, string, string>> otherTransitions = new()
-        //{
-        //    { "Dream Nail Kingsmould", new("Awoken_Dream_Nail", "Abyss_05", "White_Palace_11[door2]") },
-        //};
+        public static Dictionary<string, Tuple<string, string>> normalWarpTransitions = new()
+        {
+            { "Abyss_08[warp]", new("Warp-Lifeblood_Core_to_Abyss", "Abyss_06_Core[left1]") },
+            { "Abyss_05[warp]", new("Warp-Palace_Grounds_to_White_Palace", "White_Palace_11[door2]") },
+            { "White_Palace_11[warp]", new("Warp-White_Palace_Entrance_to_Palace_Grounds", "Abyss_05[left1]") },
+            { "White_Palace_03_hub[warp]", new("Warp-White_Palace_Atrium_to_Palace_Grounds", "Abyss_05[left1]") },
+            { "White_Palace_20[warp]", new("Warp-Path_of_Pain_Complete", "White_Palace_06[bot1]") }
+        };
 
         public TransitionHelper()
         {
@@ -219,7 +223,7 @@ namespace MapModS.UI
                         || waypoint.Name.Contains("Defeated_")
                         || waypoint.Name.Contains("Lever-")
                         || waypoint.Name.Contains("Completed_")
-                        || waypoint.Name.Contains("Warp-")
+                        //|| waypoint.Name.Contains("Warp-")
                         || waypoint.Name.Contains("_Tram")
                         || waypoint.Name.Contains("_Elevator")
                         || waypoint.Name.Contains("Grimmchild_Upgrade")
@@ -315,9 +319,9 @@ namespace MapModS.UI
 
         public static string GetScene(string transition)
         {
-            if (warpTransitions.ContainsKey(transition))
+            if (benchWarpTransitions.ContainsKey(transition))
             {
-                return GetScene(warpTransitions[transition]);
+                return GetScene(benchWarpTransitions[transition]);
             }
 
             // Handle in a special way
@@ -330,6 +334,11 @@ namespace MapModS.UI
 
             // Handle in a special way
             if (tramTransitions.ContainsKey(transition)) return null;
+
+            if (normalWarpTransitions.ContainsKey(transition))
+            {
+                return transition.Substring(0, transition.Length - 6);
+            }
 
             return RandomizerMod.RandomizerData.Data.GetTransitionDef(transition).SceneName;
         }
@@ -346,9 +355,9 @@ namespace MapModS.UI
                 return transitionPlacementsDict[source];
             }
 
-            if (warpTransitions.ContainsKey(source))
+            if (benchWarpTransitions.ContainsKey(source))
             {
-                return warpTransitions[source];
+                return benchWarpTransitions[source];
             }
 
             if (stagTransitions.ContainsKey(source))
@@ -364,6 +373,11 @@ namespace MapModS.UI
             if (tramTransitions.ContainsKey(source))
             {
                 return tramTransitions[source].Item2;
+            }
+
+            if (normalWarpTransitions.ContainsKey(source))
+            {
+                return normalWarpTransitions[source].Item2;
             }
 
             RandomizerMod.RandomizerData.TransitionDef transitionDef = RandomizerMod.RandomizerData.Data.GetTransitionDef(source);
@@ -427,11 +441,6 @@ namespace MapModS.UI
         // A ProgressionManager is used to track logic while traversing through the search space
         public List<string> ShortestRoute(string startScene, string finalScene, HashSet<KeyValuePair<string, string>> rejectedTransitionPairs, bool allowBenchWarp)
         {
-            //if (!warpTransitions.ContainsKey("Warp Start"))
-            //{
-            //    warpTransitions.Add("Warp Start", RandomizerMod.RandomizerData.Data.GetStartDef(RandomizerMod.RandomizerMod.RS.GenerationSettings.StartLocationSettings.StartLocation).Transition);
-            //}
-
             transitionPlacementsDict = RandomizerMod.RandomizerMod.RS.Context.transitionPlacements.ToDictionary(tp => tp.source.Name, tp => tp.target.Name);
 
             HashSet<string> transitionSpace = new();
@@ -498,6 +507,15 @@ namespace MapModS.UI
                 }
             }
 
+            // Add normal warp transitions (check if reachable during algorithm)
+            foreach (KeyValuePair<string, Tuple<string, string>> normalWarpTransition in normalWarpTransitions)
+            {
+                if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Get(normalWarpTransition.Value.Item1) > 0)
+                {
+                    transitionSpace.Add(normalWarpTransition.Key);
+                }
+            }
+
             // Just in case
             if (startScene == null || finalScene == null)
                 //|| startScene == finalScene)
@@ -511,7 +529,7 @@ namespace MapModS.UI
             // Just in case
             transitionSpace.Remove(null);
 
-            tt.GetNewItems();
+            //tt.GetNewItems();
 
             // Algorithm (BFS)
             HashSet<string> visitedTransitions = new();
@@ -522,7 +540,7 @@ namespace MapModS.UI
             {
                 Dictionary<string, string> startWarp = new() { { "Warp Start", RandomizerMod.RandomizerData.Data.GetStartDef(RandomizerMod.RandomizerMod.RS.GenerationSettings.StartLocationSettings.StartLocation).Transition } };
 
-                foreach (KeyValuePair<string, string> warpPair in warpTransitions.Union(startWarp))
+                foreach (KeyValuePair<string, string> warpPair in benchWarpTransitions.Union(startWarp))
                 {
                     string scene = GetScene(warpPair.Value);
 
@@ -597,7 +615,8 @@ namespace MapModS.UI
                         && !rejectedTransitionPairs.Any(pair => pair.Key == currentNode.currentRoute.First() && pair.Value == transition)
                         && ((tt.pm.lm.TransitionLookup.ContainsKey(transition)
                                 && tt.pm.lm.TransitionLookup[transition].CanGet(tt.pm))
-                            || VerifySpecialTransition(transition, currentNode.currentScene)))
+                            || (VerifySpecialTransition(transition, currentNode.currentScene)
+                                && CanGetSpecialTransition(transition))))
                     {
                         SearchNode newNode = new(GetScene(GetAdjacentTransition(transition)), currentNode.currentRoute, GetAdjacentTransition(transition));
                         newNode.currentRoute.Add(transition);
@@ -620,7 +639,8 @@ namespace MapModS.UI
                 || transition.StartsWith("Left Elevator")
                 || transition.StartsWith("Right Elevator")
                 || transition.StartsWith("Upper Tram")
-                || transition.StartsWith("Lower Tram");
+                || transition.StartsWith("Lower Tram")
+                || transition.EndsWith("[warp]");
         }
 
         // Checks if the player has transitioned into a scene with the special transition
@@ -634,7 +654,18 @@ namespace MapModS.UI
             if ((transition.StartsWith("Upper Tram") && currentScene.StartsWith("Crossroads_46"))
                 || (transition.StartsWith("Lower Tram") && currentScene.StartsWith("Abyss_03"))) return true;
 
+            if (transition.EndsWith("[warp]") && transition.StartsWith(currentScene)) return true;
+
             return false;
+        }
+
+        // Checks if the player can get the transition
+        public bool CanGetSpecialTransition(string transition)
+        {
+            if (transition.EndsWith("[warp]")) return (tt.pm.Get(normalWarpTransitions[transition].Item1) > 0);
+
+            // Others are true because they have been added to the search space based on being available
+            return true;
         }
     }
 }

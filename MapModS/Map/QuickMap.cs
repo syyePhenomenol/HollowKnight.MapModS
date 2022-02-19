@@ -1,6 +1,7 @@
 ﻿using GlobalEnums;
 using HutongGames.PlayMaker;
 using HutongGames.PlayMaker.Actions;
+using MapModS.Data;
 using MapModS.Settings;
 using MapModS.UI;
 using System.Linq;
@@ -13,6 +14,9 @@ namespace MapModS.Map
     {
         public static void Hook()
         {
+            On.GameManager.GetCurrentMapZone += GameManager_GetCurrentMapZone;
+            On.GameMap.GetDoorMapZone += GameMap_GetDoorMapZone;
+
             On.GameMap.QuickMapAncientBasin += GameMap_QuickMapAncientBasin;
             On.GameMap.QuickMapCity += GameMap_QuickMapCity;
             On.GameMap.QuickMapCliffs += GameMap_QuickMapCliffs;
@@ -27,11 +31,15 @@ namespace MapModS.Map
             On.GameMap.QuickMapQueensGardens += GameMap_QuickMapQueensGardens;
             On.GameMap.QuickMapRestingGrounds += GameMap_QuickMapRestingGrounds;
             On.GameMap.QuickMapWaterways += GameMap_QuickMapWaterways;
+
             On.GameManager.SetGameMap += GameManager_SetGameMap;
         }
 
         public static void Unhook()
         {
+            On.GameManager.GetCurrentMapZone -= GameManager_GetCurrentMapZone;
+            On.GameMap.GetDoorMapZone -= GameMap_GetDoorMapZone;
+
             On.GameMap.QuickMapAncientBasin -= GameMap_QuickMapAncientBasin;
             On.GameMap.QuickMapCity -= GameMap_QuickMapCity;
             On.GameMap.QuickMapCliffs -= GameMap_QuickMapCliffs;
@@ -46,7 +54,33 @@ namespace MapModS.Map
             On.GameMap.QuickMapQueensGardens -= GameMap_QuickMapQueensGardens;
             On.GameMap.QuickMapRestingGrounds -= GameMap_QuickMapRestingGrounds;
             On.GameMap.QuickMapWaterways -= GameMap_QuickMapWaterways;
+
             On.GameManager.SetGameMap -= GameManager_SetGameMap;
+        }
+
+        // The following fixes loading the Quick Map for some of the special areas (like Ancestral Mound)
+        private static string GameMap_GetDoorMapZone(On.GameMap.orig_GetDoorMapZone orig, GameMap self)
+        {
+            MapZone mapZone = StringUtils.GetFixedMapZone();
+
+            if (mapZone != MapZone.NONE)
+            {
+                return mapZone.ToString();
+            }
+
+            return orig(self);
+        }
+
+        private static string GameManager_GetCurrentMapZone(On.GameManager.orig_GetCurrentMapZone orig, GameManager self)
+        {
+            MapZone mapZone = StringUtils.GetFixedMapZone();
+
+            if (mapZone != MapZone.NONE)
+            {
+                return mapZone.ToString();
+            }
+
+            return orig(self);
         }
 
         // These are called every time we open the respective Quick Map
