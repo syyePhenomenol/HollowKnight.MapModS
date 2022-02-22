@@ -1,5 +1,4 @@
 ﻿using GlobalEnums;
-using ItemChanger;
 using MapModS.Data;
 using MapModS.Settings;
 using System;
@@ -183,6 +182,7 @@ namespace MapModS.Map
         internal void ToggleSpoilers()
         {
             MapModS.LS.SpoilerOn = !MapModS.LS.SpoilerOn;
+
             SetSprites();
         }
 

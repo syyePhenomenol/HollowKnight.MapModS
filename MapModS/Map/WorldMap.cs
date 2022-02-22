@@ -51,7 +51,15 @@ namespace MapModS.Map
         {
             orig(self, go_gameMap);
 
-            DataLoader.SetUsedPinDefs();
+            try
+            {
+                DataLoader.SetUsedPinDefs();
+            }
+            catch (Exception e)
+            {
+                MapModS.Instance.LogError(e);
+            }
+            
 
             GameMap gameMap = go_gameMap.GetComponent<GameMap>();
 
@@ -188,9 +196,9 @@ namespace MapModS.Map
                 gameMap.SetupMap();
             }
 
-            PinsVanilla.ForceDisablePins(gameMap.gameObject);
-
             if (goCustomPins == null || !MapModS.LS.ModEnabled) return;
+
+            PinsVanilla.ForceDisablePins(gameMap.gameObject);
 
             CustomPins.UpdatePins(mapZone, transitionPinScenes);
             CustomPins.ResizePins();

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections;
-using HutongGames.PlayMaker;
 using UnityEngine.SceneManagement;
-using Vasi;
 
 namespace MapModS.UI
 {
@@ -11,7 +8,6 @@ namespace MapModS.UI
         public static void Hook()
         {
             On.GameMap.Start += GameMap_Start;
-            //On.PlayMakerFSM.OnEnable += PlayMakerFSM_OnEnable;
             On.GameMap.WorldMap += GameMap_WorldMap;
             On.GameMap.CloseQuickMap += GameMap_CloseQuickMap;
             On.HeroController.Pause += HeroController_Pause;
@@ -21,7 +17,6 @@ namespace MapModS.UI
         public static void Unhook()
         {
             On.GameMap.Start -= GameMap_Start;
-            //On.PlayMakerFSM.OnEnable -= PlayMakerFSM_OnEnable;
             On.GameMap.WorldMap -= GameMap_WorldMap;
             On.GameMap.CloseQuickMap -= GameMap_CloseQuickMap;
             On.HeroController.Pause -= HeroController_Pause;
@@ -60,28 +55,6 @@ namespace MapModS.UI
             MapText.Hide();
             TransitionText.Hide();
         }
-
-        //private static void PlayMakerFSM_OnEnable(On.PlayMakerFSM.orig_OnEnable orig, PlayMakerFSM self)
-        //{
-        //    orig(self);
-
-        //    if (self.gameObject.name == "Knight" && self.FsmName == "Map Control"
-        //        || self.FsmName == "Bench Control")
-        //    {
-        //        FsmUtil.AddAction(FsmUtil.GetState(self, "Map Idle"), new OpenQuickMap());
-        //    }
-        //}
-
-        //public class OpenQuickMap : FsmStateAction
-        //{
-        //    public override void OnEnter()
-        //    {
-        //        MapText.Show();
-        //        TransitionText.ShowQuickMap();
-
-        //        Finish();
-        //    }
-        //}
 
         private static void HeroController_Pause(On.HeroController.orig_Pause orig, HeroController self)
         {

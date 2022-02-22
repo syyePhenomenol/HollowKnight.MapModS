@@ -55,7 +55,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Compatibility.cs" />
     <Compile Remove="Data\PinDefOld.cs" />
     <Compile Remove="Data\PinDefUnused.cs" />
     <Compile Remove="Data\Pool.cs" />
@@ -66,6 +65,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Resources\fixedMapZones.json" />
     <None Remove="Resources\GUI\ButtonRect.png" />
     <None Remove="Resources\GUI\ButtonRectEmpty.png" />
     <None Remove="Resources\GUI\ButtonsMenuBG.png" />
@@ -241,6 +241,7 @@
     <EmbeddedResource Include="Resources\GUI\DropdownBG.png" />
     <EmbeddedResource Include="Resources\GUI\EnemiesBg.png" />
     <EmbeddedResource Include="Resources\pins.json" />
+    <EmbeddedResource Include="Resources\fixedMapZones.json" />
     <EmbeddedResource Include="Resources\pinsAM.json" />
     <EmbeddedResource Include="Resources\Pins\pinBlankGreen.png" />
     <EmbeddedResource Include="Resources\Pins\pinBlankRed.png" />
@@ -353,9 +354,6 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>false</Private>
-    </Reference>
-    <Reference Include="Benchwarp">
-      <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\Benchwarp\Benchwarp.dll</HintPath>
     </Reference>
     <Reference Include="ItemChanger">
       <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\ItemChanger\ItemChanger.dll</HintPath>

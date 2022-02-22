@@ -3,7 +3,6 @@ using MapModS.Data;
 using MapModS.Map;
 using MapModS.Settings;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -12,7 +11,6 @@ using UnityEngine;
 
 namespace MapModS.UI
 {
-    // Spaghetti warning
     internal class TransitionText
     {
         public static GameObject Canvas;
@@ -80,6 +78,8 @@ namespace MapModS.UI
             _uncheckedTransitionsPanelQuickMap.SetActive(false, false);
 
             SetTexts();
+
+            SetRoomColors();
         }
 
         public static void Hide()
@@ -170,7 +170,8 @@ namespace MapModS.UI
             if (Canvas == null || HeroController.instance == null) return;
 
             if ((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
-                && Input.GetKeyDown(KeyCode.B))
+                && Input.GetKeyDown(KeyCode.B)
+                && Dependencies.HasDependency("Benchwarp"))
             {
                 MapModS.GS.ToggleAllowBenchWarp();
                 SetTexts();
@@ -376,13 +377,16 @@ namespace MapModS.UI
                 routeText += "None";
             }
 
-            if (MapModS.GS.allowBenchWarpSearch)
+            if (Dependencies.HasDependency("Benchwarp"))
             {
-                routeText += "\nInclude benchwarp (Ctrl-B): On";
-            }
-            else
-            {
-                routeText += "\nInclude benchwarp (Ctrl-B): Off";
+                if (MapModS.GS.allowBenchWarpSearch)
+                {
+                    routeText += "\nInclude benchwarp (Ctrl-B): On";
+                }
+                else
+                {
+                    routeText += "\nInclude benchwarp (Ctrl-B): Off";
+                }
             }
 
             if (MapModS.GS.uncheckedPanelActive)
@@ -544,7 +548,14 @@ namespace MapModS.UI
                 rejectedTransitionPairs.Clear();
             }
 
-            selectedRoute = th.ShortestRoute(StringUtils.CurrentNormalScene(), selectedScene, rejectedTransitionPairs, MapModS.GS.allowBenchWarpSearch);
+            try
+            {
+                selectedRoute = th.ShortestRoute(StringUtils.CurrentNormalScene(), selectedScene, rejectedTransitionPairs, MapModS.GS.allowBenchWarpSearch);
+            }
+            catch (Exception e)
+            {
+                MapModS.Instance.LogError(e);
+            }
 
             if (!selectedRoute.Any())
             {

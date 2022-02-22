@@ -1,5 +1,5 @@
 ﻿using MapModS.Data;
-using RandomizerCore;
+using RandomizerMod.RC;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -104,7 +104,7 @@ namespace MapModS.Map
 
             HashSet<string> allScenes = new(nonMapScenes);
 
-            if (!MapModS.AdditionalMapsInstalled)
+            if (!Dependencies.HasDependency("AdditionalMaps"))
             {
                 allScenes.UnionWith(whitePalaceScenes);
                 maxTableWidth = 6;
@@ -152,11 +152,11 @@ namespace MapModS.Map
         {
             foreach (TransitionPlacement tp in RandomizerMod.RandomizerMod.RS.Context.transitionPlacements)
             {
-                if (tp.target == null) return null;
+                if (tp.Target == null) return null;
 
-                if (tp.source.Name == transitionDef.Name)
+                if (tp.Source.Name == transitionDef.Name)
                 {
-                    return RandomizerMod.RandomizerData.Data.GetTransitionDef(tp.target.Name).SceneName;
+                    return RandomizerMod.RandomizerData.Data.GetTransitionDef(tp.Target.Name).SceneName;
                 }
             }
 

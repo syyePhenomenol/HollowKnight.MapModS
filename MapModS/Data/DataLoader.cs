@@ -1,10 +1,11 @@
-﻿using RandomizerMod.RandomizerData;
+﻿using GlobalEnums;
+using RandomizerMod.RandomizerData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using ItemChanger;
-using RandomizerCore;
 using RandomizerMod.IC;
+using RandomizerMod.RC;
 
 namespace MapModS.Data
 {
@@ -12,6 +13,7 @@ namespace MapModS.Data
     {
         private static Dictionary<string, PinDef> _allPins;
         private static Dictionary<string, PinDef> _allPinsAM;
+        private static Dictionary<string, MapZone> _fixedMapZones;
         private static Dictionary<string, PinDef> _usedPins = new();
 
         //public static Dictionary<string, PinDef> newPins = new();
@@ -51,6 +53,11 @@ namespace MapModS.Data
             }
 
             return default;
+        }
+
+        public static MapZone GetFixedMapZone()
+        {
+            return _fixedMapZones.GetValueOrDefault(StringUtils.CurrentNormalScene());
         }
 
         // Uses RandomizerData to get the PoolGroup from an item name
@@ -167,12 +174,12 @@ namespace MapModS.Data
 
         public static string RandoItemName(this AbstractItem item)
         {
-            return item.RandoPlacement().item.Name ?? "";
+            return item.RandoPlacement().Item.Name ?? "";
         }
 
         public static string RandoLocationName(this AbstractItem item)
         {
-            return item.RandoPlacement().location.Name ?? "";
+            return item.RandoPlacement().Location.Name ?? "";
         }
 
         public static int RandoItemId(this AbstractItem item)
@@ -260,7 +267,7 @@ namespace MapModS.Data
                 }
             }
 
-            if (MapModS.AdditionalMapsInstalled)
+            if (Dependencies.HasDependency("AdditionalMaps"))
             {
                 foreach (PinDef pinDefAM in GetPinAMArray())
                 {
@@ -279,6 +286,7 @@ namespace MapModS.Data
         {
             _allPins = JsonUtil.Deserialize<Dictionary<string, PinDef>>("MapModS.Resources.pins.json");
             _allPinsAM = JsonUtil.Deserialize<Dictionary<string, PinDef>>("MapModS.Resources.pinsAM.json");
+            _fixedMapZones = JsonUtil.Deserialize<Dictionary<string, MapZone>>("MapModS.Resources.fixedMapZones.json");
         }
 
         // For debugging pins

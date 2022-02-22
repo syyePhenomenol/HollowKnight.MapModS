@@ -170,11 +170,11 @@ namespace MapModS.UI
 
                 mu.AddEntries(pm.lm.Waypoints.Select(w => new DelegateUpdateEntry(w, pm => { pm.Add(w); }, pm.lm)));
 
-                if (pm.ctx.transitionPlacements != null)
+                if (RandomizerMod.RandomizerMod.RS.Context.transitionPlacements != null)
                 {
-                    mu.AddEntries(pm.ctx.transitionPlacements.Select((p, id) => new DelegateUpdateEntry(p.source, pm =>
+                    mu.AddEntries(RandomizerMod.RandomizerMod.RS.Context.transitionPlacements.Select((p, id) => new DelegateUpdateEntry(p.Source, pm =>
                     {
-                        (RandoTransition source, RandoTransition target) = pm.ctx.transitionPlacements[id];
+                        (RandoTransition source, RandoTransition target) = RandomizerMod.RandomizerMod.RS.Context.transitionPlacements[id];
 
                         if (!pm.Has(source.lt.term))
                         {
@@ -195,7 +195,7 @@ namespace MapModS.UI
                     {
                         // MapModS.Instance.Log("Adding " + pm.ctx.itemPlacements[id].item.Name + " with id " + id);
                         addedItems.Add(id);
-                        pm.Add(pm.ctx.itemPlacements[id].item);
+                        pm.Add(RandomizerMod.RandomizerMod.RS.Context.itemPlacements[id].Item);
                     }
                 }
 
@@ -297,7 +297,7 @@ namespace MapModS.UI
                 {
                     if (lm.TransitionLookup.ContainsKey(location.Name))
                     {
-                        if (lm.GetTransition(location.Name).data.SceneName != searchScene) return false;
+                        if (RandomizerMod.RandomizerData.Data.GetTransitionDef(location.Name).SceneName != searchScene) return false;
                     }
 
                     return location.CanGet(pm);
@@ -441,7 +441,9 @@ namespace MapModS.UI
         // A ProgressionManager is used to track logic while traversing through the search space
         public List<string> ShortestRoute(string startScene, string finalScene, HashSet<KeyValuePair<string, string>> rejectedTransitionPairs, bool allowBenchWarp)
         {
-            transitionPlacementsDict = RandomizerMod.RandomizerMod.RS.Context.transitionPlacements.ToDictionary(tp => tp.source.Name, tp => tp.target.Name);
+            IEnumerable<string> visitedBenches = Dependencies.GetVisitedBenchScenes();
+
+            transitionPlacementsDict = RandomizerMod.RandomizerMod.RS.Context.transitionPlacements.ToDictionary(tp => tp.Source.Name, tp => tp.Target.Name);
 
             HashSet<string> transitionSpace = new();
             Dictionary<string, string> startTransitionPlacements = new();
@@ -468,9 +470,7 @@ namespace MapModS.UI
             {
                 string adjacentScene = GetScene(stagTransition.Value.Item2);
 
-                if (allowBenchWarp
-                    && Benchwarp.Benchwarp.LS.visitedBenchScenes.ContainsKey(adjacentScene)
-                    && Benchwarp.Benchwarp.LS.visitedBenchScenes[adjacentScene]) continue;
+                if (allowBenchWarp && visitedBenches.Contains(adjacentScene)) continue;
 
                 if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Get(stagTransition.Value.Item1) > 0)
                 {
@@ -493,12 +493,10 @@ namespace MapModS.UI
             foreach (KeyValuePair<string, Tuple<string, string>> tramTransition in tramTransitions)
             {
                 if (allowBenchWarp
-                    && ((tramTransition.Key.StartsWith("Upper Tram")
-                            && Benchwarp.Benchwarp.LS.visitedBenchScenes.ContainsKey("Room_Tram_RG")
-                            && Benchwarp.Benchwarp.LS.visitedBenchScenes["Room_Tram_RG"])
+                    && (tramTransition.Key.StartsWith("Upper Tram")
+                            && visitedBenches.Contains("Room_Tram_RG"))
                         || (tramTransition.Key.StartsWith("Lower Tram")
-                            && Benchwarp.Benchwarp.LS.visitedBenchScenes.ContainsKey("Room_Tram")
-                            && Benchwarp.Benchwarp.LS.visitedBenchScenes["Room_Tram"]))) continue;
+                            && visitedBenches.Contains("Room_Tram"))) continue;
 
                 if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Get(tramTransition.Value.Item1) > 0)
                 {
@@ -529,7 +527,7 @@ namespace MapModS.UI
             // Just in case
             transitionSpace.Remove(null);
 
-            //tt.GetNewItems();
+            tt.GetNewItems();
 
             // Algorithm (BFS)
             HashSet<string> visitedTransitions = new();
@@ -547,15 +545,12 @@ namespace MapModS.UI
                     // Remove the single transition rejected routes
                     if (rejectedTransitionPairs.Any(p => p.Key == warpPair.Key && p.Value == warpPair.Key)) continue;
 
-                    if ((Benchwarp.Benchwarp.LS.visitedBenchScenes.ContainsKey(scene) &&
-                        Benchwarp.Benchwarp.LS.visitedBenchScenes[scene])
+                    if (visitedBenches.Contains(scene)
                         || (warpPair.Key.StartsWith("Warp Upper Tram")
-                            && Benchwarp.Benchwarp.LS.visitedBenchScenes.ContainsKey("Room_Tram_RG")
-                            && Benchwarp.Benchwarp.LS.visitedBenchScenes["Room_Tram_RG"])
+                            && visitedBenches.Contains("Room_Tram_RG")
                         || (warpPair.Key.StartsWith("Warp Lower Tram")
-                            && Benchwarp.Benchwarp.LS.visitedBenchScenes.ContainsKey("Room_Tram")
-                            && Benchwarp.Benchwarp.LS.visitedBenchScenes["Room_Tram"])
-                        || (warpPair.Key == "Warp Start"))
+                            && visitedBenches.Contains("Room_Tram")
+                        || warpPair.Key == "Warp Start")))
                     {
                         SearchNode startNode = new(scene, new() { warpPair.Key }, warpPair.Value);
                         queue.AddLast(startNode);

@@ -61,7 +61,9 @@ namespace MapModS.Map
         // The following fixes loading the Quick Map for some of the special areas (like Ancestral Mound)
         private static string GameMap_GetDoorMapZone(On.GameMap.orig_GetDoorMapZone orig, GameMap self)
         {
-            MapZone mapZone = StringUtils.GetFixedMapZone();
+            if (!MapModS.LS.ModEnabled) return orig(self);
+
+            MapZone mapZone = DataLoader.GetFixedMapZone();
 
             if (mapZone != MapZone.NONE)
             {
@@ -73,7 +75,9 @@ namespace MapModS.Map
 
         private static string GameManager_GetCurrentMapZone(On.GameManager.orig_GetCurrentMapZone orig, GameManager self)
         {
-            MapZone mapZone = StringUtils.GetFixedMapZone();
+            if (!MapModS.LS.ModEnabled) return orig(self);
+
+            MapZone mapZone = DataLoader.GetFixedMapZone();
 
             if (mapZone != MapZone.NONE)
             {
