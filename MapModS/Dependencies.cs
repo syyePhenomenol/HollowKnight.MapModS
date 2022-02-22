@@ -19,6 +19,7 @@ namespace MapModS
         {
             { "AdditionalMaps", null },
             { "Benchwarp", null },
+            { "RandomizableLevers", null }
         };
 
         public static void GetDependencies()

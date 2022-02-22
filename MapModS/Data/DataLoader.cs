@@ -215,8 +215,11 @@ namespace MapModS.Data
         {
             _usedPins.Clear();
 
+            // Randomized placements
             foreach (KeyValuePair<string, AbstractPlacement> placement in ItemChanger.Internal.Ref.Settings.Placements)
             {
+                if (placement.Value.Items.Any(i => !i.HasTag<RandoItemTag>())) continue;
+
                 IEnumerable<ItemDef> items = placement.Value.Items
                     .Where(x => !x.IsObtained() || x.IsPersistent())
                     .Select(x => new ItemDef(x));
@@ -234,7 +237,7 @@ namespace MapModS.Data
                     // UpdatePins will set it to the correct state
                     pinDef.pinLocationState = PinLocationState.UncheckedUnreachable;
                     pinDef.locationPoolGroup = GetLocationPoolGroup(pinDef.name);
-                        
+
                     _usedPins.Add(locationName, pinDef);
 
                     //MapModS.Instance.Log(locationName);
@@ -245,8 +248,7 @@ namespace MapModS.Data
                 }
             }
 
-            bool leverRandoEnabled = _usedPins.Any(p => p.Key.StartsWith("Lever"));
-
+            // Vanilla placements
             foreach (KeyValuePair<string, PinDef> pdPair in _allPins)
             {
                 if (!_usedPins.ContainsKey(pdPair.Key)
@@ -254,11 +256,6 @@ namespace MapModS.Data
                     && !RandomizerMod.RandomizerMod.RS.TrackerData.clearedLocations.Contains(pdPair.Key)
                     && !HasObtainedVanillaItem(pdPair.Value))
                 {
-                    if (leverRandoEnabled && (pdPair.Value.name == "Dirtmouth_Stag" || pdPair.Value.name == "Resting_Grounds_Stag"))
-                    {
-                        continue;
-                    }
-
                     //MapModS.Instance.Log(pdPair.Key);
 
                     pdPair.Value.pinLocationState = PinLocationState.NonRandomizedUnchecked;
@@ -267,18 +264,38 @@ namespace MapModS.Data
                 }
             }
 
+            // Interop
             if (Dependencies.HasDependency("AdditionalMaps"))
             {
-                foreach (PinDef pinDefAM in GetPinAMArray())
+                ApplyAdditionalMapsChanges();
+            }
+
+            if (Dependencies.HasDependency("RandomizableLevers"))
+            {
+                ApplyRandomizableLeversChanges();
+            }
+        }
+
+        public static void ApplyAdditionalMapsChanges()
+        {
+            foreach (PinDef pinDefAM in GetPinAMArray())
+            {
+                if (_usedPins.TryGetValue(pinDefAM.name, out PinDef pinDef))
                 {
-                    if (_usedPins.TryGetValue(pinDefAM.name, out PinDef pinDef))
-                    {
-                        pinDef.pinScene = pinDefAM.pinScene;
-                        pinDef.mapZone = pinDefAM.mapZone;
-                        pinDef.offsetX = pinDefAM.offsetX;
-                        pinDef.offsetY = pinDefAM.offsetY;
-                    }
+                    pinDef.pinScene = pinDefAM.pinScene;
+                    pinDef.mapZone = pinDefAM.mapZone;
+                    pinDef.offsetX = pinDefAM.offsetX;
+                    pinDef.offsetY = pinDefAM.offsetY;
                 }
+            }
+        }
+
+        public static void ApplyRandomizableLeversChanges()
+        {
+            if (_usedPins.Any(p => p.Key.StartsWith("Lever")))
+            {
+                _usedPins.Remove("Dirtmouth_Stag");
+                _usedPins.Remove("Resting_Grounds_Stag");
             }
         }
 
