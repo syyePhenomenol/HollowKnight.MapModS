@@ -15,6 +15,7 @@ namespace MapModS.UI
         private static CanvasPanel _instructionPanel;
 
         private static string selectedLocation = "None";
+        private static bool worldMapOpen = false;
 
         public static bool LookupActive()
         {
@@ -44,6 +45,8 @@ namespace MapModS.UI
                 gameMap.panMaxY = 20f;
             }
 
+            worldMapOpen = true;
+
             Canvas.SetActive(true);
 
             _infoPanel.SetActive(MapModS.LS.lookupOn, MapModS.LS.lookupOn);
@@ -52,6 +55,8 @@ namespace MapModS.UI
         public static void Hide()
         {
             if (Canvas == null || _infoPanel == null) return;
+
+            worldMapOpen = false;
 
             Canvas.SetActive(false);
         }
@@ -136,6 +141,8 @@ namespace MapModS.UI
 
         public static void UpdateSelectedPin()
         {
+            if (!worldMapOpen) return;
+
             WorldMap.CustomPins.UpdateSelectedPin(selectedLocation);
             SetTexts();
         }
