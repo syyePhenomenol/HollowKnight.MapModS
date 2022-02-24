@@ -5,7 +5,6 @@ using MapModS.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -112,17 +111,6 @@ namespace MapModS.UI
 
                 float x_offset = (float)(group - 1) % 9 * 90;
                 float y_offset = (int)(group - 1) / 9 * 30;
-                string[] splitGroup = Regex.Split(group.ToString(), @"(?<!^)(?=[A-Z])");
-                string cleanGroup;
-
-                if (splitGroup.Length == 1)
-                {
-                    cleanGroup = splitGroup[0];
-                }
-                else
-                {
-                    cleanGroup = splitGroup[0] + "\n" + splitGroup[1];
-                }
 
                 pools.AddButton
                 (
@@ -133,7 +121,7 @@ namespace MapModS.UI
                     PoolClicked,
                     buttonRect,
                     GUIController.Instance.TrajanBold,
-                    cleanGroup,
+                    StringUtils.ToButtonGroup(group),
                     fontSize: 10
                 );
             }
@@ -269,6 +257,7 @@ namespace MapModS.UI
 
             UpdateGUI();
             MapText.SetTexts();
+            LookupText.UpdateSelectedPin();
         }
 
         private static void UpdateSpoilers()
@@ -388,6 +377,11 @@ namespace MapModS.UI
 
             UpdateGUI();
             MapText.SetTexts();
+
+            if (MapModS.LS.lookupOn)
+            {
+                LookupText.UpdateSelectedPin();
+            }
         }
 
         private static void UpdateSize()

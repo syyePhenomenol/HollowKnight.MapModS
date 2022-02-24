@@ -54,13 +54,13 @@ namespace MapModS.Map
             try
             {
                 DataLoader.SetUsedPinDefs();
+                DataLoader.SetLogicLookup();
             }
             catch (Exception e)
             {
                 MapModS.Instance.LogError(e);
             }
             
-
             GameMap gameMap = go_gameMap.GetComponent<GameMap>();
 
             Transition.AddExtraComponentsToMap(gameMap);
@@ -197,6 +197,11 @@ namespace MapModS.Map
             }
 
             if (goCustomPins == null || !MapModS.LS.ModEnabled) return;
+
+            gameMap.panMinX = -29f;
+            gameMap.panMaxX = 26f;
+            gameMap.panMinY = -25f;
+            gameMap.panMaxY = 20f;
 
             PinsVanilla.ForceDisablePins(gameMap.gameObject);
 

@@ -1,11 +1,11 @@
 ﻿using GlobalEnums;
+using ItemChanger;
+using RandomizerMod.IC;
 using RandomizerMod.RandomizerData;
+using RandomizerMod.RC;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ItemChanger;
-using RandomizerMod.IC;
-using RandomizerMod.RC;
 
 namespace MapModS.Data
 {
@@ -15,6 +15,7 @@ namespace MapModS.Data
         private static Dictionary<string, PinDef> _allPinsAM;
         private static Dictionary<string, MapZone> _fixedMapZones;
         private static Dictionary<string, PinDef> _usedPins = new();
+        private static Dictionary<string, string> _logicLookup = new();
 
         //public static Dictionary<string, PinDef> newPins = new();
 
@@ -58,6 +59,21 @@ namespace MapModS.Data
         public static MapZone GetFixedMapZone()
         {
             return _fixedMapZones.GetValueOrDefault(StringUtils.CurrentNormalScene());
+        }
+
+        public static bool IsInLogicLookup(string locationName)
+        {
+            return _logicLookup.ContainsKey(locationName);
+        }
+
+        public static string GetRawLogic(string locationName)
+        {
+            if (_logicLookup.TryGetValue(locationName, out string logic))
+            {
+                return logic;
+            }
+
+            return default;
         }
 
         // Uses RandomizerData to get the PoolGroup from an item name
@@ -299,6 +315,11 @@ namespace MapModS.Data
             }
         }
 
+        public static void SetLogicLookup()
+        {
+            _logicLookup = RandomizerMod.RandomizerMod.RS.TrackerData.lm.LogicLookup.Values.ToDictionary(l => l.Name, l => l.ToInfix());
+        }
+
         public static void Load()
         {
             _allPins = JsonUtil.Deserialize<Dictionary<string, PinDef>>("MapModS.Resources.pins.json");
@@ -307,7 +328,7 @@ namespace MapModS.Data
         }
 
         // For debugging pins
-        //public static void LoadNewPinDef()
+        //public static void LoadNew PinDef()
         //{
         //    newPins.Clear();
         //    newPins = JsonUtil.DeserializeFromExternalFile<Dictionary<string, PinDef>>("newPins.json");

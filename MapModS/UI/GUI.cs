@@ -46,6 +46,7 @@ namespace MapModS.UI
 
             MapText.Show();
             TransitionText.ShowWorldMap();
+            LookupText.ShowWorldMap();
         }
 
         private static void GameMap_CloseQuickMap(On.GameMap.orig_CloseQuickMap orig, GameMap self)
@@ -54,6 +55,7 @@ namespace MapModS.UI
 
             MapText.Hide();
             TransitionText.Hide();
+            LookupText.Hide();
         }
 
         private static void HeroController_Pause(On.HeroController.orig_Pause orig, HeroController self)

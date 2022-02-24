@@ -70,7 +70,9 @@
     <None Remove="Resources\GUI\ButtonRectEmpty.png" />
     <None Remove="Resources\GUI\ButtonsMenuBG.png" />
     <None Remove="Resources\GUI\DropdownBG.png" />
-    <None Remove="Resources\GUI\EnemiesBg.png" />
+    <None Remove="Resources\GUI\LookupBG.png" />
+    <None Remove="Resources\GUI\StatusPanelBG.png" />
+    <None Remove="Resources\GUI\UncheckedBG.png" />
     <None Remove="Resources\language.json" />
     <None Remove="Resources\pins.json" />
     <None Remove="Resources\pinsAM.json" />
@@ -239,7 +241,8 @@
     <EmbeddedResource Include="Resources\GUI\ButtonRectEmpty.png" />
     <EmbeddedResource Include="Resources\GUI\ButtonsMenuBG.png" />
     <EmbeddedResource Include="Resources\GUI\DropdownBG.png" />
-    <EmbeddedResource Include="Resources\GUI\EnemiesBg.png" />
+    <EmbeddedResource Include="Resources\GUI\UncheckedBG.png" />
+    <EmbeddedResource Include="Resources\GUI\LookupBG.png" />
     <EmbeddedResource Include="Resources\pins.json" />
     <EmbeddedResource Include="Resources\fixedMapZones.json" />
     <EmbeddedResource Include="Resources\pinsAM.json" />

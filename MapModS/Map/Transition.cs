@@ -367,10 +367,10 @@ namespace MapModS.Map
                 }
             }
 
-            gameMap.panMinX = -28f;
-            gameMap.panMaxX = 26f;
-            gameMap.panMinY = -25f;
-            gameMap.panMaxY = 20f;
+            //gameMap.panMinX = -28f;
+            //gameMap.panMaxX = 26f;
+            //gameMap.panMinY = -25f;
+            //gameMap.panMaxY = 20f;
 
             if (isAlt)
             {

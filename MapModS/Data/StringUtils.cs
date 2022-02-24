@@ -1,4 +1,4 @@
-﻿using GlobalEnums;
+﻿using System.Text.RegularExpressions;
 
 namespace MapModS.Data
 {
@@ -40,6 +40,42 @@ namespace MapModS.Data
         public static string CurrentNormalScene()
         {
             return RemoveBossSuffix(GameManager.instance.sceneName);
+        }
+
+        public static string ToButtonGroup(PoolGroup poolGroup)
+        {
+            string[] splitGroup = Regex.Split(poolGroup.ToString(), @"(?<!^)(?=[A-Z])");
+
+            if (splitGroup.Length == 0)
+            {
+                return "";
+            }
+            else if (splitGroup.Length == 1)
+            {
+                return splitGroup[0];
+            }
+            else
+            {
+                return splitGroup[0] + "\n" + splitGroup[1];
+            }
+        }
+
+        public static string ToCleanGroup(PoolGroup poolGroup)
+        {
+            string[] splitGroup = Regex.Split(poolGroup.ToString(), @"(?<!^)(?=[A-Z])");
+
+            if (splitGroup.Length == 0)
+            {
+                return "";
+            }
+            else if (splitGroup.Length == 1)
+            {
+                return splitGroup[0];
+            }
+            else
+            {
+                return splitGroup[0] + " " + splitGroup[1];
+            }
         }
     }
 }

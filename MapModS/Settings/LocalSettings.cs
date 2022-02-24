@@ -11,7 +11,7 @@ namespace MapModS.Settings
         AllPins,
         PinsOverMap,
         TransitionRando,
-        TransitionRandoAlt
+        TransitionRandoAlt,
     }
 
     public enum GroupBy
@@ -46,6 +46,8 @@ namespace MapModS.Settings
         public bool ModEnabled = false;
 
         public MapMode mapMode = MapMode.FullMap;
+
+        public bool lookupOn = false;
 
         public GroupBy groupBy;
 
@@ -96,6 +98,11 @@ namespace MapModS.Settings
                     mapMode = MapMode.FullMap;
                     break;
             }
+        }
+
+        public void ToggleLookup()
+        {
+            lookupOn = !lookupOn;
         }
 
         public void ToggleBench()

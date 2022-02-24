@@ -36,16 +36,16 @@ namespace MapModS.UI
         {
             Canvas = _canvas;
             _mapDisplayPanel = new CanvasPanel
-                (_canvas, GUIController.Instance.Images["ButtonsMenuBG"], new Vector2(10f, 1040f), new Vector2(1346f, 0f), new Rect(0f, 0f, 0f, 0f));
-            _mapDisplayPanel.AddText("Spoilers", "", new Vector2(430f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14);
-            _mapDisplayPanel.AddText("Randomized", "", new Vector2(630f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14);
-            _mapDisplayPanel.AddText("Others", "", new Vector2(870f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14);
-            _mapDisplayPanel.AddText("Style", "", new Vector2(1070f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14);
-            _mapDisplayPanel.AddText("Size", "", new Vector2(1290f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14);
+                (_canvas, GUIController.Instance.Images["ButtonsMenuBG"], new Vector2(0f, 1040f), new Vector2(1346f, 0f), new Rect(0f, 0f, 0f, 0f));
+            _mapDisplayPanel.AddText("Spoilers", "", new Vector2(-440f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14, FontStyle.Normal, TextAnchor.UpperCenter);
+            _mapDisplayPanel.AddText("Randomized", "", new Vector2(-220f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14, FontStyle.Normal, TextAnchor.UpperCenter);
+            _mapDisplayPanel.AddText("Others", "", new Vector2(0f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14, FontStyle.Normal, TextAnchor.UpperCenter);
+            _mapDisplayPanel.AddText("Style", "", new Vector2(220f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14, FontStyle.Normal, TextAnchor.UpperCenter);
+            _mapDisplayPanel.AddText("Size", "", new Vector2(440f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14, FontStyle.Normal, TextAnchor.UpperCenter);
 
             _refreshDisplayPanel = new CanvasPanel
-                (_canvas, GUIController.Instance.Images["ButtonsMenuBG"], new Vector2(10f, 1040f), new Vector2(1346f, 0f), new Rect(0f, 0f, 0f, 0f));
-            _refreshDisplayPanel.AddText("Refresh", "", new Vector2(750f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14);
+                (_canvas, GUIController.Instance.Images["ButtonsMenuBG"], new Vector2(0f, 1040f), new Vector2(1346f, 0f), new Rect(0f, 0f, 0f, 0f));
+            _refreshDisplayPanel.AddText("Refresh", "", new Vector2(0f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14, FontStyle.Normal, TextAnchor.UpperCenter);
 
             _mapDisplayPanel.SetActive(false, false);
             _refreshDisplayPanel.SetActive(false, false);

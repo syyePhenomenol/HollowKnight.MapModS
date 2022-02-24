@@ -351,6 +351,47 @@ namespace MapModS.Map
             OthersGroups.Clear();
         }
 
+        private double DistanceToMiddle(Transform transform)
+        {
+            return Math.Pow(transform.position.x, 2) + Math.Pow(transform.position.y, 2);
+        }
+
+        public bool GetPinClosestToMiddle(string previousLocation, out string selectedLocation)
+        {
+            selectedLocation = "None";
+            double minDistance = double.PositiveInfinity;
+
+            foreach (PinAnimatedSprite pin in _pins)
+            {
+                if (!pin.gameObject.activeInHierarchy) continue;
+
+                double distance = DistanceToMiddle(pin.transform);
+
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    selectedLocation = pin.pinDef.name;
+                }
+            }
+
+            return previousLocation != selectedLocation;
+        }
+
+        public void UpdateSelectedPin(string selectedLocation)
+        {
+            foreach (PinAnimatedSprite pin in _pins)
+            {
+                if (pin.pinDef.name == selectedLocation)
+                {
+                    pin.SetSizeAndColorActive();
+                }
+                else
+                {
+                    pin.SetSizeAndColorInactive();
+                }
+            }
+        }
+
         protected void Start()
         {
             gameObject.SetActive(false);

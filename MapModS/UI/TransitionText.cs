@@ -128,7 +128,7 @@ namespace MapModS.UI
             _instructionPanel = new CanvasPanel
                 (_canvas, GUIController.Instance.Images["ButtonsMenuBG"], new Vector2(10f, 20f), new Vector2(1346f, 0f), new Rect(0f, 0f, 0f, 0f));
             _instructionPanel.AddText("Instructions", "None", new Vector2(20f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14);
-            _instructionPanel.AddText("Route", "", new Vector2(-37f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14, FontStyle.Normal, TextAnchor.UpperRight);
+            _instructionPanel.AddText("Control", "", new Vector2(-37f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14, FontStyle.Normal, TextAnchor.UpperRight);
 
             _instructionPanel.SetActive(false, false);
 
@@ -145,7 +145,7 @@ namespace MapModS.UI
             _uncheckedTransitionsPanelQuickMap.SetActive(false, false);
 
             _uncheckedTransitionsPanelWorldMap = new CanvasPanel
-                (_canvas, GUIController.Instance.Images["EnemiesBg"], new Vector2(1400f, 150f), Vector2.zero, new Rect(0f, 0f, GUIController.Instance.Images["EnemiesBg"].width, GUIController.Instance.Images["EnemiesBg"].height));
+                (_canvas, GUIController.Instance.Images["UncheckedBG"], new Vector2(1400f, 150f), Vector2.zero, new Rect(0f, 0f, GUIController.Instance.Images["UncheckedBG"].width, GUIController.Instance.Images["UncheckedBG"].height));
             _uncheckedTransitionsPanelWorldMap.AddText("UncheckedSelected", "Transitions: None", new Vector2(20f, 20f), Vector2.zero, GUIController.Instance.TrajanNormal, 14);
 
             _uncheckedTransitionsPanelWorldMap.SetActive(false, false);
@@ -167,7 +167,9 @@ namespace MapModS.UI
         // Called every frame
         public static void Update()
         {
-            if (Canvas == null || HeroController.instance == null) return;
+            if (Canvas == null
+                || HeroController.instance == null
+                || !TransitionModeActive()) return;
 
             if ((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
                 && Input.GetKeyDown(KeyCode.B)
@@ -218,7 +220,8 @@ namespace MapModS.UI
                 || !_instructionPanel.Active
                 || !_routePanel.Active
                 || HeroController.instance == null
-                || GameManager.instance.IsGamePaused())
+                || GameManager.instance.IsGamePaused()
+                || !TransitionModeActive())
             {
                 return;
             }
@@ -279,7 +282,6 @@ namespace MapModS.UI
                 }
             }
 
-            // True if the scene name has changed
             return selectedScene != previousScene;
         }
 
@@ -361,7 +363,7 @@ namespace MapModS.UI
 
         public static void SetControlText()
         {
-            string routeText = "Current route: ";
+            string controlText = "Current route: ";
 
             if (lastStartScene != ""
                 && lastFinalScene != ""
@@ -369,49 +371,49 @@ namespace MapModS.UI
                 && lastFinalTransition != ""
                 && selectedRoute.Any())
             {
-                routeText += $"{lastStartTransition} ->...-> {lastFinalTransition}      ";
-                routeText += $"Transitions: {selectedRoute.Count()}";
+                controlText += $"{lastStartTransition} ->...-> {lastFinalTransition}      ";
+                controlText += $"Transitions: {selectedRoute.Count()}";
             }
             else
             {
-                routeText += "None";
+                controlText += "None";
             }
 
             if (Dependencies.HasDependency("Benchwarp"))
             {
                 if (MapModS.GS.allowBenchWarpSearch)
                 {
-                    routeText += "\nInclude benchwarp (Ctrl-B): On";
+                    controlText += "\nInclude benchwarp (Ctrl-B): On";
                 }
                 else
                 {
-                    routeText += "\nInclude benchwarp (Ctrl-B): Off";
+                    controlText += "\nInclude benchwarp (Ctrl-B): Off";
                 }
             }
 
             if (MapModS.GS.uncheckedPanelActive)
             {
-                routeText += "\nShow unchecked/visited (Ctrl-U): On";
+                controlText += "\nShow unchecked/visited (Ctrl-U): On";
             }
             else
             {
-                routeText += "\nShow unchecked/visited (Ctrl-U): Off";
+                controlText += "\nShow unchecked/visited (Ctrl-U): Off";
             }
 
             switch (MapModS.GS.routeTextInGame)
             {
                 case RouteTextInGame.Hide:
-                    routeText += "\nShow route in-game (Ctrl-R): Off";
+                    controlText += "\nShow route in-game (Ctrl-R): Off";
                     break;
                 case RouteTextInGame.Show:
-                    routeText += "\nShow route in-game (Ctrl-R): Full";
+                    controlText += "\nShow route in-game (Ctrl-R): Full";
                     break;
                 case RouteTextInGame.ShowNextTransitionOnly:
-                    routeText += "\nShow route in-game (Ctrl-R): Next Transition Only";
+                    controlText += "\nShow route in-game (Ctrl-R): Next Transition Only";
                     break;
             }
 
-            _instructionPanel.GetText("Route").UpdateText(routeText);
+            _instructionPanel.GetText("Control").UpdateText(controlText);
         }
 
         public static void SetRouteActive()

@@ -19,6 +19,7 @@ namespace MapModS.UI
         private GameObject _pauseCanvas;
         private GameObject _mapCanvas;
         private GameObject _transitionCanvas;
+        private GameObject _lookupCanvas;
 
         public static GUIController Instance
         {
@@ -41,9 +42,8 @@ namespace MapModS.UI
         }
 
         public Font TrajanBold { get; private set; }
-
         public Font TrajanNormal { get; private set; }
-
+        public Font Perpetua { get; private set; }
         private Font Arial { get; set; }
 
         public static void Setup()
@@ -62,6 +62,7 @@ namespace MapModS.UI
                 Destroy(_instance._pauseCanvas);
                 Destroy(_instance._mapCanvas);
                 Destroy(_instance._transitionCanvas);
+                Destroy(_instance._lookupCanvas);
                 Destroy(_instance.gameObject);
             }
         }
@@ -107,6 +108,21 @@ namespace MapModS.UI
 
             TransitionText.Initialize();
             StartCoroutine("UpdateSelectedScene");
+
+            _lookupCanvas = new GameObject();
+            _lookupCanvas.AddComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
+            CanvasScaler lookupScaler = _lookupCanvas.AddComponent<CanvasScaler>();
+            lookupScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            lookupScaler.referenceResolution = new Vector2(1920f, 1080f);
+
+            LookupText.BuildText(_lookupCanvas);
+
+            DontDestroyOnLoad(_lookupCanvas);
+
+            _lookupCanvas.SetActive(false);
+
+            LookupText.Initialize();
+            StartCoroutine("UpdateSelectedPin");
         }
 
         public void Update()
@@ -115,6 +131,7 @@ namespace MapModS.UI
             {
                 PauseMenu.Update();
                 TransitionText.Update();
+                LookupText.Update();
             }
             catch (Exception e)
             {
@@ -131,10 +148,20 @@ namespace MapModS.UI
             }
         }
 
+        IEnumerator UpdateSelectedPin()
+        {
+            while (true)
+            {
+                yield return new WaitForSecondsRealtime(0.1f);
+                LookupText.UpdateSelectedPinCoroutine();
+            }
+        }
+
         private void LoadResources()
         {
             TrajanBold = Modding.CanvasUtil.TrajanBold;
             TrajanNormal = Modding.CanvasUtil.TrajanNormal;
+            Perpetua = Modding.CanvasUtil.GetFont("Perpetua");
 
             try
             {
