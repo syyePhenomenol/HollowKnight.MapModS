@@ -80,8 +80,6 @@
     <None Remove="Resources\Pins\pinBackerGhost.png" />
     <None Remove="Resources\Pins\pinBench.png" />
     <None Remove="Resources\Pins\pinBenchGrey.png" />
-    <None Remove="Resources\Pins\pinBlankGreen.png" />
-    <None Remove="Resources\Pins\pinBlankRed.png" />
     <None Remove="Resources\Pins\pinCharm.png" />
     <None Remove="Resources\Pins\pinCharmGreen.png" />
     <None Remove="Resources\Pins\pinCharmRed.png" />
@@ -246,8 +244,6 @@
     <EmbeddedResource Include="Resources\pins.json" />
     <EmbeddedResource Include="Resources\fixedMapZones.json" />
     <EmbeddedResource Include="Resources\pinsAM.json" />
-    <EmbeddedResource Include="Resources\Pins\pinBlankGreen.png" />
-    <EmbeddedResource Include="Resources\Pins\pinBlankRed.png" />
     <EmbeddedResource Include="Resources\Pins\pinCharm.png" />
     <EmbeddedResource Include="Resources\Pins\pinCharmGreen.png" />
     <EmbeddedResource Include="Resources\Pins\pinCharmRed.png" />
