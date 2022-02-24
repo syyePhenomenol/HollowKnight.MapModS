@@ -159,10 +159,12 @@ namespace MapModS.UI
 
             if (MapModS.LS.lookupOn)
             {
+                _instructionPanel.GetText("Control").SetTextColor(Color.green);
                 controlText += "Toggle lookup (Ctrl-L): On";
             }
             else
             {
+                _instructionPanel.GetText("Control").SetTextColor(Color.white);
                 controlText += "Toggle lookup (Ctrl-L): Off";
             }
 
