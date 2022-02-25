@@ -1,7 +1,7 @@
 # MapModS Legend
 <table>
 <tr><th>Style: Normal</th><th>Style: Q Marks 1</th><th>Style: Q Marks 2</th><th>Style: Q Marks 3</th><th>Borders</th></tr>
-<tr><td>
+<tr valign=top><td>
 
 |Pin|Pool|
 |--|--|
