@@ -7,7 +7,8 @@ Randomizer Map S is a Hollow Knight mod used with Randomizer 4. It helps to find
 
 This fork of CaptainDapper's original mod has been expanded on with more features, bug fixes and a Pause Menu UI. It is currently compatible with:
 - RandomizerMod v4.0.2
-- AdditionalMaps v1.5.1.0. This mod is optional, however *highly* recommended to unlock the full potential of the map features
+- AdditionalMaps v1.5.1.0. Highly recommended with this mod to view White Palace checks
+- RandomizableLevers v1.1.2.1
 - ItemSync v2.2.0
 - RandoPlus v1.1.0
 - SkillUpgrades v0.9.4.1
@@ -15,6 +16,8 @@ This fork of CaptainDapper's original mod has been expanded on with more feature
 https://github.com/homothetyhk/RandomizerMod
 
 https://github.com/SFGrenade/AdditionalMaps
+
+https://github.com/flibber-hk/HollowKnight.RandomizableLevers
 
 https://github.com/Shadudev/HollowKnight.MultiWorld/tree/itemsync
 
@@ -29,14 +32,13 @@ https://github.com/flibber-hk/HollowKnight.SkillUpgrades
 - The World Map will now show Pins for every item check.
     - Big Pins means the items are reachable according to RandomizerMod's logic
     - Small Pins means the items are not randomized or not reachable
-    - Pins will disappear as you check their locations
-    - MapMod S settings are displayed at the bottom
-    - Check out the [MapModS Legend](./MAPLEGEND.md) for more details.
+    - Pins will disappear as you clear their locations
+    - Pin settings are displayed at the bottom
+    - Check out the [MapModS Legend](./MAPLEGEND.md) for more details on what each pin means, including the border colors.
 
-- New to MapModS for Rando 4:
-    - Previewed items will appear as pins with a green border
-    - Persistent items will appear as pins with a cyan border
-    - Out-of-logic items will appear as pins with a red border
+- In the World Map, press ``CTRL-L`` to toggle a panel for Pin lookup on/off.
+    - Hover over any visible Pin to display info about the name, pool, room and logic requirements.
+    - This feature is disabled in "Transition" mode.
 
 - The Pause Menu UI has the following buttons:
     - "Mod Enabled/Disabled": Toggle the mod on/off
@@ -55,14 +57,14 @@ https://github.com/flibber-hk/HollowKnight.SkillUpgrades
    - "All Pins": Shows all pins, but only show map areas for obtained map items
    - "Pins Over Map": Only show pins over where the corresponding map item has been obtained
 
-- "Transition" mode is a new mode in MapModS for Rando 4 that displays visited rooms with color-coding:
+- "Transition" mode displays visited rooms with color-coding:
     - Current room is green
     - Adjacent visited rooms are cyan
     - Rooms containing unchecked reachable transitions are brighter
     - Out of logic/sequence break rooms are red
     - Other visited rooms are a standard grey/white
  
-- In "Transition" mode, you also have a route searcher in the World Map that allows you to find a sequence of transitions to get to any other selected room on the map.
+- "Transition" mode has a pathfinder in the World Map that allows you to find a sequence of transitions to get to any other visited room on the map.
     - Hover over the desired room (in yellow) and press your bound `Menu Select` button to attempt a route search.
     - If successful, the route will be displayed.
     - You can toggle including benchwarp in the route search on/off with `CTRL-B`.
