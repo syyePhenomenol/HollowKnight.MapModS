@@ -48,7 +48,7 @@ https://github.com/flibber-hk/HollowKnight.SkillUpgrades
     - "Pin Style" `CTRL-4`: Toggle the style of the Pins
     - "Pin Size" `CTRL-5`: Toggle the size of the Pins
     - "Mode": Toggle the map mode
-    - "Customize Pins": Open/close a panel with a toggle for each spoiler item pool
+    - "Customize Pins": Open/close a panel with a toggle for each pool. You can control whether the pool toggles are grouped by location, or by item (spoiler).
 
 - The mod currently has four main modes:
    - "Transition": For transition rando runs only
@@ -57,19 +57,13 @@ https://github.com/flibber-hk/HollowKnight.SkillUpgrades
    - "All Pins": Shows all pins, but only show map areas for obtained map items
    - "Pins Over Map": Only show pins over where the corresponding map item has been obtained
 
-- "Transition" mode displays visited rooms with color-coding:
-    - Current room is green
-    - Adjacent visited rooms are cyan
-    - Rooms containing unchecked reachable transitions are brighter
-    - Out of logic/sequence break rooms are red
-    - Other visited rooms are a standard grey/white
- 
-- "Transition" mode has a pathfinder in the World Map that allows you to find a sequence of transitions to get to any other visited room on the map.
-    - Hover over the desired room (in yellow) and press your bound `Menu Select` button to attempt a route search.
-    - If successful, the route will be displayed.
-    - You can toggle including benchwarp in the route search on/off with `CTRL-B`.
-    - You can try again (pressing the button) to change the start/final transition.
+- "Transition" mode displays visited rooms with color-coding, along with a pathfinder function.
+    - Check out the [MapModS Legend](./MAPLEGEND.md) for more details on what the colors/brightness of each room indicate.
+    - Hover over the selected room and press your bound `Menu Select` button to find a path. If successful, the path route will be displayed. You can try again to change the start/final transition to what you want.
+    - You can toggle including Benchwarp in the pathfinder on/off with `CTRL-B`.
     - The route will also be visible from the Quick Map for easy access, and gets updated as you make the suggested transitions.
+    - You can toggle the route to be displayed in-game on/off with `CTRL-R`.
+    - The World Map can list unchecked and visited transitions for any selected room, toggled with `CTRL-U`.
 
 # How To Install
 Use Scarab: https://github.com/fifty-six/Scarab
