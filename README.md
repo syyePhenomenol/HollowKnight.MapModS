@@ -61,6 +61,7 @@ https://github.com/flibber-hk/HollowKnight.SkillUpgrades
     - Check out the [MapModS Legend](./MAPLEGEND.md) for more details on what the colors/brightness of each room indicate.
     - Hover over the selected room and press your bound `Menu Select` button to find a path. If successful, the path route will be displayed. You can try again to change the start/final transition to what you want.
     - The route will also be visible from the Quick Map, and in-game based on the below toggle. As you make the correct transitions, those transitions will get cleared from the route.
+    - The Quick Map also shows the list of unchecked and visited transitions for the current room.
     - `CTRL-B`: Toggle including Benchwarp in the pathfinder on/off.
     - `CTRL-R`: Toggle the route to be displayed in-game full/next transition only/off.
     - `CTRL-U`: Toggle the panel for unchecked and visited transitions in the World Map. 
