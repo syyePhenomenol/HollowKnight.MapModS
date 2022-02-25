@@ -36,6 +36,8 @@ https://github.com/flibber-hk/HollowKnight.SkillUpgrades
     - Previewed items will appear as pins with a green border
     - Out-of-logic items will appear as pins with a red border
 
+- Check out the [MapModS Legend](./MAPLEGEND.md) for more details.
+
 - The Pause Menu UI has the following buttons:
     - "Mod Enabled/Disabled": Toggle the mod on/off
     - "Spoilers" `CTRL-1`: Toggle Pins between vanilla (non-spoiler) and spoiler item pools
