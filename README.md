@@ -5,7 +5,7 @@ Randomizer Map S is a Hollow Knight mod used with Randomizer 4. It helps to find
 ![Example Screenshot](./transition.jpg)
 ![Example Screenshot](./pause.jpg)
 
-This fork of CaptainDapper's original mod has been expanded on with more features, bug fixes and a Pause Menu UI. It is currently compatible with:
+This fork of CaptainDapper's original mod has been expanded on with many more features and bug fixes. It is currently compatible with:
 - RandomizerMod v4.0.2
 - AdditionalMaps v1.5.1.0. Highly recommended with this mod to view White Palace checks
 - RandomizableLevers v1.1.2.1
