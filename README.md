@@ -31,12 +31,12 @@ https://github.com/flibber-hk/HollowKnight.SkillUpgrades
     - Small Pins means the items are not randomized or not reachable
     - Pins will disappear as you check their locations
     - MapMod S settings are displayed at the bottom
+    - Check out the [MapModS Legend](./MAPLEGEND.md) for more details.
 
 - New to MapModS for Rando 4:
     - Previewed items will appear as pins with a green border
     - Persistent items will appear as pins with a cyan border
     - Out-of-logic items will appear as pins with a red border
-    - Check out the [MapModS Legend](./MAPLEGEND.md) for more details.
 
 - The Pause Menu UI has the following buttons:
     - "Mod Enabled/Disabled": Toggle the mod on/off
