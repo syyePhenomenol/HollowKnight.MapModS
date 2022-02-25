@@ -34,9 +34,9 @@ https://github.com/flibber-hk/HollowKnight.SkillUpgrades
 
 - New to MapModS for Rando 4:
     - Previewed items will appear as pins with a green border
+    - Persistent items will appear as pins with a cyan border
     - Out-of-logic items will appear as pins with a red border
-
-- Check out the [MapModS Legend](./MAPLEGEND.md) for more details.
+    - Check out the [MapModS Legend](./MAPLEGEND.md) for more details.
 
 - The Pause Menu UI has the following buttons:
     - "Mod Enabled/Disabled": Toggle the mod on/off
