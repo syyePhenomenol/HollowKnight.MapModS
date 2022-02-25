@@ -1,6 +1,6 @@
 # MapModS Legend
 <table>
-<tr><th>Style: Normal</th><th>Style: Q Marks 1</th><th>Style: Q Marks 2</th><th>Style: Q Marks 3</th><th>Borders</th></tr>
+<tr><th>Style: Normal</th><th>Style: Q Marks 1</th><th>Style: Q Marks 2</th><th>Style: Q Marks 3</th><th>Borders</th><th>Transition Mode Rooms</th></tr>
 <tr valign=top><td>
 
 |Pin|Pool|
@@ -67,4 +67,20 @@
 |![](./MapModS/Resources/Pins/pinBlankCyan.png)|Persistent|
 |![](./MapModS/Resources/Pins/pinBlankRed.png)|Reachable by sequence break|
   
+</td><td>
+
+|Color|Meaning|
+|--|--|
+|Green|Current room|
+|Cyan|Adjacent visited room|
+|Red|Out-of-logic visited room|
+|Yellow|Selected visited room|
+|White|None of the above, visited room|
+
+
+|Brightness|Meaning|
+|--|--|
+|Bright|Contains unchecked transitions|
+|Dark|Fully explored| 
+    
 </td></tr> </table>
