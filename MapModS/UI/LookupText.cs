@@ -14,7 +14,7 @@ namespace MapModS.UI
         private static CanvasPanel _infoPanel;
         private static CanvasPanel _instructionPanel;
 
-        private static string selectedLocation = "None";
+        private static string selectedLocation = "None selected";
         private static bool worldMapOpen = false;
 
         public static bool LookupActive()
@@ -63,17 +63,12 @@ namespace MapModS.UI
 
         public static void Initialize()
         {
-            selectedLocation = "None";
+            selectedLocation = "None selected";
         }
 
         public static void BuildText(GameObject _canvas)
         {
             Canvas = _canvas;
-            //_infoPanel = new CanvasPanel
-            //    (_canvas, GUIController.Instance.Images["ButtonsMenuBG"], new Vector2(10f, 20f), new Vector2(1200f, 0f), new Rect(0f, 0f, 0f, 0f));
-            //_infoPanel.AddText("Info", "None", new Vector2(20f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14);
-
-            //_infoPanel.SetActive(true, true);
 
             _instructionPanel = new CanvasPanel
                 (_canvas, GUIController.Instance.Images["ButtonsMenuBG"], new Vector2(10f, 20f), new Vector2(1346f, 0f), new Rect(0f, 0f, 0f, 0f));
@@ -83,7 +78,7 @@ namespace MapModS.UI
 
             _infoPanel = new CanvasPanel
                 (_canvas, GUIController.Instance.Images["LookupBG"], new Vector2(1200f, 200f), new Vector2(GUIController.Instance.Images["LookupBG"].width, GUIController.Instance.Images["LookupBG"].height), new Rect(0f, 0f, GUIController.Instance.Images["LookupBG"].width, GUIController.Instance.Images["LookupBG"].height));
-            _infoPanel.AddText("Info", "None", new Vector2(5f, 30f), new Vector2(GUIController.Instance.Images["LookupBG"].width - 20f, GUIController.Instance.Images["LookupBG"].height), GUIController.Instance.Perpetua, 19);
+            _infoPanel.AddText("Info", "None selected", new Vector2(5f, 30f), new Vector2(GUIController.Instance.Images["LookupBG"].width - 20f, GUIController.Instance.Images["LookupBG"].height), GUIController.Instance.Perpetua, 19);
 
             _infoPanel.SetActive(false, false);
 
@@ -173,27 +168,61 @@ namespace MapModS.UI
 
         public static void SetInstructionsText()
         {
-            string instructionsText = $"{selectedLocation}";
+            string instructionsText = $"{StringUtils.ToCleanName(selectedLocation)}";
 
             PinDef pd = DataLoader.GetUsedPinDef(selectedLocation);
 
             if (pd != null)
             {
                 instructionsText += $"\n\nRoom: {pd.sceneName}";
-                instructionsText += $"\n\nLocation Pool: {StringUtils.ToCleanGroup(pd.locationPoolGroup)}";
+
+                instructionsText += $"\n\nStatus:";
+
+                instructionsText += pd.pinLocationState switch
+                {
+                    PinLocationState.UncheckedUnreachable => " Randomized, unchecked, unreachable",
+                    PinLocationState.UncheckedReachable => " Randomized, unchecked, reachable",
+                    PinLocationState.NonRandomizedUnchecked => " Not randomized, either unchecked or persistent",
+                    PinLocationState.OutOfLogicReachable => " Randomized, unchecked, reachable through sequence break",
+                    PinLocationState.Previewed => " Randomized, previewed",
+                    PinLocationState.Cleared => " Cleared",
+                    PinLocationState.ClearedPersistent => " Randomized, cleared, persistent",
+                    _ => ""
+                };
 
                 if (DataLoader.IsInLogicLookup(selectedLocation))
                 {
                     instructionsText += $"\n\nLogic: {DataLoader.GetRawLogic(selectedLocation)}";
                 }
 
-                if (MapModS.LS.SpoilerOn && pd.randoItems != null && pd.randoItems.Any())
+                if (RandomizerMod.RandomizerMod.RS.TrackerData.previewedLocations.Contains(pd.name))
+                {
+                    instructionsText += $"\n\nPreviewed item(s):";
+
+                    string[] previewText = DataLoader.GetPreviewText(pd.abstractPlacementName);
+
+                    if (previewText == null) return;
+
+                    foreach (string text in previewText)
+                    {
+                        instructionsText += $" {StringUtils.ToCleanPreviewText(text)},";
+                    }
+
+                    instructionsText = instructionsText.Substring(0, instructionsText.Length - 1);
+                }
+                
+                if (MapModS.LS.SpoilerOn
+                    && pd.randoItems != null
+                    && pd.randoItems.Any()
+                    && (!RandomizerMod.RandomizerMod.RS.TrackerData.previewedLocations.Contains(pd.name)
+                        || (RandomizerMod.RandomizerMod.RS.TrackerData.previewedLocations.Contains(pd.name)
+                            && !pd.canPreviewItem)))
                 {
                     instructionsText += $"\n\nSpoiler item(s):";
 
                     foreach (ItemDef item in pd.randoItems)
                     {
-                        instructionsText += $" {item.itemName},";
+                        instructionsText += $" {StringUtils.ToCleanName(item.itemName)},";
                     }
 
                     instructionsText = instructionsText.Substring(0, instructionsText.Length - 1);

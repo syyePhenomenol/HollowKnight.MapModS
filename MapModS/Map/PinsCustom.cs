@@ -271,7 +271,7 @@ namespace MapModS.Map
                     }
                 }
 
-                if (RandomizerMod.RandomizerMod.RS.TrackerData.previewedLocations.Contains(pd.name) && pd.canPreview)
+                if (RandomizerMod.RandomizerMod.RS.TrackerData.previewedLocations.Contains(pd.name) && pd.canPreviewItem)
                 {
                     pd.pinLocationState = PinLocationState.Previewed;
                 }
@@ -351,6 +351,7 @@ namespace MapModS.Map
             OthersGroups.Clear();
         }
 
+        // The following is for the lookup panel
         private double DistanceToMiddle(Transform transform)
         {
             return Math.Pow(transform.position.x, 2) + Math.Pow(transform.position.y, 2);
@@ -358,7 +359,7 @@ namespace MapModS.Map
 
         public bool GetPinClosestToMiddle(string previousLocation, out string selectedLocation)
         {
-            selectedLocation = "None";
+            selectedLocation = "None selected";
             double minDistance = double.PositiveInfinity;
 
             foreach (PinAnimatedSprite pin in _pins)
@@ -383,11 +384,11 @@ namespace MapModS.Map
             {
                 if (pin.pinDef.name == selectedLocation)
                 {
-                    pin.SetSizeAndColorActive();
+                    pin.SetSizeAndColorSelected();
                 }
                 else
                 {
-                    pin.SetSizeAndColorInactive();
+                    pin.SetSizeAndColor();
                 }
             }
         }

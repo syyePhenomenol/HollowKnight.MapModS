@@ -142,16 +142,10 @@ namespace MapModS.Map
             }
         }
 
-        public void SetSizeAndColorActive()
+        public void SetSizeAndColorSelected()
         {
-            transform.localScale = 1.45f * GetPinScale() * new Vector2(1.0f, 1.0f);
+            transform.localScale = 1.8f * GetPinScale() * new Vector2(1.0f, 1.0f);
             SR.color = _origColor;
-        }
-
-        public void SetSizeAndColorInactive()
-        {
-            transform.localScale = 1.015f * GetPinScale() * new Vector2(1.0f, 1.0f);
-            SR.color = _inactiveColor;
         }
     }
 }

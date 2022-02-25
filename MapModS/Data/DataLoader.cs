@@ -207,15 +207,46 @@ namespace MapModS.Data
             return default;
         }
 
-        public static bool CanPreview(this AbstractPlacement placement)
-        {
-            return !placement.HasTag<ItemChanger.Tags.DisableItemPreviewTag>();
-        }
-
         public static bool IsPersistent(this AbstractItem item)
         {
             return item.HasTag<ItemChanger.Tags.PersistentItemTag>();
         }
+
+        //public static string Cost(this AbstractItem item)
+        //{
+        //    if (item.GetTag(out ItemChanger.CostTag tag))
+        //    {
+        //        return tag.Cost.GetCostText();
+        //    }
+        //    return default;
+        //}
+
+        public static bool CanPreviewItem(this AbstractPlacement placement)
+        {
+            return !placement.HasTag<ItemChanger.Tags.DisableItemPreviewTag>();
+        }
+
+        public static string[] GetPreviewText(string abstractPlacementName)
+        {
+            if (!ItemChanger.Internal.Ref.Settings.Placements.TryGetValue(abstractPlacementName, out AbstractPlacement placement)) return default;
+
+            if (placement.GetTag(out ItemChanger.Tags.MultiPreviewRecordTag multiTag))
+            {
+                return multiTag.previewTexts;
+            }
+
+            if (placement.GetTag(out ItemChanger.Tags.PreviewRecordTag tag))
+            {
+                return new[] { tag.previewText };
+            }
+
+            return default;
+        }
+
+        //public static bool CanPreviewCost(this AbstractPlacement placement)
+        //{
+        //    return !placement.HasTag<ItemChanger.Tags.DisableCostPreviewTag>();
+        //}
 
         public static bool HasObtainedVanillaItem(PinDef pd)
         {
@@ -248,8 +279,10 @@ namespace MapModS.Data
 
                 if (_allPins.TryGetValue(locationName, out PinDef pinDef))
                 {
+                    pinDef.abstractPlacementName = placement.Key;
                     pinDef.randoItems = items;
-                    pinDef.canPreview = placement.Value.CanPreview();
+                    pinDef.canPreviewItem = placement.Value.CanPreviewItem();
+                    //pinDef.canPreviewCost = placement.Value.CanPreviewCost();
                     // UpdatePins will set it to the correct state
                     pinDef.pinLocationState = PinLocationState.UncheckedUnreachable;
                     pinDef.locationPoolGroup = GetLocationPoolGroup(pinDef.name);
@@ -272,6 +305,11 @@ namespace MapModS.Data
                     && !RandomizerMod.RandomizerMod.RS.TrackerData.clearedLocations.Contains(pdPair.Key)
                     && !HasObtainedVanillaItem(pdPair.Value))
                 {
+                    if (pdPair.Key == "Mantis_Claw" && _usedPins.ContainsKey("Left_Mantis_Claw"))
+                    {
+                        continue;
+                    }
+
                     //MapModS.Instance.Log(pdPair.Key);
 
                     pdPair.Value.pinLocationState = PinLocationState.NonRandomizedUnchecked;

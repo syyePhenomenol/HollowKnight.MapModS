@@ -77,5 +77,20 @@ namespace MapModS.Data
                 return splitGroup[0] + " " + splitGroup[1];
             }
         }
+
+        public static string ToCleanPreviewText(string text)
+        {
+            return text.Replace("Pay ", "")
+                .Replace("Once you own ", "")
+                .Replace(", I'll gladly sell it to you.", "")
+                .Replace("Requires ", "")
+                .Replace("<br>", "");
+        }
+
+        public static string ToCleanName(string name)
+        {
+            return name.Replace("-", " ")
+                .Replace("_", " ");
+        }
     }
 }
