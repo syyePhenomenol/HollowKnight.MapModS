@@ -53,6 +53,7 @@ namespace MapModS.Map
 
             try
             {
+                Dependencies.BenchwarpInterop();
                 DataLoader.SetUsedPinDefs();
                 DataLoader.SetLogicLookup();
             }

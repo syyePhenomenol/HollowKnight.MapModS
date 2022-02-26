@@ -36,8 +36,6 @@ namespace MapModS
                     optionalDependencies[assembly.GetName().Name] = assembly;
                 }
             }
-
-            BenchwarpInterop();
         }
 
         public static bool HasDependency(string name)
