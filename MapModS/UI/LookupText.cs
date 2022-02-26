@@ -109,7 +109,7 @@ namespace MapModS.UI
                 {
                     _infoPanel.SetActive(false, false);
 
-                    WorldMap.CustomPins.ResizePins();
+                    WorldMap.CustomPins.ResizePins("None selected");
                 }
             }
         }
@@ -138,7 +138,7 @@ namespace MapModS.UI
         {
             if (!worldMapOpen) return;
 
-            WorldMap.CustomPins.UpdateSelectedPin(selectedLocation);
+            WorldMap.CustomPins.ResizePins(selectedLocation);
             SetTexts();
         }
 

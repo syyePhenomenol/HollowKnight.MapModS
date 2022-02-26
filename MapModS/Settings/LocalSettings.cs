@@ -23,19 +23,6 @@ namespace MapModS.Settings
     [Serializable]
     public class LocalSettings
     {
-        public class GroupSetting
-        {
-            public GroupSetting()
-            {
-                On = true;
-            }
-
-            public bool On;
-        };
-
-        public Dictionary<PoolGroup, GroupSetting> GroupSettings = Enum.GetValues(typeof(PoolGroup))
-            .Cast<PoolGroup>().ToDictionary(t => t, t => new GroupSetting());
-
         public Dictionary<string, bool> ObtainedVanillaItems = new();
 
         // Vanilla only
@@ -54,6 +41,19 @@ namespace MapModS.Settings
         public bool SpoilerOn = false;
 
         public bool NewSettings = true;
+
+        public class GroupSetting
+        {
+            public GroupSetting()
+            {
+                On = true;
+            }
+
+            public bool On;
+        };
+
+        public Dictionary<PoolGroup, GroupSetting> GroupSettings = Enum.GetValues(typeof(PoolGroup))
+            .Cast<PoolGroup>().ToDictionary(t => t, t => new GroupSetting());
 
         public void ToggleModEnabled()
         {
@@ -156,6 +156,22 @@ namespace MapModS.Settings
             if (GroupSettings.ContainsKey(group))
             {
                 GroupSettings[group].On = value;
+            }
+        }
+
+        public void SetAllGroupsOn()
+        {
+            foreach (GroupSetting groupSetting in GroupSettings.Values)
+            {
+                groupSetting.On = true;
+            }
+        }
+
+        public void SetAllGroupsOff()
+        {
+            foreach (GroupSetting groupSetting in GroupSettings.Values)
+            {
+                groupSetting.On = false;
             }
         }
     }

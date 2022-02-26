@@ -25,6 +25,14 @@ namespace MapModS.UI
             ["Mode"] = (ModeClicked, new Vector2(200f, 30f)),
         };
 
+        private static readonly Dictionary<string, (UnityAction<string>, Vector2)> _poolPanelAuxButtons = new()
+        {
+            ["Set All\nPools On"] = (AllPoolsOnClicked, new Vector2(-400f, 60f)),
+            ["Set All\nPools Off"] = (AllPoolsOffClicked, new Vector2(-300f, 60f)),
+            ["GroupBy"] = (GroupByClicked, new Vector2(-200f, 60f)),
+            ["Persistent"] = (PersistentClicked, new Vector2(-100f, 60f))
+        };
+
         private static CanvasPanel _mapControlPanel;
 
         public static void BuildMenu(GameObject _canvas)
@@ -33,7 +41,7 @@ namespace MapModS.UI
 
             _mapControlPanel = new CanvasPanel
                 (_canvas, GUIController.Instance.Images["ButtonsMenuBG"], new Vector2(10f, 870f), new Vector2(1346f, 0f), new Rect(0f, 0f, 0f, 0f));
-            _mapControlPanel.AddText("MapModLabel", "MapMod S", new Vector2(0f, -25f), Vector2.zero, GUIController.Instance.TrajanNormal, 18);
+            _mapControlPanel.AddText("MapModLabel", "MapModS", new Vector2(0f, -25f), Vector2.zero, GUIController.Instance.TrajanNormal, 18);
 
             Rect buttonRect = new(0, 0, GUIController.Instance.Images["ButtonRect"].width, GUIController.Instance.Images["ButtonRect"].height);
 
@@ -130,32 +138,6 @@ namespace MapModS.UI
 
             pools.AddButton
             (
-                "Persistent",
-                GUIController.Instance.Images["ButtonRect"],
-                new Vector2(-200f, 60f),
-                Vector2.zero,
-                PersistentClicked,
-                buttonRect,
-                GUIController.Instance.TrajanBold,
-                "Persistent\nitems:",
-                fontSize: 10
-            );
-
-            pools.AddButton
-            (
-                "GroupBy",
-                GUIController.Instance.Images["ButtonRect"],
-                new Vector2(-100f, 60f),
-                Vector2.zero,
-                GroupByClicked,
-                buttonRect,
-                GUIController.Instance.TrajanBold,
-                "Group by\n",
-                fontSize: 10
-            );
-
-            pools.AddButton
-            (
                 "Benches",
                 GUIController.Instance.Images["ButtonRectEmpty"],
                 new Vector2((float)(poolGroupCount - 1) % 9 * 90, (int)(poolGroupCount - 1) / 9 * 30),
@@ -166,6 +148,22 @@ namespace MapModS.UI
                 "Benches",
                 fontSize: 10
             );
+
+            foreach (KeyValuePair<string, (UnityAction<string>, Vector2)> pair in _poolPanelAuxButtons)
+            {
+                pools.AddButton
+                (
+                    pair.Key,
+                    GUIController.Instance.Images["ButtonRectEmpty"],
+                    pair.Value.Item2,
+                    Vector2.zero,
+                    pair.Value.Item1,
+                    buttonRect,
+                    GUIController.Instance.TrajanBold,
+                    pair.Key,
+                    fontSize: 10
+                );
+            }
 
             UpdateGUI();
 
@@ -212,6 +210,7 @@ namespace MapModS.UI
             UpdateStyle();
             UpdateSize();
             UpdateMode();
+            UpdatePoolsPanel();
 
             foreach (PoolGroup group in Enum.GetValues(typeof(PoolGroup)))
             {
@@ -288,7 +287,8 @@ namespace MapModS.UI
 
         public static void RandomizedClicked(string buttonName)
         {
-            WorldMap.CustomPins.ToggleRandomized();
+            MapModS.GS.ToggleRandomizedOn();
+            WorldMap.CustomPins.RefreshGroups();
 
             UpdateGUI();
             MapText.SetTexts();
@@ -296,31 +296,22 @@ namespace MapModS.UI
 
         private static void UpdateRandomized()
         {
-            if (WorldMap.CustomPins == null) return;
-
-            if (!WorldMap.CustomPins.RandomizedGroups.Any(MapModS.LS.GetOnFromGroup))
-            {
-                _mapControlPanel.GetButton("Randomized").SetTextColor(Color.white);
-                _mapControlPanel.GetButton("Randomized").UpdateText("Randomized:\noff");
-                MapModS.GS.randomizedOn = false;
-            }
-            else if (WorldMap.CustomPins.RandomizedGroups.All(MapModS.LS.GetOnFromGroup))
+            if (MapModS.GS.randomizedOn)
             {
                 _mapControlPanel.GetButton("Randomized").SetTextColor(Color.green);
                 _mapControlPanel.GetButton("Randomized").UpdateText("Randomized:\non");
-                MapModS.GS.randomizedOn = true;
             }
             else
             {
-                _mapControlPanel.GetButton("Randomized").SetTextColor(Color.yellow);
-                _mapControlPanel.GetButton("Randomized").UpdateText("Randomized:\ncustom");
-                MapModS.GS.randomizedOn = true;
+                _mapControlPanel.GetButton("Randomized").SetTextColor(Color.white);
+                _mapControlPanel.GetButton("Randomized").UpdateText("Randomized:\noff");
             }
         }
 
         public static void OthersClicked(string buttonName)
         {
-            WorldMap.CustomPins.ToggleOthers();
+            MapModS.GS.ToggleOthersOn();
+            WorldMap.CustomPins.RefreshGroups();
 
             UpdateGUI();
             MapText.SetTexts();
@@ -328,25 +319,15 @@ namespace MapModS.UI
 
         private static void UpdateOthers()
         {
-            if (WorldMap.CustomPins == null) return;
-
-            if (!WorldMap.CustomPins.OthersGroups.Any(MapModS.LS.GetOnFromGroup))
-            {
-                _mapControlPanel.GetButton("Others").SetTextColor(Color.white);
-                _mapControlPanel.GetButton("Others").UpdateText("Others:\noff");
-                MapModS.GS.othersOn = false;
-            }
-            else if (WorldMap.CustomPins.OthersGroups.All(MapModS.LS.GetOnFromGroup))
+            if (MapModS.GS.othersOn)
             {
                 _mapControlPanel.GetButton("Others").SetTextColor(Color.green);
                 _mapControlPanel.GetButton("Others").UpdateText("Others:\non");
-                MapModS.GS.othersOn = true;
             }
             else
             {
-                _mapControlPanel.GetButton("Others").SetTextColor(Color.yellow);
-                _mapControlPanel.GetButton("Others").UpdateText("Others:\ncustom");
-                MapModS.GS.othersOn = true;
+                _mapControlPanel.GetButton("Others").SetTextColor(Color.white);
+                _mapControlPanel.GetButton("Others").UpdateText("Others:\noff");
             }
         }
 
@@ -386,7 +367,7 @@ namespace MapModS.UI
 
             if (WorldMap.CustomPins != null)
             {
-                WorldMap.CustomPins.ResizePins();
+                WorldMap.CustomPins.ResizePins("None selected");
             }
 
             UpdateGUI();
@@ -468,16 +449,21 @@ namespace MapModS.UI
         public static void PoolsPanelClicked()
         {
             _mapControlPanel.TogglePanel("PoolsPanel");
+
+            UpdateGUI();
+        }
+
+        private static void UpdatePoolsPanel()
+        {
+            _mapControlPanel.GetButton("PoolsToggle").SetTextColor
+                (
+                _mapControlPanel.GetPanel("PoolsPanel").Active? Color.yellow : Color.white
+                );;
         }
 
         public static void PoolClicked(string buttonName)
         {
             MapModS.LS.SetOnFromGroup(buttonName, !MapModS.LS.GetOnFromGroup(buttonName));
-
-            if (WorldMap.CustomPins != null)
-            {
-                WorldMap.CustomPins.ReassignGroups();
-            }
 
             UpdateGUI();
         }
@@ -526,6 +512,41 @@ namespace MapModS.UI
                 );
         }
 
+        public static void AllPoolsOnClicked(string buttonName)
+        {
+            MapModS.LS.SetAllGroupsOn();
+
+            UpdateGUI();
+        }
+
+        public static void AllPoolsOffClicked(string buttonName)
+        {
+            MapModS.LS.SetAllGroupsOff();
+
+            UpdateGUI();
+        }
+
+        public static void GroupByClicked(string buttonName)
+        {
+            MapModS.LS.ToggleGroupBy();
+
+            UpdateGUI();
+        }
+
+        private static void UpdateGroupBy()
+        {
+            switch (MapModS.LS.groupBy)
+            {
+                case GroupBy.Location:
+                    _mapControlPanel.GetPanel("PoolsPanel").GetButton("GroupBy").UpdateText("Group by:\nLocation");
+                    break;
+
+                case GroupBy.Item:
+                    _mapControlPanel.GetPanel("PoolsPanel").GetButton("GroupBy").UpdateText("Group by:\nItem");
+                    break;
+            }
+        }
+
         public static void PersistentClicked(string buttonName)
         {
             MapModS.GS.TogglePersistentOn();
@@ -544,32 +565,6 @@ namespace MapModS.UI
             {
                 _mapControlPanel.GetPanel("PoolsPanel").GetButton("Persistent").UpdateText("Persistent\nitems: Off");
                 _mapControlPanel.GetPanel("PoolsPanel").GetButton("Persistent").SetTextColor(Color.white);
-            }
-        }
-
-        public static void GroupByClicked(string buttonName)
-        {
-            MapModS.LS.ToggleGroupBy();
-
-            if (WorldMap.CustomPins != null)
-            {
-                WorldMap.CustomPins.ReassignGroups();
-            }
-
-            UpdateGUI();
-        }
-
-        private static void UpdateGroupBy()
-        {
-            switch (MapModS.LS.groupBy)
-            {
-                case GroupBy.Location:
-                    _mapControlPanel.GetPanel("PoolsPanel").GetButton("GroupBy").UpdateText("Group by:\nLocation");
-                    break;
-
-                case GroupBy.Item:
-                    _mapControlPanel.GetPanel("PoolsPanel").GetButton("GroupBy").UpdateText("Group by:\nItem");
-                    break;
             }
         }
     }

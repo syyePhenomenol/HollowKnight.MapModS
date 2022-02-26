@@ -90,13 +90,7 @@ namespace MapModS.UI
 
         private static void SetRandomized()
         {
-            if (WorldMap.CustomPins.RandomizedGroups.Any(MapModS.LS.GetOnFromGroup)
-                && !WorldMap.CustomPins.RandomizedGroups.All(MapModS.LS.GetOnFromGroup))
-            {
-                _mapDisplayPanel.GetText("Randomized").SetTextColor(Color.yellow);
-                _mapDisplayPanel.GetText("Randomized").UpdateText("Randomized (ctrl-2): custom");
-            }
-            else if (MapModS.GS.randomizedOn)
+            if (MapModS.GS.randomizedOn)
             {
                 _mapDisplayPanel.GetText("Randomized").SetTextColor(Color.green);
                 _mapDisplayPanel.GetText("Randomized").UpdateText("Randomized (ctrl-2): on");
@@ -110,13 +104,7 @@ namespace MapModS.UI
 
         private static void SetOthers()
         {
-            if (WorldMap.CustomPins.OthersGroups.Any(MapModS.LS.GetOnFromGroup)
-                && !WorldMap.CustomPins.OthersGroups.All(MapModS.LS.GetOnFromGroup))
-            {
-                _mapDisplayPanel.GetText("Others").SetTextColor(Color.yellow);
-                _mapDisplayPanel.GetText("Others").UpdateText("Others (ctrl-3): custom");
-            }
-            else if (MapModS.GS.othersOn)
+            if (MapModS.GS.othersOn)
             {
                 _mapDisplayPanel.GetText("Others").SetTextColor(Color.green);
                 _mapDisplayPanel.GetText("Others").UpdateText("Others (ctrl-3): on");

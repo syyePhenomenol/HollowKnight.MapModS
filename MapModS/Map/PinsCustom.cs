@@ -10,16 +10,14 @@ namespace MapModS.Map
 {
     public class PinsCustom : MonoBehaviour
     {
-        private readonly Dictionary<PoolGroup, GameObject> _Groups = new();
-
         private readonly List<PinAnimatedSprite> _pins = new();
+
+        private GameObject randomizedGroup;
+        private GameObject othersGroup;
 
         public void MakePins(GameMap gameMap)
         {
             DestroyPins();
-
-            RandomizedGroups.Clear();
-            OthersGroups.Clear();
 
             foreach (PinDef pinDef in DataLoader.GetUsedPinArray())
             {
@@ -59,49 +57,33 @@ namespace MapModS.Map
             AssignGroup(pin);
             SetPinPosition(pinDef, goPin, gameMap);
 
-            AddGroupToSet(pinDef);
-        }
-
-        public void ReassignGroups()
-        {
-            foreach (PinAnimatedSprite pin in _pins)
-            {
-                AssignGroup(pin);
-            }
+            //AddGroupToSet(pinDef);
         }
 
         private void AssignGroup(PinAnimatedSprite pin)
         {
-            if (pin.pinDef.pinLocationState == PinLocationState.Cleared) return;
-
-            PoolGroup poolGroup = PoolGroup.Unknown;
-
-            if (MapModS.LS.groupBy == GroupBy.Item)
+            if (pin.pinDef.pinLocationState != PinLocationState.NonRandomizedUnchecked)
             {
-                if (pin.pinDef.pinLocationState == PinLocationState.NonRandomizedUnchecked
-                    || pin.pinDef.randoItems == null || !pin.pinDef.randoItems.Any())
+                if (randomizedGroup == null)
                 {
-                    poolGroup = pin.pinDef.locationPoolGroup;
+                    randomizedGroup = new GameObject("Randomized Pin Group");
+                    randomizedGroup.transform.SetParent(transform);
+                    randomizedGroup.SetActive(MapModS.GS.randomizedOn);
                 }
-                else
-                {
-                    ItemDef item = pin.pinDef.randoItems.FirstOrDefault(i => MapModS.LS.GroupSettings[i.poolGroup].On) ?? pin.pinDef.randoItems.First();
-                    poolGroup = item.poolGroup;
-                }
+
+                pin.gameObject.transform.SetParent(randomizedGroup.transform);
             }
             else
             {
-                poolGroup = pin.pinDef.locationPoolGroup;
-            }
+                if (othersGroup == null)
+                {
+                    othersGroup = new GameObject("Randomized Pin Group");
+                    othersGroup.transform.SetParent(transform);
+                    othersGroup.SetActive(MapModS.GS.othersOn);
+                }
 
-            if (!_Groups.ContainsKey(poolGroup))
-            {
-                _Groups[poolGroup] = new GameObject("PinGroup " + poolGroup);
-                _Groups[poolGroup].transform.SetParent(transform);
-                //_Groups[poolGroup].SetActive(false);
+                pin.gameObject.transform.SetParent(othersGroup.transform);
             }
-
-            pin.gameObject.transform.SetParent(_Groups[poolGroup].transform);
         }
 
         private void SetPinPosition(PinDef pinDef, GameObject goPin, GameMap gameMap)
@@ -147,38 +129,6 @@ namespace MapModS.Map
             return new Vector3(0, 0, 0);
         }
 
-        // Used for updating button states
-        public HashSet<PoolGroup> RandomizedGroups = new();
-
-        public HashSet<PoolGroup> OthersGroups = new();
-
-        public void InitializePoolSettings()
-        {
-            foreach (PoolGroup group in RandomizedGroups)
-            {
-                MapModS.LS.SetOnFromGroup(group, MapModS.GS.randomizedOn);
-            }
-
-            foreach (PoolGroup group in OthersGroups)
-            {
-                MapModS.LS.SetOnFromGroup(group, MapModS.GS.othersOn);
-            }
-        }
-
-        private void AddGroupToSet(PinDef pinDef)
-        {
-            if (pinDef.locationPoolGroup == PoolGroup.Shop
-                || pinDef.pinLocationState != PinLocationState.NonRandomizedUnchecked)
-            {
-                OthersGroups.Remove(pinDef.locationPoolGroup);
-                RandomizedGroups.Add(pinDef.locationPoolGroup);
-            }
-            else if (!RandomizedGroups.Contains(pinDef.locationPoolGroup))
-            {
-                OthersGroups.Add(pinDef.locationPoolGroup);
-            }
-        }
-
         internal void ToggleSpoilers()
         {
             MapModS.LS.SpoilerOn = !MapModS.LS.SpoilerOn;
@@ -193,34 +143,40 @@ namespace MapModS.Map
             SetSprites();
         }
 
-        internal void ToggleRandomized()
-        {
-            MapModS.GS.ToggleRandomizedOn();
-
-            foreach (PoolGroup group in RandomizedGroups)
-            {
-                MapModS.LS.SetOnFromGroup(group, MapModS.GS.randomizedOn);
-            }
-
-            RefreshGroups();
-        }
-
-        internal void ToggleOthers()
-        {
-            MapModS.GS.ToggleOthersOn();
-
-            foreach (PoolGroup group in OthersGroups)
-            {
-                MapModS.LS.SetOnFromGroup(group, MapModS.GS.othersOn);
-            }
-
-            RefreshGroups();
-        }
-
         public void UpdatePins(MapZone mapZone, HashSet<string> transitionPinScenes)
         {
             foreach (PinAnimatedSprite pin in _pins)
             {
+                // Custom pool setting control
+                if (MapModS.LS.groupBy == GroupBy.Location)
+                {
+                    if (!MapModS.LS.GetOnFromGroup(pin.pinDef.locationPoolGroup))
+                    {
+                        pin.gameObject.SetActive(false);
+                        continue;
+                    }
+                }
+                else if (MapModS.LS.groupBy == GroupBy.Item)
+                {
+                    if (pin.pinDef.pinLocationState == PinLocationState.NonRandomizedUnchecked
+                        || pin.pinDef.randoItems == null || !pin.pinDef.randoItems.Any())
+                    {
+                        if (!MapModS.LS.GetOnFromGroup(pin.pinDef.locationPoolGroup))
+                        {
+                            pin.gameObject.SetActive(false);
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        if (pin.pinDef.randoItems.All(i => !MapModS.LS.GetOnFromGroup(i.poolGroup)))
+                        {
+                            pin.gameObject.SetActive(false);
+                            continue;
+                        }
+                    }
+                }
+
                 pin.ResetSpriteIndex();
 
                 PinDef pd = pin.pinDef;
@@ -241,6 +197,7 @@ namespace MapModS.Map
                     pin.gameObject.SetActive(false);
                 }
 
+                // Show based on location/item state
                 if (pd.pinLocationState == PinLocationState.Cleared)
                 {
                     pin.gameObject.SetActive(false);
@@ -324,10 +281,10 @@ namespace MapModS.Map
         // Called every time when any relevant setting is changed, or when the Map is opened
         public void RefreshGroups()
         {
-            foreach (PoolGroup group in _Groups.Keys)
-            {
-                _Groups[group].SetActive(MapModS.LS.GetOnFromGroup(group));
-            }
+            if (randomizedGroup == null || othersGroup == null) return;
+
+            randomizedGroup.SetActive(MapModS.GS.randomizedOn);
+            othersGroup.SetActive(MapModS.GS.othersOn);
         }
 
         public void SetSprites()
@@ -335,14 +292,6 @@ namespace MapModS.Map
             foreach (PinAnimatedSprite pin in _pins)
             {
                 pin.SetSprite();
-            }
-        }
-
-        public void ResizePins()
-        {
-            foreach (PinAnimatedSprite pin in _pins)
-            {
-                pin.SetSizeAndColor();
             }
         }
 
@@ -354,8 +303,8 @@ namespace MapModS.Map
             }
 
             _pins.Clear();
-            RandomizedGroups.Clear();
-            OthersGroups.Clear();
+            Destroy(randomizedGroup);
+            Destroy(othersGroup);
         }
 
         // The following is for the lookup panel
@@ -385,7 +334,7 @@ namespace MapModS.Map
             return previousLocation != selectedLocation;
         }
 
-        public void UpdateSelectedPin(string selectedLocation)
+        public void ResizePins(string selectedLocation)
         {
             foreach (PinAnimatedSprite pin in _pins)
             {
