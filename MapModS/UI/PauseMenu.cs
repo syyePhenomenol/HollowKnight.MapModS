@@ -130,6 +130,19 @@ namespace MapModS.UI
 
             pools.AddButton
             (
+                "Persistent",
+                GUIController.Instance.Images["ButtonRect"],
+                new Vector2(-200f, 60f),
+                Vector2.zero,
+                PersistentClicked,
+                buttonRect,
+                GUIController.Instance.TrajanBold,
+                "Persistent\nitems:",
+                fontSize: 10
+            );
+
+            pools.AddButton
+            (
                 "GroupBy",
                 GUIController.Instance.Images["ButtonRect"],
                 new Vector2(-100f, 60f),
@@ -209,6 +222,7 @@ namespace MapModS.UI
 
             UpdateBench();
             UpdateGroupBy();
+            UpdatePersistent();
         }
 
         public static void EnableClicked(string buttonName)
@@ -466,7 +480,6 @@ namespace MapModS.UI
             }
 
             UpdateGUI();
-            //MapText.SetTexts();
         }
 
         private static void UpdatePool(PoolGroup pool)
@@ -513,6 +526,27 @@ namespace MapModS.UI
                 );
         }
 
+        public static void PersistentClicked(string buttonName)
+        {
+            MapModS.GS.TogglePersistentOn();
+
+            UpdateGUI();
+        }
+
+        private static void UpdatePersistent()
+        {
+            if (MapModS.GS.persistentOn)
+            {
+                _mapControlPanel.GetPanel("PoolsPanel").GetButton("Persistent").UpdateText("Persistent\nitems: On");
+                _mapControlPanel.GetPanel("PoolsPanel").GetButton("Persistent").SetTextColor(Color.green);
+            }
+            else
+            {
+                _mapControlPanel.GetPanel("PoolsPanel").GetButton("Persistent").UpdateText("Persistent\nitems: Off");
+                _mapControlPanel.GetPanel("PoolsPanel").GetButton("Persistent").SetTextColor(Color.white);
+            }
+        }
+
         public static void GroupByClicked(string buttonName)
         {
             MapModS.LS.ToggleGroupBy();
@@ -523,7 +557,6 @@ namespace MapModS.UI
             }
 
             UpdateGUI();
-            //MapText.SetTexts();
         }
 
         private static void UpdateGroupBy()

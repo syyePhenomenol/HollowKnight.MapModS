@@ -28,8 +28,6 @@
 
         public bool uncheckedPanelActive = false;
 
-        public bool overlayVanillaPins = false;
-
         public RouteTextInGame routeTextInGame = RouteTextInGame.Hide;
 
         public PinStyle pinStyle = PinStyle.Normal;
@@ -38,7 +36,9 @@
 
         public bool randomizedOn = true;
 
-        public bool othersOn = true;
+        public bool othersOn = false;
+
+        public bool persistentOn = true;
 
         public void ToggleAllowBenchWarp()
         {
@@ -101,6 +101,11 @@
         public void ToggleOthersOn()
         {
             othersOn = !othersOn;
+        }
+
+        public void TogglePersistentOn()
+        {
+            persistentOn = !persistentOn;
         }
     }
 }

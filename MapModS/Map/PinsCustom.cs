@@ -247,7 +247,14 @@ namespace MapModS.Map
                     continue;
                 }
 
-                if (pd.pinLocationState == PinLocationState.ClearedPersistent) continue;
+                if (pd.pinLocationState == PinLocationState.ClearedPersistent)
+                {
+                    if (!MapModS.GS.persistentOn)
+                    {
+                        pin.gameObject.SetActive(false);
+                    }
+                    continue;
+                }
 
                 if (pd.pinLocationState == PinLocationState.NonRandomizedUnchecked)
                 {
