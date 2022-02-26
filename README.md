@@ -37,7 +37,7 @@ https://github.com/flibber-hk/HollowKnight.SkillUpgrades
     - Check out the [MapModS Legend](./MAPLEGEND.md) for more details on what each pin means, including the border colors.
 
 - In the World Map, press ``CTRL-L`` to toggle a panel for Pin lookup on/off.
-    - Hover over any visible Pin to display info about the name, pool, room and logic requirements.
+    - Hover over any visible Pin to display info about the name, room, status, logic requirements, previewed items (if any) and spoiler items (if Spoilers on).
     - This feature is disabled in "Transition" mode.
 
 - The Pause Menu UI has the following buttons:
