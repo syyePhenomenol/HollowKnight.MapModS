@@ -96,6 +96,11 @@ namespace MapModS.Map
 
             CustomPins.MakePins(gameMap);
             
+            if (MapModS.LS.NewSettings)
+            {
+                CustomPins.ResetPoolSettings();
+            }
+
             MapModS.Instance.Log("Adding Custom Pins done.");
 
             MapModS.LS.NewSettings = false;
@@ -203,7 +208,7 @@ namespace MapModS.Map
 
             CustomPins.UpdatePins(mapZone, transitionPinScenes);
             CustomPins.ResizePins("None selected");
-            CustomPins.RefreshGroups();
+            CustomPins.SetPinsActive();
             CustomPins.SetSprites();
         }
     }

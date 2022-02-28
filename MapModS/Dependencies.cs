@@ -64,20 +64,30 @@ namespace MapModS
         static object? bwLocalSettings_Instance;
         static FieldInfo? bwLocalSettings_VisitedBenchScenes;
         static IEnumerable bwLocalSettings_VisitedBenchScenes_Instance;
+        static bool isOldBenchwarp = false;
 
         public static void BenchwarpInterop()
         {
             if (ModHooks.GetMod("Benchwarp", true) is Mod bw)
             {
-                bwBenchKey = optionalDependencies["Benchwarp"]?.GetType("Benchwarp.BenchKey");
-
-                bwBenchKey_SceneName = bwBenchKey.GetProperty("SceneName");
-
                 bwLocalSettings_Instance = bw.GetType().GetProperty("LS").GetValue(bw);
 
                 Type? bwLocalSettingsType = bwLocalSettings_Instance?.GetType();
 
                 bwLocalSettings_VisitedBenchScenes = bwLocalSettingsType?.GetField("visitedBenchScenes");
+
+                Type? vbsType = bwLocalSettings_VisitedBenchScenes.GetType();
+
+                bwBenchKey = optionalDependencies["Benchwarp"]?.GetType("Benchwarp.BenchKey");
+
+                if (bwBenchKey == null)
+                {
+                    MapModS.Instance?.LogWarn("Benchwarp is outdated");
+                    isOldBenchwarp = true;
+                    return;
+                }
+
+                bwBenchKey_SceneName = bwBenchKey.GetProperty("SceneName");
 
                 if (bwBenchKey == null
                     || bwBenchKey_SceneName == null
@@ -95,6 +105,11 @@ namespace MapModS
             if (!HasDependency("Benchwarp")) return Enumerable.Empty<string>();
 
             bwLocalSettings_VisitedBenchScenes_Instance = (IEnumerable) bwLocalSettings_VisitedBenchScenes.GetValue(bwLocalSettings_Instance);
+
+            if (isOldBenchwarp)
+            {
+                return bwLocalSettings_VisitedBenchScenes_Instance.Cast<KeyValuePair<string, bool>>().Where(s => s.Value).Select(s => s.Key);
+            }
 
             return bwLocalSettings_VisitedBenchScenes_Instance.Cast<object>().Select(s => (string)bwBenchKey_SceneName.GetValue(s));
         }

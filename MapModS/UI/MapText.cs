@@ -36,15 +36,15 @@ namespace MapModS.UI
         {
             Canvas = _canvas;
             _mapDisplayPanel = new CanvasPanel
-                (_canvas, GUIController.Instance.Images["ButtonsMenuBG"], new Vector2(0f, 1040f), new Vector2(1346f, 0f), new Rect(0f, 0f, 0f, 0f));
-            _mapDisplayPanel.AddText("Spoilers", "", new Vector2(-440f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14, FontStyle.Normal, TextAnchor.UpperCenter);
-            _mapDisplayPanel.AddText("Randomized", "", new Vector2(-220f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14, FontStyle.Normal, TextAnchor.UpperCenter);
+                (_canvas, GUIController.Instance.Images["ButtonsMenuBG"], new Vector2(0f, 1030f), new Vector2(1346f, 0f), new Rect(0f, 0f, 0f, 0f));
+            _mapDisplayPanel.AddText("Spoilers", "", new Vector2(-540f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14, FontStyle.Normal, TextAnchor.UpperCenter);
+            _mapDisplayPanel.AddText("Randomized", "", new Vector2(-270f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14, FontStyle.Normal, TextAnchor.UpperCenter);
             _mapDisplayPanel.AddText("Others", "", new Vector2(0f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14, FontStyle.Normal, TextAnchor.UpperCenter);
-            _mapDisplayPanel.AddText("Style", "", new Vector2(220f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14, FontStyle.Normal, TextAnchor.UpperCenter);
-            _mapDisplayPanel.AddText("Size", "", new Vector2(440f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14, FontStyle.Normal, TextAnchor.UpperCenter);
+            _mapDisplayPanel.AddText("Style", "", new Vector2(270f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14, FontStyle.Normal, TextAnchor.UpperCenter);
+            _mapDisplayPanel.AddText("Size", "", new Vector2(540f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14, FontStyle.Normal, TextAnchor.UpperCenter);
 
             _refreshDisplayPanel = new CanvasPanel
-                (_canvas, GUIController.Instance.Images["ButtonsMenuBG"], new Vector2(0f, 1040f), new Vector2(1346f, 0f), new Rect(0f, 0f, 0f, 0f));
+                (_canvas, GUIController.Instance.Images["ButtonsMenuBG"], new Vector2(0f, 1030f), new Vector2(1346f, 0f), new Rect(0f, 0f, 0f, 0f));
             _refreshDisplayPanel.AddText("Refresh", "", new Vector2(0f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14, FontStyle.Normal, TextAnchor.UpperCenter);
 
             _mapDisplayPanel.SetActive(false, false);
@@ -90,30 +90,54 @@ namespace MapModS.UI
 
         private static void SetRandomized()
         {
-            if (MapModS.GS.randomizedOn)
+            if (WorldMap.CustomPins == null) return;
+
+            string randomizedText = "";
+
+            if (MapModS.LS.randomizedOn)
             {
                 _mapDisplayPanel.GetText("Randomized").SetTextColor(Color.green);
-                _mapDisplayPanel.GetText("Randomized").UpdateText("Randomized (ctrl-2): on");
+                randomizedText += "Randomized (ctrl-2): on";
             }
             else
             {
                 _mapDisplayPanel.GetText("Randomized").SetTextColor(Color.white);
-                _mapDisplayPanel.GetText("Randomized").UpdateText("Randomized (ctrl-2): off");
+                randomizedText += "Randomized (ctrl-2): off";
             }
+
+            if (WorldMap.CustomPins.IsRandomizedCustom())
+            {
+                _mapDisplayPanel.GetText("Randomized").SetTextColor(Color.yellow);
+                randomizedText += " (custom)";
+            }
+
+            _mapDisplayPanel.GetText("Randomized").UpdateText(randomizedText);
         }
 
         private static void SetOthers()
         {
-            if (MapModS.GS.othersOn)
+            if (WorldMap.CustomPins == null) return;
+
+            string othersText = "";
+
+            if (MapModS.LS.othersOn)
             {
                 _mapDisplayPanel.GetText("Others").SetTextColor(Color.green);
-                _mapDisplayPanel.GetText("Others").UpdateText("Others (ctrl-3): on");
+                othersText += "Others (ctrl-3): on";
             }
             else
             {
                 _mapDisplayPanel.GetText("Others").SetTextColor(Color.white);
-                _mapDisplayPanel.GetText("Others").UpdateText("Others (ctrl-3): off");
+                othersText += "Others (ctrl-3): off";
             }
+
+            if (WorldMap.CustomPins.IsOthersCustom())
+            {
+                _mapDisplayPanel.GetText("Others").SetTextColor(Color.yellow);
+                othersText += " (custom)";
+            }
+
+            _mapDisplayPanel.GetText("Others").UpdateText(othersText);
         }
 
         private static void SetStyle()

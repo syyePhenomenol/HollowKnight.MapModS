@@ -279,6 +279,8 @@ namespace MapModS.Data
 
                 if (_allPins.TryGetValue(locationName, out PinDef pinDef))
                 {
+                    pinDef.randomized = true;
+
                     pinDef.abstractPlacementName = placement.Key;
                     pinDef.randoItems = items;
                     pinDef.canPreviewItem = placement.Value.CanPreviewItem();
@@ -311,6 +313,8 @@ namespace MapModS.Data
                     }
 
                     //MapModS.Instance.Log(pdPair.Key);
+
+                    pdPair.Value.randomized = false;
 
                     pdPair.Value.pinLocationState = PinLocationState.NonRandomizedUnchecked;
                     pdPair.Value.locationPoolGroup = GetLocationPoolGroup(pdPair.Value.name);

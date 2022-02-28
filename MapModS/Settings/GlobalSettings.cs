@@ -34,10 +34,6 @@
 
         public PinSize pinSize = PinSize.Medium;
 
-        public bool randomizedOn = true;
-
-        public bool othersOn = false;
-
         public bool persistentOn = true;
 
         public void ToggleAllowBenchWarp()
@@ -91,16 +87,6 @@
                     pinSize = PinSize.Small;
                     break;
             }
-        }
-
-        public void ToggleRandomizedOn()
-        {
-            randomizedOn = !randomizedOn;
-        }
-
-        public void ToggleOthersOn()
-        {
-            othersOn = !othersOn;
         }
 
         public void TogglePersistentOn()

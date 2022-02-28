@@ -8,7 +8,7 @@ namespace MapModS.UI
 {
     public class TransitionHelper
     {
-        private static readonly Dictionary<string, string> termFixes = new()
+        private static readonly Dictionary<string, string> transitionTermFixes = new()
         {
             { "Ruins1_31[left3]", "ELEGANT" },
             { "Ruins2_11_b[left1]", "LOVE" }
@@ -200,7 +200,7 @@ namespace MapModS.UI
                 }
 
                 // Emulate a transition being possibly available via having the required term
-                foreach (KeyValuePair<string, string> pair in termFixes)
+                foreach (KeyValuePair<string, string> pair in transitionTermFixes)
                 {
                     int keyId = pm.lm.TermLookup[pair.Key];
                     int ValueId = pm.lm.TermLookup[pair.Value];
@@ -457,6 +457,8 @@ namespace MapModS.UI
 
                 if (MapModS.LS.mapMode == Settings.MapMode.TransitionRandoAlt
                     && !PlayerData.instance.scenesVisited.Contains(scene)) continue;
+
+                //MapModS.Instance.Log(transitionEntry.Key);
 
                 if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Has(transitionEntry.Value.term.Id))
                 {

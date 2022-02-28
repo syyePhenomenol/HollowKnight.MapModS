@@ -33,9 +33,13 @@ namespace MapModS.Data
         // These are assigned during SetPinDefs
         public PoolGroup locationPoolGroup;
 
+        public bool randomized;
+
         public string abstractPlacementName;
         public IEnumerable<ItemDef> randoItems;
         public bool canPreviewItem;
         public PinLocationState pinLocationState;
+
+        public bool canShowOnMap = false;
     }
 }
