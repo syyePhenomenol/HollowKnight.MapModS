@@ -1,26 +1,23 @@
 # Randomizer Map S
 Randomizer Map S is a Hollow Knight mod used with Randomizer 4. It helps to find both item and transition checks.
 
-![Example Screenshot](./ReadmeAssets/worldmap.jpg)
-![Example Screenshot](./ReadmeAssets/quickmap.jpg)
-![Example Screenshot](./ReadmeAssets/transition.jpg)
-![Example Screenshot](./ReadmeAssets/pause.jpg)
-
 This fork of CaptainDapper's original mod has been expanded on with many more features and bug fixes. It is currently compatible with:
-- RandomizerMod v4.0.3 (does NOT work with earlier versions)
-- AdditionalMaps v1.5.1.0. Highly recommended with this mod to view White Palace checks
-- RandomizableLevers v1.1.2.1
-- ItemSync v2.2.1
-- RandoPlus v1.2.0
-- SkillUpgrades v0.9.4.2
+- [RandomizerMod v4.0.3](https://github.com/homothetyhk/RandomizerMod). Does NOT work with earlier versions
+- [AdditionalMaps v1.5.1.0](https://github.com/SFGrenade/AdditionalMaps). Highly recommended with this mod to view White Palace checks
+- [RandomizableLevers v1.1.2.1](https://github.com/flibber-hk/HollowKnight.RandomizableLevers)
+- [ItemSync v2.2.1](https://github.com/Shadudev/HollowKnight.MultiWorld/tree/itemsync)
+- [RandoPlus v1.2.0](https://github.com/flibber-hk/HollowKnight.RandoPlus)
+- [SkillUpgrades v0.9.4.2](https://github.com/flibber-hk/HollowKnight.SkillUpgrades)
 - Most other mods that don't change map function
 
-https://github.com/homothetyhk/RandomizerMod
-https://github.com/SFGrenade/AdditionalMaps
-https://github.com/flibber-hk/HollowKnight.RandomizableLevers
-https://github.com/Shadudev/HollowKnight.MultiWorld/tree/itemsync
-https://github.com/flibber-hk/HollowKnight.RandoPlus
-https://github.com/flibber-hk/HollowKnight.SkillUpgrades
+# Screenshots
+<details>
+<summary>Click to expand</summary>
+    <img src="./ReadmeAssets/worldmap.jpg" alt="World Map">
+    <img src="./ReadmeAssets/quickmap.jpg" alt="Quick Map">
+    <img src="./ReadmeAssets/transition.jpg" alt="Transition Mode">
+    <img src="./ReadmeAssets/pause.jpg" alt="Pause Menu">
+</details>
 
 # Quick Start Guide
 - Press `CTRL-M` during a game to enable the mod. Alternatively, enable it from the Pause Menu.
