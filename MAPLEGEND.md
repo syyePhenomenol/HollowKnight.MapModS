@@ -69,18 +69,18 @@
   
 </td><td>
 
-|Color|Meaning|
-|--|--|
-|Green|Current room|
-|Cyan|Adjacent visited room|
-|Red|Out-of-logic visited room|
-|Yellow|Selected visited room|
-|White|None of the above, visited room|
+|Color|Example|Meaning|
+|--|--|--|
+|Green|![](./LegendAssets/currentroom.jpg)|Current room|
+|Cyan|![](./LegendAssets/adjacentroom.jpg)|Adjacent visited room|
+|Red|![](./LegendAssets/outoflogicroom.jpg)|Out-of-logic visited room|
+|Yellow|![](./LegendAssets/selectedroom.jpg)|Selected visited room|
+|White|![](./LegendAssets/normalroom.jpg)|None of the above, visited room|
 
 
-|Brightness|Meaning|
-|--|--|
-|Bright|Contains unchecked transitions|
-|Dark|Fully explored| 
+|Brightness|Example|Meaning|
+|--|--|--|
+|Bright|![](./LegendAssets/normalroom.jpg)|Contains unchecked transitions|
+|Dark|![](./LegendAssets/checkedroom.jpg)|Fully explored| 
     
 </td></tr> </table>
