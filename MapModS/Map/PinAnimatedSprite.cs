@@ -66,7 +66,7 @@ namespace MapModS.Map
 
         public void SetSprite()
         {
-            if (!gameObject.activeSelf) return;
+            if (!gameObject.activeSelf || spriteIndex + 1 > pinDef.randoItems.Count()) return;
 
             // Non-randomized
             if (pinDef.pinLocationState == PinLocationState.NonRandomizedUnchecked)

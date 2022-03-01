@@ -401,6 +401,7 @@ namespace MapModS.Map
         {
             foreach (PinAnimatedSprite pin in _pins)
             {
+                pin.ResetSpriteIndex();
                 pin.SetSprite();
             }
         }
