@@ -95,11 +95,15 @@ namespace MapModS.Map
             goCustomPins.transform.SetParent(go_gameMap.transform);
 
             CustomPins.MakePins(gameMap);
-            
+
+            CustomPins.GetRandomizedGroups();
+
             if (MapModS.LS.NewSettings)
             {
                 CustomPins.ResetPoolSettings();
             }
+
+            CustomPins.UpdatePins(MapZone.NONE, new());
 
             MapModS.Instance.Log("Adding Custom Pins done.");
 

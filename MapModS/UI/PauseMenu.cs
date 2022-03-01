@@ -266,7 +266,7 @@ namespace MapModS.UI
         {
             MapModS.LS.ToggleSpoilers();
             WorldMap.CustomPins.SetSprites();
-
+            
             UpdateGUI();
             MapText.SetTexts();
             LookupText.UpdateSelectedPin();
