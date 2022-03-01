@@ -2,6 +2,7 @@
 Randomizer Map S is a Hollow Knight mod used with Randomizer 4. It helps to find both item and transition checks.
 
 ![Example Screenshot](./ReadmeAssets/worldmap.jpg)
+![Example Screenshot](./ReadmeAssets/quickmap.jpg)
 ![Example Screenshot](./ReadmeAssets/transition.jpg)
 ![Example Screenshot](./ReadmeAssets/pause.jpg)
 
