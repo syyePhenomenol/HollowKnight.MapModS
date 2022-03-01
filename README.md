@@ -27,7 +27,7 @@ This fork of CaptainDapper's original mod has been expanded on with many more fe
 - Big Pins: Items are reachable according to RandomizerMod's logic
 - Small Pins: Items are not randomized or not reachable
 - Pins will disappear as you clear their locations. If item previews are enabled, it will show the corresponding previewed item.
-- Check out the [MapModS Legend](./MAPLEGEND.md) for more details on what each pin means, including the border colors.
+- Check out the [Map Legend](./MAPLEGEND.md) for more details on what each pin means, including the border colors.
 - Pin settings are displayed at the bottom. See Pause Menu for more info on the toggles.
 - ``CTRL-L``: In the World Map, toggle a panel for pin lookup on/off.
     - Hover over any visible pin to display info about the name, room, status, logic requirements, previewed items (if any) and spoiler items (if Spoilers on).
@@ -52,7 +52,7 @@ This fork of CaptainDapper's original mod has been expanded on with many more fe
     - You can also control whether persistent items are always showing or not.
 
 ## Transition Mode
-- Check out the [MapModS Legend](./MAPLEGEND.md) for more details on what the colors/brightness of each room indicate.
+- Check out the [Map Legend](./MAPLEGEND.md) for more details on what the colors/brightness of each room indicate.
 - Hover over the selected room and press your bound `Menu Select` button to find a path. If successful, the path route will be displayed. You can try again to change the start/final transition to what you want.
 - The route will also be visible from the Quick Map, and in-game based on the below toggle. As you make the correct transitions, those transitions will get cleared from the route.
 - The Quick Map also shows the list of unchecked and visited transitions for the current room.
