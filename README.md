@@ -36,8 +36,8 @@ This fork of CaptainDapper's original mod has been expanded on with many more fe
 ## Pause Menu
 - "Mod Enabled/Disabled": Toggle the mod on/off
 - "Spoilers" `CTRL-1`: Toggle pins between vanilla (non-spoiler) and spoiler item pools
-- "Randomized" `Ctrl-2`: Toggle all pins for randomized items on/off
-- "Others" `Ctrl-3`: Toggle all pins for non-randomized items on/off
+- "Randomized" `CTRL-2`: Toggle all pins for randomized items on/off
+- "Others" `CTRL-3`: Toggle all pins for non-randomized items on/off
 - "Pin Style" `CTRL-4`: Toggle the style of the pins
 - "Pin Size" `CTRL-5`: Toggle the size of the pins
 - "Mode": Toggle the map mode
