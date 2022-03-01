@@ -18,6 +18,28 @@ namespace MapModS.Data
             return _js.Deserialize<T>(jtr);
         }
 
+        public static T DeserializeExternal<T>(string assemblyName, string embeddedResourcePath)
+        {
+            Assembly assembly;
+
+            if (Dependencies.strictDependencies.ContainsKey(assemblyName))
+            {
+                assembly = Dependencies.strictDependencies[assemblyName];
+            }
+            else if (Dependencies.optionalDependencies.ContainsKey(assemblyName))
+            {
+                assembly = Dependencies.optionalDependencies[assemblyName];
+            }
+            else
+            {
+                return default(T);
+            }
+
+            using StreamReader sr = new(assembly.GetManifestResourceStream(embeddedResourcePath));
+            using JsonTextReader jtr = new(sr);
+            return _js.Deserialize<T>(jtr);
+        }
+
         // For debugging pins
         //public static T DeserializeFromExternalFile<T>(string externalFile)
         //{

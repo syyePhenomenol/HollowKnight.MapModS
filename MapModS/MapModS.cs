@@ -7,6 +7,8 @@ using MapModS.UI;
 using Modding;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace MapModS
 {
@@ -14,7 +16,7 @@ namespace MapModS
     {
         public static MapModS Instance;
 
-        public override string GetVersion() => "2.2.0";
+        public override string GetVersion() => "2.3.0";
 
         public override int LoadPriority() => 10;
 
@@ -26,23 +28,30 @@ namespace MapModS
         public void OnLoadGlobal(GlobalSettings gs) => GS = gs;
         public GlobalSettings OnSaveGlobal() => GS;
 
-        public static bool AdditionalMapsInstalled = false;
-        public static bool RandomizableLeversInstalled = false;
-
         public override void Initialize()
         {
             Log("Initializing...");
 
             Instance = this;
 
-            if (ModHooks.GetMod("Randomizer 4") is not Mod)
+            Dependencies.GetDependencies();
+
+            foreach (KeyValuePair<string, Assembly> pair in Dependencies.strictDependencies)
             {
-                Log("Randomizer 4 was not detected. MapModS disabled");
-                return;
+                if (pair.Value == null)
+                {
+                    Log($"{pair.Key} is not installed. MapModS disabled");
+                    return;
+                }
             }
 
-            AdditionalMapsInstalled = ModHooks.GetMod("Additional Maps") is Mod;
-            RandomizableLeversInstalled = ModHooks.GetMod("RandomizableLevers") is Mod;
+            foreach (KeyValuePair<string, Assembly> pair in Dependencies.optionalDependencies)
+            {
+                if (pair.Value == null)
+                {
+                    Log($"{pair.Key} is not installed. Some features are disabled.");
+                }
+            }
 
             try
             {
@@ -73,20 +82,12 @@ namespace MapModS
 
         private void ModHooks_NewGameHook()
         {
-            if (RandomizerMod.RandomizerMod.RS.GenerationSettings == null) return;
-
-            Log("Activating mod");
-
             Hook();
         }
 
         private void GameManager_LoadGame(On.GameManager.orig_LoadGame orig, GameManager self, int saveSlot, Action<bool> callback)
         {
             orig(self, saveSlot, callback);
-
-            if (RandomizerMod.RandomizerMod.RS.GenerationSettings == null) return;
-
-            Log("Activating mod");
 
             Hook();
         }
@@ -100,6 +101,10 @@ namespace MapModS
 
         private void Hook()
         {
+            if (RandomizerMod.RandomizerMod.RS.GenerationSettings == null) return;
+
+            Log("Activating mod");
+
             // Track when items are picked up/Geo Rocks are broken
             ItemTracker.Hook();
             GeoRockTracker.Hook();

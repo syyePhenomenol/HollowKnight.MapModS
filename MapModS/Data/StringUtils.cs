@@ -1,4 +1,6 @@
-﻿namespace MapModS.Data
+﻿using System.Text.RegularExpressions;
+
+namespace MapModS.Data
 {
     public static class StringUtils
     {
@@ -38,6 +40,57 @@
         public static string CurrentNormalScene()
         {
             return RemoveBossSuffix(GameManager.instance.sceneName);
+        }
+
+        public static string ToButtonGroup(PoolGroup poolGroup)
+        {
+            string[] splitGroup = Regex.Split(poolGroup.ToString(), @"(?<!^)(?=[A-Z])");
+
+            if (splitGroup.Length == 0)
+            {
+                return "";
+            }
+            else if (splitGroup.Length == 1)
+            {
+                return splitGroup[0];
+            }
+            else
+            {
+                return splitGroup[0] + "\n" + splitGroup[1];
+            }
+        }
+
+        public static string ToCleanGroup(PoolGroup poolGroup)
+        {
+            string[] splitGroup = Regex.Split(poolGroup.ToString(), @"(?<!^)(?=[A-Z])");
+
+            if (splitGroup.Length == 0)
+            {
+                return "";
+            }
+            else if (splitGroup.Length == 1)
+            {
+                return splitGroup[0];
+            }
+            else
+            {
+                return splitGroup[0] + " " + splitGroup[1];
+            }
+        }
+
+        public static string ToCleanPreviewText(string text)
+        {
+            return text.Replace("Pay ", "")
+                .Replace("Once you own ", "")
+                .Replace(", I'll gladly sell it to you.", "")
+                .Replace("Requires ", "")
+                .Replace("<br>", "");
+        }
+
+        public static string ToCleanName(string name)
+        {
+            return name.Replace("-", " ")
+                .Replace("_", " ");
         }
     }
 }

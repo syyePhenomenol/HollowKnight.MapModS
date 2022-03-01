@@ -1,16 +1,20 @@
 ﻿using MapModS.Data;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using GlobalEnums;
 using MapModS.Settings;
 
 namespace MapModS.Map
 {
+    public enum PinBorderColor
+    {
+        Normal,
+        Previewed,
+        OutOfLogic,
+        Persistent
+    }
+
     public class PinAnimatedSprite : MonoBehaviour
     {
         public PinDef pinDef { get; private set; } = null;
@@ -62,7 +66,7 @@ namespace MapModS.Map
 
         public void SetSprite()
         {
-            if (!gameObject.activeSelf) return;
+            if (!gameObject.activeSelf || spriteIndex + 1 > pinDef.randoItems.Count()) return;
 
             // Non-randomized
             if (pinDef.pinLocationState == PinLocationState.NonRandomizedUnchecked)
@@ -106,34 +110,42 @@ namespace MapModS.Map
             SR.sprite = SpriteManager.GetSpriteFromPool(pool, pinBorderColor);
         }
 
-        public void SetSizeAndColor()
+        private float GetPinScale()
         {
-            float scale = MapModS.GS.pinSize switch
+            return MapModS.GS.pinSize switch
             {
                 PinSize.Small => 0.31f,
                 PinSize.Medium => 0.37f,
                 PinSize.Large => 0.42f,
                 _ => throw new NotImplementedException()
             };
+        }
 
-            transform.localScale = 1.45f * scale * new Vector2(1.0f, 1.0f);
-
+        public void SetSizeAndColor()
+        {
             if (pinDef.pinLocationState == PinLocationState.UncheckedReachable
                 || pinDef.pinLocationState == PinLocationState.OutOfLogicReachable
                 || pinDef.pinLocationState == PinLocationState.Previewed)
             {
+                transform.localScale = 1.45f * GetPinScale() * new Vector2(1.0f, 1.0f);
                 SR.color = _origColor;
             }
             else if (pinDef.pinLocationState == PinLocationState.ClearedPersistent)
             {
-                transform.localScale = 0.7f * transform.localScale;
+                transform.localScale = 1.015f * GetPinScale() * new Vector2(1.0f, 1.0f);
                 SR.color = _origColor;
             }
             else
             {
-                transform.localScale = 0.7f * transform.localScale;
+                transform.localScale = 1.015f * GetPinScale() * new Vector2(1.0f, 1.0f);
                 SR.color = _inactiveColor;
             }
+        }
+
+        public void SetSizeAndColorSelected()
+        {
+            transform.localScale = 1.8f * GetPinScale() * new Vector2(1.0f, 1.0f);
+            SR.color = _origColor;
         }
     }
 }

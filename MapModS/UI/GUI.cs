@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine.SceneManagement;
 
 namespace MapModS.UI
@@ -10,22 +9,22 @@ namespace MapModS.UI
         {
             On.GameMap.Start += GameMap_Start;
             On.GameMap.WorldMap += GameMap_WorldMap;
-            On.GameMap.SetupMapMarkers += SetupMapMarkers;
-            On.GameMap.DisableMarkers += GameMap_DisableMarkers;
+            On.GameMap.CloseQuickMap += GameMap_CloseQuickMap;
+            On.HeroController.Pause += HeroController_Pause;
+            On.HeroController.UnPause += HeroController_UnPause;
             UnityEngine.SceneManagement.SceneManager.activeSceneChanged += HandleSceneChanges;
         }
-
         public static void Unhook()
         {
             On.GameMap.Start -= GameMap_Start;
             On.GameMap.WorldMap -= GameMap_WorldMap;
-            On.GameMap.SetupMapMarkers -= SetupMapMarkers;
-            On.GameMap.DisableMarkers -= GameMap_DisableMarkers;
+            On.GameMap.CloseQuickMap -= GameMap_CloseQuickMap;
+            On.HeroController.Pause -= HeroController_Pause;
+            On.HeroController.UnPause -= HeroController_UnPause;
             UnityEngine.SceneManagement.SceneManager.activeSceneChanged -= HandleSceneChanges;
 
             GUIController.Unload();
         }
-
         private static void GameMap_Start(On.GameMap.orig_Start orig, GameMap self)
         {
             orig(self);
@@ -41,24 +40,34 @@ namespace MapModS.UI
             }
         }
 
-        private static void GameMap_WorldMap (On.GameMap.orig_WorldMap orig, GameMap self)
+        private static void GameMap_WorldMap(On.GameMap.orig_WorldMap orig, GameMap self)
         {
             orig(self);
-            TransitionText.ShowWorldMap();
-        }
 
-        private static void SetupMapMarkers(On.GameMap.orig_SetupMapMarkers orig, GameMap self)
-        {
-            orig(self);
             MapText.Show();
-            TransitionText.Show();
+            TransitionText.ShowWorldMap();
+            LookupText.ShowWorldMap();
         }
 
-        private static void GameMap_DisableMarkers(On.GameMap.orig_DisableMarkers orig, GameMap self)
+        private static void GameMap_CloseQuickMap(On.GameMap.orig_CloseQuickMap orig, GameMap self)
         {
             orig(self);
+
             MapText.Hide();
             TransitionText.Hide();
+            LookupText.Hide();
+        }
+
+        private static void HeroController_Pause(On.HeroController.orig_Pause orig, HeroController self)
+        {
+            orig(self);
+            TransitionText.SetRouteActive();
+        }
+
+        private static void HeroController_UnPause(On.HeroController.orig_UnPause orig, HeroController self)
+        {
+            orig(self);
+            TransitionText.SetRouteActive();
         }
 
         private static void HandleSceneChanges(Scene from, Scene to)

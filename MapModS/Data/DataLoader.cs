@@ -1,10 +1,11 @@
-﻿using RandomizerMod.RandomizerData;
+﻿using GlobalEnums;
+using ItemChanger;
+using RandomizerMod.IC;
+using RandomizerMod.RandomizerData;
+using RandomizerMod.RC;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ItemChanger;
-using RandomizerCore;
-using RandomizerMod.IC;
 
 namespace MapModS.Data
 {
@@ -12,7 +13,9 @@ namespace MapModS.Data
     {
         private static Dictionary<string, PinDef> _allPins;
         private static Dictionary<string, PinDef> _allPinsAM;
+        private static Dictionary<string, MapZone> _fixedMapZones;
         private static Dictionary<string, PinDef> _usedPins = new();
+        private static Dictionary<string, string> _logicLookup = new();
 
         //public static Dictionary<string, PinDef> newPins = new();
 
@@ -53,12 +56,30 @@ namespace MapModS.Data
             return default;
         }
 
+        public static MapZone GetFixedMapZone()
+        {
+            return _fixedMapZones.GetValueOrDefault(StringUtils.CurrentNormalScene());
+        }
+
+        public static bool IsInLogicLookup(string locationName)
+        {
+            return _logicLookup.ContainsKey(locationName);
+        }
+
+        public static string GetRawLogic(string locationName)
+        {
+            if (_logicLookup.TryGetValue(locationName, out string logic))
+            {
+                return logic;
+            }
+
+            return default;
+        }
+
         // Uses RandomizerData to get the PoolGroup from an item name
         public static PoolGroup GetPoolGroup(string cleanItemName)
         {
             if (shopLocations.Contains(cleanItemName)) return PoolGroup.Shop;
-
-            if (cleanItemName.EndsWith("_Geo")) return PoolGroup.GeoChests;
 
             switch (cleanItemName)
             {
@@ -123,6 +144,8 @@ namespace MapModS.Data
                 }
             }
 
+            if (cleanItemName.EndsWith("_Geo")) return PoolGroup.GeoChests;
+
             MapModS.Instance.LogWarn($"PoolGroup not found for an item: " + cleanItemName);
 
             return PoolGroup.Unknown;
@@ -167,12 +190,12 @@ namespace MapModS.Data
 
         public static string RandoItemName(this AbstractItem item)
         {
-            return item.RandoPlacement().item.Name ?? "";
+            return item.RandoPlacement().Item.Name ?? "";
         }
 
         public static string RandoLocationName(this AbstractItem item)
         {
-            return item.RandoPlacement().location.Name ?? "";
+            return item.RandoPlacement().Location.Name ?? "";
         }
 
         public static int RandoItemId(this AbstractItem item)
@@ -184,40 +207,91 @@ namespace MapModS.Data
             return default;
         }
 
-        public static bool CanPreview(this AbstractPlacement placement)
+        public static bool IsPersistent(this AbstractItem item)
+        {
+            return item.HasTag<ItemChanger.Tags.PersistentItemTag>();
+        }
+
+        //public static string Cost(this AbstractItem item)
+        //{
+        //    if (item.GetTag(out ItemChanger.CostTag tag))
+        //    {
+        //        return tag.Cost.GetCostText();
+        //    }
+        //    return default;
+        //}
+
+        public static bool CanPreviewItem(this AbstractPlacement placement)
         {
             return !placement.HasTag<ItemChanger.Tags.DisableItemPreviewTag>();
         }
 
-        public static bool IsPersistent(this AbstractItem item)
+        public static string[] GetPreviewText(string abstractPlacementName)
         {
-            return item.HasTag<ItemChanger.Tags.PersistentItemTag>();
+            if (!ItemChanger.Internal.Ref.Settings.Placements.TryGetValue(abstractPlacementName, out AbstractPlacement placement)) return default;
+
+            if (placement.GetTag(out ItemChanger.Tags.MultiPreviewRecordTag multiTag))
+            {
+                return multiTag.previewTexts;
+            }
+
+            if (placement.GetTag(out ItemChanger.Tags.PreviewRecordTag tag))
+            {
+                return new[] { tag.previewText };
+            }
+
+            return default;
+        }
+
+        //public static bool CanPreviewCost(this AbstractPlacement placement)
+        //{
+        //    return !placement.HasTag<ItemChanger.Tags.DisableCostPreviewTag>();
+        //}
+
+        public static bool HasObtainedVanillaItem(PinDef pd)
+        {
+            return (pd.pdBool != null && PlayerData.instance.GetBool(pd.pdBool))
+                        || (pd.pdInt != null && PlayerData.instance.GetInt(pd.pdInt) >= pd.pdIntValue)
+                        || (pd.locationPoolGroup == PoolGroup.WhisperingRoots && PlayerData.instance.scenesEncounteredDreamPlantC.Contains(pd.sceneName))
+                        || (pd.locationPoolGroup == PoolGroup.Grubs && PlayerData.instance.scenesGrubRescued.Contains(pd.sceneName))
+                        || (pd.locationPoolGroup == PoolGroup.GrimmkinFlames && PlayerData.instance.scenesFlameCollected.Contains(pd.sceneName))
+                        || MapModS.LS.ObtainedVanillaItems.ContainsKey(pd.objectName + pd.sceneName);
         }
 
         public static void SetUsedPinDefs()
         {
             _usedPins.Clear();
 
+            // Randomized placements
             foreach (KeyValuePair<string, AbstractPlacement> placement in ItemChanger.Internal.Ref.Settings.Placements)
             {
+                if (placement.Value.Items.Any(i => !i.HasTag<RandoItemTag>())) continue;
+
                 IEnumerable<ItemDef> items = placement.Value.Items
-                    .Where(x => !x.IsObtained())
+                    .Where(x => !x.IsObtained() || x.IsPersistent())
                     .Select(x => new ItemDef(x));
 
                 if (!items.Any()) continue;
 
-                string locationName = placement.Value.Items.Where(x => !x.IsObtained()).First().RandoLocationName();
+                string locationName = placement.Value.Items.First().RandoLocationName();
 
                 if (locationName == "Start") continue;
 
                 if (_allPins.TryGetValue(locationName, out PinDef pinDef))
                 {
+                    pinDef.randomized = true;
+
+                    pinDef.abstractPlacementName = placement.Key;
                     pinDef.randoItems = items;
-                    pinDef.canPreview = placement.Value.CanPreview();
+                    pinDef.canPreviewItem = placement.Value.CanPreviewItem();
+                    //pinDef.canPreviewCost = placement.Value.CanPreviewCost();
+                    // UpdatePins will set it to the correct state
                     pinDef.pinLocationState = PinLocationState.UncheckedUnreachable;
                     pinDef.locationPoolGroup = GetLocationPoolGroup(pinDef.name);
-                        
+
                     _usedPins.Add(locationName, pinDef);
+
+                    //MapModS.Instance.Log(locationName);
                 }
                 else
                 {
@@ -225,48 +299,78 @@ namespace MapModS.Data
                 }
             }
 
-            bool leverRandoEnabled = _usedPins.Any(p => p.Key.StartsWith("Lever"));
-
-            foreach (KeyValuePair<string, PinDef> pinDef in _allPins)
+            // Vanilla placements
+            foreach (KeyValuePair<string, PinDef> pdPair in _allPins)
             {
-                if (!_usedPins.ContainsKey(pinDef.Key)
-                    && !pinDef.Value.randoOnly
-                    && !RandomizerMod.RandomizerMod.RS.TrackerData.clearedLocations.Contains(pinDef.Key))
+                if (!_usedPins.ContainsKey(pdPair.Key)
+                    && !pdPair.Value.randoOnly
+                    && !RandomizerMod.RandomizerMod.RS.TrackerData.clearedLocations.Contains(pdPair.Key)
+                    && !HasObtainedVanillaItem(pdPair.Value))
                 {
-                    if (leverRandoEnabled && (pinDef.Value.name == "Dirtmouth_Stag" || pinDef.Value.name == "Resting_Grounds_Stag"))
+                    if (pdPair.Key == "Mantis_Claw" && _usedPins.ContainsKey("Left_Mantis_Claw"))
                     {
                         continue;
                     }
 
-                    pinDef.Value.pinLocationState = PinLocationState.NonRandomizedUnchecked;
-                    pinDef.Value.locationPoolGroup = GetLocationPoolGroup(pinDef.Value.name);
-                    _usedPins.Add(pinDef.Key, pinDef.Value);
+                    //MapModS.Instance.Log(pdPair.Key);
+
+                    pdPair.Value.randomized = false;
+
+                    pdPair.Value.pinLocationState = PinLocationState.NonRandomizedUnchecked;
+                    pdPair.Value.locationPoolGroup = GetLocationPoolGroup(pdPair.Value.name);
+                    _usedPins.Add(pdPair.Key, pdPair.Value);
                 }
             }
 
-            if (MapModS.AdditionalMapsInstalled)
+            // Interop
+            if (Dependencies.HasDependency("AdditionalMaps"))
             {
-                foreach (PinDef pinDefAM in GetPinAMArray())
+                ApplyAdditionalMapsChanges();
+            }
+
+            if (Dependencies.HasDependency("RandomizableLevers"))
+            {
+                ApplyRandomizableLeversChanges();
+            }
+        }
+
+        public static void ApplyAdditionalMapsChanges()
+        {
+            foreach (PinDef pinDefAM in GetPinAMArray())
+            {
+                if (_usedPins.TryGetValue(pinDefAM.name, out PinDef pinDef))
                 {
-                    if (_usedPins.TryGetValue(pinDefAM.name, out PinDef pinDef))
-                    {
-                        pinDef.pinScene = pinDefAM.pinScene;
-                        pinDef.mapZone = pinDefAM.mapZone;
-                        pinDef.offsetX = pinDefAM.offsetX;
-                        pinDef.offsetY = pinDefAM.offsetY;
-                    }
+                    pinDef.pinScene = pinDefAM.pinScene;
+                    pinDef.mapZone = pinDefAM.mapZone;
+                    pinDef.offsetX = pinDefAM.offsetX;
+                    pinDef.offsetY = pinDefAM.offsetY;
                 }
             }
+        }
+
+        public static void ApplyRandomizableLeversChanges()
+        {
+            if (_usedPins.Any(p => p.Key.StartsWith("Lever")))
+            {
+                _usedPins.Remove("Dirtmouth_Stag");
+                _usedPins.Remove("Resting_Grounds_Stag");
+            }
+        }
+
+        public static void SetLogicLookup()
+        {
+            _logicLookup = RandomizerMod.RandomizerMod.RS.TrackerData.lm.LogicLookup.Values.ToDictionary(l => l.Name, l => l.ToInfix());
         }
 
         public static void Load()
         {
             _allPins = JsonUtil.Deserialize<Dictionary<string, PinDef>>("MapModS.Resources.pins.json");
             _allPinsAM = JsonUtil.Deserialize<Dictionary<string, PinDef>>("MapModS.Resources.pinsAM.json");
+            _fixedMapZones = JsonUtil.Deserialize<Dictionary<string, MapZone>>("MapModS.Resources.fixedMapZones.json");
         }
 
         // For debugging pins
-        //public static void LoadNewPinDef()
+        //public static void LoadNew PinDef()
         //{
         //    newPins.Clear();
         //    newPins = JsonUtil.DeserializeFromExternalFile<Dictionary<string, PinDef>>("newPins.json");

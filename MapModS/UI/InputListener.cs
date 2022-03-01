@@ -1,26 +1,22 @@
-﻿using MapModS.Data;
-using MapModS.Map;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace MapModS.UI
 {
-    // This class handles hotkey behaviour
+    // This class handles global hotkey behaviour
     internal class InputListener : MonoBehaviour
     {
         private static GameObject _instance_GO = null;
 
         public static void InstantiateSingleton()
         {
+            _instance_GO = GameObject.Find("RandoMapInputListener");
+
             if (_instance_GO == null)
             {
-                _instance_GO = GameObject.Find("RandoMapInputListener");
-                if (_instance_GO == null)
-                {
-                    MapModS.Instance.Log("Adding Input Listener.");
-                    _instance_GO = new GameObject("RandoMapInputListener");
-                    _instance_GO.AddComponent<InputListener>();
-                    DontDestroyOnLoad(_instance_GO);
-                }
+                MapModS.Instance.Log("Adding Input Listener.");
+                _instance_GO = new GameObject("RandoMapInputListener");
+                _instance_GO.AddComponent<InputListener>();
+                DontDestroyOnLoad(_instance_GO);
             }
         }
 

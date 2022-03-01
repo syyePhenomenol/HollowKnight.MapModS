@@ -55,7 +55,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Compatibility.cs" />
     <Compile Remove="Data\PinDefOld.cs" />
     <Compile Remove="Data\PinDefUnused.cs" />
     <Compile Remove="Data\Pool.cs" />
@@ -66,11 +65,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Resources\fixedMapZones.json" />
     <None Remove="Resources\GUI\ButtonRect.png" />
     <None Remove="Resources\GUI\ButtonRectEmpty.png" />
     <None Remove="Resources\GUI\ButtonsMenuBG.png" />
     <None Remove="Resources\GUI\DropdownBG.png" />
-    <None Remove="Resources\GUI\EnemiesBg.png" />
+    <None Remove="Resources\GUI\LookupBG.png" />
+    <None Remove="Resources\GUI\StatusPanelBG.png" />
+    <None Remove="Resources\GUI\UncheckedBG.png" />
     <None Remove="Resources\language.json" />
     <None Remove="Resources\pins.json" />
     <None Remove="Resources\pinsAM.json" />
@@ -78,8 +80,6 @@
     <None Remove="Resources\Pins\pinBackerGhost.png" />
     <None Remove="Resources\Pins\pinBench.png" />
     <None Remove="Resources\Pins\pinBenchGrey.png" />
-    <None Remove="Resources\Pins\pinBlankGreen.png" />
-    <None Remove="Resources\Pins\pinBlankRed.png" />
     <None Remove="Resources\Pins\pinCharm.png" />
     <None Remove="Resources\Pins\pinCharmGreen.png" />
     <None Remove="Resources\Pins\pinCharmRed.png" />
@@ -239,11 +239,11 @@
     <EmbeddedResource Include="Resources\GUI\ButtonRectEmpty.png" />
     <EmbeddedResource Include="Resources\GUI\ButtonsMenuBG.png" />
     <EmbeddedResource Include="Resources\GUI\DropdownBG.png" />
-    <EmbeddedResource Include="Resources\GUI\EnemiesBg.png" />
+    <EmbeddedResource Include="Resources\GUI\UncheckedBG.png" />
+    <EmbeddedResource Include="Resources\GUI\LookupBG.png" />
     <EmbeddedResource Include="Resources\pins.json" />
+    <EmbeddedResource Include="Resources\fixedMapZones.json" />
     <EmbeddedResource Include="Resources\pinsAM.json" />
-    <EmbeddedResource Include="Resources\Pins\pinBlankGreen.png" />
-    <EmbeddedResource Include="Resources\Pins\pinBlankRed.png" />
     <EmbeddedResource Include="Resources\Pins\pinCharm.png" />
     <EmbeddedResource Include="Resources\Pins\pinCharmGreen.png" />
     <EmbeddedResource Include="Resources\Pins\pinCharmRed.png" />
@@ -353,9 +353,6 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>false</Private>
-    </Reference>
-    <Reference Include="Benchwarp">
-      <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\Benchwarp\Benchwarp.dll</HintPath>
     </Reference>
     <Reference Include="ItemChanger">
       <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\ItemChanger\ItemChanger.dll</HintPath>

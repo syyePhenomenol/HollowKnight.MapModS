@@ -1,6 +1,4 @@
-﻿using MapModS.Map;
-
-namespace MapModS.Settings
+﻿namespace MapModS.Settings
 {
     public enum PinSize
     {
@@ -8,13 +6,35 @@ namespace MapModS.Settings
         Medium,
         Large
     }
+
+    public enum PinStyle
+    {
+        Normal,
+        Q_Marks_1,
+        Q_Marks_2,
+        Q_Marks_3
+    }
+
+    public enum RouteTextInGame
+    {
+        Hide,
+        Show,
+        ShowNextTransitionOnly
+    }
+
     public class GlobalSettings
     {
         public bool allowBenchWarpSearch = true;
 
         public bool uncheckedPanelActive = false;
 
+        public RouteTextInGame routeTextInGame = RouteTextInGame.Hide;
+
+        public PinStyle pinStyle = PinStyle.Normal;
+
         public PinSize pinSize = PinSize.Medium;
+
+        public bool persistentOn = true;
 
         public void ToggleAllowBenchWarp()
         {
@@ -24,6 +44,35 @@ namespace MapModS.Settings
         public void ToggleUncheckedPanel()
         {
             uncheckedPanelActive = !uncheckedPanelActive;
+        }
+
+        public void ToggleRouteTextInGame()
+        {
+            switch (routeTextInGame)
+            {
+                case RouteTextInGame.Hide:
+                case RouteTextInGame.Show:
+                    routeTextInGame += 1;
+                    break;
+                default:
+                    routeTextInGame = RouteTextInGame.Hide;
+                    break;
+            }
+        }
+
+        public void TogglePinStyle()
+        {
+            switch (pinStyle)
+            {
+                case PinStyle.Normal:
+                case PinStyle.Q_Marks_1:
+                case PinStyle.Q_Marks_2:
+                    pinStyle += 1;
+                    break;
+                default:
+                    pinStyle = PinStyle.Normal;
+                    break;
+            }
         }
 
         public void TogglePinSize()
@@ -38,6 +87,11 @@ namespace MapModS.Settings
                     pinSize = PinSize.Small;
                     break;
             }
+        }
+
+        public void TogglePersistentOn()
+        {
+            persistentOn = !persistentOn;
         }
     }
 }

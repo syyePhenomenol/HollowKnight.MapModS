@@ -30,11 +30,16 @@ namespace MapModS.Data
 
         public bool randoOnly = false;
 
-        // These are assigned during FindSpoilerPools, unusued if it's a Shop
+        // These are assigned during SetPinDefs
         public PoolGroup locationPoolGroup;
 
+        public bool randomized;
+
+        public string abstractPlacementName;
         public IEnumerable<ItemDef> randoItems;
-        public bool canPreview;
+        public bool canPreviewItem;
         public PinLocationState pinLocationState;
+
+        public bool canShowOnMap = false;
     }
 }

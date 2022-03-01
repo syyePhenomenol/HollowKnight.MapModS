@@ -1,5 +1,5 @@
 ﻿using MapModS.Data;
-using RandomizerCore;
+using RandomizerMod.RC;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -104,7 +104,7 @@ namespace MapModS.Map
 
             HashSet<string> allScenes = new(nonMapScenes);
 
-            if (!MapModS.AdditionalMapsInstalled)
+            if (!Dependencies.HasDependency("AdditionalMaps"))
             {
                 allScenes.UnionWith(whitePalaceScenes);
                 maxTableWidth = 6;
@@ -152,11 +152,11 @@ namespace MapModS.Map
         {
             foreach (TransitionPlacement tp in RandomizerMod.RandomizerMod.RS.Context.transitionPlacements)
             {
-                if (tp.target == null) return null;
+                if (tp.Target == null) return null;
 
-                if (tp.source.Name == transitionDef.Name)
+                if (tp.Source.Name == transitionDef.Name)
                 {
-                    return RandomizerMod.RandomizerData.Data.GetTransitionDef(tp.target.Name).SceneName;
+                    return RandomizerMod.RandomizerData.Data.GetTransitionDef(tp.Target.Name).SceneName;
                 }
             }
 
@@ -190,8 +190,10 @@ namespace MapModS.Map
             tmp.color = color;
         }
 
-        public static HashSet<string> SetupMapTransitionMode(GameMap gameMap, bool isAlt)
+        public static HashSet<string> SetupMapTransitionMode(GameMap gameMap)
         {
+            bool isAlt = MapModS.LS.mapMode == Settings.MapMode.TransitionRandoAlt;
+
             HashSet<string> inLogicScenes = new();
 
             HashSet<string> outOfLogicScenes = new();
@@ -365,10 +367,10 @@ namespace MapModS.Map
                 }
             }
 
-            gameMap.panMinX = -28f;
-            gameMap.panMaxX = 26f;
-            gameMap.panMinY = -25f;
-            gameMap.panMaxY = 20f;
+            //gameMap.panMinX = -28f;
+            //gameMap.panMaxX = 26f;
+            //gameMap.panMinY = -25f;
+            //gameMap.panMaxY = 20f;
 
             if (isAlt)
             {
@@ -434,8 +436,12 @@ namespace MapModS.Map
             }
         }
 
-        public static void ResetMapColors(GameMap gameMap)
+        public static void ResetMapColors(GameObject goGameMap)
         {
+            GameMap gameMap = goGameMap.GetComponent<GameMap>();
+
+            if (gameMap == null) return;
+
             foreach (Transform areaObj in gameMap.transform)
             {
                 if (areaObj.name == "Grub Pins"

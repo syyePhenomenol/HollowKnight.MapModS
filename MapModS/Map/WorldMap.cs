@@ -5,7 +5,6 @@ using MapModS.Trackers;
 using Modding;
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 
 namespace MapModS.Map
@@ -52,20 +51,31 @@ namespace MapModS.Map
         {
             orig(self, go_gameMap);
 
-            DataLoader.SetUsedPinDefs();
-
+            try
+            {
+                Dependencies.BenchwarpInterop();
+                DataLoader.SetUsedPinDefs();
+                DataLoader.SetLogicLookup();
+            }
+            catch (Exception e)
+            {
+                MapModS.Instance.LogError(e);
+            }
+            
             GameMap gameMap = go_gameMap.GetComponent<GameMap>();
 
             Transition.AddExtraComponentsToMap(gameMap);
 
             if (SettingsUtil.IsTransitionRando())
             {
-                goExtraRooms = Transition.CreateExtraMapRooms(gameMap);
+                if (GameObject.Find("MMS Custom Map Rooms") == null)
+                {
+                    goExtraRooms = Transition.CreateExtraMapRooms(gameMap);
+                }
 
                 if (MapModS.LS.NewSettings)
                 {
                     MapModS.LS.mapMode = MapMode.TransitionRando;
-                    MapModS.LS.NewSettings = false;
                 }
             }
 
@@ -86,9 +96,18 @@ namespace MapModS.Map
 
             CustomPins.MakePins(gameMap);
 
-            CustomPins.FindRandomizedGroups();
+            CustomPins.GetRandomizedGroups();
+
+            if (MapModS.LS.NewSettings)
+            {
+                CustomPins.ResetPoolSettings();
+            }
+
+            CustomPins.UpdatePins(MapZone.NONE, new());
 
             MapModS.Instance.Log("Adding Custom Pins done.");
+
+            MapModS.LS.NewSettings = false;
         }
 
         // Called every time we open the World Map
@@ -112,7 +131,14 @@ namespace MapModS.Map
                 }
             }
 
-            UpdateMap(self, MapZone.NONE);
+            try
+            {
+                UpdateMap(self, MapZone.NONE);
+            }
+            catch (Exception e)
+            {
+                MapModS.Instance.LogError(e);
+            }
         }
 
         // Following two behaviours necessary since GameMap is actually persistently active
@@ -164,35 +190,29 @@ namespace MapModS.Map
             FullMap.PurgeMap();
 
             if (SettingsUtil.IsTransitionRando()
-                && MapModS.LS.ModEnabled)
+                && MapModS.LS.ModEnabled
+                && (MapModS.LS.mapMode == MapMode.TransitionRando
+                    || MapModS.LS.mapMode == MapMode.TransitionRandoAlt))
             {
-                if (MapModS.LS.mapMode == MapMode.TransitionRando)
-                {
-                    transitionPinScenes = Transition.SetupMapTransitionMode(gameMap, false);
-                }
-                else if (MapModS.LS.mapMode == MapMode.TransitionRandoAlt)
-                {
-                    transitionPinScenes = Transition.SetupMapTransitionMode(gameMap, true);
-                }
-                else
-                {
-                    Transition.ResetMapColors(gameMap);
-                    gameMap.SetupMap();
-                }
+                    transitionPinScenes = Transition.SetupMapTransitionMode(gameMap);
             }
             else
             {
-                Transition.ResetMapColors(gameMap);
                 gameMap.SetupMap();
             }
 
-            PinsVanilla.ForceDisablePins(gameMap.gameObject);
-
             if (goCustomPins == null || !MapModS.LS.ModEnabled) return;
 
+            gameMap.panMinX = -29f;
+            gameMap.panMaxX = 26f;
+            gameMap.panMinY = -25f;
+            gameMap.panMaxY = 20f;
+
+            PinsVanilla.ForceDisablePins(gameMap.gameObject);
+
             CustomPins.UpdatePins(mapZone, transitionPinScenes);
-            CustomPins.ResizePins();
-            CustomPins.RefreshGroups();
+            CustomPins.ResizePins("None selected");
+            CustomPins.SetPinsActive();
             CustomPins.SetSprites();
         }
     }
