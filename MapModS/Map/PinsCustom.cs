@@ -237,9 +237,9 @@ namespace MapModS.Map
                     {
                         targetPoolGroup = pin.pinDef.locationPoolGroup;
                     }
+                    // All of the corresponding item groups for that location are off
                     else if (targetPoolGroup == PoolGroup.Unknown && pin.pinDef.randomized)
                     {
-                        MapModS.Instance.LogWarn("There is a randomized pin without any items, or unknown pool group");
                         pin.gameObject.SetActive(false);
                         continue;
                     }
