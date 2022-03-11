@@ -16,6 +16,7 @@ namespace MapModS.Data
         public int id;
         public string itemName;
         public PoolGroup poolGroup;
+        //public string poolGroup;
         public bool persistent = false;
         //public string cost;
     }
