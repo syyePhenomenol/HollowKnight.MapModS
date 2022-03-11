@@ -12,6 +12,8 @@ namespace MapModS
         public static Dictionary<string, Assembly> strictDependencies = new()
         {
             { "RandomizerMod", null },
+            { "ItemChanger", null },
+            { "MenuChanger", null },
             { "Vasi", null }
         };
 
