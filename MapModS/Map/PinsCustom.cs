@@ -28,7 +28,7 @@ namespace MapModS.Map
                 }
             }
 
-            GetRandomizedGroups();
+            GetRandomizedOthersGroups();
         }
 
         private void MakePin(PinDef pinDef, GameMap gameMap)
@@ -367,8 +367,9 @@ namespace MapModS.Map
         }
 
         private HashSet<PoolGroup> randomizedGroups = new();
+        private HashSet<PoolGroup> othersGroups = new();
 
-        public void GetRandomizedGroups()
+        public void GetRandomizedOthersGroups()
         {
             if (MapModS.LS.groupBy == GroupBy.Location)
             {
@@ -378,6 +379,8 @@ namespace MapModS.Map
             {
                 randomizedGroups = new HashSet<PoolGroup>(_pins.Where(p => p.pinDef.randomized).SelectMany(p => p.pinDef.randoItems).Select(i => i.poolGroup));
             }
+
+            othersGroups = new HashSet<PoolGroup>(_pins.Where(p => !p.pinDef.randomized).Select(p => p.pinDef.locationPoolGroup));
         }
 
         public bool IsRandomizedCustom()
@@ -390,11 +393,14 @@ namespace MapModS.Map
 
         public bool IsOthersCustom()
         {
-            if (!randomizedGroups.Any()) return false;
+            if (!othersGroups.Any()) return false;
 
-            return (Enum.GetValues(typeof(PoolGroup)).Cast<PoolGroup>().Except(randomizedGroups).Where(g => g != PoolGroup.Unknown && g != PoolGroup.Shop)
-                .Any(g => MapModS.LS.GetPoolGroupState(g) == PoolGroupState.On && !MapModS.LS.othersOn
+            return (othersGroups.Any(g => MapModS.LS.GetPoolGroupState(g) == PoolGroupState.On && !MapModS.LS.othersOn
                      || MapModS.LS.GetPoolGroupState(g) == PoolGroupState.Off && MapModS.LS.othersOn));
+
+            //return (Enum.GetValues(typeof(PoolGroup)).Cast<PoolGroup>().Except(randomizedGroups).Where(g => g != PoolGroup.Unknown && g != PoolGroup.Shop)
+            //    .Any(g => MapModS.LS.GetPoolGroupState(g) == PoolGroupState.On && !MapModS.LS.othersOn
+            //         || MapModS.LS.GetPoolGroupState(g) == PoolGroupState.Off && MapModS.LS.othersOn));
         }
 
         public void SetSprites()
