@@ -66,7 +66,7 @@ namespace MapModS.Map
 
         public void SetSprite()
         {
-            if (!gameObject.activeSelf || spriteIndex + 1 > pinDef.randoItems.Count()) return;
+            if (!gameObject.activeSelf) return;
 
             // Non-randomized
             if (pinDef.pinLocationState == PinLocationState.NonRandomizedUnchecked)
@@ -74,6 +74,8 @@ namespace MapModS.Map
                 SR.sprite = SpriteManager.GetSpriteFromPool(pinDef.locationPoolGroup, PinBorderColor.Normal);
                 return;
             }
+
+            if (pinDef.randoItems == null || spriteIndex + 1 > pinDef.randoItems.Count()) return;
 
             PoolGroup pool;
             PinBorderColor pinBorderColor = PinBorderColor.Normal;
