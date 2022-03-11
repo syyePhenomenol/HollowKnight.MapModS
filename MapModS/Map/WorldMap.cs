@@ -96,7 +96,7 @@ namespace MapModS.Map
 
             CustomPins.MakePins(gameMap);
 
-            CustomPins.GetRandomizedGroups();
+            CustomPins.GetRandomizedOthersGroups();
 
             if (MapModS.LS.NewSettings)
             {
