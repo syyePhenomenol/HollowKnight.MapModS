@@ -2,7 +2,6 @@
 using MapModS.Data;
 using MapModS.Map;
 using MapModS.Settings;
-using RandomizerMod;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -348,15 +347,15 @@ namespace MapModS.UI
 
         public static void SetInstructionsText()
         {
-            string instructionsText = $"{Localization.Localize("Selected room")}: {selectedScene}.";
+            string instructionsText = $"Selected room: {selectedScene}.";
 
             if (selectedScene == StringUtils.CurrentNormalScene())
             {
-                instructionsText += $" {Localization.Localize("You are here")}.";
+                instructionsText += " You are here.";
             }
             else
             {
-                instructionsText += $" {Localization.Localize("Press [Menu Select] to find new route or switch starting / final transitions")}.";
+                instructionsText += $" Press [Menu Select] to find new route or switch starting / final transitions.";
             }
 
             _instructionPanel.GetText("Instructions").UpdateText(instructionsText);
@@ -364,7 +363,7 @@ namespace MapModS.UI
 
         public static void SetControlText()
         {
-            string controlText = $"{Localization.Localize("Current route")}: ";
+            string controlText = "Current route: ";
 
             if (lastStartScene != ""
                 && lastFinalScene != ""
@@ -373,50 +372,44 @@ namespace MapModS.UI
                 && selectedRoute.Any())
             {
                 controlText += $"{lastStartTransition} ->...-> {lastFinalTransition}      ";
-                controlText += $"{Localization.Localize("Transitions")}: {selectedRoute.Count()}";
+                controlText += $"Transitions: {selectedRoute.Count()}";
             }
             else
             {
-                controlText += Localization.Localize("None");
+                controlText += "None";
             }
 
             if (Dependencies.HasDependency("Benchwarp"))
             {
-                controlText += $"\n{Localization.Localize("Include benchwarp")} (Ctrl-B): ";
-
                 if (MapModS.GS.allowBenchWarpSearch)
                 {
-                    controlText += Localization.Localize("On");
+                    controlText += "\nInclude benchwarp (Ctrl-B): On";
                 }
                 else
                 {
-                    controlText += Localization.Localize("Off");
+                    controlText += "\nInclude benchwarp (Ctrl-B): Off";
                 }
             }
 
-            controlText += $"\n{Localization.Localize("Show unchecked/visited")} (Ctrl-U): ";
-
             if (MapModS.GS.uncheckedPanelActive)
             {
-                controlText += Localization.Localize("On");
+                controlText += "\nShow unchecked/visited (Ctrl-U): On";
             }
             else
             {
-                controlText += Localization.Localize("Off");
+                controlText += "\nShow unchecked/visited (Ctrl-U): Off";
             }
-
-            controlText += $"\n{Localization.Localize("Show route in-game")} (Ctrl-R): ";
 
             switch (MapModS.GS.routeTextInGame)
             {
                 case RouteTextInGame.Hide:
-                    controlText += Localization.Localize("Off");
+                    controlText += "\nShow route in-game (Ctrl-R): Off";
                     break;
                 case RouteTextInGame.Show:
-                    controlText += Localization.Localize("Full");
+                    controlText += "\nShow route in-game (Ctrl-R): Full";
                     break;
                 case RouteTextInGame.ShowNextTransitionOnly:
-                    controlText += Localization.Localize("Next Transition Only");
+                    controlText += "\nShow route in-game (Ctrl-R): Next Transition Only";
                     break;
             }
 
@@ -500,7 +493,7 @@ namespace MapModS.UI
 
             if (uncheckedTransitions.Any())
             {
-                uncheckedTransitionsText += $"{Localization.Localize("Unchecked")}:";
+                uncheckedTransitionsText += "Unchecked:";
 
                 foreach (string transition in uncheckedTransitions)
                 {
@@ -514,7 +507,7 @@ namespace MapModS.UI
 
             if (visitedTransitions.Any())
             {
-                uncheckedTransitionsText += $"{Localization.Localize("Visited")}:";
+                uncheckedTransitionsText += "Visited:";
 
                 foreach (Tuple<string, string> transition in visitedTransitions)
                 {

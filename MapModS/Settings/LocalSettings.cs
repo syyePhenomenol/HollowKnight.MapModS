@@ -193,8 +193,7 @@ namespace MapModS.Settings
                 {
                     PoolGroupState.Off => PoolGroupState.On,
                     PoolGroupState.On => PoolGroupState.Off,
-                    PoolGroupState.Mixed => PoolGroupState.On,
-                    _ => throw new NotImplementedException()
+                    PoolGroupState.Mixed => PoolGroupState.On
                 };
             }
         }

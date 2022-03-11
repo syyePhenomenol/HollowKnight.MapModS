@@ -3,7 +3,6 @@ using MapModS.Map;
 using MapModS.Settings;
 using System.Linq;
 using UnityEngine;
-using RandomizerMod;
 
 namespace MapModS.UI
 {
@@ -79,43 +78,37 @@ namespace MapModS.UI
 
         private static void SetSpoilers()
         {
-            string spoilersText = $"{Localization.Localize("Spoilers")} (ctrl-1): ";
-
-            if (MapModS.LS.SpoilerOn)
-            {
-                _mapDisplayPanel.GetText("Spoilers").SetTextColor(Color.green);
-                spoilersText += Localization.Localize("on");
-            }
-            else
-            {
-                _mapDisplayPanel.GetText("Spoilers").SetTextColor(Color.white);
-                spoilersText += Localization.Localize("off");
-            }
-
-            _mapDisplayPanel.GetText("Spoilers").UpdateText(spoilersText);
+            _mapDisplayPanel.GetText("Spoilers").UpdateText
+                (
+                    MapModS.LS.SpoilerOn ? "Spoilers (ctrl-1): on" : "Spoilers (ctrl-1): off"
+                );
+            _mapDisplayPanel.GetText("Spoilers").SetTextColor
+                (
+                    MapModS.LS.SpoilerOn ? Color.green : Color.white
+                );
         }
 
         private static void SetRandomized()
         {
             if (WorldMap.CustomPins == null) return;
 
-            string randomizedText = $"{Localization.Localize("Randomized")} (ctrl-2): ";
+            string randomizedText = "";
 
             if (MapModS.LS.randomizedOn)
             {
                 _mapDisplayPanel.GetText("Randomized").SetTextColor(Color.green);
-                randomizedText += Localization.Localize("on");
+                randomizedText += "Randomized (ctrl-2): on";
             }
             else
             {
                 _mapDisplayPanel.GetText("Randomized").SetTextColor(Color.white);
-                randomizedText += Localization.Localize("off");
+                randomizedText += "Randomized (ctrl-2): off";
             }
 
             if (WorldMap.CustomPins.IsRandomizedCustom())
             {
                 _mapDisplayPanel.GetText("Randomized").SetTextColor(Color.yellow);
-                randomizedText += $" ({Localization.Localize("custom")})";
+                randomizedText += " (custom)";
             }
 
             _mapDisplayPanel.GetText("Randomized").UpdateText(randomizedText);
@@ -125,23 +118,23 @@ namespace MapModS.UI
         {
             if (WorldMap.CustomPins == null) return;
 
-            string othersText = $"{Localization.Localize("Others")} (ctrl-3): ";
+            string othersText = "";
 
             if (MapModS.LS.othersOn)
             {
                 _mapDisplayPanel.GetText("Others").SetTextColor(Color.green);
-                othersText += Localization.Localize("on");
+                othersText += "Others (ctrl-3): on";
             }
             else
             {
                 _mapDisplayPanel.GetText("Others").SetTextColor(Color.white);
-                othersText += Localization.Localize("off");
+                othersText += "Others (ctrl-3): off";
             }
 
             if (WorldMap.CustomPins.IsOthersCustom())
             {
                 _mapDisplayPanel.GetText("Others").SetTextColor(Color.yellow);
-                othersText += $" ({Localization.Localize("custom")})";
+                othersText += " (custom)";
             }
 
             _mapDisplayPanel.GetText("Others").UpdateText(othersText);
@@ -149,61 +142,53 @@ namespace MapModS.UI
 
         private static void SetStyle()
         {
-            string styleText = $"{Localization.Localize("Style")} (ctrl-4): ";
-
             switch (MapModS.GS.pinStyle)
             {
                 case PinStyle.Normal:
-                    styleText += Localization.Localize("normal");
+                    _mapDisplayPanel.GetText("Style").UpdateText("Style (ctrl-4): normal");
                     break;
 
                 case PinStyle.Q_Marks_1:
-                    styleText += $"{Localization.Localize("q marks")} 1";
+                    _mapDisplayPanel.GetText("Style").UpdateText("Style (ctrl-4): q marks 1");
                     break;
 
                 case PinStyle.Q_Marks_2:
-                    styleText += $"{Localization.Localize("q marks")} 2";
+                    _mapDisplayPanel.GetText("Style").UpdateText("Style (ctrl-4): q marks 2");
                     break;
 
                 case PinStyle.Q_Marks_3:
-                    styleText += $"{Localization.Localize("q marks")} 3";
+                    _mapDisplayPanel.GetText("Style").UpdateText("Style (ctrl-4): q marks 3");
                     break;
             }
-
-            _mapDisplayPanel.GetText("Style").UpdateText(styleText);
         }
 
         private static void SetSize()
         {
-            string sizeText = $"{Localization.Localize("Size")} (ctrl-5): ";
-
             switch (MapModS.GS.pinSize)
             {
                 case PinSize.Small:
-                    sizeText += Localization.Localize("small");
+                    _mapDisplayPanel.GetText("Size").UpdateText("Size (ctrl-5): small");
                     break;
 
                 case PinSize.Medium:
-                    sizeText += Localization.Localize("medium");
+                    _mapDisplayPanel.GetText("Size").UpdateText("Size (ctrl-5): medium");
                     break;
 
                 case PinSize.Large:
-                    sizeText += Localization.Localize("large");
+                    _mapDisplayPanel.GetText("Size").UpdateText("Size (ctrl-5): large");
                     break;
             }
-
-            _mapDisplayPanel.GetText("Size").UpdateText(sizeText);
         }
 
         private static void SetRefresh()
         {
             if (MapModS.LS.ModEnabled)
             {
-                _refreshDisplayPanel.GetText("Refresh").UpdateText(Localization.Localize("MapModS enabled. Close map to refresh"));
+                _refreshDisplayPanel.GetText("Refresh").UpdateText("MapMod S enabled. Close map to refresh");
             }
             else
             {
-                _refreshDisplayPanel.GetText("Refresh").UpdateText(Localization.Localize("MapModS disabled. Close map to refresh"));
+                _refreshDisplayPanel.GetText("Refresh").UpdateText("MapMod S disabled. Close map to refresh");
             }
         }
     }
