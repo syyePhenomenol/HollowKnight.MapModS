@@ -53,16 +53,6 @@ namespace MapModS.Settings
 
         public bool NewSettings = true;
 
-        //public class GroupSetting
-        //{
-        //    public GroupSetting()
-        //    {
-        //        On = true;
-        //    }
-
-        //    public bool On;
-        //};
-
         public Dictionary<PoolGroup, PoolGroupState> PoolGroupStates = Enum.GetValues(typeof(PoolGroup))
             .Cast<PoolGroup>().ToDictionary(t => t, t => PoolGroupState.On);
 
@@ -198,21 +188,5 @@ namespace MapModS.Settings
                 };
             }
         }
-
-        //public void SetAllGroupsOn()
-        //{
-        //    foreach (GroupSetting groupSetting in GroupSettings.Values)
-        //    {
-        //        groupSetting.On = true;
-        //    }
-        //}
-
-        //public void SetAllGroupsOff()
-        //{
-        //    foreach (GroupSetting groupSetting in GroupSettings.Values)
-        //    {
-        //        groupSetting.On = false;
-        //    }
-        //}
     }
 }

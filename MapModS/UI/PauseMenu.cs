@@ -2,9 +2,9 @@
 using MapModS.Data;
 using MapModS.Map;
 using MapModS.Settings;
+using RandomizerMod;
 using System;
 using System.Collections.Generic;
-using RandomizerMod;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -110,13 +110,17 @@ namespace MapModS.UI
 
             pools.SetActive(false, true);
 
+            int poolGroupCounter = 0;
+
             // Pool buttons
             foreach (PoolGroup group in Enum.GetValues(typeof(PoolGroup)))
             {
                 if (group == PoolGroup.Unknown) continue;
 
-                float x_offset = (float)(group - 1) % 9 * 90;
-                float y_offset = (int)(group - 1) / 9 * 30;
+                float x_offset = (float)(poolGroupCounter) % 9 * 90;
+                float y_offset = poolGroupCounter / 9 * 30;
+
+                poolGroupCounter++;
 
                 pools.AddButton
                 (
@@ -132,13 +136,11 @@ namespace MapModS.UI
                 );
             }
 
-            int poolGroupCount = Enum.GetNames(typeof(PoolGroup)).Length;
-
             pools.AddButton
             (
                 "Benches",
                 GUIController.Instance.Images["ButtonRectEmpty"],
-                new Vector2((float)(poolGroupCount - 1) % 9 * 90, (int)(poolGroupCount - 1) / 9 * 30),
+                new Vector2((float)(poolGroupCounter) % 9 * 90, poolGroupCounter / 9 * 30),
                 Vector2.zero,
                 BenchClicked,
                 buttonRect,
@@ -245,7 +247,6 @@ namespace MapModS.UI
                 BuildMenu(Canvas);
                 MapText.LockToggleEnable = true;
                 MapText.RebuildText();
-                //TransitionText.LockToggleEnable = true;
                 TransitionText.SetTexts();
             }
         }

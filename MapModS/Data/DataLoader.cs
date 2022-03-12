@@ -212,15 +212,6 @@ namespace MapModS.Data
             return item.HasTag<ItemChanger.Tags.PersistentItemTag>();
         }
 
-        //public static string Cost(this AbstractItem item)
-        //{
-        //    if (item.GetTag(out ItemChanger.CostTag tag))
-        //    {
-        //        return tag.Cost.GetCostText();
-        //    }
-        //    return default;
-        //}
-
         public static bool CanPreviewItem(this AbstractPlacement placement)
         {
             return !placement.HasTag<ItemChanger.Tags.DisableItemPreviewTag>();
@@ -242,11 +233,6 @@ namespace MapModS.Data
 
             return default;
         }
-
-        //public static bool CanPreviewCost(this AbstractPlacement placement)
-        //{
-        //    return !placement.HasTag<ItemChanger.Tags.DisableCostPreviewTag>();
-        //}
 
         public static bool HasObtainedVanillaItem(PinDef pd)
         {
@@ -284,7 +270,6 @@ namespace MapModS.Data
                     pinDef.abstractPlacementName = placement.Key;
                     pinDef.randoItems = items;
                     pinDef.canPreviewItem = placement.Value.CanPreviewItem();
-                    //pinDef.canPreviewCost = placement.Value.CanPreviewCost();
                     // UpdatePins will set it to the correct state
                     pinDef.pinLocationState = PinLocationState.UncheckedUnreachable;
                     pinDef.locationPoolGroup = GetLocationPoolGroup(pinDef.name);

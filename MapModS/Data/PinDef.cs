@@ -32,7 +32,6 @@ namespace MapModS.Data
 
         // These are assigned during SetPinDefs
         public PoolGroup locationPoolGroup;
-        //public string locationPoolGroup;
 
         public bool randomized;
 

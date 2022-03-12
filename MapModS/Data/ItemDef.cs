@@ -10,14 +10,11 @@ namespace MapModS.Data
             itemName = item.RandoItemName();
             poolGroup = DataLoader.GetItemPoolGroup(item.RandoItemName());
             persistent = item.IsPersistent();
-            //cost = item.Cost();
         }
 
         public int id;
         public string itemName;
         public PoolGroup poolGroup;
-        //public string poolGroup;
         public bool persistent = false;
-        //public string cost;
     }
 }

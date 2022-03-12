@@ -2,9 +2,9 @@
 using MapModS.Data;
 using MapModS.Map;
 using MapModS.Settings;
+using RandomizerMod;
 using System.Linq;
 using UnityEngine;
-using RandomizerMod;
 
 namespace MapModS.UI
 {

@@ -1,9 +1,8 @@
 ﻿using MapModS.CanvasUtil;
 using MapModS.Map;
 using MapModS.Settings;
-using System.Linq;
-using UnityEngine;
 using RandomizerMod;
+using UnityEngine;
 
 namespace MapModS.UI
 {

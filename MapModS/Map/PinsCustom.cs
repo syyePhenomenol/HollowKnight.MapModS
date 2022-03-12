@@ -397,10 +397,6 @@ namespace MapModS.Map
 
             return (othersGroups.Any(g => MapModS.LS.GetPoolGroupState(g) == PoolGroupState.On && !MapModS.LS.othersOn
                      || MapModS.LS.GetPoolGroupState(g) == PoolGroupState.Off && MapModS.LS.othersOn));
-
-            //return (Enum.GetValues(typeof(PoolGroup)).Cast<PoolGroup>().Except(randomizedGroups).Where(g => g != PoolGroup.Unknown && g != PoolGroup.Shop)
-            //    .Any(g => MapModS.LS.GetPoolGroupState(g) == PoolGroupState.On && !MapModS.LS.othersOn
-            //         || MapModS.LS.GetPoolGroupState(g) == PoolGroupState.Off && MapModS.LS.othersOn));
         }
 
         public void SetSprites()
@@ -420,8 +416,6 @@ namespace MapModS.Map
             }
 
             _pins.Clear();
-            //Destroy(randomizedGroup);
-            //Destroy(othersGroup);
         }
 
         // The following is for the lookup panel

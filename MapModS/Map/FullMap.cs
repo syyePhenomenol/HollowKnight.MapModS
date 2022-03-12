@@ -155,11 +155,6 @@ namespace MapModS.Map
                         || areaObj.name == "MMS Custom Pin Group"
                         || areaObj.name == "MMS Custom Map Rooms") continue;
 
-                //if (areaObj.name == "MMS Custom Map Rooms")
-                //{
-                //    areaObj.gameObject.SetActive(false);
-                //}
-
                 foreach (Transform roomObj in areaObj.transform)
                 {
                     roomObj.gameObject.SetActive(_persistentMapObjects.Contains(roomObj.name));
