@@ -1,25 +1,23 @@
 # Randomizer Map S
 Randomizer Map S is a Hollow Knight mod used with Randomizer 4. It helps to find both item and transition checks.
 
-![Example Screenshot](./ReadmeAssets/worldmap.jpg)
-![Example Screenshot](./ReadmeAssets/transition.jpg)
-![Example Screenshot](./ReadmeAssets/pause.jpg)
-
 This fork of CaptainDapper's original mod has been expanded on with many more features and bug fixes. It is currently compatible with:
-- RandomizerMod v4.0.3 (does NOT work with earlier versions)
-- AdditionalMaps v1.5.1.0. Highly recommended with this mod to view White Palace checks
-- RandomizableLevers v1.1.2.1
-- ItemSync v2.2.1
-- RandoPlus v1.2.0
-- SkillUpgrades v0.9.4.2
+- [RandomizerMod v4.0.3](https://github.com/homothetyhk/RandomizerMod). Does NOT work with earlier versions
+- [AdditionalMaps v1.5.1.0](https://github.com/SFGrenade/AdditionalMaps). Highly recommended with this mod to view White Palace checks
+- [RandomizableLevers v1.1.2.1](https://github.com/flibber-hk/HollowKnight.RandomizableLevers)
+- [ItemSync v2.2.1](https://github.com/Shadudev/HollowKnight.MultiWorld/tree/itemsync)
+- [RandoPlus v1.2.0](https://github.com/flibber-hk/HollowKnight.RandoPlus)
+- [SkillUpgrades v0.9.4.2](https://github.com/flibber-hk/HollowKnight.SkillUpgrades)
 - Most other mods that don't change map function
 
-https://github.com/homothetyhk/RandomizerMod
-https://github.com/SFGrenade/AdditionalMaps
-https://github.com/flibber-hk/HollowKnight.RandomizableLevers
-https://github.com/Shadudev/HollowKnight.MultiWorld/tree/itemsync
-https://github.com/flibber-hk/HollowKnight.RandoPlus
-https://github.com/flibber-hk/HollowKnight.SkillUpgrades
+# Screenshots
+<details>
+<summary>Click to expand</summary>
+    <img src="./ReadmeAssets/worldmap.jpg" alt="World Map">
+    <img src="./ReadmeAssets/quickmap.jpg" alt="Quick Map">
+    <img src="./ReadmeAssets/transition.jpg" alt="Transition Mode">
+    <img src="./ReadmeAssets/pause.jpg" alt="Pause Menu">
+</details>
 
 # Quick Start Guide
 - Press `CTRL-M` during a game to enable the mod. Alternatively, enable it from the Pause Menu.
@@ -29,7 +27,7 @@ https://github.com/flibber-hk/HollowKnight.SkillUpgrades
 - Big Pins: Items are reachable according to RandomizerMod's logic
 - Small Pins: Items are not randomized or not reachable
 - Pins will disappear as you clear their locations. If item previews are enabled, it will show the corresponding previewed item.
-- Check out the [MapModS Legend](./MAPLEGEND.md) for more details on what each pin means, including the border colors.
+- Check out the [Map Legend](./MAPLEGEND.md) for more details on what each pin means, including the border colors.
 - Pin settings are displayed at the bottom. See Pause Menu for more info on the toggles.
 - ``CTRL-L``: In the World Map, toggle a panel for pin lookup on/off.
     - Hover over any visible pin to display info about the name, room, status, logic requirements, previewed items (if any) and spoiler items (if Spoilers on).
@@ -38,8 +36,8 @@ https://github.com/flibber-hk/HollowKnight.SkillUpgrades
 ## Pause Menu
 - "Mod Enabled/Disabled": Toggle the mod on/off
 - "Spoilers" `CTRL-1`: Toggle pins between vanilla (non-spoiler) and spoiler item pools
-- "Randomized" `Ctrl-2`: Toggle all pins for randomized items on/off
-- "Others" `Ctrl-3`: Toggle all pins for non-randomized items on/off
+- "Randomized" `CTRL-2`: Toggle all pins for randomized items on/off
+- "Others" `CTRL-3`: Toggle all pins for non-randomized items on/off
 - "Pin Style" `CTRL-4`: Toggle the style of the pins
 - "Pin Size" `CTRL-5`: Toggle the size of the pins
 - "Mode": Toggle the map mode
@@ -54,7 +52,7 @@ https://github.com/flibber-hk/HollowKnight.SkillUpgrades
     - You can also control whether persistent items are always showing or not.
 
 ## Transition Mode
-- Check out the [MapModS Legend](./MAPLEGEND.md) for more details on what the colors/brightness of each room indicate.
+- Check out the [Map Legend](./MAPLEGEND.md) for more details on what the colors/brightness of each room indicate.
 - Hover over the selected room and press your bound `Menu Select` button to find a path. If successful, the path route will be displayed. You can try again to change the start/final transition to what you want.
 - The route will also be visible from the Quick Map, and in-game based on the below toggle. As you make the correct transitions, those transitions will get cleared from the route.
 - The Quick Map also shows the list of unchecked and visited transitions for the current room.
