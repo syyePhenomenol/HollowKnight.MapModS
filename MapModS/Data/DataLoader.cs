@@ -15,6 +15,7 @@ namespace MapModS.Data
     {
         private static Dictionary<string, PinDef> _allPins;
         private static Dictionary<string, PinDef> _allPinsAM;
+        private static Dictionary<string, string> _pinScenes;
         private static Dictionary<string, MapZone> _fixedMapZones;
         private static Dictionary<string, PinDef> _usedPins = new();
         private static Dictionary<string, string> _logicLookup = new();
@@ -195,41 +196,54 @@ namespace MapModS.Data
 
                 if (!items.Any()) continue;
 
-                string locationName = placement.Value.Items.First().RandoLocationName();
+                RandoModLocation rml = placement.Value.RandoLocation();
 
-                if (locationName == "Start") continue;
+                if (rml == null || rml.Name == "Start") continue;
 
-                if (_allPins.TryGetValue(locationName, out PinDef pd))
+                if (!_allPins.TryGetValue(rml.Name, out PinDef pd))
                 {
-                    pd.randomized = true;
+                    pd = new();
 
-                    pd.abstractPlacementName = placement.Key;
-                    pd.randoItems = items;
-                    pd.canPreviewItem = placement.Value.CanPreviewItem();
-
-                    // UpdatePins will set it to the correct state
-                    pd.pinLocationState = PinLocationState.UncheckedUnreachable;
-                    pd.locationPoolGroup = SupplementalMetadata.OfPlacementAndLocations(placement.Value).Get(CMI.LocationPoolGroup);
-
-                    _usedPins.Add(locationName, pd);
-
-                    unsortedGroups.Add(pd.locationPoolGroup);
-
-                    foreach(ItemDef i in pd.randoItems)
-                    {
-                        unsortedGroups.Add(i.poolGroup);
-                    }
-
-                    //MapModS.Instance.Log(locationName);
-                    //MapModS.Instance.Log(pinDef.locationPoolGroup);
+                    MapModS.Instance.Log("Unknown placement. Making a 'best guess' for the placement");
                 }
-                // Handle unrecognized placements here
-                else
+
+                pd.name = rml.Name;
+                pd.sceneName = rml.LocationDef.SceneName;
+                
+                if (pd.sceneName == "Room_Colosseum_Bronze" || pd.sceneName == "Room_Colosseum_Silver")
                 {
-                    MapModS.Instance.Log("No corresponding pin location for a placement");
+                    pd.sceneName = "Room_Colosseum_01";
                 }
+
+                if (_pinScenes.ContainsKey(pd.sceneName))
+                {
+                    pd.pinScene = _pinScenes[pd.sceneName];
+                }
+
+                pd.mapZone = StringUtils.ToMapZone(RandomizerMod.RandomizerData.Data.GetRoomDef(pd.pinScene ?? pd.sceneName).MapArea);
+
+                pd.randomized = true;
+                pd.randoItems = items;
+                pd.canPreviewItem = placement.Value.CanPreviewItem();
+
+                // UpdatePins will set it to the correct state
+                pd.pinLocationState = PinLocationState.UncheckedUnreachable;
+                pd.locationPoolGroup = SupplementalMetadata.OfPlacementAndLocations(placement.Value).Get(CMI.LocationPoolGroup);
+
+                _usedPins.Add(rml.Name, pd);
+
+                unsortedGroups.Add(pd.locationPoolGroup);
+
+                foreach(ItemDef i in pd.randoItems)
+                {
+                    unsortedGroups.Add(i.poolGroup);
+                }
+
+                //MapModS.Instance.Log(locationName);
+                //MapModS.Instance.Log(pinDef.locationPoolGroup);
             }
 
+            // Vanilla placements
             foreach (GeneralizedPlacement placement in RandomizerMod.RandomizerMod.RS.Context.Vanilla)
             {
                 if (RandomizerMod.RandomizerData.Data.IsLocation(placement.Location.Name)
@@ -239,6 +253,21 @@ namespace MapModS.Data
                     && _allPins.ContainsKey(placement.Location.Name))
                 {
                     PinDef pd = _allPins[placement.Location.Name];
+
+                    pd.name = placement.Location.Name;
+                    pd.sceneName = RandomizerMod.RandomizerData.Data.GetLocationDef(placement.Location.Name).SceneName;
+
+                    if (pd.sceneName == "Room_Colosseum_Bronze" || pd.sceneName == "Room_Colosseum_Silver")
+                    {
+                        pd.sceneName = "Room_Colosseum_01";
+                    }
+
+                    if (_pinScenes.ContainsKey(pd.sceneName))
+                    {
+                        pd.pinScene = _pinScenes[pd.sceneName];
+                    }
+
+                    pd.mapZone = StringUtils.ToMapZone(RandomizerMod.RandomizerData.Data.GetRoomDef(pd.pinScene ?? pd.sceneName).MapArea);
 
                     if (!HasObtainedVanillaItem(pd))
                     {
@@ -256,6 +285,7 @@ namespace MapModS.Data
                 }
             }
 
+            // Sort all the PoolGroups that have been used
             foreach (string poolGroup in sortedKnownGroups)
             {
                 if (unsortedGroups.Contains(poolGroup))
@@ -311,6 +341,7 @@ namespace MapModS.Data
         {
             _allPins = JsonUtil.Deserialize<Dictionary<string, PinDef>>("MapModS.Resources.pins.json");
             _allPinsAM = JsonUtil.Deserialize<Dictionary<string, PinDef>>("MapModS.Resources.pinsAM.json");
+            _pinScenes = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.pinScenes.json");
             _fixedMapZones = JsonUtil.Deserialize<Dictionary<string, MapZone>>("MapModS.Resources.fixedMapZones.json");
         }
 

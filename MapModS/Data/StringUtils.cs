@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using GlobalEnums;
+using System.Text.RegularExpressions;
 
 namespace MapModS.Data
 {
@@ -55,6 +56,29 @@ namespace MapModS.Data
         {
             return name.Replace("-", " ")
                 .Replace("_", " ");
+        }
+
+        public static MapZone ToMapZone(string mapZone)
+        {
+            return mapZone switch
+            {
+                "Ancient Basin" => MapZone.ABYSS,
+                "City of Tears" => MapZone.CITY,
+                "Crystal Peak" => MapZone.MINES,
+                "Deepnest" => MapZone.DEEPNEST,
+                "Dirtmouth" => MapZone.TOWN,
+                "Fog Canyon" => MapZone.FOG_CANYON,
+                "Forgotten Crossroads" => MapZone.CROSSROADS,
+                "Fungal Wastes" => MapZone.WASTES,
+                "Greenpath" => MapZone.GREEN_PATH,
+                "Howling Cliffs" => MapZone.CLIFFS,
+                "Kingdom's Edge" => MapZone.OUTSKIRTS,
+                "Queen's Gardens" => MapZone.ROYAL_GARDENS,
+                "Resting Grounds" => MapZone.RESTING_GROUNDS,
+                "Royal Waterways" => MapZone.WATERWAYS,
+                "White Palace" => MapZone.WHITE_PALACE,
+                _ => MapZone.NONE
+            };
         }
     }
 }

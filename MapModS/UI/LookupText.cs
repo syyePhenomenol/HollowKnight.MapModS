@@ -200,7 +200,7 @@ namespace MapModS.UI
                 {
                     instructionsText += $"\n\n{Localization.Localize("Previewed item(s)")}:";
 
-                    string[] previewText = DataLoader.GetPreviewText(pd.abstractPlacementName);
+                    string[] previewText = DataLoader.GetPreviewText(pd.name);
 
                     if (previewText == null) return;
 

@@ -60,12 +60,20 @@ namespace MapModS.Map
         {
             string roomName = pinDef.pinScene ?? pinDef.sceneName;
 
-            Vector3 vec = GetRoomPos(roomName, gameMap);
-            vec.Scale(new Vector3(1.46f, 1.46f, 1));
+            if (TryGetRoomPos(roomName, gameMap, out Vector3 vec))
+            {
+                vec.Scale(new Vector3(1.46f, 1.46f, 1));
 
-            vec += new Vector3(pinDef.offsetX, pinDef.offsetY, pinDef.offsetZ);
+                vec += new Vector3(pinDef.offsetX, pinDef.offsetY, pinDef.offsetZ);
 
-            goPin.transform.localPosition = new Vector3(vec.x, vec.y, vec.z - 0.01f);
+                goPin.transform.localPosition = new Vector3(vec.x, vec.y, vec.z - 0.01f);
+            }
+            else
+            {
+                MapModS.Instance.LogWarn($"{roomName} is not a valid room name!");
+
+                pinDef.pinLocationState = PinLocationState.Cleared;
+            }
         }
 
         // For debugging pins
@@ -80,7 +88,7 @@ namespace MapModS.Map
         //    }
         //}
 
-        private Vector3 GetRoomPos(string roomName, GameMap gameMap)
+        private bool TryGetRoomPos(string roomName, GameMap gameMap, out Vector3 pos)
         {
             foreach (Transform areaObj in gameMap.transform)
             {
@@ -90,13 +98,14 @@ namespace MapModS.Map
                     {
                         Vector3 roomVec = roomObj.transform.localPosition;
                         roomVec.Scale(areaObj.transform.localScale);
-                        return areaObj.transform.localPosition + roomVec;
+                        pos = areaObj.transform.localPosition + roomVec;
+                        return true;
                     }
                 }
             }
 
-            MapModS.Instance.LogWarn($"{roomName} is not a valid room name!");
-            return new Vector3(0, 0, 0);
+            pos = new Vector3(0, 0, 0);
+            return false;
         }
 
         public void UpdatePins(MapZone mapZone, HashSet<string> transitionPinScenes)

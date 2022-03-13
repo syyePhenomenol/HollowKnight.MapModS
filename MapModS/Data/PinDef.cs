@@ -24,18 +24,15 @@ namespace MapModS.Data
         public MapZone mapZone;
 
         // The local offset of the pin relative to its pinScene/sceneName map object
-        public float offsetX;
-        public float offsetY;
-        public float offsetZ;
-
-        public bool randoOnly = false;
+        public float offsetX = 0f; 
+        public float offsetY = 0f;
+        public float offsetZ = 0f;
 
         // These are assigned during SetPinDefs
         public string locationPoolGroup = "Unknown";
 
         public bool randomized;
 
-        public string abstractPlacementName;
         public IEnumerable<ItemDef> randoItems;
         public bool canPreviewItem;
         public PinLocationState pinLocationState;
