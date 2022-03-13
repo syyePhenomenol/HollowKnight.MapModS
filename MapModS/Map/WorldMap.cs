@@ -38,16 +38,6 @@ namespace MapModS.Map
             ModHooks.LanguageGetHook -= OnLanguageGetHook;
         }
 
-        private static string OnLanguageGetHook(string key, string sheet, string orig)
-        {
-            if (sheet == "MMS" && (Transition.nonMapScenes.Contains(key) || Transition.whitePalaceScenes.Contains(key)))
-            {
-                return key;
-            }
-
-            return orig;
-        }
-
         // Called every time when a new GameMap is created (once per save load)
         private static void GameMap_Start(On.GameMap.orig_Start orig, GameMap self)
         {
@@ -192,6 +182,16 @@ namespace MapModS.Map
             orig(self);
 
             return false;
+        }
+
+        private static string OnLanguageGetHook(string key, string sheet, string orig)
+        {
+            if (sheet == "MMS" && (Transition.nonMapScenes.Contains(key) || Transition.whitePalaceScenes.Contains(key)))
+            {
+                return key;
+            }
+
+            return orig;
         }
 
         // The main method for updating map objects and pins when opening either World Map or Quick Map
