@@ -164,7 +164,7 @@ namespace MapModS.Settings
                 return item.state;
             }
 
-            MapModS.Instance.LogWarn($"Tried to get a PoolGroup setting, but the key {poolGroup} was missing");
+            //MapModS.Instance.LogWarn($"Tried to get a PoolGroup setting, but the key {poolGroup} was missing");
 
             return PoolGroupState.Off;
         }
@@ -177,10 +177,10 @@ namespace MapModS.Settings
             {
                 item.state = state;
             }
-            else
-            {
-                MapModS.Instance.LogWarn($"Tried to set a PoolGroup setting, but the key {poolGroup} was missing");
-            }
+            //else
+            //{
+            //    MapModS.Instance.LogWarn($"Tried to set a PoolGroup setting, but the key {poolGroup} was missing");
+            //}
         }
 
         public void TogglePoolGroupSetting(string poolGroup)
@@ -197,10 +197,10 @@ namespace MapModS.Settings
                     _ => throw new NotImplementedException()
                 };
             }
-            else
-            {
-                MapModS.Instance.LogWarn($"Tried to set a PoolGroup setting, but the key {poolGroup} was missing");
-            }
+            //else
+            //{
+            //    MapModS.Instance.LogWarn($"Tried to set a PoolGroup setting, but the key {poolGroup} was missing");
+            //}
         }
     }
 }
