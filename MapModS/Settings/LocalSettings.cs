@@ -27,6 +27,18 @@ namespace MapModS.Settings
         Mixed
     }
 
+    public class SettingPair
+    {
+        public SettingPair(string poolGroup, PoolGroupState state)
+        {
+            this.poolGroup = poolGroup;
+            this.state = state;
+        }
+
+        public string poolGroup;
+        public PoolGroupState state;
+    }
+
     [Serializable]
     public class LocalSettings
     {
@@ -53,8 +65,7 @@ namespace MapModS.Settings
 
         public bool NewSettings = true;
 
-        public Dictionary<PoolGroup, PoolGroupState> PoolGroupStates = Enum.GetValues(typeof(PoolGroup))
-            .Cast<PoolGroup>().ToDictionary(t => t, t => PoolGroupState.On);
+        public List<SettingPair> PoolGroupSettings = new();
 
         public void ToggleModEnabled()
         {
@@ -139,53 +150,56 @@ namespace MapModS.Settings
             othersOn = !othersOn;
         }
 
-        public PoolGroupState GetPoolGroupState(string groupName)
+        public void InitializePoolGroupSettings()
         {
-            if (Enum.TryParse(groupName, out PoolGroup group))
+            PoolGroupSettings = DataLoader.usedPoolGroups.Select(p => new SettingPair(p, PoolGroupState.On)).ToList();
+        }
+
+        public PoolGroupState GetPoolGroupSetting(string poolGroup)
+        {
+            var item = PoolGroupSettings.FirstOrDefault(s => s.poolGroup == poolGroup);
+
+            if (item != null)
             {
-                return PoolGroupStates[group];
+                return item.state;
             }
+
+            MapModS.Instance.LogWarn($"Tried to get a PoolGroup setting, but the key {poolGroup} was missing");
 
             return PoolGroupState.Off;
         }
 
-        public PoolGroupState GetPoolGroupState(PoolGroup group)
+        public void SetPoolGroupSetting(string poolGroup, PoolGroupState state)
         {
-            if (PoolGroupStates.ContainsKey(group))
+            var item = PoolGroupSettings.FirstOrDefault(s => s.poolGroup == poolGroup);
+
+            if (item != null)
             {
-                return PoolGroupStates[group];
+                item.state = state;
             }
-
-            return PoolGroupState.Off;
-        }
-
-        public void SetPoolGroupState(string groupName, PoolGroupState state)
-        {
-            if (Enum.TryParse(groupName, out PoolGroup group))
+            else
             {
-                PoolGroupStates[group] = state;
+                MapModS.Instance.LogWarn($"Tried to set a PoolGroup setting, but the key {poolGroup} was missing");
             }
         }
 
-        public void SetPoolGroupState(PoolGroup group, PoolGroupState state)
+        public void TogglePoolGroupSetting(string poolGroup)
         {
-            if (PoolGroupStates.ContainsKey(group))
-            {
-                PoolGroupStates[group] = state;
-            }
-        }
+            var item = PoolGroupSettings.FirstOrDefault(s => s.poolGroup == poolGroup);
 
-        public void TogglePoolGroupState(string groupName)
-        {
-            if (Enum.TryParse(groupName, out PoolGroup group))
+            if (item != null)
             {
-                PoolGroupStates[group] = PoolGroupStates[group] switch
+                item.state = item.state switch
                 {
                     PoolGroupState.Off => PoolGroupState.On,
                     PoolGroupState.On => PoolGroupState.Off,
                     PoolGroupState.Mixed => PoolGroupState.On,
                     _ => throw new NotImplementedException()
                 };
+            }
+            else
+            {
+                MapModS.Instance.LogWarn($"Tried to set a PoolGroup setting, but the key {poolGroup} was missing");
             }
         }
     }

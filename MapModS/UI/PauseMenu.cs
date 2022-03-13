@@ -113,10 +113,8 @@ namespace MapModS.UI
             int poolGroupCounter = 0;
 
             // Pool buttons
-            foreach (PoolGroup group in Enum.GetValues(typeof(PoolGroup)))
+            foreach (string group in DataLoader.usedPoolGroups)
             {
-                if (group == PoolGroup.Unknown) continue;
-
                 float x_offset = (float)(poolGroupCounter) % 9 * 90;
                 float y_offset = poolGroupCounter / 9 * 30;
 
@@ -131,7 +129,7 @@ namespace MapModS.UI
                     PoolClicked,
                     buttonRect,
                     GUIController.Instance.TrajanBold,
-                    Localization.Localize(StringUtils.ToCleanGroup(group)),
+                    Localization.Localize(group),
                     fontSize: 10
                 );
             }
@@ -212,10 +210,8 @@ namespace MapModS.UI
             UpdateMode();
             UpdatePoolsPanel();
 
-            foreach (PoolGroup group in Enum.GetValues(typeof(PoolGroup)))
+            foreach (string group in DataLoader.usedPoolGroups)
             {
-                if (group == PoolGroup.Unknown) continue;
-
                 UpdatePool(group);
             }
 
@@ -504,7 +500,7 @@ namespace MapModS.UI
 
         public static void PoolClicked(string buttonName)
         {
-            MapModS.LS.TogglePoolGroupState(buttonName);
+            MapModS.LS.TogglePoolGroupSetting(buttonName);
 
             WorldMap.CustomPins.GetRandomizedOthersGroups();
 
@@ -512,29 +508,29 @@ namespace MapModS.UI
             MapText.SetTexts();
         }
 
-        private static void UpdatePool(PoolGroup pool)
+        private static void UpdatePool(string poolGroup)
         {
             if (WorldMap.CustomPins == null) return;
 
-            if (pool == PoolGroup.GeoRocks && !RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.GeoRocks)
+            if (poolGroup == "Geo Rocks" && !RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.GeoRocks)
             {
-                _mapControlPanel.GetPanel("PoolsPanel").GetButton(pool.ToString()).UpdateText
+                _mapControlPanel.GetPanel("PoolsPanel").GetButton(poolGroup).UpdateText
                     (
                         $"{Localization.Localize("Geo Rocks")}:\n"
                         + MapModS.LS.GeoRockCounter + " / " + "207"
                     );
             }
 
-            switch (MapModS.LS.GetPoolGroupState(pool))
+            switch (MapModS.LS.GetPoolGroupSetting(poolGroup))
             {
                 case PoolGroupState.Off:
-                    _mapControlPanel.GetPanel("PoolsPanel").GetButton(pool.ToString()).SetTextColor(Color.white);
+                    _mapControlPanel.GetPanel("PoolsPanel").GetButton(poolGroup).SetTextColor(Color.white);
                     break;
                 case PoolGroupState.On:
-                    _mapControlPanel.GetPanel("PoolsPanel").GetButton(pool.ToString()).SetTextColor(Color.green);
+                    _mapControlPanel.GetPanel("PoolsPanel").GetButton(poolGroup).SetTextColor(Color.green);
                     break;
                 case PoolGroupState.Mixed:
-                    _mapControlPanel.GetPanel("PoolsPanel").GetButton(pool.ToString()).SetTextColor(Color.yellow);
+                    _mapControlPanel.GetPanel("PoolsPanel").GetButton(poolGroup).SetTextColor(Color.yellow);
                     break;
             }
         }

@@ -1,4 +1,6 @@
 ﻿using ItemChanger;
+using CMI = ConnectionMetadataInjector.ConnectionMetadataInjector;
+using ConnectionMetadataInjector;
 
 namespace MapModS.Data
 {
@@ -8,13 +10,13 @@ namespace MapModS.Data
         {
             id = item.RandoItemId();
             itemName = item.RandoItemName();
-            poolGroup = DataLoader.GetItemPoolGroup(item.RandoItemName());
+            poolGroup = SupplementalMetadata.Of(item).Get(CMI.ItemPoolGroup);
             persistent = item.IsPersistent();
         }
 
         public int id;
         public string itemName;
-        public PoolGroup poolGroup;
+        public string poolGroup = "Unknown";
         public bool persistent = false;
     }
 }

@@ -28,7 +28,7 @@ namespace MapModS.Map
             }
         }
 
-        public static Sprite GetSpriteFromPool(PoolGroup pool, PinBorderColor color)
+        public static Sprite GetSpriteFromPool(string pool, PinBorderColor color)
         {
             string spriteName = "undefined";
 
@@ -37,32 +37,33 @@ namespace MapModS.Map
                 case PinStyle.Normal:
                     spriteName = pool switch
                     {
-                        PoolGroup.Dreamers => "pinDreamer",
-                        PoolGroup.Skills => "pinSkill",
-                        PoolGroup.Charms => "pinCharm",
-                        PoolGroup.Keys => "pinKey",
-                        PoolGroup.MaskShards => "pinMask",
-                        PoolGroup.VesselFragments => "pinVessel",
-                        PoolGroup.CharmNotches => "pinNotch",
-                        PoolGroup.PaleOre => "pinOre",
-                        PoolGroup.GeoChests => "pinGeo",
-                        PoolGroup.RancidEggs => "pinEgg",
-                        PoolGroup.Relics => "pinRelic",
-                        PoolGroup.WhisperingRoots => "pinRoot",
-                        PoolGroup.BossEssence => "pinEssenceBoss",
-                        PoolGroup.Grubs => "pinGrub",
-                        PoolGroup.Mimics => "pinGrub",
-                        PoolGroup.Maps => "pinMap",
-                        PoolGroup.Stags => "pinStag",
-                        PoolGroup.LifebloodCocoons => "pinCocoon",
-                        PoolGroup.GrimmkinFlames => "pinFlame",
-                        PoolGroup.JournalEntries => "pinLore",
-                        PoolGroup.GeoRocks => "pinRock",
-                        PoolGroup.BossGeo => "pinGeo",
-                        PoolGroup.SoulTotems => "pinTotem",
-                        PoolGroup.LoreTablets => "pinLore",
-                        PoolGroup.Shop => "pinShop",
-                        PoolGroup.Levers => "pinLever",
+                        "Dreamers" => "pinDreamer",
+                        "Skills" => "pinSkill",
+                        "Charms" => "pinCharm",
+                        "Keys" => "pinKey",
+                        "Mask Shards" => "pinMask",
+                        "Vessel Fragments" => "pinVessel",
+                        "Charm Notches" => "pinNotch",
+                        "Pale Ore" => "pinOre",
+                        "Geo Chests" => "pinGeo",
+                        "Rancid Eggs" => "pinEgg",
+                        "Relics" => "pinRelic",
+                        "Whispering Roots" => "pinRoot",
+                        "Boss Essence" => "pinEssenceBoss",
+                        "Grubs" => "pinGrub",
+                        "Mimics" => "pinGrub",
+                        "Maps" => "pinMap",
+                        "Stags" => "pinStag",
+                        "Lifeblood Cocoons" => "pinCocoon",
+                        "Grimmkin Flames" => "pinFlame",
+                        "Journal Entries" => "pinLore",
+                        "Geo Rocks" => "pinRock",
+                        "Boss Geo" => "pinGeo",
+                        "Soul Totems" => "pinTotem",
+                        "Lore Tablets" => "pinLore",
+                        "Shops" => "pinShop",
+                        "Levers" => "pinLever",
+                        "Mr Mushroom" => "pinLore",
                         _ => "pinUnknown",
                     };
                     break;
@@ -70,7 +71,7 @@ namespace MapModS.Map
                 case PinStyle.Q_Marks_1:
                     spriteName = pool switch
                     {
-                        PoolGroup.Shop => "pinShop",
+                        "Shops" => "pinShop",
                         _ => "pinUnknown",
                     };
                     break;
@@ -78,12 +79,12 @@ namespace MapModS.Map
                 case PinStyle.Q_Marks_2:
                     spriteName = pool switch
                     {
-                        PoolGroup.Grubs => "pinUnknown_GrubInv",
-                        PoolGroup.Mimics => "pinUnknown_GrubInv",
-                        PoolGroup.LifebloodCocoons => "pinUnknown_LifebloodInv",
-                        PoolGroup.GeoRocks => "pinUnknown_GeoRockInv",
-                        PoolGroup.SoulTotems => "pinUnknown_TotemInv",
-                        PoolGroup.Shop => "pinShop",
+                        "Grubs" => "pinUnknown_GrubInv",
+                        "Mimics" => "pinUnknown_GrubInv",
+                        "Lifeblood Cocoons" => "pinUnknown_LifebloodInv",
+                        "Geo Rocks" => "pinUnknown_GeoRockInv",
+                        "Soul Totems" => "pinUnknown_TotemInv",
+                        "Shops" => "pinShop",
                         _ => "pinUnknown",
                     };
                     break;
@@ -91,12 +92,12 @@ namespace MapModS.Map
                 case PinStyle.Q_Marks_3:
                     spriteName = pool switch
                     {
-                        PoolGroup.Grubs => "pinUnknown_Grub",
-                        PoolGroup.Mimics => "pinUnknown_Grub",
-                        PoolGroup.LifebloodCocoons => "pinUnknown_Lifeblood",
-                        PoolGroup.GeoRocks => "pinUnknown_GeoRock",
-                        PoolGroup.SoulTotems => "pinUnknown_Totem",
-                        PoolGroup.Shop => "pinShop",
+                        "Grubs" => "pinUnknown_Grub",
+                        "Mimics" => "pinUnknown_Grub",
+                        "Lifeblood Cocoons" => "pinUnknown_Lifeblood",
+                        "Geo Rocks" => "pinUnknown_GeoRock",
+                        "Soul Totems" => "pinUnknown_Totem",
+                        "Shops" => "pinShop",
                         _ => "pinUnknown",
                     };
                     break;

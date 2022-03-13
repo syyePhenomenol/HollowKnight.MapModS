@@ -31,7 +31,7 @@ namespace MapModS.Data
         public bool randoOnly = false;
 
         // These are assigned during SetPinDefs
-        public PoolGroup locationPoolGroup;
+        public string locationPoolGroup = "Unknown";
 
         public bool randomized;
 

@@ -77,7 +77,8 @@ namespace MapModS.Map
 
             if (pinDef.randoItems == null || spriteIndex + 1 > pinDef.randoItems.Count()) return;
 
-            PoolGroup pool;
+            //PoolGroup pool;
+            string pool = "Unknown";
             PinBorderColor pinBorderColor = PinBorderColor.Normal;
 
             if (pinDef.pinLocationState == PinLocationState.OutOfLogicReachable)

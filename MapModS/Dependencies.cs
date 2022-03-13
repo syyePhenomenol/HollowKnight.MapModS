@@ -15,6 +15,7 @@ namespace MapModS
             { "RandomizerCore", null },
             { "ItemChanger", null },
             { "MenuChanger", null },
+            { "ConnectionMetadataInjector", null },
             { "Vasi", null }
         };
 
@@ -22,7 +23,8 @@ namespace MapModS
         {
             { "AdditionalMaps", null },
             { "Benchwarp", null },
-            { "RandomizableLevers", null }
+            { "RandomizableLevers", null },
+            { "RandoPlus", null }
         };
 
         public static void GetDependencies()
