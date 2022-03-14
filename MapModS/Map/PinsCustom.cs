@@ -132,6 +132,13 @@ namespace MapModS.Map
                     pin.pinDef.canShowOnMap = false;
                 }
 
+                // Set pin location state
+                if (pd.pinLocationState == PinLocationState.Cleared)
+                {
+                    pin.pinDef.canShowOnMap = false;
+                    continue;
+                }
+
                 if (pd.pinLocationState == PinLocationState.ClearedPersistent)
                 {
                     if (!MapModS.GS.persistentOn)
@@ -268,7 +275,7 @@ namespace MapModS.Map
                     return item.poolGroup;
                 }
             }
-            return "Unknown";
+            return "";
         }
 
         private bool HasRandoItemGroup(PinDef pd, string poolGroup)
