@@ -82,7 +82,12 @@ namespace MapModS.Data
 
         public static MapZone GetFixedMapZone()
         {
-            return _fixedMapZones.GetValueOrDefault(StringUtils.CurrentNormalScene());
+            if (_fixedMapZones.TryGetValue(StringUtils.CurrentNormalScene(), out MapZone mapZone))
+            {
+                return mapZone;
+            }
+
+            return default;
         }
 
         public static bool IsInLogicLookup(string locationName)
