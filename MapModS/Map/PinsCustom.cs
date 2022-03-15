@@ -116,6 +116,8 @@ namespace MapModS.Map
 
                 PinDef pd = pin.pinDef;
 
+                UpdatePinLocationState(pd);
+
                 // Show based on map settings
                 if ((mapZone == MapZone.NONE && (MapModS.LS.mapMode != MapMode.PinsOverMap || SettingsUtil.GetMapSetting(pd.mapZone)))
                     || mapZone == pd.mapZone)
@@ -132,84 +134,77 @@ namespace MapModS.Map
                     pin.pinDef.canShowOnMap = false;
                 }
 
-                // Set pin location state
-                if (pd.pinLocationState == PinLocationState.Cleared)
+                if (pd.pinLocationState == PinLocationState.Cleared
+                    || pd.pinLocationState == PinLocationState.ClearedPersistent && !MapModS.GS.persistentOn)
                 {
                     pin.pinDef.canShowOnMap = false;
-                    continue;
-                }
-
-                if (pd.pinLocationState == PinLocationState.ClearedPersistent)
-                {
-                    if (!MapModS.GS.persistentOn)
-                    {
-                        pin.pinDef.canShowOnMap = false;
-                    }
-                    continue;
-                }
-
-                if (pd.pinLocationState == PinLocationState.NonRandomizedUnchecked)
-                {
-                    if (DataLoader.HasObtainedVanillaItem(pd))
-                    {
-                        pd.pinLocationState = PinLocationState.Cleared;
-
-                        pin.pinDef.canShowOnMap = false;
-                    }
-                    continue;
-                }
-
-                if (RandomizerMod.RandomizerMod.RS.TrackerData.uncheckedReachableLocations.Contains(pd.name))
-                {
-                    if (RandomizerMod.RandomizerMod.RS.TrackerDataWithoutSequenceBreaks.uncheckedReachableLocations.Contains(pin.pinDef.name))
-                    {
-                        pd.pinLocationState = PinLocationState.UncheckedReachable;
-                    }
-                    else
-                    {
-                        pd.pinLocationState = PinLocationState.OutOfLogicReachable;
-                    }
-                }
-
-                if (RandomizerMod.RandomizerMod.RS.TrackerData.previewedLocations.Contains(pd.name) && pd.canPreviewItem)
-                {
-                    pd.pinLocationState = PinLocationState.Previewed;
-                }
-
-                // Remove obtained rando items from list
-                if (pd.randoItems != null && pd.randoItems.Any())
-                {
-                    List<ItemDef> newRandoItems = new();
-
-                    foreach (ItemDef item in pd.randoItems)
-                    {
-                        if ((!RandomizerMod.RandomizerMod.RS.TrackerData.obtainedItems.Contains(item.id)
-                            && !RandomizerMod.RandomizerMod.RS.TrackerData.outOfLogicObtainedItems.Contains(item.id))
-                            || item.persistent)
-                        {
-                            newRandoItems.Add(item);
-                        }
-                    }
-
-                    pd.randoItems = newRandoItems;
-                }
-
-                if (RandomizerMod.RandomizerMod.RS.TrackerData.clearedLocations.Contains(pd.name))
-                {
-                    if (pd.randoItems != null && pd.randoItems.Any(i => i.persistent))
-                    {
-                        pd.pinLocationState = PinLocationState.ClearedPersistent;
-                    }
-                    else
-                    {
-                        pd.pinLocationState = PinLocationState.Cleared;
-
-                        pin.pinDef.canShowOnMap = false;
-                    }
                 }
             }
 
             _pins.RemoveAll(p => p.gameObject == null);
+        }
+
+        public void UpdatePinLocationState(PinDef pd)
+        {
+            // Check vanilla item
+            if (pd.pinLocationState == PinLocationState.NonRandomizedUnchecked)
+            {
+                if (DataLoader.HasObtainedVanillaItem(pd))
+                {
+                    pd.pinLocationState = PinLocationState.Cleared;
+                }
+                return;
+            }
+
+            // Remove obtained rando items from list
+            if (pd.randoItems != null && pd.randoItems.Any())
+            {
+                List<ItemDef> newRandoItems = new();
+
+                foreach (ItemDef item in pd.randoItems)
+                {
+                    if ((!RandomizerMod.RandomizerMod.RS.TrackerData.obtainedItems.Contains(item.id)
+                        && !RandomizerMod.RandomizerMod.RS.TrackerData.outOfLogicObtainedItems.Contains(item.id))
+                        || item.persistent)
+                    {
+                        newRandoItems.Add(item);
+                    }
+                }
+
+                pd.randoItems = newRandoItems;
+            }
+
+            // Check if reachable
+            if (RandomizerMod.RandomizerMod.RS.TrackerData.uncheckedReachableLocations.Contains(pd.name))
+            {
+                if (RandomizerMod.RandomizerMod.RS.TrackerDataWithoutSequenceBreaks.uncheckedReachableLocations.Contains(pd.name))
+                {
+                    pd.pinLocationState = PinLocationState.UncheckedReachable;
+                }
+                else
+                {
+                    pd.pinLocationState = PinLocationState.OutOfLogicReachable;
+                }
+            }
+
+            // Check if previewed
+            if (RandomizerMod.RandomizerMod.RS.TrackerData.previewedLocations.Contains(pd.name) && pd.canPreviewItem)
+            {
+                pd.pinLocationState = PinLocationState.Previewed;
+            }
+
+            // Check if cleared
+            if (RandomizerMod.RandomizerMod.RS.TrackerData.clearedLocations.Contains(pd.name))
+            {
+                if (pd.randoItems != null && pd.randoItems.Any(i => i.persistent))
+                {
+                    pd.pinLocationState = PinLocationState.ClearedPersistent;
+                }
+                else
+                {
+                    pd.pinLocationState = PinLocationState.Cleared;
+                }
+            }
         }
 
         // Called every time when any relevant setting is changed, or when the Map is opened
