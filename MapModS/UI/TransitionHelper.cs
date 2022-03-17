@@ -536,7 +536,7 @@ namespace MapModS.UI
             LinkedList<SearchNode> queue = new();
 
             // Add initial bench warp transitions if setting is enabled
-            if (allowBenchWarp)
+            if (allowBenchWarp && Dependencies.HasDependency("Benchwarp"))
             {
                 Dictionary<string, string> startWarp = new() { { "Warp Start", RandomizerMod.RandomizerData.Data.GetStartDef(RandomizerMod.RandomizerMod.RS.GenerationSettings.StartLocationSettings.StartLocation).Transition } };
 
