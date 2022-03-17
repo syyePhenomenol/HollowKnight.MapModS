@@ -1,9 +1,10 @@
 ﻿using MapModS.Data;
+using MapModS.Settings;
 using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
-using MapModS.Settings;
+using PBC = MapModS.Map.PinBorderColor;
 using PLS = MapModS.Data.PinLocationState;
 
 namespace MapModS.Map
@@ -19,10 +20,13 @@ namespace MapModS.Map
     public class PinAnimatedSprite : MonoBehaviour
     {
         public PinDef pinDef { get; private set; } = null;
+        
         SpriteRenderer SR => gameObject.GetComponent<SpriteRenderer>();
-        int spriteIndex = 0;
+
+        private int spriteIndex = 0;
 
         private readonly Color _inactiveColor = Color.gray;
+        
         private Color _origColor;
 
         public void SetPinData(PinDef pd)
@@ -90,19 +94,19 @@ namespace MapModS.Map
             }
 
             // Set border color of pin
-            PinBorderColor pinBorderColor = PinBorderColor.Normal;
+            PBC pinBorderColor = PBC.Normal;
 
             switch (pinDef.pinLocationState)
             {
                 case PLS.OutOfLogicReachable:
 
-                    pinBorderColor = PinBorderColor.OutOfLogic;
+                    pinBorderColor = PBC.OutOfLogic;
 
                     break;
 
                 case PLS.Previewed:
 
-                    pinBorderColor = PinBorderColor.Previewed;
+                    pinBorderColor = PBC.Previewed;
 
                     break;
 
@@ -110,7 +114,7 @@ namespace MapModS.Map
 
                     if (pinDef.randoItems.ElementAt(spriteIndex).persistent)
                     {
-                        pinBorderColor = PinBorderColor.Persistent;
+                        pinBorderColor = PBC.Persistent;
                     }
 
                     break;
