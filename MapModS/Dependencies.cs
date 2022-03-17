@@ -45,8 +45,8 @@ namespace MapModS
 
         public static bool HasDependency(string name)
         {
-            return ((strictDependencies.ContainsKey(name) && strictDependencies[name] != null)
-                || (optionalDependencies.ContainsKey(name) && optionalDependencies[name] != null));
+            return (strictDependencies.ContainsKey(name) && strictDependencies[name] != null)
+                || (optionalDependencies.ContainsKey(name) && optionalDependencies[name] != null);
         }
 
         // Taken from BadMagic's BenchwarpInterop
