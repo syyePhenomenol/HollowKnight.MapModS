@@ -19,7 +19,7 @@ namespace MapModS.Map
 
     public class PinAnimatedSprite : MonoBehaviour
     {
-        public PinDef pinDef { get; private set; } = null;
+        public PinDef PD { get; private set; } = null;
         
         SpriteRenderer SR => gameObject.GetComponent<SpriteRenderer>();
 
@@ -31,22 +31,24 @@ namespace MapModS.Map
 
         public void SetPinData(PinDef pd)
         {
-            pinDef = pd;
+            PD = pd;
             _origColor = SR.color;
         }
 
-        void OnEnable()
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Member is actually used")]
+        private void OnEnable()
         {
             if (gameObject.activeSelf
-                && pinDef != null
-                && pinDef.randoItems != null
-                && pinDef.randoItems.Count() > 1)
+                && PD != null
+                && PD.randoItems != null
+                && PD.randoItems.Count() > 1)
             {
                 StartCoroutine("CycleSprite");
             }
         }
 
-        void OnDisable()
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Member is actually used")]
+        private void OnDisable()
         {
             if (!gameObject.activeSelf)
             {
@@ -54,12 +56,13 @@ namespace MapModS.Map
             }
         }
 
-        IEnumerator CycleSprite()
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Member is actually used")]
+        private IEnumerator CycleSprite()
         {
             while (true)
             {
                 yield return new WaitForSecondsRealtime(1);
-                spriteIndex = (spriteIndex + 1) % pinDef.randoItems.Count();
+                spriteIndex = (spriteIndex + 1) % PD.randoItems.Count();
                 SetSprite();
             }
         }
@@ -74,29 +77,29 @@ namespace MapModS.Map
             if (!gameObject.activeSelf) return;
 
             // Non-randomized
-            if (pinDef.pinLocationState == PLS.NonRandomizedUnchecked)
+            if (PD.pinLocationState == PLS.NonRandomizedUnchecked)
             {
-                SR.sprite = SpriteManager.GetSpriteFromPool(pinDef.locationPoolGroup, PinBorderColor.Normal);
+                SR.sprite = SpriteManager.GetSpriteFromPool(PD.locationPoolGroup, PinBorderColor.Normal);
                 
                 return;
             }
 
-            if (pinDef.randoItems == null || spriteIndex + 1 > pinDef.randoItems.Count()) return;
+            if (PD.randoItems == null || spriteIndex + 1 > PD.randoItems.Count()) return;
 
             // Set pool to display
-            string pool = pinDef.locationPoolGroup;
+            string pool = PD.locationPoolGroup;
 
-            if (pinDef.pinLocationState == PLS.Previewed
-                || pinDef.pinLocationState == PLS.ClearedPersistent
+            if (PD.pinLocationState == PLS.Previewed
+                || PD.pinLocationState == PLS.ClearedPersistent
                 || MapModS.LS.SpoilerOn)
             {
-                pool = pinDef.randoItems.ElementAt(spriteIndex).poolGroup;
+                pool = PD.randoItems.ElementAt(spriteIndex).poolGroup;
             }
 
             // Set border color of pin
             PBC pinBorderColor = PBC.Normal;
 
-            switch (pinDef.pinLocationState)
+            switch (PD.pinLocationState)
             {
                 case PLS.OutOfLogicReachable:
 
@@ -112,7 +115,7 @@ namespace MapModS.Map
 
                 case PLS.ClearedPersistent:
 
-                    if (pinDef.randoItems.ElementAt(spriteIndex).persistent)
+                    if (PD.randoItems.ElementAt(spriteIndex).persistent)
                     {
                         pinBorderColor = PBC.Persistent;
                     }
@@ -130,7 +133,7 @@ namespace MapModS.Map
         public void SetSizeAndColor()
         {
             // Size
-            transform.localScale = pinDef.pinLocationState switch
+            transform.localScale = PD.pinLocationState switch
             {
                 PLS.UncheckedReachable
                 or PLS.OutOfLogicReachable
@@ -141,7 +144,7 @@ namespace MapModS.Map
             };
 
             // Color
-            SR.color = pinDef.pinLocationState switch
+            SR.color = PD.pinLocationState switch
             {
                 PLS.UncheckedReachable
                 or PLS.OutOfLogicReachable

@@ -139,6 +139,7 @@ namespace MapModS.UI
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Member is actually used")]
         IEnumerator UpdateSelectedScene()
         {
             while (true)
@@ -148,6 +149,7 @@ namespace MapModS.UI
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Member is actually used")]
         IEnumerator UpdateSelectedPin()
         {
             while (true)

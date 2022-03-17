@@ -17,7 +17,7 @@ namespace MapModS.Data
         private static Dictionary<string, PinDef> _allPinsAM;
         private static Dictionary<string, string> _pinScenes;
         private static Dictionary<string, MapZone> _fixedMapZones;
-        private static Dictionary<string, PinDef> _usedPins = new();
+        private static readonly Dictionary<string, PinDef> _usedPins = new();
         private static Dictionary<string, string> _logicLookup = new();
 
         public static List<string> usedPoolGroups = new();

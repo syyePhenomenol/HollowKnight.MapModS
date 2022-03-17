@@ -1,6 +1,6 @@
-﻿using ItemChanger;
+﻿using ConnectionMetadataInjector;
+using ItemChanger;
 using CMI = ConnectionMetadataInjector.ConnectionMetadataInjector;
-using ConnectionMetadataInjector;
 
 namespace MapModS.Data
 {

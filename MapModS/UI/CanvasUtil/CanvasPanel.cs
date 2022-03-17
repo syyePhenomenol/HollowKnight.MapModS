@@ -253,10 +253,5 @@ namespace MapModS.CanvasUtil
         {
             _background.UpdateImage(tex, subSection);
         }
-
-        private Vector2 GetPosition()
-        {
-            return _position;
-        }
     }
 }

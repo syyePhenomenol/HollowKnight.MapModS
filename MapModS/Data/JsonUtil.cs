@@ -32,7 +32,7 @@ namespace MapModS.Data
             }
             else
             {
-                return default(T);
+                return default;
             }
 
             using StreamReader sr = new(assembly.GetManifestResourceStream(embeddedResourcePath));
