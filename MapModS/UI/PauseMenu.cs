@@ -2,9 +2,8 @@
 using MapModS.Data;
 using MapModS.Map;
 using MapModS.Settings;
-using System;
+using RandomizerMod;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -104,19 +103,21 @@ namespace MapModS.UI
                 s => PoolsPanelClicked(),
                 buttonRect,
                 GUIController.Instance.TrajanBold,
-                "Customize\nPins",
+                Localization.Localize("Customize Pins"),
                 fontSize: 10
             );
 
             pools.SetActive(false, true);
 
-            // Pool buttons
-            foreach (PoolGroup group in Enum.GetValues(typeof(PoolGroup)))
-            {
-                if (group == PoolGroup.Unknown) continue;
+            int poolGroupCounter = 0;
 
-                float x_offset = (float)(group - 1) % 9 * 90;
-                float y_offset = (int)(group - 1) / 9 * 30;
+            // Pool buttons
+            foreach (string group in DataLoader.usedPoolGroups)
+            {
+                float x_offset = (float)(poolGroupCounter) % 9 * 90;
+                float y_offset = poolGroupCounter / 9 * 30;
+
+                poolGroupCounter++;
 
                 pools.AddButton
                 (
@@ -127,23 +128,21 @@ namespace MapModS.UI
                     PoolClicked,
                     buttonRect,
                     GUIController.Instance.TrajanBold,
-                    StringUtils.ToButtonGroup(group),
+                    Localization.Localize(group),
                     fontSize: 10
                 );
             }
-
-            int poolGroupCount = Enum.GetNames(typeof(PoolGroup)).Length;
 
             pools.AddButton
             (
                 "Benches",
                 GUIController.Instance.Images["ButtonRectEmpty"],
-                new Vector2((float)(poolGroupCount - 1) % 9 * 90, (int)(poolGroupCount - 1) / 9 * 30),
+                new Vector2((float)(poolGroupCounter) % 9 * 90, poolGroupCounter / 9 * 30),
                 Vector2.zero,
                 BenchClicked,
                 buttonRect,
                 GUIController.Instance.TrajanBold,
-                "Benches",
+                Localization.Localize("Benches"),
                 fontSize: 10
             );
 
@@ -210,10 +209,8 @@ namespace MapModS.UI
             UpdateMode();
             UpdatePoolsPanel();
 
-            foreach (PoolGroup group in Enum.GetValues(typeof(PoolGroup)))
+            foreach (string group in DataLoader.usedPoolGroups)
             {
-                if (group == PoolGroup.Unknown) continue;
-
                 UpdatePool(group);
             }
 
@@ -245,7 +242,6 @@ namespace MapModS.UI
                 BuildMenu(Canvas);
                 MapText.LockToggleEnable = true;
                 MapText.RebuildText();
-                //TransitionText.LockToggleEnable = true;
                 TransitionText.SetTexts();
             }
         }
@@ -258,7 +254,8 @@ namespace MapModS.UI
                 );
             _mapControlPanel.GetButton("Enable").UpdateText
                 (
-                    MapModS.LS.ModEnabled ? ("Mod\nEnabled") : ("Mod\nDisabled")
+                    MapModS.LS.ModEnabled? $"{Localization.Localize("Mod")}\n{Localization.Localize("Enabled")}"
+                    : $"{Localization.Localize("Mod")}\n{Localization.Localize("Disabled")}"
                 );
         }
 
@@ -280,7 +277,8 @@ namespace MapModS.UI
                 );
             _mapControlPanel.GetButton("Spoilers").UpdateText
                 (
-                    MapModS.LS.SpoilerOn ? ("Spoilers:\non") : ("Spoilers:\noff")
+                    MapModS.LS.SpoilerOn? (Localization.Localize("Spoilers") + ":\n" + Localization.Localize("on"))
+                    : (Localization.Localize("Spoilers") + ":\n" + Localization.Localize("off"))
                 );
         }
 
@@ -298,23 +296,23 @@ namespace MapModS.UI
         {
             if (WorldMap.CustomPins == null) return;
 
-            string randomizedText = "";
+            string randomizedText = $"{Localization.Localize("Randomized")}:\n";
 
             if (MapModS.LS.randomizedOn)
             {
                 _mapControlPanel.GetButton("Randomized").SetTextColor(Color.green);
-                randomizedText += "Randomized:\non";
+                randomizedText += Localization.Localize("on");
             }
             else
             {
                 _mapControlPanel.GetButton("Randomized").SetTextColor(Color.white);
-                randomizedText += "Randomized:\noff";
+                randomizedText += Localization.Localize("off");
             }
 
             if (WorldMap.CustomPins.IsRandomizedCustom())
             {
                 _mapControlPanel.GetButton("Randomized").SetTextColor(Color.yellow);
-                randomizedText += " (custom)";
+                randomizedText += $" ({Localization.Localize("custom")})";
             }
 
             _mapControlPanel.GetButton("Randomized").UpdateText(randomizedText);
@@ -334,23 +332,23 @@ namespace MapModS.UI
         {
             if (WorldMap.CustomPins == null) return;
 
-            string othersText = "";
+            string othersText = $"{Localization.Localize("Others")}:\n";
 
             if (MapModS.LS.othersOn)
             {
                 _mapControlPanel.GetButton("Others").SetTextColor(Color.green);
-                othersText += "Others:\non";
+                othersText += Localization.Localize("on");
             }
             else
             {
                 _mapControlPanel.GetButton("Others").SetTextColor(Color.white);
-                othersText += "Others:\noff";
+                othersText += Localization.Localize("off");
             }
 
             if (WorldMap.CustomPins.IsOthersCustom())
             {
                 _mapControlPanel.GetButton("Others").SetTextColor(Color.yellow);
-                othersText += " (custom)";
+                othersText += $" ({Localization.Localize("custom")})";
             }
 
             _mapControlPanel.GetButton("Others").UpdateText(othersText);
@@ -367,24 +365,28 @@ namespace MapModS.UI
 
         private static void UpdateStyle()
         {
+            string styleText = $"{Localization.Localize("Pin Style")}:\n";
+
             switch (MapModS.GS.pinStyle)
             {
                 case PinStyle.Normal:
-                    _mapControlPanel.GetButton("Style").UpdateText("Pin Style:\nnormal");
+                    styleText += Localization.Localize("normal");
                     break;
 
                 case PinStyle.Q_Marks_1:
-                    _mapControlPanel.GetButton("Style").UpdateText("Pin Style:\nq marks 1");
+                    styleText += $"{Localization.Localize("q marks")} 1";
                     break;
 
                 case PinStyle.Q_Marks_2:
-                    _mapControlPanel.GetButton("Style").UpdateText("Pin Style:\nq marks 2");
+                    styleText += $"{Localization.Localize("q marks")} 2";
                     break;
 
                 case PinStyle.Q_Marks_3:
-                    _mapControlPanel.GetButton("Style").UpdateText("Pin Style:\nq marks 3");
+                    styleText += $"{Localization.Localize("q marks")} 3";
                     break;
             }
+
+            _mapControlPanel.GetButton("Style").UpdateText(styleText);
         }
 
         public static void SizeClicked(string buttonName)
@@ -407,20 +409,24 @@ namespace MapModS.UI
 
         private static void UpdateSize()
         {
+            string sizeText = $"{Localization.Localize("Pin Size")}:\n";
+
             switch (MapModS.GS.pinSize)
             {
                 case PinSize.Small:
-                    _mapControlPanel.GetButton("Size").UpdateText("Pin Size:\nsmall");
+                    sizeText += Localization.Localize("small");
                     break;
 
                 case PinSize.Medium:
-                    _mapControlPanel.GetButton("Size").UpdateText("Pin Size:\nmedium");
+                    sizeText += Localization.Localize("medium");
                     break;
 
                 case PinSize.Large:
-                    _mapControlPanel.GetButton("Size").UpdateText("Pin Size:\nlarge");
+                    sizeText += Localization.Localize("large");
                     break;
             }
+
+            _mapControlPanel.GetButton("Size").UpdateText(sizeText);
         }
 
         public static void ModeClicked(string buttonName)
@@ -443,33 +449,37 @@ namespace MapModS.UI
 
         private static void UpdateMode()
         {
+            string modeText = $"{Localization.Localize("Mode")}:\n";
+
             switch (MapModS.LS.mapMode)
             {
                 case MapMode.FullMap:
                     _mapControlPanel.GetButton("Mode").SetTextColor(Color.green);
-                    _mapControlPanel.GetButton("Mode").UpdateText("Mode:\nFull Map");
+                    modeText += Localization.Localize("Full Map");
                     break;
 
                 case MapMode.AllPins:
                     _mapControlPanel.GetButton("Mode").SetTextColor(Color.white);
-                    _mapControlPanel.GetButton("Mode").UpdateText("Mode:\nAll Pins");
+                    modeText += Localization.Localize("All Pins");
                     break;
 
                 case MapMode.PinsOverMap:
                     _mapControlPanel.GetButton("Mode").SetTextColor(Color.white);
-                    _mapControlPanel.GetButton("Mode").UpdateText("Mode:\nPins Over Map");
+                    modeText += Localization.Localize("Pins Over Map");
                     break;
 
                 case MapMode.TransitionRando:
                     _mapControlPanel.GetButton("Mode").SetTextColor(Color.cyan);
-                    _mapControlPanel.GetButton("Mode").UpdateText("Mode:\nTransition");
+                    modeText += Localization.Localize("Transition");
                     break;
 
                 case MapMode.TransitionRandoAlt:
                     _mapControlPanel.GetButton("Mode").SetTextColor(Color.cyan);
-                    _mapControlPanel.GetButton("Mode").UpdateText("Mode:\nTransition 2");
+                    modeText += Localization.Localize("Transition") + " 2";
                     break;
             }
+
+            _mapControlPanel.GetButton("Mode").UpdateText(modeText);
         }
 
         public static void PoolsPanelClicked()
@@ -489,37 +499,37 @@ namespace MapModS.UI
 
         public static void PoolClicked(string buttonName)
         {
-            MapModS.LS.TogglePoolGroupState(buttonName);
+            MapModS.LS.TogglePoolGroupSetting(buttonName);
 
-            WorldMap.CustomPins.GetRandomizedGroups();
+            WorldMap.CustomPins.GetRandomizedOthersGroups();
 
             UpdateGUI();
             MapText.SetTexts();
         }
 
-        private static void UpdatePool(PoolGroup pool)
+        private static void UpdatePool(string poolGroup)
         {
             if (WorldMap.CustomPins == null) return;
 
-            if (pool == PoolGroup.GeoRocks && !RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.GeoRocks)
+            if (poolGroup == "Geo Rocks" && !RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.GeoRocks)
             {
-                _mapControlPanel.GetPanel("PoolsPanel").GetButton(pool.ToString()).UpdateText
+                _mapControlPanel.GetPanel("PoolsPanel").GetButton(poolGroup).UpdateText
                     (
-                        "Geo Rocks:\n"
+                        $"{Localization.Localize("Geo Rocks")}:\n"
                         + MapModS.LS.GeoRockCounter + " / " + "207"
                     );
             }
 
-            switch (MapModS.LS.GetPoolGroupState(pool))
+            switch (MapModS.LS.GetPoolGroupSetting(poolGroup))
             {
                 case PoolGroupState.Off:
-                    _mapControlPanel.GetPanel("PoolsPanel").GetButton(pool.ToString()).SetTextColor(Color.white);
+                    _mapControlPanel.GetPanel("PoolsPanel").GetButton(poolGroup).SetTextColor(Color.white);
                     break;
                 case PoolGroupState.On:
-                    _mapControlPanel.GetPanel("PoolsPanel").GetButton(pool.ToString()).SetTextColor(Color.green);
+                    _mapControlPanel.GetPanel("PoolsPanel").GetButton(poolGroup).SetTextColor(Color.green);
                     break;
                 case PoolGroupState.Mixed:
-                    _mapControlPanel.GetPanel("PoolsPanel").GetButton(pool.ToString()).SetTextColor(Color.yellow);
+                    _mapControlPanel.GetPanel("PoolsPanel").GetButton(poolGroup).SetTextColor(Color.yellow);
                     break;
             }
         }
@@ -551,7 +561,7 @@ namespace MapModS.UI
         {
             MapModS.LS.ToggleGroupBy();
 
-            WorldMap.CustomPins.GetRandomizedGroups();
+            WorldMap.CustomPins.GetRandomizedOthersGroups();
             WorldMap.CustomPins.ResetPoolSettings();
 
             UpdateGUI();
@@ -562,11 +572,11 @@ namespace MapModS.UI
             switch (MapModS.LS.groupBy)
             {
                 case GroupBy.Location:
-                    _mapControlPanel.GetPanel("PoolsPanel").GetButton("GroupBy").UpdateText("Group by:\nLocation");
+                    _mapControlPanel.GetPanel("PoolsPanel").GetButton("GroupBy").UpdateText($"{Localization.Localize("Group by")}:\n{Localization.Localize("Location")}");
                     break;
 
                 case GroupBy.Item:
-                    _mapControlPanel.GetPanel("PoolsPanel").GetButton("GroupBy").UpdateText("Group by:\nItem");
+                    _mapControlPanel.GetPanel("PoolsPanel").GetButton("GroupBy").UpdateText($"{Localization.Localize("Group by")}:\n{Localization.Localize("Item")}");
                     break;
             }
         }
@@ -582,12 +592,12 @@ namespace MapModS.UI
         {
             if (MapModS.GS.persistentOn)
             {
-                _mapControlPanel.GetPanel("PoolsPanel").GetButton("Persistent").UpdateText("Persistent\nitems: On");
+                _mapControlPanel.GetPanel("PoolsPanel").GetButton("Persistent").UpdateText($"{Localization.Localize("Persistent items")}: {Localization.Localize("On")}");
                 _mapControlPanel.GetPanel("PoolsPanel").GetButton("Persistent").SetTextColor(Color.green);
             }
             else
             {
-                _mapControlPanel.GetPanel("PoolsPanel").GetButton("Persistent").UpdateText("Persistent\nitems: Off");
+                _mapControlPanel.GetPanel("PoolsPanel").GetButton("Persistent").UpdateText($"{Localization.Localize("Persistent items")}: {Localization.Localize("Off")}");
                 _mapControlPanel.GetPanel("PoolsPanel").GetButton("Persistent").SetTextColor(Color.white);
             }
         }

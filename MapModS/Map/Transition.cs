@@ -79,7 +79,7 @@ namespace MapModS.Map
 
         public static GameObject CreateExtraMapRooms(GameMap gameMap)
         {
-            GameObject go_extraMapRooms = new GameObject("MMS Custom Map Rooms");
+            GameObject go_extraMapRooms = new("MMS Custom Map Rooms");
             go_extraMapRooms.layer = 5;
             go_extraMapRooms.transform.SetParent(gameMap.transform);
             go_extraMapRooms.transform.localPosition = new Vector3(-14f, 16f, 0);
@@ -366,11 +366,6 @@ namespace MapModS.Map
                     emd.origTransitionColor = sr.color;
                 }
             }
-
-            //gameMap.panMinX = -28f;
-            //gameMap.panMaxX = 26f;
-            //gameMap.panMinY = -25f;
-            //gameMap.panMaxY = 20f;
 
             if (isAlt)
             {

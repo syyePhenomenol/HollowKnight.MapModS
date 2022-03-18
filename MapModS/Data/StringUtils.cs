@@ -1,4 +1,4 @@
-﻿using System.Text.RegularExpressions;
+﻿using GlobalEnums;
 
 namespace MapModS.Data
 {
@@ -42,42 +42,6 @@ namespace MapModS.Data
             return RemoveBossSuffix(GameManager.instance.sceneName);
         }
 
-        public static string ToButtonGroup(PoolGroup poolGroup)
-        {
-            string[] splitGroup = Regex.Split(poolGroup.ToString(), @"(?<!^)(?=[A-Z])");
-
-            if (splitGroup.Length == 0)
-            {
-                return "";
-            }
-            else if (splitGroup.Length == 1)
-            {
-                return splitGroup[0];
-            }
-            else
-            {
-                return splitGroup[0] + "\n" + splitGroup[1];
-            }
-        }
-
-        public static string ToCleanGroup(PoolGroup poolGroup)
-        {
-            string[] splitGroup = Regex.Split(poolGroup.ToString(), @"(?<!^)(?=[A-Z])");
-
-            if (splitGroup.Length == 0)
-            {
-                return "";
-            }
-            else if (splitGroup.Length == 1)
-            {
-                return splitGroup[0];
-            }
-            else
-            {
-                return splitGroup[0] + " " + splitGroup[1];
-            }
-        }
-
         public static string ToCleanPreviewText(string text)
         {
             return text.Replace("Pay ", "")
@@ -91,6 +55,29 @@ namespace MapModS.Data
         {
             return name.Replace("-", " ")
                 .Replace("_", " ");
+        }
+
+        public static MapZone ToMapZone(string mapZone)
+        {
+            return mapZone switch
+            {
+                "Ancient Basin" => MapZone.ABYSS,
+                "City of Tears" => MapZone.CITY,
+                "Crystal Peak" => MapZone.MINES,
+                "Deepnest" => MapZone.DEEPNEST,
+                "Dirtmouth" => MapZone.TOWN,
+                "Fog Canyon" => MapZone.FOG_CANYON,
+                "Forgotten Crossroads" => MapZone.CROSSROADS,
+                "Fungal Wastes" => MapZone.WASTES,
+                "Greenpath" => MapZone.GREEN_PATH,
+                "Howling Cliffs" => MapZone.CLIFFS,
+                "Kingdom's Edge" => MapZone.OUTSKIRTS,
+                "Queen's Gardens" => MapZone.ROYAL_GARDENS,
+                "Resting Grounds" => MapZone.RESTING_GROUNDS,
+                "Royal Waterways" => MapZone.WATERWAYS,
+                "White Palace" => MapZone.WHITE_PALACE,
+                _ => MapZone.NONE
+            };
         }
     }
 }

@@ -1,14 +1,22 @@
 # Randomizer Map S
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/syyePhenomenol/HollowKnight.MapModS)
+![Downloads GitHub all releases](https://img.shields.io/github/downloads/syyePhenomenol/HollowKnight.MapModS/total)
+
 Randomizer Map S is a Hollow Knight mod used with Randomizer 4. It helps to find both item and transition checks.
 
-This fork of CaptainDapper's original mod has been expanded on with many more features and bug fixes. It is currently compatible with:
-- [RandomizerMod v4.0.3](https://github.com/homothetyhk/RandomizerMod). Does NOT work with earlier versions
+This fork of CaptainDapper's original mod has been expanded on with many more features and bug fixes.
+
+Dependencies:
+- [RandomizerMod v4.0.3](https://github.com/homothetyhk/RandomizerMod) and all of its dependencies. Does NOT work with earlier versions
+- [ConnectionMetadataInjector v1.1.8107.6258](https://github.com/BadMagic100/ConnectionMetadataInjector). Does NOT work with earlier versions
+
+Compatible optional mods:
 - [AdditionalMaps v1.5.1.0](https://github.com/SFGrenade/AdditionalMaps). Highly recommended with this mod to view White Palace checks
-- [RandomizableLevers v1.1.2.1](https://github.com/flibber-hk/HollowKnight.RandomizableLevers)
-- [ItemSync v2.2.1](https://github.com/Shadudev/HollowKnight.MultiWorld/tree/itemsync)
-- [RandoPlus v1.2.0](https://github.com/flibber-hk/HollowKnight.RandoPlus)
-- [SkillUpgrades v0.9.4.2](https://github.com/flibber-hk/HollowKnight.SkillUpgrades)
-- Most other mods that don't change map function
+- [RandomizableLevers v1.1.2.1](https://github.com/flibber-hk/HollowKnight.RandomizableLevers). Shows lever checks on map
+- [RandoPlus v1.2.0](https://github.com/flibber-hk/HollowKnight.RandoPlus). Shows Mr Mushroom checks on map
+- Most other mods
+
+This mod has support for languages other than English. You will need to source a `language.json` file and copy it to the `Randomizer 4` directory.
 
 # Screenshots
 <details>
@@ -58,7 +66,7 @@ This fork of CaptainDapper's original mod has been expanded on with many more fe
 - The Quick Map also shows the list of unchecked and visited transitions for the current room.
 - `CTRL-B`: Toggle including Benchwarp in the pathfinder on/off.
 - `CTRL-R`: Toggle the route to be displayed in-game full/next transition only/off.
-- `CTRL-U`: Toggle the panel for unchecked and visited transitions in the World Map. 
+- `CTRL-U`: Toggle the panel for unchecked and visited transitions in the World Map.
 
 # How To Install
 Use Scarab: https://github.com/fifty-six/Scarab

@@ -2,6 +2,7 @@
 using MapModS.Data;
 using MapModS.Map;
 using MapModS.Settings;
+using RandomizerMod;
 using System.Linq;
 using UnityEngine;
 
@@ -78,7 +79,7 @@ namespace MapModS.UI
 
             _infoPanel = new CanvasPanel
                 (_canvas, GUIController.Instance.Images["LookupBG"], new Vector2(1200f, 200f), new Vector2(GUIController.Instance.Images["LookupBG"].width, GUIController.Instance.Images["LookupBG"].height), new Rect(0f, 0f, GUIController.Instance.Images["LookupBG"].width, GUIController.Instance.Images["LookupBG"].height));
-            _infoPanel.AddText("Info", "None selected", new Vector2(5f, 30f), new Vector2(GUIController.Instance.Images["LookupBG"].width - 20f, GUIController.Instance.Images["LookupBG"].height), GUIController.Instance.Perpetua, 19);
+            _infoPanel.AddText("Info", Localization.Localize("None selected"), new Vector2(5f, 30f), new Vector2(GUIController.Instance.Images["LookupBG"].width - 20f, GUIController.Instance.Images["LookupBG"].height), GUIController.Instance.Perpetua, 19);
 
             _infoPanel.SetActive(false, false);
 
@@ -150,20 +151,20 @@ namespace MapModS.UI
 
         public static void SetControlText()
         {
-            string controlText = "";
+            string controlText = $"{Localization.Localize("Toggle lookup")} (Ctrl-L): ";
 
             if (MapModS.LS.lookupOn)
             {
                 _instructionPanel.GetText("Control").SetTextColor(Color.green);
-                controlText += "Toggle lookup (Ctrl-L): On";
+                controlText += Localization.Localize("On");
             }
             else
             {
                 _instructionPanel.GetText("Control").SetTextColor(Color.white);
-                controlText += "Toggle lookup (Ctrl-L): Off";
+                controlText += Localization.Localize("Off");
             }
 
-            _instructionPanel.GetText("Control").UpdateText(controlText);
+            _instructionPanel.GetText("Control").UpdateText(Localization.Localize(controlText));
         }
 
         public static void SetInstructionsText()
@@ -174,32 +175,32 @@ namespace MapModS.UI
 
             if (pd != null)
             {
-                instructionsText += $"\n\nRoom: {pd.sceneName}";
+                instructionsText += $"\n\n{Localization.Localize("Room")}: {pd.sceneName}";
 
-                instructionsText += $"\n\nStatus:";
+                instructionsText += $"\n\n{Localization.Localize("Status")}:";
 
                 instructionsText += pd.pinLocationState switch
                 {
-                    PinLocationState.UncheckedUnreachable => " Randomized, unchecked, unreachable",
-                    PinLocationState.UncheckedReachable => " Randomized, unchecked, reachable",
-                    PinLocationState.NonRandomizedUnchecked => " Not randomized, either unchecked or persistent",
-                    PinLocationState.OutOfLogicReachable => " Randomized, unchecked, reachable through sequence break",
-                    PinLocationState.Previewed => " Randomized, previewed",
-                    PinLocationState.Cleared => " Cleared",
-                    PinLocationState.ClearedPersistent => " Randomized, cleared, persistent",
+                    PinLocationState.UncheckedUnreachable => $" {Localization.Localize("Randomized, unchecked, unreachable")}",
+                    PinLocationState.UncheckedReachable => $" {Localization.Localize("Randomized, unchecked, reachable")}",
+                    PinLocationState.NonRandomizedUnchecked => $" {Localization.Localize("Not randomized, either unchecked or persistent")}",
+                    PinLocationState.OutOfLogicReachable => $" {Localization.Localize("Randomized, unchecked, reachable through sequence break")}",
+                    PinLocationState.Previewed => $" {Localization.Localize("Randomized, previewed")}",
+                    PinLocationState.Cleared => $" {Localization.Localize("Cleared")}",
+                    PinLocationState.ClearedPersistent => $" {Localization.Localize("Randomized, cleared, persistent")}",
                     _ => ""
                 };
 
                 if (DataLoader.IsInLogicLookup(selectedLocation))
                 {
-                    instructionsText += $"\n\nLogic: {DataLoader.GetRawLogic(selectedLocation)}";
+                    instructionsText += $"\n\n{Localization.Localize("Logic")}: {DataLoader.GetRawLogic(selectedLocation)}";
                 }
 
                 if (RandomizerMod.RandomizerMod.RS.TrackerData.previewedLocations.Contains(pd.name))
                 {
-                    instructionsText += $"\n\nPreviewed item(s):";
+                    instructionsText += $"\n\n{Localization.Localize("Previewed item(s)")}:";
 
-                    string[] previewText = DataLoader.GetPreviewText(pd.abstractPlacementName);
+                    string[] previewText = DataLoader.GetPreviewText(pd.name);
 
                     if (previewText == null) return;
 
@@ -218,7 +219,7 @@ namespace MapModS.UI
                         || (RandomizerMod.RandomizerMod.RS.TrackerData.previewedLocations.Contains(pd.name)
                             && !pd.canPreviewItem)))
                 {
-                    instructionsText += $"\n\nSpoiler item(s):";
+                    instructionsText += $"\n\n{Localization.Localize("Spoiler item(s)")}:";
 
                     foreach (ItemDef item in pd.randoItems)
                     {
@@ -229,7 +230,7 @@ namespace MapModS.UI
                 }
             }
 
-            _infoPanel.GetText("Info").UpdateText(instructionsText);
+            _infoPanel.GetText("Info").UpdateText(Localization.Localize(instructionsText));
         }
     }
 }

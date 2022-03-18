@@ -14,6 +14,7 @@ namespace MapModS.Map
     {
         public static void Hook()
         {
+            On.GameMap.PositionCompass += GameMap_PositionCompass;
             On.GameManager.GetCurrentMapZone += GameManager_GetCurrentMapZone;
             On.GameMap.GetDoorMapZone += GameMap_GetDoorMapZone;
 
@@ -37,6 +38,7 @@ namespace MapModS.Map
 
         public static void Unhook()
         {
+            On.GameMap.PositionCompass -= GameMap_PositionCompass;
             On.GameManager.GetCurrentMapZone -= GameManager_GetCurrentMapZone;
             On.GameMap.GetDoorMapZone -= GameMap_GetDoorMapZone;
 
@@ -56,6 +58,14 @@ namespace MapModS.Map
             On.GameMap.QuickMapWaterways -= GameMap_QuickMapWaterways;
 
             On.GameManager.SetGameMap -= GameManager_SetGameMap;
+        }
+
+        // Fixes some null referencing shenanigans
+        private static void GameMap_PositionCompass(On.GameMap.orig_PositionCompass orig, GameMap self, bool posShade)
+        {
+            self.doorMapZone = self.GetDoorMapZone();
+
+            orig(self, posShade);
         }
 
         // The following fixes loading the Quick Map for some of the special areas (like Ancestral Mound)

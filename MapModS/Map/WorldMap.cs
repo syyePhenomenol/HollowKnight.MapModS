@@ -18,6 +18,7 @@ namespace MapModS.Map
 
         public static void Hook()
         {
+            On.GameMap.Start += GameMap_Start;
             On.GameManager.SetGameMap += GameManager_SetGameMap;
             On.GameMap.WorldMap += GameMap_WorldMap;
             On.GameMap.SetupMapMarkers += GameMap_SetupMapMarkers;
@@ -28,6 +29,7 @@ namespace MapModS.Map
 
         public static void Unhook()
         {
+            On.GameMap.Start -= GameMap_Start;
             On.GameManager.SetGameMap -= GameManager_SetGameMap;
             On.GameMap.WorldMap -= GameMap_WorldMap;
             On.GameMap.SetupMapMarkers -= GameMap_SetupMapMarkers;
@@ -36,31 +38,33 @@ namespace MapModS.Map
             ModHooks.LanguageGetHook -= OnLanguageGetHook;
         }
 
-        private static string OnLanguageGetHook(string key, string sheet, string orig)
+        // Called every time when a new GameMap is created (once per save load)
+        private static void GameMap_Start(On.GameMap.orig_Start orig, GameMap self)
         {
-            if (sheet == "MMS" && (Transition.nonMapScenes.Contains(key) || Transition.whitePalaceScenes.Contains(key)))
-            {
-                return key;
-            }
-
-            return orig;
-        }
-
-        // The function that is called every time after a new GameMap is created (once per save load)
-        private static void GameManager_SetGameMap(On.GameManager.orig_SetGameMap orig, GameManager self, GameObject go_gameMap)
-        {
-            orig(self, go_gameMap);
+            orig(self);
 
             try
             {
                 Dependencies.BenchwarpInterop();
                 DataLoader.SetUsedPinDefs();
                 DataLoader.SetLogicLookup();
+
+                if (MapModS.LS.NewSettings || MapModS.LS.PoolGroupSettings.Count == 0)
+                {
+                    MapModS.LS.InitializePoolGroupSettings();
+                    MapModS.LS.NewSettings = true;
+                }
             }
             catch (Exception e)
             {
                 MapModS.Instance.LogError(e);
             }
+        }
+
+        // Called every time after a new GameMap is created (once per save load)
+        private static void GameManager_SetGameMap(On.GameManager.orig_SetGameMap orig, GameManager self, GameObject go_gameMap)
+        {
+            orig(self, go_gameMap);
             
             GameMap gameMap = go_gameMap.GetComponent<GameMap>();
 
@@ -96,7 +100,7 @@ namespace MapModS.Map
 
             CustomPins.MakePins(gameMap);
 
-            CustomPins.GetRandomizedGroups();
+            CustomPins.GetRandomizedOthersGroups();
 
             if (MapModS.LS.NewSettings)
             {
@@ -178,6 +182,16 @@ namespace MapModS.Map
             orig(self);
 
             return false;
+        }
+
+        private static string OnLanguageGetHook(string key, string sheet, string orig)
+        {
+            if (sheet == "MMS" && (Transition.nonMapScenes.Contains(key) || Transition.whitePalaceScenes.Contains(key)))
+            {
+                return key;
+            }
+
+            return orig;
         }
 
         // The main method for updating map objects and pins when opening either World Map or Quick Map

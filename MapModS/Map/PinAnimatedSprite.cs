@@ -1,9 +1,11 @@
 ﻿using MapModS.Data;
+using MapModS.Settings;
 using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
-using MapModS.Settings;
+using PBC = MapModS.Map.PinBorderColor;
+using PLS = MapModS.Data.PinLocationState;
 
 namespace MapModS.Map
 {
@@ -17,31 +19,36 @@ namespace MapModS.Map
 
     public class PinAnimatedSprite : MonoBehaviour
     {
-        public PinDef pinDef { get; private set; } = null;
+        public PinDef PD { get; private set; } = null;
+        
         SpriteRenderer SR => gameObject.GetComponent<SpriteRenderer>();
-        int spriteIndex = 0;
+
+        private int spriteIndex = 0;
 
         private readonly Color _inactiveColor = Color.gray;
+        
         private Color _origColor;
 
         public void SetPinData(PinDef pd)
         {
-            pinDef = pd;
+            PD = pd;
             _origColor = SR.color;
         }
 
-        void OnEnable()
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Member is actually used")]
+        private void OnEnable()
         {
             if (gameObject.activeSelf
-                && pinDef != null
-                && pinDef.randoItems != null
-                && pinDef.randoItems.Count() > 1)
+                && PD != null
+                && PD.randoItems != null
+                && PD.randoItems.Count() > 1)
             {
                 StartCoroutine("CycleSprite");
             }
         }
 
-        void OnDisable()
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Member is actually used")]
+        private void OnDisable()
         {
             if (!gameObject.activeSelf)
             {
@@ -49,12 +56,13 @@ namespace MapModS.Map
             }
         }
 
-        IEnumerator CycleSprite()
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Member is actually used")]
+        private IEnumerator CycleSprite()
         {
             while (true)
             {
                 yield return new WaitForSecondsRealtime(1);
-                spriteIndex = (spriteIndex + 1) % pinDef.randoItems.Count();
+                spriteIndex = (spriteIndex + 1) % PD.randoItems.Count();
                 SetSprite();
             }
         }
@@ -66,48 +74,92 @@ namespace MapModS.Map
 
         public void SetSprite()
         {
-            if (!gameObject.activeSelf || spriteIndex + 1 > pinDef.randoItems.Count()) return;
+            if (!gameObject.activeSelf) return;
 
             // Non-randomized
-            if (pinDef.pinLocationState == PinLocationState.NonRandomizedUnchecked)
+            if (PD.pinLocationState == PLS.NonRandomizedUnchecked)
             {
-                SR.sprite = SpriteManager.GetSpriteFromPool(pinDef.locationPoolGroup, PinBorderColor.Normal);
+                SR.sprite = SpriteManager.GetSpriteFromPool(PD.locationPoolGroup, PinBorderColor.Normal);
+                
                 return;
             }
 
-            PoolGroup pool;
-            PinBorderColor pinBorderColor = PinBorderColor.Normal;
+            if (PD.randoItems == null || spriteIndex + 1 > PD.randoItems.Count()) return;
 
-            if (pinDef.pinLocationState == PinLocationState.OutOfLogicReachable)
+            // Set pool to display
+            string pool = PD.locationPoolGroup;
+
+            if (PD.pinLocationState == PLS.Previewed
+                || PD.pinLocationState == PLS.ClearedPersistent
+                || MapModS.LS.SpoilerOn)
             {
-                pinBorderColor = PinBorderColor.OutOfLogic;
+                pool = PD.randoItems.ElementAt(spriteIndex).poolGroup;
             }
 
-            if (pinDef.pinLocationState == PinLocationState.Previewed)
-            {
-                pinBorderColor = PinBorderColor.Previewed;
-            }
+            // Set border color of pin
+            PBC pinBorderColor = PBC.Normal;
 
-            if (pinDef.pinLocationState == PinLocationState.Previewed)
+            switch (PD.pinLocationState)
             {
-                pool = pinDef.randoItems.ElementAt(spriteIndex).poolGroup;
-            }
-            else if (MapModS.LS.SpoilerOn
-                || pinDef.pinLocationState == PinLocationState.ClearedPersistent)
-            {
-                pool = pinDef.randoItems.ElementAt(spriteIndex).poolGroup;
+                case PLS.OutOfLogicReachable:
 
-                if (pinDef.randoItems.ElementAt(spriteIndex).persistent)
-                {
-                    pinBorderColor = PinBorderColor.Persistent;
-                }
-            }
-            else
-            {
-                pool = pinDef.locationPoolGroup;
+                    pinBorderColor = PBC.OutOfLogic;
+
+                    break;
+
+                case PLS.Previewed:
+
+                    pinBorderColor = PBC.Previewed;
+
+                    break;
+
+                case PLS.ClearedPersistent:
+
+                    if (PD.randoItems.ElementAt(spriteIndex).persistent)
+                    {
+                        pinBorderColor = PBC.Persistent;
+                    }
+
+                    break;
+
+                default:
+
+                    break;
             }
 
             SR.sprite = SpriteManager.GetSpriteFromPool(pool, pinBorderColor);
+        }
+
+        public void SetSizeAndColor()
+        {
+            // Size
+            transform.localScale = PD.pinLocationState switch
+            {
+                PLS.UncheckedReachable
+                or PLS.OutOfLogicReachable
+                or PLS.Previewed
+                => GetPinScale() * new Vector2(1.45f, 1.45f),
+
+                _ => GetPinScale() * new Vector2(1.015f, 1.015f),
+            };
+
+            // Color
+            SR.color = PD.pinLocationState switch
+            {
+                PLS.UncheckedReachable
+                or PLS.OutOfLogicReachable
+                or PLS.Previewed
+                or PLS.ClearedPersistent
+                => _origColor,
+
+                _ => _inactiveColor,
+            };
+        }
+
+        public void SetSizeAndColorSelected()
+        {
+            transform.localScale = GetPinScale() * new Vector2(1.8f, 1.8f);
+            SR.color = _origColor;
         }
 
         private float GetPinScale()
@@ -119,33 +171,6 @@ namespace MapModS.Map
                 PinSize.Large => 0.42f,
                 _ => throw new NotImplementedException()
             };
-        }
-
-        public void SetSizeAndColor()
-        {
-            if (pinDef.pinLocationState == PinLocationState.UncheckedReachable
-                || pinDef.pinLocationState == PinLocationState.OutOfLogicReachable
-                || pinDef.pinLocationState == PinLocationState.Previewed)
-            {
-                transform.localScale = 1.45f * GetPinScale() * new Vector2(1.0f, 1.0f);
-                SR.color = _origColor;
-            }
-            else if (pinDef.pinLocationState == PinLocationState.ClearedPersistent)
-            {
-                transform.localScale = 1.015f * GetPinScale() * new Vector2(1.0f, 1.0f);
-                SR.color = _origColor;
-            }
-            else
-            {
-                transform.localScale = 1.015f * GetPinScale() * new Vector2(1.0f, 1.0f);
-                SR.color = _inactiveColor;
-            }
-        }
-
-        public void SetSizeAndColorSelected()
-        {
-            transform.localScale = 1.8f * GetPinScale() * new Vector2(1.0f, 1.0f);
-            SR.color = _origColor;
         }
     }
 }

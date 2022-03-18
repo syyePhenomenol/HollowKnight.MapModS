@@ -62,7 +62,7 @@ namespace MapModS.CanvasUtil
             if (font != null && text != null)
             {
                 _textObj = new GameObject();
-                _textObj.AddComponent<RectTransform>().sizeDelta = new Vector2(bgSubSection.width * 2, bgSubSection.height * 2);
+                _textObj.AddComponent<RectTransform>().sizeDelta = new Vector2(bgSubSection.width * 1.85f, bgSubSection.height * 2);
                 Text t = _textObj.AddComponent<Text>();
                 t.text = text;
                 t.font = font;

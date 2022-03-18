@@ -1,9 +1,9 @@
-﻿using System;
-using System.Reflection;
+﻿using Modding;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Modding;
-using System.Collections;
+using System.Reflection;
 
 namespace MapModS
 {
@@ -12,6 +12,10 @@ namespace MapModS
         public static Dictionary<string, Assembly> strictDependencies = new()
         {
             { "RandomizerMod", null },
+            { "RandomizerCore", null },
+            { "ItemChanger", null },
+            { "MenuChanger", null },
+            { "ConnectionMetadataInjector", null },
             { "Vasi", null }
         };
 
@@ -19,7 +23,8 @@ namespace MapModS
         {
             { "AdditionalMaps", null },
             { "Benchwarp", null },
-            { "RandomizableLevers", null }
+            { "RandomizableLevers", null },
+            { "RandoPlus", null }
         };
 
         public static void GetDependencies()
@@ -40,8 +45,8 @@ namespace MapModS
 
         public static bool HasDependency(string name)
         {
-            return (strictDependencies.GetValueOrDefault(name) != null
-                || optionalDependencies.GetValueOrDefault(name) != null);
+            return (strictDependencies.ContainsKey(name) && strictDependencies[name] != null)
+                || (optionalDependencies.ContainsKey(name) && optionalDependencies[name] != null);
         }
 
         // Taken from BadMagic's BenchwarpInterop
@@ -59,10 +64,10 @@ namespace MapModS
         // The above copyright notice and this permission notice shall be included in all
         // copies or substantial portions of the Software.
 
-        static Type? bwBenchKey;
-        static PropertyInfo? bwBenchKey_SceneName;
-        static object? bwLocalSettings_Instance;
-        static FieldInfo? bwLocalSettings_VisitedBenchScenes;
+        static Type bwBenchKey;
+        static PropertyInfo bwBenchKey_SceneName;
+        static object bwLocalSettings_Instance;
+        static FieldInfo bwLocalSettings_VisitedBenchScenes;
         static IEnumerable bwLocalSettings_VisitedBenchScenes_Instance;
         static bool isOldBenchwarp = false;
 
@@ -72,17 +77,15 @@ namespace MapModS
             {
                 bwLocalSettings_Instance = bw.GetType().GetProperty("LS").GetValue(bw);
 
-                Type? bwLocalSettingsType = bwLocalSettings_Instance?.GetType();
+                Type bwLocalSettingsType = bwLocalSettings_Instance?.GetType();
 
                 bwLocalSettings_VisitedBenchScenes = bwLocalSettingsType?.GetField("visitedBenchScenes");
-
-                Type? vbsType = bwLocalSettings_VisitedBenchScenes.GetType();
 
                 bwBenchKey = optionalDependencies["Benchwarp"]?.GetType("Benchwarp.BenchKey");
 
                 if (bwBenchKey == null)
                 {
-                    MapModS.Instance?.LogWarn("Benchwarp is outdated");
+                    MapModS.Instance.LogWarn("Benchwarp is outdated");
                     isOldBenchwarp = true;
                     return;
                 }
@@ -95,7 +98,7 @@ namespace MapModS
                     || bwLocalSettingsType == null
                     || bwLocalSettings_VisitedBenchScenes == null)
                 {
-                    MapModS.Instance?.LogError("Found benchwarp installed, but couldn't get necessary interop info");
+                    MapModS.Instance.LogError("Found benchwarp installed, but couldn't get necessary interop info");
                 }
             }
         }

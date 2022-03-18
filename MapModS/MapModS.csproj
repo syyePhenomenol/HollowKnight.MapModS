@@ -10,7 +10,7 @@
     <LangVersion>latest</LangVersion>
     <Deterministic>true</Deterministic>
     <AssemblyName>MapModS</AssemblyName>
-	<HollowKnightRefs>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed</HollowKnightRefs>
+	<HollowKnightRefs>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed</HollowKnightRefs>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -31,22 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
 
-  <Target Name="CopyMod" AfterTargets="PostBuildEvent">
-    <RemoveDir Directories="$(ExportDir)/$(TargetName)/" />
-    <MakeDir Directories="$(ExportDir)/$(TargetName)/" />
-    <MakeDir Directories="$(ExportDir)/$(TargetName)/zip/" />
-    <MakeDir Condition="!Exists('$(HollowKnightRefs)/Mods/$(TargetName)/')" Directories="$(HollowKnightRefs)/Mods/$(TargetName)/" />
-    <Copy SourceFiles="$(TargetPath);$(TargetDir)/$(TargetName).pdb" DestinationFolder="$(HollowKnightRefs)/Mods/$(TargetName)/" />
-    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ExportDir)/$(TargetName)/" />
-    <Copy SourceFiles="ReadMe.md;$(TargetPath);$(TargetDir)/$(TargetName).pdb" DestinationFolder="$(ExportDir)/$(TargetName)/zip/" />
-    <ZipDirectory SourceDirectory="$(ExportDir)/$(TargetName)/zip/" DestinationFile="$(ExportDir)/$(TargetName)/$(TargetName).zip" />
-    <RemoveDir Directories="$(ExportDir)/$(TargetName)/zip/" />
-    
-    <GetFileHash Files="$(ExportDir)/$(TargetName)/$(TargetName).zip" Algorithm="SHA256">
-      <Output TaskParameter="Items" ItemName="FilesWithHashes" />
-    </GetFileHash>
-    <WriteLinesToFile File="$(ExportDir)/$(TargetName)/SHA.txt" Lines="@(FilesWithHashes->'%(FileHash)')" Overwrite="true" Encoding="UTF-8" />
-  </Target>
+  
 
   <ItemGroup>
     <Compile Remove="Unused\**" />
@@ -58,6 +43,7 @@
     <Compile Remove="Data\PinDefOld.cs" />
     <Compile Remove="Data\PinDefUnused.cs" />
     <Compile Remove="Data\Pool.cs" />
+    <Compile Remove="Data\PoolGroup.cs" />
     <Compile Remove="Data\PreviewGroup.cs" />
     <Compile Remove="Data\ShopDef.cs" />
     <Compile Remove="Map\PinOld.cs" />
@@ -76,6 +62,7 @@
     <None Remove="Resources\language.json" />
     <None Remove="Resources\pins.json" />
     <None Remove="Resources\pinsAM.json" />
+    <None Remove="Resources\pinScenes.json" />
     <None Remove="Resources\pinsold.json" />
     <None Remove="Resources\Pins\pinBackerGhost.png" />
     <None Remove="Resources\Pins\pinBench.png" />
@@ -244,6 +231,7 @@
     <EmbeddedResource Include="Resources\pins.json" />
     <EmbeddedResource Include="Resources\fixedMapZones.json" />
     <EmbeddedResource Include="Resources\pinsAM.json" />
+    <EmbeddedResource Include="Resources\pinScenes.json" />
     <EmbeddedResource Include="Resources\Pins\pinCharm.png" />
     <EmbeddedResource Include="Resources\Pins\pinCharmGreen.png" />
     <EmbeddedResource Include="Resources\Pins\pinCharmRed.png" />
@@ -349,97 +337,128 @@
     <EmbeddedResource Include="Resources\Pins\pinVesselRed.png" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="Assembly-CSharp">
-      <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Assembly-CSharp.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="ItemChanger">
-      <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\ItemChanger\ItemChanger.dll</HintPath>
-    </Reference>
-    <Reference Include="MMHOOK_Assembly-CSharp">
-      <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\MMHOOK_Assembly-CSharp.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="MMHOOK_PlayMaker">
-      <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\MMHOOK_PlayMaker.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="Mono.Cecil">
-      <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mono.Cecil.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="MonoMod.Utils">
-      <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\MonoMod.Utils.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="mscorlib">
-      <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\mscorlib.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Newtonsoft.Json.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="PlayMaker">
-      <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\PlayMaker.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="RandomizerCore">
-      <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\RandomizerCore\RandomizerCore.dll</HintPath>
-      <CopyLocal>False</CopyLocal>
-    </Reference>
-    <Reference Include="RandomizerMod">
-      <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\Randomizer 4\RandomizerMod.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine">
-      <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\UnityEngine.dll</HintPath>
-      <CopyLocal>False</CopyLocal>
-    </Reference>
-    <Reference Include="UnityEngine.CoreModule">
-      <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="UnityEngine.ImageConversionModule">
-      <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="UnityEngine.InputLegacyModule">
-      <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
-      <CopyLocal>False</CopyLocal>
-    </Reference>
-    <Reference Include="UnityEngine.Physics2DModule">
-      <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\UnityEngine.Physics2DModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.TextRenderingModule">
-      <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\UnityEngine.UI.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="UnityEngine.UIModule">
-      <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\UnityEngine.UIModule.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="Vasi">
-      <HintPath>H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\Vasi\Vasi.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-  </ItemGroup>
+	<Target Name="CopyMod" AfterTargets="PostBuildEvent">
+		<RemoveDir Directories="$(ExportDir)/$(TargetName)/" />
+		<MakeDir Directories="$(ExportDir)/$(TargetName)/" />
+		<MakeDir Directories="$(ExportDir)/$(TargetName)/zip/" />
+		<MakeDir Condition="!Exists('$(HollowKnightRefs)/Mods/$(TargetName)/')" Directories="$(HollowKnightRefs)/Mods/$(TargetName)/" />
+		<Copy SourceFiles="$(TargetPath);$(TargetDir)/$(TargetName).pdb" DestinationFolder="$(HollowKnightRefs)/Mods/$(TargetName)/" />
+		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ExportDir)/$(TargetName)/" />
+		<Copy SourceFiles="../README.md;$(TargetPath);$(TargetDir)/$(TargetName).pdb" DestinationFolder="$(ExportDir)/$(TargetName)/zip/" />
+		<ZipDirectory SourceDirectory="$(ExportDir)/$(TargetName)/zip/" DestinationFile="$(ExportDir)/$(TargetName)/$(TargetName).zip" />
+		<RemoveDir Directories="$(ExportDir)/$(TargetName)/zip/" />
 
+		<GetFileHash Files="$(ExportDir)/$(TargetName)/$(TargetName).zip" Algorithm="SHA256">
+			<Output TaskParameter="Items" ItemName="FilesWithHashes" />
+		</GetFileHash>
+		<WriteLinesToFile File="$(ExportDir)/$(TargetName)/SHA.txt" Lines="@(FilesWithHashes->'%(FileHash)')" Overwrite="true" Encoding="UTF-8" />
 
+		<GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
+			<Output TaskParameter="Assemblies" ItemName="Targets" />
+		</GetAssemblyIdentity>
+		<ItemGroup>
+			<VersionNumber Include="@(Targets->'%(Version)')" />
+		</ItemGroup>
+		<WriteLinesToFile File="$(ExportDir)/$(TargetName)/version.txt" Lines="@(VersionNumber)" Overwrite="true" Encoding="UTF-8" />
+	</Target>
 
-    <Target Name="CopyMod" AfterTargets="PostBuildEvent">
-        <Copy SourceFiles="$(TargetPath);$(TargetDir)$(TargetName).pdb" DestinationFolder="H:\Programs\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\$(TargetName)" SkipUnchangedFiles="true" />
-    </Target>
+    <ItemGroup>
+      <Reference Include="Assembly-CSharp">
+        <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Assembly-CSharp.dll</HintPath>
+        <CopyLocal>False</CopyLocal>
+      </Reference>
+      <Reference Include="ConnectionMetadataInjector">
+        <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\ConnectionMetadataInjector\ConnectionMetadataInjector.dll</HintPath>
+        <CopyLocal>False</CopyLocal>
+      </Reference>
+      <Reference Include="ItemChanger">
+        <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\ItemChanger\ItemChanger.dll</HintPath>
+        <CopyLocal>False</CopyLocal>
+      </Reference>
+      <Reference Include="MenuChanger">
+        <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\MenuChanger\MenuChanger.dll</HintPath>
+        <CopyLocal>False</CopyLocal>
+      </Reference>
+      <Reference Include="MMHOOK_Assembly-CSharp">
+        <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\MMHOOK_Assembly-CSharp.dll</HintPath>
+        <CopyLocal>False</CopyLocal>
+      </Reference>
+      <Reference Include="MMHOOK_PlayMaker">
+        <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\MMHOOK_PlayMaker.dll</HintPath>
+        <CopyLocal>False</CopyLocal>
+      </Reference>
+      <Reference Include="Mono.Cecil">
+        <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mono.Cecil.dll</HintPath>
+        <CopyLocal>False</CopyLocal>
+      </Reference>
+      <Reference Include="MonoMod.RuntimeDetour">
+        <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\MonoMod.RuntimeDetour.dll</HintPath>
+        <CopyLocal>False</CopyLocal>
+      </Reference>
+      <Reference Include="MonoMod.Utils">
+        <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\MonoMod.Utils.dll</HintPath>
+        <CopyLocal>False</CopyLocal>
+      </Reference>
+      <Reference Include="Newtonsoft.Json">
+        <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Newtonsoft.Json.dll</HintPath>
+        <CopyLocal>False</CopyLocal>
+      </Reference>
+      <Reference Include="PlayMaker">
+        <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\PlayMaker.dll</HintPath>
+        <CopyLocal>False</CopyLocal>
+      </Reference>
+      <Reference Include="RandomizerCore">
+        <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\RandomizerCore\RandomizerCore.dll</HintPath>
+        <CopyLocal>False</CopyLocal>
+      </Reference>
+      <Reference Include="RandomizerMod">
+        <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\Randomizer 4\RandomizerMod.dll</HintPath>
+        <CopyLocal>False</CopyLocal>
+      </Reference>
+      <Reference Include="UnityEngine">
+        <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\UnityEngine.dll</HintPath>
+        <CopyLocal>False</CopyLocal>
+      </Reference>
+      <Reference Include="UnityEngine.CoreModule">
+        <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+        <CopyLocal>False</CopyLocal>
+      </Reference>
+      <Reference Include="UnityEngine.ImageConversionModule">
+        <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
+        <CopyLocal>False</CopyLocal>
+      </Reference>
+      <Reference Include="UnityEngine.InputLegacyModule">
+        <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
+        <CopyLocal>False</CopyLocal>
+      </Reference>
+      <Reference Include="UnityEngine.TextCoreModule">
+        <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\UnityEngine.TextCoreModule.dll</HintPath>
+        <CopyLocal>False</CopyLocal>
+      </Reference>
+      <Reference Include="UnityEngine.TextRenderingModule">
+        <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+        <CopyLocal>False</CopyLocal>
+      </Reference>
+      <Reference Include="UnityEngine.UI">
+        <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\UnityEngine.UI.dll</HintPath>
+        <CopyLocal>False</CopyLocal>
+      </Reference>
+      <Reference Include="UnityEngine.UIModule">
+        <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\UnityEngine.UIModule.dll</HintPath>
+        <CopyLocal>False</CopyLocal>
+      </Reference>
+      <Reference Include="Vasi">
+        <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\Vasi\Vasi.dll</HintPath>
+        <CopyLocal>False</CopyLocal>
+      </Reference>
+    </ItemGroup>
 
 
 
     <ItemGroup>
       <Reference Update="System">
         <Private>false</Private>
+        <CopyLocal>False</CopyLocal>
       </Reference>
     </ItemGroup>
 
@@ -448,6 +467,7 @@
     <ItemGroup>
       <Reference Update="System.Core">
         <Private>false</Private>
+        <CopyLocal>False</CopyLocal>
       </Reference>
     </ItemGroup>
 
@@ -456,6 +476,7 @@
     <ItemGroup>
       <Reference Update="System.Data">
         <Private>false</Private>
+        <CopyLocal>False</CopyLocal>
       </Reference>
     </ItemGroup>
 
@@ -464,6 +485,7 @@
     <ItemGroup>
       <Reference Update="System.Drawing">
         <Private>false</Private>
+        <CopyLocal>False</CopyLocal>
       </Reference>
     </ItemGroup>
 
@@ -472,6 +494,7 @@
     <ItemGroup>
       <Reference Update="System.IO.Compression.FileSystem">
         <Private>false</Private>
+        <CopyLocal>False</CopyLocal>
       </Reference>
     </ItemGroup>
 
@@ -480,6 +503,7 @@
     <ItemGroup>
       <Reference Update="System.Numerics">
         <Private>false</Private>
+        <CopyLocal>False</CopyLocal>
       </Reference>
     </ItemGroup>
 
@@ -488,6 +512,7 @@
     <ItemGroup>
       <Reference Update="System.Runtime.Serialization">
         <Private>false</Private>
+        <CopyLocal>False</CopyLocal>
       </Reference>
     </ItemGroup>
 
@@ -496,6 +521,7 @@
     <ItemGroup>
       <Reference Update="System.Xml">
         <Private>false</Private>
+        <CopyLocal>False</CopyLocal>
       </Reference>
     </ItemGroup>
 
@@ -504,6 +530,7 @@
     <ItemGroup>
       <Reference Update="System.Xml.Linq">
         <Private>false</Private>
+        <CopyLocal>False</CopyLocal>
       </Reference>
     </ItemGroup>
 
