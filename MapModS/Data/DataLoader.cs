@@ -247,25 +247,9 @@ namespace MapModS.Data
                 //MapModS.Instance.Log(locationName);
                 //MapModS.Instance.Log(pinDef.locationPoolGroup);
             }
-
-            List<GeneralizedPlacement> missingPlacements = new();
-
-            if (!RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.GrimmkinFlames)
-            {
-                // These vanilla placements are not in Context.Vanilla for some reason. This is a temporary fix
-                missingPlacements = new()
-                {
-                    new(null, RandomizerMod.RandomizerMod.RS.Context.LM.GetLogicDef("Grimmkin_Flame-City_Storerooms")),
-                    new(null, RandomizerMod.RandomizerMod.RS.Context.LM.GetLogicDef("Grimmkin_Flame-Greenpath")),
-                    new(null, RandomizerMod.RandomizerMod.RS.Context.LM.GetLogicDef("Grimmkin_Flame-Crystal_Peak")),
-                    new(null, RandomizerMod.RandomizerMod.RS.Context.LM.GetLogicDef("Grimmkin_Flame-King's_Pass")),
-                    new(null, RandomizerMod.RandomizerMod.RS.Context.LM.GetLogicDef("Grimmkin_Flame-Resting_Grounds")),
-                    new(null, RandomizerMod.RandomizerMod.RS.Context.LM.GetLogicDef("Grimmkin_Flame-Kingdom's_Edge"))
-                };
-            }
             
             // Vanilla placements
-            foreach (GeneralizedPlacement placement in RandomizerMod.RandomizerMod.RS.Context.Vanilla.Concat(missingPlacements))
+            foreach (GeneralizedPlacement placement in RandomizerMod.RandomizerMod.RS.Context.Vanilla)
             {
                 if (RandomizerMod.RandomizerData.Data.IsLocation(placement.Location.Name)
                     && !RandomizerMod.RandomizerMod.RS.TrackerData.clearedLocations.Contains(placement.Location.Name)
