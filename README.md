@@ -11,9 +11,9 @@ Dependencies:
 - [ConnectionMetadataInjector v1.1.8107.6258](https://github.com/BadMagic100/ConnectionMetadataInjector). Does NOT work with earlier versions
 
 Compatible optional mods:
-- [AdditionalMaps v1.5.1.0](https://github.com/SFGrenade/AdditionalMaps). Highly recommended with this mod to view White Palace checks
-- [RandomizableLevers v1.1.2.1](https://github.com/flibber-hk/HollowKnight.RandomizableLevers). Shows lever checks on map
-- [RandoPlus v1.2.0](https://github.com/flibber-hk/HollowKnight.RandoPlus). Shows Mr Mushroom checks on map
+- [AdditionalMaps](https://github.com/SFGrenade/AdditionalMaps). Highly recommended with this mod to view White Palace checks
+- [RandomizableLevers](https://github.com/flibber-hk/HollowKnight.RandomizableLevers). Shows lever checks on map
+- [RandoPlus](https://github.com/flibber-hk/HollowKnight.RandoPlus). Shows Mr Mushroom checks on map
 - Most other mods
 
 This mod has support for languages other than English. You will need to source a `language.json` file and copy it to the `Randomizer 4` directory.
