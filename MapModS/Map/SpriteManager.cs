@@ -31,75 +31,75 @@ namespace MapModS.Map
         {
             string spriteName = "undefined";
 
-            switch (MapModS.GS.pinStyle)
+            if (MapModS.GS.pinStyle == PinStyle.Normal
+                || color == PinBorderColor.Previewed
+                || color == PinBorderColor.Persistent)
             {
-                case PinStyle.Normal:
-                    spriteName = pool switch
-                    {
-                        "Dreamers" => "pinDreamer",
-                        "Skills" => "pinSkill",
-                        "Charms" => "pinCharm",
-                        "Keys" => "pinKey",
-                        "Mask Shards" => "pinMask",
-                        "Vessel Fragments" => "pinVessel",
-                        "Charm Notches" => "pinNotch",
-                        "Pale Ore" => "pinOre",
-                        "Geo Chests" => "pinGeo",
-                        "Rancid Eggs" => "pinEgg",
-                        "Relics" => "pinRelic",
-                        "Whispering Roots" => "pinRoot",
-                        "Boss Essence" => "pinEssenceBoss",
-                        "Grubs" => "pinGrub",
-                        "Mimics" => "pinGrub",
-                        "Maps" => "pinMap",
-                        "Stags" => "pinStag",
-                        "Lifeblood Cocoons" => "pinCocoon",
-                        "Grimmkin Flames" => "pinFlame",
-                        "Journal Entries" => "pinLore",
-                        "Geo Rocks" => "pinRock",
-                        "Boss Geo" => "pinGeo",
-                        "Soul Totems" => "pinTotem",
-                        "Lore Tablets" => "pinLore",
-                        "Shops" => "pinShop",
-                        "Levers" => "pinLever",
-                        "Mr Mushroom" => "pinLore",
-                        _ => "pinUnknown",
-                    };
-                    break;
-
-                case PinStyle.Q_Marks_1:
-                    spriteName = pool switch
-                    {
-                        "Shops" => "pinShop",
-                        _ => "pinUnknown",
-                    };
-                    break;
-
-                case PinStyle.Q_Marks_2:
-                    spriteName = pool switch
-                    {
-                        "Grubs" => "pinUnknown_GrubInv",
-                        "Mimics" => "pinUnknown_GrubInv",
-                        "Lifeblood Cocoons" => "pinUnknown_LifebloodInv",
-                        "Geo Rocks" => "pinUnknown_GeoRockInv",
-                        "Soul Totems" => "pinUnknown_TotemInv",
-                        "Shops" => "pinShop",
-                        _ => "pinUnknown",
-                    };
-                    break;
-
-                case PinStyle.Q_Marks_3:
-                    spriteName = pool switch
-                    {
-                        "Grubs" => "pinUnknown_Grub",
-                        "Mimics" => "pinUnknown_Grub",
-                        "Lifeblood Cocoons" => "pinUnknown_Lifeblood",
-                        "Geo Rocks" => "pinUnknown_GeoRock",
-                        "Soul Totems" => "pinUnknown_Totem",
-                        "Shops" => "pinShop",
-                        _ => "pinUnknown",
-                    };
-                    break;
+                spriteName = pool switch
+                {
+                    "Dreamers" => "pinDreamer",
+                    "Skills" => "pinSkill",
+                    "Charms" => "pinCharm",
+                    "Keys" => "pinKey",
+                    "Mask Shards" => "pinMask",
+                    "Vessel Fragments" => "pinVessel",
+                    "Charm Notches" => "pinNotch",
+                    "Pale Ore" => "pinOre",
+                    "Geo Chests" => "pinGeo",
+                    "Rancid Eggs" => "pinEgg",
+                    "Relics" => "pinRelic",
+                    "Whispering Roots" => "pinRoot",
+                    "Boss Essence" => "pinEssenceBoss",
+                    "Grubs" => "pinGrub",
+                    "Mimics" => "pinGrub",
+                    "Maps" => "pinMap",
+                    "Stags" => "pinStag",
+                    "Lifeblood Cocoons" => "pinCocoon",
+                    "Grimmkin Flames" => "pinFlame",
+                    "Journal Entries" => "pinLore",
+                    "Geo Rocks" => "pinRock",
+                    "Boss Geo" => "pinGeo",
+                    "Soul Totems" => "pinTotem",
+                    "Lore Tablets" => "pinLore",
+                    "Shops" => "pinShop",
+                    "Levers" => "pinLever",
+                    "Mr Mushroom" => "pinLore",
+                    _ => "pinUnknown",
+                };
+            }
+            else if (MapModS.GS.pinStyle == PinStyle.Q_Marks_1)
+            {
+                spriteName = pool switch
+                {
+                    "Shops" => "pinShop",
+                    _ => "pinUnknown",
+                };
+            }
+            else if (MapModS.GS.pinStyle == PinStyle.Q_Marks_2)
+            {
+                spriteName = pool switch
+                {
+                    "Grubs" => "pinUnknown_GrubInv",
+                    "Mimics" => "pinUnknown_GrubInv",
+                    "Lifeblood Cocoons" => "pinUnknown_LifebloodInv",
+                    "Geo Rocks" => "pinUnknown_GeoRockInv",
+                    "Soul Totems" => "pinUnknown_TotemInv",
+                    "Shops" => "pinShop",
+                    _ => "pinUnknown",
+                };
+            }
+            else if (MapModS.GS.pinStyle == PinStyle.Q_Marks_3)
+            {
+                spriteName = pool switch
+                {
+                    "Grubs" => "pinUnknown_Grub",
+                    "Mimics" => "pinUnknown_Grub",
+                    "Lifeblood Cocoons" => "pinUnknown_Lifeblood",
+                    "Geo Rocks" => "pinUnknown_GeoRock",
+                    "Soul Totems" => "pinUnknown_Totem",
+                    "Shops" => "pinShop",
+                    _ => "pinUnknown",
+                };
             }
 
             switch (color)
