@@ -432,7 +432,9 @@ namespace MapModS.UI
                 && (MapModS.LS.mapMode == MapMode.TransitionRando
                     || MapModS.LS.mapMode == MapMode.TransitionRandoAlt)
                 && HeroController.instance != null && !HeroController.instance.GetCState("isPaused")
-                && RandomizerMod.RandomizerData.Data.IsRoom(StringUtils.CurrentNormalScene())
+                && (RandomizerMod.RandomizerData.Data.IsRoom(StringUtils.CurrentNormalScene())
+                    || StringUtils.CurrentNormalScene() == "Room_Tram"
+                    || StringUtils.CurrentNormalScene() == "Room_Tram_RG")
                 && (MapModS.GS.routeTextInGame != RouteTextInGame.Hide
                         || _instructionPanel.Active
                         || _uncheckedTransitionsPanelQuickMap.Active);
