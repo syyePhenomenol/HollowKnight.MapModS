@@ -79,7 +79,7 @@ namespace MapModS.Map
             // Non-randomized
             if (PD.pinLocationState == PLS.NonRandomizedUnchecked)
             {
-                SR.sprite = SpriteManager.GetSpriteFromPool(PD.locationPoolGroup, PinBorderColor.Normal);
+                SR.sprite = SpriteManager.GetSpriteFromPool(PD.locationPoolGroup, PBC.Normal);
                 
                 return;
             }
