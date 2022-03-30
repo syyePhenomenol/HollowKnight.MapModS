@@ -34,7 +34,7 @@
 
         public PinSize pinSize = PinSize.Medium;
 
-        public bool persistentOn = true;
+        public bool persistentOn = false;
 
         public void ToggleAllowBenchWarp()
         {
