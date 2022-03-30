@@ -1918,13 +1918,13 @@
   },
   "Geo_Rock-Crossroads_Goam_Alcove": {
     "objectName": "Geo Rock 1",
-    "offsetX": 0.8,
+    "offsetX": 0.0,
     "offsetY": -0.1,
     "offsetZ": 0.0
   },
   "Geo_Rock-Crossroads_Goam_Damage_Boost": {
     "objectName": "Geo Rock 2",
-    "offsetX": 0.0,
+    "offsetX": 0.8,
     "offsetY": -0.1,
     "offsetZ": 0.0
   },
