@@ -9,6 +9,7 @@ This fork of CaptainDapper's original mod has been expanded on with many more fe
 Dependencies:
 - [RandomizerMod v4.0.3](https://github.com/homothetyhk/RandomizerMod) and all of its dependencies. Does NOT work with earlier versions
 - [ConnectionMetadataInjector v1.1.8107.6258](https://github.com/BadMagic100/ConnectionMetadataInjector). Does NOT work with earlier versions
+- [Vasi](https://github.com/fifty-six/HollowKnight.Vasi)
 
 Compatible optional mods:
 - [AdditionalMaps](https://github.com/SFGrenade/AdditionalMaps). Highly recommended with this mod to view White Palace checks
