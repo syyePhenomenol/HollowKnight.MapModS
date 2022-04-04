@@ -90,6 +90,7 @@ namespace MapModS.UI
         {
             if (Canvas == null
                 || HeroController.instance == null
+                || WorldMap.goCustomPins == null
                 || WorldMap.CustomPins == null
                 || !LookupActive()
                 || TransitionText.TransitionModeActive()) return;
@@ -119,9 +120,10 @@ namespace MapModS.UI
         public static void UpdateSelectedPinCoroutine()
         {
             if (Canvas == null
+                || HeroController.instance == null
+                || WorldMap.goCustomPins == null
                 || WorldMap.CustomPins == null
                 || !_infoPanel.Active
-                || HeroController.instance == null
                 || GameManager.instance.IsGamePaused()
                 || !LookupActive()
                 || !MapModS.LS.lookupOn)
@@ -137,7 +139,9 @@ namespace MapModS.UI
 
         public static void UpdateSelectedPin()
         {
-            if (!worldMapOpen) return;
+            if (!worldMapOpen
+                || WorldMap.goCustomPins == null
+                || WorldMap.CustomPins == null) return;
 
             WorldMap.CustomPins.ResizePins(selectedLocation);
             SetTexts();
