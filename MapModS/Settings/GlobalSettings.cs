@@ -28,6 +28,8 @@
 
         public bool uncheckedPanelActive = false;
 
+        public bool routeCompassEnabled = true;
+
         public RouteTextInGame routeTextInGame = RouteTextInGame.Hide;
 
         public PinStyle pinStyle = PinStyle.Normal;
@@ -44,6 +46,11 @@
         public void ToggleUncheckedPanel()
         {
             uncheckedPanelActive = !uncheckedPanelActive;
+        }
+
+        public void ToggleRouteCompassEnabled()
+        {
+            routeCompassEnabled = !routeCompassEnabled;
         }
 
         public void ToggleRouteTextInGame()

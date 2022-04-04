@@ -14,33 +14,12 @@ namespace MapModS.UI
     {
         public Dictionary<string, Texture2D> Images = new();
 
-        private static GUIController _instance;
+        public static GUIController Instance;
 
         private GameObject _pauseCanvas;
         private GameObject _mapCanvas;
         private GameObject _transitionCanvas;
         private GameObject _lookupCanvas;
-
-        public static GUIController Instance
-        {
-            get
-            {
-                if (_instance != null) return _instance;
-
-                _instance = FindObjectOfType<GUIController>();
-
-                if (_instance != null) return _instance;
-
-                MapModS.Instance.LogWarn("Couldn't find GUIController");
-
-                GameObject GUIObj = new();
-                _instance = GUIObj.AddComponent<GUIController>();
-                DontDestroyOnLoad(GUIObj);
-
-                return _instance;
-            }
-        }
-
         public Font TrajanBold { get; private set; }
         public Font TrajanNormal { get; private set; }
         public Font Perpetua { get; private set; }
@@ -49,28 +28,27 @@ namespace MapModS.UI
         public static void Setup()
         {
             GameObject GUIObj = new("MapModS GUI");
-            _instance = GUIObj.AddComponent<GUIController>();
+            Instance = GUIObj.AddComponent<GUIController>();
             DontDestroyOnLoad(GUIObj);
+            Instance.LoadResources();
         }
 
         public static void Unload()
         {
-            if (_instance != null)
+            if (Instance != null)
             {
-                _instance.StopAllCoroutines();
+                Instance.StopAllCoroutines();
 
-                Destroy(_instance._pauseCanvas);
-                Destroy(_instance._mapCanvas);
-                Destroy(_instance._transitionCanvas);
-                Destroy(_instance._lookupCanvas);
-                Destroy(_instance.gameObject);
+                Destroy(Instance._pauseCanvas);
+                Destroy(Instance._mapCanvas);
+                Destroy(Instance._transitionCanvas);
+                Destroy(Instance._lookupCanvas);
+                Destroy(Instance.gameObject);
             }
         }
 
         public void BuildMenus()
         {
-            LoadResources();
-
             _pauseCanvas = new GameObject();
             _pauseCanvas.AddComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
             CanvasScaler pauseScaler = _pauseCanvas.AddComponent<CanvasScaler>();

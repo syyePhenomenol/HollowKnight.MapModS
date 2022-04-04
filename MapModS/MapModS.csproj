@@ -222,6 +222,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Resources\GUI\arrow.png" />
     <EmbeddedResource Include="Resources\GUI\ButtonRect.png" />
     <EmbeddedResource Include="Resources\GUI\ButtonRectEmpty.png" />
     <EmbeddedResource Include="Resources\GUI\ButtonsMenuBG.png" />

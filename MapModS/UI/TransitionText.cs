@@ -197,6 +197,13 @@ namespace MapModS.UI
                 SetRouteActive();
             }
 
+            if ((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
+                && Input.GetKeyDown(KeyCode.C))
+            {
+                MapModS.GS.ToggleRouteCompassEnabled();
+                SetTexts();
+            }
+
             if (!_instructionPanel.Active
                 || !_routePanel.Active
                 || GameManager.instance.IsGamePaused())
@@ -420,6 +427,17 @@ namespace MapModS.UI
                     break;
             }
 
+            controlText += $"\n{Localization.Localize("Show route compass")} (Ctrl-C): ";
+
+            if (MapModS.GS.routeCompassEnabled)
+            {
+                controlText += Localization.Localize("On");
+            }
+            else
+            {
+                controlText += Localization.Localize("Off");
+            }
+
             _instructionPanel.GetText("Control").UpdateText(controlText);
         }
 
@@ -584,6 +602,8 @@ namespace MapModS.UI
             }
 
             SetTexts();
+
+            RouteCompass.UpdateCompass();
         }
 
         public static void RemoveTraversedTransition(string previousScene, string currentScene)

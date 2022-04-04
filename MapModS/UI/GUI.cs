@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Modding;
+using System;
 using UnityEngine.SceneManagement;
 
 namespace MapModS.UI
@@ -13,7 +14,10 @@ namespace MapModS.UI
             On.HeroController.Pause += HeroController_Pause;
             On.HeroController.UnPause += HeroController_UnPause;
             UnityEngine.SceneManagement.SceneManager.activeSceneChanged += HandleSceneChanges;
+
+            GUIController.Setup();
         }
+
         public static void Unhook()
         {
             On.GameMap.Start -= GameMap_Start;
@@ -28,16 +32,8 @@ namespace MapModS.UI
         private static void GameMap_Start(On.GameMap.orig_Start orig, GameMap self)
         {
             orig(self);
-
-            try
-            {
-                GUIController.Setup();
-                GUIController.Instance.BuildMenus();
-            }
-            catch (Exception e)
-            {
-                MapModS.Instance.LogError(e);
-            }
+                
+            GUIController.Instance.BuildMenus();
         }
 
         private static void GameMap_WorldMap(On.GameMap.orig_WorldMap orig, GameMap self)
@@ -77,6 +73,9 @@ namespace MapModS.UI
             if (GameManager.instance.sceneName != to.name) return;
 
             TransitionText.RemoveTraversedTransition(from.name, to.name);
+
+            RouteCompass.CreateRouteCompass();
+            RouteCompass.UpdateCompass();
         }
     }
 }
