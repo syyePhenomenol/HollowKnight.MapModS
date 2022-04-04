@@ -12,7 +12,7 @@ namespace MapModS.Map
     public static class WorldMap
     {
         public static GameObject goCustomPins = null;
-        public static PinsCustom CustomPins => goCustomPins.GetComponent<PinsCustom>();
+        public static PinsCustom CustomPins => goCustomPins?.GetComponent<PinsCustom>();
 
         public static GameObject goExtraRooms = null;
 
