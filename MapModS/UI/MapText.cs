@@ -63,7 +63,9 @@ namespace MapModS.UI
 
         public static void SetTexts()
         {
-            if (GameManager.instance.gameMap == null || WorldMap.CustomPins == null) return;
+            if (GameManager.instance.gameMap == null
+                || WorldMap.goCustomPins == null
+                || WorldMap.CustomPins == null) return;
 
             _mapDisplayPanel.SetActive(!LockToggleEnable && MapModS.LS.ModEnabled, false);
             _refreshDisplayPanel.SetActive(LockToggleEnable, false);
@@ -96,8 +98,6 @@ namespace MapModS.UI
 
         private static void SetRandomized()
         {
-            if (WorldMap.CustomPins == null) return;
-
             string randomizedText = $"{Localization.Localize("Randomized")} (ctrl-2): ";
 
             if (MapModS.LS.randomizedOn)
@@ -122,8 +122,6 @@ namespace MapModS.UI
 
         private static void SetOthers()
         {
-            if (WorldMap.CustomPins == null) return;
-
             string othersText = $"{Localization.Localize("Others")} (ctrl-3): ";
 
             if (MapModS.LS.othersOn)
