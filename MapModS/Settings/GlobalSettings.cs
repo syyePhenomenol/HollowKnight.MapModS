@@ -30,7 +30,7 @@
 
         public bool routeCompassEnabled = true;
 
-        public RouteTextInGame routeTextInGame = RouteTextInGame.Hide;
+        public RouteTextInGame routeTextInGame = RouteTextInGame.ShowNextTransitionOnly;
 
         public PinStyle pinStyle = PinStyle.Normal;
 
