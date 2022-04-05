@@ -1,5 +1,4 @@
-﻿using Modding;
-using System;
+﻿using MapModS.Settings;
 using UnityEngine.SceneManagement;
 
 namespace MapModS.UI
@@ -70,7 +69,7 @@ namespace MapModS.UI
         {
             //MapModS.Instance.Log($"{from.name} to {to.name}");
 
-            if (GameManager.instance.sceneName != to.name) return;
+            if (GameManager.instance.sceneName != to.name || !SettingsUtil.IsTransitionRando()) return;
 
             TransitionText.RemoveTraversedTransition(from.name, to.name);
 
