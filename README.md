@@ -30,6 +30,8 @@ This mod has support for languages other than English. You will need to source a
 
 # Quick Start Guide
 - Press `CTRL-M` during a game to enable the mod. Alternatively, enable it from the Pause Menu.
+- [fireb0rn's quick MapModS guide (item randomizer)](https://www.youtube.com/watch?v=z35cFvU0McQ&t=1113s)
+- [fireb0rn's quick MapModS guide (transition randomizer)](https://www.youtube.com/watch?v=z35cFvU0McQ&t=1195s)
 
 # Features
 ## World Map / Quick Map
