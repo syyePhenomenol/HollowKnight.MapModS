@@ -295,10 +295,10 @@ namespace MapModS.UI
                 // Lazy evaluation for transitions
                 public override bool CanGet(ProgressionManager pm)
                 {
-                    if (lm.TransitionLookup.ContainsKey(location.Name))
-                    {
-                        if (RandomizerMod.RandomizerData.Data.GetTransitionDef(location.Name).SceneName != searchScene) return false;
-                    }
+                    if (lm.TransitionLookup.ContainsKey(location.Name)
+                        && RandomizerMod.RandomizerData.Data.GetTransitionDef(location.Name).SceneName != searchScene) return false;
+
+                    if (pm.Has(pm.lm.TermLookup[location.Name])) return true;
 
                     return location.CanGet(pm);
                 }
@@ -310,6 +310,10 @@ namespace MapModS.UI
 
                 public override void OnAdd(ProgressionManager pm)
                 {
+                    if (searchTransition != ""
+                        && lm.TransitionLookup.ContainsKey(location.Name)
+                        && RandomizerMod.RandomizerData.Data.GetTransitionDef(location.Name).Name != searchTransition) return;
+
                     onAdd?.Invoke(pm);
                 }
 
@@ -435,6 +439,7 @@ namespace MapModS.UI
         private readonly TransitionTracker tt;
         private static Dictionary<string, string> transitionPlacementsDict = new();
         private static string searchScene;
+        private static string searchTransition = "";
 
         // Calculates the shortest route (by number of transitions) from startScene to finalScene.
         // The search space will be purely limited to rooms that have been visited + unreached reachable locations
@@ -529,6 +534,8 @@ namespace MapModS.UI
             // Just in case
             transitionSpace.Remove(null);
 
+            searchTransition = "";
+
             tt.GetNewItems();
 
             // Algorithm (BFS)
@@ -606,6 +613,8 @@ namespace MapModS.UI
                         && !stagTransitions.ContainsKey(transition)
                         && !elevatorTransitions.ContainsKey(transition)
                         && !tramTransitions.ContainsKey(transition)) continue;
+
+                    searchTransition = transition;
 
                     if (GetAdjacentTransition(transition) != null
                         && !visitedTransitions.Contains(transition)
