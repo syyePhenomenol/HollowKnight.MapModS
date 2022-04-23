@@ -22,6 +22,11 @@ namespace MapModS.UI
             { "Town[door_bretta]", "bretta_house/open/door_bretta" },
             { "Crossroads_04[door_Mender_House]", "_Transition Gates/Mender Door/door_Mender_House" },
             { "Ruins2_04[door_Ruin_Elevator]", "Bathhouse Door/door_Ruin_Elevator" },
+            { "Fungus1_07[top1]", "Missing Prefab/Missing Prefab (Dummy)/top1" },
+            { "Fungus1_07[left1]", "Missing Prefab/Missing Prefab (Dummy)/left1" },
+            { "Fungus1_11[bot1]", "Missing Prefab/Missing Prefab (Dummy)/bot1" },
+            { "Fungus1_11[top1]", "Missing Prefab/Missing Prefab (Dummy)/top1" },
+            { "Fungus1_11[left1]", "Missing Prefab/Missing Prefab (Dummy)/left1" }
         };
 
         public static void CreateRouteCompass()
