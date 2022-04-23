@@ -35,7 +35,7 @@ namespace MapModS.UI
             { "Waterways_07[right1]", "Lever-Dung_Defender" }
         };
 
-        private static readonly HashSet<string> persistentTransitions = new()
+        private static readonly HashSet<string> persistentTerms = new()
         {
             { "Town[door_station]" },
             { "Town[door_sly]" },
@@ -45,7 +45,12 @@ namespace MapModS.UI
             { "Town[room_divine]" },
             { "Town[room_grimm]" },
             { "Crossroads_09[left1]" },
-            { "Crossroads_09[right1]" }
+            { "Crossroads_09[right1]" },
+            { "LEFTSLASH" },
+            { "RIGHTSLASH" },
+            { "UPSLASH" },
+            { "DOWNSLASH" },
+            { "SWIM" },
         };
 
         // Pair of bench warp instruction + logically equivalent transition
@@ -151,6 +156,11 @@ namespace MapModS.UI
         public TransitionHelper()
         {
             tt = new();
+
+            if (RandomizerMod.RandomizerMod.RS.Context.transitionPlacements != null)
+            {
+                transitionPlacementsDict = RandomizerMod.RandomizerMod.RS.Context.transitionPlacements.ToDictionary(tp => tp.Source.Name, tp => tp.Target.Name);
+            }
         }
 
         // Code based on homothety's implementation of RandomizerMod's TrackerData
@@ -172,15 +182,7 @@ namespace MapModS.UI
 
                 if (RandomizerMod.RandomizerMod.RS.Context.transitionPlacements != null)
                 {
-                    mu.AddEntries(RandomizerMod.RandomizerMod.RS.Context.transitionPlacements.Select((p, id) => new DelegateUpdateEntry(p.Source, pm =>
-                    {
-                        (RandoTransition source, RandoTransition target) = RandomizerMod.RandomizerMod.RS.Context.transitionPlacements[id];
-
-                        if (!pm.Has(source.lt.term))
-                        {
-                            pm.Add(source);
-                        }
-                    }, pm.lm)));
+                    mu.AddEntries(RandomizerMod.RandomizerMod.RS.Context.transitionPlacements.Select((p, id) => new DelegateUpdateEntry(p.Source, pm => {}, pm.lm)));
                 }
 
                 mu.Hook(pm);
@@ -193,7 +195,6 @@ namespace MapModS.UI
                 {
                     if (!addedItems.Contains(id))
                     {
-                        // MapModS.Instance.Log("Adding " + pm.ctx.itemPlacements[id].item.Name + " with id " + id);
                         addedItems.Add(id);
                         pm.Add(RandomizerMod.RandomizerMod.RS.Context.itemPlacements[id].Item);
                     }
@@ -235,8 +236,6 @@ namespace MapModS.UI
                     {
                         if (!addedTerms.Contains(id))
                         {
-                            // MapModS.Instance.Log("Has " + waypoint.Name + " with id " + waypoint.term.Id);
-
                             addedTerms.Add(id);
                             pm.Add(waypoint);
                         }
@@ -251,25 +250,21 @@ namespace MapModS.UI
                     if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Get(pair.Key) > 0
                         && !addedTerms.Contains(waypointTerm.Id))
                     {
-                        // MapModS.Instance.Log("Adding " + pair.Value + " with id " + waypointTerm.Id);
-
                         addedTerms.Add(waypointTerm.Id);
                         pm.Add(new LogicWaypoint(waypointTerm, pm.lm.LogicLookup[pair.Value]));
                     }
                 }
 
-                // Persistent transitions should always be added
-                foreach (string transition in persistentTransitions)
+                // Persistent terms should always be added
+                foreach (string term in persistentTerms)
                 {
-                    int id = pm.lm.TermLookup[transition];
+                    int id = pm.lm.TermLookup[term];
 
                     if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Has(id)
                         && !addedTerms.Contains(id))
                     {
-                        //MapModS.Instance.Log("Persistent transition: " + transition);
-
                         addedTerms.Add(id);
-                        pm.Add(pm.lm.TransitionLookup[transition]);
+                        pm.Set(id, 1);
                     }
                 }
 
@@ -329,7 +324,10 @@ namespace MapModS.UI
             }
 
             // Handle in a special way
-            if (stagTransitions.ContainsKey(transition)) return null;
+            if (stagTransitions.ContainsKey(transition))
+            {
+                return null;
+            }
 
             if (elevatorTransitions.ContainsKey(transition))
             {
@@ -337,7 +335,10 @@ namespace MapModS.UI
             }
 
             // Handle in a special way
-            if (tramTransitions.ContainsKey(transition)) return null;
+            if (tramTransitions.ContainsKey(transition))
+            {
+                return null;
+            }
 
             if (normalWarpTransitions.ContainsKey(transition))
             {
@@ -438,6 +439,7 @@ namespace MapModS.UI
 
         private readonly TransitionTracker tt;
         private static Dictionary<string, string> transitionPlacementsDict = new();
+
         private static string searchScene;
         private static string searchTransition = "";
 
@@ -446,14 +448,13 @@ namespace MapModS.UI
         // A ProgressionManager is used to track logic while traversing through the search space
         public List<string> ShortestRoute(string startScene, string finalScene, HashSet<KeyValuePair<string, string>> rejectedTransitionPairs, bool allowBenchWarp)
         {
+            if (startScene == null || finalScene == null) return new();
+
             IEnumerable<string> visitedBenches = Dependencies.GetVisitedBenchScenes();
 
-            transitionPlacementsDict = RandomizerMod.RandomizerMod.RS.Context.transitionPlacements.ToDictionary(tp => tp.Source.Name, tp => tp.Target.Name);
-
             HashSet<string> transitionSpace = new();
-            Dictionary<string, string> startTransitionPlacements = new();
 
-            // Get all relevant transitions
+            // Add normal transitions
             foreach (KeyValuePair<string, LogicTransition> transitionEntry in RandomizerMod.RandomizerMod.RS.TrackerData.lm.TransitionLookup)
             {
                 string scene = GetScene(transitionEntry.Key);
@@ -463,11 +464,8 @@ namespace MapModS.UI
                 if (MapModS.LS.mapMode == Settings.MapMode.TransitionRandoAlt
                     && !PlayerData.instance.scenesVisited.Contains(scene)) continue;
 
-                //MapModS.Instance.Log(transitionEntry.Key);
-
                 if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Has(transitionEntry.Value.term.Id))
                 {
-                    //MapModS.Instance.Log("Search space includes: " + transitionEntry.Key);
                     transitionSpace.Add(transitionEntry.Key);
                 }
             }
@@ -481,7 +479,6 @@ namespace MapModS.UI
 
                 if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Get(stagTransition.Value.Item1) > 0)
                 {
-                    //MapModS.Instance.Log("Adding " + stagTransition.Key);
                     transitionSpace.Add(stagTransition.Key);
                 }
             }
@@ -491,7 +488,6 @@ namespace MapModS.UI
             {
                 if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Get(elevatorTransition.Value.Item1) > 0)
                 {
-                    //MapModS.Instance.Log("Adding " + elevatorTransition.Key);
                     transitionSpace.Add(elevatorTransition.Key);
                 }
             }
@@ -507,7 +503,6 @@ namespace MapModS.UI
 
                 if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Get(tramTransition.Value.Item1) > 0)
                 {
-                    //MapModS.Instance.Log("Adding " + tramTransition.Key);
                     transitionSpace.Add(tramTransition.Key);
                 }
             }
@@ -521,17 +516,6 @@ namespace MapModS.UI
                 }
             }
 
-            // Just in case
-            if (startScene == null || finalScene == null)
-                //|| startScene == finalScene)
-            {
-                return new();
-            }
-
-            //MapModS.Instance.Log($"Start scene: {startScene}");
-            //MapModS.Instance.Log($"Final scene: {finalScene}");
-
-            // Just in case
             transitionSpace.Remove(null);
 
             searchTransition = "";
@@ -556,10 +540,10 @@ namespace MapModS.UI
 
                     if (visitedBenches.Contains(scene)
                         || (warpPair.Key.StartsWith("Warp Upper Tram")
-                            && visitedBenches.Contains("Room_Tram_RG")
+                            && visitedBenches.Contains("Room_Tram_RG"))
                         || (warpPair.Key.StartsWith("Warp Lower Tram")
-                            && visitedBenches.Contains("Room_Tram")
-                        || warpPair.Key == "Warp Start")))
+                            && visitedBenches.Contains("Room_Tram"))
+                        || warpPair.Key == "Warp Start")
                     {
                         SearchNode startNode = new(scene, new() { warpPair.Key }, warpPair.Value);
                         queue.AddLast(startNode);
@@ -595,9 +579,6 @@ namespace MapModS.UI
                 queue.RemoveFirst();
 
                 searchScene = currentNode.currentScene;
-
-                //currentNode.PrintRoute();
-
                 if (currentNode.currentScene == finalScene) return currentNode.currentRoute;
 
                 tt.pm.StartTemp();
