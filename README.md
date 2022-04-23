@@ -30,6 +30,8 @@ This mod has support for languages other than English. You will need to source a
 
 # Quick Start Guide
 - Press `CTRL-M` during a game to enable the mod. Alternatively, enable it from the Pause Menu.
+- [fireb0rn's quick MapModS guide (item randomizer)](https://www.youtube.com/watch?v=z35cFvU0McQ&t=1113s)
+- [fireb0rn's quick MapModS guide (transition randomizer)](https://www.youtube.com/watch?v=z35cFvU0McQ&t=1195s)
 
 # Features
 ## World Map / Quick Map
@@ -63,11 +65,13 @@ This mod has support for languages other than English. You will need to source a
 ## Transition Mode
 - Check out the [Map Legend](./MAPLEGEND.md) for more details on what the colors/brightness of each room indicate.
 - Hover over the selected room and press your bound `Menu Select` button to find a path. If successful, the path route will be displayed. You can try again to change the start/final transition to what you want.
-- The route will also be visible from the Quick Map, and in-game based on the below toggle. As you make the correct transitions, those transitions will get cleared from the route.
+- A compass arrow will point to the next transition you need to go to (if it's not a special transition like a Benchwarp or stag).
+- The route text will also be visible from the Quick Map, and in-game (see below toggle). As you make the correct transitions, those transitions will get cleared from the route.
 - The Quick Map also shows the list of unchecked and visited transitions for the current room.
 - `CTRL-B`: Toggle including Benchwarp in the pathfinder on/off.
 - `CTRL-R`: Toggle the route to be displayed in-game full/next transition only/off.
 - `CTRL-U`: Toggle the panel for unchecked and visited transitions in the World Map.
+- `CTRL-C`: Toggle the route compass on/off.
 
 # How To Install
 Use Scarab: https://github.com/fifty-six/Scarab
