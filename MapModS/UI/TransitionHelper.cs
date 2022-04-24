@@ -1,4 +1,4 @@
-﻿using RandomizerCore;
+﻿using MapModS.Data;
 using RandomizerCore.Logic;
 using System;
 using System.Collections.Generic;
@@ -155,10 +155,10 @@ namespace MapModS.UI
 
         public TransitionHelper()
         {
-            tt = new();
-
             if (RandomizerMod.RandomizerMod.RS.Context.transitionPlacements != null)
             {
+                tt = new();
+
                 transitionPlacementsDict = RandomizerMod.RandomizerMod.RS.Context.transitionPlacements.ToDictionary(tp => tp.Source.Name, tp => tp.Target.Name);
             }
         }
@@ -178,14 +178,51 @@ namespace MapModS.UI
 
                 mu = new(pm.lm);
 
-                mu.AddEntries(pm.lm.Waypoints.Select(w => new DelegateUpdateEntry(w, pm => { pm.Add(w); }, pm.lm)));
+                mu.AddEntries(pm.lm.Waypoints.Select(w => new DelegateUpdateEntry(w, pm => { pm.Add(w); })));
 
-                if (RandomizerMod.RandomizerMod.RS.Context.transitionPlacements != null)
-                {
-                    mu.AddEntries(RandomizerMod.RandomizerMod.RS.Context.transitionPlacements.Select((p, id) => new DelegateUpdateEntry(p.Source, pm => {}, pm.lm)));
-                }
+                mu.AddEntries(RandomizerMod.RandomizerMod.RS.Context.transitionPlacements.Select((p, id) => new DelegateUpdateEntry(p.Source, pm => {})));
 
                 mu.Hook(pm);
+            }
+
+            public class DelegateUpdateEntry : UpdateEntry
+            {
+                readonly Action<ProgressionManager> onAdd;
+                readonly ILogicDef location;
+
+                public DelegateUpdateEntry(ILogicDef location, Action<ProgressionManager> onAdd)
+                {
+                    this.location = location;
+                    this.onAdd = onAdd;
+                }
+
+                // Lazy evaluation for transitions
+                public override bool CanGet(ProgressionManager pm)
+                {
+                    if (pm.lm.TransitionLookup.ContainsKey(location.Name)
+                        && RandomizerMod.RandomizerData.Data.GetTransitionDef(location.Name).SceneName != searchScene) return false;
+
+                    if (pm.Has(pm.lm.TermLookup[location.Name])) return true;
+
+                    return location.CanGet(pm);
+                }
+
+                public override IEnumerable<Term> GetTerms()
+                {
+                    return location.GetTerms();
+                }
+
+                // Prevent adding more after newly added transitions in room
+                public override void OnAdd(ProgressionManager pm)
+                {
+                    if (searchTransition != ""
+                        && pm.lm.TransitionLookup.ContainsKey(location.Name)
+                        && RandomizerMod.RandomizerData.Data.GetTransitionDef(location.Name).Name != searchTransition) return;
+
+                    onAdd?.Invoke(pm);
+                }
+
+                public override void OnRemove(ProgressionManager pm) { }
             }
 
             public void GetNewItems()
@@ -273,51 +310,15 @@ namespace MapModS.UI
                     pm.Add(pm.lm.TransitionLookup["Town[right1]"]);
                 }
             }
-
-            public class DelegateUpdateEntry : UpdateEntry
-            {
-                readonly Action<ProgressionManager> onAdd;
-                readonly ILogicDef location;
-                readonly LogicManager lm;
-
-                public DelegateUpdateEntry(ILogicDef location, Action<ProgressionManager> onAdd, LogicManager lm)
-                {
-                    this.location = location;
-                    this.onAdd = onAdd;
-                    this.lm = lm;
-                }
-
-                // Lazy evaluation for transitions
-                public override bool CanGet(ProgressionManager pm)
-                {
-                    if (lm.TransitionLookup.ContainsKey(location.Name)
-                        && RandomizerMod.RandomizerData.Data.GetTransitionDef(location.Name).SceneName != searchScene) return false;
-
-                    if (pm.Has(pm.lm.TermLookup[location.Name])) return true;
-
-                    return location.CanGet(pm);
-                }
-
-                public override IEnumerable<Term> GetTerms()
-                {
-                    return location.GetTerms();
-                }
-
-                public override void OnAdd(ProgressionManager pm)
-                {
-                    if (searchTransition != ""
-                        && lm.TransitionLookup.ContainsKey(location.Name)
-                        && RandomizerMod.RandomizerData.Data.GetTransitionDef(location.Name).Name != searchTransition) return;
-
-                    onAdd?.Invoke(pm);
-                }
-
-                public override void OnRemove(ProgressionManager pm) { }
-            }
         }
 
         public static string GetScene(string transition)
         {
+            if (transition == "Warp Start")
+            {
+                return RandomizerMod.RandomizerData.Data.GetStartDef(RandomizerMod.RandomizerMod.RS.GenerationSettings.StartLocationSettings.StartLocation).SceneName;
+            }
+
             if (benchWarpTransitions.ContainsKey(transition))
             {
                 return GetScene(benchWarpTransitions[transition]);
@@ -507,7 +508,7 @@ namespace MapModS.UI
                 }
             }
 
-            // Add normal warp transitions (check if reachable during algorithm)
+            // Add normal warp transitions
             foreach (KeyValuePair<string, Tuple<string, string>> normalWarpTransition in normalWarpTransitions)
             {
                 if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Get(normalWarpTransition.Value.Item1) > 0)
@@ -579,7 +580,18 @@ namespace MapModS.UI
                 queue.RemoveFirst();
 
                 searchScene = currentNode.currentScene;
-                if (currentNode.currentScene == finalScene) return currentNode.currentRoute;
+
+                // Avoid going through a rejected path, and remove redudant new paths
+                if (currentNode.currentScene == finalScene && !rejectedTransitionPairs.Any(pair => pair.Key == currentNode.currentRoute.First() && GetAdjacentTransition(pair.Value) == GetAdjacentTransition(currentNode.currentRoute.Last())))
+                {
+                    // No circling back on previous transition
+                    if (currentNode.currentRoute.Any(t => t == GetAdjacentTransition(currentNode.currentRoute.Last()))) continue;
+
+                    // No other paths to same final transition with a different starting benchwarp
+                    if (rejectedTransitionPairs.Any(pair => GetAdjacentTransition(pair.Value) == GetAdjacentTransition(currentNode.currentRoute.Last()) && benchWarpTransitions.ContainsKey(pair.Key))) continue;
+
+                    return currentNode.currentRoute;
+                }
 
                 tt.pm.StartTemp();
 
@@ -590,25 +602,71 @@ namespace MapModS.UI
 
                 foreach (string transition in transitionSpace)
                 {
-                    if (GetScene(transition) != currentNode.currentScene
-                        && !stagTransitions.ContainsKey(transition)
-                        && !elevatorTransitions.ContainsKey(transition)
-                        && !tramTransitions.ContainsKey(transition)) continue;
+                    // Don't ever expand the search on a visited transition
+                    if (GetAdjacentTransition(transition) == null
+                        || visitedTransitions.Contains(transition)) continue;
 
-                    searchTransition = transition;
+                    bool addNode = false;
 
-                    if (GetAdjacentTransition(transition) != null
-                        && !visitedTransitions.Contains(transition)
-                        && !rejectedTransitionPairs.Any(pair => pair.Key == currentNode.currentRoute.First() && pair.Value == transition)
-                        && ((tt.pm.lm.TransitionLookup.ContainsKey(transition)
-                                && tt.pm.lm.TransitionLookup[transition].CanGet(tt.pm))
-                            || (VerifySpecialTransition(transition, currentNode.currentScene)
-                                && CanGetSpecialTransition(transition))))
+                    if (tt.pm.lm.TransitionLookup.ContainsKey(transition))
                     {
-                        SearchNode newNode = new(GetScene(GetAdjacentTransition(transition)), currentNode.currentRoute, GetAdjacentTransition(transition));
+                        searchTransition = transition;
+
+                        if (GetScene(transition) == currentNode.currentScene
+                            && tt.pm.lm.TransitionLookup[transition].CanGet(tt.pm))
+                        {
+                            addNode = true;
+                        }
+                    }
+                    // Don't take stags/elevators/trams/normal warps twice in a row
+                    else if (stagTransitions.ContainsKey(transition))
+                    {
+                        if (!stagTransitions.ContainsKey(currentNode.currentRoute.Last())
+                            && stagTransitions.Any(t => t.Value.Item2.StartsWith(currentNode.currentScene)))
+                        {
+                            addNode = true;
+                        } 
+                    }
+                    else if (elevatorTransitions.ContainsKey(transition))
+                    {
+                        if (!elevatorTransitions.ContainsKey(currentNode.currentRoute.Last())
+                            && currentNode.currentScene == elevatorTransitions[transition].Item2)
+                        {
+                            addNode = true;
+                        }
+                    }
+                    else if (tramTransitions.ContainsKey(transition))
+                    {
+                        if (!tramTransitions.ContainsKey(currentNode.currentRoute.Last())
+                            && ((transition.StartsWith("Upper Tram") && currentNode.currentScene.StartsWith("Crossroads_46"))
+                                || (transition.StartsWith("Lower Tram") && currentNode.currentScene.StartsWith("Abyss_03"))))
+                        {
+                            addNode = true;
+                        }
+                    }
+                    else if (normalWarpTransitions.ContainsKey(transition))
+                    {
+                        if (!normalWarpTransitions.ContainsKey(currentNode.currentRoute.Last())
+                            && transition.StartsWith(currentNode.currentScene)
+                            && tt.pm.Get(normalWarpTransitions[transition].Item1) > 0)
+                        {
+                            addNode = true;
+                        }
+                    }
+                    else
+                    {
+                        MapModS.Instance.LogWarn("Transition not recognized: " + transition);
+                    }
+
+                    if (addNode)
+                    {
+                        string adjacent = GetAdjacentTransition(transition);
+                        SearchNode newNode = new(GetScene(adjacent), currentNode.currentRoute, adjacent);
                         newNode.currentRoute.Add(transition);
-                        visitedTransitions.Add(transition);
+
                         queue.AddLast(newNode);
+
+                        visitedTransitions.Add(transition);
                     }
                 }
 
@@ -633,26 +691,16 @@ namespace MapModS.UI
         // Checks if the player has transitioned into a scene with the special transition
         public static bool VerifySpecialTransition(string transition, string currentScene)
         {
-            if (transition.StartsWith("Stag") && stagTransitions.Any(t => t.Value.Item2.StartsWith(currentScene))) return true;
+            if (stagTransitions.ContainsKey(transition) && stagTransitions.Any(t => t.Value.Item2.StartsWith(currentScene))) return true;
 
-            if ((transition.StartsWith("Left Elevator") || transition.StartsWith("Right Elevator"))
-                && currentScene == elevatorTransitions[transition].Item2) return true;
+            if (elevatorTransitions.ContainsKey(transition) && currentScene == elevatorTransitions[transition].Item2) return true;
 
             if ((transition.StartsWith("Upper Tram") && currentScene.StartsWith("Crossroads_46"))
                 || (transition.StartsWith("Lower Tram") && currentScene.StartsWith("Abyss_03"))) return true;
 
-            if (transition.EndsWith("[warp]") && transition.StartsWith(currentScene)) return true;
+            if (normalWarpTransitions.ContainsKey(transition) && transition.StartsWith(currentScene)) return true;
 
             return false;
-        }
-
-        // Checks if the player can get the transition
-        public bool CanGetSpecialTransition(string transition)
-        {
-            if (transition.EndsWith("[warp]")) return (tt.pm.Get(normalWarpTransitions[transition].Item1) > 0);
-
-            // Others are true because they have been added to the search space based on being available
-            return true;
         }
     }
 }
