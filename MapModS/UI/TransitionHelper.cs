@@ -588,7 +588,7 @@ namespace MapModS.UI
                     if (currentNode.currentRoute.Any(t => t == GetAdjacentTransition(currentNode.currentRoute.Last()))) continue;
 
                     // No other paths to same final transition with a different starting benchwarp
-                    if (rejectedTransitionPairs.Any(pair => GetAdjacentTransition(pair.Value) == GetAdjacentTransition(currentNode.currentRoute.Last()) && benchWarpTransitions.ContainsKey(pair.Key))) continue;
+                    if (rejectedTransitionPairs.Any(pair => GetAdjacentTransition(pair.Value) == GetAdjacentTransition(currentNode.currentRoute.Last()) && (benchWarpTransitions.ContainsKey(pair.Key) || pair.Key == "Warp Start"))) continue;
 
                     return currentNode.currentRoute;
                 }
