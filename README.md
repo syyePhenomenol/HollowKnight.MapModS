@@ -64,7 +64,8 @@ This mod has support for languages other than English. You will need to source a
 
 ## Transition Mode
 - Check out the [Map Legend](./MAPLEGEND.md) for more details on what the colors/brightness of each room indicate.
-- Hover over the selected room and press your bound `Menu Select` button to find a path. If successful, the path route will be displayed. You can try again to change the start/final transition to what you want.
+- Hover over the selected room and press your bound `Menu Select` button to find a path. By default, this is the same as the button for jumping on your controller, or the `Enter` key on your keyboard.
+- If successful, the path route will be displayed. You can try again to change the start/final transition to what you want.
 - A compass arrow will point to the next transition you need to go to (if it's not a special transition like a Benchwarp or stag).
 - The route text will also be visible from the Quick Map, and in-game (see below toggle). As you make the correct transitions, those transitions will get cleared from the route.
 - The Quick Map also shows the list of unchecked and visited transitions for the current room.
