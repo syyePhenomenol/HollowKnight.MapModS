@@ -21,7 +21,7 @@ namespace MapModS.Trackers
         // Called after every time the map is opened
         public static void UpdateObtainedItems()
         {
-            // The following is needed in case the mod is installed halfway through an existing vanilla save
+            // The following is needed in case the mod is installed halfway through an existing save
             foreach (GeoRockData grd in GameManager.instance.sceneData.geoRocks)
             {
                 if (grd.hitsLeft == 0)
