@@ -49,6 +49,11 @@ namespace MapModS.Map
                 DataLoader.SetUsedPinDefs();
                 DataLoader.SetLogicLookup();
 
+                if (SettingsUtil.IsTransitionRando())
+                {
+                    DataLoader.SetTransitionLookup();
+                }
+
                 if (MapModS.LS.NewSettings || MapModS.LS.PoolGroupSettings.Count == 0)
                 {
                     MapModS.LS.InitializePoolGroupSettings();

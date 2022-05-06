@@ -19,6 +19,7 @@ namespace MapModS.Data
         private static Dictionary<string, MapZone> _fixedMapZones;
         private static readonly Dictionary<string, PinDef> _usedPins = new();
         private static Dictionary<string, string> _logicLookup = new();
+        private static Dictionary<string, string> _transitionLookup = new();
 
         public static List<string> usedPoolGroups = new();
 
@@ -103,6 +104,21 @@ namespace MapModS.Data
             }
 
             return default;
+        }
+
+        public static bool IsInTransitionLookup(string source)
+        {
+            return _transitionLookup.ContainsKey(source);
+        }
+
+        public static string GetTransitionTarget(string source)
+        {
+            if (_transitionLookup.TryGetValue(source, out string target))
+            {
+                return target;
+            }
+
+            return null;
         }
 
         // Next five helper functions are based on BadMagic100's Rando4Stats RandoExtensions
@@ -342,6 +358,11 @@ namespace MapModS.Data
         public static void SetLogicLookup()
         {
             _logicLookup = RandomizerMod.RandomizerMod.RS.TrackerData.lm.LogicLookup.Values.ToDictionary(l => l.Name, l => l.ToInfix());
+        }
+
+        public static void SetTransitionLookup()
+        {
+            _transitionLookup = RandomizerMod.RandomizerMod.RS.Context.transitionPlacements.ToDictionary(tp => tp.Source.Name, tp => tp.Target.Name);
         }
 
         public static void Load()

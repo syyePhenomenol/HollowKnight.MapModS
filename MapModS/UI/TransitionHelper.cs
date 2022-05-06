@@ -103,6 +103,7 @@ namespace MapModS.UI
             { "Warp White Palace Entrance", "White_Palace_01[left1]" },
             // Special waypoint needed
             { "Warp White Palace Atrium", "White_Palace_03_hub[right1]" },
+            // Could be janky in uncoupled rando
             { "Warp White Palace Balcony", "White_Palace_06[top1]" },
             { "Warp Upper Tram -> Exit Left", "Crossroads_46[left1]" },
             { "Warp Upper Tram -> Exit Right", "Crossroads_46b[right1]" },
@@ -158,8 +159,6 @@ namespace MapModS.UI
             if (RandomizerMod.RandomizerMod.RS.Context.transitionPlacements != null)
             {
                 tt = new();
-
-                transitionPlacementsDict = RandomizerMod.RandomizerMod.RS.Context.transitionPlacements.ToDictionary(tp => tp.Source.Name, tp => tp.Target.Name);
             }
         }
 
@@ -356,9 +355,9 @@ namespace MapModS.UI
                 return RandomizerMod.RandomizerData.Data.GetStartDef(RandomizerMod.RandomizerMod.RS.GenerationSettings.StartLocationSettings.StartLocation).Transition;
             }
 
-            if (transitionPlacementsDict.ContainsKey(source))
+            if (DataLoader.IsInTransitionLookup(source))
             {
-                return transitionPlacementsDict[source];
+                return DataLoader.GetTransitionTarget(source);
             }
 
             if (benchWarpTransitions.ContainsKey(source))
@@ -439,7 +438,6 @@ namespace MapModS.UI
         }
 
         private readonly TransitionTracker tt;
-        private static Dictionary<string, string> transitionPlacementsDict = new();
 
         private static string searchScene;
         private static string searchTransition = "";
@@ -465,7 +463,10 @@ namespace MapModS.UI
                 if (MapModS.LS.mapMode == Settings.MapMode.TransitionRandoAlt
                     && !PlayerData.instance.scenesVisited.Contains(scene)) continue;
 
-                if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Has(transitionEntry.Value.term.Id))
+                if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Has(transitionEntry.Value.term.Id)
+                    // Prevents adding certain randomized transitions that haven't been visited yet in uncoupled rando
+                    && !(DataLoader.IsInTransitionLookup(transitionEntry.Key)
+                        && !RandomizerMod.RandomizerMod.RS.TrackerData.visitedTransitions.ContainsKey(transitionEntry.Key)))
                 {
                     transitionSpace.Add(transitionEntry.Key);
                 }
