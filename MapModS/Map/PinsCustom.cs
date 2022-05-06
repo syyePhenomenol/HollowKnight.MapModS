@@ -446,7 +446,7 @@ namespace MapModS.Map
         {
             foreach (PinAnimatedSprite pin in _pins)
             {
-                if (pin.PD.name == selectedLocation)
+                if (pin.PD.name == selectedLocation && MapModS.LS.lookupOn)
                 {
                     pin.SetSizeAndColorSelected();
                 }
