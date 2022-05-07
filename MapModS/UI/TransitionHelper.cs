@@ -585,9 +585,6 @@ namespace MapModS.UI
                 // Avoid going through a rejected path, and remove redudant new paths
                 if (currentNode.currentScene == finalScene && !rejectedTransitionPairs.Any(pair => pair.Key == currentNode.currentRoute.First() && GetAdjacentTransition(pair.Value) == GetAdjacentTransition(currentNode.currentRoute.Last())))
                 {
-                    // No circling back on previous transition
-                    if (currentNode.currentRoute.Any(t => t == GetAdjacentTransition(currentNode.currentRoute.Last()))) continue;
-
                     // No other paths to same final transition with a different starting benchwarp
                     if (rejectedTransitionPairs.Any(pair => GetAdjacentTransition(pair.Value) == GetAdjacentTransition(currentNode.currentRoute.Last()) && (benchWarpTransitions.ContainsKey(pair.Key) || pair.Key == "Warp Start"))) continue;
 
@@ -662,6 +659,10 @@ namespace MapModS.UI
                     if (addNode)
                     {
                         string adjacent = GetAdjacentTransition(transition);
+
+                        // No circling back on previous transition
+                        if (currentNode.currentRoute.Any(t => t == adjacent)) continue;
+
                         SearchNode newNode = new(GetScene(adjacent), currentNode.currentRoute, adjacent);
                         newNode.currentRoute.Add(transition);
 
