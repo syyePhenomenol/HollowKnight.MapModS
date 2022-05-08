@@ -7,8 +7,10 @@ namespace MapModS.UI
 {
     internal class DirectionalCompass : MonoBehaviour
     {
-        private GameObject compassInternal;
         private GameObject entity;
+
+        private GameObject compassInternal;
+        private SpriteRenderer sr;
 
         private Func<bool> Condition;
 
@@ -39,9 +41,9 @@ namespace MapModS.UI
             DontDestroyOnLoad(dc.compassInternal);
             dc.compassInternal.layer = 18;
 
-            SpriteRenderer sr = dc.compassInternal.GetComponent<SpriteRenderer>();
-            sr.sprite = sprite;
-            sr.color = color;
+            dc.sr = dc.compassInternal.GetComponent<SpriteRenderer>();
+            dc.sr.sprite = sprite;
+            dc.sr.color = color;
 
             dc.compassInternal.transform.parent = compass.transform;
             dc.compassInternal.transform.localScale = Vector3.one * scale;
@@ -98,6 +100,8 @@ namespace MapModS.UI
 
                 transform.localPosition = dir;
                 transform.eulerAngles = new(0, 0, angle);
+                transform.localScale = dir.magnitude / radius * Vector2.one;
+                sr.color = dir.magnitude / radius * Color.white;
 
                 compassInternal.SetActive(true);
             }

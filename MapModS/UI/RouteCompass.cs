@@ -26,7 +26,36 @@ namespace MapModS.UI
             { "Fungus1_07[left1]", "Missing Prefab/Missing Prefab (Dummy)/left1" },
             { "Fungus1_11[bot1]", "Missing Prefab/Missing Prefab (Dummy)/bot1" },
             { "Fungus1_11[top1]", "Missing Prefab/Missing Prefab (Dummy)/top1" },
-            { "Fungus1_11[left1]", "Missing Prefab/Missing Prefab (Dummy)/left1" }
+            { "Fungus1_11[left1]", "Missing Prefab/Missing Prefab (Dummy)/left1" },
+
+            { "Left Elevator Up", "elev_main/Lift Call Lever" },
+            { "Left Elevator Down", "_Scenery/elev_main/Lift Call Lever" },
+            { "Right Elevator Up", "elev_main/Lift Call Lever" },
+            { "Right Elevator Down", "elev_main/Lift Call Lever" },
+
+            { "Abyss_05[warp]", "Dusk Knight/Shield" },
+            { "White_Palace_11[warp]", "doorWarp" },
+            { "White_Palace_03_hub[warp]", "doorWarp" },
+            { "White_Palace_20[warp]", "End Scene" }
+        };
+
+        private static readonly Dictionary<string, string> doorsByScene = new()
+        {
+            { "Room_Town_Stag_Station", "Station Bell/Bell" },
+            { "Crossroads_47", "_Scenery/Station Bell/Bell" },
+            { "Fungus1_16_alt", "Station Bell/Bell" },
+            { "Fungus2_02", "Station Bell/Bell" },
+            { "Deepnest_09", "Station Bell/Bell" },
+            { "Abyss_22", "Station Bell/Bell" },
+            { "Ruins1_29", "Station Bell/Bell" },
+            { "Ruins2_08", "Station Bell/Bell" },
+            { "RestingGrounds_09", "Station Bell Lever/Bell/Bell" },
+            { "Fungus3_40", "Station Bell/Bell" },
+            { "Crossroads_46", "Tram Main/door_tram" },
+            { "Crossroads_46b", "Tram Main/door_tram" },
+            { "Abyss_03_b", "Tram Main/door_tram" },
+            { "Abyss_03" , "Tram Main/door_tram" },
+            { "Abyss_03_c", "Tram Main/door_tram" }
         };
 
         public static void CreateRouteCompass()
@@ -59,21 +88,34 @@ namespace MapModS.UI
         {
             if (compass == null) return;
 
-            if (CompassC != null
-                && TransitionText.selectedRoute.Any()
-                && RandomizerMod.RandomizerData.Data.IsTransition(TransitionText.selectedRoute.First())
-                && StringUtils.CurrentNormalScene() == RandomizerMod.RandomizerData.Data.GetTransitionDef(TransitionText.selectedRoute.First()).SceneName)
+            if (CompassC != null && TransitionText.selectedRoute.Any())
             {
                 string transition = TransitionText.selectedRoute.First();
-                string gate;
+                string scene = TransitionHelper.GetScene(TransitionText.selectedRoute.First());
+                string gate = "";
 
-                if (specialDoors.ContainsKey(transition))
+                if (StringUtils.CurrentNormalScene() == scene)
                 {
-                    gate = specialDoors[transition];
+                    if (specialDoors.ContainsKey(transition))
+                    {
+                        gate = specialDoors[transition];
+                    }
+                    else if (DataLoader.IsInTransitionLookup(transition))
+                    {
+                        gate = DataLoader.GetTransitionDoor(transition);
+                    }
                 }
-                else
+                else if ((TransitionHelper.stagTransitions.ContainsKey(transition)
+                        || TransitionHelper.tramTransitions.ContainsKey(transition))
+                    && doorsByScene.ContainsKey(StringUtils.CurrentNormalScene()))
                 {
-                    gate = RandomizerMod.RandomizerData.Data.GetTransitionDef(transition).DoorName;
+                    gate = doorsByScene[StringUtils.CurrentNormalScene()];
+                }
+
+                if (gate == "")
+                {
+                    compass.SetActive(false);
+                    return;
                 }
 
                 GameObject gateObject = UnityExtensions.FindGameObject(UnityEngine.SceneManagement.SceneManager.GetActiveScene(), gate);
