@@ -357,13 +357,26 @@ namespace MapModS.UI
         {
             string instructionsText = $"{Localization.Localize("Selected room")}: {selectedScene}.";
 
+            List<InControl.BindingSource> bindings = new(InputHandler.Instance.inputActions.menuSubmit.Bindings);
+
             if (selectedScene == StringUtils.CurrentNormalScene())
             {
                 instructionsText += $" {Localization.Localize("You are here")}.";
             }
             else
             {
-                instructionsText += $" {Localization.Localize("Press [Menu Select] to find new route or switch starting / final transitions")}.";
+                instructionsText += $" {Localization.Localize("Press")} ";
+
+                instructionsText += $"[{bindings.First().Name}]";
+
+                if (bindings.Count > 1 && bindings[1].BindingSourceType == InControl.BindingSourceType.DeviceBindingSource)
+                {
+                    instructionsText += $" {Localization.Localize("or")} ";
+
+                    instructionsText += $"({bindings[1].Name})";
+                }
+
+                instructionsText += $" {Localization.Localize("to find new route or switch starting / final transitions")}.";
             }
 
             _instructionPanel.GetText("Instructions").UpdateText(instructionsText);
@@ -548,15 +561,15 @@ namespace MapModS.UI
         public static IEnumerable<string> GetUncheckedTransitions(string scene)
         {
             return RandomizerMod.RandomizerMod.RS.TrackerData.uncheckedReachableTransitions
-                .Where(t => RandomizerMod.RandomizerData.Data.GetTransitionDef(t).SceneName == scene)
-                .Select(t => RandomizerMod.RandomizerData.Data.GetTransitionDef(t).DoorName);
+                .Where(t => DataLoader.GetTransitionScene(t) == scene)
+                .Select(t => DataLoader.GetTransitionDoor(t));
         }
 
         public static IEnumerable<Tuple<string, string>> GetVisitedTransitions(string scene)
         {
             return RandomizerMod.RandomizerMod.RS.TrackerData.visitedTransitions
-                .Where(t => RandomizerMod.RandomizerData.Data.GetTransitionDef(t.Key).SceneName == scene)
-                .Select(t => new Tuple<string, string>(RandomizerMod.RandomizerData.Data.GetTransitionDef(t.Key).DoorName, t.Value));
+                .Where(t => DataLoader.GetTransitionScene(t.Key) == scene)
+                .Select(t => new Tuple<string, string>(DataLoader.GetTransitionDoor(t.Key), t.Value));
         }
 
         public static void GetRoute()
@@ -624,7 +637,7 @@ namespace MapModS.UI
                 return;
             }
 
-            if (selectedRoute.Count >= 2 && previousScene == RandomizerMod.RandomizerData.Data.GetTransitionDef(selectedRoute.First()).SceneName)
+            if (selectedRoute.Count >= 2 && previousScene == DataLoader.GetTransitionScene(selectedRoute.First()))
             {
                 if (TransitionHelper.IsSpecialTransition(selectedRoute.ElementAt(1)))
                 {
@@ -634,7 +647,7 @@ namespace MapModS.UI
                         SetTexts();
                     }
                 }
-                else if (currentScene == RandomizerMod.RandomizerData.Data.GetTransitionDef(selectedRoute.ElementAt(1)).SceneName)
+                else if (currentScene == DataLoader.GetTransitionScene(selectedRoute.ElementAt(1)))
                 {
                     selectedRoute.Remove(selectedRoute.First());
                     SetTexts();
@@ -643,7 +656,7 @@ namespace MapModS.UI
                 return;
             }
 
-            if (previousScene == RandomizerMod.RandomizerData.Data.GetTransitionDef(selectedRoute.First()).SceneName
+            if (previousScene == DataLoader.GetTransitionScene(selectedRoute.First())
                 && currentScene == lastFinalScene)
             {
                 selectedRoute.Remove(selectedRoute.First());
