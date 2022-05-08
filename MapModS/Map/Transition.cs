@@ -189,46 +189,34 @@ namespace MapModS.Map
             RandomizerCore.Logic.ProgressionManager pm = RandomizerMod.RandomizerMod.RS.TrackerData.pm;
 
             // Get in-logic, out-of-logic, and adjacent visited scenes
-            foreach (KeyValuePair<string, RandomizerCore.Logic.LogicTransition> transitionEntry in RandomizerMod.RandomizerMod.RS.TrackerData.lm.TransitionLookup)
+            foreach (KeyValuePair<string, RandomizerCore.Logic.LogicTransition> t in RandomizerMod.RandomizerMod.RS.TrackerData.lm.TransitionLookup)
             {
-                RandomizerMod.RandomizerData.TransitionDef transitionDef = RandomizerMod.RandomizerData.Data.GetTransitionDef(transitionEntry.Key);
+                string scene = DataLoader.GetTransitionScene(t.Key);
 
-                if (pm.Has(transitionEntry.Value.term.Id))
+                if (pm.Has(t.Value.term.Id))
                 {
-                    inLogicScenes.Add(transitionDef.SceneName);
+                    inLogicScenes.Add(scene);
 
-                    if (transitionDef.SceneName == StringUtils.CurrentNormalScene())
+                    if (scene == StringUtils.CurrentNormalScene())
                     {
                         // visitedTransitions doesn't include vanilla transitions
-                        if (RandomizerMod.RandomizerMod.RS.TrackerData.visitedTransitions.ContainsKey(transitionEntry.Key))
+                        if ((RandomizerMod.RandomizerMod.RS.TrackerData.visitedTransitions.ContainsKey(t.Key) || !DataLoader.IsRandomizedTransition(t.Key))
+                            && DataLoader.GetAdjacentTransition(t.Key) != null)
                         {
-                            string target = DataLoader.GetTransitionTarget(transitionEntry.Key);
-
-                            if (target != null && RandomizerMod.RandomizerData.Data.IsTransition(target))
-                            {
-                                visitedAdjacentScenes.Add(RandomizerMod.RandomizerData.Data.GetTransitionDef(target).SceneName);
-                            }
-                        }
-                        // If we "have" the transition but it's not in lookup, it's a vanilla transition. We include all of them, even if the player hasn't visited yet
-                        // (the isAlt condition will filter out non-visited adjacent vanilla scenes)
-                        else if (!DataLoader.IsInTransitionLookup(transitionEntry.Key)
-                            && transitionDef.VanillaTarget != null
-                            && RandomizerMod.RandomizerData.Data.IsTransition(transitionDef.VanillaTarget))
-                        {
-                            visitedAdjacentScenes.Add(RandomizerMod.RandomizerData.Data.GetTransitionDef(transitionDef.VanillaTarget).SceneName);
+                            visitedAdjacentScenes.Add(DataLoader.GetAdjacentScene(t.Key));
                         }
                     }
                 }
-                else if (PlayerData.instance.scenesVisited.Contains(transitionDef.SceneName))
+                else if (PlayerData.instance.scenesVisited.Contains(scene))
                 {
-                    outOfLogicScenes.Add(transitionDef.SceneName);
+                    outOfLogicScenes.Add(scene);
                 }
             }
 
             // Get scenes where there are unchecked reachable transitions
             foreach (string transition in RandomizerMod.RandomizerMod.RS.TrackerData.uncheckedReachableTransitions)
             {
-                uncheckedReachableScenes.Add(RandomizerMod.RandomizerData.Data.GetTransitionDef(transition).SceneName);
+                uncheckedReachableScenes.Add(DataLoader.GetTransitionScene(transition));
             }
 
             // Show rooms with custom colors

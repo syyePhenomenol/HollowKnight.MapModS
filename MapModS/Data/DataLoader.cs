@@ -19,7 +19,8 @@ namespace MapModS.Data
         private static Dictionary<string, MapZone> _fixedMapZones;
         private static readonly Dictionary<string, PinDef> _usedPins = new();
         private static Dictionary<string, string> _logicLookup = new();
-        private static Dictionary<string, string> _transitionLookup = new();
+        private static HashSet<string> _randomizedTransitions = new();
+        private static Dictionary<string, TransitionPlacement> _transitionLookup = new();
 
         public static List<string> usedPoolGroups = new();
 
@@ -106,17 +107,62 @@ namespace MapModS.Data
             return default;
         }
 
+        public static bool IsRandomizedTransition(string source)
+        {
+            return _randomizedTransitions.Contains(source);
+        }
+
         public static bool IsInTransitionLookup(string source)
         {
             return _transitionLookup.ContainsKey(source);
         }
 
-        public static string GetTransitionTarget(string source)
+        public static string GetTransitionScene(string source)
         {
-            if (_transitionLookup.TryGetValue(source, out string target))
+            if (_transitionLookup.TryGetValue(source, out TransitionPlacement placement))
             {
-                return target;
+                return placement.Source.TransitionDef.SceneName;
             }
+
+            //MapModS.Instance.Log("GetTransitionScene null " + source);
+
+            return null;
+        }
+
+        public static string GetTransitionDoor(string source)
+        {
+            if (_transitionLookup.TryGetValue(source, out TransitionPlacement placement))
+            {
+                return placement.Source.TransitionDef.DoorName;
+            }
+
+            //MapModS.Instance.Log("GetTransitionDoor null " + source);
+
+            return null;
+        }
+
+        public static string GetAdjacentTransition(string source)
+        {
+            if (_transitionLookup.TryGetValue(source, out TransitionPlacement placement)
+                && placement.Target != null)
+            {
+                return placement.Target.Name;
+            }
+
+            //MapModS.Instance.Log("GetAdjacentTransition null " + source);
+
+            return null;
+        }
+
+        public static string GetAdjacentScene(string source)
+        {
+            if (_transitionLookup.TryGetValue(source, out TransitionPlacement placement)
+                && placement.Target != null && placement.Target.TransitionDef != null)
+            {
+                return placement.Target.TransitionDef.SceneName;
+            }
+
+            //MapModS.Instance.Log("GetAdjacentScene null " + source);
 
             return null;
         }
@@ -362,7 +408,47 @@ namespace MapModS.Data
 
         public static void SetTransitionLookup()
         {
-            _transitionLookup = RandomizerMod.RandomizerMod.RS.Context.transitionPlacements.ToDictionary(tp => tp.Source.Name, tp => tp.Target.Name);
+            _randomizedTransitions = new(RandomizerMod.RandomizerMod.RS.Context.transitionPlacements.Select(tp => tp.Source.Name));
+
+            _transitionLookup = RandomizerMod.RandomizerMod.RS.Context.transitionPlacements.ToDictionary(tp => tp.Source.Name, tp => tp);
+
+            foreach (GeneralizedPlacement gp in RandomizerMod.RandomizerMod.RS.Context.Vanilla.Where(gp => RandomizerMod.RandomizerData.Data.IsTransition(gp.Location.Name)))
+            {
+                RandoModTransition target = new(RandomizerMod.RandomizerMod.RS.Context.LM.GetTransition(gp.Item.Name))
+                {
+                    TransitionDef = RandomizerMod.RandomizerData.Data.GetTransitionDef(gp.Item.Name)
+                };
+
+                RandoModTransition source = new(RandomizerMod.RandomizerMod.RS.Context.LM.GetTransition(gp.Location.Name))
+                {
+                    TransitionDef = RandomizerMod.RandomizerData.Data.GetTransitionDef(gp.Location.Name)
+                };
+
+                _transitionLookup.Add(gp.Location.Name, new(target, source));
+            }
+
+            // Add impossible transitions
+
+            foreach (TransitionPlacement tp in RandomizerMod.RandomizerMod.RS.Context.transitionPlacements)
+            {
+                if (!_transitionLookup.ContainsKey(tp.Target.Name))
+                {
+                    _transitionLookup.Add(tp.Target.Name, new(null, tp.Target));
+                }
+            }
+
+            foreach (GeneralizedPlacement gp in RandomizerMod.RandomizerMod.RS.Context.Vanilla.Where(gp => RandomizerMod.RandomizerData.Data.IsTransition(gp.Location.Name)))
+            {
+                if (!_transitionLookup.ContainsKey(gp.Item.Name))
+                {
+                    RandoModTransition source = new(RandomizerMod.RandomizerMod.RS.Context.LM.GetTransition(gp.Item.Name))
+                    {
+                        TransitionDef = RandomizerMod.RandomizerData.Data.GetTransitionDef(gp.Item.Name)
+                    };
+
+                    _transitionLookup.Add(gp.Item.Name, new(null, source));
+                }
+            }
         }
 
         public static void Load()

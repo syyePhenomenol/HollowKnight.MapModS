@@ -199,7 +199,7 @@ namespace MapModS.UI
                 public override bool CanGet(ProgressionManager pm)
                 {
                     if (pm.lm.TransitionLookup.ContainsKey(location.Name)
-                        && RandomizerMod.RandomizerData.Data.GetTransitionDef(location.Name).SceneName != searchScene) return false;
+                        && DataLoader.GetTransitionScene(location.Name) != searchScene) return false;
 
                     if (pm.Has(pm.lm.TermLookup[location.Name])) return true;
 
@@ -216,7 +216,7 @@ namespace MapModS.UI
                 {
                     if (searchTransition != ""
                         && pm.lm.TransitionLookup.ContainsKey(location.Name)
-                        && RandomizerMod.RandomizerData.Data.GetTransitionDef(location.Name).Name != searchTransition) return;
+                        && location.Name != searchTransition) return;
 
                     onAdd?.Invoke(pm);
                 }
@@ -345,7 +345,7 @@ namespace MapModS.UI
                 return transition.Substring(0, transition.Length - 6);
             }
 
-            return RandomizerMod.RandomizerData.Data.GetTransitionDef(transition).SceneName;
+            return DataLoader.GetTransitionScene(transition);
         }
 
         public static string GetAdjacentTransition(string source)
@@ -357,7 +357,7 @@ namespace MapModS.UI
 
             if (DataLoader.IsInTransitionLookup(source))
             {
-                return DataLoader.GetTransitionTarget(source);
+                return DataLoader.GetAdjacentTransition(source);
             }
 
             if (benchWarpTransitions.ContainsKey(source))
@@ -385,13 +385,9 @@ namespace MapModS.UI
                 return normalWarpTransitions[source].Item2;
             }
 
-            RandomizerMod.RandomizerData.TransitionDef transitionDef = RandomizerMod.RandomizerData.Data.GetTransitionDef(source);
+            // Some top transitions don't have an adjacent transition
 
-            if (transitionDef == null) return null;
-
-            // If it's not in TransitionPlacements, it's the vanilla target.
-            // NOTE that this can be null
-            return transitionDef.VanillaTarget;
+            return null;
         }
 
         private bool ApplyAltLogic(string transition)
@@ -465,7 +461,7 @@ namespace MapModS.UI
 
                 if (RandomizerMod.RandomizerMod.RS.TrackerData.pm.Has(transitionEntry.Value.term.Id)
                     // Prevents adding certain randomized transitions that haven't been visited yet in uncoupled rando
-                    && !(DataLoader.IsInTransitionLookup(transitionEntry.Key)
+                    && !(DataLoader.IsRandomizedTransition(transitionEntry.Key)
                         && !RandomizerMod.RandomizerMod.RS.TrackerData.visitedTransitions.ContainsKey(transitionEntry.Key)))
                 {
                     transitionSpace.Add(transitionEntry.Key);
@@ -661,7 +657,7 @@ namespace MapModS.UI
                         string adjacent = GetAdjacentTransition(transition);
 
                         // No circling back on previous transition
-                        if (currentNode.currentRoute.Any(t => t == adjacent)) continue;
+                        if (adjacent == null || currentNode.currentRoute.Any(t => t == adjacent)) continue;
 
                         SearchNode newNode = new(GetScene(adjacent), currentNode.currentRoute, adjacent);
                         newNode.currentRoute.Add(transition);
