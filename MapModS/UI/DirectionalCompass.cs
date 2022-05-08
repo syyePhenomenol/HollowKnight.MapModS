@@ -11,6 +11,7 @@ namespace MapModS.UI
 
         private GameObject compassInternal;
         private SpriteRenderer sr;
+        private Color color;
 
         private Func<bool> Condition;
 
@@ -43,7 +44,8 @@ namespace MapModS.UI
 
             dc.sr = dc.compassInternal.GetComponent<SpriteRenderer>();
             dc.sr.sprite = sprite;
-            dc.sr.color = color;
+
+            dc.color = color;
 
             dc.compassInternal.transform.parent = compass.transform;
             dc.compassInternal.transform.localScale = Vector3.one * scale;
@@ -101,7 +103,7 @@ namespace MapModS.UI
                 transform.localPosition = dir;
                 transform.eulerAngles = new(0, 0, angle);
                 transform.localScale = dir.magnitude / radius * Vector2.one;
-                sr.color = dir.magnitude / radius * Color.white;
+                sr.color = dir.magnitude / radius * color;
 
                 compassInternal.SetActive(true);
             }
