@@ -212,7 +212,8 @@ namespace MapModS.UI
             }
 
             // Use menu selection button for control
-            if (InputHandler.Instance != null && InputHandler.Instance.inputActions.menuSubmit.WasPressed)
+            if (InputHandler.Instance != null && InputHandler.Instance.inputActions.menuSubmit.WasPressed
+                && (searchThread == null || !searchThread.IsAlive))
             {
                 searchThread = new(GetRoute);
                 searchThread.Start();
@@ -233,6 +234,8 @@ namespace MapModS.UI
             {
                 return;
             }
+
+            if (colorUpdateThread != null && colorUpdateThread.IsAlive) return;
 
             colorUpdateThread = new(() =>
             {
