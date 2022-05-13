@@ -80,8 +80,8 @@ namespace MapModS.UI
             { "Warp Watcher's Spire", "Ruins1_18[right2]" },
             { "Warp King's Station", "Ruins2_08[left1]" },
             { "Warp Pleasure House", "Ruins_Bathhouse[door1]" },
-            // Need to handle logic from here in a special manner. Going to leave it out for now...
-            { "Warp Waterways?", "Waterways_02[top1]" },
+            // Special waypoint needed
+            { "Warp Waterways", "Waterways_02[top1]" },
             { "Warp Deepnest Hot Springs", "Deepnest_30[left1]" },
             { "Warp Failed Tramway", "Deepnest_14[left1]" },
             { "Warp Beast's Den", "Deepnest_Spider_Town[left1]" },
@@ -89,8 +89,8 @@ namespace MapModS.UI
             { "Warp Hidden Station", "Abyss_22[left1]" },
             { "Warp Oro", "Deepnest_East_06[door1]" },
             { "Warp Kingdom's Edge Camp", "Deepnest_East_13[bot1]" },
-            // Probably needs its own special waypoint too, if player falls in from top and has no claw or wings
-            { "Warp Colosseum?", "Room_Colosseum_02[top1]" },
+            // Manually check transitions from this bench
+            { "Warp Colosseum", "Room_Colosseum_02[top1]" },
             { "Warp Hive", "Hive_01[right2]" },
             { "Warp Crystal Peak Dark Room", "Mines_29[left1]" },
             { "Warp Crystal Guardian", "Mines_18[left1]" },
@@ -103,7 +103,7 @@ namespace MapModS.UI
             { "Warp White Palace Entrance", "White_Palace_01[left1]" },
             // Special waypoint needed
             { "Warp White Palace Atrium", "White_Palace_03_hub[right1]" },
-            // Could be janky in uncoupled rando
+            // Manually check transitions from this bench
             { "Warp White Palace Balcony", "White_Palace_06[top1]" },
             { "Warp Upper Tram -> Exit Left", "Crossroads_46[left1]" },
             { "Warp Upper Tram -> Exit Right", "Crossroads_46b[right1]" },
@@ -390,8 +390,15 @@ namespace MapModS.UI
             return null;
         }
 
+        // Instead of adding the adjacent transition, add the corresponding waypoint instead
         private bool ApplyAltLogic(string transition)
         {
+            if (transition == "Warp Waterways")
+            {
+                tt.pm.Add(new LogicWaypoint(tt.pm.lm.TermLookup["Waterways_02"], tt.pm.lm.LogicLookup["Waterways_02"]));
+                return true;
+            }
+
             if (transition == "Warp White Palace Entrace")
             {
                 tt.pm.Add(new LogicWaypoint(tt.pm.lm.TermLookup["White_Palace_01"], tt.pm.lm.LogicLookup["White_Palace_01"]));
@@ -405,6 +412,21 @@ namespace MapModS.UI
             }
 
             return false;
+        }
+
+        // These benches don't have exact equivalence to other transitions, so we patch them here
+        private bool CanGetTransitionFromBenchwarp(string bwTransition, string transition)
+        {
+            if (bwTransition == "Warp Colosseum" && (transition == "Room_Colosseum_02[top1]" || transition == "Room_Colosseum_02[top2]"))
+            {
+                return tt.pm.Get("LEFTCLAW") > 0 || tt.pm.Get("RIGHTCLAW") > 0;
+            }
+            else if (bwTransition == "Warp White Palace Balcony" && transition == "White_Palace_06[top1]")
+            {
+                return tt.pm.Get("RIGHTCLAW") > 0 && (tt.pm.Get("LEFTCLAW") > 0 || tt.pm.Get("WINGS") > 0);
+            }
+
+            return true;
         }
 
         class SearchNode
@@ -607,7 +629,8 @@ namespace MapModS.UI
                         searchTransition = transition;
 
                         if (GetScene(transition) == currentNode.currentScene
-                            && tt.pm.lm.TransitionLookup[transition].CanGet(tt.pm))
+                            && tt.pm.lm.TransitionLookup[transition].CanGet(tt.pm)
+                            && CanGetTransitionFromBenchwarp(currentNode.currentRoute.Last(), transition))
                         {
                             addNode = true;
                         }
