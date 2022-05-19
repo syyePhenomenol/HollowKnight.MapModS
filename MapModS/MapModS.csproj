@@ -60,6 +60,8 @@
     <None Remove="Resources\GUI\StatusPanelBG.png" />
     <None Remove="Resources\GUI\UncheckedBG.png" />
     <None Remove="Resources\language.json" />
+    <None Remove="Resources\mapRoomsold.json" />
+    <None Remove="Resources\nonMappedRooms.json" />
     <None Remove="Resources\pins.json" />
     <None Remove="Resources\pinsAM.json" />
     <None Remove="Resources\pinScenes.json" />
@@ -229,8 +231,8 @@
     <EmbeddedResource Include="Resources\GUI\DropdownBG.png" />
     <EmbeddedResource Include="Resources\GUI\UncheckedBG.png" />
     <EmbeddedResource Include="Resources\GUI\LookupBG.png" />
+    <EmbeddedResource Include="Resources\nonMappedRooms.json" />
     <EmbeddedResource Include="Resources\pins.json" />
-    <EmbeddedResource Include="Resources\fixedMapZones.json" />
     <EmbeddedResource Include="Resources\pinsAM.json" />
     <EmbeddedResource Include="Resources\pinScenes.json" />
     <EmbeddedResource Include="Resources\Pins\pinCharm.png" />

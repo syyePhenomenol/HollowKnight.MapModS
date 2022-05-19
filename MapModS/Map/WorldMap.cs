@@ -25,6 +25,7 @@ namespace MapModS.Map
             On.GameMap.DisableMarkers += GameMap_DisableMarkers;
             On.GameManager.UpdateGameMap += GameManager_UpdateGameMap;
             ModHooks.LanguageGetHook += OnLanguageGetHook;
+            On.GameMap.Update += GameMap_Update;
         }
 
         public static void Unhook()
@@ -36,6 +37,7 @@ namespace MapModS.Map
             On.GameMap.DisableMarkers -= GameMap_DisableMarkers;
             On.GameManager.UpdateGameMap -= GameManager_UpdateGameMap;
             ModHooks.LanguageGetHook -= OnLanguageGetHook;
+            On.GameMap.Update -= GameMap_Update;
         }
 
         // Called every time when a new GameMap is created (once per save load)
@@ -46,13 +48,9 @@ namespace MapModS.Map
             try
             {
                 Dependencies.BenchwarpInterop();
-                DataLoader.SetUsedPinDefs();
-                DataLoader.SetLogicLookup();
-
-                if (SettingsUtil.IsTransitionRando())
-                {
-                    DataLoader.SetTransitionLookup();
-                }
+                MainData.SetUsedPinDefs();
+                MainData.SetLogicLookup();
+                TransitionData.SetTransitionLookup();
 
                 if (MapModS.LS.NewSettings || MapModS.LS.PoolGroupSettings.Count == 0)
                 {
@@ -75,17 +73,14 @@ namespace MapModS.Map
 
             Transition.AddExtraComponentsToMap(gameMap);
 
-            if (SettingsUtil.IsTransitionRando())
+            if (GameObject.Find("MMS Custom Map Rooms") == null)
             {
-                if (GameObject.Find("MMS Custom Map Rooms") == null)
-                {
-                    goExtraRooms = Transition.CreateExtraMapRooms(gameMap);
-                }
+                goExtraRooms = Transition.CreateExtraMapRooms(gameMap);
+            }
 
-                if (MapModS.LS.NewSettings)
-                {
-                    MapModS.LS.mapMode = MapMode.TransitionRando;
-                }
+            if (TransitionData.IsTransitionRando() && MapModS.LS.NewSettings)
+            {
+                MapModS.LS.mapMode = MapMode.TransitionRando;
             }
 
             if (goCustomPins != null)
@@ -158,12 +153,6 @@ namespace MapModS.Map
             if (!MapModS.LS.ModEnabled || goCustomPins == null) return;
 
             goCustomPins.SetActive(true);
-
-            // For debugging purposes
-            //if (goExtraRooms != null)
-            //{
-            //    goExtraRooms.SetActive(true);
-            //}
         }
 
         private static void GameMap_DisableMarkers(On.GameMap.orig_DisableMarkers orig, GameMap self)
@@ -191,12 +180,40 @@ namespace MapModS.Map
 
         private static string OnLanguageGetHook(string key, string sheet, string orig)
         {
-            if (sheet == "MMS" && (Transition.nonMapScenes.Contains(key) || Transition.whitePalaceScenes.Contains(key)))
+            if (sheet == "MMS" && MainData.IsNonMappedScene(key))
             {
                 return key;
             }
 
             return orig;
+        }
+
+        // Zoom faster on keyboard by holding down shift key, similarly to right analog stick on controller
+        private static void GameMap_Update(On.GameMap.orig_Update orig, GameMap self)
+        {
+            if (MapModS.LS.ModEnabled
+                && self.canPan
+                && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
+            {
+                if (InputHandler.Instance.inputActions.down.IsPressed)
+                {
+                    self.transform.position = new Vector3(self.transform.position.x, self.transform.position.y + self.panSpeed * Time.deltaTime, self.transform.position.z);
+                }
+                if (InputHandler.Instance.inputActions.up.IsPressed)
+                {
+                    self.transform.position = new Vector3(self.transform.position.x, self.transform.position.y - self.panSpeed * Time.deltaTime, self.transform.position.z);
+                }
+                if (InputHandler.Instance.inputActions.left.IsPressed)
+                {
+                    self.transform.position = new Vector3(self.transform.position.x + self.panSpeed * Time.deltaTime, self.transform.position.y, self.transform.position.z);
+                }
+                if (InputHandler.Instance.inputActions.right.IsPressed)
+                {
+                    self.transform.position = new Vector3(self.transform.position.x - self.panSpeed * Time.deltaTime, self.transform.position.y, self.transform.position.z);
+                }
+            }
+
+            orig(self);
         }
 
         // The main method for updating map objects and pins when opening either World Map or Quick Map
@@ -208,12 +225,9 @@ namespace MapModS.Map
 
             FullMap.PurgeMap();
 
-            if (SettingsUtil.IsTransitionRando()
-                && MapModS.LS.ModEnabled
-                && (MapModS.LS.mapMode == MapMode.TransitionRando
-                    || MapModS.LS.mapMode == MapMode.TransitionRandoAlt))
+            if (TransitionData.TransitionModeActive())
             {
-                    transitionPinScenes = Transition.SetupMapTransitionMode(gameMap);
+                transitionPinScenes = Transition.SetupMapTransitionMode(gameMap);
             }
             else
             {

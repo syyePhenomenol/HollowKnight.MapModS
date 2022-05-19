@@ -6,6 +6,7 @@ using RandomizerMod;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using RM = RandomizerMod.RandomizerMod;
 
 namespace MapModS.UI
 {
@@ -112,7 +113,7 @@ namespace MapModS.UI
             int poolGroupCounter = 0;
 
             // Pool buttons
-            foreach (string group in DataLoader.usedPoolGroups)
+            foreach (string group in MainData.usedPoolGroups)
             {
                 float x_offset = (float)(poolGroupCounter) % 9 * 90;
                 float y_offset = poolGroupCounter / 9 * 30;
@@ -209,7 +210,7 @@ namespace MapModS.UI
             UpdateMode();
             UpdatePoolsPanel();
 
-            foreach (string group in DataLoader.usedPoolGroups)
+            foreach (string group in MainData.usedPoolGroups)
             {
                 UpdatePool(group);
             }
@@ -231,9 +232,7 @@ namespace MapModS.UI
                     UIManager.instance.checkpointSprite.Hide();
                 }
 
-                if (!MapModS.LS.ModEnabled
-                    && GameManager.instance.gameMap != null
-                    && SettingsUtil.IsTransitionRando())
+                if (!MapModS.LS.ModEnabled && GameManager.instance.gameMap != null)
                 {
                     Transition.ResetMapColors(GameManager.instance.gameMap);
                 }
@@ -432,11 +431,8 @@ namespace MapModS.UI
         public static void ModeClicked(string buttonName)
         {
             if (GameManager.instance.gameMap != null
-                && (RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode == RandomizerMod.Settings.TransitionSettings.TransitionMode.RoomRandomizer
-                    && MapModS.LS.mapMode == MapMode.TransitionRando)
-                || ((RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode == RandomizerMod.Settings.TransitionSettings.TransitionMode.FullAreaRandomizer
-                        || RandomizerMod.RandomizerMod.RS.GenerationSettings.TransitionSettings.Mode == RandomizerMod.Settings.TransitionSettings.TransitionMode.MapAreaRandomizer)
-                    && MapModS.LS.mapMode == MapMode.TransitionRandoAlt))
+                && (MapModS.LS.mapMode == MapMode.TransitionRando
+                    || MapModS.LS.mapMode == MapMode.TransitionRandoAlt))
             {
                 Transition.ResetMapColors(GameManager.instance.gameMap);
             }
@@ -511,7 +507,7 @@ namespace MapModS.UI
         {
             if (WorldMap.CustomPins == null) return;
 
-            if (poolGroup == "Geo Rocks" && !RandomizerMod.RandomizerMod.RS.GenerationSettings.PoolSettings.GeoRocks)
+            if (poolGroup == "Geo Rocks" && !RM.RS.GenerationSettings.PoolSettings.GeoRocks)
             {
                 _mapControlPanel.GetPanel("PoolsPanel").GetButton(poolGroup).UpdateText
                     (
@@ -536,7 +532,7 @@ namespace MapModS.UI
 
         public static void BenchClicked(string buttonName)
         {
-            if (!PlayerData.instance.hasPinBench) return;
+            if (!PlayerData.instance.GetBool("hasPinBench")) return;
 
             MapModS.LS.ToggleBench();
 
@@ -545,7 +541,7 @@ namespace MapModS.UI
 
         public static void UpdateBench()
         {
-            if (!PlayerData.instance.hasPinBench)
+            if (!PlayerData.instance.GetBool("hasPinBench"))
             {
                 _mapControlPanel.GetPanel("PoolsPanel").GetButton("Benches").SetTextColor(Color.red);
                 return;

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using MapModS.Data;
+using UnityEngine;
 
 namespace MapModS.UI
 {
@@ -68,12 +69,13 @@ namespace MapModS.UI
                         PauseMenu.SizeClicked("Size");
                     }
 
-                    // For debugging pins
-                    //if (Input.GetKeyDown(KeyCode.R))
-                    //{
-                    //    DataLoader.LoadNewPinDef();
-                    //    WorldMap.CustomPins.ReadjustPinPostiions();
-                    //}
+#if DEBUG
+                    if (Input.GetKeyDown(KeyCode.R))
+                    {
+                        MainData.LoadDebugResources();
+                        //Transition.RealignRoomText();
+                    }
+#endif
                 }
             }
         }

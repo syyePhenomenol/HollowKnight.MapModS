@@ -1,4 +1,5 @@
-﻿using MapModS.Settings;
+﻿using MapModS.Data;
+using MapModS.Settings;
 using UnityEngine.SceneManagement;
 
 namespace MapModS.UI
@@ -27,11 +28,12 @@ namespace MapModS.UI
             UnityEngine.SceneManagement.SceneManager.activeSceneChanged -= HandleSceneChanges;
 
             GUIController.Unload();
+            TransitionText.ClearData();
         }
         private static void GameMap_Start(On.GameMap.orig_Start orig, GameMap self)
         {
             orig(self);
-                
+            
             GUIController.Instance.BuildMenus();
         }
 
@@ -67,9 +69,7 @@ namespace MapModS.UI
 
         private static void HandleSceneChanges(Scene from, Scene to)
         {
-            //MapModS.Instance.Log($"{from.name} to {to.name}");
-
-            if (GameManager.instance.sceneName != to.name || !SettingsUtil.IsTransitionRando()) return;
+            if (GameManager.instance.sceneName != to.name) return;
 
             TransitionText.RemoveTraversedTransition(from.name, to.name);
 

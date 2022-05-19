@@ -43,7 +43,7 @@ namespace MapModS.Trackers
 
         public override void OnEnter()
         {
-            string scene = StringUtils.CurrentNormalScene()??"";
+            string scene = Utils.CurrentScene()??"";
 
             if (!_oName.Contains("-"))
             {

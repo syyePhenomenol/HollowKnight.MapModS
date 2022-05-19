@@ -1,5 +1,6 @@
 ﻿using HutongGames.PlayMaker;
 using HutongGames.PlayMaker.Actions;
+using MapModS.Data;
 using MapModS.Settings;
 using Modding;
 using Mono.Cecil.Cil;
@@ -268,7 +269,7 @@ namespace MapModS.Map
             {
                 foreach (FsmState state in self.FsmStates)
                 {
-                    if (SettingsUtil.IsFSMMapState(state.Name))
+                    if (Utils.IsFSMMapState(state.Name))
                     {
                         ReplaceBool(self, state.Name, 0);
                         continue;
@@ -360,7 +361,7 @@ namespace MapModS.Map
             }
 
             // These are the map zone objects when zoomed out
-            else if (SettingsUtil.IsFSMMapState(self.gameObject.name) && self.FsmName == "deactivate")
+            else if (Utils.IsFSMMapState(self.gameObject.name) && self.FsmName == "deactivate")
             {
                 ReplaceBool(self, "Check", 0);
             }

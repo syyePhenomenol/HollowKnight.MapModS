@@ -73,7 +73,7 @@ namespace MapModS.Map
         {
             if (!MapModS.LS.ModEnabled) return orig(self);
 
-            MapZone mapZone = DataLoader.GetFixedMapZone();
+            MapZone mapZone = MainData.GetFixedMapZone();
 
             if (mapZone != MapZone.NONE)
             {
@@ -87,7 +87,7 @@ namespace MapModS.Map
         {
             if (!MapModS.LS.ModEnabled) return orig(self);
 
-            MapZone mapZone = DataLoader.GetFixedMapZone();
+            MapZone mapZone = MainData.GetFixedMapZone();
 
             if (mapZone != MapZone.NONE)
             {
@@ -250,7 +250,7 @@ namespace MapModS.Map
 
             foreach (FsmState state in quickMapFSM.FsmStates)
             {
-                if (SettingsUtil.IsFSMMapState(state.Name))
+                if (Utils.IsFSMMapState(state.Name))
                 {
                     string boolString = FsmUtil.GetAction<PlayerDataBoolTest>(state, 0).boolName.ToString();
                     FsmUtil.GetAction<PlayerDataBoolTest>(state, 0).boolName = "MMS_" + boolString;

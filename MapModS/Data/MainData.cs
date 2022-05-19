@@ -8,19 +8,19 @@ using RandomizerMod.RC;
 using System.Collections.Generic;
 using System.Linq;
 using CMI = ConnectionMetadataInjector.ConnectionMetadataInjector;
+using RD = RandomizerMod.RandomizerData.Data;
+using RM = RandomizerMod.RandomizerMod;
 
 namespace MapModS.Data
 {
-    public static class DataLoader
+    public static class MainData
     {
         private static Dictionary<string, PinDef> _allPins;
         private static Dictionary<string, PinDef> _allPinsAM;
         private static Dictionary<string, string> _pinScenes;
-        private static Dictionary<string, MapZone> _fixedMapZones;
+        private static Dictionary<string, MapRoomDef> _nonMappedRooms;
         private static readonly Dictionary<string, PinDef> _usedPins = new();
         private static Dictionary<string, string> _logicLookup = new();
-        private static HashSet<string> _randomizedTransitions = new();
-        private static Dictionary<string, TransitionPlacement> _transitionLookup = new();
 
         public static List<string> usedPoolGroups = new();
 
@@ -82,11 +82,42 @@ namespace MapModS.Data
             return default;
         }
 
+        public static bool IsNonMappedScene(string scene)
+        {
+            return _nonMappedRooms.ContainsKey(scene);
+        }
+
+        public static IEnumerable<string> GetNonMappedScenes()
+        {
+            if (Dependencies.HasDependency("AdditionalMaps"))
+            {
+                return _nonMappedRooms.Keys.Where(s => _nonMappedRooms[s].includeWithAdditionalMaps);
+            }
+
+            return _nonMappedRooms.Keys;
+        }
+
+        public static MapRoomDef GetNonMappedRoomDef(string scene)
+        {
+            if (_nonMappedRooms.TryGetValue(scene, out MapRoomDef mrd))
+            {
+                return mrd;
+            }
+
+            return default;
+        }
+
         public static MapZone GetFixedMapZone()
         {
-            if (_fixedMapZones.TryGetValue(StringUtils.CurrentNormalScene(), out MapZone mapZone))
+            if (_nonMappedRooms.TryGetValue(Utils.CurrentScene(), out MapRoomDef mrd))
             {
-                return mapZone;
+                return mrd.mapZone;
+            }
+
+            // This seems to be the one mapped room that doesn't have its MapZone set
+            if (Utils.CurrentScene() == "Ruins_Elevator")
+            {
+                return MapZone.CITY;
             }
 
             return default;
@@ -107,65 +138,6 @@ namespace MapModS.Data
             return default;
         }
 
-        public static bool IsRandomizedTransition(string source)
-        {
-            return _randomizedTransitions.Contains(source);
-        }
-
-        public static bool IsInTransitionLookup(string source)
-        {
-            return _transitionLookup.ContainsKey(source);
-        }
-
-        public static string GetTransitionScene(string source)
-        {
-            if (_transitionLookup.TryGetValue(source, out TransitionPlacement placement))
-            {
-                return placement.Source.TransitionDef.SceneName;
-            }
-
-            //MapModS.Instance.Log("GetTransitionScene null " + source);
-
-            return null;
-        }
-
-        public static string GetTransitionDoor(string source)
-        {
-            if (_transitionLookup.TryGetValue(source, out TransitionPlacement placement))
-            {
-                return placement.Source.TransitionDef.DoorName;
-            }
-
-            //MapModS.Instance.Log("GetTransitionDoor null " + source);
-
-            return null;
-        }
-
-        public static string GetAdjacentTransition(string source)
-        {
-            if (_transitionLookup.TryGetValue(source, out TransitionPlacement placement)
-                && placement.Target != null)
-            {
-                return placement.Target.Name;
-            }
-
-            //MapModS.Instance.Log("GetAdjacentTransition null " + source);
-
-            return null;
-        }
-
-        public static string GetAdjacentScene(string source)
-        {
-            if (_transitionLookup.TryGetValue(source, out TransitionPlacement placement)
-                && placement.Target != null && placement.Target.TransitionDef != null)
-            {
-                return placement.Target.TransitionDef.SceneName;
-            }
-
-            //MapModS.Instance.Log("GetAdjacentScene null " + source);
-
-            return null;
-        }
 
         // Next five helper functions are based on BadMagic100's Rando4Stats RandoExtensions
         // MIT License
@@ -185,7 +157,7 @@ namespace MapModS.Data
         {
             if (item.GetTag(out RandoItemTag tag))
             {
-                return RandomizerMod.RandomizerMod.RS.Context.itemPlacements[tag.id];
+                return RM.RS.Context.itemPlacements[tag.id];
             }
             return default;
         }
@@ -287,7 +259,7 @@ namespace MapModS.Data
                     pd.pinScene = _pinScenes[pd.sceneName];
                 }
 
-                pd.mapZone = StringUtils.ToMapZone(RandomizerMod.RandomizerData.Data.GetRoomDef(pd.pinScene ?? pd.sceneName).MapArea);
+                pd.mapZone = Utils.ToMapZone(RD.GetRoomDef(pd.pinScene ?? pd.sceneName).MapArea);
 
                 pd.randomized = true;
                 pd.randoItems = items;
@@ -311,10 +283,10 @@ namespace MapModS.Data
             }
             
             // Vanilla placements
-            foreach (GeneralizedPlacement placement in RandomizerMod.RandomizerMod.RS.Context.Vanilla)
+            foreach (GeneralizedPlacement placement in RM.RS.Context.Vanilla)
             {
-                if (RandomizerMod.RandomizerData.Data.IsLocation(placement.Location.Name)
-                    && !RandomizerMod.RandomizerMod.RS.TrackerData.clearedLocations.Contains(placement.Location.Name)
+                if (RD.IsLocation(placement.Location.Name)
+                    && !RM.RS.TrackerData.clearedLocations.Contains(placement.Location.Name)
                     && placement.Location.Name != "Start"
                     && placement.Location.Name != "Iselda"
                     && _allPins.ContainsKey(placement.Location.Name)
@@ -323,7 +295,7 @@ namespace MapModS.Data
                     PinDef pd = _allPins[placement.Location.Name];
 
                     pd.name = placement.Location.Name;
-                    pd.sceneName = RandomizerMod.RandomizerData.Data.GetLocationDef(placement.Location.Name).SceneName;
+                    pd.sceneName = RD.GetLocationDef(placement.Location.Name).SceneName;
 
                     if (pd.sceneName == "Room_Colosseum_Bronze" || pd.sceneName == "Room_Colosseum_Silver")
                     {
@@ -335,7 +307,7 @@ namespace MapModS.Data
                         pd.pinScene = _pinScenes[pd.sceneName];
                     }
 
-                    pd.mapZone = StringUtils.ToMapZone(RandomizerMod.RandomizerData.Data.GetRoomDef(pd.pinScene ?? pd.sceneName).MapArea);
+                    pd.mapZone = Utils.ToMapZone(RD.GetRoomDef(pd.pinScene ?? pd.sceneName).MapArea);
 
                     if (!HasObtainedVanillaItem(pd))
                     {
@@ -403,52 +375,7 @@ namespace MapModS.Data
 
         public static void SetLogicLookup()
         {
-            _logicLookup = RandomizerMod.RandomizerMod.RS.TrackerData.lm.LogicLookup.Values.ToDictionary(l => l.Name, l => l.ToInfix());
-        }
-
-        public static void SetTransitionLookup()
-        {
-            _randomizedTransitions = new(RandomizerMod.RandomizerMod.RS.Context.transitionPlacements.Select(tp => tp.Source.Name));
-
-            _transitionLookup = RandomizerMod.RandomizerMod.RS.Context.transitionPlacements.ToDictionary(tp => tp.Source.Name, tp => tp);
-
-            foreach (GeneralizedPlacement gp in RandomizerMod.RandomizerMod.RS.Context.Vanilla.Where(gp => RandomizerMod.RandomizerData.Data.IsTransition(gp.Location.Name)))
-            {
-                RandoModTransition target = new(RandomizerMod.RandomizerMod.RS.Context.LM.GetTransition(gp.Item.Name))
-                {
-                    TransitionDef = RandomizerMod.RandomizerData.Data.GetTransitionDef(gp.Item.Name)
-                };
-
-                RandoModTransition source = new(RandomizerMod.RandomizerMod.RS.Context.LM.GetTransition(gp.Location.Name))
-                {
-                    TransitionDef = RandomizerMod.RandomizerData.Data.GetTransitionDef(gp.Location.Name)
-                };
-
-                _transitionLookup.Add(gp.Location.Name, new(target, source));
-            }
-
-            // Add impossible transitions
-
-            foreach (TransitionPlacement tp in RandomizerMod.RandomizerMod.RS.Context.transitionPlacements)
-            {
-                if (!_transitionLookup.ContainsKey(tp.Target.Name))
-                {
-                    _transitionLookup.Add(tp.Target.Name, new(null, tp.Target));
-                }
-            }
-
-            foreach (GeneralizedPlacement gp in RandomizerMod.RandomizerMod.RS.Context.Vanilla.Where(gp => RandomizerMod.RandomizerData.Data.IsTransition(gp.Location.Name)))
-            {
-                if (!_transitionLookup.ContainsKey(gp.Item.Name))
-                {
-                    RandoModTransition source = new(RandomizerMod.RandomizerMod.RS.Context.LM.GetTransition(gp.Item.Name))
-                    {
-                        TransitionDef = RandomizerMod.RandomizerData.Data.GetTransitionDef(gp.Item.Name)
-                    };
-
-                    _transitionLookup.Add(gp.Item.Name, new(null, source));
-                }
-            }
+            _logicLookup = RM.RS.TrackerData.lm.LogicLookup.Values.ToDictionary(l => l.Name, l => l.ToInfix());
         }
 
         public static void Load()
@@ -456,14 +383,14 @@ namespace MapModS.Data
             _allPins = JsonUtil.Deserialize<Dictionary<string, PinDef>>("MapModS.Resources.pins.json");
             _allPinsAM = JsonUtil.Deserialize<Dictionary<string, PinDef>>("MapModS.Resources.pinsAM.json");
             _pinScenes = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.pinScenes.json");
-            _fixedMapZones = JsonUtil.Deserialize<Dictionary<string, MapZone>>("MapModS.Resources.fixedMapZones.json");
+            _nonMappedRooms = JsonUtil.Deserialize<Dictionary<string, MapRoomDef>>("MapModS.Resources.nonMappedRooms.json");
         }
 
-        // For debugging pins
-        //public static void LoadNew PinDef()
-        //{
-        //    newPins.Clear();
-        //    newPins = JsonUtil.DeserializeFromExternalFile<Dictionary<string, PinDef>>("newPins.json");
-        //}
+#if DEBUG
+        public static void LoadDebugResources()
+        {
+
+        }
+#endif
     }
 }

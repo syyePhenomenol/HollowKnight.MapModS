@@ -30,7 +30,7 @@ namespace MapModS.UI
         {
             if (Canvas == null || GameManager.instance.gameMap == null || _infoPanel == null) return;
 
-            if (!LookupActive() || TransitionText.TransitionModeActive())
+            if (!LookupActive() || TransitionData.TransitionModeActive())
             {
                 Hide();
                 return;
@@ -93,7 +93,7 @@ namespace MapModS.UI
                 || WorldMap.goCustomPins == null
                 || WorldMap.CustomPins == null
                 || !LookupActive()
-                || TransitionText.TransitionModeActive()) return;
+                || TransitionData.TransitionModeActive()) return;
 
             if ((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
                 && Input.GetKeyDown(KeyCode.L))
@@ -173,9 +173,9 @@ namespace MapModS.UI
 
         public static void SetInstructionsText()
         {
-            string instructionsText = $"{StringUtils.ToCleanName(selectedLocation)}";
+            string instructionsText = $"{Utils.ToCleanName(selectedLocation)}";
 
-            PinDef pd = DataLoader.GetUsedPinDef(selectedLocation);
+            PinDef pd = MainData.GetUsedPinDef(selectedLocation);
 
             if (pd != null)
             {
@@ -195,22 +195,22 @@ namespace MapModS.UI
                     _ => ""
                 };
 
-                if (DataLoader.IsInLogicLookup(selectedLocation))
+                if (MainData.IsInLogicLookup(selectedLocation))
                 {
-                    instructionsText += $"\n\n{Localization.Localize("Logic")}: {DataLoader.GetRawLogic(selectedLocation)}";
+                    instructionsText += $"\n\n{Localization.Localize("Logic")}: {MainData.GetRawLogic(selectedLocation)}";
                 }
 
                 if (RandomizerMod.RandomizerMod.RS.TrackerData.previewedLocations.Contains(pd.name))
                 {
                     instructionsText += $"\n\n{Localization.Localize("Previewed item(s)")}:";
 
-                    string[] previewText = DataLoader.GetPreviewText(pd.name);
+                    string[] previewText = MainData.GetPreviewText(pd.name);
 
                     if (previewText == null) return;
 
                     foreach (string text in previewText)
                     {
-                        instructionsText += $" {StringUtils.ToCleanPreviewText(text)},";
+                        instructionsText += $" {Utils.ToCleanPreviewText(text)},";
                     }
 
                     instructionsText = instructionsText.Substring(0, instructionsText.Length - 1);
@@ -227,7 +227,7 @@ namespace MapModS.UI
 
                     foreach (ItemDef item in pd.randoItems)
                     {
-                        instructionsText += $" {StringUtils.ToCleanName(item.itemName)},";
+                        instructionsText += $" {Utils.ToCleanName(item.itemName)},";
                     }
 
                     instructionsText = instructionsText.Substring(0, instructionsText.Length - 1);

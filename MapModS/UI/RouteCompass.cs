@@ -4,6 +4,8 @@ using MapModS.Data;
 using MapModS.Settings;
 using Modding.Utils;
 using UnityEngine;
+using PD = MapModS.Data.PathfinderData;
+using SM = UnityEngine.SceneManagement.SceneManager;
 
 namespace MapModS.UI
 {
@@ -62,7 +64,9 @@ namespace MapModS.UI
         {
             if (compass != null && CompassC != null) CompassC.Destroy();
 
-            if (Knight == null || GUIController.Instance == null) return;
+            if (Knight == null
+                || GUIController.Instance == null
+                || GameManager.instance.IsNonGameplayScene()) return;
 
             Texture2D tex = GUIController.Instance.Images["arrow"];
 
@@ -91,25 +95,25 @@ namespace MapModS.UI
             if (CompassC != null && TransitionText.selectedRoute.Any())
             {
                 string transition = TransitionText.selectedRoute.First();
-                string scene = TransitionHelper.GetScene(TransitionText.selectedRoute.First());
+                string scene = PD.GetScene(TransitionText.selectedRoute.First());
                 string gate = "";
 
-                if (StringUtils.CurrentNormalScene() == scene)
+                if (Utils.CurrentScene() == scene)
                 {
                     if (specialDoors.ContainsKey(transition))
                     {
                         gate = specialDoors[transition];
                     }
-                    else if (DataLoader.IsInTransitionLookup(transition))
+                    else if (TransitionData.IsInTransitionLookup(transition))
                     {
-                        gate = DataLoader.GetTransitionDoor(transition);
+                        gate = TransitionData.GetTransitionDoor(transition);
                     }
                 }
-                else if ((TransitionHelper.stagTransitions.ContainsKey(transition)
-                        || TransitionHelper.tramTransitions.ContainsKey(transition))
-                    && doorsByScene.ContainsKey(StringUtils.CurrentNormalScene()))
+                else if ((PD.stagTransitions.ContainsKey(transition)
+                        || PD.tramTransitions.ContainsKey(transition))
+                    && doorsByScene.ContainsKey(Utils.CurrentScene()))
                 {
-                    gate = doorsByScene[StringUtils.CurrentNormalScene()];
+                    gate = doorsByScene[Utils.CurrentScene()];
                 }
 
                 if (gate == "")
@@ -118,7 +122,7 @@ namespace MapModS.UI
                     return;
                 }
 
-                GameObject gateObject = UnityExtensions.FindGameObject(UnityEngine.SceneManagement.SceneManager.GetActiveScene(), gate);
+                GameObject gateObject = UnityExtensions.FindGameObject(SM.GetActiveScene(), gate);
 
                 if (gateObject != null)
                 {
@@ -127,7 +131,7 @@ namespace MapModS.UI
                     return;
                 }
 
-                GameObject gateObject2 = UnityExtensions.FindGameObject(UnityEngine.SceneManagement.SceneManager.GetActiveScene(), "_Transition Gates/" + gate);
+                GameObject gateObject2 = UnityExtensions.FindGameObject(SM.GetActiveScene(), "_Transition Gates/" + gate);
 
                 if (gateObject2 != null)
                 {
