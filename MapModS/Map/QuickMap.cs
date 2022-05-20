@@ -2,8 +2,8 @@
 using HutongGames.PlayMaker;
 using HutongGames.PlayMaker.Actions;
 using MapModS.Data;
-using MapModS.Settings;
 using MapModS.UI;
+using Modding;
 using System.Linq;
 using UnityEngine;
 using Vasi;
@@ -14,6 +14,8 @@ namespace MapModS.Map
     {
         public static void Hook()
         {
+            On.MapNextAreaDisplay.OnEnable += MapNextAreaDisplay_OnEnable;
+
             On.GameMap.PositionCompass += GameMap_PositionCompass;
             On.GameManager.GetCurrentMapZone += GameManager_GetCurrentMapZone;
             On.GameMap.GetDoorMapZone += GameMap_GetDoorMapZone;
@@ -38,6 +40,8 @@ namespace MapModS.Map
 
         public static void Unhook()
         {
+            On.MapNextAreaDisplay.OnEnable -= MapNextAreaDisplay_OnEnable;
+
             On.GameMap.PositionCompass -= GameMap_PositionCompass;
             On.GameManager.GetCurrentMapZone -= GameManager_GetCurrentMapZone;
             On.GameMap.GetDoorMapZone -= GameMap_GetDoorMapZone;
@@ -58,6 +62,17 @@ namespace MapModS.Map
             On.GameMap.QuickMapWaterways -= GameMap_QuickMapWaterways;
 
             On.GameManager.SetGameMap -= GameManager_SetGameMap;
+        }
+
+        // Don't show next map objects in Quick Map during Transition mode
+        private static void MapNextAreaDisplay_OnEnable(On.MapNextAreaDisplay.orig_OnEnable orig, MapNextAreaDisplay self)
+        {
+            orig(self);
+
+            if (TransitionData.TransitionModeActive())
+            {
+                ReflectionHelper.CallMethod(self, "DeactivateChildren");
+            }
         }
 
         // Fixes some null referencing shenanigans
