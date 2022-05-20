@@ -175,6 +175,40 @@ namespace MapModS.Data
 
                     text += GetTransitionDoor(pair.Key) + " -> " + pair.Value;
                 }
+
+                text += "\n\n";
+            }
+
+            if (!RM.RS.GenerationSettings.TransitionSettings.Coupled)
+            {
+                text += GetVisitedTo(scene);
+            }
+
+            return text;
+        }
+
+        public static string GetVisitedTo(string scene)
+        {
+            string text = "";
+
+            Dictionary<string, string> visitedTransitionsTo = RM.RS.TrackerData.visitedTransitions
+                .Where(t => GetTransitionScene(t.Value) == scene).ToDictionary(t => t.Key, t => t.Value);
+
+            if (visitedTransitionsTo.Any())
+            {
+                text += $"{Localization.Localize("Visited to")}:";
+
+                foreach (KeyValuePair<string, string> pair in visitedTransitionsTo)
+                {
+                    text += "\n";
+
+                    if (RM.RS.TrackerDataWithoutSequenceBreaks.outOfLogicVisitedTransitions.Contains(pair.Key))
+                    {
+                        text += "*";
+                    }
+
+                    text += pair.Key + " -> " + GetTransitionDoor(pair.Value);
+                }
             }
 
             return text;
