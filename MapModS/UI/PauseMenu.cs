@@ -93,7 +93,7 @@ namespace MapModS.UI
                 GUIController.Instance.Images["ButtonRectEmpty"],
                 new Vector2(400f, 0f),
                 Vector2.zero,
-                new Rect(0f, 0f, GUIController.Instance.Images["DropdownBG"].width, 270f)
+                new Rect(0f, 0f, 0f, 0f)
             );
             _mapControlPanel.AddButton
             (
