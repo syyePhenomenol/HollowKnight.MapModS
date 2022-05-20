@@ -227,7 +227,7 @@ namespace MapModS.Map
 
             if (TransitionData.TransitionModeActive())
             {
-                transitionPinScenes = Transition.SetupMapTransitionMode(gameMap);
+                transitionPinScenes = Transition.SetupMapTransitionMode(gameMap, mapZone);
             }
             else
             {

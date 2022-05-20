@@ -1,4 +1,5 @@
-﻿using MapModS.Data;
+﻿using GlobalEnums;
+using MapModS.Data;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -18,6 +19,8 @@ namespace MapModS.Map
             go_extraMapRooms.SetActive(true);
 
             var areaNamePrefab = UnityEngine.Object.Instantiate(gameMap.areaCliffs.transform.GetChild(0).gameObject);
+
+            UnityEngine.Object.Destroy(areaNamePrefab.GetComponent<DisplayOnWorldMapOnly>());
 
             var prefabTMP = areaNamePrefab.GetComponent<TextMeshPro>();
             prefabTMP.color = Color.white;
@@ -94,7 +97,7 @@ namespace MapModS.Map
             tmp.color = color;
         }
 
-        public static HashSet<string> SetupMapTransitionMode(GameMap gameMap)
+        public static HashSet<string> SetupMapTransitionMode(GameMap gameMap, MapZone mapZone)
         {
             bool isAlt = MapModS.LS.mapMode == Settings.MapMode.TransitionRandoAlt;
 
@@ -227,9 +230,17 @@ namespace MapModS.Map
 
                     if (areaObj.name == "MMS Custom Map Rooms")
                     {
-                        TextMeshPro tmp = roomObj.gameObject.GetComponent<TextMeshPro>();
-                        SetActiveTMPColor(roomObj, active, tmp, color);
-                        emd.origTransitionColor = tmp.color;
+                        if (mapZone == MapZone.NONE || MainData.GetNonMappedRoomDef(roomObj.name).mapZone == mapZone)
+                        {
+                            TextMeshPro tmp = roomObj.gameObject.GetComponent<TextMeshPro>();
+                            SetActiveTMPColor(roomObj, active, tmp, color);
+                            emd.origTransitionColor = tmp.color;
+                        }
+                        else
+                        {
+                            roomObj.gameObject.SetActive(false);
+                        }
+
                         continue;
                     }
 
