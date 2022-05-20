@@ -18,6 +18,8 @@ namespace MapModS.Data
         private static Dictionary<string, PinDef> _allPins;
         private static Dictionary<string, PinDef> _allPinsAM;
         private static Dictionary<string, string> _pinScenes;
+        private static List<string> _sortedGroups;
+        private static HashSet<string> _minimalMapRooms;
         private static Dictionary<string, MapRoomDef> _nonMappedRooms;
         private static readonly Dictionary<string, PinDef> _usedPins = new();
         private static Dictionary<string, string> _logicLookup = new();
@@ -25,37 +27,6 @@ namespace MapModS.Data
         public static List<string> usedPoolGroups = new();
 
         //public static Dictionary<string, PinDef> newPins = new();
-
-        public static List<string> sortedKnownGroups = new()
-        {
-            "Dreamers",
-            "Skills",
-            "Charms",
-            "Keys",
-            "Mask Shards",
-            "Vessel Fragments",
-            "Charm Notches",
-            "Pale Ore",
-            "Geo Chests",
-            "Rancid Eggs",
-            "Relics",
-            "Whispering Roots",
-            "Boss Essence",
-            "Grubs",
-            "Mimics",
-            "Maps",
-            "Stags",
-            "Lifeblood Cocoons",
-            "Grimmkin Flames",
-            "Journal Entries",
-            "Geo Rocks",
-            "Boss Geo",
-            "Soul Totems",
-            "Lore Tablets",
-            "Shops",
-            "Levers",
-            "Unknown"
-        };
 
         public static PinDef[] GetPinArray()
         {
@@ -80,6 +51,11 @@ namespace MapModS.Data
             }
 
             return default;
+        }
+
+        public static bool IsMinimalMapRoom(string scene)
+        {
+            return _minimalMapRooms.Contains(scene);
         }
 
         public static bool IsNonMappedScene(string scene)
@@ -326,7 +302,7 @@ namespace MapModS.Data
             }
 
             // Sort all the PoolGroups that have been used
-            foreach (string poolGroup in sortedKnownGroups)
+            foreach (string poolGroup in _sortedGroups)
             {
                 if (unsortedGroups.Contains(poolGroup))
                 {
@@ -383,6 +359,8 @@ namespace MapModS.Data
             _allPins = JsonUtil.Deserialize<Dictionary<string, PinDef>>("MapModS.Resources.pins.json");
             _allPinsAM = JsonUtil.Deserialize<Dictionary<string, PinDef>>("MapModS.Resources.pinsAM.json");
             _pinScenes = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.pinScenes.json");
+            _sortedGroups = JsonUtil.Deserialize<List<string>>("MapModS.Resources.sortedGroups.json");
+            _minimalMapRooms = JsonUtil.Deserialize<HashSet<string>>("MapModS.Resources.minimalMapRooms.json");
             _nonMappedRooms = JsonUtil.Deserialize<Dictionary<string, MapRoomDef>>("MapModS.Resources.nonMappedRooms.json");
         }
 
