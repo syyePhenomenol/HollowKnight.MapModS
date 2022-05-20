@@ -55,7 +55,6 @@
     <None Remove="Resources\GUI\ButtonRect.png" />
     <None Remove="Resources\GUI\ButtonRectEmpty.png" />
     <None Remove="Resources\GUI\ButtonsMenuBG.png" />
-    <None Remove="Resources\GUI\DropdownBG.png" />
     <None Remove="Resources\GUI\LookupBG.png" />
     <None Remove="Resources\GUI\StatusPanelBG.png" />
     <None Remove="Resources\GUI\UncheckedBG.png" />
@@ -234,7 +233,6 @@
     <EmbeddedResource Include="Resources\GUI\ButtonRect.png" />
     <EmbeddedResource Include="Resources\GUI\ButtonRectEmpty.png" />
     <EmbeddedResource Include="Resources\GUI\ButtonsMenuBG.png" />
-    <EmbeddedResource Include="Resources\GUI\DropdownBG.png" />
     <EmbeddedResource Include="Resources\GUI\UncheckedBG.png" />
     <EmbeddedResource Include="Resources\GUI\LookupBG.png" />
     <EmbeddedResource Include="Resources\minimalMapRooms.json" />
