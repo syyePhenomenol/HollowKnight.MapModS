@@ -26,8 +26,6 @@ namespace MapModS.Data
 
         public static List<string> usedPoolGroups = new();
 
-        //public static Dictionary<string, PinDef> newPins = new();
-
         public static PinDef[] GetPinArray()
         {
             return _allPins.Values.ToArray();

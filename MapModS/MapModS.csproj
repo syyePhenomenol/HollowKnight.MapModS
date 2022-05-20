@@ -61,6 +61,7 @@
     <None Remove="Resources\GUI\UncheckedBG.png" />
     <None Remove="Resources\language.json" />
     <None Remove="Resources\mapRoomsold.json" />
+    <None Remove="Resources\minimalMapRooms.json" />
     <None Remove="Resources\nonMappedRooms.json" />
     <None Remove="Resources\pins.json" />
     <None Remove="Resources\pinsAM.json" />
@@ -221,6 +222,11 @@
     <None Remove="Resources\pins_old.json" />
     <None Remove="Resources\pins_unused.json" />
     <None Remove="Resources\shop.json" />
+    <None Remove="Resources\sortedGroups.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\sortedGroups.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -231,6 +237,7 @@
     <EmbeddedResource Include="Resources\GUI\DropdownBG.png" />
     <EmbeddedResource Include="Resources\GUI\UncheckedBG.png" />
     <EmbeddedResource Include="Resources\GUI\LookupBG.png" />
+    <EmbeddedResource Include="Resources\minimalMapRooms.json" />
     <EmbeddedResource Include="Resources\nonMappedRooms.json" />
     <EmbeddedResource Include="Resources\pins.json" />
     <EmbeddedResource Include="Resources\pinsAM.json" />

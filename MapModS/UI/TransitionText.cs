@@ -17,8 +17,6 @@ namespace MapModS.UI
     {
         public static GameObject Canvas;
 
-        //public static bool LockToggleEnable;
-
         private static CanvasPanel _instructionPanel;
         private static CanvasPanel _routePanel;
         private static CanvasPanel _uncheckedTransitionsPanelQuickMap;
@@ -60,8 +58,6 @@ namespace MapModS.UI
                 return;
             }
 
-            //LockToggleEnable = false;
-
             _instructionPanel.SetActive(false, false);
             _routePanel.SetActive(true, true);
             _uncheckedTransitionsPanelWorldMap.SetActive(false, false);
@@ -79,8 +75,6 @@ namespace MapModS.UI
                 HideAll();
                 return;
             }
-
-            //LockToggleEnable = false;
 
             _instructionPanel.SetActive(true, true);
             _routePanel.SetActive(true, true);
@@ -101,8 +95,6 @@ namespace MapModS.UI
                 HideAll();
                 return;
             }
-
-            //LockToggleEnable = false;
 
             _instructionPanel.SetActive(false, false);
             _uncheckedTransitionsPanelWorldMap.SetActive(false, false);

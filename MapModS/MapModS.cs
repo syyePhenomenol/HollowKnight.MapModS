@@ -16,7 +16,7 @@ namespace MapModS
     {
         public static MapModS Instance;
 
-        public override string GetVersion() => "2.4.5";
+        public override string GetVersion() => "2.5.0";
 
         public override int LoadPriority() => 10;
 
@@ -65,7 +65,7 @@ namespace MapModS
 
             try
             {
-                DataLoader.Load();
+                MainData.Load();
             }
             catch (Exception e)
             {
