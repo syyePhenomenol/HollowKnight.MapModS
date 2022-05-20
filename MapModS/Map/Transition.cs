@@ -16,7 +16,7 @@ namespace MapModS.Map
             go_extraMapRooms.layer = 5;
             go_extraMapRooms.transform.SetParent(gameMap.transform);
             go_extraMapRooms.transform.localPosition = Vector3.zero;
-            go_extraMapRooms.SetActive(true);
+            go_extraMapRooms.SetActive(false);
 
             var areaNamePrefab = UnityEngine.Object.Instantiate(gameMap.areaCliffs.transform.GetChild(0).gameObject);
 
