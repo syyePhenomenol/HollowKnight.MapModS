@@ -1,5 +1,6 @@
 ﻿using GlobalEnums;
 using MapModS.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -316,6 +317,104 @@ namespace MapModS.Map
                     }
                 }
             }
+        }
+
+        private static readonly Vector4 selectionColor = new(255, 255, 0, 0.8f);
+
+        public static void SetSelectedRoomColor(string selectedScene)
+        {
+            GameObject go_GameMap = GameManager.instance.gameMap;
+
+            if (go_GameMap == null) return;
+
+            foreach (Transform areaObj in go_GameMap.transform)
+            {
+                foreach (Transform roomObj in areaObj.transform)
+                {
+                    if (!roomObj.gameObject.activeSelf) continue;
+
+                    Transition.ExtraMapData extra = roomObj.GetComponent<Transition.ExtraMapData>();
+
+                    if (extra == null) continue;
+
+                    if (areaObj.name == "MMS Custom Map Rooms")
+                    {
+                        TextMeshPro tmp = roomObj.gameObject.GetComponent<TextMeshPro>();
+
+                        if (extra.sceneName == selectedScene)
+                        {
+                            tmp.color = selectionColor;
+                        }
+                        else
+                        {
+                            tmp.color = extra.origTransitionColor;
+                        }
+
+                        continue;
+                    }
+
+                    SpriteRenderer sr = roomObj.GetComponent<SpriteRenderer>();
+
+                    // For AdditionalMaps room objects, the child has the SR
+                    if (extra.sceneName.Contains("White_Palace"))
+                    {
+                        foreach (Transform roomObj2 in roomObj.transform)
+                        {
+                            if (!roomObj2.name.Contains("RWP")) continue;
+                            sr = roomObj2.GetComponent<SpriteRenderer>();
+                            break;
+                        }
+                    }
+
+                    if (sr == null) continue;
+
+                    if (extra.sceneName == selectedScene)
+                    {
+                        sr.color = selectionColor;
+                    }
+                    else
+                    {
+                        sr.color = extra.origTransitionColor;
+                    }
+                }
+            }
+        }
+
+        private static double DistanceToMiddle(Transform transform)
+        {
+            return Math.Pow(transform.position.x, 2) + Math.Pow(transform.position.y, 2);
+        }
+
+        public static bool GetRoomClosestToMiddle(string previousScene, out string selectedScene)
+        {
+            selectedScene = null;
+            double minDistance = double.PositiveInfinity;
+
+            GameObject go_GameMap = GameManager.instance.gameMap;
+
+            if (go_GameMap == null) return false;
+
+            foreach (Transform areaObj in go_GameMap.transform)
+            {
+                foreach (Transform roomObj in areaObj.transform)
+                {
+                    if (!roomObj.gameObject.activeSelf) continue;
+
+                    Transition.ExtraMapData extra = roomObj.GetComponent<Transition.ExtraMapData>();
+
+                    if (extra == null) continue;
+
+                    double distance = DistanceToMiddle(roomObj);
+
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                        selectedScene = extra.sceneName;
+                    }
+                }
+            }
+
+            return selectedScene != previousScene;
         }
 
         public static void ResetMapColors(GameObject goGameMap)

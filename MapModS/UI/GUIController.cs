@@ -5,21 +5,15 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace MapModS.UI
 {
-    // All the following was modified from the GUI implementation of BenchwarpMod by homothetyhk
+    // All the following was modified from the GUI implementation of BenchwarpMod by homothety
     public class GUIController : MonoBehaviour
     {
         public Dictionary<string, Texture2D> Images = new();
 
         public static GUIController Instance;
-
-        private GameObject _transitionCanvas;
-        public Font TrajanBold { get; private set; }
-        public Font TrajanNormal { get; private set; }
-        public Font Perpetua { get; private set; }
 
         public static void Setup()
         {
@@ -34,27 +28,12 @@ namespace MapModS.UI
             if (Instance != null)
             {
                 Instance.StopAllCoroutines();
-
-                Destroy(Instance._transitionCanvas);
                 Destroy(Instance.gameObject);
             }
         }
 
         public void StartScripts()
         {
-            _transitionCanvas = new GameObject();
-            _transitionCanvas.AddComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
-            CanvasScaler transitionScaler = _transitionCanvas.AddComponent<CanvasScaler>();
-            transitionScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            transitionScaler.referenceResolution = new Vector2(1920f, 1080f);
-
-            TransitionText.BuildText(_transitionCanvas);
-
-            DontDestroyOnLoad(_transitionCanvas);
-
-            _transitionCanvas.SetActive(true);
-
-            TransitionText.Initialize();
             StartCoroutine("UpdateSelectedScene");
 
             StartCoroutine("UpdateSelectedPin");
@@ -64,8 +43,7 @@ namespace MapModS.UI
         {
             try
             {
-                //PauseMenu.Update();
-                TransitionText.Update();
+                TransitionPersistent.Update();
             }
             catch (Exception e)
             {
@@ -79,7 +57,7 @@ namespace MapModS.UI
             while (true)
             {
                 yield return new WaitForSecondsRealtime(0.1f);
-                TransitionText.UpdateSelectedScene();
+                TransitionPersistent.UpdateSelectedScene();
             }
         }
 
@@ -95,15 +73,6 @@ namespace MapModS.UI
 
         private void LoadResources()
         {
-            TrajanBold = Modding.CanvasUtil.TrajanBold;
-            TrajanNormal = Modding.CanvasUtil.TrajanNormal;
-            Perpetua = Modding.CanvasUtil.GetFont("Perpetua");
-
-            if (TrajanBold == null || TrajanNormal == null)
-            {
-                MapModS.Instance.LogError("Could not find game fonts");
-            }
-
             Assembly asm = Assembly.GetExecutingAssembly();
 
             foreach (string res in asm.GetManifestResourceNames())

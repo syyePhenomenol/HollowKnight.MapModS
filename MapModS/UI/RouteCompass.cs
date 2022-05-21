@@ -92,10 +92,10 @@ namespace MapModS.UI
         {
             if (compass == null) return;
 
-            if (CompassC != null && TransitionText.selectedRoute.Any())
+            if (CompassC != null && TransitionPersistent.selectedRoute.Any())
             {
-                string transition = TransitionText.selectedRoute.First();
-                string scene = PD.GetScene(TransitionText.selectedRoute.First());
+                string transition = TransitionPersistent.selectedRoute.First();
+                string scene = PD.GetScene(TransitionPersistent.selectedRoute.First());
                 string gate = "";
 
                 if (Utils.CurrentScene() == scene)

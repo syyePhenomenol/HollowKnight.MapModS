@@ -118,8 +118,6 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.ABYSS);
-
-            TransitionText.ShowQuickMap();
         }
 
         private static void GameMap_QuickMapCity(On.GameMap.orig_QuickMapCity orig, GameMap self)
@@ -127,8 +125,6 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.CITY);
-
-            TransitionText.ShowQuickMap();
         }
 
         private static void GameMap_QuickMapCliffs(On.GameMap.orig_QuickMapCliffs orig, GameMap self)
@@ -136,8 +132,6 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.CLIFFS);
-
-            TransitionText.ShowQuickMap();
         }
 
         private static void GameMap_QuickMapCrossroads(On.GameMap.orig_QuickMapCrossroads orig, GameMap self)
@@ -145,8 +139,6 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.CROSSROADS);
-
-            TransitionText.ShowQuickMap();
         }
 
         private static void GameMap_QuickMapCrystalPeak(On.GameMap.orig_QuickMapCrystalPeak orig, GameMap self)
@@ -154,8 +146,6 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.MINES);
-
-            TransitionText.ShowQuickMap();
         }
 
         private static void GameMap_QuickMapDeepnest(On.GameMap.orig_QuickMapDeepnest orig, GameMap self)
@@ -163,8 +153,6 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.DEEPNEST);
-
-            TransitionText.ShowQuickMap();
         }
 
         private static void GameMap_QuickMapDirtmouth(On.GameMap.orig_QuickMapDirtmouth orig, GameMap self)
@@ -172,8 +160,6 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.TOWN);
-
-            TransitionText.ShowQuickMap();
         }
 
         private static void GameMap_QuickMapFogCanyon(On.GameMap.orig_QuickMapFogCanyon orig, GameMap self)
@@ -181,8 +167,6 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.FOG_CANYON);
-
-            TransitionText.ShowQuickMap();
         }
 
         private static void GameMap_QuickMapFungalWastes(On.GameMap.orig_QuickMapFungalWastes orig, GameMap self)
@@ -190,8 +174,6 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.WASTES);
-
-            TransitionText.ShowQuickMap();
         }
 
         private static void GameMap_QuickMapGreenpath(On.GameMap.orig_QuickMapGreenpath orig, GameMap self)
@@ -199,8 +181,6 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.GREEN_PATH);
-
-            TransitionText.ShowQuickMap();
         }
 
         private static void GameMap_QuickMapKingdomsEdge(On.GameMap.orig_QuickMapKingdomsEdge orig, GameMap self)
@@ -208,8 +188,6 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.OUTSKIRTS);
-
-            TransitionText.ShowQuickMap();
         }
 
         private static void GameMap_QuickMapQueensGardens(On.GameMap.orig_QuickMapQueensGardens orig, GameMap self)
@@ -217,8 +195,6 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.ROYAL_GARDENS);
-
-            TransitionText.ShowQuickMap();
         }
 
         private static void GameMap_QuickMapRestingGrounds(On.GameMap.orig_QuickMapRestingGrounds orig, GameMap self)
@@ -226,8 +202,6 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.RESTING_GROUNDS);
-
-            TransitionText.ShowQuickMap();
         }
 
         private static void GameMap_QuickMapWaterways(On.GameMap.orig_QuickMapWaterways orig, GameMap self)
@@ -235,8 +209,6 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.WATERWAYS);
-
-            TransitionText.ShowQuickMap();
         }
 
         private static void GameManager_SetGameMap(On.GameManager.orig_SetGameMap orig, GameManager self, GameObject go_gameMap)
@@ -298,8 +270,8 @@ namespace MapModS.Map
             WorldMap.UpdateMap(_GameMap, _customMapZone);
             _GameMap.SetupMapMarkers();
 
-            //MapText.Show();
-            TransitionText.ShowQuickMap();
+            GUI.worldMapOpen = false;
+            GUI.quickMapOpen = true;
 
             Finish();
         }
