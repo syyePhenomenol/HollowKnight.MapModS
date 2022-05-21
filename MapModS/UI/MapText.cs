@@ -22,12 +22,17 @@ namespace MapModS.UI
             { "Size", new(new(1000f, 10f , 10f, 20f), UpdateSize) },
         };
 
+        public static bool Condition()
+        {
+            return GUI.worldMapOpen || GUI.quickMapOpen;
+        }
+
         public static void Build()
         {
             if (layout == null)
             {
                 layout = new(true, "Map Text");
-                layout.VisibilityCondition = GUI.AnyMapOpen;
+                layout.VisibilityCondition = Condition;
 
                 foreach (string textName in _textObjects.Keys)
                 {

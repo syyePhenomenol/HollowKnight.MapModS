@@ -234,7 +234,7 @@ namespace MapModS.UI
                 UIManager.instance.checkpointSprite.Hide();
             }
 
-            if (GUI.AnyMapOpen())
+            if (GUI.worldMapOpen || GUI.quickMapOpen)
             {
                 MapText.SetToRefresh();
             }

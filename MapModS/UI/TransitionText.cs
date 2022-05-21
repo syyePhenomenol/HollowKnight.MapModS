@@ -1,4 +1,5 @@
-﻿using MapModS.CanvasUtil;
+﻿using MagicUI.Core;
+using MapModS.CanvasUtil;
 using MapModS.Data;
 using MapModS.Map;
 using MapModS.Settings;
@@ -114,6 +115,7 @@ namespace MapModS.UI
         public static void BuildText(GameObject _canvas)
         {
             Canvas = _canvas;
+
             _instructionPanel = new CanvasPanel
                 (_canvas, GUIController.Instance.Images["ButtonsMenuBG"], new Vector2(10f, 20f), new Vector2(1346f, 0f), new Rect(0f, 0f, 0f, 0f));
             _instructionPanel.AddText("Instructions", "None", new Vector2(20f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14);

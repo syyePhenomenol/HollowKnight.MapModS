@@ -1,28 +1,11 @@
-﻿using MapModS.Data;
-using MapModS.Settings;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine.SceneManagement;
 
 namespace MapModS.UI
 {
     public static class GUI
     {
-        private static bool worldMapOpen = false;
-        private static bool quickMapOpen = false;
-
-        public static bool AnyMapOpen()
-        {
-            return worldMapOpen || quickMapOpen;
-        }
-
-        public static bool WorldMapOpen()
-        {
-            return worldMapOpen;
-        }
-
-        public static bool QuickMapOpen()
-        {
-            return quickMapOpen;
-        }
+        public static bool worldMapOpen = false;
+        public static bool quickMapOpen = false;
 
         public static void Hook()
         {
@@ -80,13 +63,14 @@ namespace MapModS.UI
 
             PauseMenu.Destroy();
             MapText.Destroy();
+            LookupText.Destroy();
         }
 
         private static void GameMap_Start(On.GameMap.orig_Start orig, GameMap self)
         {
             orig(self);
             
-            GUIController.Instance.BuildMenus();
+            GUIController.Instance.StartScripts();
         }
 
         private static void GameManager_SetGameMap(On.GameManager.orig_SetGameMap orig, GameManager self, UnityEngine.GameObject go_gameMap)
@@ -95,6 +79,7 @@ namespace MapModS.UI
 
             PauseMenu.Build();
             MapText.Build();
+            LookupText.Build();
         }
 
         private static void GameMap_WorldMap(On.GameMap.orig_WorldMap orig, GameMap self)
@@ -105,7 +90,6 @@ namespace MapModS.UI
 
             //MapText.Show();
             TransitionText.ShowWorldMap();
-            LookupText.ShowWorldMap();
         }
 
         private static void GameMap_QuickMapAncientBasin(On.GameMap.orig_QuickMapAncientBasin orig, GameMap self)
@@ -215,7 +199,6 @@ namespace MapModS.UI
             MapText.UpdateAll();
             //MapText.Hide();
             //TransitionText.Hide();
-            //LookupText.Hide();
         }
 
         private static void HeroController_Pause(On.HeroController.orig_Pause orig, HeroController self)

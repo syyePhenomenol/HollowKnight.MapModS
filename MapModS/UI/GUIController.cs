@@ -16,14 +16,10 @@ namespace MapModS.UI
 
         public static GUIController Instance;
 
-        private GameObject _pauseCanvas;
-        private GameObject _mapCanvas;
         private GameObject _transitionCanvas;
-        private GameObject _lookupCanvas;
         public Font TrajanBold { get; private set; }
         public Font TrajanNormal { get; private set; }
         public Font Perpetua { get; private set; }
-        private Font Arial { get; set; }
 
         public static void Setup()
         {
@@ -39,15 +35,12 @@ namespace MapModS.UI
             {
                 Instance.StopAllCoroutines();
 
-                Destroy(Instance._pauseCanvas);
-                Destroy(Instance._mapCanvas);
                 Destroy(Instance._transitionCanvas);
-                Destroy(Instance._lookupCanvas);
                 Destroy(Instance.gameObject);
             }
         }
 
-        public void BuildMenus()
+        public void StartScripts()
         {
             _transitionCanvas = new GameObject();
             _transitionCanvas.AddComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
@@ -64,19 +57,6 @@ namespace MapModS.UI
             TransitionText.Initialize();
             StartCoroutine("UpdateSelectedScene");
 
-            _lookupCanvas = new GameObject();
-            _lookupCanvas.AddComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
-            CanvasScaler lookupScaler = _lookupCanvas.AddComponent<CanvasScaler>();
-            lookupScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            lookupScaler.referenceResolution = new Vector2(1920f, 1080f);
-
-            LookupText.BuildText(_lookupCanvas);
-
-            DontDestroyOnLoad(_lookupCanvas);
-
-            _lookupCanvas.SetActive(false);
-
-            LookupText.Initialize();
             StartCoroutine("UpdateSelectedPin");
         }
 
@@ -86,7 +66,6 @@ namespace MapModS.UI
             {
                 //PauseMenu.Update();
                 TransitionText.Update();
-                LookupText.Update();
             }
             catch (Exception e)
             {
@@ -120,21 +99,7 @@ namespace MapModS.UI
             TrajanNormal = Modding.CanvasUtil.TrajanNormal;
             Perpetua = Modding.CanvasUtil.GetFont("Perpetua");
 
-            try
-            {
-                Arial = Font.CreateDynamicFontFromOSFont
-                (
-                    Font.GetOSInstalledFontNames().First(x => x.ToLower().Contains("arial")),
-                    13
-                );
-            }
-            catch
-            {
-                MapModS.Instance.LogWarn("Unable to find Arial! Using Perpetua.");
-                Arial = Modding.CanvasUtil.GetFont("Perpetua");
-            }
-
-            if (TrajanBold == null || TrajanNormal == null || Arial == null)
+            if (TrajanBold == null || TrajanNormal == null)
             {
                 MapModS.Instance.LogError("Could not find game fonts");
             }
