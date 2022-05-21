@@ -1,394 +1,375 @@
-﻿using MapModS.CanvasUtil;
+﻿using MagicUI.Core;
+using MagicUI.Elements;
 using MapModS.Data;
 using MapModS.Map;
 using MapModS.Settings;
-using RandomizerMod;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using RM = RandomizerMod.RandomizerMod;
+using L = RandomizerMod.Localization;
 
 namespace MapModS.UI
 {
     // All the following was modified from the GUI implementation of BenchwarpMod by homothetyhk
     internal class PauseMenu
     {
-        public static GameObject Canvas;
+        private static LayoutRoot layout;
 
-        private static readonly Dictionary<string, (UnityAction<string>, Vector2)> _mainButtons = new()
+        private static bool poolsPanelActive = false;
+
+        private static readonly Dictionary<string, Tuple<Action<Button>, Action<Button>>> _mainButtons = new()
         {
-            ["Spoilers"] = (SpoilersClicked, new Vector2(100f, 0f)),
-            ["Randomized"] = (RandomizedClicked, new Vector2(200f, 0f)),
-            ["Others"] = (OthersClicked, new Vector2(300f, 0f)),
-            ["Style"] = (StyleClicked, new Vector2(0f, 30f)),
-            ["Size"] = (SizeClicked, new Vector2(100f, 30f)),
-            ["Mode"] = (ModeClicked, new Vector2(200f, 30f)),
+            { "Enabled", new(ToggleEnabled, UpdateEnabled) },
+            { "Spoilers", new(ToggleSpoilers, UpdateSpoilers) },
+            { "Randomized", new(ToggleRandomized, UpdateRandomized) },
+            { "Others", new(ToggleOthers, UpdateOthers) },
+            { "Style", new(ToggleStyle, UpdateStyle) },
+            { "Size", new(ToggleSize, UpdateSize) },
+            { "Mode", new(ToggleMode, UpdateMode) },
+            { "Customize Pins", new(ToggleCustomizePins, UpdateCustomizePins) }
         };
 
-        private static readonly Dictionary<string, (UnityAction<string>, Vector2)> _poolPanelAuxButtons = new()
+        private static readonly Dictionary<string, Tuple<Action<Button>, Action<Button>>> _auxButtons = new()
         {
-            ["GroupBy"] = (GroupByClicked, new Vector2(-200f, 60f)),
-            ["Persistent"] = (PersistentClicked, new Vector2(-100f, 60f))
+            { "Persistent", new(TogglePersistent, UpdatePersistent) },
+            { "Group By", new(ToggleGroupBy, UpdateGroupBy) }
         };
 
-        private static CanvasPanel _mapControlPanel;
-
-        public static void BuildMenu(GameObject _canvas)
+        public static void BuildMenu()
         {
-            Canvas = _canvas;
+            if (layout == null)
+            {
+                layout = new(true, "Pause Menu");
+                layout.VisibilityCondition = GameManager.instance.IsGamePaused;
 
-            _mapControlPanel = new CanvasPanel
-                (_canvas, GUIController.Instance.Images["ButtonsMenuBG"], new Vector2(10f, 865f), new Vector2(1346f, 0f), new Rect(0f, 0f, 0f, 0f));
-            _mapControlPanel.AddText("MapModLabel", "MapModS", new Vector2(0f, -25f), Vector2.zero, GUIController.Instance.TrajanNormal, 18);
+                TextObject title = new(layout, "MapModS")
+                {
+                    TextAlignment = HorizontalAlignment.Left,
+                    FontSize = 20,
+                    Font = MagicUI.Core.UI.TrajanBold,
+                    Padding = new(10.5f, 840f, 10f, 10f),
+                    Text = "MapModS",
+                };
 
-            Rect buttonRect = new(0, 0, GUIController.Instance.Images["ButtonRect"].width, GUIController.Instance.Images["ButtonRect"].height);
+                DynamicUniformGrid mainButtons = new(layout, "Main Buttons")
+                {
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Top,
+                    Orientation = Orientation.Vertical,
+                    Padding = new(10.5f, 865f, 10f, 10f),
+                    HorizontalSpacing = 5f,
+                    VerticalSpacing = 5f
+                };
 
-            // Main settings
-            // Toggle the mod on or off
-            _mapControlPanel.AddButton
-                (
-                    "Enable",
-                    GUIController.Instance.Images["ButtonRect"],
-                    new Vector2(0f, 0f),
-                    Vector2.zero,
-                    EnableClicked,
-                    buttonRect,
-                    GUIController.Instance.TrajanBold,
-                    "Enable",
-                    fontSize: 10
-                );
+                mainButtons.ChildrenBeforeRollover = 4;
+
+                foreach (KeyValuePair<string, Tuple<Action<Button>, Action<Button>>> kvp in _mainButtons)
+                {
+                    Button button = new(layout, kvp.Key)
+                    {
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        BorderColor = Color.white,
+                        MinHeight = 28f,
+                        MinWidth = 95f,
+                        Font = MagicUI.Core.UI.TrajanBold,
+                        FontSize = 11,
+                        Margin = 0f
+                    };
+
+                    button.Click += kvp.Value.Item1;
+                    mainButtons.Children.Add(button);
+                }
+            }
+
+            DynamicUniformGrid panelButtons = new(layout, "Panel Buttons")
+            {
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Top,
+                Orientation = Orientation.Vertical,
+                Padding = new(415.5f, 865f, 10f, 10f),
+                HorizontalSpacing = 0f,
+                VerticalSpacing = 5f
+            };
+
+            panelButtons.ChildrenBeforeRollover = 10;
+
+            foreach (string group in new List<string>(MainData.usedPoolGroups) { "Benches" })
+            {
+                Button button = new(layout, group)
+                {
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    BorderColor = Color.black,
+                    MinHeight = 28f,
+                    MinWidth = 85f,
+                    Content = L.Localize(group).Replace(" ", "\n"),
+                    Font = MagicUI.Core.UI.TrajanNormal,
+                    FontSize = 11,
+                    Margin = 0f
+                };
+
+                button.Click += TogglePool;
+                panelButtons.Children.Add(button);
+            }
+
+            StackLayout auxButtons = new(layout, "Aux Buttons")
+            {
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Top,
+                Orientation = Orientation.Horizontal,
+                Padding = new(210.5f, 931f, 10f, 10f),
+                Spacing = 5f
+            };
+
+            foreach (KeyValuePair<string, Tuple<Action<Button>, Action<Button>>> kvp in _auxButtons)
+            {
+                Button button = new(layout, kvp.Key)
+                {
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    BorderColor = Color.black,
+                    MinHeight = 28f,
+                    MinWidth = 95f,
+                    Font = MagicUI.Core.UI.TrajanNormal,
+                    FontSize = 11,
+                    Margin = 0f
+                };
+
+                button.Click += kvp.Value.Item1;
+                auxButtons.Children.Add(button);
+            }
+
+            UpdateAll();
+        }
+
+        public static void DestroyMenu()
+        {
+            layout.Destroy();
+        }
+
+        private static void UpdateAll()
+        {
+            foreach (KeyValuePair<string, Tuple<Action<Button>, Action<Button>>> kvp in _mainButtons)
+            {
+                Button button = (Button)layout.GetElement(kvp.Key);
+
+                kvp.Value.Item2.Invoke(button);
+
+                if (kvp.Key == "Enabled") continue;
+                
+                if (MapModS.LS.ModEnabled)
+                {
+                    button.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    button.Visibility = Visibility.Hidden;
+                }
+            }
+
+            foreach (string group in new List<string>(MainData.usedPoolGroups) { "Benches" })
+            {
+                Button button = (Button)layout.GetElement(group);
+
+                UpdatePool(button);
+
+                if (MapModS.LS.ModEnabled && poolsPanelActive)
+                {
+                    button.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    button.Visibility = Visibility.Hidden;
+                }
+            }
+
+            foreach (KeyValuePair<string, Tuple<Action<Button>, Action<Button>>> kvp in _auxButtons)
+            {
+                Button button = (Button)layout.GetElement(kvp.Key);
+
+                kvp.Value.Item2.Invoke(button);
+
+                if (MapModS.LS.ModEnabled && poolsPanelActive)
+                {
+                    button.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    button.Visibility = Visibility.Hidden;
+                }
+            }
+        }
+
+        public static void ToggleEnabled(Button sender)
+        {
+            MapModS.LS.ToggleModEnabled();
+
+            if (!GameManager.instance.IsGamePaused() && !HeroController.instance.controlReqlinquished)
+            {
+                UIManager.instance.checkpointSprite.Show();
+                UIManager.instance.checkpointSprite.Hide();
+            }
 
             if (!MapModS.LS.ModEnabled)
             {
-                UpdateEnable();
-
-                if (GameManager.instance.IsGamePaused())
-                {
-                    _mapControlPanel.SetActive(true, false);
-                }
-
-                return;
+                Transition.ResetMapColors(GameManager.instance.gameMap);
+                poolsPanelActive = false;
             }
 
-            foreach (KeyValuePair<string, (UnityAction<string>, Vector2)> pair in _mainButtons)
-            {
-                _mapControlPanel.AddButton
-                (
-                    pair.Key,
-                    GUIController.Instance.Images["ButtonRect"],
-                    pair.Value.Item2,
-                    Vector2.zero,
-                    pair.Value.Item1,
-                    buttonRect,
-                    GUIController.Instance.TrajanBold,
-                    pair.Key,
-                    fontSize: 10
-                );
-            }
+            //MapText.RebuildText();
+            //TransitionText.SetTexts();
 
-            // New panel for pool buttons
-            CanvasPanel pools = _mapControlPanel.AddPanel
-            (
-                "PoolsPanel",
-                GUIController.Instance.Images["ButtonRectEmpty"],
-                new Vector2(400f, 0f),
-                Vector2.zero,
-                new Rect(0f, 0f, 0f, 0f)
-            );
-            _mapControlPanel.AddButton
-            (
-                "PoolsToggle",
-                GUIController.Instance.Images["ButtonRect"],
-                new Vector2(300f, 30f),
-                Vector2.zero,
-                s => PoolsPanelClicked(),
-                buttonRect,
-                GUIController.Instance.TrajanBold,
-                Localization.Localize("Customize Pins"),
-                fontSize: 10
-            );
-
-            pools.SetActive(false, true);
-
-            int poolGroupCounter = 0;
-
-            // Pool buttons
-            foreach (string group in MainData.usedPoolGroups)
-            {
-                float x_offset = (float)(poolGroupCounter) % 9 * 90;
-                float y_offset = poolGroupCounter / 9 * 30;
-
-                poolGroupCounter++;
-
-                pools.AddButton
-                (
-                    group.ToString(),
-                    GUIController.Instance.Images["ButtonRectEmpty"],
-                    new Vector2(x_offset, y_offset),
-                    Vector2.zero,
-                    PoolClicked,
-                    buttonRect,
-                    GUIController.Instance.TrajanBold,
-                    Localization.Localize(group),
-                    fontSize: 10
-                );
-            }
-
-            pools.AddButton
-            (
-                "Benches",
-                GUIController.Instance.Images["ButtonRectEmpty"],
-                new Vector2((float)(poolGroupCounter) % 9 * 90, poolGroupCounter / 9 * 30),
-                Vector2.zero,
-                BenchClicked,
-                buttonRect,
-                GUIController.Instance.TrajanBold,
-                Localization.Localize("Benches"),
-                fontSize: 10
-            );
-
-            foreach (KeyValuePair<string, (UnityAction<string>, Vector2)> pair in _poolPanelAuxButtons)
-            {
-                pools.AddButton
-                (
-                    pair.Key,
-                    GUIController.Instance.Images["ButtonRectEmpty"],
-                    pair.Value.Item2,
-                    Vector2.zero,
-                    pair.Value.Item1,
-                    buttonRect,
-                    GUIController.Instance.TrajanBold,
-                    pair.Key,
-                    fontSize: 10
-                );
-            }
-
-            UpdateGUI();
-
-            _mapControlPanel.SetActive(false, true); // collapse all subpanels
-
-            if (GameManager.instance.IsGamePaused())
-            {
-                _mapControlPanel.SetActive(true, false);
-            }
+            UpdateAll();
         }
 
-        // Called every frame
-        public static void Update()
+        private static void UpdateEnabled(Button sender)
         {
-            if (_mapControlPanel == null || GameManager.instance == null)
+            if (MapModS.LS.ModEnabled)
             {
-                return;
+                sender.ContentColor = Color.green;
+                sender.Content = $"{L.Localize("Mod")}\n{L.Localize("Enabled")}";
             }
-
-            if (HeroController.instance == null || !GameManager.instance.IsGameplayScene() || !GameManager.instance.IsGamePaused())
+            else
             {
-                // Any time we aren't at the Pause Menu / don't want to show the UI otherwise
-                if (_mapControlPanel.Active) _mapControlPanel.SetActive(false, true);
-                return;
-            }
-
-            // On the frame that we enter the Pause Menu
-            if (!_mapControlPanel.Active)
-            {
-                _mapControlPanel.Destroy();
-                BuildMenu(Canvas);
+                sender.ContentColor = Color.red;
+                sender.Content = $"{L.Localize("Mod")}\n{L.Localize("Disabled")}";
             }
         }
 
-        // Update all the buttons (text, color)
-        public static void UpdateGUI()
-        {
-            if (GameManager.instance.gameMap == null) return;
-
-            UpdateEnable();
-            UpdateSpoilers();
-            UpdateRandomized();
-            UpdateOthers();
-            UpdateStyle();
-            UpdateSize();
-            UpdateMode();
-            UpdatePoolsPanel();
-
-            foreach (string group in MainData.usedPoolGroups)
-            {
-                UpdatePool(group);
-            }
-
-            UpdateBench();
-            UpdateGroupBy();
-            UpdatePersistent();
-        }
-
-        public static void EnableClicked(string buttonName)
-        {
-            if (!(MapText.LockToggleEnable && MapText.Canvas.activeSelf))
-            {
-                MapModS.LS.ToggleModEnabled();
-
-                if (!GameManager.instance.IsGamePaused() && !HeroController.instance.controlReqlinquished)
-                {
-                    UIManager.instance.checkpointSprite.Show();
-                    UIManager.instance.checkpointSprite.Hide();
-                }
-
-                if (!MapModS.LS.ModEnabled && GameManager.instance.gameMap != null)
-                {
-                    Transition.ResetMapColors(GameManager.instance.gameMap);
-                }
-
-                _mapControlPanel.Destroy();
-                BuildMenu(Canvas);
-                MapText.LockToggleEnable = true;
-                MapText.RebuildText();
-                TransitionText.SetTexts();
-            }
-        }
-
-        private static void UpdateEnable()
-        {
-            _mapControlPanel.GetButton("Enable").SetTextColor
-                (
-                    MapModS.LS.ModEnabled ? Color.green : Color.red
-                );
-            _mapControlPanel.GetButton("Enable").UpdateText
-                (
-                    MapModS.LS.ModEnabled? $"{Localization.Localize("Mod")}\n{Localization.Localize("Enabled")}"
-                    : $"{Localization.Localize("Mod")}\n{Localization.Localize("Disabled")}"
-                );
-        }
-
-        public static void SpoilersClicked(string buttonName)
+        public static void ToggleSpoilers(Button sender)
         {
             MapModS.LS.ToggleSpoilers();
             WorldMap.CustomPins.SetSprites();
-            
-            UpdateGUI();
             MapText.SetTexts();
             LookupText.UpdateSelectedPin();
+
+            UpdateAll();
         }
 
-        private static void UpdateSpoilers()
+        private static void UpdateSpoilers(Button sender)
         {
-            _mapControlPanel.GetButton("Spoilers").SetTextColor
-                (
-                    MapModS.LS.SpoilerOn ? Color.green : Color.white
-                );
-            _mapControlPanel.GetButton("Spoilers").UpdateText
-                (
-                    MapModS.LS.SpoilerOn? (Localization.Localize("Spoilers") + ":\n" + Localization.Localize("on"))
-                    : (Localization.Localize("Spoilers") + ":\n" + Localization.Localize("off"))
-                );
+            if (MapModS.LS.SpoilerOn)
+            {
+                sender.ContentColor = Color.green;
+                sender.Content = $"{L.Localize("Spoilers")}:\n{L.Localize("on")}";
+            }
+            else
+            {
+                sender.ContentColor = Color.white;
+                sender.Content = $"{L.Localize("Spoilers")}:\n{L.Localize("off")}";
+            }
         }
 
-        public static void RandomizedClicked(string buttonName)
+        public static void ToggleRandomized(Button sender)
         {
             MapModS.LS.ToggleRandomizedOn();
             WorldMap.CustomPins.ResetPoolSettings();
             WorldMap.CustomPins.SetPinsActive();
-
-            UpdateGUI();
             MapText.SetTexts();
+
+            UpdateAll();
         }
 
-        private static void UpdateRandomized()
+        private static void UpdateRandomized(Button sender)
         {
             if (WorldMap.CustomPins == null) return;
 
-            string randomizedText = $"{Localization.Localize("Randomized")}:\n";
+            string text = $"{L.Localize("Randomized")}:\n";
 
             if (MapModS.LS.randomizedOn)
             {
-                _mapControlPanel.GetButton("Randomized").SetTextColor(Color.green);
-                randomizedText += Localization.Localize("on");
+                sender.ContentColor = Color.green;
+                text += L.Localize("on");
             }
             else
             {
-                _mapControlPanel.GetButton("Randomized").SetTextColor(Color.white);
-                randomizedText += Localization.Localize("off");
+                sender.ContentColor = Color.white;
+                text += L.Localize("off");
             }
 
             if (WorldMap.CustomPins.IsRandomizedCustom())
             {
-                _mapControlPanel.GetButton("Randomized").SetTextColor(Color.yellow);
-                randomizedText += $" ({Localization.Localize("custom")})";
+                sender.ContentColor = Color.yellow;
+                text += $" ({L.Localize("custom")})";
             }
 
-            _mapControlPanel.GetButton("Randomized").UpdateText(randomizedText);
+            sender.Content = text;
         }
 
-        public static void OthersClicked(string buttonName)
+        public static void ToggleOthers(Button sender)
         {
             MapModS.LS.ToggleOthersOn();
             WorldMap.CustomPins.ResetPoolSettings();
             WorldMap.CustomPins.SetPinsActive();
-
-            UpdateGUI();
             MapText.SetTexts();
+
+            UpdateAll();
         }
 
-        private static void UpdateOthers()
+        private static void UpdateOthers(Button sender)
         {
             if (WorldMap.CustomPins == null) return;
 
-            string othersText = $"{Localization.Localize("Others")}:\n";
+            string text = $"{L.Localize("Others")}:\n";
 
             if (MapModS.LS.othersOn)
             {
-                _mapControlPanel.GetButton("Others").SetTextColor(Color.green);
-                othersText += Localization.Localize("on");
+                sender.ContentColor = Color.green;
+                text += L.Localize("on");
             }
             else
             {
-                _mapControlPanel.GetButton("Others").SetTextColor(Color.white);
-                othersText += Localization.Localize("off");
+                sender.ContentColor = Color.white;
+                text += L.Localize("off");
             }
 
             if (WorldMap.CustomPins.IsOthersCustom())
             {
-                _mapControlPanel.GetButton("Others").SetTextColor(Color.yellow);
-                othersText += $" ({Localization.Localize("custom")})";
+                sender.ContentColor = Color.yellow;
+                text += $" ({L.Localize("custom")})";
             }
 
-            _mapControlPanel.GetButton("Others").UpdateText(othersText);
+            sender.Content = text;
         }
 
-        public static void StyleClicked(string buttonName)
+        public static void ToggleStyle(Button sender)
         {
             MapModS.GS.TogglePinStyle();
             WorldMap.CustomPins.SetSprites();
-
-            UpdateGUI();
             MapText.SetTexts();
+
+            UpdateAll();
         }
 
-        private static void UpdateStyle()
+        private static void UpdateStyle(Button sender)
         {
-            string styleText = $"{Localization.Localize("Pin Style")}:\n";
+            string text = $"{L.Localize("Pin Style")}:\n";
 
             switch (MapModS.GS.pinStyle)
             {
                 case PinStyle.Normal:
-                    styleText += Localization.Localize("normal");
+                    text += L.Localize("normal");
                     break;
 
                 case PinStyle.Q_Marks_1:
-                    styleText += $"{Localization.Localize("q marks")} 1";
+                    text += $"{L.Localize("q marks")} 1";
                     break;
 
                 case PinStyle.Q_Marks_2:
-                    styleText += $"{Localization.Localize("q marks")} 2";
+                    text += $"{L.Localize("q marks")} 2";
                     break;
 
                 case PinStyle.Q_Marks_3:
-                    styleText += $"{Localization.Localize("q marks")} 3";
+                    text += $"{L.Localize("q marks")} 3";
                     break;
             }
 
-            _mapControlPanel.GetButton("Style").UpdateText(styleText);
+            sender.Content = text;
         }
 
-        public static void SizeClicked(string buttonName)
+        public static void ToggleSize(Button sender)
         {
             MapModS.GS.TogglePinSize();
 
@@ -397,38 +378,39 @@ namespace MapModS.UI
                 WorldMap.CustomPins.ResizePins("None selected");
             }
 
-            UpdateGUI();
             MapText.SetTexts();
 
             if (MapModS.LS.lookupOn)
             {
                 LookupText.UpdateSelectedPin();
             }
+
+            UpdateAll();
         }
 
-        private static void UpdateSize()
+        private static void UpdateSize(Button sender)
         {
-            string sizeText = $"{Localization.Localize("Pin Size")}:\n";
+            string text = $"{L.Localize("Pin Size")}:\n";
 
             switch (MapModS.GS.pinSize)
             {
                 case PinSize.Small:
-                    sizeText += Localization.Localize("small");
+                    text += L.Localize("small");
                     break;
 
                 case PinSize.Medium:
-                    sizeText += Localization.Localize("medium");
+                    text += L.Localize("medium");
                     break;
 
                 case PinSize.Large:
-                    sizeText += Localization.Localize("large");
+                    text += L.Localize("large");
                     break;
             }
 
-            _mapControlPanel.GetButton("Size").UpdateText(sizeText);
+            sender.Content = text;
         }
 
-        public static void ModeClicked(string buttonName)
+        public static void ToggleMode(Button sender)
         {
             if (GameManager.instance.gameMap != null
                 && (MapModS.LS.mapMode == MapMode.TransitionRando
@@ -439,162 +421,173 @@ namespace MapModS.UI
 
             MapModS.LS.ToggleFullMap();
 
-            UpdateGUI();
             MapText.SetTexts();
+
+            UpdateAll();
         }
 
-        private static void UpdateMode()
+        private static void UpdateMode(Button sender)
         {
-            string modeText = $"{Localization.Localize("Mode")}:\n";
+            string text = $"{L.Localize("Mode")}:\n";
 
             switch (MapModS.LS.mapMode)
             {
                 case MapMode.FullMap:
-                    _mapControlPanel.GetButton("Mode").SetTextColor(Color.green);
-                    modeText += Localization.Localize("Full Map");
+                    sender.ContentColor = Color.green;
+                    text += L.Localize("Full Map");
                     break;
 
                 case MapMode.AllPins:
-                    _mapControlPanel.GetButton("Mode").SetTextColor(Color.white);
-                    modeText += Localization.Localize("All Pins");
+                    sender.ContentColor = Color.white;
+                    text += L.Localize("All Pins");
                     break;
 
                 case MapMode.PinsOverMap:
-                    _mapControlPanel.GetButton("Mode").SetTextColor(Color.white);
-                    modeText += Localization.Localize("Pins Over Map");
+                    sender.ContentColor = Color.white;
+                    text += L.Localize("Pins Over Map");
                     break;
 
                 case MapMode.TransitionRando:
-                    _mapControlPanel.GetButton("Mode").SetTextColor(Color.cyan);
-                    modeText += Localization.Localize("Transition");
+                    sender.ContentColor = Color.cyan;
+                    text += L.Localize("Transition");
                     break;
 
                 case MapMode.TransitionRandoAlt:
-                    _mapControlPanel.GetButton("Mode").SetTextColor(Color.cyan);
-                    modeText += Localization.Localize("Transition") + " 2";
+                    sender.ContentColor = Color.cyan;
+                    text += L.Localize("Transition") + " 2";
                     break;
             }
 
-            _mapControlPanel.GetButton("Mode").UpdateText(modeText);
+            sender.Content = text;
         }
 
-        public static void PoolsPanelClicked()
+        public static void CollapsePanel()
         {
-            _mapControlPanel.TogglePanel("PoolsPanel");
+            poolsPanelActive = false;
 
-            UpdateGUI();
+            UpdateAll();
         }
 
-        private static void UpdatePoolsPanel()
+        public static void ToggleCustomizePins(Button sender)
         {
-            _mapControlPanel.GetButton("PoolsToggle").SetTextColor
-                (
-                _mapControlPanel.GetPanel("PoolsPanel").Active? Color.yellow : Color.white
-                );;
+            poolsPanelActive = !poolsPanelActive;
+
+            UpdateAll();
         }
 
-        public static void PoolClicked(string buttonName)
+        private static void UpdateCustomizePins(Button sender)
         {
-            MapModS.LS.TogglePoolGroupSetting(buttonName);
+            if (MapModS.LS.ModEnabled && poolsPanelActive)
+            {
+                sender.ContentColor = Color.yellow;
+            }
+            else
+            {
+                sender.ContentColor = Color.white;
+            }
 
-            WorldMap.CustomPins.GetRandomizedOthersGroups();
-
-            UpdateGUI();
-            MapText.SetTexts();
+            sender.Content = $"{L.Localize("Customize")}\n{L.Localize("Pins")}";
         }
 
-        private static void UpdatePool(string poolGroup)
+        public static void TogglePool(Button sender)
+        {
+            if (sender.Name == "Benches")
+            {
+                if (!PlayerData.instance.GetBool("hasPinBench")) return;
+
+                MapModS.LS.ToggleBench();
+            }
+            else
+            {
+                MapModS.LS.TogglePoolGroupSetting(sender.Name);
+
+                WorldMap.CustomPins.GetRandomizedOthersGroups();
+
+                MapText.SetTexts();
+
+                UpdateAll();
+            }
+        }
+
+        private static void UpdatePool(Button sender)
         {
             if (WorldMap.CustomPins == null) return;
 
-            if (poolGroup == "Geo Rocks" && !RM.RS.GenerationSettings.PoolSettings.GeoRocks)
+            if (sender.Name == "Geo Rocks" && !RM.RS.GenerationSettings.PoolSettings.GeoRocks)
             {
-                _mapControlPanel.GetPanel("PoolsPanel").GetButton(poolGroup).UpdateText
-                    (
-                        $"{Localization.Localize("Geo Rocks")}:\n"
-                        + MapModS.LS.GeoRockCounter + " / " + "207"
-                    );
+                sender.Content = $"{L.Localize("Geo Rocks")}:\n" + MapModS.LS.GeoRockCounter + " / " + "207";
             }
 
-            switch (MapModS.LS.GetPoolGroupSetting(poolGroup))
+            if (sender.Name == "Benches")
             {
-                case PoolGroupState.Off:
-                    _mapControlPanel.GetPanel("PoolsPanel").GetButton(poolGroup).SetTextColor(Color.white);
-                    break;
-                case PoolGroupState.On:
-                    _mapControlPanel.GetPanel("PoolsPanel").GetButton(poolGroup).SetTextColor(Color.green);
-                    break;
-                case PoolGroupState.Mixed:
-                    _mapControlPanel.GetPanel("PoolsPanel").GetButton(poolGroup).SetTextColor(Color.yellow);
-                    break;
+                if (PlayerData.instance.GetBool("hasPinBench"))
+                {
+                    sender.ContentColor = Color.green;
+                }
+                else
+                {
+                    sender.ContentColor = Color.red;
+                }
+            }
+            else
+            {
+                switch (MapModS.LS.GetPoolGroupSetting(sender.Name))
+                {
+                    case PoolGroupState.Off:
+                        sender.ContentColor = Color.white;
+                        break;
+                    case PoolGroupState.On:
+                        sender.ContentColor = Color.green;
+                        break;
+                    case PoolGroupState.Mixed:
+                        sender.ContentColor = Color.yellow;
+                        break;
+                }
             }
         }
 
-        public static void BenchClicked(string buttonName)
-        {
-            if (!PlayerData.instance.GetBool("hasPinBench")) return;
-
-            MapModS.LS.ToggleBench();
-
-            UpdateGUI();
-        }
-
-        public static void UpdateBench()
-        {
-            if (!PlayerData.instance.GetBool("hasPinBench"))
-            {
-                _mapControlPanel.GetPanel("PoolsPanel").GetButton("Benches").SetTextColor(Color.red);
-                return;
-            }
-
-            _mapControlPanel.GetPanel("PoolsPanel").GetButton("Benches").SetTextColor
-                (
-                    MapModS.LS.showBenchPins ? Color.green : Color.white
-                );
-        }
-
-        public static void GroupByClicked(string buttonName)
+        public static void ToggleGroupBy(Button sender)
         {
             MapModS.LS.ToggleGroupBy();
 
             WorldMap.CustomPins.GetRandomizedOthersGroups();
             WorldMap.CustomPins.ResetPoolSettings();
 
-            UpdateGUI();
+            UpdateAll();
         }
 
-        private static void UpdateGroupBy()
+        private static void UpdateGroupBy(Button sender)
         {
             switch (MapModS.LS.groupBy)
             {
                 case GroupBy.Location:
-                    _mapControlPanel.GetPanel("PoolsPanel").GetButton("GroupBy").UpdateText($"{Localization.Localize("Group by")}:\n{Localization.Localize("Location")}");
+                    sender.Content = $"{L.Localize("Group by")}:\n{L.Localize("Location")}";
                     break;
 
                 case GroupBy.Item:
-                    _mapControlPanel.GetPanel("PoolsPanel").GetButton("GroupBy").UpdateText($"{Localization.Localize("Group by")}:\n{Localization.Localize("Item")}");
+                    sender.Content = $"{L.Localize("Group by")}:\n{L.Localize("Item")}";
                     break;
             }
         }
 
-        public static void PersistentClicked(string buttonName)
+        public static void TogglePersistent(Button sender)
         {
             MapModS.GS.TogglePersistentOn();
 
-            UpdateGUI();
+            UpdateAll();
         }
 
-        private static void UpdatePersistent()
+        private static void UpdatePersistent(Button sender)
         {
             if (MapModS.GS.persistentOn)
             {
-                _mapControlPanel.GetPanel("PoolsPanel").GetButton("Persistent").UpdateText($"{Localization.Localize("Persistent items")}: {Localization.Localize("On")}");
-                _mapControlPanel.GetPanel("PoolsPanel").GetButton("Persistent").SetTextColor(Color.green);
+                sender.ContentColor = Color.green;
+                sender.Content = $"{L.Localize("Persistent\nitems")}: {L.Localize("On")}";
             }
             else
             {
-                _mapControlPanel.GetPanel("PoolsPanel").GetButton("Persistent").UpdateText($"{Localization.Localize("Persistent items")}: {Localization.Localize("Off")}");
-                _mapControlPanel.GetPanel("PoolsPanel").GetButton("Persistent").SetTextColor(Color.white);
+                sender.ContentColor = Color.white;
+                sender.Content = $"{L.Localize("Persistent\nitems")}: {L.Localize("Off")}";
             }
         }
     }

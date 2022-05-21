@@ -9,6 +9,7 @@ namespace MapModS.UI
         public static void Hook()
         {
             On.GameMap.Start += GameMap_Start;
+            On.GameManager.SetGameMap += GameManager_SetGameMap;
             On.GameMap.WorldMap += GameMap_WorldMap;
             On.GameMap.CloseQuickMap += GameMap_CloseQuickMap;
             On.HeroController.Pause += HeroController_Pause;
@@ -21,6 +22,7 @@ namespace MapModS.UI
         public static void Unhook()
         {
             On.GameMap.Start -= GameMap_Start;
+            On.GameManager.SetGameMap -= GameManager_SetGameMap;
             On.GameMap.WorldMap -= GameMap_WorldMap;
             On.GameMap.CloseQuickMap -= GameMap_CloseQuickMap;
             On.HeroController.Pause -= HeroController_Pause;
@@ -29,12 +31,22 @@ namespace MapModS.UI
 
             GUIController.Unload();
             TransitionText.ClearData();
+
+            PauseMenu.DestroyMenu();
         }
+
         private static void GameMap_Start(On.GameMap.orig_Start orig, GameMap self)
         {
             orig(self);
             
             GUIController.Instance.BuildMenus();
+        }
+
+        private static void GameManager_SetGameMap(On.GameManager.orig_SetGameMap orig, GameManager self, UnityEngine.GameObject go_gameMap)
+        {
+            orig(self, go_gameMap);
+
+            PauseMenu.BuildMenu();
         }
 
         private static void GameMap_WorldMap(On.GameMap.orig_WorldMap orig, GameMap self)
@@ -65,6 +77,8 @@ namespace MapModS.UI
         {
             orig(self);
             TransitionText.SetRouteActive();
+
+            PauseMenu.CollapsePanel();
         }
 
         private static void HandleSceneChanges(Scene from, Scene to)

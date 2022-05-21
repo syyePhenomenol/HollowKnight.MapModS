@@ -39,35 +39,35 @@ namespace MapModS.UI
             {
                 if (Input.GetKeyDown(KeyCode.M))
                 {
-                    PauseMenu.EnableClicked("Enable");
+                    //PauseMenu.EnableClicked("Enable");
                 }
 
                 if (MapModS.LS.ModEnabled)
                 {
-                    if (Input.GetKeyDown(KeyCode.Alpha1))
-                    {
-                        PauseMenu.SpoilersClicked("Spoilers");
-                    }
+                    //if (Input.GetKeyDown(KeyCode.Alpha1))
+                    //{
+                    //    PauseMenu.SpoilersClicked("Spoilers");
+                    //}
 
-                    if (Input.GetKeyDown(KeyCode.Alpha2))
-                    {
-                        PauseMenu.RandomizedClicked("Randomized");
-                    }
+                    //if (Input.GetKeyDown(KeyCode.Alpha2))
+                    //{
+                    //    PauseMenu.RandomizedClicked("Randomized");
+                    //}
 
-                    if (Input.GetKeyDown(KeyCode.Alpha3))
-                    {
-                        PauseMenu.OthersClicked("Others");
-                    }
+                    //if (Input.GetKeyDown(KeyCode.Alpha3))
+                    //{
+                    //    PauseMenu.OthersClicked("Others");
+                    //}
 
-                    if (Input.GetKeyDown(KeyCode.Alpha4))
-                    {
-                        PauseMenu.StyleClicked("Style");
-                    }
+                    //if (Input.GetKeyDown(KeyCode.Alpha4))
+                    //{
+                    //    PauseMenu.StyleClicked("Style");
+                    //}
 
-                    if (Input.GetKeyDown(KeyCode.Alpha5))
-                    {
-                        PauseMenu.SizeClicked("Size");
-                    }
+                    //if (Input.GetKeyDown(KeyCode.Alpha5))
+                    //{
+                    //    PauseMenu.SizeClicked("Size");
+                    //}
 
 #if DEBUG
                     if (Input.GetKeyDown(KeyCode.R))

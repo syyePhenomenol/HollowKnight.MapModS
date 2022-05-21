@@ -49,16 +49,16 @@ namespace MapModS.UI
 
         public void BuildMenus()
         {
-            _pauseCanvas = new GameObject();
-            _pauseCanvas.AddComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
-            CanvasScaler pauseScaler = _pauseCanvas.AddComponent<CanvasScaler>();
-            pauseScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            pauseScaler.referenceResolution = new Vector2(1920f, 1080f);
-            _pauseCanvas.AddComponent<GraphicRaycaster>();
+            //_pauseCanvas = new GameObject();
+            //_pauseCanvas.AddComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
+            //CanvasScaler pauseScaler = _pauseCanvas.AddComponent<CanvasScaler>();
+            //pauseScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            //pauseScaler.referenceResolution = new Vector2(1920f, 1080f);
+            //_pauseCanvas.AddComponent<GraphicRaycaster>();
 
-            PauseMenu.BuildMenu(_pauseCanvas);
+            //PauseMenu.BuildMenu(_pauseCanvas);
 
-            DontDestroyOnLoad(_pauseCanvas);
+            //DontDestroyOnLoad(_pauseCanvas);
 
             _mapCanvas = new GameObject();
             _mapCanvas.AddComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
@@ -107,7 +107,7 @@ namespace MapModS.UI
         {
             try
             {
-                PauseMenu.Update();
+                //PauseMenu.Update();
                 TransitionText.Update();
                 LookupText.Update();
             }
