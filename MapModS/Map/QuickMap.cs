@@ -119,7 +119,6 @@ namespace MapModS.Map
 
             WorldMap.UpdateMap(self, MapZone.ABYSS);
 
-            MapText.Show();
             TransitionText.ShowQuickMap();
         }
 
@@ -129,7 +128,6 @@ namespace MapModS.Map
 
             WorldMap.UpdateMap(self, MapZone.CITY);
 
-            MapText.Show();
             TransitionText.ShowQuickMap();
         }
 
@@ -139,7 +137,6 @@ namespace MapModS.Map
 
             WorldMap.UpdateMap(self, MapZone.CLIFFS);
 
-            MapText.Show();
             TransitionText.ShowQuickMap();
         }
 
@@ -149,7 +146,6 @@ namespace MapModS.Map
 
             WorldMap.UpdateMap(self, MapZone.CROSSROADS);
 
-            MapText.Show();
             TransitionText.ShowQuickMap();
         }
 
@@ -159,7 +155,6 @@ namespace MapModS.Map
 
             WorldMap.UpdateMap(self, MapZone.MINES);
 
-            MapText.Show();
             TransitionText.ShowQuickMap();
         }
 
@@ -169,7 +164,6 @@ namespace MapModS.Map
 
             WorldMap.UpdateMap(self, MapZone.DEEPNEST);
 
-            MapText.Show();
             TransitionText.ShowQuickMap();
         }
 
@@ -179,7 +173,6 @@ namespace MapModS.Map
 
             WorldMap.UpdateMap(self, MapZone.TOWN);
 
-            MapText.Show();
             TransitionText.ShowQuickMap();
         }
 
@@ -189,7 +182,6 @@ namespace MapModS.Map
 
             WorldMap.UpdateMap(self, MapZone.FOG_CANYON);
 
-            MapText.Show();
             TransitionText.ShowQuickMap();
         }
 
@@ -199,7 +191,6 @@ namespace MapModS.Map
 
             WorldMap.UpdateMap(self, MapZone.WASTES);
 
-            MapText.Show();
             TransitionText.ShowQuickMap();
         }
 
@@ -209,7 +200,6 @@ namespace MapModS.Map
 
             WorldMap.UpdateMap(self, MapZone.GREEN_PATH);
 
-            MapText.Show();
             TransitionText.ShowQuickMap();
         }
 
@@ -219,7 +209,6 @@ namespace MapModS.Map
 
             WorldMap.UpdateMap(self, MapZone.OUTSKIRTS);
 
-            MapText.Show();
             TransitionText.ShowQuickMap();
         }
 
@@ -229,7 +218,6 @@ namespace MapModS.Map
 
             WorldMap.UpdateMap(self, MapZone.ROYAL_GARDENS);
 
-            MapText.Show();
             TransitionText.ShowQuickMap();
         }
 
@@ -239,7 +227,6 @@ namespace MapModS.Map
 
             WorldMap.UpdateMap(self, MapZone.RESTING_GROUNDS);
 
-            MapText.Show();
             TransitionText.ShowQuickMap();
         }
 
@@ -249,7 +236,6 @@ namespace MapModS.Map
 
             WorldMap.UpdateMap(self, MapZone.WATERWAYS);
 
-            MapText.Show();
             TransitionText.ShowQuickMap();
         }
 
@@ -312,7 +298,7 @@ namespace MapModS.Map
             WorldMap.UpdateMap(_GameMap, _customMapZone);
             _GameMap.SetupMapMarkers();
 
-            MapText.Show();
+            //MapText.Show();
             TransitionText.ShowQuickMap();
 
             Finish();

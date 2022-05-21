@@ -1,207 +1,218 @@
-﻿using MapModS.CanvasUtil;
+﻿using MagicUI.Core;
+using MagicUI.Elements;
 using MapModS.Map;
 using MapModS.Settings;
-using RandomizerMod;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
+using L = RandomizerMod.Localization;
 
 namespace MapModS.UI
 {
     internal class MapText
     {
-        public static GameObject Canvas;
+        private static LayoutRoot layout;
 
-        public static bool LockToggleEnable;
-
-        private static CanvasPanel _mapDisplayPanel;
-        private static CanvasPanel _refreshDisplayPanel;
-
-        public static void Show()
+        private static readonly Dictionary<string, Tuple<Padding, Action<TextObject>>> _textObjects = new()
         {
-            if (Canvas == null) return;
+            { "Spoilers", new(new(10f, 10f, 1000f, 20f), UpdateSpoilers) },
+            { "Randomized", new(new(10f, 10f, 500f, 20f), UpdateRandomized) },
+            { "Others", new(new(10f, 10f, 10f, 20f), UpdateOthers) },
+            { "Style", new(new(500f, 10f, 10f, 20f), UpdateStyle) },
+            { "Size", new(new(1000f, 10f , 10f, 20f), UpdateSize) },
+        };
 
-            Canvas.SetActive(true);
-            LockToggleEnable = false;
-            RebuildText();
+        public static void Build()
+        {
+            if (layout == null)
+            {
+                layout = new(true, "Map Text");
+                layout.VisibilityCondition = GUI.AnyMapOpen;
+
+                foreach (string textName in _textObjects.Keys)
+                {
+                    TextObject textObj = new(layout, textName)
+                    {
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Bottom,
+                        Font = MagicUI.Core.UI.TrajanNormal,
+                        FontSize = 16,
+                        Padding = _textObjects[textName].Item1
+                    };
+                }
+
+                TextObject refresh = new(layout, "Refresh")
+                {
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Bottom,
+                    Font = MagicUI.Core.UI.TrajanNormal,
+                    FontSize = 16,
+                    Padding = new(10f, 10f, 10f, 20f)
+                };
+
+                UpdateAll();
+            }
         }
 
-        public static void Hide()
+        public static void Destroy()
         {
-            if (Canvas == null) return;
-
-            Canvas.SetActive(false);
-            LockToggleEnable = false;
+            layout.Destroy();
+            layout = null;
         }
 
-        public static void BuildText(GameObject _canvas)
+        public static void UpdateAll()
         {
-            Canvas = _canvas;
-            _mapDisplayPanel = new CanvasPanel
-                (_canvas, GUIController.Instance.Images["ButtonsMenuBG"], new Vector2(0f, 1030f), new Vector2(1346f, 0f), new Rect(0f, 0f, 0f, 0f));
-            _mapDisplayPanel.AddText("Spoilers", "", new Vector2(-540f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14, FontStyle.Normal, TextAnchor.UpperCenter);
-            _mapDisplayPanel.AddText("Randomized", "", new Vector2(-270f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14, FontStyle.Normal, TextAnchor.UpperCenter);
-            _mapDisplayPanel.AddText("Others", "", new Vector2(0f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14, FontStyle.Normal, TextAnchor.UpperCenter);
-            _mapDisplayPanel.AddText("Style", "", new Vector2(270f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14, FontStyle.Normal, TextAnchor.UpperCenter);
-            _mapDisplayPanel.AddText("Size", "", new Vector2(540f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14, FontStyle.Normal, TextAnchor.UpperCenter);
+            foreach (string textName in _textObjects.Keys)
+            {
+                TextObject textObj = (TextObject)layout.GetElement(textName);
 
-            _refreshDisplayPanel = new CanvasPanel
-                (_canvas, GUIController.Instance.Images["ButtonsMenuBG"], new Vector2(0f, 1030f), new Vector2(1346f, 0f), new Rect(0f, 0f, 0f, 0f));
-            _refreshDisplayPanel.AddText("Refresh", "", new Vector2(0f, 0f), Vector2.zero, GUIController.Instance.TrajanNormal, 14, FontStyle.Normal, TextAnchor.UpperCenter);
+                _textObjects[textName].Item2.Invoke(textObj);
 
-            _mapDisplayPanel.SetActive(false, false);
-            _refreshDisplayPanel.SetActive(false, false);
+                if (MapModS.LS.ModEnabled)
+                {
+                    textObj.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    textObj.Visibility = Visibility.Hidden;
+                }
+            }
 
-            SetTexts();
+            layout.GetElement("Refresh").Visibility = Visibility.Hidden;
         }
 
-        public static void RebuildText()
+        public static void SetToRefresh()
         {
-            _mapDisplayPanel.Destroy();
-            _refreshDisplayPanel.Destroy();
+            foreach (string text in _textObjects.Keys)
+            {
+                TextObject textObj = (TextObject)layout.GetElement(text);
 
-            BuildText(Canvas);
+                textObj.Visibility = Visibility.Hidden;
+            }
+
+            TextObject refresh = (TextObject)layout.GetElement("Refresh");
+            refresh.Visibility = Visibility.Visible;
+
+            if (MapModS.LS.ModEnabled)
+            {
+                refresh.Text = L.Localize("MapModS enabled. Close map to refresh");
+            }
+            else
+            {
+                refresh.Text = L.Localize("MapModS disabled. Close map to refresh");
+            }
         }
 
-        public static void SetTexts()
+        private static void UpdateSpoilers(TextObject textObj)
         {
-            if (GameManager.instance.gameMap == null
-                || WorldMap.goCustomPins == null
-                || WorldMap.CustomPins == null) return;
-
-            _mapDisplayPanel.SetActive(!LockToggleEnable && MapModS.LS.ModEnabled, false);
-            _refreshDisplayPanel.SetActive(LockToggleEnable, false);
-
-            SetSpoilers();
-            SetStyle();
-            SetRandomized();
-            SetOthers();
-            SetSize();
-            SetRefresh();
-        }
-
-        private static void SetSpoilers()
-        {
-            string spoilersText = $"{Localization.Localize("Spoilers")} (ctrl-1): ";
+            string text = $"{L.Localize("Spoilers")} (ctrl-1): ";
 
             if (MapModS.LS.SpoilerOn)
             {
-                _mapDisplayPanel.GetText("Spoilers").SetTextColor(Color.green);
-                spoilersText += Localization.Localize("on");
+                textObj.ContentColor = Color.green;
+                text += L.Localize("on");
             }
             else
             {
-                _mapDisplayPanel.GetText("Spoilers").SetTextColor(Color.white);
-                spoilersText += Localization.Localize("off");
+                textObj.ContentColor = Color.white;
+                text += L.Localize("off");
             }
 
-            _mapDisplayPanel.GetText("Spoilers").UpdateText(spoilersText);
+            textObj.Text = text;
         }
 
-        private static void SetRandomized()
+        private static void UpdateRandomized(TextObject textObj)
         {
-            string randomizedText = $"{Localization.Localize("Randomized")} (ctrl-2): ";
+            string text = $"{L.Localize("Randomized")} (ctrl-2): ";
 
             if (MapModS.LS.randomizedOn)
             {
-                _mapDisplayPanel.GetText("Randomized").SetTextColor(Color.green);
-                randomizedText += Localization.Localize("on");
+                textObj.ContentColor = Color.green;
+                text += L.Localize("on");
             }
             else
             {
-                _mapDisplayPanel.GetText("Randomized").SetTextColor(Color.white);
-                randomizedText += Localization.Localize("off");
+                textObj.ContentColor = Color.white;
+                text += L.Localize("off");
             }
 
             if (WorldMap.CustomPins.IsRandomizedCustom())
             {
-                _mapDisplayPanel.GetText("Randomized").SetTextColor(Color.yellow);
-                randomizedText += $" ({Localization.Localize("custom")})";
+                textObj.ContentColor = Color.yellow;
             }
 
-            _mapDisplayPanel.GetText("Randomized").UpdateText(randomizedText);
+            textObj.Text = text;
         }
 
-        private static void SetOthers()
+        private static void UpdateOthers(TextObject textObj)
         {
-            string othersText = $"{Localization.Localize("Others")} (ctrl-3): ";
+            string text = $"{L.Localize("Others")} (ctrl-3): ";
 
             if (MapModS.LS.othersOn)
             {
-                _mapDisplayPanel.GetText("Others").SetTextColor(Color.green);
-                othersText += Localization.Localize("on");
+                textObj.ContentColor = Color.green;
+                text += L.Localize("on");
             }
             else
             {
-                _mapDisplayPanel.GetText("Others").SetTextColor(Color.white);
-                othersText += Localization.Localize("off");
+                textObj.ContentColor = Color.white;
+                text += L.Localize("off");
             }
 
             if (WorldMap.CustomPins.IsOthersCustom())
             {
-                _mapDisplayPanel.GetText("Others").SetTextColor(Color.yellow);
-                othersText += $" ({Localization.Localize("custom")})";
+                textObj.ContentColor = Color.yellow;
             }
 
-            _mapDisplayPanel.GetText("Others").UpdateText(othersText);
+            textObj.Text = text;
         }
 
-        private static void SetStyle()
+        private static void UpdateStyle(TextObject textObj)
         {
-            string styleText = $"{Localization.Localize("Style")} (ctrl-4): ";
+            string text = $"{L.Localize("Style")} (ctrl-4): ";
 
             switch (MapModS.GS.pinStyle)
             {
                 case PinStyle.Normal:
-                    styleText += Localization.Localize("normal");
+                    text += L.Localize("normal");
                     break;
 
                 case PinStyle.Q_Marks_1:
-                    styleText += $"{Localization.Localize("q marks")} 1";
+                    text += $"{L.Localize("q marks")} 1";
                     break;
 
                 case PinStyle.Q_Marks_2:
-                    styleText += $"{Localization.Localize("q marks")} 2";
+                    text += $"{L.Localize("q marks")} 2";
                     break;
 
                 case PinStyle.Q_Marks_3:
-                    styleText += $"{Localization.Localize("q marks")} 3";
+                    text += $"{L.Localize("q marks")} 3";
                     break;
             }
 
-            _mapDisplayPanel.GetText("Style").UpdateText(styleText);
+            textObj.Text = text;
         }
 
-        private static void SetSize()
+        private static void UpdateSize(TextObject textObj)
         {
-            string sizeText = $"{Localization.Localize("Size")} (ctrl-5): ";
+            string text = $"{L.Localize("Size")} (ctrl-5): ";
 
             switch (MapModS.GS.pinSize)
             {
                 case PinSize.Small:
-                    sizeText += Localization.Localize("small");
+                    text += L.Localize("small");
                     break;
 
                 case PinSize.Medium:
-                    sizeText += Localization.Localize("medium");
+                    text += L.Localize("medium");
                     break;
 
                 case PinSize.Large:
-                    sizeText += Localization.Localize("large");
+                    text += L.Localize("large");
                     break;
             }
 
-            _mapDisplayPanel.GetText("Size").UpdateText(sizeText);
-        }
-
-        private static void SetRefresh()
-        {
-            if (MapModS.LS.ModEnabled)
-            {
-                _refreshDisplayPanel.GetText("Refresh").UpdateText(Localization.Localize("MapModS enabled. Close map to refresh"));
-            }
-            else
-            {
-                _refreshDisplayPanel.GetText("Refresh").UpdateText(Localization.Localize("MapModS disabled. Close map to refresh"));
-            }
+            textObj.Text = text;
         }
     }
 }

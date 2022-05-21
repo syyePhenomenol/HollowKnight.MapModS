@@ -6,11 +6,43 @@ namespace MapModS.UI
 {
     public static class GUI
     {
+        private static bool worldMapOpen = false;
+        private static bool quickMapOpen = false;
+
+        public static bool AnyMapOpen()
+        {
+            return worldMapOpen || quickMapOpen;
+        }
+
+        public static bool WorldMapOpen()
+        {
+            return worldMapOpen;
+        }
+
+        public static bool QuickMapOpen()
+        {
+            return quickMapOpen;
+        }
+
         public static void Hook()
         {
             On.GameMap.Start += GameMap_Start;
             On.GameManager.SetGameMap += GameManager_SetGameMap;
             On.GameMap.WorldMap += GameMap_WorldMap;
+            On.GameMap.QuickMapAncientBasin += GameMap_QuickMapAncientBasin;
+            On.GameMap.QuickMapCity += GameMap_QuickMapCity;
+            On.GameMap.QuickMapCliffs += GameMap_QuickMapCliffs;
+            On.GameMap.QuickMapCrossroads += GameMap_QuickMapCrossroads;
+            On.GameMap.QuickMapCrystalPeak += GameMap_QuickMapCrystalPeak;
+            On.GameMap.QuickMapDeepnest += GameMap_QuickMapDeepnest;
+            On.GameMap.QuickMapDirtmouth += GameMap_QuickMapDirtmouth;
+            On.GameMap.QuickMapFogCanyon += GameMap_QuickMapFogCanyon;
+            On.GameMap.QuickMapFungalWastes += GameMap_QuickMapFungalWastes;
+            On.GameMap.QuickMapGreenpath += GameMap_QuickMapGreenpath;
+            On.GameMap.QuickMapKingdomsEdge += GameMap_QuickMapKingdomsEdge;
+            On.GameMap.QuickMapQueensGardens += GameMap_QuickMapQueensGardens;
+            On.GameMap.QuickMapRestingGrounds += GameMap_QuickMapRestingGrounds;
+            On.GameMap.QuickMapWaterways += GameMap_QuickMapWaterways;
             On.GameMap.CloseQuickMap += GameMap_CloseQuickMap;
             On.HeroController.Pause += HeroController_Pause;
             On.HeroController.UnPause += HeroController_UnPause;
@@ -24,6 +56,20 @@ namespace MapModS.UI
             On.GameMap.Start -= GameMap_Start;
             On.GameManager.SetGameMap -= GameManager_SetGameMap;
             On.GameMap.WorldMap -= GameMap_WorldMap;
+            On.GameMap.QuickMapAncientBasin -= GameMap_QuickMapAncientBasin;
+            On.GameMap.QuickMapCity -= GameMap_QuickMapCity;
+            On.GameMap.QuickMapCliffs -= GameMap_QuickMapCliffs;
+            On.GameMap.QuickMapCrossroads -= GameMap_QuickMapCrossroads;
+            On.GameMap.QuickMapCrystalPeak -= GameMap_QuickMapCrystalPeak;
+            On.GameMap.QuickMapDeepnest -= GameMap_QuickMapDeepnest;
+            On.GameMap.QuickMapDirtmouth -= GameMap_QuickMapDirtmouth;
+            On.GameMap.QuickMapFogCanyon -= GameMap_QuickMapFogCanyon;
+            On.GameMap.QuickMapFungalWastes -= GameMap_QuickMapFungalWastes;
+            On.GameMap.QuickMapGreenpath -= GameMap_QuickMapGreenpath;
+            On.GameMap.QuickMapKingdomsEdge -= GameMap_QuickMapKingdomsEdge;
+            On.GameMap.QuickMapQueensGardens -= GameMap_QuickMapQueensGardens;
+            On.GameMap.QuickMapRestingGrounds -= GameMap_QuickMapRestingGrounds;
+            On.GameMap.QuickMapWaterways -= GameMap_QuickMapWaterways;
             On.GameMap.CloseQuickMap -= GameMap_CloseQuickMap;
             On.HeroController.Pause -= HeroController_Pause;
             On.HeroController.UnPause -= HeroController_UnPause;
@@ -32,7 +78,8 @@ namespace MapModS.UI
             GUIController.Unload();
             TransitionText.ClearData();
 
-            PauseMenu.DestroyMenu();
+            PauseMenu.Destroy();
+            MapText.Destroy();
         }
 
         private static void GameMap_Start(On.GameMap.orig_Start orig, GameMap self)
@@ -46,25 +93,129 @@ namespace MapModS.UI
         {
             orig(self, go_gameMap);
 
-            PauseMenu.BuildMenu();
+            PauseMenu.Build();
+            MapText.Build();
         }
 
         private static void GameMap_WorldMap(On.GameMap.orig_WorldMap orig, GameMap self)
         {
             orig(self);
 
-            MapText.Show();
+            worldMapOpen = true;
+
+            //MapText.Show();
             TransitionText.ShowWorldMap();
             LookupText.ShowWorldMap();
+        }
+
+        private static void GameMap_QuickMapAncientBasin(On.GameMap.orig_QuickMapAncientBasin orig, GameMap self)
+        {
+            orig(self);
+            worldMapOpen = false;
+            quickMapOpen = true;
+        }
+
+        private static void GameMap_QuickMapCity(On.GameMap.orig_QuickMapCity orig, GameMap self)
+        {
+            orig(self);
+            worldMapOpen = false;
+            quickMapOpen = true;
+        }
+
+        private static void GameMap_QuickMapCliffs(On.GameMap.orig_QuickMapCliffs orig, GameMap self)
+        {
+            orig(self);
+            worldMapOpen = false;
+            quickMapOpen = true;
+        }
+
+        private static void GameMap_QuickMapCrossroads(On.GameMap.orig_QuickMapCrossroads orig, GameMap self)
+        {
+            orig(self);
+            worldMapOpen = false;
+            quickMapOpen = true;
+        }
+
+        private static void GameMap_QuickMapCrystalPeak(On.GameMap.orig_QuickMapCrystalPeak orig, GameMap self)
+        {
+            orig(self);
+            worldMapOpen = false;
+            quickMapOpen = true;
+        }
+
+        private static void GameMap_QuickMapDeepnest(On.GameMap.orig_QuickMapDeepnest orig, GameMap self)
+        {
+            orig(self);
+            worldMapOpen = false;
+            quickMapOpen = true;
+        }
+
+        private static void GameMap_QuickMapDirtmouth(On.GameMap.orig_QuickMapDirtmouth orig, GameMap self)
+        {
+            orig(self);
+            worldMapOpen = false;
+            quickMapOpen = true;
+        }
+
+        private static void GameMap_QuickMapFogCanyon(On.GameMap.orig_QuickMapFogCanyon orig, GameMap self)
+        {
+            orig(self);
+            worldMapOpen = false;
+            quickMapOpen = true;
+        }
+
+        private static void GameMap_QuickMapFungalWastes(On.GameMap.orig_QuickMapFungalWastes orig, GameMap self)
+        {
+            orig(self);
+            worldMapOpen = false;
+            quickMapOpen = true;
+        }
+
+        private static void GameMap_QuickMapGreenpath(On.GameMap.orig_QuickMapGreenpath orig, GameMap self)
+        {
+            orig(self);
+            worldMapOpen = false;
+            quickMapOpen = true;
+        }
+
+        private static void GameMap_QuickMapKingdomsEdge(On.GameMap.orig_QuickMapKingdomsEdge orig, GameMap self)
+        {
+            orig(self);
+            worldMapOpen = false;
+            quickMapOpen = true;
+        }
+
+        private static void GameMap_QuickMapQueensGardens(On.GameMap.orig_QuickMapQueensGardens orig, GameMap self)
+        {
+            orig(self);
+            worldMapOpen = false;
+            quickMapOpen = true;
+        }
+
+        private static void GameMap_QuickMapRestingGrounds(On.GameMap.orig_QuickMapRestingGrounds orig, GameMap self)
+        {
+            orig(self);
+            worldMapOpen = false;
+            quickMapOpen = true;
+        }
+
+        private static void GameMap_QuickMapWaterways(On.GameMap.orig_QuickMapWaterways orig, GameMap self)
+        {
+            orig(self);
+            worldMapOpen = false;
+            quickMapOpen = true;
         }
 
         private static void GameMap_CloseQuickMap(On.GameMap.orig_CloseQuickMap orig, GameMap self)
         {
             orig(self);
+            worldMapOpen = false;
+            quickMapOpen = false;
 
-            MapText.Hide();
-            TransitionText.Hide();
-            LookupText.Hide();
+            MapText.UpdateAll();
+            //MapText.Hide();
+            //TransitionText.Hide();
+            //LookupText.Hide();
         }
 
         private static void HeroController_Pause(On.HeroController.orig_Pause orig, HeroController self)

@@ -6,12 +6,11 @@ using MapModS.Settings;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using RM = RandomizerMod.RandomizerMod;
 using L = RandomizerMod.Localization;
+using RM = RandomizerMod.RandomizerMod;
 
 namespace MapModS.UI
 {
-    // All the following was modified from the GUI implementation of BenchwarpMod by homothetyhk
     internal class PauseMenu
     {
         private static LayoutRoot layout;
@@ -30,13 +29,22 @@ namespace MapModS.UI
             { "Customize Pins", new(ToggleCustomizePins, UpdateCustomizePins) }
         };
 
+        private static readonly Dictionary<string, Tuple<KeyCode, Action<Button>>> _hotkeys = new()
+        {
+            { "Spoilers", new(KeyCode.Alpha1, ToggleSpoilers) },
+            { "Randomized", new(KeyCode.Alpha2, ToggleRandomized) },
+            { "Others", new(KeyCode.Alpha3, ToggleOthers) },
+            { "Style", new(KeyCode.Alpha4, ToggleStyle) },
+            { "Size", new(KeyCode.Alpha5, ToggleSize) }
+        };
+
         private static readonly Dictionary<string, Tuple<Action<Button>, Action<Button>>> _auxButtons = new()
         {
             { "Persistent", new(TogglePersistent, UpdatePersistent) },
             { "Group By", new(ToggleGroupBy, UpdateGroupBy) }
         };
 
-        public static void BuildMenu()
+        public static void Build()
         {
             if (layout == null)
             {
@@ -132,7 +140,7 @@ namespace MapModS.UI
                     BorderColor = Color.black,
                     MinHeight = 28f,
                     MinWidth = 95f,
-                    Font = MagicUI.Core.UI.TrajanNormal,
+                    Font = MagicUI.Core.UI.TrajanBold,
                     FontSize = 11,
                     Margin = 0f
                 };
@@ -141,12 +149,26 @@ namespace MapModS.UI
                 auxButtons.Children.Add(button);
             }
 
+            layout.ListenForHotkey(KeyCode.M, () =>
+            {
+                ToggleEnabled((Button)layout.GetElement("Enabled"));
+            }, ModifierKeys.Ctrl);
+
+            foreach (KeyValuePair<string, Tuple<KeyCode, Action<Button>>> kvp in _hotkeys)
+            {
+                layout.ListenForHotkey(kvp.Value.Item1, () =>
+                {
+                    kvp.Value.Item2.Invoke((Button)layout.GetElement(kvp.Key));
+                }, ModifierKeys.Ctrl, () => MapModS.LS.ModEnabled);
+            }
+
             UpdateAll();
         }
 
-        public static void DestroyMenu()
+        public static void Destroy()
         {
             layout.Destroy();
+            layout = null;
         }
 
         private static void UpdateAll()
@@ -206,10 +228,19 @@ namespace MapModS.UI
         {
             MapModS.LS.ToggleModEnabled();
 
-            if (!GameManager.instance.IsGamePaused() && !HeroController.instance.controlReqlinquished)
+            if (!GameManager.instance.IsGamePaused())
             {
                 UIManager.instance.checkpointSprite.Show();
                 UIManager.instance.checkpointSprite.Hide();
+            }
+
+            if (GUI.AnyMapOpen())
+            {
+                MapText.SetToRefresh();
+            }
+            else
+            {
+                MapText.UpdateAll();
             }
 
             if (!MapModS.LS.ModEnabled)
@@ -218,7 +249,6 @@ namespace MapModS.UI
                 poolsPanelActive = false;
             }
 
-            //MapText.RebuildText();
             //TransitionText.SetTexts();
 
             UpdateAll();
@@ -242,10 +272,10 @@ namespace MapModS.UI
         {
             MapModS.LS.ToggleSpoilers();
             WorldMap.CustomPins.SetSprites();
-            MapText.SetTexts();
             LookupText.UpdateSelectedPin();
 
             UpdateAll();
+            MapText.UpdateAll();
         }
 
         private static void UpdateSpoilers(Button sender)
@@ -267,9 +297,9 @@ namespace MapModS.UI
             MapModS.LS.ToggleRandomizedOn();
             WorldMap.CustomPins.ResetPoolSettings();
             WorldMap.CustomPins.SetPinsActive();
-            MapText.SetTexts();
 
             UpdateAll();
+            MapText.UpdateAll();
         }
 
         private static void UpdateRandomized(Button sender)
@@ -303,9 +333,9 @@ namespace MapModS.UI
             MapModS.LS.ToggleOthersOn();
             WorldMap.CustomPins.ResetPoolSettings();
             WorldMap.CustomPins.SetPinsActive();
-            MapText.SetTexts();
 
             UpdateAll();
+            MapText.UpdateAll();
         }
 
         private static void UpdateOthers(Button sender)
@@ -338,9 +368,9 @@ namespace MapModS.UI
         {
             MapModS.GS.TogglePinStyle();
             WorldMap.CustomPins.SetSprites();
-            MapText.SetTexts();
 
             UpdateAll();
+            MapText.UpdateAll();
         }
 
         private static void UpdateStyle(Button sender)
@@ -378,14 +408,13 @@ namespace MapModS.UI
                 WorldMap.CustomPins.ResizePins("None selected");
             }
 
-            MapText.SetTexts();
-
             if (MapModS.LS.lookupOn)
             {
                 LookupText.UpdateSelectedPin();
             }
 
             UpdateAll();
+            MapText.UpdateAll();
         }
 
         private static void UpdateSize(Button sender)
@@ -421,9 +450,8 @@ namespace MapModS.UI
 
             MapModS.LS.ToggleFullMap();
 
-            MapText.SetTexts();
-
             UpdateAll();
+            MapText.UpdateAll();
         }
 
         private static void UpdateMode(Button sender)
@@ -503,9 +531,8 @@ namespace MapModS.UI
 
                 WorldMap.CustomPins.GetRandomizedOthersGroups();
 
-                MapText.SetTexts();
-
                 UpdateAll();
+                MapText.UpdateAll();
             }
         }
 

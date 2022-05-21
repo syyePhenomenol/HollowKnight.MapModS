@@ -49,29 +49,6 @@ namespace MapModS.UI
 
         public void BuildMenus()
         {
-            //_pauseCanvas = new GameObject();
-            //_pauseCanvas.AddComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
-            //CanvasScaler pauseScaler = _pauseCanvas.AddComponent<CanvasScaler>();
-            //pauseScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            //pauseScaler.referenceResolution = new Vector2(1920f, 1080f);
-            //_pauseCanvas.AddComponent<GraphicRaycaster>();
-
-            //PauseMenu.BuildMenu(_pauseCanvas);
-
-            //DontDestroyOnLoad(_pauseCanvas);
-
-            _mapCanvas = new GameObject();
-            _mapCanvas.AddComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
-            CanvasScaler mapScaler = _mapCanvas.AddComponent<CanvasScaler>();
-            mapScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            mapScaler.referenceResolution = new Vector2(1920f, 1080f);
-
-            MapText.BuildText(_mapCanvas);
-
-            DontDestroyOnLoad(_mapCanvas);
-
-            _mapCanvas.SetActive(false);
-
             _transitionCanvas = new GameObject();
             _transitionCanvas.AddComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
             CanvasScaler transitionScaler = _transitionCanvas.AddComponent<CanvasScaler>();
