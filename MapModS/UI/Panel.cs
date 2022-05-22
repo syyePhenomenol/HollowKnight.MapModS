@@ -89,9 +89,9 @@ namespace MapModS.UIExtensions
 
             if (Child != null)
             {
-                backgroundObj.Width = Math.Max(MinWidth, Child.EffectiveSize.x + borders.Left + borders.Right);
+                backgroundObj.Width = Math.Max(MinWidth, Child.EffectiveSize.x + borders.AddedWidth);
 
-                backgroundObj.Height = Math.Max(MinHeight, Child.EffectiveSize.y + borders.Top + borders.Bottom);
+                backgroundObj.Height = Math.Max(MinHeight, Child.EffectiveSize.y + borders.AddedHeight);
             }
             else
             {
@@ -110,7 +110,7 @@ namespace MapModS.UIExtensions
             Child?.Arrange(new Rect
             (
                 alignedTopLeftCorner + new Vector2(borders.Left, borders.Top),
-                new Vector2(backgroundObj.EffectiveSize.x - borders.Left - borders.Right, backgroundObj.EffectiveSize.y - borders.Top - borders.Bottom)
+                new Vector2(backgroundObj.EffectiveSize.x - borders.AddedWidth, backgroundObj.EffectiveSize.y - borders.AddedHeight)
             ));
 
             backgroundObj.Arrange(new Rect(alignedTopLeftCorner, backgroundObj.EffectiveSize));
