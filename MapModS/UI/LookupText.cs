@@ -4,6 +4,7 @@ using MagicUI.Graphics;
 using MapModS.Data;
 using MapModS.Map;
 using MapModS.Settings;
+using System;
 using System.Linq;
 using UnityEngine;
 using L = RandomizerMod.Localization;
@@ -14,6 +15,10 @@ namespace MapModS.UI
     internal class LookupText
     {
         private static LayoutRoot layout;
+
+        private static TextObject control;
+        private static Image panelBG;
+        private static TextObject panelText;
 
         private static string selectedLocation = "None selected";
 
@@ -33,26 +38,28 @@ namespace MapModS.UI
                 layout = new(true, "Lookup Text");
                 layout.VisibilityCondition = Condition;
 
-                TextObject control = new(layout, "Control")
+                control = new(layout, "Control")
                 {
                     HorizontalAlignment = HorizontalAlignment.Right,
                     VerticalAlignment = VerticalAlignment.Top,
+                    TextAlignment = HorizontalAlignment.Right,
                     Font = MagicUI.Core.UI.TrajanNormal,
                     FontSize = 14,
                     Padding = new(10f, 20f, 20.5f, 10f)
                 };
 
-                Image panelBackground = new(layout, GUIController.Instance.Images["LookupBG"].ToSprite(), "Background")
+                panelBG = new(layout, GUIController.Instance.Images["LookupBG"].ToSlicedSprite(0f, 50f, 0f, 50f), "Background")
                 {
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Top,
                     Padding = new(1230f, 170f, 10f, 10f)
                 };
 
-                TextObject panelText = new(layout, "Panel Text")
+                panelText = new(layout, "Panel Text")
                 {
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Top,
+                    TextAlignment = HorizontalAlignment.Left,
                     Font = MagicUI.Core.UI.Perpetua,
                     FontSize = 20,
                     MaxWidth = 485f,
@@ -89,44 +96,30 @@ namespace MapModS.UI
 
         public static void UpdateAll()
         {
-            UpdateControl((TextObject)layout.GetElement("Control"));
+            UpdateControl();
 
-            Image background = (Image)layout.GetElement("Background");
-            TextObject panelText = (TextObject)layout.GetElement("Panel Text");
-
-            UpdatePanelText(panelText);
-
-            if (MapModS.LS.lookupOn)
-            {
-                background.Visibility = Visibility.Visible;
-                panelText.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                background.Visibility = Visibility.Hidden;
-                panelText.Visibility = Visibility.Hidden;
-            }
+            UpdatePanel();
         }
 
-        public static void UpdateControl(TextObject textObj)
+        public static void UpdateControl()
         {
             string text = $"{L.Localize("Toggle lookup")} (Ctrl-L): ";
 
             if (MapModS.LS.lookupOn)
             {
-                textObj.ContentColor = Color.green;
+                control.ContentColor = Color.green;
                 text += L.Localize("On");
             }
             else
             {
-                textObj.ContentColor = Color.white;
+                control.ContentColor = Color.white;
                 text += L.Localize("Off");
             }
 
-            textObj.Text = text;
+            control.Text = text;
         }
 
-        public static void UpdatePanelText(TextObject textObj)
+        public static void UpdatePanel()
         {
             string text = $"{Utils.ToCleanName(selectedLocation)}";
 
@@ -189,7 +182,20 @@ namespace MapModS.UI
                 }
             }
 
-            textObj.Text = text;
+            panelText.Text = text;
+
+            panelBG.Height = Math.Max(100f, panelText.ContentSize.y + 50f);
+
+            if (MapModS.LS.lookupOn)
+            {
+                panelBG.Visibility = Visibility.Visible;
+                panelText.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                panelBG.Visibility = Visibility.Hidden;
+                panelText.Visibility = Visibility.Hidden;
+            }
         }
 
         public static void UpdateSelectedPinCoroutine()

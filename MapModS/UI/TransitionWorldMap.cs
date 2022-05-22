@@ -7,12 +7,18 @@ using System.Collections.Generic;
 using System.Linq;
 using L = RandomizerMod.Localization;
 using TP = MapModS.UI.TransitionPersistent;
+using System;
 
 namespace MapModS.UI
 {
     internal class TransitionWorldMap
     {
         private static LayoutRoot layout;
+
+        private static TextObject instruction;
+        private static TextObject control;
+        private static Image panelBG;
+        private static TextObject panelText;
 
         private static bool Condition()
         {
@@ -26,16 +32,17 @@ namespace MapModS.UI
                 layout = new(true, "Transition World Map");
                 layout.VisibilityCondition = Condition;
 
-                TextObject instruction = new(layout, "Instructions")
+                instruction = new(layout, "Instructions")
                 {
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Top,
+                    TextAlignment = HorizontalAlignment.Left,
                     Font = MagicUI.Core.UI.TrajanNormal,
                     FontSize = 14,
                     Padding = new(20f, 20f, 10f, 10f)
                 };
 
-                TextObject control = new(layout, "Control")
+                control = new(layout, "Control")
                 {
                     HorizontalAlignment = HorizontalAlignment.Right,
                     VerticalAlignment = VerticalAlignment.Top,
@@ -45,14 +52,14 @@ namespace MapModS.UI
                     Padding = new(10f, 20f, 20f, 10f)
                 };
 
-                Image panelBackground = new(layout, GUIController.Instance.Images["UncheckedBG"].ToSprite(), "Background")
+                panelBG = new(layout, GUIController.Instance.Images["UncheckedBG"].ToSlicedSprite(0f, 50f, 0f, 50f), "Background")
                 {
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Top,
                     Padding = new(1380f, 170f, 10f, 10f)
                 };
 
-                TextObject panelText = new(layout, "Panel Text")
+                panelText = new(layout, "Panel Text")
                 {
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Top,
@@ -74,27 +81,12 @@ namespace MapModS.UI
 
         public static void UpdateAll()
         {
-            UpdateInstructions((TextObject)layout.GetElement("Instructions"));
-            UpdateControl((TextObject)layout.GetElement("Control"));
-
-            Image background = (Image)layout.GetElement("Background");
-            TextObject panelText = (TextObject)layout.GetElement("Panel Text");
-
-            UpdatePanelText(panelText);
-
-            if (MapModS.GS.uncheckedPanelActive)
-            {
-                background.Visibility = Visibility.Visible;
-                panelText.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                background.Visibility = Visibility.Hidden;
-                panelText.Visibility = Visibility.Hidden;
-            }
+            UpdateInstructions();
+            UpdateControl();
+            UpdatePanel();
         }
 
-        public static void UpdateInstructions(TextObject textObj)
+        public static void UpdateInstructions()
         {
             string text = $"{L.Localize("Selected room")}: {TP.selectedScene}.";
 
@@ -120,10 +112,10 @@ namespace MapModS.UI
                 text += $" {L.Localize("to find new route or switch starting / final transitions")}.";
             }
 
-            textObj.Text = text;
+            instruction.Text = text;
         }
 
-        public static void UpdateControl(TextObject textObj)
+        public static void UpdateControl()
         {
             string text = $"{L.Localize("Current route")}: ";
 
@@ -192,12 +184,25 @@ namespace MapModS.UI
                 text += L.Localize("Off");
             }
 
-            textObj.Text = text;
+            control.Text = text;
         }
 
-        public static void UpdatePanelText(TextObject textObj)
+        public static void UpdatePanel()
         {
-            textObj.Text = TransitionData.GetUncheckedVisited(TP.selectedScene);
+            panelText.Text = TransitionData.GetUncheckedVisited(TP.selectedScene);
+
+            panelBG.Height = Math.Max(100f, panelText.ContentSize.y + 50f);
+
+            if (MapModS.GS.uncheckedPanelActive)
+            {
+                panelBG.Visibility = Visibility.Visible;
+                panelText.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                panelBG.Visibility = Visibility.Hidden;
+                panelText.Visibility = Visibility.Hidden;
+            }
         }
     }
 }

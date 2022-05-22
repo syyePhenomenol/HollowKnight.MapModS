@@ -109,7 +109,7 @@ namespace MapModS.UI
                 {
                     HorizontalAlignment = HorizontalAlignment.Center,
                     VerticalAlignment = VerticalAlignment.Center,
-                    BorderColor = Color.black,
+                    Borderless = true,
                     MinHeight = 28f,
                     MinWidth = 85f,
                     Content = L.Localize(group).Replace(" ", "\n"),
@@ -137,7 +137,7 @@ namespace MapModS.UI
                 {
                     HorizontalAlignment = HorizontalAlignment.Center,
                     VerticalAlignment = VerticalAlignment.Center,
-                    BorderColor = Color.black,
+                    Borderless = true,
                     MinHeight = 28f,
                     MinWidth = 95f,
                     Font = MagicUI.Core.UI.TrajanBold,

@@ -8,10 +8,14 @@ namespace MapModS.UI
     internal class TransitionQuickMap
     {
         private static LayoutRoot layout;
+
+        private static TextObject uncheckedText;
+
         private static bool Condition()
         {
             return TransitionData.TransitionModeActive() && GUI.quickMapOpen;
         }
+
         public static void Build()
         {
             if (layout == null)
@@ -19,11 +23,11 @@ namespace MapModS.UI
                 layout = new(true, "Transition Quick Map");
                 layout.VisibilityCondition = Condition;
 
-                TextObject uncheckedText = new(layout, "Unchecked")
+                uncheckedText = new(layout, "Unchecked")
                 {
                     HorizontalAlignment = HorizontalAlignment.Right,
                     VerticalAlignment = VerticalAlignment.Top,
-                    TextAlignment = HorizontalAlignment.Left,
+                    TextAlignment = HorizontalAlignment.Right,
                     Font = MagicUI.Core.UI.TrajanNormal,
                     FontSize = 14,
                     Padding = new(10f, 20f, 20f, 10f)
@@ -41,12 +45,12 @@ namespace MapModS.UI
 
         public static void UpdateAll()
         {
-            UpdateUnchecked((TextObject)layout.GetElement("Unchecked"));
+            UpdateUnchecked();
         }
 
-        public static void UpdateUnchecked(TextObject textObj)
+        public static void UpdateUnchecked()
         {
-            textObj.Text = TransitionData.GetUncheckedVisited(Utils.CurrentScene());
+            uncheckedText.Text = TransitionData.GetUncheckedVisited(Utils.CurrentScene());
         }
     }
 }

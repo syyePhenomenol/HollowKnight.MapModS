@@ -16,6 +16,8 @@ namespace MapModS.UI
     {
         private static LayoutRoot layout;
 
+        private static TextObject route;
+
         public static Pathfinder pf;
 
         public static string lastStartScene = "";
@@ -43,7 +45,7 @@ namespace MapModS.UI
                 layout = new(true, "Transition Persistent");
                 layout.VisibilityCondition = Condition;
 
-                TextObject route = new(layout, "Route")
+                route = new(layout, "Route")
                 {
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Top,
@@ -101,10 +103,10 @@ namespace MapModS.UI
 
         public static void UpdateAll()
         {
-            UpdateRoute((TextObject)layout.GetElement("Route"));
+            UpdateRoute();
         }
 
-        public static void UpdateRoute(TextObject textObj)
+        public static void UpdateRoute()
         {
             string text = "\n";
 
@@ -130,7 +132,7 @@ namespace MapModS.UI
                 }
             }
 
-            textObj.Text = text;
+            route.Text = text;
         }
 
         private static Thread colorUpdateThread;
