@@ -5,12 +5,19 @@ using UnityEngine;
 
 namespace MapModS.UIExtensions
 {
-    public class Panel : Container
+    /// <summary>
+    /// A container that overlays a single element on top of a background image. The background will always be scaled to surround
+    /// the element. To have a Sprite scale without stretching its borders, use ToSliceSprite() to create the Sprite.
+    /// </summary>
+    public sealed class Panel : Container
     {
-        public readonly Image Background;
+        private readonly Image backgroundObj;
 
         private float minWidth;
 
+        /// <summary>
+        /// The minimum width of the background
+        /// </summary>
         public float MinWidth
         {
             get => minWidth;
@@ -26,6 +33,9 @@ namespace MapModS.UIExtensions
 
         private float minHeight;
 
+        /// <summary>
+        /// The minimum height of the background
+        /// </summary>
         public float MinHeight
         {
             get => minHeight;
@@ -38,9 +48,12 @@ namespace MapModS.UIExtensions
                 }
             }
         }
-
+        
         private Vector4 borders;
 
+        /// <summary>
+        /// How far around the enclosed element the background will stretch to (left, top, right, bottom)
+        /// </summary>
         public Vector4 Borders
         {
             get => borders;
@@ -54,12 +67,20 @@ namespace MapModS.UIExtensions
             }
         }
 
-        public Panel(LayoutRoot onLayout, Sprite bgSprite, string name = "New Panel") : base(onLayout, name)
+        /// <summary>
+        /// Creates a panel
+        /// </summary>
+        /// <param name="onLayout">The layout root to draw the panel on</param>
+        /// <param name="background">The sprite of the background</param>
+        /// <param name="name">The name of the panel</param>
+        public Panel(LayoutRoot onLayout, Sprite background, string name = "New Panel") : base(onLayout, name)
         {
-            Background = new(onLayout, bgSprite, name + " Background");
+            backgroundObj = new(onLayout, background, name + " Background");
 
-            minWidth = bgSprite.rect.width;
-            minHeight = bgSprite.rect.width;
+            SetLogicalChild(backgroundObj);
+
+            minWidth = background.rect.width;
+            minHeight = background.rect.width;
             borders = Vector4.zero;
         }
 
@@ -67,23 +88,23 @@ namespace MapModS.UIExtensions
         {
             Child?.Measure();
 
-            if (Child != null && Background != null)
+            if (Child != null)
             {
-                Background.Width = Math.Max(MinWidth, Child.EffectiveSize.x + borders.x + borders.z);
+                backgroundObj.Width = Math.Max(MinWidth, Child.EffectiveSize.x + borders.x + borders.z);
 
-                Background.Height = Math.Max(MinHeight, Child.EffectiveSize.y + borders.y + borders.w);
+                backgroundObj.Height = Math.Max(MinHeight, Child.EffectiveSize.y + borders.y + borders.w);
             }
             
-            Background?.Measure();
+            backgroundObj.Measure();
 
-            return Background.EffectiveSize;
+            return backgroundObj.EffectiveSize;
         }
 
         protected override void ArrangeOverride(Vector2 alignedTopLeftCorner)
         {
-            Child?.Arrange(new Rect(alignedTopLeftCorner + new Vector2(borders.x, borders.y), Child.EffectiveSize));
+            Child?.Arrange(new Rect(alignedTopLeftCorner + new Vector2(borders.x, borders.y), new Vector2(backgroundObj.EffectiveSize.x - borders.x, backgroundObj.EffectiveSize.y - borders.y)));
 
-            Background?.Arrange(new Rect(alignedTopLeftCorner, Background.EffectiveSize));
+            backgroundObj.Arrange(new Rect(alignedTopLeftCorner, backgroundObj.EffectiveSize));
 
             return;
         }
@@ -91,7 +112,7 @@ namespace MapModS.UIExtensions
         protected override void DestroyOverride()
         {
             Child?.Destroy();
-            Background?.Destroy();
+            backgroundObj.Destroy();
         }
     }
 }
