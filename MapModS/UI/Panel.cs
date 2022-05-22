@@ -1,79 +1,97 @@
 ﻿using MagicUI.Core;
 using MagicUI.Elements;
+using System;
 using UnityEngine;
 
 namespace MapModS.UIExtensions
 {
-    public class Panel : Layout
+    public class Panel : Container
     {
-        private Image background;
+        public readonly Image Background;
 
-        public Vector4 Borders = Vector4.zero;
+        private float minWidth;
 
-        public float MinWidth = 0f;
-        public float MinHeight = 0f;
-
-        public Panel(LayoutRoot onLayout, Image background, string name = "New Panel") : base(onLayout, name)
+        public float MinWidth
         {
-            this.background = background;
-            Children.Add(background);
+            get => minWidth;
+            set
+            {
+                if (minWidth != value)
+                {
+                    minWidth = value;
+                    InvalidateMeasure();
+                }
+            }
+        }
+
+        private float minHeight;
+
+        public float MinHeight
+        {
+            get => minHeight;
+            set
+            {
+                if (minHeight != value)
+                {
+                    minHeight = value;
+                    InvalidateMeasure();
+                }
+            }
+        }
+
+        private Vector4 borders;
+
+        public Vector4 Borders
+        {
+            get => borders;
+            set
+            {
+                if (borders != value)
+                {
+                    borders = value;
+                    InvalidateMeasure();
+                }
+            }
+        }
+
+        public Panel(LayoutRoot onLayout, Sprite bgSprite, string name = "New Panel") : base(onLayout, name)
+        {
+            Background = new(onLayout, bgSprite, name + " Background");
+
+            minWidth = bgSprite.rect.width;
+            minHeight = bgSprite.rect.width;
+            borders = Vector4.zero;
         }
 
         protected override Vector2 MeasureOverride()
         {
-            foreach (ArrangableElement element in Children)
-            {
-                element.Measure();
-            }
+            Child?.Measure();
 
-            return background.EffectiveSize;
+            if (Child != null && Background != null)
+            {
+                Background.Width = Math.Max(MinWidth, Child.EffectiveSize.x + borders.x + borders.z);
+
+                Background.Height = Math.Max(MinHeight, Child.EffectiveSize.y + borders.y + borders.w);
+            }
+            
+            Background?.Measure();
+
+            return Background.EffectiveSize;
         }
 
         protected override void ArrangeOverride(Vector2 alignedTopLeftCorner)
         {
-            float xMax = 0f;
-            float yMax = 0f;
+            Child?.Arrange(new Rect(alignedTopLeftCorner + new Vector2(borders.x, borders.y), Child.EffectiveSize));
 
-            foreach (ArrangableElement element in Children)
-            {
-                Vector2 size = element.EffectiveSize;
+            Background?.Arrange(new Rect(alignedTopLeftCorner, Background.EffectiveSize));
 
-                if (element == background)
-                {
-                    element.Arrange(new Rect(alignedTopLeftCorner, size));
-                }
-                else
-                {
-                    element.Arrange(new Rect(alignedTopLeftCorner + new Vector2(Borders.x, Borders.y), size));
-
-                    if (size.x > xMax) xMax = size.x;
-
-                    if (size.y > yMax) yMax = size.y;
-                }
-            }
-
-            if (xMax > MinWidth)
-            {
-                background.Width = xMax + Borders.z;
-            }
-            else
-            {
-                background.Width = MinWidth + Borders.z;
-            }
-
-            if (yMax > MinHeight)
-            {
-                background.Height = yMax + Borders.w;
-            }
-            else
-            {
-                background.Height = MinHeight + Borders.w;
-            }
+            return;
         }
 
         protected override void DestroyOverride()
         {
-            Children.Clear();
+            Child?.Destroy();
+            Background?.Destroy();
         }
     }
 }
