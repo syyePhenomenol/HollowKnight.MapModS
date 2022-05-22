@@ -49,17 +49,17 @@ namespace MapModS.UIExtensions
             }
         }
         
-        private Vector4 borders;
+        private Padding borders = new(0, 0, 0, 0);
 
         /// <summary>
         /// How far around the enclosed element the background will stretch to (left, top, right, bottom)
         /// </summary>
-        public Vector4 Borders
+        public Padding Borders
         {
             get => borders;
             set
             {
-                if (borders != value)
+                if (!borders.Equals(value))
                 {
                     borders = value;
                     InvalidateMeasure();
@@ -81,7 +81,6 @@ namespace MapModS.UIExtensions
 
             minWidth = background.rect.width;
             minHeight = background.rect.width;
-            borders = Vector4.zero;
         }
 
         protected override Vector2 MeasureOverride()
@@ -90,9 +89,15 @@ namespace MapModS.UIExtensions
 
             if (Child != null)
             {
-                backgroundObj.Width = Math.Max(MinWidth, Child.EffectiveSize.x + borders.x + borders.z);
+                backgroundObj.Width = Math.Max(MinWidth, Child.EffectiveSize.x + borders.Left + borders.Right);
 
-                backgroundObj.Height = Math.Max(MinHeight, Child.EffectiveSize.y + borders.y + borders.w);
+                backgroundObj.Height = Math.Max(MinHeight, Child.EffectiveSize.y + borders.Top + borders.Bottom);
+            }
+            else
+            {
+                backgroundObj.Width = MinWidth;
+
+                backgroundObj.Height = MinHeight;
             }
             
             backgroundObj.Measure();
@@ -102,7 +107,11 @@ namespace MapModS.UIExtensions
 
         protected override void ArrangeOverride(Vector2 alignedTopLeftCorner)
         {
-            Child?.Arrange(new Rect(alignedTopLeftCorner + new Vector2(borders.x, borders.y), new Vector2(backgroundObj.EffectiveSize.x - borders.x, backgroundObj.EffectiveSize.y - borders.y)));
+            Child?.Arrange(new Rect
+            (
+                alignedTopLeftCorner + new Vector2(borders.Left, borders.Top),
+                new Vector2(backgroundObj.EffectiveSize.x - borders.Left - borders.Right, backgroundObj.EffectiveSize.y - borders.Top - borders.Bottom)
+            ));
 
             backgroundObj.Arrange(new Rect(alignedTopLeftCorner, backgroundObj.EffectiveSize));
 
