@@ -13,6 +13,8 @@ namespace MapModS.UI
     {
         private static LayoutRoot layout;
 
+        private static TextObject refresh;
+
         private static readonly Dictionary<string, Tuple<Padding, Action<TextObject>>> _textObjects = new()
         {
             { "Spoilers", new(new(10f, 10f, 1000f, 20f), UpdateSpoilers) },
@@ -46,7 +48,7 @@ namespace MapModS.UI
                     };
                 }
 
-                TextObject refresh = new(layout, "Refresh")
+                refresh = new(layout, "Refresh")
                 {
                     HorizontalAlignment = HorizontalAlignment.Center,
                     VerticalAlignment = VerticalAlignment.Bottom,
@@ -83,7 +85,7 @@ namespace MapModS.UI
                 }
             }
 
-            layout.GetElement("Refresh").Visibility = Visibility.Hidden;
+            refresh.Visibility = Visibility.Hidden;
         }
 
         public static void SetToRefresh()
@@ -95,7 +97,6 @@ namespace MapModS.UI
                 textObj.Visibility = Visibility.Hidden;
             }
 
-            TextObject refresh = (TextObject)layout.GetElement("Refresh");
             refresh.Visibility = Visibility.Visible;
 
             if (MapModS.LS.ModEnabled)

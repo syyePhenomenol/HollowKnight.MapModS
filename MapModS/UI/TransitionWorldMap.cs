@@ -21,7 +21,9 @@ namespace MapModS.UI
 
         private static bool Condition()
         {
-            return GUI.worldMapOpen && TransitionData.TransitionModeActive();
+            return TransitionData.TransitionModeActive()
+                && !GUI.lockToggleEnable
+                && GUI.worldMapOpen;
         }
 
         public static void Build()

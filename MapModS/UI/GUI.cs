@@ -6,6 +6,7 @@ namespace MapModS.UI
     {
         public static bool worldMapOpen = false;
         public static bool quickMapOpen = false;
+        public static bool lockToggleEnable = false;
 
         public static void Hook()
         {
@@ -209,6 +210,7 @@ namespace MapModS.UI
             orig(self);
             worldMapOpen = false;
             quickMapOpen = false;
+            lockToggleEnable = false;
 
             MapText.UpdateAll();
             TransitionPersistent.UpdateAll();

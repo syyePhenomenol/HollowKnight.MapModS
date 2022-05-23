@@ -13,7 +13,9 @@ namespace MapModS.UI
 
         private static bool Condition()
         {
-            return TransitionData.TransitionModeActive() && GUI.quickMapOpen;
+            return TransitionData.TransitionModeActive()
+                && !GUI.lockToggleEnable
+                && GUI.quickMapOpen;
         }
 
         public static void Build()

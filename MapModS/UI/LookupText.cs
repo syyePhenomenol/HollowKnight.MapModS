@@ -25,6 +25,7 @@ namespace MapModS.UI
         {
             return GUI.worldMapOpen
                 && MapModS.LS.ModEnabled
+                && !GUI.lockToggleEnable
                 && (MapModS.LS.mapMode == MapMode.FullMap
                     || MapModS.LS.mapMode == MapMode.AllPins
                     || MapModS.LS.mapMode == MapMode.PinsOverMap);

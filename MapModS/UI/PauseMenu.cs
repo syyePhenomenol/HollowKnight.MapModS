@@ -215,16 +215,16 @@ namespace MapModS.UI
 
         public static void ToggleEnabled(Button sender)
         {
+            if (GUI.lockToggleEnable) return;
+
             MapModS.LS.ToggleModEnabled();
 
-            if (!GameManager.instance.IsGamePaused())
-            {
-                UIManager.instance.checkpointSprite.Show();
-                UIManager.instance.checkpointSprite.Hide();
-            }
+            UIManager.instance.checkpointSprite.Show();
+            UIManager.instance.checkpointSprite.Hide();
 
             if (GUI.worldMapOpen || GUI.quickMapOpen)
             {
+                GUI.lockToggleEnable = true;
                 MapText.SetToRefresh();
             }
             else
@@ -234,11 +234,12 @@ namespace MapModS.UI
 
             if (!MapModS.LS.ModEnabled)
             {
+                WorldMap.goCustomPins.SetActive(false);
+                WorldMap.goExtraRooms.SetActive(false);
+                FullMap.PurgeMap();
                 Transition.ResetMapColors(GameManager.instance.gameMap);
                 poolsPanelActive = false;
             }
-
-            //TransitionText.SetTexts();
 
             UpdateAll();
         }

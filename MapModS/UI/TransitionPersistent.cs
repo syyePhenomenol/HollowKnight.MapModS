@@ -31,6 +31,7 @@ namespace MapModS.UI
         private static bool Condition()
         {
             return TransitionData.TransitionModeActive()
+                && !GUI.lockToggleEnable
                 && (GUI.worldMapOpen
                     || GUI.quickMapOpen
                     || (!GameManager.instance.IsGamePaused()
@@ -142,6 +143,7 @@ namespace MapModS.UI
         {
             if (layout == null
                 || !GUI.worldMapOpen
+                || GUI.lockToggleEnable
                 || GameManager.instance.IsGamePaused()
                 || !TransitionData.TransitionModeActive())
             {
@@ -170,6 +172,7 @@ namespace MapModS.UI
         {
             if (!TransitionData.TransitionModeActive()
                 || !GUI.worldMapOpen
+                || GUI.lockToggleEnable
                 || GameManager.instance.IsGamePaused())
             {
                 return;
