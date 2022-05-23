@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using L = RandomizerMod.Localization;
 using TP = MapModS.UI.TransitionPersistent;
-using System;
 
 namespace MapModS.UI
 {
@@ -17,7 +16,7 @@ namespace MapModS.UI
 
         private static TextObject instruction;
         private static TextObject control;
-        private static Image panelBG;
+        private static Panel panel;
         private static TextObject panelText;
 
         private static bool Condition()
@@ -52,8 +51,11 @@ namespace MapModS.UI
                     Padding = new(10f, 20f, 20f, 10f)
                 };
 
-                panelBG = new(layout, GUIController.Instance.Images["UncheckedBG"].ToSlicedSprite(0f, 50f, 0f, 50f), "Background")
+                panel = new(layout, GUIController.Instance.Images["UncheckedBG"].ToSlicedSprite(100f, 50f, 0f, 50f), "Panel")
                 {
+                    Borders = new(30f, 30f, 30f, 30f),
+                    MinWidth = 400f,
+                    MinHeight = 100f,
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Top,
                     Padding = new(1380f, 170f, 10f, 10f)
@@ -64,10 +66,10 @@ namespace MapModS.UI
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Top,
                     Font = MagicUI.Core.UI.TrajanNormal,
-                    FontSize = 14,
-                    MaxWidth = 485f,
-                    Padding = new(1400f, 190f, 10f, 10f)
+                    FontSize = 14
                 };
+
+                panel.Child = panelText;
 
                 UpdateAll();
             }
@@ -191,17 +193,13 @@ namespace MapModS.UI
         {
             panelText.Text = TransitionData.GetUncheckedVisited(TP.selectedScene);
 
-            panelBG.Height = Math.Max(100f, panelText.ContentSize.y + 50f);
-
             if (MapModS.GS.uncheckedPanelActive)
             {
-                panelBG.Visibility = Visibility.Visible;
-                panelText.Visibility = Visibility.Visible;
+                panel.Visibility = Visibility.Visible;
             }
             else
             {
-                panelBG.Visibility = Visibility.Hidden;
-                panelText.Visibility = Visibility.Hidden;
+                panel.Visibility = Visibility.Hidden;
             }
         }
     }

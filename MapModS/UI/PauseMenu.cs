@@ -91,7 +91,7 @@ namespace MapModS.UI
                 }
             }
 
-            DynamicUniformGrid panelButtons = new(layout, "Panel Buttons")
+            DynamicUniformGrid poolButtons = new(layout, "Pool Buttons")
             {
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Top,
@@ -101,7 +101,7 @@ namespace MapModS.UI
                 VerticalSpacing = 5f
             };
 
-            panelButtons.ChildrenBeforeRollover = 10;
+            poolButtons.ChildrenBeforeRollover = 10;
 
             foreach (string group in new List<string>(MainData.usedPoolGroups) { "Benches" })
             {
@@ -119,7 +119,7 @@ namespace MapModS.UI
                 };
 
                 button.Click += TogglePool;
-                panelButtons.Children.Add(button);
+                poolButtons.Children.Add(button);
             }
 
             StackLayout auxButtons = new(layout, "Aux Buttons")
@@ -180,7 +180,7 @@ namespace MapModS.UI
                 kvp.Value.Item2.Invoke(button);
 
                 if (kvp.Key == "Enabled") continue;
-                
+
                 if (MapModS.LS.ModEnabled)
                 {
                     button.Visibility = Visibility.Visible;
@@ -193,34 +193,23 @@ namespace MapModS.UI
 
             foreach (string group in new List<string>(MainData.usedPoolGroups) { "Benches" })
             {
-                Button button = (Button)layout.GetElement(group);
+                UpdatePool((Button)layout.GetElement(group));
+            }
 
-                UpdatePool(button);
-
-                if (MapModS.LS.ModEnabled && poolsPanelActive)
-                {
-                    button.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    button.Visibility = Visibility.Hidden;
-                }
+            if (MapModS.LS.ModEnabled && poolsPanelActive)
+            {
+                layout.GetElement("Pool Buttons").Visibility = Visibility.Visible;
+                layout.GetElement("Aux Buttons").Visibility = Visibility.Visible;
+            }
+            else
+            {
+                layout.GetElement("Pool Buttons").Visibility = Visibility.Hidden;
+                layout.GetElement("Aux Buttons").Visibility = Visibility.Hidden;
             }
 
             foreach (KeyValuePair<string, Tuple<Action<Button>, Action<Button>>> kvp in _auxButtons)
             {
-                Button button = (Button)layout.GetElement(kvp.Key);
-
-                kvp.Value.Item2.Invoke(button);
-
-                if (MapModS.LS.ModEnabled && poolsPanelActive)
-                {
-                    button.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    button.Visibility = Visibility.Hidden;
-                }
+                kvp.Value.Item2.Invoke((Button)layout.GetElement(kvp.Key));
             }
         }
 

@@ -8,7 +8,6 @@ using UnityEngine;
 
 namespace MapModS.UI
 {
-    // All the following was modified from the GUI implementation of BenchwarpMod by homothety
     public class GUIController : MonoBehaviour
     {
         public Dictionary<string, Texture2D> Images = new();

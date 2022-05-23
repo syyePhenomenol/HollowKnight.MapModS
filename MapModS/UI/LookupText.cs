@@ -4,7 +4,6 @@ using MagicUI.Graphics;
 using MapModS.Data;
 using MapModS.Map;
 using MapModS.Settings;
-using System;
 using System.Linq;
 using UnityEngine;
 using L = RandomizerMod.Localization;
@@ -17,7 +16,7 @@ namespace MapModS.UI
         private static LayoutRoot layout;
 
         private static TextObject control;
-        private static Image panelBG;
+        private static Panel panel;
         private static TextObject panelText;
 
         private static string selectedLocation = "None selected";
@@ -48,8 +47,10 @@ namespace MapModS.UI
                     Padding = new(10f, 20f, 20.5f, 10f)
                 };
 
-                panelBG = new(layout, GUIController.Instance.Images["LookupBG"].ToSlicedSprite(0f, 50f, 0f, 50f), "Background")
+                panel = new(layout, GUIController.Instance.Images["LookupBG"].ToSlicedSprite(200f, 100f, 0f, 100f), "Panel")
                 {
+                    Borders = new(60f, 40f, 30f, 40f),
+                    MinHeight = 200f,
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Top,
                     Padding = new(1230f, 170f, 10f, 10f)
@@ -62,9 +63,10 @@ namespace MapModS.UI
                     TextAlignment = HorizontalAlignment.Left,
                     Font = MagicUI.Core.UI.Perpetua,
                     FontSize = 20,
-                    MaxWidth = 485f,
-                    Padding = new(1240.5f, 190f, 10f, 10f)
+                    MaxWidth = 450f
                 };
+
+                panel.Child = panelText;
 
                 layout.ListenForHotkey(KeyCode.L, () =>
                 {
@@ -184,17 +186,13 @@ namespace MapModS.UI
 
             panelText.Text = text;
 
-            panelBG.Height = Math.Max(100f, panelText.ContentSize.y + 50f);
-
             if (MapModS.LS.lookupOn)
             {
-                panelBG.Visibility = Visibility.Visible;
-                panelText.Visibility = Visibility.Visible;
+                panel.Visibility = Visibility.Visible;
             }
             else
             {
-                panelBG.Visibility = Visibility.Hidden;
-                panelText.Visibility = Visibility.Hidden;
+                panel.Visibility = Visibility.Hidden;
             }
         }
 
