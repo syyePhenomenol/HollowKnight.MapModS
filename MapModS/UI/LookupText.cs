@@ -35,7 +35,7 @@ namespace MapModS.UI
         {
             if (layout == null)
             {
-                layout = new(true, "Lookup Text");
+                layout = new(true, "Lookup");
                 layout.VisibilityCondition = Condition;
 
                 control = new(layout, "Control")
@@ -45,7 +45,7 @@ namespace MapModS.UI
                     TextAlignment = HorizontalAlignment.Right,
                     Font = MagicUI.Core.UI.TrajanNormal,
                     FontSize = 14,
-                    Padding = new(10f, 20f, 20.5f, 10f)
+                    Padding = new(10f, 20f, 20f, 10f)
                 };
 
                 panel = new(layout, GUIController.Instance.Images["LookupBG"].ToSlicedSprite(200f, 100f, 0f, 100f), "Panel")

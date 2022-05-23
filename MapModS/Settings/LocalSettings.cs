@@ -55,6 +55,8 @@ namespace MapModS.Settings
 
         public bool lookupOn = false;
 
+        public bool mapKeyOn = false;
+
         public GroupBy groupBy;
 
         public bool SpoilerOn = false;
@@ -108,6 +110,11 @@ namespace MapModS.Settings
         public void ToggleLookup()
         {
             lookupOn = !lookupOn;
+        }
+
+        public void ToggleMapKey()
+        {
+            mapKeyOn = !mapKeyOn;
         }
 
         public void ToggleBench()

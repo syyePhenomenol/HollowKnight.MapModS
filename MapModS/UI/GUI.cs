@@ -61,6 +61,7 @@ namespace MapModS.UI
 
             PauseMenu.Destroy();
             MapText.Destroy();
+            MapKey.Destroy();
             LookupText.Destroy();
             TransitionPersistent.Destroy();
             TransitionWorldMap.Destroy();
@@ -80,6 +81,7 @@ namespace MapModS.UI
 
             PauseMenu.Build();
             MapText.Build();
+            MapKey.Build();
             LookupText.Build();
             TransitionPersistent.Build();
             TransitionWorldMap.Build();

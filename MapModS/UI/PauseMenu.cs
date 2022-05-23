@@ -15,7 +15,7 @@ namespace MapModS.UI
     {
         private static LayoutRoot layout;
 
-        private static bool poolsPanelActive = false;
+        private static bool panelActive = false;
 
         private static readonly Dictionary<string, Tuple<Action<Button>, Action<Button>>> _mainButtons = new()
         {
@@ -56,7 +56,7 @@ namespace MapModS.UI
                     TextAlignment = HorizontalAlignment.Left,
                     FontSize = 20,
                     Font = MagicUI.Core.UI.TrajanBold,
-                    Padding = new(10.5f, 840f, 10f, 10f),
+                    Padding = new(10f, 840f, 10f, 10f),
                     Text = "MapModS",
                 };
 
@@ -65,7 +65,7 @@ namespace MapModS.UI
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Top,
                     Orientation = Orientation.Vertical,
-                    Padding = new(10.5f, 865f, 10f, 10f),
+                    Padding = new(10f, 865f, 10f, 10f),
                     HorizontalSpacing = 5f,
                     VerticalSpacing = 5f
                 };
@@ -96,7 +96,7 @@ namespace MapModS.UI
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Top,
                 Orientation = Orientation.Vertical,
-                Padding = new(415.5f, 865f, 10f, 10f),
+                Padding = new(415f, 865f, 10f, 10f),
                 HorizontalSpacing = 0f,
                 VerticalSpacing = 5f
             };
@@ -127,7 +127,7 @@ namespace MapModS.UI
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Top,
                 Orientation = Orientation.Horizontal,
-                Padding = new(210.5f, 931f, 10f, 10f),
+                Padding = new(210f, 931f, 10f, 10f),
                 Spacing = 5f
             };
 
@@ -196,7 +196,7 @@ namespace MapModS.UI
                 UpdatePool((Button)layout.GetElement(group));
             }
 
-            if (MapModS.LS.ModEnabled && poolsPanelActive)
+            if (MapModS.LS.ModEnabled && panelActive)
             {
                 layout.GetElement("Pool Buttons").Visibility = Visibility.Visible;
                 layout.GetElement("Aux Buttons").Visibility = Visibility.Visible;
@@ -238,7 +238,7 @@ namespace MapModS.UI
                 WorldMap.goExtraRooms.SetActive(false);
                 FullMap.PurgeMap();
                 Transition.ResetMapColors(GameManager.instance.gameMap);
-                poolsPanelActive = false;
+                panelActive = false;
             }
 
             UpdateAll();
@@ -442,6 +442,7 @@ namespace MapModS.UI
 
             UpdateAll();
             MapText.UpdateAll();
+            MapKey.UpdateAll();
         }
 
         private static void UpdateMode(Button sender)
@@ -481,21 +482,21 @@ namespace MapModS.UI
 
         public static void CollapsePanel()
         {
-            poolsPanelActive = false;
+            panelActive = false;
 
             UpdateAll();
         }
 
         public static void ToggleCustomizePins(Button sender)
         {
-            poolsPanelActive = !poolsPanelActive;
+            panelActive = !panelActive;
 
             UpdateAll();
         }
 
         private static void UpdateCustomizePins(Button sender)
         {
-            if (MapModS.LS.ModEnabled && poolsPanelActive)
+            if (MapModS.LS.ModEnabled && panelActive)
             {
                 sender.ContentColor = Color.yellow;
             }

@@ -55,6 +55,7 @@
     <None Remove="Resources\GUI\ButtonRect.png" />
     <None Remove="Resources\GUI\ButtonRectEmpty.png" />
     <None Remove="Resources\GUI\ButtonsMenuBG.png" />
+    <None Remove="Resources\GUI\KeyBG.png" />
     <None Remove="Resources\GUI\LookupBG.png" />
     <None Remove="Resources\GUI\StatusPanelBG.png" />
     <None Remove="Resources\GUI\UncheckedBG.png" />
@@ -69,6 +70,10 @@
     <None Remove="Resources\Pins\pinBackerGhost.png" />
     <None Remove="Resources\Pins\pinBench.png" />
     <None Remove="Resources\Pins\pinBenchGrey.png" />
+    <None Remove="Resources\Pins\pinBlank.png" />
+    <None Remove="Resources\Pins\pinBlankCyan.png" />
+    <None Remove="Resources\Pins\pinBlankGreen.png" />
+    <None Remove="Resources\Pins\pinBlankRed.png" />
     <None Remove="Resources\Pins\pinCharm.png" />
     <None Remove="Resources\Pins\pinCharmGreen.png" />
     <None Remove="Resources\Pins\pinCharmRed.png" />
@@ -225,6 +230,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Resources\GUI\KeyBG.png" />
+    <EmbeddedResource Include="Resources\Pins\pinBlank.png" />
+    <EmbeddedResource Include="Resources\Pins\pinBlankCyan.png" />
+    <EmbeddedResource Include="Resources\Pins\pinBlankGreen.png" />
+    <EmbeddedResource Include="Resources\Pins\pinBlankRed.png" />
     <EmbeddedResource Include="Resources\sortedGroups.json" />
   </ItemGroup>
 
