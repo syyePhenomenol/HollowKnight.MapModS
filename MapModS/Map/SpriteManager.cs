@@ -107,7 +107,7 @@ namespace MapModS.Map
                 case PinBorderColor.Previewed:
                     spriteName += "Green";
                     break;
-                case PinBorderColor.OutOfLogic:
+                case PinBorderColor.Out_of_logic:
                     spriteName += "Red";
                     break;
                 case PinBorderColor.Persistent:

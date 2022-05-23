@@ -13,7 +13,7 @@ namespace MapModS.Map
     {
         Normal,
         Previewed,
-        OutOfLogic,
+        Out_of_logic,
         Persistent
     }
 
@@ -103,7 +103,7 @@ namespace MapModS.Map
             {
                 case PLS.OutOfLogicReachable:
 
-                    pinBorderColor = PBC.OutOfLogic;
+                    pinBorderColor = PBC.Out_of_logic;
 
                     break;
 

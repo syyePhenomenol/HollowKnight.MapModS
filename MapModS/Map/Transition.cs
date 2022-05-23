@@ -56,21 +56,23 @@ namespace MapModS.Map
             return go_extraMapRooms;
         }
 
-        enum RoomState
+        public enum RoomState
         {
-            Default,
+            Normal,
             Current,
             Adjacent,
-            OutOfLogic,
+            Out_of_logic,
+            Selected,
             Debug
         }
 
-        readonly static Dictionary<RoomState, Vector4> roomColor = new()
+        public readonly static Dictionary<RoomState, Vector4> roomColor = new()
         {
-            { RoomState.Default, new(255, 255, 255, 0.3f) }, // white
+            { RoomState.Normal, new(255, 255, 255, 0.3f) }, // white
             { RoomState.Current, new(0, 255, 0, 0.4f) }, // green
             { RoomState.Adjacent, new(0, 255, 255, 0.4f) }, // cyan
-            { RoomState.OutOfLogic, new(255, 0, 0, 0.3f) }, // red
+            { RoomState.Out_of_logic, new(255, 0, 0, 0.3f) }, // red
+            { RoomState.Selected, new(255, 255, 0, 0.7f) }, // yellow
             { RoomState.Debug, new(0, 0, 255, 0.5f) } // blue
         };
 
@@ -175,33 +177,33 @@ namespace MapModS.Map
                     }
 
                     bool active = false;
-                    Vector4 color = roomColor[RoomState.Default];
+                    Vector4 color = roomColor[RoomState.Normal];
 
                     if (isAlt)
                     {
                         if (visitedScenes.Contains(emd.sceneName))
                         {
-                            color = roomColor[RoomState.Default];
+                            color = roomColor[RoomState.Normal];
                             active = true;
                         }
 
                         if (outOfLogicScenes.Contains(emd.sceneName)
                             && !inLogicScenes.Contains(emd.sceneName))
                         {
-                            color = roomColor[RoomState.OutOfLogic];
+                            color = roomColor[RoomState.Out_of_logic];
                         }
                     }
                     else
                     {
                         if (outOfLogicScenes.Contains(emd.sceneName))
                         {
-                            color = roomColor[RoomState.OutOfLogic];
+                            color = roomColor[RoomState.Out_of_logic];
                             active = true;
                         }
 
                         if (inLogicScenes.Contains(emd.sceneName))
                         {
-                            color = roomColor[RoomState.Default];
+                            color = roomColor[RoomState.Normal];
                             active = true;
                         }
                     }
@@ -226,7 +228,12 @@ namespace MapModS.Map
 
                     if (uncheckedReachableScenes.Contains(emd.sceneName))
                     {
+                        emd.highlight = true;
                         color.w = 1f;
+                    }
+                    else
+                    {
+                        emd.highlight = false;
                     }
 
                     if (areaObj.name == "MMS Custom Map Rooms")
@@ -288,6 +295,7 @@ namespace MapModS.Map
             public Color origColor;
             public Color origTransitionColor;
             public string sceneName;
+            public bool highlight;
         }
 
         // Store original color, also store the sceneName for the room object for convenience
@@ -319,8 +327,6 @@ namespace MapModS.Map
             }
         }
 
-        private static readonly Vector4 selectionColor = new(255, 255, 0, 0.8f);
-
         public static void SetSelectedRoomColor(string selectedScene)
         {
             GameObject go_GameMap = GameManager.instance.gameMap;
@@ -333,7 +339,7 @@ namespace MapModS.Map
                 {
                     if (!roomObj.gameObject.activeSelf) continue;
 
-                    Transition.ExtraMapData extra = roomObj.GetComponent<Transition.ExtraMapData>();
+                    ExtraMapData extra = roomObj.GetComponent<ExtraMapData>();
 
                     if (extra == null) continue;
 
@@ -343,7 +349,14 @@ namespace MapModS.Map
 
                         if (extra.sceneName == selectedScene)
                         {
-                            tmp.color = selectionColor;
+                            Vector4 color = roomColor[RoomState.Selected];
+
+                            if (extra.highlight)
+                            {
+                                color.w = 1f;
+                            }
+
+                            tmp.color = color;
                         }
                         else
                         {
@@ -370,7 +383,14 @@ namespace MapModS.Map
 
                     if (extra.sceneName == selectedScene)
                     {
-                        sr.color = selectionColor;
+                        Vector4 color = roomColor[RoomState.Selected];
+
+                        if (extra.highlight)
+                        {
+                            color.w = 1f;
+                        }
+
+                        sr.color = color;
                     }
                     else
                     {
@@ -400,7 +420,7 @@ namespace MapModS.Map
                 {
                     if (!roomObj.gameObject.activeSelf) continue;
 
-                    Transition.ExtraMapData extra = roomObj.GetComponent<Transition.ExtraMapData>();
+                    ExtraMapData extra = roomObj.GetComponent<ExtraMapData>();
 
                     if (extra == null) continue;
 
