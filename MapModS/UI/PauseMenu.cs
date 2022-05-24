@@ -167,7 +167,7 @@ namespace MapModS.UI
 
         public static void Destroy()
         {
-            layout.Destroy();
+            layout?.Destroy();
             layout = null;
         }
 
@@ -442,6 +442,7 @@ namespace MapModS.UI
 
             UpdateAll();
             MapText.UpdateAll();
+            ControlPanel.UpdateAll();
             MapKey.UpdateAll();
         }
 

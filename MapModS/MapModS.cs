@@ -129,9 +129,6 @@ namespace MapModS
 
             // Add a Pause Menu GUI, map text UI and transition helper text
             GUI.Hook();
-
-            // Add keyboard shortcut control
-            InputListener.InstantiateSingleton();
         }
 
         private void Unhook()
@@ -145,7 +142,6 @@ namespace MapModS
             PinsVanilla.Unhook();
             Quill.Unhook();
             GUI.Unhook();
-            InputListener.DestroySingleton();
         }
     }
 }

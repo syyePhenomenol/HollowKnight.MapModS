@@ -15,7 +15,7 @@ namespace MapModS.UI
     {
         private static LayoutRoot layout;
 
-        private static TextObject control;
+        //private static TextObject lookup;
         private static Panel panel;
         private static TextObject panelText;
 
@@ -38,23 +38,15 @@ namespace MapModS.UI
                 layout = new(true, "Lookup");
                 layout.VisibilityCondition = Condition;
 
-                control = new(layout, "Control")
-                {
-                    HorizontalAlignment = HorizontalAlignment.Right,
-                    VerticalAlignment = VerticalAlignment.Top,
-                    TextAlignment = HorizontalAlignment.Right,
-                    Font = MagicUI.Core.UI.TrajanNormal,
-                    FontSize = 14,
-                    Padding = new(10f, 20f, 20f, 10f)
-                };
+                //lookup = UIExtensions.TextFromCenter(layout, "Lookup", true);
 
                 panel = new(layout, GUIController.Instance.Images["LookupBG"].ToSlicedSprite(200f, 100f, 0f, 100f), "Panel")
                 {
                     Borders = new(60f, 40f, 30f, 40f),
                     MinHeight = 200f,
-                    HorizontalAlignment = HorizontalAlignment.Left,
+                    HorizontalAlignment = HorizontalAlignment.Right,
                     VerticalAlignment = VerticalAlignment.Top,
-                    Padding = new(1230f, 170f, 10f, 10f)
+                    Padding = new(10f, 170f, 160f, 10f)
                 };
 
                 panelText = new(layout, "Panel Text")
@@ -69,22 +61,6 @@ namespace MapModS.UI
 
                 panel.Child = panelText;
 
-                layout.ListenForHotkey(KeyCode.L, () =>
-                {
-                    MapModS.LS.ToggleLookup();
-
-                    if (MapModS.LS.lookupOn)
-                    {
-                        UpdateSelectedPin();
-                    }
-                    else
-                    {
-                        WorldMap.CustomPins.ResizePins("None selected");
-                    }
-
-                    UpdateAll();
-                }, ModifierKeys.Ctrl, () => MapModS.LS.ModEnabled);
-
                 selectedLocation = "None selected";
 
                 UpdateAll();
@@ -93,33 +69,15 @@ namespace MapModS.UI
 
         public static void Destroy()
         {
-            layout.Destroy();
+            layout?.Destroy();
             layout = null;
         }
 
         public static void UpdateAll()
         {
-            UpdateControl();
+            //UpdateLookup();
 
             UpdatePanel();
-        }
-
-        public static void UpdateControl()
-        {
-            string text = $"{L.Localize("Toggle lookup")} (Ctrl-L): ";
-
-            if (MapModS.LS.lookupOn)
-            {
-                control.ContentColor = Color.green;
-                text += L.Localize("On");
-            }
-            else
-            {
-                control.ContentColor = Color.white;
-                text += L.Localize("Off");
-            }
-
-            control.Text = text;
         }
 
         public static void UpdatePanel()

@@ -3,12 +3,9 @@ using MagicUI.Elements;
 using MagicUI.Graphics;
 using MapModS.Data;
 using MapModS.Map;
-using MapModS.Settings;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using L = RandomizerMod.Localization;
-using RM = RandomizerMod.RandomizerMod;
 
 namespace MapModS.UI
 {
@@ -16,7 +13,6 @@ namespace MapModS.UI
     {
         private static LayoutRoot layout;
 
-        private static TextObject control;
         private static Panel panel;
         private static StackLayout panelContents;
         private static GridLayout pinKey;
@@ -44,16 +40,6 @@ namespace MapModS.UI
                 layout = new(true, "Map Key");
                 layout.VisibilityCondition = Condition;
 
-                control = new(layout, "Control")
-                {
-                    HorizontalAlignment = HorizontalAlignment.Right,
-                    VerticalAlignment = VerticalAlignment.Top,
-                    TextAlignment = HorizontalAlignment.Right,
-                    Font = MagicUI.Core.UI.TrajanNormal,
-                    FontSize = 14,
-                    Padding = new(10f, 20f, 20f, 10f)
-                };
-
                 panel = new(layout, GUIController.Instance.Images["KeyBG"].ToSlicedSprite(0f, 50f, 100f, 50f), "Panel")
                 {
                     MinHeight = 0f,
@@ -61,13 +47,13 @@ namespace MapModS.UI
                     Borders = new(0f, 10f, 20f, 10f),
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Top,
-                    Padding = new(165f, 170f, 10f, 10f)
+                    Padding = new(160f, 170f, 10f, 10f)
                 };
 
                 panelContents = new(layout, "Panel Contents")
                 {
                     HorizontalAlignment = HorizontalAlignment.Left,
-                    VerticalAlignment = VerticalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Top,
                     Orientation = Orientation.Vertical,
                     Padding = Padding.Zero,
                     Spacing = 5f
@@ -102,8 +88,8 @@ namespace MapModS.UI
                 {
                     Image pin = new Image(layout, SpriteManager.GetSprite(kvp.Value), kvp.Key.ToString() + " Pin")
                     {
-                        Width = 60f,
-                        Height = 60f,
+                        Width = 50f,
+                        Height = 50f,
                         HorizontalAlignment = HorizontalAlignment.Center,
                         VerticalAlignment = VerticalAlignment.Center
                     }.WithProp(GridLayout.Column, 0).WithProp(GridLayout.Row, counter);
@@ -155,12 +141,12 @@ namespace MapModS.UI
 
                     Image room = new Image(layout, roomCopy, kvp.Key.ToString() + " Room")
                     {
-                        Width = 50f,
-                        Height = 50f,
+                        Width = 40f,
+                        Height = 40f,
                         Tint = kvp.Value,
                         HorizontalAlignment = HorizontalAlignment.Right,
                         VerticalAlignment = VerticalAlignment.Center,
-                        Padding = new(0f, 5f, 10f, 5f),
+                        Padding = new(0f, 5f, 18f, 5f),
                     }.WithProp(GridLayout.Column, 0).WithProp(GridLayout.Row, counter);
 
                     TextObject text = new TextObject(layout, kvp.Key.ToString() + " Text")
@@ -179,12 +165,12 @@ namespace MapModS.UI
 
                 Image roomHighlight = new Image(layout, roomCopy, "Highlighted Room")
                 {
-                    Width = 50f,
-                    Height = 50f,
+                    Width = 40f,
+                    Height = 40f,
                     Tint = new(255, 255, 255, 1f),
                     HorizontalAlignment = HorizontalAlignment.Right,
                     VerticalAlignment = VerticalAlignment.Center,
-                    Padding = new(0f, 5f, 10f, 5f),
+                    Padding = new(0f, 5f, 18f, 5f),
                 }.WithProp(GridLayout.Column, 0).WithProp(GridLayout.Row, counter);
 
                 TextObject textHighlight = new TextObject(layout, "Highlighted Text")
@@ -198,49 +184,19 @@ namespace MapModS.UI
                 roomKey.Children.Add(roomHighlight);
                 roomKey.Children.Add(textHighlight);
 
-                layout.ListenForHotkey(KeyCode.K, () =>
-                {
-                    MapModS.LS.ToggleMapKey();
-                    UpdateAll();
-                }, ModifierKeys.Ctrl, () => MapModS.LS.ModEnabled);
-
                 UpdateAll();
             }
         }
 
         public static void Destroy()
         {
-            layout.Destroy();
+            layout?.Destroy();
             layout = null;
         }
 
         public static void UpdateAll()
         {
-            UpdateControl();
             UpdatePanel();
-        }
-
-        public static void UpdateControl()
-        {
-            string text = $"\n{L.Localize("Toggle map key")} (Ctrl-K): ";
-
-            if (TransitionData.TransitionModeActive())
-            {
-                text = "\n\n\n\n" + text;
-            }
-
-            if (MapModS.LS.mapKeyOn)
-            {
-                control.ContentColor = Color.green;
-                text += L.Localize("On");
-            }
-            else
-            {
-                control.ContentColor = Color.white;
-                text += L.Localize("Off");
-            }
-
-            control.Text = text;
         }
 
         public static void UpdatePanel()

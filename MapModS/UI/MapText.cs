@@ -63,7 +63,7 @@ namespace MapModS.UI
 
         public static void Destroy()
         {
-            layout.Destroy();
+            layout?.Destroy();
             layout = null;
         }
 

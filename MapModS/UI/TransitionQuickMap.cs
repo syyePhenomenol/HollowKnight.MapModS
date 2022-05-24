@@ -25,15 +25,7 @@ namespace MapModS.UI
                 layout = new(true, "Transition Quick Map");
                 layout.VisibilityCondition = Condition;
 
-                uncheckedText = new(layout, "Unchecked")
-                {
-                    HorizontalAlignment = HorizontalAlignment.Right,
-                    VerticalAlignment = VerticalAlignment.Top,
-                    TextAlignment = HorizontalAlignment.Right,
-                    Font = MagicUI.Core.UI.TrajanNormal,
-                    FontSize = 14,
-                    Padding = new(10f, 20f, 20f, 10f)
-                };
+                uncheckedText = UIExtensions.TextFromEdge(layout, "Unchecked", true);
 
                 UpdateAll();
             }
@@ -41,7 +33,7 @@ namespace MapModS.UI
 
         public static void Destroy()
         {
-            layout.Destroy();
+            layout?.Destroy();
             layout = null;
         }
 

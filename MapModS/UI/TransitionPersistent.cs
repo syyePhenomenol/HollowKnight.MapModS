@@ -46,41 +46,7 @@ namespace MapModS.UI
                 layout = new(true, "Transition Persistent");
                 layout.VisibilityCondition = Condition;
 
-                route = new(layout, "Route")
-                {
-                    HorizontalAlignment = HorizontalAlignment.Left,
-                    VerticalAlignment = VerticalAlignment.Top,
-                    Font = MagicUI.Core.UI.TrajanNormal,
-                    FontSize = 14,
-                    Padding = new(20f, 20f, 10f, 10f)
-                };
-
-                layout.ListenForHotkey(KeyCode.B, () =>
-                {
-                    MapModS.GS.ToggleAllowBenchWarp();
-                    rejectedTransitionPairs = new();
-                    UpdateAll();
-                    TransitionWorldMap.UpdateAll();
-                }, ModifierKeys.Ctrl, () => MapModS.LS.ModEnabled);
-
-                layout.ListenForHotkey(KeyCode.U, () =>
-                {
-                    MapModS.GS.ToggleUncheckedPanel();
-                    TransitionWorldMap.UpdateAll();
-                }, ModifierKeys.Ctrl, () => MapModS.LS.ModEnabled);
-
-                layout.ListenForHotkey(KeyCode.R, () =>
-                {
-                    MapModS.GS.ToggleRouteTextInGame();
-                    UpdateAll();
-                    TransitionWorldMap.UpdateAll();
-                }, ModifierKeys.Ctrl, () => MapModS.LS.ModEnabled);
-
-                layout.ListenForHotkey(KeyCode.C, () =>
-                {
-                    MapModS.GS.ToggleRouteCompassEnabled();
-                    TransitionWorldMap.UpdateAll();
-                }, ModifierKeys.Ctrl, () => MapModS.LS.ModEnabled);
+                route = UIExtensions.TextFromEdge(layout, "Route", false);
 
                 UpdateAll();
             }
@@ -90,7 +56,7 @@ namespace MapModS.UI
 
         public static void Destroy()
         {
-            layout.Destroy();
+            layout?.Destroy();
             layout = null;
 
             lastStartScene = "";
@@ -110,6 +76,11 @@ namespace MapModS.UI
         public static void UpdateRoute()
         {
             string text = "\n";
+
+            if (GUI.worldMapOpen)
+            {
+                text += "\n";
+            }
 
             if (selectedRoute.Any())
             {

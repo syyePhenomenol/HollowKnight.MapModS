@@ -61,6 +61,7 @@ namespace MapModS.UI
 
             PauseMenu.Destroy();
             MapText.Destroy();
+            ControlPanel.Destroy();
             MapKey.Destroy();
             LookupText.Destroy();
             TransitionPersistent.Destroy();
@@ -81,6 +82,7 @@ namespace MapModS.UI
 
             PauseMenu.Build();
             MapText.Build();
+            ControlPanel.Build();
             MapKey.Build();
             LookupText.Build();
             TransitionPersistent.Build();

@@ -5,6 +5,7 @@ using MapModS.Data;
 using MapModS.Settings;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using L = RandomizerMod.Localization;
 using TP = MapModS.UI.TransitionPersistent;
 
@@ -15,7 +16,8 @@ namespace MapModS.UI
         private static LayoutRoot layout;
 
         private static TextObject instruction;
-        private static TextObject control;
+        private static TextObject routeSummary;
+
         private static Panel panel;
         private static TextObject panelText;
 
@@ -33,34 +35,18 @@ namespace MapModS.UI
                 layout = new(true, "Transition World Map");
                 layout.VisibilityCondition = Condition;
 
-                instruction = new(layout, "Instructions")
-                {
-                    HorizontalAlignment = HorizontalAlignment.Left,
-                    VerticalAlignment = VerticalAlignment.Top,
-                    TextAlignment = HorizontalAlignment.Left,
-                    Font = MagicUI.Core.UI.TrajanNormal,
-                    FontSize = 14,
-                    Padding = new(20f, 20f, 10f, 10f)
-                };
+                instruction = UIExtensions.TextFromEdge(layout, "Instructions", false);
 
-                control = new(layout, "Control")
-                {
-                    HorizontalAlignment = HorizontalAlignment.Right,
-                    VerticalAlignment = VerticalAlignment.Top,
-                    TextAlignment = HorizontalAlignment.Right,
-                    Font = MagicUI.Core.UI.TrajanNormal,
-                    FontSize = 14,
-                    Padding = new(10f, 20f, 20f, 10f)
-                };
+                routeSummary = UIExtensions.TextFromEdge(layout, "Route Summary", true);
 
                 panel = new(layout, GUIController.Instance.Images["UncheckedBG"].ToSlicedSprite(100f, 50f, 0f, 50f), "Panel")
                 {
                     Borders = new(30f, 30f, 30f, 30f),
                     MinWidth = 400f,
                     MinHeight = 100f,
-                    HorizontalAlignment = HorizontalAlignment.Left,
+                    HorizontalAlignment = HorizontalAlignment.Right,
                     VerticalAlignment = VerticalAlignment.Top,
-                    Padding = new(1380f, 170f, 10f, 10f)
+                    Padding = new(10f, 170f, 160f, 10f)
                 };
 
                 panelText = new(layout, "Panel Text")
@@ -79,14 +65,14 @@ namespace MapModS.UI
 
         public static void Destroy()
         {
-            layout.Destroy();
+            layout?.Destroy();
             layout = null;
         }
 
         public static void UpdateAll()
         {
             UpdateInstructions();
-            UpdateControl();
+            UpdateRouteSummary();
             UpdatePanel();
         }
 
@@ -119,7 +105,7 @@ namespace MapModS.UI
             instruction.Text = text;
         }
 
-        public static void UpdateControl()
+        public static void UpdateRouteSummary()
         {
             string text = $"{L.Localize("Current route")}: ";
 
@@ -129,66 +115,15 @@ namespace MapModS.UI
                 && TP.lastFinalTransition != ""
                 && TP.selectedRoute.Any())
             {
-                text += $"{TP.lastStartTransition} ->...-> {TP.lastFinalTransition}      ";
-                text += $"{L.Localize("Transitions")}: {TP.selectedRoute.Count()}";
+                text += $"{TP.lastStartTransition} ->...-> {TP.lastFinalTransition}";
+                text += $"\n\n{L.Localize("Transitions")}: {TP.selectedRoute.Count()}";
             }
             else
             {
                 text += L.Localize("None");
             }
 
-            if (Dependencies.HasDependency("Benchwarp"))
-            {
-                text += $"\n{L.Localize("Include benchwarp")} (Ctrl-B): ";
-
-                if (MapModS.GS.allowBenchWarpSearch)
-                {
-                    text += L.Localize("On");
-                }
-                else
-                {
-                    text += L.Localize("Off");
-                }
-            }
-
-            text += $"\n{L.Localize("Show unchecked/visited")} (Ctrl-U): ";
-
-            if (MapModS.GS.uncheckedPanelActive)
-            {
-                text += L.Localize("On");
-            }
-            else
-            {
-                text += L.Localize("Off");
-            }
-
-            text += $"\n{L.Localize("Show route in-game")} (Ctrl-R): ";
-
-            switch (MapModS.GS.routeTextInGame)
-            {
-                case RouteTextInGame.Hide:
-                    text += L.Localize("Off");
-                    break;
-                case RouteTextInGame.Show:
-                    text += L.Localize("Full");
-                    break;
-                case RouteTextInGame.ShowNextTransitionOnly:
-                    text += L.Localize("Next Transition Only");
-                    break;
-            }
-
-            text += $"\n{L.Localize("Show route compass")} (Ctrl-C): ";
-
-            if (MapModS.GS.routeCompassEnabled)
-            {
-                text += L.Localize("On");
-            }
-            else
-            {
-                text += L.Localize("Off");
-            }
-
-            control.Text = text;
+            routeSummary.Text = text;
         }
 
         public static void UpdatePanel()
