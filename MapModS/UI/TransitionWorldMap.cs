@@ -2,10 +2,8 @@
 using MagicUI.Elements;
 using MagicUI.Graphics;
 using MapModS.Data;
-using MapModS.Settings;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 using L = RandomizerMod.Localization;
 using TP = MapModS.UI.TransitionPersistent;
 
@@ -39,7 +37,7 @@ namespace MapModS.UI
 
                 routeSummary = UIExtensions.TextFromEdge(layout, "Route Summary", true);
 
-                panel = new(layout, GUIController.Instance.Images["UncheckedBG"].ToSlicedSprite(100f, 50f, 0f, 50f), "Panel")
+                panel = new(layout, GUIController.Instance.Images["panelRight"].ToSlicedSprite(100f, 50f, 0f, 50f), "Panel")
                 {
                     Borders = new(30f, 30f, 30f, 30f),
                     MinWidth = 400f,

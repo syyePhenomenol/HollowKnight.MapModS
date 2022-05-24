@@ -4,10 +4,8 @@ using MagicUI.Graphics;
 using MapModS.Data;
 using MapModS.Map;
 using MapModS.Settings;
-using System.Linq;
 using UnityEngine;
 using L = RandomizerMod.Localization;
-using RM = RandomizerMod.RandomizerMod;
 
 namespace MapModS.UI
 {
@@ -29,7 +27,9 @@ namespace MapModS.UI
 
         public static bool Condition()
         {
-            return MapModS.LS.ModEnabled && GUI.worldMapOpen;
+            return MapModS.LS.ModEnabled
+                && GUI.worldMapOpen
+                && !GUI.lockToggleEnable;
         }
 
         public static void Build()
@@ -39,7 +39,7 @@ namespace MapModS.UI
                 layout = new(true, "Control Panel");
                 layout.VisibilityCondition = Condition;
 
-                panel = new(layout, GUIController.Instance.Images["KeyBG"].ToSlicedSprite(0f, 50f, 100f, 50f), "Panel")
+                panel = new(layout, GUIController.Instance.Images["panelLeft"].ToSlicedSprite(0f, 50f, 100f, 50f), "Panel")
                 {
                     MinWidth = 0f,
                     MinHeight = 0f,
@@ -152,7 +152,7 @@ namespace MapModS.UI
 
         public static void UpdateAll()
         {
-            UpdatePanel();
+            UpdateControl();
             UpdateMapKey();
             UpdateLookup();
             UpdateBenchwarp();
@@ -162,7 +162,6 @@ namespace MapModS.UI
 
             if (MapModS.LS.controlPanelOn)
             {
-                //layout.GetElement("Panel Background").Visibility = Visibility.Visible;
                 mapKey.Visibility = Visibility.Visible;
                 lookup.Visibility = Visibility.Visible;
 
@@ -183,7 +182,6 @@ namespace MapModS.UI
             }
             else
             {
-                //layout.GetElement("Panel Background").Visibility = Visibility.Hidden;
                 mapKey.Visibility = Visibility.Collapsed;
                 lookup.Visibility = Visibility.Collapsed;
                 benchwarp.Visibility = Visibility.Collapsed;
@@ -193,30 +191,15 @@ namespace MapModS.UI
             }
         }
 
-        public static void UpdatePanel()
+        public static void UpdateControl()
         {
             if (MapModS.LS.controlPanelOn)
             {
-                //panel.Visibility = Visibility.Visible;
-
-                //if (TransitionData.TransitionModeActive())
-                //{
-                //    panel.MinWidth = 450f;
-                //    panel.MinHeight = 130f;
-                //}
-                //else
-                //{
-                //    panel.MinWidth = 450f;
-                //    panel.MinHeight = 50f;
-                //}
-
                 control.Text = "Ctrl-H: Hide hotkeys";
             }
             else
             {
-                //panel.Visibility = Visibility.Hidden;
-
-                control.Text = "Ctrl-H: Show hotkeys";
+                control.Text = "Ctrl-H: More hotkeys";
             }
         }
 

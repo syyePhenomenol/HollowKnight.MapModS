@@ -5,7 +5,6 @@ using MapModS.Data;
 using MapModS.Map;
 using System.Collections.Generic;
 using UnityEngine;
-using L = RandomizerMod.Localization;
 
 namespace MapModS.UI
 {
@@ -40,11 +39,11 @@ namespace MapModS.UI
                 layout = new(true, "Map Key");
                 layout.VisibilityCondition = Condition;
 
-                panel = new(layout, GUIController.Instance.Images["KeyBG"].ToSlicedSprite(0f, 50f, 100f, 50f), "Panel")
+                panel = new(layout, GUIController.Instance.Images["panelLeft"].ToSlicedSprite(0f, 50f, 100f, 50f), "Panel")
                 {
                     MinHeight = 0f,
                     MinWidth = 0f,
-                    Borders = new(0f, 10f, 20f, 10f),
+                    Borders = new(0f, 20f, 20f, 20f),
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Top,
                     Padding = new(160f, 170f, 10f, 10f)
@@ -146,7 +145,7 @@ namespace MapModS.UI
                         Tint = kvp.Value,
                         HorizontalAlignment = HorizontalAlignment.Right,
                         VerticalAlignment = VerticalAlignment.Center,
-                        Padding = new(0f, 5f, 18f, 5f),
+                        Padding = new(0f, 5f, 17f, 5f),
                     }.WithProp(GridLayout.Column, 0).WithProp(GridLayout.Row, counter);
 
                     TextObject text = new TextObject(layout, kvp.Key.ToString() + " Text")
@@ -170,7 +169,7 @@ namespace MapModS.UI
                     Tint = new(255, 255, 255, 1f),
                     HorizontalAlignment = HorizontalAlignment.Right,
                     VerticalAlignment = VerticalAlignment.Center,
-                    Padding = new(0f, 5f, 18f, 5f),
+                    Padding = new(0f, 5f, 17f, 5f),
                 }.WithProp(GridLayout.Column, 0).WithProp(GridLayout.Row, counter);
 
                 TextObject textHighlight = new TextObject(layout, "Highlighted Text")

@@ -55,10 +55,9 @@
     <None Remove="Resources\GUI\ButtonRect.png" />
     <None Remove="Resources\GUI\ButtonRectEmpty.png" />
     <None Remove="Resources\GUI\ButtonsMenuBG.png" />
-    <None Remove="Resources\GUI\KeyBG.png" />
-    <None Remove="Resources\GUI\LookupBG.png" />
+    <None Remove="Resources\GUI\panelLeft.png" />
+    <None Remove="Resources\GUI\panelRight.png" />
     <None Remove="Resources\GUI\StatusPanelBG.png" />
-    <None Remove="Resources\GUI\UncheckedBG.png" />
     <None Remove="Resources\language.json" />
     <None Remove="Resources\mapRoomsold.json" />
     <None Remove="Resources\minimalMapRooms.json" />
@@ -230,7 +229,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\GUI\KeyBG.png" />
+    <EmbeddedResource Include="Resources\GUI\panelLeft.png" />
     <EmbeddedResource Include="Resources\Pins\pinBlank.png" />
     <EmbeddedResource Include="Resources\Pins\pinBlankCyan.png" />
     <EmbeddedResource Include="Resources\Pins\pinBlankGreen.png" />
@@ -240,8 +239,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\GUI\arrow.png" />
-    <EmbeddedResource Include="Resources\GUI\UncheckedBG.png" />
-    <EmbeddedResource Include="Resources\GUI\LookupBG.png" />
+    <EmbeddedResource Include="Resources\GUI\panelRight.png" />
     <EmbeddedResource Include="Resources\minimalMapRooms.json" />
     <EmbeddedResource Include="Resources\nonMappedRooms.json" />
     <EmbeddedResource Include="Resources\pins.json" />

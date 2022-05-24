@@ -5,7 +5,6 @@ using MapModS.Data;
 using MapModS.Map;
 using MapModS.Settings;
 using System.Linq;
-using UnityEngine;
 using L = RandomizerMod.Localization;
 using RM = RandomizerMod.RandomizerMod;
 
@@ -15,7 +14,6 @@ namespace MapModS.UI
     {
         private static LayoutRoot layout;
 
-        //private static TextObject lookup;
         private static Panel panel;
         private static TextObject panelText;
 
@@ -38,12 +36,11 @@ namespace MapModS.UI
                 layout = new(true, "Lookup");
                 layout.VisibilityCondition = Condition;
 
-                //lookup = UIExtensions.TextFromCenter(layout, "Lookup", true);
-
-                panel = new(layout, GUIController.Instance.Images["LookupBG"].ToSlicedSprite(200f, 100f, 0f, 100f), "Panel")
+                panel = new(layout, GUIController.Instance.Images["panelRight"].ToSlicedSprite(100f, 50f, 0f, 50f), "Panel")
                 {
-                    Borders = new(60f, 40f, 30f, 40f),
-                    MinHeight = 200f,
+                    Borders = new(30f, 30f, 30f, 30f),
+                    MinWidth = 400f,
+                    MinHeight = 100f,
                     HorizontalAlignment = HorizontalAlignment.Right,
                     VerticalAlignment = VerticalAlignment.Top,
                     Padding = new(10f, 170f, 160f, 10f)
@@ -75,8 +72,6 @@ namespace MapModS.UI
 
         public static void UpdateAll()
         {
-            //UpdateLookup();
-
             UpdatePanel();
         }
 
