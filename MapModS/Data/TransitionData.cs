@@ -26,15 +26,6 @@ namespace MapModS.Data
                 || (RM.RS.Context.transitionPlacements != null && RM.RS.Context.transitionPlacements.Any());
         }
 
-        // Generically speaking, this is for any save that has a combination of randomized/vanilla transitions
-        public static bool IsAreaRando()
-        {
-            return RM.RS.GenerationSettings.TransitionSettings.Mode == TM.MapAreaRandomizer
-                || RM.RS.GenerationSettings.TransitionSettings.Mode == TM.FullAreaRandomizer
-                || (RM.RS.GenerationSettings.TransitionSettings.Mode == TM.None
-                    && RM.RS.Context.transitionPlacements != null && RM.RS.Context.transitionPlacements.Any());
-        }
-
         public static bool TransitionModeActive()
         {
             return MapModS.LS.ModEnabled

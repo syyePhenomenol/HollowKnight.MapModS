@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using RD = RandomizerMod.RandomizerData;
+using RD = RandomizerMod.RandomizerData.Data;
 using RM = RandomizerMod.RandomizerMod;
 
 namespace MapModS.Data
@@ -158,7 +158,7 @@ namespace MapModS.Data
         {
             if (transition == "Warp Start")
             {
-                return RD.Data.GetStartDef(RM.RS.GenerationSettings.StartLocationSettings.StartLocation).SceneName;
+                return RD.GetStartDef(RM.RS.GenerationSettings.StartLocationSettings.StartLocation).SceneName;
             }
 
             if (benchWarpTransitions.ContainsKey(transition))
@@ -195,7 +195,7 @@ namespace MapModS.Data
         {
             if (source == "Warp Start")
             {
-                return RD.Data.GetStartDef(RM.RS.GenerationSettings.StartLocationSettings.StartLocation).Transition;
+                return RD.GetStartDef(RM.RS.GenerationSettings.StartLocationSettings.StartLocation).Transition;
             }
 
             // Some top transitions don't have an adjacent transition

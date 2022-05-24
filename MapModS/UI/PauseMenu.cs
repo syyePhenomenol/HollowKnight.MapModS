@@ -438,7 +438,7 @@ namespace MapModS.UI
                 Transition.ResetMapColors(GameManager.instance.gameMap);
             }
 
-            MapModS.LS.ToggleFullMap();
+            MapModS.LS.ToggleMapMode();
 
             UpdateAll();
             MapText.UpdateAll();

@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using RM = RandomizerMod.RandomizerMod;
+using TM = RandomizerMod.Settings.TransitionSettings.TransitionMode;
 
 namespace MapModS.Settings
 {
@@ -76,7 +78,7 @@ namespace MapModS.Settings
             ModEnabled = !ModEnabled;
         }
 
-        public void ToggleFullMap()
+        public void ToggleMapMode()
         {
             switch (mapMode)
             {
@@ -93,7 +95,7 @@ namespace MapModS.Settings
                     break;
 
                 case MapMode.TransitionRando:
-                    if (TransitionData.IsAreaRando())
+                    if (RM.RS.GenerationSettings.TransitionSettings.Mode != TM.RoomRandomizer)
                     {
                         mapMode = MapMode.TransitionRandoAlt;
                     }
