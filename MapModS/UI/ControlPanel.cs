@@ -81,7 +81,7 @@ namespace MapModS.UI
 
                 layout.ListenForHotkey(KeyCode.H, () =>
                 {
-                    MapModS.LS.ToggleControlPanel();
+                    MapModS.GS.ToggleControlPanel();
                     UpdateAll();
                 }, ModifierKeys.Ctrl, () => MapModS.LS.ModEnabled);
 
@@ -160,7 +160,7 @@ namespace MapModS.UI
             UpdateRouteInGame();
             UpdateCompass();
 
-            if (MapModS.LS.controlPanelOn)
+            if (MapModS.GS.controlPanelOn)
             {
                 mapKey.Visibility = Visibility.Visible;
                 lookup.Visibility = Visibility.Visible;
@@ -193,7 +193,7 @@ namespace MapModS.UI
 
         public static void UpdateControl()
         {
-            if (MapModS.LS.controlPanelOn)
+            if (MapModS.GS.controlPanelOn)
             {
                 control.Text = "Ctrl-H: Hide hotkeys";
             }

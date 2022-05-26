@@ -55,8 +55,6 @@ namespace MapModS.Settings
 
         public MapMode mapMode = MapMode.FullMap;
 
-        public bool controlPanelOn = true;
-
         public bool lookupOn = false;
 
         public bool mapKeyOn = false;
@@ -109,11 +107,6 @@ namespace MapModS.Settings
                     mapMode = MapMode.FullMap;
                     break;
             }
-        }
-
-        public void ToggleControlPanel()
-        {
-            controlPanelOn = !controlPanelOn;
         }
 
         public void ToggleMapKey()
