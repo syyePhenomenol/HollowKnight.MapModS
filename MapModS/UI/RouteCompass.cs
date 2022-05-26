@@ -109,8 +109,7 @@ namespace MapModS.UI
                         gate = TransitionData.GetTransitionDoor(transition);
                     }
                 }
-                else if ((PD.stagTransitions.ContainsKey(transition)
-                        || PD.tramTransitions.ContainsKey(transition))
+                else if ((transition.IsStagTransition() || transition.IsTramTransition())
                     && doorsByScene.ContainsKey(Utils.CurrentScene()))
                 {
                     gate = doorsByScene[Utils.CurrentScene()];

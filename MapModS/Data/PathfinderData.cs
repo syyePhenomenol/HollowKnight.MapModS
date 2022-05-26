@@ -1,6 +1,7 @@
-﻿using System;
+﻿using RandomizerCore.Logic;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using RD = RandomizerMod.RandomizerData.Data;
 using RM = RandomizerMod.RandomizerMod;
 
@@ -8,17 +9,15 @@ namespace MapModS.Data
 {
     public static class PathfinderData
     {
-        public static readonly Dictionary<string, string> transitionTermFixes = new()
+        // Waterways_02: from bench to top3, need to check if floor is broken
+        // also need to fix all the logic for each transition from the bench
+        // Ruins1_31: from left to right side (Ruins1_31), need to check if wall is broken
+
+        public static readonly Dictionary<string, string> conditionalTerms = new()
         {
             { "Ruins1_31[left3]", "ELEGANT" },
-            { "Ruins2_11_b[left1]", "LOVE" }
-        };
-
-        public static readonly Dictionary<string, string> waypointFixes = new()
-        {
+            { "Ruins2_11_b[left1]", "LOVE" },
             { "Abyss_01[left1]", "Opened_Dung_Defender_Wall" },
-            //{ "Crossroads_09[left1]", "Defeated_Brooding_Mawlek" },
-            //{ "Crossroads_09[right1]", "Defeated_Brooding_Mawlek" },
             { "Crossroads_33[left1]", "Opened_Mawlek_Wall" },
             { "Crossroads_33[right1]", "Opened_Shaman_Pillar" },
             { "Deepnest_East_03[left2]", "Opened_Lower_Kingdom's_Edge_Wall" },
@@ -53,147 +52,24 @@ namespace MapModS.Data
             { "SWIM" },
         };
 
-        // Pair of bench warp instruction + logically equivalent transition
-        public static Dictionary<string, string> benchWarpTransitions = new()
+        public static string GetScene(this string transition)
         {
-            { "Warp Dirtmouth", "Town[bot1]" },
-            { "Warp Mato", "Room_nailmaster[left1]" },
-            { "Warp Crossroads Hot Springs", "Crossroads_30[left1]" },
-            { "Warp Crossroads Stag", "Crossroads_47[right1]" },
-            { "Warp Salubra", "Crossroads_04[door_charmshop]" },
-            { "Warp Ancestral Mound", "Crossroads_ShamanTemple[left1]" },
-            { "Warp Black Egg Temple", "Room_temple[left1]" },
-            { "Warp Waterfall", "Fungus1_01b[left1]" },
-            { "Warp Stone Sanctuary", "Fungus1_37[left1]" },
-            { "Warp Greenpath Toll", "Fungus1_31[top1]" },
-            { "Warp Greenpath Stag", "Fungus1_16_alt[right1]" },
-            { "Warp Lake of Unn", "Room_Slug_Shrine[left1]" },
-            { "Warp Sheo", "Fungus1_15[door1]" },
-            { "Warp Archives", "Fungus3_archive[left1]" },
-            { "Warp Queens Station", "Fungus2_02[right1]" },
-            { "Warp Leg Eater", "Fungus2_26[left1]" },
-            { "Warp Bretta", "Fungus2_13[left2]" },
-            { "Warp Mantis Village", "Fungus2_31[left1]" },
-            { "Warp Quirrel", "Ruins1_02[top1]" },
-            { "Warp City Toll", "Ruins1_31[left1]" },
-            { "Warp City Storerooms", "Ruins1_29[left1]" },
-            { "Warp Watcher's Spire", "Ruins1_18[right2]" },
-            { "Warp King's Station", "Ruins2_08[left1]" },
-            { "Warp Pleasure House", "Ruins_Bathhouse[door1]" },
-            // Special waypoint needed
-            { "Warp Waterways", "Waterways_02[top1]" },
-            { "Warp Deepnest Hot Springs", "Deepnest_30[left1]" },
-            { "Warp Failed Tramway", "Deepnest_14[left1]" },
-            { "Warp Beast's Den", "Deepnest_Spider_Town[left1]" },
-            { "Warp Ancient Basin Toll", "Abyss_18[right1]" },
-            { "Warp Hidden Station", "Abyss_22[left1]" },
-            { "Warp Oro", "Deepnest_East_06[door1]" },
-            { "Warp Kingdom's Edge Camp", "Deepnest_East_13[bot1]" },
-            // Manually check transitions from this bench
-            { "Warp Colosseum", "Room_Colosseum_02[top1]" },
-            { "Warp Hive", "Hive_01[right2]" },
-            { "Warp Crystal Peak Dark Room", "Mines_29[left1]" },
-            { "Warp Crystal Guardian", "Mines_18[left1]" },
-            { "Warp Resting Grounds Stag", "RestingGrounds_09[left1]" },
-            { "Warp Grey Mourner", "RestingGrounds_12[door_Mansion]" },
-            { "Warp Queen's Gardens Cornifer", "Fungus1_24[left1]" },
-            { "Warp Queen's Gardens Toll", "Fungus3_50[right1]" },
-            { "Warp Queen's Gardens Stag", "Fungus3_40[right1]" },
-            // Special waypoint needed
-            { "Warp White Palace Entrance", "White_Palace_01[left1]" },
-            // Special waypoint needed
-            { "Warp White Palace Atrium", "White_Palace_03_hub[right1]" },
-            // Manually check transitions from this bench
-            { "Warp White Palace Balcony", "White_Palace_06[top1]" },
-            { "Warp Upper Tram -> Exit Left", "Crossroads_46[left1]" },
-            { "Warp Upper Tram -> Exit Right", "Crossroads_46b[right1]" },
-            { "Warp Lower Tram -> Exit Left", "Abyss_03_b[left1]" },
-            { "Warp Lower Tram -> Exit Middle", "Abyss_03[top1]" },
-            { "Warp Lower Tram -> Exit Right", "Abyss_03_c[right1]" }
-        };
-
-        public static Dictionary<string, Tuple<string, string>> stagTransitions = new()
-        {
-            { "Stag Dirtmouth", new("Dirtmouth_Stag", "Room_Town_Stag_Station[left1]") },
-            { "Stag Crossroads", new("Crossroads_Stag", "Crossroads_47[right1]") },
-            { "Stag Greenpath", new("Greenpath_Stag", "Fungus1_16_alt[right1]") },
-            { "Stag Queen's Station", new("Queen's_Station_Stag", "Fungus2_02[right1]") },
-            { "Stag Distant Village", new("Distant_Village_Stag", "Deepnest_09[left1]") },
-            { "Stag Hidden Station", new("Hidden_Station_Stag", "Abyss_22[left1]") },
-            { "Stag City Storerooms", new("City_Storerooms_Stag", "Ruins1_29[left1]") },
-            { "Stag King's Station", new("King's_Station_Stag", "Ruins2_08[left1]") },
-            { "Stag Resting Grounds", new("Resting_Grounds_Stag", "RestingGrounds_09[left1]") },
-            { "Stag Queen's Gardens", new("Queen's_Gardens_Stag", "Fungus3_40[right1]") },
-            { "Stag Stag Nest", new("Stag_Nest_Stag", "Cliffs_03[right1]") }
-        };
-
-        // Tuple is (waypoint requirement, scene requirement, adjacent transition)
-        public static Dictionary<string, Tuple<string, string, string>> elevatorTransitions = new()
-        {
-            { "Left Elevator Up", new("Left_Elevator", "Crossroads_49b", "Crossroads_49[right1]") },
-            { "Left Elevator Down", new("Left_Elevator", "Crossroads_49", "Crossroads_49b[right1]") },
-            { "Right Elevator Up", new("Right_Elevator", "Ruins2_10b", "Ruins2_10[left1]") },
-            { "Right Elevator Down", new("Right_Elevator", "Ruins2_10", "Ruins2_10b[right2]") }
-        };
-
-        public static Dictionary<string, Tuple<string, string>> tramTransitions = new()
-        {
-            { "Upper Tram -> Exit Left", new("Upper_Tram", "Crossroads_46[left1]") },
-            { "Upper Tram -> Exit Right", new("Upper_Tram", "Crossroads_46b[right1]") },
-            { "Lower Tram -> Exit Left", new("Lower_Tram", "Abyss_03_b[left1]") },
-            { "Lower Tram -> Exit Middle", new("Lower_Tram", "Abyss_03[top1]") },
-            { "Lower Tram -> Exit Right", new("Lower_Tram", "Abyss_03_c[right1]") }
-        };
-
-        public static Dictionary<string, Tuple<string, string>> normalWarpTransitions = new()
-        {
-            { "Abyss_08[warp]", new("Warp-Lifeblood_Core_to_Abyss", "Abyss_06_Core[left1]") },
-            { "Abyss_05[warp]", new("Warp-Palace_Grounds_to_White_Palace", "White_Palace_11[door2]") },
-            { "White_Palace_11[warp]", new("Warp-White_Palace_Entrance_to_Palace_Grounds", "Abyss_05[left1]") },
-            { "White_Palace_03_hub[warp]", new("Warp-White_Palace_Atrium_to_Palace_Grounds", "Abyss_05[left1]") },
-            { "White_Palace_20[warp]", new("Warp-Path_of_Pain_Complete", "White_Palace_06[bot1]") }
-        };
-
-        public static string GetScene(string transition)
-        {
-            if (transition == "Warp Start")
+            if (transition == "Warp_Start")
             {
                 return RD.GetStartDef(RM.RS.GenerationSettings.StartLocationSettings.StartLocation).SceneName;
             }
 
-            if (benchWarpTransitions.ContainsKey(transition))
+            if (transition.IsSpecialTransition())
             {
-                return GetScene(benchWarpTransitions[transition]);
-            }
-
-            // Handle in a special way
-            if (stagTransitions.ContainsKey(transition))
-            {
-                return null;
-            }
-
-            if (elevatorTransitions.ContainsKey(transition))
-            {
-                return elevatorTransitions[transition].Item2;
-            }
-
-            // Handle in a special way
-            if (tramTransitions.ContainsKey(transition))
-            {
-                return null;
-            }
-
-            if (normalWarpTransitions.ContainsKey(transition))
-            {
-                return transition.Substring(0, transition.Length - 6);
+                return specialTransitions[transition].GetScene();
             }
 
             return TransitionData.GetTransitionScene(transition);
         }
 
-        public static string GetAdjacentTransition(string source)
+        public static string GetAdjacentTransition(this string source)
         {
-            if (source == "Warp Start")
+            if (source == "Warp_Start")
             {
                 return RD.GetStartDef(RM.RS.GenerationSettings.StartLocationSettings.StartLocation).Transition;
             }
@@ -204,59 +80,103 @@ namespace MapModS.Data
                 return TransitionData.GetAdjacentTransition(source);
             }
 
-            if (benchWarpTransitions.ContainsKey(source))
+            if (source.IsSpecialTransition())
             {
-                return benchWarpTransitions[source];
-            }
-
-            if (stagTransitions.ContainsKey(source))
-            {
-                return stagTransitions[source].Item2;
-            }
-
-            if (elevatorTransitions.ContainsKey(source))
-            {
-                return elevatorTransitions[source].Item3;
-            }
-
-            if (tramTransitions.ContainsKey(source))
-            {
-                return tramTransitions[source].Item2;
-            }
-
-            if (normalWarpTransitions.ContainsKey(source))
-            {
-                return normalWarpTransitions[source].Item2;
+                return source;
             }
 
             MapModS.Instance.LogWarn($"No adjacent transition for {source}");
 
             return null;
         }
-        public static bool IsSpecialTransition(string transition)
+
+        // Returns all benchwarps based on benches sat on + Start
+        public static HashSet<string> GetBenchwarpTransitions()
         {
-            return transition.StartsWith("Warp")
-                || transition.StartsWith("Stag")
-                || transition.StartsWith("Left Elevator")
-                || transition.StartsWith("Right Elevator")
-                || transition.StartsWith("Upper Tram")
-                || transition.StartsWith("Lower Tram")
-                || transition.EndsWith("[warp]");
+            IEnumerable<string> visitedBenches = Dependencies.GetVisitedBenchScenes();
+
+            HashSet<string> transitions = new(benchwarpScenes.Where(b => visitedBenches.Contains(b.Value)).Select(b => b.Key));
+
+            transitions.Add("Warp_Start");
+
+            return transitions;
         }
 
-        // Checks if the player has transitioned into a scene with the special transition
-        public static bool VerifySpecialTransition(string transition, string currentScene)
+        public static bool IsSpecialTransition(this string transition)
         {
-            if (stagTransitions.ContainsKey(transition) && stagTransitions.Any(t => t.Value.Item2.StartsWith(currentScene))) return true;
+            return specialTransitions.ContainsKey(transition);
+        }
 
-            if (elevatorTransitions.ContainsKey(transition) && currentScene == elevatorTransitions[transition].Item2) return true;
+        public static bool IsBenchwarpTransition(this string transition)
+        {
+            return transition.IsSpecialTransition() && transition.StartsWith("Warp");
+        }
 
-            if ((transition.StartsWith("Upper Tram") && currentScene.StartsWith("Crossroads_46"))
-                || (transition.StartsWith("Lower Tram") && currentScene.StartsWith("Abyss_03"))) return true;
+        public static bool IsStagTransition(this string transition)
+        {
+            return transition.IsSpecialTransition() && transition.StartsWith("Stag");
+        }
 
-            if (normalWarpTransitions.ContainsKey(transition) && transition.StartsWith(currentScene)) return true;
+        public static bool IsElevatorTransition(this string transition)
+        {
+            return transition.IsSpecialTransition() && (transition.StartsWith("Left_Elevator") || transition.StartsWith("Right_Elevator"));
+        }
 
-            return false;
+        public static bool IsTramTransition(this string transition)
+        {
+            return transition.IsSpecialTransition() && (transition.StartsWith("Lower_Tram") || transition.StartsWith("Upper_Tram"));
+        }
+
+        public static bool IsWarpTransition(this string transition)
+        {
+            return transition.IsSpecialTransition() && transition.Contains("[warp]");
+        }
+
+        public static HashSet<string> GetTransitionsInScene(this string scene)
+        {
+            HashSet<string> transitions = TransitionData.GetTransitionsByScene(scene);
+
+            if (sceneSpecialTransitions.ContainsKey(scene))
+            {
+                transitions.UnionWith(sceneSpecialTransitions[scene]);
+            }
+
+            return transitions;
+        }
+
+        private static Dictionary<string, string> benchwarpScenes;
+        private static Dictionary<string, string> specialTransitions;
+        private static Dictionary<string, HashSet<string>> sceneSpecialTransitions;
+
+        public static void Load()
+        {
+            benchwarpScenes = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.benchwarp.json");
+            specialTransitions = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.specialTransitions.json");
+            sceneSpecialTransitions = JsonUtil.Deserialize<Dictionary<string, HashSet<string>>>("MapModS.Resources.Pathfinder.Data.sceneTransitions.json");
+        }
+
+        private static readonly (LogicManagerBuilder.JsonType type, string fileName)[] files = new[]
+        {
+            (LogicManagerBuilder.JsonType.Macros, "macros"),
+            (LogicManagerBuilder.JsonType.Transitions, "transitions"),
+            (LogicManagerBuilder.JsonType.LogicEdit, "logicEdits"),
+            (LogicManagerBuilder.JsonType.LogicSubst, "logicSubstitutions")
+        };
+
+        private static LogicManagerBuilder lmb;
+
+        public static LogicManager lm;
+
+        public static void MakeLogicManager()
+        {
+            lmb = new(RM.RS.Context.LM);
+
+            foreach ((LogicManagerBuilder.JsonType type, string fileName) in files)
+            {
+                lmb.DeserializeJson(type, Assembly.GetExecutingAssembly().GetManifestResourceStream($"MapModS.Resources.Pathfinder.Logic.{fileName}.json"));
+            }
+
+            lm = new(lmb);
         }
     }
 }

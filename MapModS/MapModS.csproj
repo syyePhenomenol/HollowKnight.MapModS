@@ -62,6 +62,15 @@
     <None Remove="Resources\mapRoomsold.json" />
     <None Remove="Resources\minimalMapRooms.json" />
     <None Remove="Resources\nonMappedRooms.json" />
+    <None Remove="Resources\Pathfinder\Data\benchwarp.json" />
+    <None Remove="Resources\Pathfinder\Data\sceneTransitions.json" />
+    <None Remove="Resources\Pathfinder\Data\specialTransitions.json" />
+    <None Remove="Resources\Pathfinder\logicEdits.json" />
+    <None Remove="Resources\Pathfinder\Logic\logicSubstitutions.json" />
+    <None Remove="Resources\Pathfinder\macros.json" />
+    <None Remove="Resources\Pathfinder\Terms.json" />
+    <None Remove="Resources\Pathfinder\transitions.json" />
+    <None Remove="Resources\Pathfinder\waypoints.json" />
     <None Remove="Resources\pins.json" />
     <None Remove="Resources\pinsAM.json" />
     <None Remove="Resources\pinScenes.json" />
@@ -230,6 +239,13 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\GUI\panelLeft.png" />
+    <EmbeddedResource Include="Resources\Pathfinder\Data\benchwarp.json" />
+    <EmbeddedResource Include="Resources\Pathfinder\Data\sceneTransitions.json" />
+    <EmbeddedResource Include="Resources\Pathfinder\Data\specialTransitions.json" />
+    <EmbeddedResource Include="Resources\Pathfinder\Logic\logicSubstitutions.json" />
+    <EmbeddedResource Include="Resources\Pathfinder\Logic\logicEdits.json" />
+    <EmbeddedResource Include="Resources\Pathfinder\Logic\macros.json" />
+    <EmbeddedResource Include="Resources\Pathfinder\Logic\transitions.json" />
     <EmbeddedResource Include="Resources\Pins\pinBlank.png" />
     <EmbeddedResource Include="Resources\Pins\pinBlankCyan.png" />
     <EmbeddedResource Include="Resources\Pins\pinBlankGreen.png" />

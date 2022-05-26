@@ -208,42 +208,20 @@ namespace MapModS.UI
             previousScene = Utils.RemoveBossSuffix(previousScene);
             currentScene = Utils.RemoveBossSuffix(currentScene);
 
-            if (PD.IsSpecialTransition(selectedRoute.First()))
+            string transition = selectedRoute.First();
+
+            if (transition.IsSpecialTransition() || previousScene == transition.GetScene())
             {
-                if (currentScene == PD.GetScene(PD.GetAdjacentTransition(selectedRoute.First())))
+                if (currentScene == transition.GetAdjacentTransition().GetScene())
                 {
-                    selectedRoute.Remove(selectedRoute.First());
+                    selectedRoute.Remove(transition);
                     UpdateAll();
                 }
-
-                return;
             }
 
-            if (selectedRoute.Count >= 2 && previousScene == TransitionData.GetTransitionScene(selectedRoute.First()))
+            if (!selectedRoute.Any())
             {
-                if (PD.IsSpecialTransition(selectedRoute.ElementAt(1)))
-                {
-                    if (PD.VerifySpecialTransition(selectedRoute.ElementAt(1), currentScene))
-                    {
-                        selectedRoute.Remove(selectedRoute.First());
-                        UpdateAll();
-                    }
-                }
-                else if (currentScene == TransitionData.GetTransitionScene(selectedRoute.ElementAt(1)))
-                {
-                    selectedRoute.Remove(selectedRoute.First());
-                    UpdateAll();
-                }
-
-                return;
-            }
-
-            if (previousScene == TransitionData.GetTransitionScene(selectedRoute.First())
-                && currentScene == lastFinalScene)
-            {
-                selectedRoute.Remove(selectedRoute.First());
                 rejectedTransitionPairs.Clear();
-                UpdateAll();
             }
         }
     }

@@ -113,7 +113,15 @@ namespace MapModS.UI
                 && TP.lastFinalTransition != ""
                 && TP.selectedRoute.Any())
             {
-                text += $"{TP.lastStartTransition} ->...-> {TP.lastFinalTransition}";
+                if (TP.lastStartTransition == TP.lastFinalTransition)
+                {
+                    text += TP.lastStartTransition;
+                }
+                else
+                {
+                    text += $"{TP.lastStartTransition} ->...-> {TP.lastFinalTransition}";
+                }
+                
                 text += $"\n\n{L.Localize("Transitions")}: {TP.selectedRoute.Count()}";
             }
             else
