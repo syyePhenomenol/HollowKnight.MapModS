@@ -27,8 +27,6 @@ namespace MapModS.Data
         {
             if (startScene == null || finalScene == null) return new();
 
-            //IEnumerable<string> visitedBenches = Dependencies.GetVisitedBenchScenes();
-
             HashSet<string> normalTransitionSpace = new();
 
             // Add normal transitions
@@ -152,13 +150,6 @@ namespace MapModS.Data
             return new();
         }
 
-        private SearchNode InitializeNode(string transition)
-        {
-            string scene = transition.GetAdjacentTransition().GetScene();
-
-            return new SearchNode(scene, new() { transition }, transition.GetAdjacentTransition());
-        }
-
         private void UpdateProgression()
         {
             foreach (Term term in Td.pm.lm.Terms)
@@ -188,10 +179,42 @@ namespace MapModS.Data
                 }
             }
 
-            //if (PlayerData.instance.GetBool("mineLiftOpened"))
-            //{
-            //    localPm.Add(localPm.lm.TransitionLookup["Town[right1]"]);
-            //}
+            if (PlayerData.instance.GetBool("mineLiftOpened"))
+            {
+                localPm.Set("Town[right1]", 1);
+            }
+
+            foreach (PersistentBoolData pbd in SceneData.instance.persistentBoolItems)
+            {
+                if (pbd.sceneName == "Waterways_02" && pbd.id == "Quake Floor (1)")
+                {
+                    localPm.Set("Broke_Waterways_Bench_Ceiling", pbd.activated ? 1 : 0);
+                }
+                else if (pbd.sceneName == "Waterways_02" && pbd.id == "Quake Floor")
+                {
+                    localPm.Set("Broke_Waterways_Bench_Floor", pbd.activated ? 1 : 0);
+                }
+                else if (pbd.sceneName == "Ruins1_31" && pbd.id == "Ruins Lift")
+                {
+                    localPm.Set("City_Toll_Wall_Broken", pbd.activated ? 1 : 0);
+                }
+            }
+
+            foreach (PersistentIntData pid in SceneData.instance.persistentIntItems)
+            {
+                if (pid.sceneName == "Ruins1_31" && pid.id == "Ruins Lift")
+                {
+                    localPm.Set("City_Toll_Elevator_Up", pid.value % 2 == 1 ? 1 : 0);
+                    localPm.Set("City_Toll_Elevator_Down", pid.value % 2 == 0 ? 1 : 0);
+                }
+            }
+        }
+
+        private SearchNode InitializeNode(string transition)
+        {
+            string scene = transition.GetAdjacentTransition().GetScene();
+
+            return new SearchNode(scene, new() { transition }, transition.GetAdjacentTransition());
         }
 
         // Add other in-logic transitions in the current room

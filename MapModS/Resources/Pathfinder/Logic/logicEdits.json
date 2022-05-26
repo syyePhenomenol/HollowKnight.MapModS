@@ -80,6 +80,10 @@
     "logic": "ORIG | Warp_City_Toll"
   },
   {
+    "name": "Ruins1_31",
+    "logic": "ORIG | (Ruins1_31[left1] | Ruins1_31[bot1]) + City_Toll_Wall_Broken + (City_Toll_Elevator_Down + (LEFTCLAW | RIGHTCLAW | WINGS) | City_Toll_Elevator_Up)"
+  },
+  {
     "name": "Ruins1_29[left1]",
     "logic": "ORIG | Warp_City_Storerooms"
   },
@@ -96,8 +100,24 @@
     "logic": "ORIG | Warp_Pleasure_House"
   },
   {
-    "name": "Waterways_02",
-    "logic": "ORIG | Warp_Waterways"
+    "name": "Waterways_02[top1]",
+    "logic": "ORIG | Warp_Waterways + (LEFTCLAW | RIGHTCLAW)"
+  },
+  {
+    "name": "Waterways_02[top1]",
+    "logic": "ORIG | Warp_Waterways + (LEFTCLAW + WINGS | RIGHTCLAW)"
+  },
+  {
+    "name": "Waterways_02[top3]",
+    "logic": "ORIG | Warp_Waterways + Broke_Waterways_Bench_Ceiling + (LEFTCLAW | RIGHTCLAW + WINGS)"
+  },
+  {
+    "name": "Waterways_02[bot1]",
+    "logic": "ORIG | Warp_Waterways + Broke_Waterways_Bench_Floor"
+  },
+  {
+    "name": "Waterways_02[bot2]",
+    "logic": "ORIG | Warp_Waterways + (SWIM | LEFTCLAW | RIGHTCLAW | WINGS)"
   },
   {
     "name": "Deepnest_30[left1]",

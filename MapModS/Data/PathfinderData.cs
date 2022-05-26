@@ -9,10 +9,6 @@ namespace MapModS.Data
 {
     public static class PathfinderData
     {
-        // Waterways_02: from bench to top3, need to check if floor is broken
-        // also need to fix all the logic for each transition from the bench
-        // Ruins1_31: from left to right side (Ruins1_31), need to check if wall is broken
-
         public static readonly Dictionary<string, string> conditionalTerms = new()
         {
             { "Ruins1_31[left3]", "ELEGANT" },
@@ -44,12 +40,7 @@ namespace MapModS.Data
             { "Town[room_divine]" },
             { "Town[room_grimm]" },
             { "Crossroads_09[left1]" },
-            { "Crossroads_09[right1]" },
-            { "LEFTSLASH" },
-            { "RIGHTSLASH" },
-            { "UPSLASH" },
-            { "DOWNSLASH" },
-            { "SWIM" },
+            { "Crossroads_09[right1]" }
         };
 
         public static string GetScene(this string transition)
@@ -58,7 +49,7 @@ namespace MapModS.Data
             {
                 return RD.GetStartDef(RM.RS.GenerationSettings.StartLocationSettings.StartLocation).SceneName;
             }
-
+            
             if (transition.IsSpecialTransition())
             {
                 return specialTransitions[transition].GetScene();
@@ -158,6 +149,7 @@ namespace MapModS.Data
         private static readonly (LogicManagerBuilder.JsonType type, string fileName)[] files = new[]
         {
             (LogicManagerBuilder.JsonType.Macros, "macros"),
+            (LogicManagerBuilder.JsonType.Waypoints, "waypoints"),
             (LogicManagerBuilder.JsonType.Transitions, "transitions"),
             (LogicManagerBuilder.JsonType.LogicEdit, "logicEdits"),
             (LogicManagerBuilder.JsonType.LogicSubst, "logicSubstitutions")
