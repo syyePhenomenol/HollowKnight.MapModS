@@ -40,7 +40,7 @@ namespace MapModS.UI
                 panel = new(layout, GUIController.Instance.Images["panelRight"].ToSlicedSprite(100f, 50f, 0f, 50f), "Panel")
                 {
                     Borders = new(30f, 30f, 30f, 30f),
-                    MinWidth = 400f,
+                    MinWidth = 200f,
                     MinHeight = 100f,
                     HorizontalAlignment = HorizontalAlignment.Right,
                     VerticalAlignment = VerticalAlignment.Top,
@@ -50,7 +50,7 @@ namespace MapModS.UI
                 panelText = new(layout, "Panel Text")
                 {
                     HorizontalAlignment = HorizontalAlignment.Left,
-                    VerticalAlignment = VerticalAlignment.Top,
+                    VerticalAlignment = VerticalAlignment.Center,
                     Font = MagicUI.Core.UI.TrajanNormal,
                     FontSize = 14
                 };

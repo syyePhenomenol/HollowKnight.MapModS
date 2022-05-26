@@ -17,31 +17,31 @@ namespace MapModS.UI
 
         private static bool panelActive = false;
 
-        private static readonly Dictionary<string, Tuple<Action<Button>, Action<Button>>> _mainButtons = new()
+        private static readonly Dictionary<string, (Action<Button>, Action<Button>)> _mainButtons = new()
         {
-            { "Enabled", new(ToggleEnabled, UpdateEnabled) },
-            { "Spoilers", new(ToggleSpoilers, UpdateSpoilers) },
-            { "Randomized", new(ToggleRandomized, UpdateRandomized) },
-            { "Others", new(ToggleOthers, UpdateOthers) },
-            { "Style", new(ToggleStyle, UpdateStyle) },
-            { "Size", new(ToggleSize, UpdateSize) },
-            { "Mode", new(ToggleMode, UpdateMode) },
-            { "Customize Pins", new(ToggleCustomizePins, UpdateCustomizePins) }
+            { "Enabled", (ToggleEnabled, UpdateEnabled) },
+            { "Spoilers", (ToggleSpoilers, UpdateSpoilers) },
+            { "Randomized", (ToggleRandomized, UpdateRandomized) },
+            { "Others", (ToggleOthers, UpdateOthers) },
+            { "Style", (ToggleStyle, UpdateStyle) },
+            { "Size", (ToggleSize, UpdateSize) },
+            { "Mode", (ToggleMode, UpdateMode) },
+            { "Customize Pins", (ToggleCustomizePins, UpdateCustomizePins) }
         };
 
-        private static readonly Dictionary<string, Tuple<KeyCode, Action<Button>>> _hotkeys = new()
+        private static readonly Dictionary<string, (KeyCode, Action<Button>)> _hotkeys = new()
         {
-            { "Spoilers", new(KeyCode.Alpha1, ToggleSpoilers) },
-            { "Randomized", new(KeyCode.Alpha2, ToggleRandomized) },
-            { "Others", new(KeyCode.Alpha3, ToggleOthers) },
-            { "Style", new(KeyCode.Alpha4, ToggleStyle) },
-            { "Size", new(KeyCode.Alpha5, ToggleSize) }
+            { "Spoilers", (KeyCode.Alpha1, ToggleSpoilers) },
+            { "Randomized", (KeyCode.Alpha2, ToggleRandomized) },
+            { "Others", (KeyCode.Alpha3, ToggleOthers) },
+            { "Style", (KeyCode.Alpha4, ToggleStyle) },
+            { "Size", (KeyCode.Alpha5, ToggleSize) }
         };
 
-        private static readonly Dictionary<string, Tuple<Action<Button>, Action<Button>>> _auxButtons = new()
+        private static readonly Dictionary<string, (Action<Button>, Action<Button>)> _auxButtons = new()
         {
-            { "Persistent", new(TogglePersistent, UpdatePersistent) },
-            { "Group By", new(ToggleGroupBy, UpdateGroupBy) }
+            { "Persistent", (TogglePersistent, UpdatePersistent) },
+            { "Group By", (ToggleGroupBy, UpdateGroupBy) }
         };
 
         public static void Build()
@@ -72,7 +72,7 @@ namespace MapModS.UI
 
                 mainButtons.ChildrenBeforeRollover = 4;
 
-                foreach (KeyValuePair<string, Tuple<Action<Button>, Action<Button>>> kvp in _mainButtons)
+                foreach (KeyValuePair<string, (Action<Button>, Action<Button>)> kvp in _mainButtons)
                 {
                     Button button = new(layout, kvp.Key)
                     {
@@ -131,7 +131,7 @@ namespace MapModS.UI
                 Spacing = 5f
             };
 
-            foreach (KeyValuePair<string, Tuple<Action<Button>, Action<Button>>> kvp in _auxButtons)
+            foreach (KeyValuePair<string, (Action<Button>, Action<Button>)> kvp in _auxButtons)
             {
                 Button button = new(layout, kvp.Key)
                 {
@@ -154,7 +154,7 @@ namespace MapModS.UI
                 ToggleEnabled((Button)layout.GetElement("Enabled"));
             }, ModifierKeys.Ctrl);
 
-            foreach (KeyValuePair<string, Tuple<KeyCode, Action<Button>>> kvp in _hotkeys)
+            foreach (KeyValuePair<string, (KeyCode, Action<Button>)> kvp in _hotkeys)
             {
                 layout.ListenForHotkey(kvp.Value.Item1, () =>
                 {
@@ -173,7 +173,7 @@ namespace MapModS.UI
 
         private static void UpdateAll()
         {
-            foreach (KeyValuePair<string, Tuple<Action<Button>, Action<Button>>> kvp in _mainButtons)
+            foreach (KeyValuePair<string, (Action<Button>, Action<Button>)> kvp in _mainButtons)
             {
                 Button button = (Button)layout.GetElement(kvp.Key);
 
@@ -207,7 +207,7 @@ namespace MapModS.UI
                 layout.GetElement("Aux Buttons").Visibility = Visibility.Hidden;
             }
 
-            foreach (KeyValuePair<string, Tuple<Action<Button>, Action<Button>>> kvp in _auxButtons)
+            foreach (KeyValuePair<string, (Action<Button>, Action<Button>)> kvp in _auxButtons)
             {
                 kvp.Value.Item2.Invoke((Button)layout.GetElement(kvp.Key));
             }
