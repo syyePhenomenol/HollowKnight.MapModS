@@ -119,7 +119,17 @@ namespace MapModS.Data
 
                 while (UpdateReachableTransitions()) { }
 
-                foreach(string transition in candidateReachableTransitions.Where(t => !visitedTransitions.Contains(t)))
+                if (searchScene == "Ruins2_06")
+                {
+                    foreach (Term term in localPm.lm.Terms)
+                    {
+                        MapModS.Instance.Log(term.Id + " " + term.Name + localPm.Get(term));
+                    }
+                }
+
+                foreach (string transition in candidateReachableTransitions
+                    .Where(t => !visitedTransitions.Contains(t))
+                    .Where(t => localPm.Get(t) > 0))
                 {
                     TryAddNode(node, transition);
                 }
