@@ -62,6 +62,8 @@
     <None Remove="Resources\mapRoomsold.json" />
     <None Remove="Resources\minimalMapRooms.json" />
     <None Remove="Resources\nonMappedRooms.json" />
+    <None Remove="Resources\Pathfinder\Compass\specialDoorsByScene.json" />
+    <None Remove="Resources\Pathfinder\Compass\specialDoorsByTransition.json" />
     <None Remove="Resources\Pathfinder\Data\adjacentTransitions.json" />
     <None Remove="Resources\Pathfinder\Data\benchwarp.json" />
     <None Remove="Resources\Pathfinder\Data\conditionalTerms.json" />
@@ -243,6 +245,8 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\GUI\panelLeft.png" />
+    <EmbeddedResource Include="Resources\Pathfinder\Compass\specialDoorsByScene.json" />
+    <EmbeddedResource Include="Resources\Pathfinder\Compass\specialDoorsByTransition.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Data\benchwarp.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Data\persistentTerms.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Data\conditionalTerms.json" />

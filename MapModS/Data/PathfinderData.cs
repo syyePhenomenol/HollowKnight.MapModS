@@ -11,10 +11,14 @@ namespace MapModS.Data
     {
         internal static HashSet<string> persistentTerms;
         internal static Dictionary<string, string> conditionalTerms;
+
         private static Dictionary<string, string> benchwarpScenes;
         private static Dictionary<string, string> adjacentTransitions;
         private static Dictionary<string, string> scenesByTransition;
         private static Dictionary<string, HashSet<string>> transitionsByScene;
+
+        internal static Dictionary<string, string> specialDoorsByScene;
+        internal static Dictionary<string, string> specialDoorsByTransition;
 
         public static void Load()
         {
@@ -24,6 +28,8 @@ namespace MapModS.Data
             adjacentTransitions = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.adjacentTransitions.json");
             scenesByTransition = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.scenesByTransition.json");
             transitionsByScene = JsonUtil.Deserialize<Dictionary<string, HashSet<string>>>("MapModS.Resources.Pathfinder.Data.transitionsByScene.json");
+            specialDoorsByScene = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Compass.specialDoorsByScene.json");
+            specialDoorsByTransition = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Compass.specialDoorsByTransition.json");
         }
 
         private static readonly (LogicManagerBuilder.JsonType type, string fileName)[] files = new[]
