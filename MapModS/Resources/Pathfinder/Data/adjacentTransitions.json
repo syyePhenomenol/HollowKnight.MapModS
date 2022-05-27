@@ -1,6 +1,5 @@
 ﻿{
   //the equivalent transition at the destination
-  //used if it is the last transition in the route + updating route
 
   "Warp_Dirtmouth": "Town[bot1]",
   "Warp_Mato": "Room_nailmaster[left1]",

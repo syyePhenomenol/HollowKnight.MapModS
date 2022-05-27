@@ -30,10 +30,10 @@ namespace MapModS.UI
             { "Fungus1_11[top1]", "Missing Prefab/Missing Prefab (Dummy)/top1" },
             { "Fungus1_11[left1]", "Missing Prefab/Missing Prefab (Dummy)/left1" },
 
-            { "Left Elevator Up", "elev_main/Lift Call Lever" },
-            { "Left Elevator Down", "_Scenery/elev_main/Lift Call Lever" },
-            { "Right Elevator Up", "elev_main/Lift Call Lever" },
-            { "Right Elevator Down", "elev_main/Lift Call Lever" },
+            { "Left_Elevator_Up", "elev_main/Lift Call Lever" },
+            { "Left_Elevator_Down", "_Scenery/elev_main/Lift Call Lever" },
+            { "Right_Elevator_Up", "elev_main/Lift Call Lever" },
+            { "Right_Elevator_Down", "elev_main/Lift Call Lever" },
 
             { "Abyss_05[warp]", "Dusk Knight/Shield" },
             { "White_Palace_11[warp]", "doorWarp" },
@@ -53,11 +53,11 @@ namespace MapModS.UI
             { "Ruins2_08", "Station Bell/Bell" },
             { "RestingGrounds_09", "Station Bell Lever/Bell/Bell" },
             { "Fungus3_40", "Station Bell/Bell" },
-            { "Crossroads_46", "Tram Main/door_tram" },
-            { "Crossroads_46b", "Tram Main/door_tram" },
-            { "Abyss_03_b", "Tram Main/door_tram" },
-            { "Abyss_03" , "Tram Main/door_tram" },
-            { "Abyss_03_c", "Tram Main/door_tram" }
+            { "Crossroads_46", "Tram Call Box" },
+            { "Crossroads_46b", "Tram Call Box" },
+            { "Abyss_03_b", "Tram Call Box" },
+            { "Abyss_03" , "Tram Call Box" },
+            { "Abyss_03_c", "Tram Call Box" }
         };
 
         public static void CreateRouteCompass()

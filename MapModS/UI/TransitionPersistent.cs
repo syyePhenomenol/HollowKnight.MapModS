@@ -86,7 +86,7 @@ namespace MapModS.UI
                 if (MapModS.GS.routeTextInGame == RouteTextInGame.ShowNextTransitionOnly
                     && !GUI.quickMapOpen && !GUI.worldMapOpen)
                 {
-                    text += " -> " + selectedRoute.First();
+                    text += " -> " + selectedRoute.First().ToCleanName();
                 }
                 else
                 {
@@ -94,11 +94,11 @@ namespace MapModS.UI
                     {
                         if (text.Length > 128)
                         {
-                            text += " -> ... -> " + selectedRoute.Last();
+                            text += " -> ... -> " + selectedRoute.Last().ToCleanName();
                             break;
                         }
 
-                        text += " -> " + transition;
+                        text += " -> " + transition.ToCleanName();
                     }
                 }
             }

@@ -9,39 +9,71 @@ namespace MapModS.Data
 {
     public static class PathfinderData
     {
-        public static readonly Dictionary<string, string> conditionalTerms = new()
+        internal static HashSet<string> persistentTerms;
+        internal static Dictionary<string, string> conditionalTerms;
+        private static Dictionary<string, string> benchwarpScenes;
+        private static Dictionary<string, string> adjacentTransitions;
+        private static Dictionary<string, string> scenesByTransition;
+        private static Dictionary<string, HashSet<string>> transitionsByScene;
+
+        public static void Load()
         {
-            { "Ruins1_31[left3]", "ELEGANT" },
-            { "Ruins2_11_b[left1]", "LOVE" },
-            { "Abyss_01[left1]", "Opened_Dung_Defender_Wall" },
-            { "Crossroads_33[left1]", "Opened_Mawlek_Wall" },
-            { "Crossroads_33[right1]", "Opened_Shaman_Pillar" },
-            { "Deepnest_East_03[left2]", "Opened_Lower_Kingdom's_Edge_Wall" },
-            { "Fungus3_02[right1]", "Opened_Archives_Exit_Wall" },
-            { "Fungus3_13[left2]", "Opened_Gardens_Stag_Exit" },
-            { "RestingGrounds_02[bot1]", "Opened_Resting_Grounds_Floor" },
-            { "RestingGrounds_05[right1]", "Opened_Glade_Door" },
-            { "Ruins1_05b[bot1]", "Opened_Waterways_Manhole" },
-            { "Ruins1_31[left2]", "Lever-Shade_Soul" },
-            { "Ruins2_04[door_Ruin_House_03]", "Opened_Emilitia_Door" },
-            { "Ruins2_10[right1]", "Opened_Resting_Grounds_Catacombs_Wall" },
-            { "Ruins2_10b[left1]", "Opened_Pleasure_House_Wall" },
-            { "Waterways_01[top1]", "Opened_Waterways_Manhole" },
-            { "Waterways_07[right1]", "Lever-Dung_Defender" }
+            persistentTerms = JsonUtil.Deserialize<HashSet<string>>("MapModS.Resources.Pathfinder.Data.persistentTerms.json");
+            conditionalTerms = JsonUtil.Deserialize< Dictionary<string, string>> ("MapModS.Resources.Pathfinder.Data.conditionalTerms.json");
+            benchwarpScenes = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.benchwarp.json");
+            adjacentTransitions = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.adjacentTransitions.json");
+            scenesByTransition = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.scenesByTransition.json");
+            transitionsByScene = JsonUtil.Deserialize<Dictionary<string, HashSet<string>>>("MapModS.Resources.Pathfinder.Data.transitionsByScene.json");
+        }
+
+        private static readonly (LogicManagerBuilder.JsonType type, string fileName)[] files = new[]
+        {
+            (LogicManagerBuilder.JsonType.Macros, "macros"),
+            (LogicManagerBuilder.JsonType.Waypoints, "waypoints"),
+            (LogicManagerBuilder.JsonType.Transitions, "transitions"),
+            (LogicManagerBuilder.JsonType.LogicEdit, "logicEdits"),
+            (LogicManagerBuilder.JsonType.LogicSubst, "logicSubstitutions")
         };
 
-        public static readonly HashSet<string> persistentTerms = new()
+        private static LogicManagerBuilder lmb;
+
+        public static LogicManager lm;
+
+        public static void MakeLogicManager()
         {
-            { "Town[door_station]" },
-            { "Town[door_sly]" },
-            { "Town[door_mapper]" },
-            { "Town[door_jiji]" },
-            { "Town[door_bretta]" },
-            { "Town[room_divine]" },
-            { "Town[room_grimm]" },
-            { "Crossroads_09[left1]" },
-            { "Crossroads_09[right1]" }
-        };
+            lmb = new(RM.RS.Context.LM);
+
+            foreach ((LogicManagerBuilder.JsonType type, string fileName) in files)
+            {
+                lmb.DeserializeJson(type, Assembly.GetExecutingAssembly().GetManifestResourceStream($"MapModS.Resources.Pathfinder.Logic.{fileName}.json"));
+            }
+
+            lm = new(lmb);
+        }
+
+        // Returns all benchwarps based on benches sat on + Start
+        public static HashSet<string> GetBenchwarpTransitions()
+        {
+            IEnumerable<string> visitedBenches = Dependencies.GetVisitedBenchScenes();
+
+            HashSet<string> transitions = new(benchwarpScenes.Where(b => visitedBenches.Contains(b.Value)).Select(b => b.Key));
+
+            transitions.Add("Warp_Start");
+
+            return transitions;
+        }
+
+        public static HashSet<string> GetTransitionsInScene(this string scene)
+        {
+            HashSet<string> transitions = TransitionData.GetTransitionsByScene(scene);
+
+            if (transitionsByScene.ContainsKey(scene))
+            {
+                transitions.UnionWith(transitionsByScene[scene]);
+            }
+
+            return transitions;
+        }
 
         public static string GetScene(this string transition)
         {
@@ -49,10 +81,14 @@ namespace MapModS.Data
             {
                 return RD.GetStartDef(RM.RS.GenerationSettings.StartLocationSettings.StartLocation).SceneName;
             }
-            
-            if (transition.IsSpecialTransition())
+
+            if (scenesByTransition.ContainsKey(transition))
             {
-                return specialTransitions[transition].GetScene();
+                return scenesByTransition[transition];
+            }
+            else if (transition.IsSpecialTransition())
+            {
+                return adjacentTransitions[transition].GetScene();
             }
 
             return TransitionData.GetTransitionScene(transition);
@@ -81,21 +117,9 @@ namespace MapModS.Data
             return null;
         }
 
-        // Returns all benchwarps based on benches sat on + Start
-        public static HashSet<string> GetBenchwarpTransitions()
-        {
-            IEnumerable<string> visitedBenches = Dependencies.GetVisitedBenchScenes();
-
-            HashSet<string> transitions = new(benchwarpScenes.Where(b => visitedBenches.Contains(b.Value)).Select(b => b.Key));
-
-            transitions.Add("Warp_Start");
-
-            return transitions;
-        }
-
         public static bool IsSpecialTransition(this string transition)
         {
-            return specialTransitions.ContainsKey(transition);
+            return adjacentTransitions.ContainsKey(transition);
         }
 
         public static bool IsBenchwarpTransition(this string transition)
@@ -123,52 +147,16 @@ namespace MapModS.Data
             return transition.IsSpecialTransition() && transition.Contains("[warp]");
         }
 
-        public static HashSet<string> GetTransitionsInScene(this string scene)
+        public static string ToCleanName(this string transition)
         {
-            HashSet<string> transitions = TransitionData.GetTransitionsByScene(scene);
-
-            if (sceneSpecialTransitions.ContainsKey(scene))
+            if (transition.IsSpecialTransition())
             {
-                transitions.UnionWith(sceneSpecialTransitions[scene]);
+                return transition.Replace("_", " ").Replace("ARROW", "->");
             }
-
-            return transitions;
-        }
-
-        private static Dictionary<string, string> benchwarpScenes;
-        private static Dictionary<string, string> specialTransitions;
-        private static Dictionary<string, HashSet<string>> sceneSpecialTransitions;
-
-        public static void Load()
-        {
-            benchwarpScenes = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.benchwarp.json");
-            specialTransitions = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.specialTransitions.json");
-            sceneSpecialTransitions = JsonUtil.Deserialize<Dictionary<string, HashSet<string>>>("MapModS.Resources.Pathfinder.Data.sceneTransitions.json");
-        }
-
-        private static readonly (LogicManagerBuilder.JsonType type, string fileName)[] files = new[]
-        {
-            (LogicManagerBuilder.JsonType.Macros, "macros"),
-            (LogicManagerBuilder.JsonType.Waypoints, "waypoints"),
-            (LogicManagerBuilder.JsonType.Transitions, "transitions"),
-            (LogicManagerBuilder.JsonType.LogicEdit, "logicEdits"),
-            (LogicManagerBuilder.JsonType.LogicSubst, "logicSubstitutions")
-        };
-
-        private static LogicManagerBuilder lmb;
-
-        public static LogicManager lm;
-
-        public static void MakeLogicManager()
-        {
-            lmb = new(RM.RS.Context.LM);
-
-            foreach ((LogicManagerBuilder.JsonType type, string fileName) in files)
+            else
             {
-                lmb.DeserializeJson(type, Assembly.GetExecutingAssembly().GetManifestResourceStream($"MapModS.Resources.Pathfinder.Logic.{fileName}.json"));
+                return transition;
             }
-
-            lm = new(lmb);
         }
     }
 }

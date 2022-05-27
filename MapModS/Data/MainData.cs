@@ -15,35 +15,35 @@ namespace MapModS.Data
 {
     public static class MainData
     {
-        private static Dictionary<string, PinDef> _allPins;
-        private static Dictionary<string, PinDef> _allPinsAM;
-        private static Dictionary<string, string> _pinScenes;
-        private static List<string> _sortedGroups;
-        private static HashSet<string> _minimalMapRooms;
-        private static Dictionary<string, MapRoomDef> _nonMappedRooms;
-        private static readonly Dictionary<string, PinDef> _usedPins = new();
-        private static Dictionary<string, string> _logicLookup = new();
+        private static Dictionary<string, PinDef> allPins;
+        private static Dictionary<string, PinDef> allPinsAM;
+        private static Dictionary<string, string> pinScenes;
+        private static List<string> sortedGroups;
+        private static HashSet<string> minimalMapRooms;
+        private static Dictionary<string, MapRoomDef> nonMappedRooms;
 
+        private static readonly Dictionary<string, PinDef> usedPins = new();
+        private static Dictionary<string, string> logicLookup = new();
         public static List<string> usedPoolGroups = new();
 
         public static PinDef[] GetPinArray()
         {
-            return _allPins.Values.ToArray();
+            return allPins.Values.ToArray();
         }
 
         public static PinDef[] GetPinAMArray()
         {
-            return _allPinsAM.Values.ToArray();
+            return allPinsAM.Values.ToArray();
         }
 
         public static PinDef[] GetUsedPinArray()
         {
-            return _usedPins.Values.ToArray();
+            return usedPins.Values.ToArray();
         }
 
         public static PinDef GetUsedPinDef(string locationName)
         {
-            if (_usedPins.TryGetValue(locationName, out PinDef pinDef))
+            if (usedPins.TryGetValue(locationName, out PinDef pinDef))
             {
                 return pinDef;
             }
@@ -53,27 +53,27 @@ namespace MapModS.Data
 
         public static bool IsMinimalMapRoom(string scene)
         {
-            return _minimalMapRooms.Contains(scene);
+            return minimalMapRooms.Contains(scene);
         }
 
         public static bool IsNonMappedScene(string scene)
         {
-            return _nonMappedRooms.ContainsKey(scene);
+            return nonMappedRooms.ContainsKey(scene);
         }
 
         public static IEnumerable<string> GetNonMappedScenes()
         {
             if (Dependencies.HasDependency("AdditionalMaps"))
             {
-                return _nonMappedRooms.Keys.Where(s => _nonMappedRooms[s].includeWithAdditionalMaps);
+                return nonMappedRooms.Keys.Where(s => nonMappedRooms[s].includeWithAdditionalMaps);
             }
 
-            return _nonMappedRooms.Keys;
+            return nonMappedRooms.Keys;
         }
 
         public static MapRoomDef GetNonMappedRoomDef(string scene)
         {
-            if (_nonMappedRooms.TryGetValue(scene, out MapRoomDef mrd))
+            if (nonMappedRooms.TryGetValue(scene, out MapRoomDef mrd))
             {
                 return mrd;
             }
@@ -83,7 +83,7 @@ namespace MapModS.Data
 
         public static MapZone GetFixedMapZone()
         {
-            if (_nonMappedRooms.TryGetValue(Utils.CurrentScene(), out MapRoomDef mrd))
+            if (nonMappedRooms.TryGetValue(Utils.CurrentScene(), out MapRoomDef mrd))
             {
                 return mrd.mapZone;
             }
@@ -99,12 +99,12 @@ namespace MapModS.Data
 
         public static bool IsInLogicLookup(string locationName)
         {
-            return _logicLookup.ContainsKey(locationName);
+            return logicLookup.ContainsKey(locationName);
         }
 
         public static string GetRawLogic(string locationName)
         {
-            if (_logicLookup.TryGetValue(locationName, out string logic))
+            if (logicLookup.TryGetValue(locationName, out string logic))
             {
                 return logic;
             }
@@ -194,7 +194,7 @@ namespace MapModS.Data
 
         public static void SetUsedPinDefs()
         {
-            _usedPins.Clear();
+            usedPins.Clear();
             usedPoolGroups.Clear();
             HashSet<string> unsortedGroups = new();
 
@@ -213,7 +213,7 @@ namespace MapModS.Data
 
                 if (rml == null || rml.Name == "Start") continue;
 
-                if (!_allPins.TryGetValue(rml.Name, out PinDef pd))
+                if (!allPins.TryGetValue(rml.Name, out PinDef pd))
                 {
                     pd = new();
 
@@ -228,9 +228,9 @@ namespace MapModS.Data
                     pd.sceneName = "Room_Colosseum_01";
                 }
 
-                if (_pinScenes.ContainsKey(pd.sceneName))
+                if (pinScenes.ContainsKey(pd.sceneName))
                 {
-                    pd.pinScene = _pinScenes[pd.sceneName];
+                    pd.pinScene = pinScenes[pd.sceneName];
                 }
 
                 pd.mapZone = Utils.ToMapZone(RD.GetRoomDef(pd.pinScene ?? pd.sceneName).MapArea);
@@ -243,7 +243,7 @@ namespace MapModS.Data
                 pd.pinLocationState = PinLocationState.UncheckedUnreachable;
                 pd.locationPoolGroup = SupplementalMetadata.OfPlacementAndLocations(placement.Value).Get(CMI.LocationPoolGroup);
 
-                _usedPins.Add(rml.Name, pd);
+                usedPins.Add(rml.Name, pd);
 
                 unsortedGroups.Add(pd.locationPoolGroup);
 
@@ -263,10 +263,10 @@ namespace MapModS.Data
                     && !RM.RS.TrackerData.clearedLocations.Contains(placement.Location.Name)
                     && placement.Location.Name != "Start"
                     && placement.Location.Name != "Iselda"
-                    && _allPins.ContainsKey(placement.Location.Name)
-                    && !_usedPins.ContainsKey(placement.Location.Name))
+                    && allPins.ContainsKey(placement.Location.Name)
+                    && !usedPins.ContainsKey(placement.Location.Name))
                 {
-                    PinDef pd = _allPins[placement.Location.Name];
+                    PinDef pd = allPins[placement.Location.Name];
 
                     pd.name = placement.Location.Name;
                     pd.sceneName = RD.GetLocationDef(placement.Location.Name).SceneName;
@@ -276,9 +276,9 @@ namespace MapModS.Data
                         pd.sceneName = "Room_Colosseum_01";
                     }
 
-                    if (_pinScenes.ContainsKey(pd.sceneName))
+                    if (pinScenes.ContainsKey(pd.sceneName))
                     {
-                        pd.pinScene = _pinScenes[pd.sceneName];
+                        pd.pinScene = pinScenes[pd.sceneName];
                     }
 
                     pd.mapZone = Utils.ToMapZone(RD.GetRoomDef(pd.pinScene ?? pd.sceneName).MapArea);
@@ -290,7 +290,7 @@ namespace MapModS.Data
                         pd.pinLocationState = PinLocationState.NonRandomizedUnchecked;
                         pd.locationPoolGroup = SubcategoryFinder.GetLocationPoolGroup(placement.Location.Name).FriendlyName();
 
-                        _usedPins.Add(placement.Location.Name, pd);
+                        usedPins.Add(placement.Location.Name, pd);
 
                         unsortedGroups.Add(pd.locationPoolGroup);
 
@@ -300,7 +300,7 @@ namespace MapModS.Data
             }
 
             // Sort all the PoolGroups that have been used
-            foreach (string poolGroup in _sortedGroups)
+            foreach (string poolGroup in sortedGroups)
             {
                 if (unsortedGroups.Contains(poolGroup))
                 {
@@ -327,7 +327,7 @@ namespace MapModS.Data
         {
             foreach (PinDef pinDefAM in GetPinAMArray())
             {
-                if (_usedPins.TryGetValue(pinDefAM.name, out PinDef pinDef))
+                if (usedPins.TryGetValue(pinDefAM.name, out PinDef pinDef))
                 {
                     pinDef.pinScene = pinDefAM.pinScene;
                     pinDef.mapZone = pinDefAM.mapZone;
@@ -340,26 +340,26 @@ namespace MapModS.Data
         public static void ApplyRandomizableLeversChanges()
         {
             // This is probably redundant
-            if (_usedPins.Any(p => p.Key.StartsWith("Lever")))
+            if (usedPins.Any(p => p.Key.StartsWith("Lever")))
             {
-                _usedPins.Remove("Dirtmouth_Stag");
-                _usedPins.Remove("Resting_Grounds_Stag");
+                usedPins.Remove("Dirtmouth_Stag");
+                usedPins.Remove("Resting_Grounds_Stag");
             }
         }
 
         public static void SetLogicLookup()
         {
-            _logicLookup = RM.RS.TrackerData.lm.LogicLookup.Values.ToDictionary(l => l.Name, l => l.ToInfix());
+            logicLookup = RM.RS.TrackerData.lm.LogicLookup.Values.ToDictionary(l => l.Name, l => l.ToInfix());
         }
 
         public static void Load()
         {
-            _allPins = JsonUtil.Deserialize<Dictionary<string, PinDef>>("MapModS.Resources.pins.json");
-            _allPinsAM = JsonUtil.Deserialize<Dictionary<string, PinDef>>("MapModS.Resources.pinsAM.json");
-            _pinScenes = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.pinScenes.json");
-            _sortedGroups = JsonUtil.Deserialize<List<string>>("MapModS.Resources.sortedGroups.json");
-            _minimalMapRooms = JsonUtil.Deserialize<HashSet<string>>("MapModS.Resources.minimalMapRooms.json");
-            _nonMappedRooms = JsonUtil.Deserialize<Dictionary<string, MapRoomDef>>("MapModS.Resources.nonMappedRooms.json");
+            allPins = JsonUtil.Deserialize<Dictionary<string, PinDef>>("MapModS.Resources.pins.json");
+            allPinsAM = JsonUtil.Deserialize<Dictionary<string, PinDef>>("MapModS.Resources.pinsAM.json");
+            pinScenes = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.pinScenes.json");
+            sortedGroups = JsonUtil.Deserialize<List<string>>("MapModS.Resources.sortedGroups.json");
+            minimalMapRooms = JsonUtil.Deserialize<HashSet<string>>("MapModS.Resources.minimalMapRooms.json");
+            nonMappedRooms = JsonUtil.Deserialize<Dictionary<string, MapRoomDef>>("MapModS.Resources.nonMappedRooms.json");
         }
 
 #if DEBUG

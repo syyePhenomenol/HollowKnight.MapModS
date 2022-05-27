@@ -17,9 +17,6 @@ namespace MapModS.Data
             localPm = new(PD.lm, RM.RS.Context);
         }
 
-        private string searchScene;
-        private HashSet<string> candidateReachableTransitions = new();
-
         // Calculates the shortest route (by number of transitions) from startScene to finalScene.
         // The search space will be purely limited to rooms that have been visited + unreached reachable locations
         // A ProgressionManager is used to track logic while traversing through the search space
@@ -27,25 +24,27 @@ namespace MapModS.Data
         {
             if (startScene == null || finalScene == null) return new();
 
+            string searchScene;
+            HashSet<string> candidateReachableTransitions = new();
             HashSet<string> normalTransitionSpace = new();
 
             // Add normal transitions
-            foreach (KeyValuePair<string, LogicTransition> transitionEntry in Td.lm.TransitionLookup)
+            foreach (string transition in Td.lm.TransitionLookup.Keys)
             {
-                if (Td.uncheckedReachableTransitions.Contains(transitionEntry.Key)
-                    || PD.GetAdjacentTransition(transitionEntry.Key) == null) continue;
+                if (Td.uncheckedReachableTransitions.Contains(transition)
+                    || PD.GetAdjacentTransition(transition) == null) continue;
 
-                string scene = PD.GetScene(transitionEntry.Key);
+                string scene = PD.GetScene(transition);
 
                 if (MapModS.LS.mapMode == Settings.MapMode.TransitionRandoAlt
                     && !PlayerData.instance.scenesVisited.Contains(scene)) continue;
 
-                if (Td.pm.Has(transitionEntry.Value.term.Id)
+                if (Td.pm.Get(transition) > 0
                     // Prevents adding certain randomized transitions that haven't been visited yet in uncoupled rando
-                    && !(TransitionData.IsRandomizedTransition(transitionEntry.Key)
-                        && !Td.visitedTransitions.ContainsKey(transitionEntry.Key)))
+                    && !(TransitionData.IsRandomizedTransition(transition)
+                        && !Td.visitedTransitions.ContainsKey(transition)))
                 {
-                    normalTransitionSpace.Add(transitionEntry.Key);
+                    normalTransitionSpace.Add(transition);
                 }
             }
 
@@ -64,8 +63,8 @@ namespace MapModS.Data
                 {
                     // Remove the single transition rejected routes
                     if (rejectedTransitionPairs.Any(p => p.Key == transition && p.Value == transition)) continue;
-                    
-                    queue.AddLast(InitializeNode(transition));
+
+                    TryAddNode(null, transition);
                 }
             }
             
@@ -91,33 +90,30 @@ namespace MapModS.Data
                 // Remove the single transition rejected routes
                 if (rejectedTransitionPairs.Any(p => p.Key == transition && p.Value == transition)) continue;
 
-                if (localPm.Get(transition) > 0)
-                {
-                    queue.AddLast(InitializeNode(transition));
-                }
+                TryAddNode(null, transition);
             }
 
             localPm.RemoveTempItems();
 
             while (queue.Any())
             {
-                SearchNode currentNode = queue.First();
+                SearchNode node = queue.First();
                 queue.RemoveFirst();
 
                 // Avoid going through a rejected path, and remove redudant new paths
-                if (currentNode.currentScene == finalScene && !rejectedTransitionPairs.Any(pair => pair.Key == currentNode.currentRoute.First() && PD.GetAdjacentTransition(pair.Value) == PD.GetAdjacentTransition(currentNode.currentRoute.Last())))
+                if (node.scene == finalScene && !rejectedTransitionPairs.Any(pair => pair.Key == node.route.First() && PD.GetAdjacentTransition(pair.Value) == PD.GetAdjacentTransition(node.route.Last())))
                 {
                     // No other paths to same final transition with a different starting benchwarp
-                    if (rejectedTransitionPairs.Any(pair => PD.GetAdjacentTransition(pair.Value) == PD.GetAdjacentTransition(currentNode.currentRoute.Last()) && pair.Key.StartsWith("Warp"))) continue;
+                    if (rejectedTransitionPairs.Any(pair => pair.Value.GetAdjacentTransition() == node.route.Last().GetAdjacentTransition() && pair.Key.StartsWith("Warp"))) continue;
 
-                    return currentNode.currentRoute;
+                    return node.route;
                 }
 
-                searchScene = currentNode.currentScene;
+                searchScene = node.scene;
 
                 localPm.StartTemp();
 
-                localPm.Set(currentNode.currentRoute.Last().GetAdjacentTransition(), 1);
+                localPm.Set(node.route.Last().GetAdjacentTransition(), 1);
 
                 candidateReachableTransitions = new(PD.GetTransitionsInScene(searchScene));
 
@@ -125,21 +121,7 @@ namespace MapModS.Data
 
                 foreach(string transition in candidateReachableTransitions.Where(t => !visitedTransitions.Contains(t)))
                 {
-                    if (transition.IsSpecialTransition()
-                        || normalTransitionSpace.Contains(transition))
-                    {
-                        string adjacent = transition.GetAdjacentTransition();
-
-                        // No circling back on previous transition
-                        if (adjacent == null || currentNode.currentRoute.Any(t => t == adjacent)) continue;
-
-                        SearchNode newNode = new(PD.GetScene(adjacent), currentNode.currentRoute, adjacent);
-                        newNode.currentRoute.Add(transition);
-
-                        queue.AddLast(newNode);
-
-                        visitedTransitions.Add(transition);
-                    }
+                    TryAddNode(node, transition);
                 }
 
                 localPm.RemoveTempItems();
@@ -148,106 +130,128 @@ namespace MapModS.Data
 
             // No route found, or the parameters are invalid
             return new();
-        }
 
-        private void UpdateProgression()
-        {
-            foreach (Term term in Td.pm.lm.Terms)
+            void UpdateProgression()
             {
-                if (!RandomizerMod.RandomizerData.Data.IsTransition(term.Name)
-                    && !RandomizerMod.RandomizerData.Data.IsRoom(term.Name))
+                foreach (Term term in Td.pm.lm.Terms)
                 {
-                    localPm.Set(term.Id, Td.pm.Get(term.Id));
+                    if (!RandomizerMod.RandomizerData.Data.IsTransition(term.Name)
+                        && !RandomizerMod.RandomizerData.Data.IsRoom(term.Name))
+                    {
+                        localPm.Set(term.Id, Td.pm.Get(term.Id));
+                    }
+                }
+
+                // Emulate a transition being possibly available via having the required term
+                foreach (KeyValuePair<string, string> pair in PD.conditionalTerms)
+                {
+                    if (Td.pm.Get(pair.Key) > 0)
+                    {
+                        localPm.Set(pair.Value, 1);
+                    }
+                }
+
+                // Persistent terms should always be true (reachable anywhere in the scene without movement requirements)
+                foreach (string term in PD.persistentTerms)
+                {
+                    if (Td.pm.Get(term) > 0)
+                    {
+                        localPm.Set(term, 1);
+                    }
+                }
+
+                if (PlayerData.instance.GetBool("mineLiftOpened"))
+                {
+                    localPm.Set("Town[right1]", 1);
+                }
+
+                foreach (PersistentBoolData pbd in SceneData.instance.persistentBoolItems)
+                {
+                    if (pbd.sceneName == "Waterways_02" && pbd.id == "Quake Floor (1)")
+                    {
+                        localPm.Set("Broke_Waterways_Bench_Ceiling", pbd.activated ? 1 : 0);
+                    }
+                    else if (pbd.sceneName == "Waterways_02" && pbd.id == "Quake Floor")
+                    {
+                        localPm.Set("Broke_Waterways_Bench_Floor", pbd.activated ? 1 : 0);
+                    }
+                    else if (pbd.sceneName == "Ruins1_31" && pbd.id == "Ruins Lift")
+                    {
+                        localPm.Set("City_Toll_Wall_Broken", pbd.activated ? 1 : 0);
+                    }
+                }
+
+                foreach (PersistentIntData pid in SceneData.instance.persistentIntItems)
+                {
+                    if (pid.sceneName == "Ruins1_31" && pid.id == "Ruins Lift")
+                    {
+                        localPm.Set("City_Toll_Elevator_Up", pid.value % 2 == 1 ? 1 : 0);
+                        localPm.Set("City_Toll_Elevator_Down", pid.value % 2 == 0 ? 1 : 0);
+                    }
                 }
             }
 
-            // Emulate a transition being possibly available via having the required term
-            foreach (KeyValuePair<string, string> pair in PD.conditionalTerms)
+            void TryAddNode(SearchNode node, string transition)
             {
-                if (Td.pm.Get(pair.Key) > 0)
+                if (transition.IsSpecialTransition() || normalTransitionSpace.Contains(transition))
                 {
-                    localPm.Set(pair.Value, 1);
+                    SearchNode newNode;
+
+                    string adjacent = transition.GetAdjacentTransition();
+
+                    if (node != null)
+                    {
+                        // No circling back on previous transition
+                        if (adjacent == null || node.route.Any(t => t == adjacent)) return;
+
+                        newNode = new(adjacent.GetScene(), node.route, adjacent);
+                        newNode.route.Add(transition);
+                    }
+                    else
+                    {
+                        newNode = new(adjacent.GetScene(), new() { transition }, adjacent);
+                    }
+
+                    queue.AddLast(newNode);
+
+                    visitedTransitions.Add(transition);
                 }
+
+                return;
             }
 
-            // Persistent terms should always be true (reachable anywhere in the scene without movement requirements)
-            foreach (string term in PD.persistentTerms)
+            // Add other in-logic transitions in the current room
+            bool UpdateReachableTransitions()
             {
-                if (Td.pm.Get(term) > 0)
+                bool continueUpdating = false;
+
+                foreach (string transition in candidateReachableTransitions)
                 {
-                    localPm.Set(term, 1);
+                    if (localPm.lm.TransitionLookup[transition].CanGet(localPm)
+                        && localPm.Get(transition) < 1)
+                    {
+                        localPm.Set(transition, 1);
+                        continueUpdating = true;
+                    }
                 }
-            }
 
-            if (PlayerData.instance.GetBool("mineLiftOpened"))
-            {
-                localPm.Set("Town[right1]", 1);
-            }
-
-            foreach (PersistentBoolData pbd in SceneData.instance.persistentBoolItems)
-            {
-                if (pbd.sceneName == "Waterways_02" && pbd.id == "Quake Floor (1)")
+                if (TransitionData.TryGetSceneWaypoint(searchScene, out LogicWaypoint waypoint)
+                    && !localPm.Has(waypoint.term) && waypoint.CanGet(localPm))
                 {
-                    localPm.Set("Broke_Waterways_Bench_Ceiling", pbd.activated ? 1 : 0);
-                }
-                else if (pbd.sceneName == "Waterways_02" && pbd.id == "Quake Floor")
-                {
-                    localPm.Set("Broke_Waterways_Bench_Floor", pbd.activated ? 1 : 0);
-                }
-                else if (pbd.sceneName == "Ruins1_31" && pbd.id == "Ruins Lift")
-                {
-                    localPm.Set("City_Toll_Wall_Broken", pbd.activated ? 1 : 0);
-                }
-            }
-
-            foreach (PersistentIntData pid in SceneData.instance.persistentIntItems)
-            {
-                if (pid.sceneName == "Ruins1_31" && pid.id == "Ruins Lift")
-                {
-                    localPm.Set("City_Toll_Elevator_Up", pid.value % 2 == 1 ? 1 : 0);
-                    localPm.Set("City_Toll_Elevator_Down", pid.value % 2 == 0 ? 1 : 0);
-                }
-            }
-        }
-
-        private SearchNode InitializeNode(string transition)
-        {
-            string scene = transition.GetAdjacentTransition().GetScene();
-
-            return new SearchNode(scene, new() { transition }, transition.GetAdjacentTransition());
-        }
-
-        // Add other in-logic transitions in the current room
-        private bool UpdateReachableTransitions()
-        {
-            bool continueUpdating = false;
-
-            foreach (string transition in candidateReachableTransitions)
-            {
-                if (localPm.lm.TransitionLookup[transition].CanGet(localPm)
-                    && localPm.Get(transition) < 1)
-                {
-                    localPm.Set(transition, 1);
+                    localPm.Add(waypoint);
                     continueUpdating = true;
                 }
-            }
 
-            if (TransitionData.TryGetSceneWaypoint(searchScene, out LogicWaypoint waypoint)
-                && !localPm.Has(waypoint.term) && waypoint.CanGet(localPm))
-            {
-                localPm.Add(waypoint);
-                continueUpdating = true;
+                return continueUpdating;
             }
-
-            return continueUpdating;
         }
 
-        private class SearchNode
+        class SearchNode
         {
             public SearchNode(string scene, List<string> route, string lat)
             {
-                currentScene = scene;
-                currentRoute = new(route);
+                this.scene = scene;
+                this.route = new(route);
                 lastAdjacentTransition = lat;
             }
 
@@ -255,7 +259,7 @@ namespace MapModS.Data
             {
                 string text = "Current route:";
 
-                foreach (string transition in currentRoute)
+                foreach (string transition in route)
                 {
                     text += " -> " + transition;
                 }
@@ -263,8 +267,8 @@ namespace MapModS.Data
                 MapModS.Instance.Log(text);
             }
 
-            public string currentScene;
-            public List<string> currentRoute = new();
+            public string scene;
+            public List<string> route = new();
             public string lastAdjacentTransition;
         }
     }
