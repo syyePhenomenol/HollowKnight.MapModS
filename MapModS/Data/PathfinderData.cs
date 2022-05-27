@@ -13,23 +13,23 @@ namespace MapModS.Data
         internal static Dictionary<string, string> conditionalTerms;
 
         private static Dictionary<string, string> benchwarpScenes;
-        private static Dictionary<string, string> adjacentTransitions;
+        private static Dictionary<string, string> adjacentScenes;
         private static Dictionary<string, string> scenesByTransition;
         private static Dictionary<string, HashSet<string>> transitionsByScene;
 
-        internal static Dictionary<string, string> specialDoorsByScene;
-        internal static Dictionary<string, string> specialDoorsByTransition;
+        internal static Dictionary<string, string> doorObjectsByScene;
+        internal static Dictionary<string, string> doorObjectsByTransition;
 
         public static void Load()
         {
             persistentTerms = JsonUtil.Deserialize<HashSet<string>>("MapModS.Resources.Pathfinder.Data.persistentTerms.json");
             conditionalTerms = JsonUtil.Deserialize< Dictionary<string, string>> ("MapModS.Resources.Pathfinder.Data.conditionalTerms.json");
             benchwarpScenes = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.benchwarp.json");
-            adjacentTransitions = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.adjacentTransitions.json");
+            adjacentScenes = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.adjacentScenes.json");
             scenesByTransition = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.scenesByTransition.json");
             transitionsByScene = JsonUtil.Deserialize<Dictionary<string, HashSet<string>>>("MapModS.Resources.Pathfinder.Data.transitionsByScene.json");
-            specialDoorsByScene = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Compass.specialDoorsByScene.json");
-            specialDoorsByTransition = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Compass.specialDoorsByTransition.json");
+            doorObjectsByScene = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Compass.doorObjectsByScene.json");
+            doorObjectsByTransition = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Compass.doorObjectsByTransition.json");
         }
 
         private static readonly (LogicManagerBuilder.JsonType type, string fileName)[] files = new[]
@@ -45,7 +45,7 @@ namespace MapModS.Data
 
         public static LogicManager lm;
 
-        public static void MakeLogicManager()
+        public static void SetPathfinderLogic()
         {
             lmb = new(RM.RS.Context.LM);
 
@@ -53,6 +53,11 @@ namespace MapModS.Data
             {
                 lmb.DeserializeJson(type, Assembly.GetExecutingAssembly().GetManifestResourceStream($"MapModS.Resources.Pathfinder.Logic.{fileName}.json"));
             }
+
+            // Set Start Warp logic
+            adjacentScenes["Warp_Start"] = RD.GetStartDef(RM.RS.GenerationSettings.StartLocationSettings.StartLocation).SceneName;
+
+            lmb.DoLogicEdit(new(RD.GetStartDef(RM.RS.GenerationSettings.StartLocationSettings.StartLocation).Transition, "ORIG | Warp_Start"));
 
             lm = new(lmb);
         }
@@ -81,38 +86,41 @@ namespace MapModS.Data
             return transitions;
         }
 
+        // Don't use this after GetAdjacentTransition() unless it's a normal transition
         public static string GetScene(this string transition)
         {
-            if (transition == "Warp_Start")
-            {
-                return RD.GetStartDef(RM.RS.GenerationSettings.StartLocationSettings.StartLocation).SceneName;
-            }
-
             if (scenesByTransition.ContainsKey(transition))
             {
                 return scenesByTransition[transition];
             }
             else if (transition.IsSpecialTransition())
             {
-                return adjacentTransitions[transition].GetScene();
+                return "";
             }
 
             return TransitionData.GetTransitionScene(transition);
         }
 
-        public static string GetAdjacentTransition(this string source)
+        // Returns the correct adjacent scene for special transitions
+        public static string GetAdjacentScene(this string transition)
         {
-            if (source == "Warp_Start")
+            if (transition.IsSpecialTransition())
             {
-                return RD.GetStartDef(RM.RS.GenerationSettings.StartLocationSettings.StartLocation).Transition;
+                return adjacentScenes[transition];
             }
 
+            return transition.GetAdjacentTransition().GetScene();
+        }
+
+        public static string GetAdjacentTransition(this string source)
+        {
             // Some top transitions don't have an adjacent transition
             if (TransitionData.IsInTransitionLookup(source))
             {
                 return TransitionData.GetAdjacentTransition(source);
             }
 
+            // Special transitions don't have a well-defined adjacent transition, but it works with the pathfinder logic to return itself
             if (source.IsSpecialTransition())
             {
                 return source;
@@ -125,7 +133,7 @@ namespace MapModS.Data
 
         public static bool IsSpecialTransition(this string transition)
         {
-            return adjacentTransitions.ContainsKey(transition);
+            return adjacentScenes.ContainsKey(transition);
         }
 
         public static bool IsBenchwarpTransition(this string transition)

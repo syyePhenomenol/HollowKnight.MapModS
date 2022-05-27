@@ -23,6 +23,7 @@ namespace MapModS.UI
         public static string lastFinalScene = "";
         public static string lastStartTransition = "";
         public static string lastFinalTransition = "";
+        public static int transitionsCount = 0;
         public static string selectedScene = "None";
         public static List<string> selectedRoute = new();
         public static HashSet<KeyValuePair<string, string>> rejectedTransitionPairs = new();
@@ -62,6 +63,7 @@ namespace MapModS.UI
             lastFinalScene = "";
             lastStartTransition = "";
             lastFinalTransition = "";
+            transitionsCount = 0;
             selectedScene = "None";
             selectedRoute.Clear();
             rejectedTransitionPairs.Clear();
@@ -190,7 +192,8 @@ namespace MapModS.UI
                 lastStartScene = Utils.CurrentScene();
                 lastFinalScene = selectedScene;
                 lastStartTransition = selectedRoute.First();
-                lastFinalTransition = PD.GetAdjacentTransition(selectedRoute.Last());
+                lastFinalTransition = selectedRoute.Last();
+                transitionsCount = selectedRoute.Count();
 
                 rejectedTransitionPairs.Add(new(selectedRoute.First(), selectedRoute.Last()));
             }
@@ -212,10 +215,11 @@ namespace MapModS.UI
 
             if (transition.IsSpecialTransition() || previousScene == transition.GetScene())
             {
-                if (currentScene == transition.GetAdjacentTransition().GetScene())
+                if (currentScene == transition.GetAdjacentScene())
                 {
                     selectedRoute.Remove(transition);
                     UpdateAll();
+                    TransitionWorldMap.UpdateAll();
                 }
             }
 

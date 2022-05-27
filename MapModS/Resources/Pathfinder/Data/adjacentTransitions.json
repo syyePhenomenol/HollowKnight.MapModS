@@ -1,6 +1,7 @@
 ﻿{
-  //the equivalent transition at the destination
-
+  // the equivalent transition at the destination
+  // Start warp is overwritten on save load
+  "Warp_Start": "Tutorial_01[right1]",
   "Warp_Dirtmouth": "Town[bot1]",
   "Warp_Mato": "Room_nailmaster[left1]",
   "Warp_Crossroads_Hot_Springs": "Crossroads_30[left1]",

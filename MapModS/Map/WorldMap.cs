@@ -51,7 +51,7 @@ namespace MapModS.Map
                 MainData.SetUsedPinDefs();
                 MainData.SetLogicLookup();
                 TransitionData.SetTransitionLookup();
-                PathfinderData.MakeLogicManager();
+                PathfinderData.SetPathfinderLogic();
 
                 if (MapModS.LS.NewSettings || MapModS.LS.PoolGroupSettings.Count == 0)
                 {

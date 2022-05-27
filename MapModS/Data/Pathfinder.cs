@@ -101,10 +101,10 @@ namespace MapModS.Data
                 queue.RemoveFirst();
 
                 // Avoid going through a rejected path, and remove redudant new paths
-                if (node.scene == finalScene && !rejectedTransitionPairs.Any(pair => pair.Key == node.route.First() && PD.GetAdjacentTransition(pair.Value) == PD.GetAdjacentTransition(node.route.Last())))
+                if (node.scene == finalScene && !rejectedTransitionPairs.Any(pair => pair.Key == node.route.First() && PD.GetAdjacentTransition(pair.Value) == node.lastAdjacentTransition))
                 {
                     // No other paths to same final transition with a different starting benchwarp
-                    if (rejectedTransitionPairs.Any(pair => pair.Value.GetAdjacentTransition() == node.route.Last().GetAdjacentTransition() && pair.Key.StartsWith("Warp"))) continue;
+                    if (rejectedTransitionPairs.Any(pair => pair.Value.GetAdjacentTransition() == node.lastAdjacentTransition && pair.Key.StartsWith("Warp"))) continue;
 
                     return node.route;
                 }
@@ -113,7 +113,7 @@ namespace MapModS.Data
 
                 localPm.StartTemp();
 
-                localPm.Set(node.route.Last().GetAdjacentTransition(), 1);
+                localPm.Set(node.lastAdjacentTransition, 1);
 
                 candidateReachableTransitions = new(PD.GetTransitionsInScene(searchScene));
 
@@ -204,12 +204,12 @@ namespace MapModS.Data
                         // No circling back on previous transition
                         if (adjacent == null || node.route.Any(t => t == adjacent)) return;
 
-                        newNode = new(adjacent.GetScene(), node.route, adjacent);
+                        newNode = new(transition.GetAdjacentScene(), node.route, adjacent);
                         newNode.route.Add(transition);
                     }
                     else
                     {
-                        newNode = new(adjacent.GetScene(), new() { transition }, adjacent);
+                        newNode = new(transition.GetAdjacentScene(), new() { transition }, adjacent);
                     }
 
                     queue.AddLast(newNode);

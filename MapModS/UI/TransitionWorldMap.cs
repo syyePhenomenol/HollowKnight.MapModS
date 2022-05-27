@@ -107,22 +107,28 @@ namespace MapModS.UI
         {
             string text = $"{L.Localize("Current route")}: ";
 
-            if (TP.lastStartScene != ""
-                && TP.lastFinalScene != ""
-                && TP.lastStartTransition != ""
+            if (TP.lastStartTransition != ""
                 && TP.lastFinalTransition != ""
+                && TP.transitionsCount > 0
                 && TP.selectedRoute.Any())
             {
-                if (TP.lastStartTransition == TP.lastFinalTransition)
+                if (TP.lastFinalTransition.IsSpecialTransition())
                 {
-                    text += TP.lastStartTransition.ToCleanName();
+                    if (TP.transitionsCount == 1)
+                    {
+                        text += $"{TP.lastStartTransition.ToCleanName()}";
+                    }
+                    else
+                    {
+                        text += $"{TP.lastStartTransition.ToCleanName()} ->...-> {TP.lastFinalTransition.ToCleanName()}";
+                    }
                 }
                 else
                 {
-                    text += $"{TP.lastStartTransition.ToCleanName()} ->...-> {TP.lastFinalTransition.ToCleanName()}";
+                    text += $"{TP.lastStartTransition.ToCleanName()} ->...-> {TP.lastFinalTransition.GetAdjacentTransition().ToCleanName()}";
                 }
                 
-                text += $"\n\n{L.Localize("Transitions")}: {TP.selectedRoute.Count()}";
+                text += $"\n\n{L.Localize("Transitions")}: {TP.transitionsCount}";
             }
             else
             {

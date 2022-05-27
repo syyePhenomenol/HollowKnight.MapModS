@@ -55,9 +55,9 @@ namespace MapModS.UI
 
                 if (Utils.CurrentScene() == scene)
                 {
-                    if (PD.specialDoorsByTransition.ContainsKey(transition))
+                    if (PD.doorObjectsByTransition.ContainsKey(transition))
                     {
-                        gate = PD.specialDoorsByTransition[transition];
+                        gate = PD.doorObjectsByTransition[transition];
                     }
                     else if (TransitionData.IsInTransitionLookup(transition))
                     {
@@ -65,9 +65,9 @@ namespace MapModS.UI
                     }
                 }
                 else if ((transition.IsStagTransition() || transition.IsTramTransition())
-                    && PD.specialDoorsByScene.ContainsKey(Utils.CurrentScene()))
+                    && PD.doorObjectsByScene.ContainsKey(Utils.CurrentScene()))
                 {
-                    gate = PD.specialDoorsByScene[Utils.CurrentScene()];
+                    gate = PD.doorObjectsByScene[Utils.CurrentScene()];
                 }
 
                 if (gate == "")
