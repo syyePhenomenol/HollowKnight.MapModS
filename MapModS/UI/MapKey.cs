@@ -5,6 +5,7 @@ using MapModS.Data;
 using MapModS.Map;
 using System.Collections.Generic;
 using UnityEngine;
+using L = RandomizerMod.Localization;
 
 namespace MapModS.UI
 {
@@ -95,7 +96,7 @@ namespace MapModS.UI
 
                     TextObject text = new TextObject(layout, kvp.Key.ToString() + " Text")
                     {
-                        Text = Utils.ToCleanName(kvp.Key.ToString()),
+                        Text = L.Localize(Utils.ToCleanName(kvp.Key.ToString())),
                         Padding = new(10f, 0f, 0f, 0f),
                         HorizontalAlignment = HorizontalAlignment.Left,
                         VerticalAlignment = VerticalAlignment.Center
@@ -150,7 +151,7 @@ namespace MapModS.UI
 
                     TextObject text = new TextObject(layout, kvp.Key.ToString() + " Text")
                     {
-                        Text = Utils.ToCleanName(kvp.Key.ToString()),
+                        Text = L.Localize(Utils.ToCleanName(kvp.Key.ToString())),
                         Padding = new(10f, 0f, 0f, 0f),
                         HorizontalAlignment = HorizontalAlignment.Left,
                         VerticalAlignment = VerticalAlignment.Center
@@ -174,7 +175,7 @@ namespace MapModS.UI
 
                 TextObject textHighlight = new TextObject(layout, "Highlighted Text")
                 {
-                    Text = "Contains\nunchecked\ntransitions",
+                    Text = L.Localize("Contains\nunchecked\ntransitions"),
                     Padding = new(10f, 0f, 0f, 0f),
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Center

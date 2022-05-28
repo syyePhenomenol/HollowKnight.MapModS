@@ -66,11 +66,11 @@ namespace MapModS.UI
 
                 modEnabled = UIExtensions.PanelText(layout, "Mod Enabled");
                 panelContents.Children.Add(modEnabled);
-                modEnabled.Text = "Ctrl-M: Disable mod";
+                modEnabled.Text = $"Ctrl-M: {L.Localize("Disable mod")}";
 
                 shiftPan = UIExtensions.PanelText(layout, "Shift Pan");
                 panelContents.Children.Add(shiftPan);
-                shiftPan.Text = "Hold Shift: Pan faster";
+                shiftPan.Text = $"{L.Localize("Hold Shift")}: {L.Localize("Pan faster")}";
 
                 mapKey = UIExtensions.PanelText(layout, "Map Key");
                 panelContents.Children.Add(mapKey);
@@ -210,11 +210,11 @@ namespace MapModS.UI
         {
             if (MapModS.GS.controlPanelOn)
             {
-                control.Text = "Ctrl-H: Hide hotkeys";
+                control.Text = $"Ctrl-H: {L.Localize("Hide hotkeys")}";
             }
             else
             {
-                control.Text = "Ctrl-H: More hotkeys";
+                control.Text = $"Ctrl-H: {L.Localize("More hotkeys")}";
             }
         }
 
