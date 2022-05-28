@@ -17,6 +17,9 @@ namespace MapModS.UI
         private static StackLayout panelContents;
         private static TextObject control;
 
+        private static TextObject modEnabled;
+        private static TextObject shiftPan;
+
         private static TextObject mapKey;
         private static TextObject lookup;
 
@@ -60,6 +63,14 @@ namespace MapModS.UI
 
                 control = UIExtensions.PanelText(layout, "Collapsed");
                 panelContents.Children.Add(control);
+
+                modEnabled = UIExtensions.PanelText(layout, "Mod Enabled");
+                panelContents.Children.Add(modEnabled);
+                modEnabled.Text = "Ctrl-M: Disable mod";
+
+                shiftPan = UIExtensions.PanelText(layout, "Shift Pan");
+                panelContents.Children.Add(shiftPan);
+                shiftPan.Text = "Hold Shift: Pan faster";
 
                 mapKey = UIExtensions.PanelText(layout, "Map Key");
                 panelContents.Children.Add(mapKey);
@@ -162,6 +173,8 @@ namespace MapModS.UI
 
             if (MapModS.GS.controlPanelOn)
             {
+                modEnabled.Visibility = Visibility.Visible;
+                shiftPan.Visibility = Visibility.Visible;
                 mapKey.Visibility = Visibility.Visible;
                 lookup.Visibility = Visibility.Visible;
 
@@ -182,6 +195,8 @@ namespace MapModS.UI
             }
             else
             {
+                modEnabled.Visibility = Visibility.Collapsed;
+                shiftPan.Visibility = Visibility.Collapsed;
                 mapKey.Visibility = Visibility.Collapsed;
                 lookup.Visibility = Visibility.Collapsed;
                 benchwarp.Visibility = Visibility.Collapsed;
