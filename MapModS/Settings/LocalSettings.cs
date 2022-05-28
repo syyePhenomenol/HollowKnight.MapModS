@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using RM = RandomizerMod.RandomizerMod;
+using TM = RandomizerMod.Settings.TransitionSettings.TransitionMode;
 
 namespace MapModS.Settings
 {
@@ -55,6 +57,8 @@ namespace MapModS.Settings
 
         public bool lookupOn = false;
 
+        public bool mapKeyOn = false;
+
         public GroupBy groupBy;
 
         public bool SpoilerOn = false;
@@ -72,7 +76,7 @@ namespace MapModS.Settings
             ModEnabled = !ModEnabled;
         }
 
-        public void ToggleFullMap()
+        public void ToggleMapMode()
         {
             switch (mapMode)
             {
@@ -85,18 +89,11 @@ namespace MapModS.Settings
                     break;
 
                 case MapMode.PinsOverMap:
-                    if (SettingsUtil.IsTransitionRando())
-                    {
-                        mapMode = MapMode.TransitionRando;
-                    }
-                    else
-                    {
-                        mapMode = MapMode.FullMap;
-                    }
+                    mapMode = MapMode.TransitionRando;
                     break;
 
                 case MapMode.TransitionRando:
-                    if (SettingsUtil.IsAreaRando())
+                    if (RM.RS.GenerationSettings.TransitionSettings.Mode != TM.RoomRandomizer)
                     {
                         mapMode = MapMode.TransitionRandoAlt;
                     }
@@ -110,6 +107,11 @@ namespace MapModS.Settings
                     mapMode = MapMode.FullMap;
                     break;
             }
+        }
+
+        public void ToggleMapKey()
+        {
+            mapKeyOn = !mapKeyOn;
         }
 
         public void ToggleLookup()
@@ -152,7 +154,7 @@ namespace MapModS.Settings
 
         public void InitializePoolGroupSettings()
         {
-            PoolGroupSettings = DataLoader.usedPoolGroups.Select(p => new SettingPair(p, PoolGroupState.On)).ToList();
+            PoolGroupSettings = MainData.usedPoolGroups.Select(p => new SettingPair(p, PoolGroupState.On)).ToList();
         }
 
         public PoolGroupState GetPoolGroupSetting(string poolGroup)
@@ -163,8 +165,6 @@ namespace MapModS.Settings
             {
                 return item.state;
             }
-
-            //MapModS.Instance.LogWarn($"Tried to get a PoolGroup setting, but the key {poolGroup} was missing");
 
             return PoolGroupState.Off;
         }
@@ -177,10 +177,6 @@ namespace MapModS.Settings
             {
                 item.state = state;
             }
-            //else
-            //{
-            //    MapModS.Instance.LogWarn($"Tried to set a PoolGroup setting, but the key {poolGroup} was missing");
-            //}
         }
 
         public void TogglePoolGroupSetting(string poolGroup)
@@ -197,10 +193,6 @@ namespace MapModS.Settings
                     _ => throw new NotImplementedException()
                 };
             }
-            //else
-            //{
-            //    MapModS.Instance.LogWarn($"Tried to set a PoolGroup setting, but the key {poolGroup} was missing");
-            //}
         }
     }
 }

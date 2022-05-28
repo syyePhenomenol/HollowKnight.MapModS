@@ -1,150 +1,79 @@
-﻿using MapModS.Data;
+﻿using GlobalEnums;
+using MapModS.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using RM = RandomizerMod.RandomizerMod;
 
 namespace MapModS.Map
 {
     internal static class Transition
     {
-        public static HashSet<string> nonMapScenes = new()
-        {
-            "Room_temple",
-            "Room_shop",
-            "Room_Town_Stag_Station",
-            "Room_mapper",
-            "Room_Bretta",
-            "Room_Ouiji",
-            "Grimm_Divine",
-            "Grimm_Main_Tent",
-            "Crossroads_ShamanTemple",
-            "Room_ruinhouse",
-            "Room_Charm_Shop",
-            "Room_Mender_House",
-            "Fungus1_35",
-            "Fungus1_36",
-            "Room_Slug_Shrine",
-            "Room_nailmaster_02",
-            "Room_Fungus_Shaman",
-            "Fungus3_archive",
-            "Fungus3_archive_02",
-            "Room_spider_small",
-            "Deepnest_Spider_Town",
-            "Deepnest_45_v02",
-            "Deepnest_East_17",
-            "Room_nailmaster_03",
-            "Room_Wyrm",
-            "Room_Colosseum_01",
-            "Room_Colosseum_02",
-            "Room_Colosseum_Spectate",
-            "Abyss_15",
-            "Abyss_Lighthouse_room",
-            "Room_GG_Shortcut",
-            "Room_nailsmith",
-            "Ruins_House_01",
-            "Ruins_House_02",
-            "Ruins_House_03",
-            "RestingGrounds_07",
-            "Room_Mansion",
-            "Mines_35",
-            "Room_Queen",
-            "Cliffs_03",
-            "Room_nailmaster",
-            "White_Palace_11"
-        };
-
-        public static HashSet<string> whitePalaceScenes = new()
-        {
-            "White_Palace_01",
-            "White_Palace_02",
-            "White_Palace_03_hub",
-            "White_Palace_04",
-            "White_Palace_05",
-            "White_Palace_06",
-            "White_Palace_07",
-            "White_Palace_08",
-            "White_Palace_09",
-            "White_Palace_12",
-            "White_Palace_13",
-            "White_Palace_14",
-            "White_Palace_15",
-            "White_Palace_16",
-            "White_Palace_17",
-            "White_Palace_18",
-            "White_Palace_19",
-            "White_Palace_20"
-        };
-
         public static GameObject CreateExtraMapRooms(GameMap gameMap)
         {
             GameObject go_extraMapRooms = new("MMS Custom Map Rooms");
             go_extraMapRooms.layer = 5;
             go_extraMapRooms.transform.SetParent(gameMap.transform);
-            go_extraMapRooms.transform.localPosition = new Vector3(-14f, 16f, 0);
-            go_extraMapRooms.SetActive(true);
+            go_extraMapRooms.transform.localPosition = Vector3.zero;
+            go_extraMapRooms.SetActive(false);
 
             var areaNamePrefab = UnityEngine.Object.Instantiate(gameMap.areaCliffs.transform.GetChild(0).gameObject);
-            
+
+            UnityEngine.Object.Destroy(areaNamePrefab.GetComponent<DisplayOnWorldMapOnly>());
+
             var prefabTMP = areaNamePrefab.GetComponent<TextMeshPro>();
             prefabTMP.color = Color.white;
             prefabTMP.fontSize = 2.5f;
             prefabTMP.enableWordWrapping = false;
-            prefabTMP.alignment = TextAlignmentOptions.TopLeft;
+            prefabTMP.margin = new Vector4(0f, 0f, 1f, 1f);
+            prefabTMP.alignment = TextAlignmentOptions.Center;
 
             areaNamePrefab.GetComponent<SetTextMeshProGameText>().sheetName = "MMS";
-            areaNamePrefab.GetComponent<RectTransform>().anchorMin = Vector2.zero;
-            areaNamePrefab.GetComponent<RectTransform>().anchorMax = Vector2.zero;
 
             areaNamePrefab.SetActive(false);
 
-            int mapPositionCounter = 0;
-            int maxTableWidth = 4;
-
-            HashSet<string> allScenes = new(nonMapScenes);
-
-            if (!Dependencies.HasDependency("AdditionalMaps"))
+            foreach (string scene in MainData.GetNonMappedScenes())
             {
-                allScenes.UnionWith(whitePalaceScenes);
-                maxTableWidth = 6;
-            }
+                MapRoomDef mrd = MainData.GetNonMappedRoomDef(scene);
 
-            foreach (string scene in allScenes)
-            {
                 GameObject go_extraMapRoom = UnityEngine.Object.Instantiate(areaNamePrefab, go_extraMapRooms.transform);
 
                 go_extraMapRoom.name = scene;
                 go_extraMapRoom.GetComponent<SetTextMeshProGameText>().convName = scene;
-                go_extraMapRoom.transform.localPosition = new Vector3((mapPositionCounter % maxTableWidth) * 4f, -0.8f * (mapPositionCounter / maxTableWidth), 0);
-
-                var tmp = go_extraMapRoom.GetComponent<TextMeshPro>();
+                go_extraMapRoom.transform.localPosition = new Vector3(mrd.offsetX, mrd.offsetY, 0f);
 
                 ExtraMapData extraData = go_extraMapRoom.gameObject.AddComponent<ExtraMapData>();
                 extraData.origColor = Color.white;
                 extraData.sceneName = scene;
 
-                go_extraMapRoom.SetActive(true);
-
-                mapPositionCounter++;
+                go_extraMapRoom.SetActive(false);
             }
+
+            UnityEngine.Object.Destroy(areaNamePrefab);
 
             return go_extraMapRooms;
         }
 
-        enum RoomState
+        public enum RoomState
         {
-            Default,
+            Normal,
             Current,
             Adjacent,
-            OutOfLogic
+            Out_of_logic,
+            Selected,
+            Debug
         }
 
-        readonly static Dictionary<RoomState, Vector4> roomColor = new()
+        public readonly static Dictionary<RoomState, Vector4> roomColor = new()
         {
-            { RoomState.Default, new(255, 255, 255, 0.3f) }, // white
+            { RoomState.Normal, new(255, 255, 255, 0.3f) }, // white
             { RoomState.Current, new(0, 255, 0, 0.4f) }, // green
             { RoomState.Adjacent, new(0, 255, 255, 0.4f) }, // cyan
-            { RoomState.OutOfLogic, new(255, 0, 0, 0.3f) } // red
+            { RoomState.Out_of_logic, new(255, 0, 0, 0.3f) }, // red
+            { RoomState.Selected, new(255, 255, 0, 0.7f) }, // yellow
+            { RoomState.Debug, new(0, 0, 255, 0.5f) } // blue
         };
 
         private static void SetActiveSRColor(Transform transform, bool active, SpriteRenderer sr, Vector4 color)
@@ -171,7 +100,7 @@ namespace MapModS.Map
             tmp.color = color;
         }
 
-        public static HashSet<string> SetupMapTransitionMode(GameMap gameMap)
+        public static HashSet<string> SetupMapTransitionMode(GameMap gameMap, MapZone mapZone)
         {
             bool isAlt = MapModS.LS.mapMode == Settings.MapMode.TransitionRandoAlt;
 
@@ -184,26 +113,26 @@ namespace MapModS.Map
             HashSet<string> uncheckedReachableScenes = new();
 
             HashSet<string> visitedScenes = new(PlayerData.instance.scenesVisited);
-            visitedScenes.Add(StringUtils.CurrentNormalScene());
+            visitedScenes.Add(Utils.CurrentScene());
 
-            RandomizerCore.Logic.ProgressionManager pm = RandomizerMod.RandomizerMod.RS.TrackerData.pm;
+            RandomizerCore.Logic.ProgressionManager pm = RM.RS.TrackerData.pm;
 
             // Get in-logic, out-of-logic, and adjacent visited scenes
-            foreach (KeyValuePair<string, RandomizerCore.Logic.LogicTransition> t in RandomizerMod.RandomizerMod.RS.TrackerData.lm.TransitionLookup)
+            foreach (KeyValuePair<string, RandomizerCore.Logic.LogicTransition> t in RM.RS.TrackerData.lm.TransitionLookup)
             {
-                string scene = DataLoader.GetTransitionScene(t.Key);
+                string scene = TransitionData.GetTransitionScene(t.Key);
 
                 if (pm.Has(t.Value.term.Id))
                 {
                     inLogicScenes.Add(scene);
 
-                    if (scene == StringUtils.CurrentNormalScene())
+                    if (scene == Utils.CurrentScene())
                     {
                         // visitedTransitions doesn't include vanilla transitions
-                        if ((RandomizerMod.RandomizerMod.RS.TrackerData.visitedTransitions.ContainsKey(t.Key) || !DataLoader.IsRandomizedTransition(t.Key))
-                            && DataLoader.GetAdjacentTransition(t.Key) != null)
+                        if ((RM.RS.TrackerData.visitedTransitions.ContainsKey(t.Key) || !TransitionData.IsRandomizedTransition(t.Key))
+                            && TransitionData.GetAdjacentTransition(t.Key) != null)
                         {
-                            visitedAdjacentScenes.Add(DataLoader.GetAdjacentScene(t.Key));
+                            visitedAdjacentScenes.Add(TransitionData.GetAdjacentScene(t.Key));
                         }
                     }
                 }
@@ -214,9 +143,9 @@ namespace MapModS.Map
             }
 
             // Get scenes where there are unchecked reachable transitions
-            foreach (string transition in RandomizerMod.RandomizerMod.RS.TrackerData.uncheckedReachableTransitions)
+            foreach (string transition in RM.RS.TrackerData.uncheckedReachableTransitions)
             {
-                uncheckedReachableScenes.Add(DataLoader.GetTransitionScene(transition));
+                uncheckedReachableScenes.Add(TransitionData.GetTransitionScene(transition));
             }
 
             // Show rooms with custom colors
@@ -248,60 +177,78 @@ namespace MapModS.Map
                     }
 
                     bool active = false;
-                    Vector4 color = roomColor[RoomState.Default];
+                    Vector4 color = roomColor[RoomState.Normal];
 
                     if (isAlt)
                     {
                         if (visitedScenes.Contains(emd.sceneName))
                         {
-                            color = roomColor[RoomState.Default];
+                            color = roomColor[RoomState.Normal];
                             active = true;
                         }
 
                         if (outOfLogicScenes.Contains(emd.sceneName)
                             && !inLogicScenes.Contains(emd.sceneName))
                         {
-                            color = roomColor[RoomState.OutOfLogic];
+                            color = roomColor[RoomState.Out_of_logic];
                         }
                     }
                     else
                     {
                         if (outOfLogicScenes.Contains(emd.sceneName))
                         {
-                            color = roomColor[RoomState.OutOfLogic];
+                            color = roomColor[RoomState.Out_of_logic];
                             active = true;
                         }
 
                         if (inLogicScenes.Contains(emd.sceneName))
                         {
-                            color = roomColor[RoomState.Default];
+                            color = roomColor[RoomState.Normal];
                             active = true;
                         }
                     }
-
-                    // For debugging
-                    //active = true;
 
                     if (visitedAdjacentScenes.Contains(emd.sceneName))
                     {
                         color = roomColor[RoomState.Adjacent];
                     }
 
-                    if (emd.sceneName == StringUtils.CurrentNormalScene())
+#if DEBUG
+                    if (!active)
+                    {
+                        color = roomColor[RoomState.Debug];
+                        active = true;
+                    }
+#endif
+
+                    if (emd.sceneName == Utils.CurrentScene())
                     {
                         color = roomColor[RoomState.Current];
                     }
 
                     if (uncheckedReachableScenes.Contains(emd.sceneName))
                     {
+                        emd.highlight = true;
                         color.w = 1f;
+                    }
+                    else
+                    {
+                        emd.highlight = false;
                     }
 
                     if (areaObj.name == "MMS Custom Map Rooms")
                     {
-                        TextMeshPro tmp = roomObj.gameObject.GetComponent<TextMeshPro>();
-                        SetActiveTMPColor(roomObj, active, tmp, color);
-                        emd.origTransitionColor = tmp.color;
+                        if (mapZone == MapZone.NONE || MainData.GetNonMappedRoomDef(roomObj.name).mapZone == mapZone)
+                        {
+                            TextMeshPro tmp = roomObj.gameObject.GetComponent<TextMeshPro>();
+                            SetActiveTMPColor(roomObj, active, tmp, color);
+                            emd.origTransitionColor = tmp.color;
+                        }
+                        else
+                        {
+                            roomObj.gameObject.SetActive(false);
+                        }
+
                         continue;
                     }
 
@@ -343,31 +290,12 @@ namespace MapModS.Map
             return new(inLogicScenes.Union(outOfLogicScenes));
         }
 
-        private static string GetActualSceneName(string objName)
-        {
-            // Some room objects have non-standard scene names, so we truncate the name
-            // in these situations
-
-            if (objName == "Ruins1_31_top_2") return "Ruins1_31b";
-
-            for (int i = 0; i < 2; i++)
-            {
-                if (RandomizerMod.RandomizerData.Data.IsRoom(objName))
-                {
-                    return objName;
-                }
-
-                objName = StringUtils.DropSuffix(objName);
-            }
-
-            return null;
-        }
-
         public class ExtraMapData : MonoBehaviour
         {
             public Color origColor;
             public Color origTransitionColor;
             public string sceneName;
+            public bool highlight;
         }
 
         // Store original color, also store the sceneName for the room object for convenience
@@ -379,7 +307,7 @@ namespace MapModS.Map
                 {
                     //MapModS.Instance.Log(roomObj.name);
 
-                    string sceneName = GetActualSceneName(roomObj.name);
+                    string sceneName = Utils.GetActualSceneName(roomObj.name);
 
                     if (sceneName == null) continue;
 
@@ -397,6 +325,116 @@ namespace MapModS.Map
                     }
                 }
             }
+        }
+
+        public static void SetSelectedRoomColor(string selectedScene)
+        {
+            GameObject go_GameMap = GameManager.instance.gameMap;
+
+            if (go_GameMap == null) return;
+
+            foreach (Transform areaObj in go_GameMap.transform)
+            {
+                foreach (Transform roomObj in areaObj.transform)
+                {
+                    if (!roomObj.gameObject.activeSelf) continue;
+
+                    ExtraMapData extra = roomObj.GetComponent<ExtraMapData>();
+
+                    if (extra == null) continue;
+
+                    if (areaObj.name == "MMS Custom Map Rooms")
+                    {
+                        TextMeshPro tmp = roomObj.gameObject.GetComponent<TextMeshPro>();
+
+                        if (extra.sceneName == selectedScene)
+                        {
+                            Vector4 color = roomColor[RoomState.Selected];
+
+                            if (extra.highlight)
+                            {
+                                color.w = 1f;
+                            }
+
+                            tmp.color = color;
+                        }
+                        else
+                        {
+                            tmp.color = extra.origTransitionColor;
+                        }
+
+                        continue;
+                    }
+
+                    SpriteRenderer sr = roomObj.GetComponent<SpriteRenderer>();
+
+                    // For AdditionalMaps room objects, the child has the SR
+                    if (extra.sceneName.Contains("White_Palace"))
+                    {
+                        foreach (Transform roomObj2 in roomObj.transform)
+                        {
+                            if (!roomObj2.name.Contains("RWP")) continue;
+                            sr = roomObj2.GetComponent<SpriteRenderer>();
+                            break;
+                        }
+                    }
+
+                    if (sr == null) continue;
+
+                    if (extra.sceneName == selectedScene)
+                    {
+                        Vector4 color = roomColor[RoomState.Selected];
+
+                        if (extra.highlight)
+                        {
+                            color.w = 1f;
+                        }
+
+                        sr.color = color;
+                    }
+                    else
+                    {
+                        sr.color = extra.origTransitionColor;
+                    }
+                }
+            }
+        }
+
+        private static double DistanceToMiddle(Transform transform)
+        {
+            return Math.Pow(transform.position.x, 2) + Math.Pow(transform.position.y, 2);
+        }
+
+        public static bool GetRoomClosestToMiddle(string previousScene, out string selectedScene)
+        {
+            selectedScene = null;
+            double minDistance = double.PositiveInfinity;
+
+            GameObject go_GameMap = GameManager.instance.gameMap;
+
+            if (go_GameMap == null) return false;
+
+            foreach (Transform areaObj in go_GameMap.transform)
+            {
+                foreach (Transform roomObj in areaObj.transform)
+                {
+                    if (!roomObj.gameObject.activeSelf) continue;
+
+                    ExtraMapData extra = roomObj.GetComponent<ExtraMapData>();
+
+                    if (extra == null) continue;
+
+                    double distance = DistanceToMiddle(roomObj);
+
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                        selectedScene = extra.sceneName;
+                    }
+                }
+            }
+
+            return selectedScene != previousScene;
         }
 
         public static void ResetMapColors(GameObject goGameMap)

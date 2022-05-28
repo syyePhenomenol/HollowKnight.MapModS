@@ -15,6 +15,7 @@ namespace MapModS.UI
 
         private Func<bool> Condition;
 
+        private float scale;
         private float radius;
 
         private bool lerp;
@@ -33,14 +34,11 @@ namespace MapModS.UI
             GameObject compass = new(name);
             DontDestroyOnLoad(compass);
 
-            compass.transform.parent = entity.transform;
-
             DirectionalCompass dc = compass.AddComponent<DirectionalCompass>();
 
             // This object is the actual compass sprite. Set active/inactive by the script itself
             dc.compassInternal = new(name + " Internal", typeof(SpriteRenderer));
             DontDestroyOnLoad(dc.compassInternal);
-            dc.compassInternal.layer = 18;
 
             dc.sr = dc.compassInternal.GetComponent<SpriteRenderer>();
             dc.sr.sprite = sprite;
@@ -48,9 +46,9 @@ namespace MapModS.UI
             dc.color = color;
 
             dc.compassInternal.transform.parent = compass.transform;
-            dc.compassInternal.transform.localScale = Vector3.one * scale;
 
             dc.entity = entity;
+            dc.scale = scale;
             dc.radius = radius;
             dc.Condition = condition;
             dc.lerp = lerp;
@@ -69,14 +67,14 @@ namespace MapModS.UI
         {
             if (entity != null && Condition() && TryGetClosestObject(out GameObject o))
             {
-                Vector3 dir = (o.transform.position - entity.transform.position);
+                Vector2 dir = o.transform.position - entity.transform.position;
 
                 dir.Scale(Vector3.one * 0.5f);
 
                 float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
 
                 // Clamp to radius
-                dir = Vector3.ClampMagnitude(dir, radius);
+                dir = Vector2.ClampMagnitude(dir, radius);
 
                 // Do lerp stuff
                 if (lerp)
@@ -89,7 +87,7 @@ namespace MapModS.UI
                     
                     if (Time.time - lerpStartTime < lerpDuration)
                     {
-                        dir = Vector3.Lerp(currentDir, dir, (Time.time - lerpStartTime) / lerpDuration);
+                        dir = Vector2.Lerp(currentDir, dir, (Time.time - lerpStartTime) / lerpDuration);
                         angle = Mathf.LerpAngle(currentAngle, angle, (Time.time - lerpStartTime) / lerpDuration);
                     }
                 }
@@ -97,12 +95,9 @@ namespace MapModS.UI
                 currentDir = dir;
                 currentAngle = angle;
 
-                // Undo reflection when the entity is facing right
-                dir.x *= entity.transform.localScale.x;
-
-                transform.localPosition = dir;
-                transform.eulerAngles = new(0, 0, angle);
-                transform.localScale = dir.magnitude / radius * Vector2.one;
+                compassInternal.transform.position = new Vector3(entity.transform.position.x + dir.x, entity.transform.position.y + dir.y, 0f);
+                compassInternal.transform.eulerAngles = new(0, 0, angle);
+                compassInternal.transform.localScale = new Vector3(dir.magnitude / radius * scale, dir.magnitude / radius * scale, 1f);
                 sr.color = dir.magnitude / radius * color;
 
                 compassInternal.SetActive(true);
@@ -131,7 +126,7 @@ namespace MapModS.UI
         {
             if (o == null || entity == null) return 9999f;
 
-            return (o.transform.position - entity.transform.position).sqrMagnitude;
+            return ((Vector2)(o.transform.position - entity.transform.position)).sqrMagnitude;
         }
     }
 }

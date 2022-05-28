@@ -55,11 +55,29 @@
     <None Remove="Resources\GUI\ButtonRect.png" />
     <None Remove="Resources\GUI\ButtonRectEmpty.png" />
     <None Remove="Resources\GUI\ButtonsMenuBG.png" />
-    <None Remove="Resources\GUI\DropdownBG.png" />
-    <None Remove="Resources\GUI\LookupBG.png" />
+    <None Remove="Resources\GUI\panelLeft.png" />
+    <None Remove="Resources\GUI\panelRight.png" />
     <None Remove="Resources\GUI\StatusPanelBG.png" />
-    <None Remove="Resources\GUI\UncheckedBG.png" />
     <None Remove="Resources\language.json" />
+    <None Remove="Resources\mapRoomsold.json" />
+    <None Remove="Resources\minimalMapRooms.json" />
+    <None Remove="Resources\nonMappedRooms.json" />
+    <None Remove="Resources\Pathfinder\Compass\doorObjectsByScene.json" />
+    <None Remove="Resources\Pathfinder\Compass\doorObjectsByTransition.json" />
+    <None Remove="Resources\Pathfinder\Data\adjacentScenes.json" />
+    <None Remove="Resources\Pathfinder\Data\adjacentTransitions.json" />
+    <None Remove="Resources\Pathfinder\Data\benchwarp.json" />
+    <None Remove="Resources\Pathfinder\Data\conditionalTerms.json" />
+    <None Remove="Resources\Pathfinder\Data\persistentTerms.json" />
+    <None Remove="Resources\Pathfinder\Data\scenesByTransition.json" />
+    <None Remove="Resources\Pathfinder\Data\transitionsbyScene.json" />
+    <None Remove="Resources\Pathfinder\logicEdits.json" />
+    <None Remove="Resources\Pathfinder\Logic\logicSubstitutions.json" />
+    <None Remove="Resources\Pathfinder\Logic\waypoints.json" />
+    <None Remove="Resources\Pathfinder\macros.json" />
+    <None Remove="Resources\Pathfinder\Terms.json" />
+    <None Remove="Resources\Pathfinder\transitions.json" />
+    <None Remove="Resources\Pathfinder\waypoints.json" />
     <None Remove="Resources\pins.json" />
     <None Remove="Resources\pinsAM.json" />
     <None Remove="Resources\pinScenes.json" />
@@ -67,6 +85,10 @@
     <None Remove="Resources\Pins\pinBackerGhost.png" />
     <None Remove="Resources\Pins\pinBench.png" />
     <None Remove="Resources\Pins\pinBenchGrey.png" />
+    <None Remove="Resources\Pins\pinBlank.png" />
+    <None Remove="Resources\Pins\pinBlankCyan.png" />
+    <None Remove="Resources\Pins\pinBlankGreen.png" />
+    <None Remove="Resources\Pins\pinBlankRed.png" />
     <None Remove="Resources\Pins\pinCharm.png" />
     <None Remove="Resources\Pins\pinCharmGreen.png" />
     <None Remove="Resources\Pins\pinCharmRed.png" />
@@ -219,18 +241,37 @@
     <None Remove="Resources\pins_old.json" />
     <None Remove="Resources\pins_unused.json" />
     <None Remove="Resources\shop.json" />
+    <None Remove="Resources\sortedGroups.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\GUI\panelLeft.png" />
+    <EmbeddedResource Include="Resources\Pathfinder\Compass\doorObjectsByScene.json" />
+    <EmbeddedResource Include="Resources\Pathfinder\Compass\doorObjectsByTransition.json" />
+    <EmbeddedResource Include="Resources\Pathfinder\Data\adjacentScenes.json" />
+    <EmbeddedResource Include="Resources\Pathfinder\Data\benchwarp.json" />
+    <EmbeddedResource Include="Resources\Pathfinder\Data\persistentTerms.json" />
+    <EmbeddedResource Include="Resources\Pathfinder\Data\conditionalTerms.json" />
+    <EmbeddedResource Include="Resources\Pathfinder\Data\transitionsByScene.json" />
+    <EmbeddedResource Include="Resources\Pathfinder\Data\scenesByTransition.json" />
+    <EmbeddedResource Include="Resources\Pathfinder\Logic\logicSubstitutions.json" />
+    <EmbeddedResource Include="Resources\Pathfinder\Logic\logicEdits.json" />
+    <EmbeddedResource Include="Resources\Pathfinder\Logic\waypoints.json" />
+    <EmbeddedResource Include="Resources\Pathfinder\Logic\macros.json" />
+    <EmbeddedResource Include="Resources\Pathfinder\Logic\transitions.json" />
+    <EmbeddedResource Include="Resources\Pins\pinBlank.png" />
+    <EmbeddedResource Include="Resources\Pins\pinBlankCyan.png" />
+    <EmbeddedResource Include="Resources\Pins\pinBlankGreen.png" />
+    <EmbeddedResource Include="Resources\Pins\pinBlankRed.png" />
+    <EmbeddedResource Include="Resources\sortedGroups.json" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\GUI\arrow.png" />
-    <EmbeddedResource Include="Resources\GUI\ButtonRect.png" />
-    <EmbeddedResource Include="Resources\GUI\ButtonRectEmpty.png" />
-    <EmbeddedResource Include="Resources\GUI\ButtonsMenuBG.png" />
-    <EmbeddedResource Include="Resources\GUI\DropdownBG.png" />
-    <EmbeddedResource Include="Resources\GUI\UncheckedBG.png" />
-    <EmbeddedResource Include="Resources\GUI\LookupBG.png" />
+    <EmbeddedResource Include="Resources\GUI\panelRight.png" />
+    <EmbeddedResource Include="Resources\minimalMapRooms.json" />
+    <EmbeddedResource Include="Resources\nonMappedRooms.json" />
     <EmbeddedResource Include="Resources\pins.json" />
-    <EmbeddedResource Include="Resources\fixedMapZones.json" />
     <EmbeddedResource Include="Resources\pinsAM.json" />
     <EmbeddedResource Include="Resources\pinScenes.json" />
     <EmbeddedResource Include="Resources\Pins\pinCharm.png" />
@@ -375,6 +416,9 @@
       <Reference Include="ItemChanger">
         <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\ItemChanger\ItemChanger.dll</HintPath>
         <CopyLocal>False</CopyLocal>
+      </Reference>
+      <Reference Include="MagicUI">
+        <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\MagicUI\MagicUI.dll</HintPath>
       </Reference>
       <Reference Include="MenuChanger">
         <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\MenuChanger\MenuChanger.dll</HintPath>

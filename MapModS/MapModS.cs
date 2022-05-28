@@ -16,7 +16,7 @@ namespace MapModS
     {
         public static MapModS Instance;
 
-        public override string GetVersion() => "2.4.5";
+        public override string GetVersion() => "2.5.0";
 
         public override int LoadPriority() => 10;
 
@@ -65,7 +65,8 @@ namespace MapModS
 
             try
             {
-                DataLoader.Load();
+                MainData.Load();
+                PathfinderData.Load();
             }
             catch (Exception e)
             {
@@ -129,9 +130,6 @@ namespace MapModS
 
             // Add a Pause Menu GUI, map text UI and transition helper text
             GUI.Hook();
-
-            // Add keyboard shortcut control
-            InputListener.InstantiateSingleton();
         }
 
         private void Unhook()
@@ -145,7 +143,6 @@ namespace MapModS
             PinsVanilla.Unhook();
             Quill.Unhook();
             GUI.Unhook();
-            InputListener.DestroySingleton();
         }
     }
 }

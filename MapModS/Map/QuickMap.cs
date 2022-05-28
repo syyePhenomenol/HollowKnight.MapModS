@@ -2,8 +2,8 @@
 using HutongGames.PlayMaker;
 using HutongGames.PlayMaker.Actions;
 using MapModS.Data;
-using MapModS.Settings;
 using MapModS.UI;
+using Modding;
 using System.Linq;
 using UnityEngine;
 using Vasi;
@@ -14,6 +14,8 @@ namespace MapModS.Map
     {
         public static void Hook()
         {
+            On.MapNextAreaDisplay.OnEnable += MapNextAreaDisplay_OnEnable;
+
             On.GameMap.PositionCompass += GameMap_PositionCompass;
             On.GameManager.GetCurrentMapZone += GameManager_GetCurrentMapZone;
             On.GameMap.GetDoorMapZone += GameMap_GetDoorMapZone;
@@ -38,6 +40,8 @@ namespace MapModS.Map
 
         public static void Unhook()
         {
+            On.MapNextAreaDisplay.OnEnable -= MapNextAreaDisplay_OnEnable;
+
             On.GameMap.PositionCompass -= GameMap_PositionCompass;
             On.GameManager.GetCurrentMapZone -= GameManager_GetCurrentMapZone;
             On.GameMap.GetDoorMapZone -= GameMap_GetDoorMapZone;
@@ -60,6 +64,17 @@ namespace MapModS.Map
             On.GameManager.SetGameMap -= GameManager_SetGameMap;
         }
 
+        // Don't show next map objects in Quick Map during Transition mode
+        private static void MapNextAreaDisplay_OnEnable(On.MapNextAreaDisplay.orig_OnEnable orig, MapNextAreaDisplay self)
+        {
+            orig(self);
+
+            if (TransitionData.TransitionModeActive())
+            {
+                ReflectionHelper.CallMethod(self, "DeactivateChildren");
+            }
+        }
+
         // Fixes some null referencing shenanigans
         private static void GameMap_PositionCompass(On.GameMap.orig_PositionCompass orig, GameMap self, bool posShade)
         {
@@ -73,7 +88,7 @@ namespace MapModS.Map
         {
             if (!MapModS.LS.ModEnabled) return orig(self);
 
-            MapZone mapZone = DataLoader.GetFixedMapZone();
+            MapZone mapZone = MainData.GetFixedMapZone();
 
             if (mapZone != MapZone.NONE)
             {
@@ -87,7 +102,7 @@ namespace MapModS.Map
         {
             if (!MapModS.LS.ModEnabled) return orig(self);
 
-            MapZone mapZone = DataLoader.GetFixedMapZone();
+            MapZone mapZone = MainData.GetFixedMapZone();
 
             if (mapZone != MapZone.NONE)
             {
@@ -103,9 +118,6 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.ABYSS);
-
-            MapText.Show();
-            TransitionText.ShowQuickMap();
         }
 
         private static void GameMap_QuickMapCity(On.GameMap.orig_QuickMapCity orig, GameMap self)
@@ -113,9 +125,6 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.CITY);
-
-            MapText.Show();
-            TransitionText.ShowQuickMap();
         }
 
         private static void GameMap_QuickMapCliffs(On.GameMap.orig_QuickMapCliffs orig, GameMap self)
@@ -123,9 +132,6 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.CLIFFS);
-
-            MapText.Show();
-            TransitionText.ShowQuickMap();
         }
 
         private static void GameMap_QuickMapCrossroads(On.GameMap.orig_QuickMapCrossroads orig, GameMap self)
@@ -133,9 +139,6 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.CROSSROADS);
-
-            MapText.Show();
-            TransitionText.ShowQuickMap();
         }
 
         private static void GameMap_QuickMapCrystalPeak(On.GameMap.orig_QuickMapCrystalPeak orig, GameMap self)
@@ -143,9 +146,6 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.MINES);
-
-            MapText.Show();
-            TransitionText.ShowQuickMap();
         }
 
         private static void GameMap_QuickMapDeepnest(On.GameMap.orig_QuickMapDeepnest orig, GameMap self)
@@ -153,9 +153,6 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.DEEPNEST);
-
-            MapText.Show();
-            TransitionText.ShowQuickMap();
         }
 
         private static void GameMap_QuickMapDirtmouth(On.GameMap.orig_QuickMapDirtmouth orig, GameMap self)
@@ -163,9 +160,6 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.TOWN);
-
-            MapText.Show();
-            TransitionText.ShowQuickMap();
         }
 
         private static void GameMap_QuickMapFogCanyon(On.GameMap.orig_QuickMapFogCanyon orig, GameMap self)
@@ -173,9 +167,6 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.FOG_CANYON);
-
-            MapText.Show();
-            TransitionText.ShowQuickMap();
         }
 
         private static void GameMap_QuickMapFungalWastes(On.GameMap.orig_QuickMapFungalWastes orig, GameMap self)
@@ -183,9 +174,6 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.WASTES);
-
-            MapText.Show();
-            TransitionText.ShowQuickMap();
         }
 
         private static void GameMap_QuickMapGreenpath(On.GameMap.orig_QuickMapGreenpath orig, GameMap self)
@@ -193,9 +181,6 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.GREEN_PATH);
-
-            MapText.Show();
-            TransitionText.ShowQuickMap();
         }
 
         private static void GameMap_QuickMapKingdomsEdge(On.GameMap.orig_QuickMapKingdomsEdge orig, GameMap self)
@@ -203,9 +188,6 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.OUTSKIRTS);
-
-            MapText.Show();
-            TransitionText.ShowQuickMap();
         }
 
         private static void GameMap_QuickMapQueensGardens(On.GameMap.orig_QuickMapQueensGardens orig, GameMap self)
@@ -213,9 +195,6 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.ROYAL_GARDENS);
-
-            MapText.Show();
-            TransitionText.ShowQuickMap();
         }
 
         private static void GameMap_QuickMapRestingGrounds(On.GameMap.orig_QuickMapRestingGrounds orig, GameMap self)
@@ -223,9 +202,6 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.RESTING_GROUNDS);
-
-            MapText.Show();
-            TransitionText.ShowQuickMap();
         }
 
         private static void GameMap_QuickMapWaterways(On.GameMap.orig_QuickMapWaterways orig, GameMap self)
@@ -233,9 +209,6 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.WATERWAYS);
-
-            MapText.Show();
-            TransitionText.ShowQuickMap();
         }
 
         private static void GameManager_SetGameMap(On.GameManager.orig_SetGameMap orig, GameManager self, GameObject go_gameMap)
@@ -250,7 +223,7 @@ namespace MapModS.Map
 
             foreach (FsmState state in quickMapFSM.FsmStates)
             {
-                if (SettingsUtil.IsFSMMapState(state.Name))
+                if (Utils.IsFSMMapState(state.Name))
                 {
                     string boolString = FsmUtil.GetAction<PlayerDataBoolTest>(state, 0).boolName.ToString();
                     FsmUtil.GetAction<PlayerDataBoolTest>(state, 0).boolName = "MMS_" + boolString;
@@ -297,8 +270,8 @@ namespace MapModS.Map
             WorldMap.UpdateMap(_GameMap, _customMapZone);
             _GameMap.SetupMapMarkers();
 
-            MapText.Show();
-            TransitionText.ShowQuickMap();
+            GUI.worldMapOpen = false;
+            GUI.quickMapOpen = true;
 
             Finish();
         }

@@ -30,6 +30,8 @@
 
         public bool routeCompassEnabled = true;
 
+        public bool controlPanelOn = true;
+
         public RouteTextInGame routeTextInGame = RouteTextInGame.ShowNextTransitionOnly;
 
         public PinStyle pinStyle = PinStyle.Normal;
@@ -51,6 +53,10 @@
         public void ToggleRouteCompassEnabled()
         {
             routeCompassEnabled = !routeCompassEnabled;
+        }
+        public void ToggleControlPanel()
+        {
+            controlPanelOn = !controlPanelOn;
         }
 
         public void ToggleRouteTextInGame()

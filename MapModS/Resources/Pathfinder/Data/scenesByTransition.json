@@ -1,0 +1,13 @@
+﻿{
+  //the scene that a special transition starts from
+
+  "Left_Elevator_Up": "Crossroads_49b",
+  "Left_Elevator_Down": "Crossroads_49",
+  "Right_Elevator_Up": "Ruins2_10b",
+  "Right_Elevator_Down": "Ruins2_10",
+  "Abyss_08[warp]": "Abyss_08",
+  "Abyss_05[warp]": "Abyss_05",
+  "White_Palace_11[warp]": "White_Palace_11",
+  "White_Palace_03_hub[warp]": "White_Palace_03_hub",
+  "White_Palace_20[warp]": "White_Palace_20"
+}

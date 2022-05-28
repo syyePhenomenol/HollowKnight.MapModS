@@ -1,10 +1,10 @@
 ﻿using HutongGames.PlayMaker;
 using HutongGames.PlayMaker.Actions;
+using MapModS.Data;
 using MapModS.Settings;
 using Modding;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
-using System.Collections.Generic;
 using UnityEngine;
 using Vasi;
 
@@ -32,111 +32,7 @@ namespace MapModS.Map
             ModHooks.GetPlayerBoolHook -= BoolGetOverride;
         }
 
-        // The objects that make up the minimal map state
-        private static readonly List<string> _persistentMapObjects = new()
-        {
-            "Crossroads_01",
-            "Crossroads_02",
-            "Crossroads_03",
-            "Crossroads_07",
-            "Crossroads_08",
-            "Crossroads_10",
-            "Crossroads_12",
-            "Crossroads_13",
-            "Crossroads_14",
-            "Crossroads_16",
-            "Crossroads_19",
-            "Crossroads_21",
-            "Crossroads_33",
-            "Crossroads_39",
-            "Crossroads_42",
-            "Crossroads_48",
-            "Waterways_01",
-            "Waterways_02",
-            "Waterways_04",
-            "Waterways_04b",
-            "Waterways_09",
-            "Cliffs_01",
-            "Cliffs_02",
-            "Deepnest_East_03",
-            "Deepnest_East_06",
-            "Deepnest_East_07",
-            "Fungus1_01",
-            "Fungus1_01b",
-            "Fungus1_02",
-            "Fungus1_04",
-            "Fungus1_06",
-            "Fungus1_10",
-            "Fungus1_19",
-            "Fungus1_21",
-            "Fungus1_30",
-            "Fungus1_31",
-            "Fungus1_32",
-            "Fungus1_07",
-            "Fungus3_01",
-            "Fungus3_02",
-            "Fungus3_25",
-            "Fungus3_25b",
-            "Fungus3_26",
-            "Fungus3_27",
-            "Fungus3_47",
-            "Fungus2_01",
-            "Fungus2_03",
-            "Fungus2_04",
-            "Fungus2_05",
-            "Fungus2_06",
-            "Fungus2_07",
-            "Fungus2_08",
-            "Fungus2_09",
-            "Fungus2_10",
-            "Fungus2_11",
-            "Fungus2_18",
-            "Fungus2_21",
-            "Fungus1_24",
-            "Fungus3_04",
-            "Fungus3_05",
-            "Fungus3_08",
-            "Fungus3_10",
-            "Fungus3_11",
-            "Fungus3_34",
-            "Deepnest_01b",
-            "Deepnest_16",
-            "Deepnest_17",
-            "Fungus2_25",
-            "Tutorial_01",
-            "Town",
-            "Crossroads_46b",
-            "RestingGrounds_02",
-            "RestingGrounds_04",
-            "RestingGrounds_05",
-            "Mines_01",
-            "Mines_02",
-            "Mines_03",
-            "Mines_05",
-            "Mines_11",
-            "Mines_13",
-            "Mines_19",
-            "Mines_29",
-            "Mines_30",
-            "Abyss_03",
-            "Abyss_04",
-            "Abyss_05",
-            "Abyss_18",
-            "Ruins1_01",
-            "Ruins1_02",
-            "Ruins1_03",
-            "Ruins1_05b",
-            "Ruins1_05",
-            "Ruins1_05c",
-            "Ruins1_06",
-            "Ruins1_09",
-            "Ruins1_17",
-            "Ruins1_27",
-            "Ruins1_29",
-            "Ruins1_28"
-        };
-
-        // We need to purge the map after turning RevealFullMap off. Essentially the opposite of SetupMap()
+        // We need to purge the map after turning changing mode/disabling the mod. Essentially the opposite of SetupMap()
         public static void PurgeMap()
         {
             GameObject go_gameMap = GameManager.instance.gameMap;
@@ -157,7 +53,7 @@ namespace MapModS.Map
 
                 foreach (Transform roomObj in areaObj.transform)
                 {
-                    roomObj.gameObject.SetActive(_persistentMapObjects.Contains(roomObj.name));
+                    roomObj.gameObject.SetActive(MainData.IsMinimalMapRoom(roomObj.name));
 
                     if (roomObj.name.Contains("Area Name"))
                     {
@@ -268,7 +164,7 @@ namespace MapModS.Map
             {
                 foreach (FsmState state in self.FsmStates)
                 {
-                    if (SettingsUtil.IsFSMMapState(state.Name))
+                    if (Utils.IsFSMMapState(state.Name))
                     {
                         ReplaceBool(self, state.Name, 0);
                         continue;
@@ -360,7 +256,7 @@ namespace MapModS.Map
             }
 
             // These are the map zone objects when zoomed out
-            else if (SettingsUtil.IsFSMMapState(self.gameObject.name) && self.FsmName == "deactivate")
+            else if (Utils.IsFSMMapState(self.gameObject.name) && self.FsmName == "deactivate")
             {
                 ReplaceBool(self, "Check", 0);
             }

@@ -40,14 +40,15 @@ namespace MapModS.Data
             return _js.Deserialize<T>(jtr);
         }
 
-        // For debugging pins
-        //public static T DeserializeFromExternalFile<T>(string externalFile)
-        //{
-        //    string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-        //    using StreamReader sr = new(Path.Combine(assemblyFolder, externalFile));
-        //    using JsonTextReader jtr = new(sr);
-        //    return _js.Deserialize<T>(jtr);
-        //}
+#if DEBUG
+        public static T DeserializeFromExternalFile<T>(string externalFile)
+        {
+            string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            using StreamReader sr = new(Path.Combine(assemblyFolder, externalFile));
+            using JsonTextReader jtr = new(sr);
+            return _js.Deserialize<T>(jtr);
+        }
+#endif
 
         public static T DeserializeString<T>(string json)
         {

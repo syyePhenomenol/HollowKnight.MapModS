@@ -76,7 +76,7 @@ namespace MapModS.Trackers
                 case "Mega Zombie Beam Miner (1)":
                 case "Zombie Beam Miner Rematch":
                 case "Giant Fly":
-                    MapModS.LS.ObtainedVanillaItems[self.gameObject.name + StringUtils.CurrentNormalScene()??""] = true;
+                    MapModS.LS.ObtainedVanillaItems[self.gameObject.name + Utils.CurrentScene()??""] = true;
                     break;
                 default:
                     break;

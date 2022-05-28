@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using MapModS.Data;
 using MapModS.Settings;
 using Modding.Utils;
 using UnityEngine;
+using PD = MapModS.Data.PathfinderData;
+using SM = UnityEngine.SceneManagement.SceneManager;
+using TP = MapModS.UI.TransitionPersistent;
 
 namespace MapModS.UI
 {
@@ -13,56 +15,13 @@ namespace MapModS.UI
         private static DirectionalCompass CompassC => compass.GetComponent<DirectionalCompass>();
         private static GameObject Knight => HeroController.instance?.gameObject;
 
-        private static readonly Dictionary<string, string> specialDoors = new()
-        {
-            { "Town[door_station]", "_Props/Stag_station/open/door_station" },
-            { "Town[door_sly]", "_Props/Sly_shop/open/door_sly" },
-            { "Town[door_mapper]", "_Props/Mappers_house/open/door_mapper" },
-            { "Town[door_jiji]", "Jiji Door/door_jiji" },
-            { "Town[door_bretta]", "bretta_house/open/door_bretta" },
-            { "Crossroads_04[door_Mender_House]", "_Transition Gates/Mender Door/door_Mender_House" },
-            { "Ruins2_04[door_Ruin_Elevator]", "Bathhouse Door/door_Ruin_Elevator" },
-            { "Fungus1_07[top1]", "Missing Prefab/Missing Prefab (Dummy)/top1" },
-            { "Fungus1_07[left1]", "Missing Prefab/Missing Prefab (Dummy)/left1" },
-            { "Fungus1_11[bot1]", "Missing Prefab/Missing Prefab (Dummy)/bot1" },
-            { "Fungus1_11[top1]", "Missing Prefab/Missing Prefab (Dummy)/top1" },
-            { "Fungus1_11[left1]", "Missing Prefab/Missing Prefab (Dummy)/left1" },
-
-            { "Left Elevator Up", "elev_main/Lift Call Lever" },
-            { "Left Elevator Down", "_Scenery/elev_main/Lift Call Lever" },
-            { "Right Elevator Up", "elev_main/Lift Call Lever" },
-            { "Right Elevator Down", "elev_main/Lift Call Lever" },
-
-            { "Abyss_05[warp]", "Dusk Knight/Shield" },
-            { "White_Palace_11[warp]", "doorWarp" },
-            { "White_Palace_03_hub[warp]", "doorWarp" },
-            { "White_Palace_20[warp]", "End Scene" }
-        };
-
-        private static readonly Dictionary<string, string> doorsByScene = new()
-        {
-            { "Room_Town_Stag_Station", "Station Bell/Bell" },
-            { "Crossroads_47", "_Scenery/Station Bell/Bell" },
-            { "Fungus1_16_alt", "Station Bell/Bell" },
-            { "Fungus2_02", "Station Bell/Bell" },
-            { "Deepnest_09", "Station Bell/Bell" },
-            { "Abyss_22", "Station Bell/Bell" },
-            { "Ruins1_29", "Station Bell/Bell" },
-            { "Ruins2_08", "Station Bell/Bell" },
-            { "RestingGrounds_09", "Station Bell Lever/Bell/Bell" },
-            { "Fungus3_40", "Station Bell/Bell" },
-            { "Crossroads_46", "Tram Main/door_tram" },
-            { "Crossroads_46b", "Tram Main/door_tram" },
-            { "Abyss_03_b", "Tram Main/door_tram" },
-            { "Abyss_03" , "Tram Main/door_tram" },
-            { "Abyss_03_c", "Tram Main/door_tram" }
-        };
-
         public static void CreateRouteCompass()
         {
             if (compass != null && CompassC != null) CompassC.Destroy();
 
-            if (Knight == null || GUIController.Instance == null) return;
+            if (Knight == null
+                || GUIController.Instance == null
+                || GameManager.instance.IsNonGameplayScene()) return;
 
             Texture2D tex = GUIController.Instance.Images["arrow"];
 
@@ -88,28 +47,27 @@ namespace MapModS.UI
         {
             if (compass == null) return;
 
-            if (CompassC != null && TransitionText.selectedRoute.Any())
+            if (CompassC != null && TP.selectedRoute.Any())
             {
-                string transition = TransitionText.selectedRoute.First();
-                string scene = TransitionHelper.GetScene(TransitionText.selectedRoute.First());
+                string transition = TP.selectedRoute.First();
+                string scene = PD.GetScene(TP.selectedRoute.First());
                 string gate = "";
 
-                if (StringUtils.CurrentNormalScene() == scene)
+                if (Utils.CurrentScene() == scene)
                 {
-                    if (specialDoors.ContainsKey(transition))
+                    if (PD.doorObjectsByTransition.ContainsKey(transition))
                     {
-                        gate = specialDoors[transition];
+                        gate = PD.doorObjectsByTransition[transition];
                     }
-                    else if (DataLoader.IsInTransitionLookup(transition))
+                    else if (TransitionData.IsInTransitionLookup(transition))
                     {
-                        gate = DataLoader.GetTransitionDoor(transition);
+                        gate = TransitionData.GetTransitionDoor(transition);
                     }
                 }
-                else if ((TransitionHelper.stagTransitions.ContainsKey(transition)
-                        || TransitionHelper.tramTransitions.ContainsKey(transition))
-                    && doorsByScene.ContainsKey(StringUtils.CurrentNormalScene()))
+                else if ((transition.IsStagTransition() || transition.IsTramTransition())
+                    && PD.doorObjectsByScene.ContainsKey(Utils.CurrentScene()))
                 {
-                    gate = doorsByScene[StringUtils.CurrentNormalScene()];
+                    gate = PD.doorObjectsByScene[Utils.CurrentScene()];
                 }
 
                 if (gate == "")
@@ -118,7 +76,7 @@ namespace MapModS.UI
                     return;
                 }
 
-                GameObject gateObject = UnityExtensions.FindGameObject(UnityEngine.SceneManagement.SceneManager.GetActiveScene(), gate);
+                GameObject gateObject = UnityExtensions.FindGameObject(SM.GetActiveScene(), gate);
 
                 if (gateObject != null)
                 {
@@ -127,7 +85,7 @@ namespace MapModS.UI
                     return;
                 }
 
-                GameObject gateObject2 = UnityExtensions.FindGameObject(UnityEngine.SceneManagement.SceneManager.GetActiveScene(), "_Transition Gates/" + gate);
+                GameObject gateObject2 = UnityExtensions.FindGameObject(SM.GetActiveScene(), "_Transition Gates/" + gate);
 
                 if (gateObject2 != null)
                 {
