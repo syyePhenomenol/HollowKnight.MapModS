@@ -16,6 +16,7 @@ namespace MapModS
             { "ItemChanger", null },
             { "MenuChanger", null },
             { "ConnectionMetadataInjector", null },
+            { "MagicUI", null },
             { "Vasi", null }
         };
 
