@@ -42,7 +42,7 @@ namespace MapModS.UI
                 layout = new(true, "Control Panel");
                 layout.VisibilityCondition = Condition;
 
-                panel = new(layout, GUIController.Instance.Images["panelLeft"].ToSlicedSprite(0f, 50f, 100f, 50f), "Panel")
+                panel = new(layout, GUIController.Instance.Images["panelLeft"].ToSlicedSprite(200f, 50f, 100f, 50f), "Panel")
                 {
                     MinWidth = 0f,
                     MinHeight = 0f,

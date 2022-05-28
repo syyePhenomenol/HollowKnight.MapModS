@@ -33,7 +33,7 @@ namespace MapModS.UI
                 layout = new(true, "Lookup");
                 layout.VisibilityCondition = Condition;
 
-                panel = new(layout, GUIController.Instance.Images["panelRight"].ToSlicedSprite(100f, 50f, 0f, 50f), "Panel")
+                panel = new(layout, GUIController.Instance.Images["panelRight"].ToSlicedSprite(100f, 50f, 200f, 50f), "Panel")
                 {
                     Borders = new(30f, 30f, 30f, 30f),
                     MinWidth = 400f,
