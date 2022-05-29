@@ -189,7 +189,7 @@ namespace MapModS.Data
                         || (pd.locationPoolGroup == "Whispering Roots" && PlayerData.instance.scenesEncounteredDreamPlantC.Contains(pd.sceneName))
                         || (pd.locationPoolGroup == "Grubs" && PlayerData.instance.scenesGrubRescued.Contains(pd.sceneName))
                         || (pd.locationPoolGroup == "Grimmkin Flames" && PlayerData.instance.scenesFlameCollected.Contains(pd.sceneName))
-                        || MapModS.LS.ObtainedVanillaItems.ContainsKey(pd.objectName + pd.sceneName);
+                        || MapModS.LS.obtainedVanillaItems.ContainsKey(pd.objectName + pd.sceneName);
         }
 
         public static void SetUsedPinDefs()

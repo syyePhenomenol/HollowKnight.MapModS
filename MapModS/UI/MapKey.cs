@@ -3,6 +3,7 @@ using MagicUI.Elements;
 using MagicUI.Graphics;
 using MapModS.Data;
 using MapModS.Map;
+using MapModS.Settings;
 using System.Collections.Generic;
 using UnityEngine;
 using L = RandomizerMod.Localization;
@@ -29,7 +30,7 @@ namespace MapModS.UI
         public static bool Condition()
         {
             return GUI.worldMapOpen
-                && MapModS.LS.ModEnabled
+                && MapModS.LS.modEnabled
                 && !GUI.lockToggleEnable;
         }
 
@@ -201,7 +202,7 @@ namespace MapModS.UI
 
         public static void UpdatePanel()
         {
-            if (MapModS.LS.mapKeyOn)
+            if (MapModS.GS.mapKeyOn)
             {
                 panel.Visibility = Visibility.Visible;
             }
@@ -210,7 +211,8 @@ namespace MapModS.UI
                 panel.Visibility = Visibility.Hidden;
             }
 
-            if (TransitionData.TransitionModeActive())
+            if (MapModS.LS.mapMode == MapMode.TransitionRando
+                || MapModS.LS.mapMode == MapMode.TransitionRandoAlt)
             {
                 roomKey.Visibility = Visibility.Visible;
             }

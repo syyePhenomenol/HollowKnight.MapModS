@@ -177,7 +177,7 @@ namespace MapModS.Map
         {
             orig(self);
 
-            if (!MapModS.LS.ModEnabled) return;
+            if (!MapModS.LS.modEnabled) return;
 
             self.gameObject.SetActive(false);
         }
@@ -186,7 +186,7 @@ namespace MapModS.Map
         {
             orig(self);
 
-            if (!MapModS.LS.ModEnabled) return;
+            if (!MapModS.LS.modEnabled) return;
 
             self.gameObject.SetActive(false);
         }
@@ -195,7 +195,7 @@ namespace MapModS.Map
         {
             orig(self);
 
-            if (!MapModS.LS.ModEnabled) return;
+            if (!MapModS.LS.modEnabled) return;
 
             self.gameObject.SetActive(false);
         }
@@ -212,21 +212,21 @@ namespace MapModS.Map
 
                 if (child.gameObject.name == "Pin_Black_Egg")
                 {
-                    if (MapModS.LS.ModEnabled)
+                    if (MapModS.LS.modEnabled)
                     {
                         child.gameObject.SetActive(false);
                     }
                 }
                 else if (child.gameObject.name == "pin_blue_health")
                 {
-                    if (MapModS.LS.ModEnabled)
+                    if (MapModS.LS.modEnabled)
                     {
                         child.gameObject.SetActive(false);
                     }
                 }
                 else if (child.gameObject.name == "pin_dream_tree")
                 {
-                    if (MapModS.LS.ModEnabled)
+                    if (MapModS.LS.modEnabled)
                     {
                         child.gameObject.SetActive(false);
                     }
@@ -250,7 +250,7 @@ namespace MapModS.Map
 
             if (boolName.StartsWith("MMSX"))
             {
-                if (MapModS.LS.ModEnabled)
+                if (MapModS.LS.modEnabled)
                 {
                     if (boolName.Contains("hasPinBench") && MapModS.LS.showBenchPins)
                     {

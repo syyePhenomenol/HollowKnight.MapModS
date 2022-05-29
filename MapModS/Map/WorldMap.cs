@@ -53,10 +53,10 @@ namespace MapModS.Map
                 TransitionData.SetTransitionLookup();
                 PathfinderData.SetPathfinderLogic();
 
-                if (MapModS.LS.NewSettings || MapModS.LS.PoolGroupSettings.Count == 0)
+                if (MapModS.LS.newSettings || MapModS.LS.poolGroupSettings.Count == 0)
                 {
                     MapModS.LS.InitializePoolGroupSettings();
-                    MapModS.LS.NewSettings = true;
+                    MapModS.LS.newSettings = true;
                 }
             }
             catch (Exception e)
@@ -79,7 +79,7 @@ namespace MapModS.Map
                 goExtraRooms = Transition.CreateExtraMapRooms(gameMap);
             }
 
-            if (TransitionData.IsTransitionRando() && MapModS.LS.NewSettings)
+            if (TransitionData.IsTransitionRando() && MapModS.LS.newSettings)
             {
                 MapModS.LS.mapMode = MapMode.TransitionRando;
             }
@@ -103,7 +103,7 @@ namespace MapModS.Map
 
             CustomPins.GetRandomizedOthersGroups();
 
-            if (MapModS.LS.NewSettings)
+            if (MapModS.LS.newSettings)
             {
                 CustomPins.ResetPoolSettings();
             }
@@ -112,7 +112,7 @@ namespace MapModS.Map
 
             MapModS.Instance.Log("Adding Custom Pins done.");
 
-            MapModS.LS.NewSettings = false;
+            MapModS.LS.newSettings = false;
         }
 
         // Called every time we open the World Map
@@ -121,7 +121,7 @@ namespace MapModS.Map
             orig(self);
 
             // Easiest way to force AdditionalMaps custom areas to show
-            if (MapModS.LS.ModEnabled
+            if (MapModS.LS.modEnabled
                 && (MapModS.LS.mapMode == MapMode.FullMap
                     || MapModS.LS.mapMode == MapMode.TransitionRando
                     || MapModS.LS.mapMode == MapMode.TransitionRandoAlt))
@@ -151,7 +151,7 @@ namespace MapModS.Map
         {
             orig(self);
 
-            if (!MapModS.LS.ModEnabled || goCustomPins == null) return;
+            if (!MapModS.LS.modEnabled || goCustomPins == null) return;
 
             goCustomPins.SetActive(true);
         }
@@ -192,7 +192,7 @@ namespace MapModS.Map
         // Zoom faster on keyboard by holding down shift key, similarly to right analog stick on controller
         private static void GameMap_Update(On.GameMap.orig_Update orig, GameMap self)
         {
-            if (MapModS.LS.ModEnabled
+            if (MapModS.LS.modEnabled
                 && self.canPan
                 && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
             {
@@ -235,7 +235,7 @@ namespace MapModS.Map
                 gameMap.SetupMap();
             }
 
-            if (goCustomPins == null || !MapModS.LS.ModEnabled) return;
+            if (goCustomPins == null || !MapModS.LS.modEnabled) return;
 
             gameMap.panMinX = -29f;
             gameMap.panMaxX = 26f;

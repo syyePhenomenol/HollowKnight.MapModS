@@ -101,7 +101,7 @@ namespace MapModS.UI
 
         public static bool IsCompassEnabled()
         {
-            return (MapModS.LS.ModEnabled
+            return (MapModS.LS.modEnabled
                 && (MapModS.LS.mapMode == MapMode.TransitionRando
                     || MapModS.LS.mapMode == MapMode.TransitionRandoAlt)
                 && MapModS.GS.routeCompassEnabled);

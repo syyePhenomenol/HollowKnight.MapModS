@@ -55,13 +55,13 @@ namespace MapModS.Trackers
         private static void AfterSavegameLoadHook(SaveGameData self)
         {
             // Update Geo Rock counter (vanilla Geo Rocks only)
-            MapModS.LS.GeoRockCounter = 0;
+            MapModS.LS.geoRockCounter = 0;
 
             foreach (GeoRockData grd in self.sceneData.geoRocks)
             {
                 if (grd.hitsLeft == 0)
                 {
-                    MapModS.LS.GeoRockCounter++;
+                    MapModS.LS.geoRockCounter++;
                 }
             }
         }

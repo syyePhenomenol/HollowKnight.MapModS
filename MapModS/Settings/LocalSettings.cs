@@ -44,36 +44,32 @@ namespace MapModS.Settings
     [Serializable]
     public class LocalSettings
     {
-        public Dictionary<string, bool> ObtainedVanillaItems = new();
+        public Dictionary<string, bool> obtainedVanillaItems = new();
 
         // Vanilla only
-        public int GeoRockCounter = 0;
+        public int geoRockCounter = 0;
 
         public bool showBenchPins = false;
 
-        public bool ModEnabled = false;
+        public bool modEnabled = false;
 
         public MapMode mapMode = MapMode.FullMap;
 
-        public bool lookupOn = false;
-
-        public bool mapKeyOn = false;
-
         public GroupBy groupBy;
 
-        public bool SpoilerOn = false;
+        public bool spoilerOn = false;
 
         public bool randomizedOn = true;
 
         public bool othersOn = false;
 
-        public bool NewSettings = true;
+        public bool newSettings = true;
 
-        public List<SettingPair> PoolGroupSettings = new();
+        public List<SettingPair> poolGroupSettings = new();
 
         public void ToggleModEnabled()
         {
-            ModEnabled = !ModEnabled;
+            modEnabled = !modEnabled;
         }
 
         public void ToggleMapMode()
@@ -109,16 +105,6 @@ namespace MapModS.Settings
             }
         }
 
-        public void ToggleMapKey()
-        {
-            mapKeyOn = !mapKeyOn;
-        }
-
-        public void ToggleLookup()
-        {
-            lookupOn = !lookupOn;
-        }
-
         public void ToggleBench()
         {
             showBenchPins = !showBenchPins;
@@ -139,7 +125,7 @@ namespace MapModS.Settings
 
         public void ToggleSpoilers()
         {
-            SpoilerOn = !SpoilerOn;
+            spoilerOn = !spoilerOn;
         }
 
         public void ToggleRandomizedOn()
@@ -154,12 +140,12 @@ namespace MapModS.Settings
 
         public void InitializePoolGroupSettings()
         {
-            PoolGroupSettings = MainData.usedPoolGroups.Select(p => new SettingPair(p, PoolGroupState.On)).ToList();
+            poolGroupSettings = MainData.usedPoolGroups.Select(p => new SettingPair(p, PoolGroupState.On)).ToList();
         }
 
         public PoolGroupState GetPoolGroupSetting(string poolGroup)
         {
-            var item = PoolGroupSettings.FirstOrDefault(s => s.poolGroup == poolGroup);
+            var item = poolGroupSettings.FirstOrDefault(s => s.poolGroup == poolGroup);
 
             if (item != null)
             {
@@ -171,7 +157,7 @@ namespace MapModS.Settings
 
         public void SetPoolGroupSetting(string poolGroup, PoolGroupState state)
         {
-            var item = PoolGroupSettings.FirstOrDefault(s => s.poolGroup == poolGroup);
+            var item = poolGroupSettings.FirstOrDefault(s => s.poolGroup == poolGroup);
 
             if (item != null)
             {
@@ -181,7 +167,7 @@ namespace MapModS.Settings
 
         public void TogglePoolGroupSetting(string poolGroup)
         {
-            var item = PoolGroupSettings.FirstOrDefault(s => s.poolGroup == poolGroup);
+            var item = poolGroupSettings.FirstOrDefault(s => s.poolGroup == poolGroup);
 
             if (item != null)
             {

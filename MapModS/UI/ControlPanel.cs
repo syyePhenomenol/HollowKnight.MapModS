@@ -1,7 +1,6 @@
 ﻿using MagicUI.Core;
 using MagicUI.Elements;
 using MagicUI.Graphics;
-using MapModS.Data;
 using MapModS.Map;
 using MapModS.Settings;
 using UnityEngine;
@@ -30,7 +29,7 @@ namespace MapModS.UI
 
         public static bool Condition()
         {
-            return MapModS.LS.ModEnabled
+            return MapModS.LS.modEnabled
                 && GUI.worldMapOpen
                 && !GUI.lockToggleEnable;
         }
@@ -94,20 +93,20 @@ namespace MapModS.UI
                 {
                     MapModS.GS.ToggleControlPanel();
                     UpdateAll();
-                }, ModifierKeys.Ctrl, () => MapModS.LS.ModEnabled);
+                }, ModifierKeys.Ctrl, () => MapModS.LS.modEnabled);
 
                 layout.ListenForHotkey(KeyCode.K, () =>
                 {
-                    MapModS.LS.ToggleMapKey();
+                    MapModS.GS.ToggleMapKey();
                     UpdateAll();
                     MapKey.UpdateAll();
-                }, ModifierKeys.Ctrl, () => MapModS.LS.ModEnabled);
+                }, ModifierKeys.Ctrl, () => MapModS.LS.modEnabled);
 
                 layout.ListenForHotkey(KeyCode.L, () =>
                 {
-                    MapModS.LS.ToggleLookup();
+                    MapModS.GS.ToggleLookup();
 
-                    if (MapModS.LS.lookupOn)
+                    if (MapModS.GS.lookupOn)
                     {
                         LookupText.UpdateSelectedPin();
                     }
@@ -118,7 +117,7 @@ namespace MapModS.UI
 
                     UpdateAll();
                     LookupText.UpdateAll();
-                }, ModifierKeys.Ctrl, () => MapModS.LS.ModEnabled);
+                }, ModifierKeys.Ctrl, () => MapModS.LS.modEnabled);
 
                 layout.ListenForHotkey(KeyCode.B, () =>
                 {
@@ -127,14 +126,14 @@ namespace MapModS.UI
                     UpdateAll();
                     TransitionPersistent.UpdateAll();
                     TransitionWorldMap.UpdateAll();
-                }, ModifierKeys.Ctrl, () => MapModS.LS.ModEnabled);
+                }, ModifierKeys.Ctrl, () => MapModS.LS.modEnabled);
 
                 layout.ListenForHotkey(KeyCode.U, () =>
                 {
                     MapModS.GS.ToggleUncheckedPanel();
                     UpdateAll();
                     TransitionWorldMap.UpdateAll();
-                }, ModifierKeys.Ctrl, () => MapModS.LS.ModEnabled);
+                }, ModifierKeys.Ctrl, () => MapModS.LS.modEnabled);
 
                 layout.ListenForHotkey(KeyCode.R, () =>
                 {
@@ -142,14 +141,14 @@ namespace MapModS.UI
                     UpdateAll();
                     TransitionPersistent.UpdateAll();
                     TransitionWorldMap.UpdateAll();
-                }, ModifierKeys.Ctrl, () => MapModS.LS.ModEnabled);
+                }, ModifierKeys.Ctrl, () => MapModS.LS.modEnabled);
 
                 layout.ListenForHotkey(KeyCode.C, () =>
                 {
                     MapModS.GS.ToggleRouteCompassEnabled();
                     UpdateAll();
                     TransitionWorldMap.UpdateAll();
-                }, ModifierKeys.Ctrl, () => MapModS.LS.ModEnabled);
+                }, ModifierKeys.Ctrl, () => MapModS.LS.modEnabled);
 
                 UpdateAll();
             }
@@ -178,7 +177,8 @@ namespace MapModS.UI
                 mapKey.Visibility = Visibility.Visible;
                 lookup.Visibility = Visibility.Visible;
 
-                if (TransitionData.TransitionModeActive())
+                if (MapModS.LS.mapMode == MapMode.TransitionRando
+                    || MapModS.LS.mapMode == MapMode.TransitionRandoAlt)
                 {
                     benchwarp.Visibility = Visibility.Visible;
                     uncheckedVisited.Visibility = Visibility.Visible;
@@ -224,7 +224,7 @@ namespace MapModS.UI
                 (
                     mapKey,
                     $"{L.Localize("Toggle map key")} (Ctrl-K): ",
-                    MapModS.LS.mapKeyOn
+                    MapModS.GS.mapKeyOn
                 );
         }
 
@@ -234,7 +234,7 @@ namespace MapModS.UI
                 (
                     lookup,
                     $"{L.Localize("Toggle lookup")} (Ctrl-L): ",
-                    MapModS.LS.lookupOn
+                    MapModS.GS.lookupOn
                 );
         }
 

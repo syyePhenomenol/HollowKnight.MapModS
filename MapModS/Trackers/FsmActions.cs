@@ -19,10 +19,10 @@ namespace MapModS.Trackers
         {
             if (!_grd.id.Contains("-"))
             {
-                MapModS.LS.ObtainedVanillaItems[_grd.id + _grd.sceneName] = true;
+                MapModS.LS.obtainedVanillaItems[_grd.id + _grd.sceneName] = true;
             }
 
-            MapModS.LS.GeoRockCounter ++;
+            MapModS.LS.geoRockCounter ++;
 
             //MapModS.Instance.Log("Geo Rock broken");
             //MapModS.Instance.Log(" ID: " + _grd.id);
@@ -47,7 +47,7 @@ namespace MapModS.Trackers
 
             if (!_oName.Contains("-"))
             {
-                MapModS.LS.ObtainedVanillaItems[_oName + scene] = true;
+                MapModS.LS.obtainedVanillaItems[_oName + scene] = true;
             }
 
             //MapModS.Instance.Log("Item picked up");

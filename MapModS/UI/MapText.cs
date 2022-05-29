@@ -75,7 +75,7 @@ namespace MapModS.UI
 
                 _textObjects[textName].Item2.Invoke(textObj);
 
-                if (MapModS.LS.ModEnabled)
+                if (MapModS.LS.modEnabled)
                 {
                     textObj.Visibility = Visibility.Visible;
                 }
@@ -99,7 +99,7 @@ namespace MapModS.UI
 
             refresh.Visibility = Visibility.Visible;
 
-            if (MapModS.LS.ModEnabled)
+            if (MapModS.LS.modEnabled)
             {
                 refresh.Text = L.Localize("MapModS enabled. Close map to refresh");
             }
@@ -113,7 +113,7 @@ namespace MapModS.UI
         {
             string text = $"{L.Localize("Spoilers")} (ctrl-1): ";
 
-            if (MapModS.LS.SpoilerOn)
+            if (MapModS.LS.spoilerOn)
             {
                 textObj.ContentColor = Color.green;
                 text += L.Localize("on");

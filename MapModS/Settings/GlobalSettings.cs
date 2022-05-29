@@ -1,4 +1,6 @@
-﻿namespace MapModS.Settings
+﻿using System;
+
+namespace MapModS.Settings
 {
     public enum PinSize
     {
@@ -22,6 +24,7 @@
         ShowNextTransitionOnly
     }
 
+    [Serializable]
     public class GlobalSettings
     {
         public bool allowBenchWarpSearch = true;
@@ -31,6 +34,10 @@
         public bool routeCompassEnabled = true;
 
         public bool controlPanelOn = true;
+
+        public bool mapKeyOn = false;
+
+        public bool lookupOn = false;
 
         public RouteTextInGame routeTextInGame = RouteTextInGame.ShowNextTransitionOnly;
 
@@ -57,6 +64,16 @@
         public void ToggleControlPanel()
         {
             controlPanelOn = !controlPanelOn;
+        }
+
+        public void ToggleMapKey()
+        {
+            mapKeyOn = !mapKeyOn;
+        }
+
+        public void ToggleLookup()
+        {
+            lookupOn = !lookupOn;
         }
 
         public void ToggleRouteTextInGame()

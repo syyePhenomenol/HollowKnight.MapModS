@@ -26,7 +26,7 @@ namespace MapModS.Trackers
             {
                 if (grd.hitsLeft == 0)
                 {
-                    MapModS.LS.ObtainedVanillaItems[grd.id + grd.sceneName] = true;
+                    MapModS.LS.obtainedVanillaItems[grd.id + grd.sceneName] = true;
                 }
             }
 
@@ -43,22 +43,22 @@ namespace MapModS.Trackers
                     || pbd.id == "Zombie Beam Miner Rematch")
                     && !pbd.id.Contains("-"))
                 {
-                    MapModS.LS.ObtainedVanillaItems[pbd.id + pbd.sceneName] = true;
+                    MapModS.LS.obtainedVanillaItems[pbd.id + pbd.sceneName] = true;
                 }
                 // Soul Warrior Sanctum Boss Geo
                 else if (pbd.id == "Battle Scene v2" && pbd.sceneName == "Ruins1_23")
                 {
-                    MapModS.LS.ObtainedVanillaItems["Mage Knight" + pbd.sceneName] = true;
+                    MapModS.LS.obtainedVanillaItems["Mage Knight" + pbd.sceneName] = true;
                 }
                 // Soul Warrior Elegant Key Boss Geo
                 else if (pbd.id == "Battle Scene v2" && pbd.sceneName == "Ruins1_31")
                 {
-                    MapModS.LS.ObtainedVanillaItems["Mage Knight" + pbd.sceneName + "b"] = true;
+                    MapModS.LS.obtainedVanillaItems["Mage Knight" + pbd.sceneName + "b"] = true;
                 }
                 // Gruz Mother Boss Geo
                 else if (pbd.id == "Battle Scene" && pbd.sceneName == "Crossroads_04")
                 {
-                    MapModS.LS.ObtainedVanillaItems["Giant Fly" + pbd.sceneName] = true;
+                    MapModS.LS.obtainedVanillaItems["Giant Fly" + pbd.sceneName] = true;
                 }
             }
         }
@@ -76,7 +76,7 @@ namespace MapModS.Trackers
                 case "Mega Zombie Beam Miner (1)":
                 case "Zombie Beam Miner Rematch":
                 case "Giant Fly":
-                    MapModS.LS.ObtainedVanillaItems[self.gameObject.name + Utils.CurrentScene()??""] = true;
+                    MapModS.LS.obtainedVanillaItems[self.gameObject.name + Utils.CurrentScene()??""] = true;
                     break;
                 default:
                     break;

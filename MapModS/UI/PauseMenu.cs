@@ -159,7 +159,7 @@ namespace MapModS.UI
                 layout.ListenForHotkey(kvp.Value.Item1, () =>
                 {
                     kvp.Value.Item2.Invoke((Button)layout.GetElement(kvp.Key));
-                }, ModifierKeys.Ctrl, () => MapModS.LS.ModEnabled);
+                }, ModifierKeys.Ctrl, () => MapModS.LS.modEnabled);
             }
 
             UpdateAll();
@@ -181,7 +181,7 @@ namespace MapModS.UI
 
                 if (kvp.Key == "Enabled") continue;
 
-                if (MapModS.LS.ModEnabled)
+                if (MapModS.LS.modEnabled)
                 {
                     button.Visibility = Visibility.Visible;
                 }
@@ -196,7 +196,7 @@ namespace MapModS.UI
                 UpdatePool((Button)layout.GetElement(group));
             }
 
-            if (MapModS.LS.ModEnabled && panelActive)
+            if (MapModS.LS.modEnabled && panelActive)
             {
                 layout.GetElement("Pool Buttons").Visibility = Visibility.Visible;
                 layout.GetElement("Aux Buttons").Visibility = Visibility.Visible;
@@ -232,7 +232,7 @@ namespace MapModS.UI
                 MapText.UpdateAll();
             }
 
-            if (!MapModS.LS.ModEnabled)
+            if (!MapModS.LS.modEnabled)
             {
                 WorldMap.goCustomPins.SetActive(false);
                 WorldMap.goExtraRooms.SetActive(false);
@@ -246,7 +246,7 @@ namespace MapModS.UI
 
         private static void UpdateEnabled(Button sender)
         {
-            if (MapModS.LS.ModEnabled)
+            if (MapModS.LS.modEnabled)
             {
                 sender.ContentColor = Color.green;
                 sender.Content = $"{L.Localize("Mod")}\n{L.Localize("Enabled")}";
@@ -270,7 +270,7 @@ namespace MapModS.UI
 
         private static void UpdateSpoilers(Button sender)
         {
-            if (MapModS.LS.SpoilerOn)
+            if (MapModS.LS.spoilerOn)
             {
                 sender.ContentColor = Color.green;
                 sender.Content = $"{L.Localize("Spoilers")}:\n{L.Localize("on")}";
@@ -398,7 +398,7 @@ namespace MapModS.UI
                 WorldMap.CustomPins.ResizePins("None selected");
             }
 
-            if (MapModS.LS.lookupOn)
+            if (MapModS.GS.lookupOn)
             {
                 LookupText.UpdateSelectedPin();
             }
@@ -497,7 +497,7 @@ namespace MapModS.UI
 
         private static void UpdateCustomizePins(Button sender)
         {
-            if (MapModS.LS.ModEnabled && panelActive)
+            if (MapModS.LS.modEnabled && panelActive)
             {
                 sender.ContentColor = Color.yellow;
             }
@@ -534,7 +534,7 @@ namespace MapModS.UI
 
             if (sender.Name == "Geo Rocks" && !RM.RS.GenerationSettings.PoolSettings.GeoRocks)
             {
-                sender.Content = $"{L.Localize("Geo Rocks")}:\n" + MapModS.LS.GeoRockCounter + " / " + "207";
+                sender.Content = $"{L.Localize("Geo Rocks")}:\n" + MapModS.LS.geoRockCounter + " / " + "207";
             }
 
             if (sender.Name == "Benches")

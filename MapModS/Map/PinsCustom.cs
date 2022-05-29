@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using RM = RandomizerMod.RandomizerMod;
 using PGS = MapModS.Settings.PoolGroupState;
 using PLS = MapModS.Data.PinLocationState;
+using RM = RandomizerMod.RandomizerMod;
 
 namespace MapModS.Map
 {
@@ -451,7 +451,7 @@ namespace MapModS.Map
         {
             foreach (PinAnimatedSprite pin in _pins)
             {
-                if (pin.PD.name == selectedLocation && MapModS.LS.lookupOn)
+                if (pin.PD.name == selectedLocation && MapModS.GS.lookupOn)
                 {
                     pin.SetSizeAndColorSelected();
                 }

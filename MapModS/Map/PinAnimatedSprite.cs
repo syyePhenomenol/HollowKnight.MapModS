@@ -91,7 +91,7 @@ namespace MapModS.Map
 
             if (PD.pinLocationState == PLS.Previewed
                 || PD.pinLocationState == PLS.ClearedPersistent
-                || MapModS.LS.SpoilerOn)
+                || MapModS.LS.spoilerOn)
             {
                 pool = PD.randoItems.ElementAt(spriteIndex).poolGroup;
             }

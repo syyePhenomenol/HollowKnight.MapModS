@@ -270,14 +270,14 @@ namespace MapModS.Map
         public static bool BoolGetOverride(string boolName, bool orig)
         {
             // Always have a map when the mod is enabled
-            if (boolName == "MMS_hasMap" && MapModS.LS.ModEnabled)
+            if (boolName == "MMS_hasMap" && MapModS.LS.modEnabled)
             {
                 return true;
             }
 
             if (boolName.StartsWith("MMS_"))
             {
-                if (MapModS.LS.ModEnabled &&
+                if (MapModS.LS.modEnabled &&
                     (MapModS.LS.mapMode == MapMode.FullMap
                         || MapModS.LS.mapMode == MapMode.TransitionRando
                         || MapModS.LS.mapMode == MapMode.TransitionRandoAlt))

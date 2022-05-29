@@ -3,7 +3,6 @@ using MagicUI.Elements;
 using MagicUI.Graphics;
 using MapModS.Data;
 using MapModS.Map;
-using MapModS.Settings;
 using System.Linq;
 using L = RandomizerMod.Localization;
 using RM = RandomizerMod.RandomizerMod;
@@ -22,7 +21,7 @@ namespace MapModS.UI
         public static bool Condition()
         {
             return GUI.worldMapOpen
-                && MapModS.LS.ModEnabled
+                && MapModS.LS.modEnabled
                 && !GUI.lockToggleEnable;
         }
 
@@ -117,7 +116,7 @@ namespace MapModS.UI
                     text = text.Substring(0, text.Length - 1);
                 }
 
-                if (MapModS.LS.SpoilerOn
+                if (MapModS.LS.spoilerOn
                     && pd.randoItems != null
                     && pd.randoItems.Any()
                     && (!RM.RS.TrackerData.previewedLocations.Contains(pd.name)
@@ -137,7 +136,7 @@ namespace MapModS.UI
 
             panelText.Text = text;
 
-            if (MapModS.LS.lookupOn)
+            if (MapModS.GS.lookupOn)
             {
                 panel.Visibility = Visibility.Visible;
             }
@@ -153,7 +152,7 @@ namespace MapModS.UI
                 || WorldMap.CustomPins == null
                 || GameManager.instance.IsGamePaused()
                 || !Condition()
-                || !MapModS.LS.lookupOn)
+                || !MapModS.GS.lookupOn)
             {
                 return;
             }
