@@ -28,7 +28,7 @@ namespace MapModS.Data
 
         public static bool TransitionModeActive()
         {
-            return MapModS.LS.ModEnabled
+            return MapModS.LS.modEnabled
                 && (MapModS.LS.mapMode == Settings.MapMode.TransitionRando
                     || MapModS.LS.mapMode == Settings.MapMode.TransitionRandoAlt);
         }
@@ -149,27 +149,7 @@ namespace MapModS.Data
             Dictionary<string, string> visitedTransitions = RM.RS.TrackerData.visitedTransitions
                 .Where(t => GetTransitionScene(t.Key) == scene).ToDictionary(t => t.Key, t => t.Value);
 
-            if (visitedTransitions.Any())
-            {
-                if (text != "")
-                {
-                    text += "\n\n";
-                }
-
-                text += $"{Localization.Localize("Visited")}:";
-
-                foreach (KeyValuePair<string, string> pair in visitedTransitions)
-                {
-                    text += "\n";
-
-                    if (RM.RS.TrackerDataWithoutSequenceBreaks.outOfLogicVisitedTransitions.Contains(pair.Key))
-                    {
-                        text += "*";
-                    }
-
-                    text += GetTransitionDoor(pair.Key) + " -> " + pair.Value;
-                }
-            }
+            text += BuildTransitionStringList(visitedTransitions, "Visited", false, text != "");
 
             Dictionary<string, string> visitedTransitionsTo = RM.RS.TrackerData.visitedTransitions
             .Where(t => GetTransitionScene(t.Value) == scene).ToDictionary(t => t.Key, t => t.Value);
@@ -180,16 +160,43 @@ namespace MapModS.Data
                 visitedTransitionsTo = visitedTransitionsTo.Where(t => !visitedTransitions.ContainsKey(t.Value)).ToDictionary(t => t.Key, t => t.Value);
             }
 
-            if (visitedTransitionsTo.Any())
+            text += BuildTransitionStringList(visitedTransitionsTo, "Visited to", true, text != "");
+
+            Dictionary<string, string> vanillaTransitions = RM.RS.Context.Vanilla
+                .Where(t => RD.IsTransition(t.Location.Name)
+                    && GetTransitionScene(t.Location.Name) == scene
+                    && RM.RS.TrackerData.pm.Get(t.Location.Name) > 0)
+                .ToDictionary(t => t.Location.Name, t => t.Item.Name);
+
+
+            text += BuildTransitionStringList(vanillaTransitions, "Vanilla", false, text != "");
+
+            Dictionary<string, string> vanillaTransitionsTo = RM.RS.Context.Vanilla
+                .Where(t => RD.IsTransition(t.Location.Name)
+                    && GetTransitionScene(t.Item.Name) == scene
+                    && RM.RS.TrackerData.pm.Get(t.Item.Name) > 0
+                    && !vanillaTransitions.ContainsKey(t.Item.Name))
+                .ToDictionary(t => t.Location.Name, t => t.Item.Name);
+
+            text += BuildTransitionStringList(vanillaTransitionsTo, "Vanilla to", true, text != "");
+
+            return text;
+        }
+
+        public static string BuildTransitionStringList(Dictionary<string, string> transitions, string subtitle, bool to, bool addNewLines)
+        {
+            string text = "";
+
+            if (transitions.Any())
             {
-                if (text != "")
+                if (addNewLines)
                 {
                     text += "\n\n";
                 }
 
-                text += $"{Localization.Localize("Visited to")}:";
+                text += $"{Localization.Localize(subtitle)}:";
 
-                foreach (KeyValuePair<string, string> pair in visitedTransitionsTo)
+                foreach (KeyValuePair<string, string> pair in transitions)
                 {
                     text += "\n";
 
@@ -198,7 +205,14 @@ namespace MapModS.Data
                         text += "*";
                     }
 
-                    text += pair.Key + " -> " + GetTransitionDoor(pair.Value);
+                    if (to)
+                    {
+                        text += pair.Key + " -> " + GetTransitionDoor(pair.Value);
+                    }
+                    else
+                    {
+                        text += GetTransitionDoor(pair.Key) + " -> " + pair.Value;
+                    }
                 }
             }
 
