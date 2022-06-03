@@ -3771,5 +3771,25 @@
     "offsetX": 0.9,
     "offsetY": -0.4,
     "offsetZ": 0.0
+  },
+  "Nailsmith_Upgrade_1": {
+    "offsetX": -2.8,
+    "offsetY": -0.7,
+    "offsetZ": 0.0
+  },
+  "Nailsmith_Upgrade_2": {
+    "offsetX": -2.4,
+    "offsetY": -0.7,
+    "offsetZ": 0.001
+  },
+  "Nailsmith_Upgrade_3": {
+    "offsetX": -2.0,
+    "offsetY": -0.7,
+    "offsetZ": 0.002
+  },
+  "Nailsmith_Upgrade_4": {
+    "offsetX": -1.6,
+    "offsetY": -0.7,
+    "offsetZ": 0.003
   }
 }
