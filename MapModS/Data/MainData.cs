@@ -211,7 +211,7 @@ namespace MapModS.Data
 
                 RandoModLocation rml = placement.Value.RandoLocation();
 
-                if (rml == null || rml.Name == "Start") continue;
+                if (rml == null || rml.Name == "Start" || rml.LocationDef.SceneName == null) continue;
 
                 if (!allPins.TryGetValue(rml.Name, out PinDef pd))
                 {
