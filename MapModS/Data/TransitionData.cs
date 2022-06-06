@@ -97,17 +97,12 @@ namespace MapModS.Data
         {
             if (scene != null && _transitionsByScene.ContainsKey(scene))
             {
-                if (_transitionsByScene[scene].Count() == 0)
-                {
-                    MapModS.Instance.LogWarn("Empty?");
-                }
-
                 return _transitionsByScene[scene];
             }
 
-            MapModS.Instance.LogWarn("No transitions found for scene " + scene);
+            //MapModS.Instance.LogWarn("No transitions found for scene " + scene);
 
-            return null;
+            return new();
         }
 
         public static bool TryGetSceneWaypoint(string scene, out LogicWaypoint waypoint)

@@ -117,7 +117,7 @@
   },
   {
     "name": "Waterways_02[bot2]",
-    "logic": "ORIG | Warp_Waterways + (SWIM | LEFTCLAW | RIGHTCLAW | WINGS)"
+    "logic": "ORIG | Warp_Waterways + (SWIM | LEFTCLAW | RIGHTCLAW | RIGHTSUPERDASH | WINGS)"
   },
   {
     "name": "Deepnest_30[left1]",

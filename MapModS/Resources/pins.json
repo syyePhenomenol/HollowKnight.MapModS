@@ -2470,14 +2470,14 @@
   },
   "Geo_Rock-Above_Mantis_Lords_1": {
     "objectName": "Geo Rock 1",
-    "offsetX": -0.8,
-    "offsetY": -0.4,
+    "offsetX": 0.0,
+    "offsetY": -0.1,
     "offsetZ": 0.0
   },
   "Geo_Rock-Above_Mantis_Lords_2": {
     "objectName": "Geo Rock 1 (1)",
-    "offsetX": 0.0,
-    "offsetY": -0.1,
+    "offsetX": -0.8,
+    "offsetY": -0.4,
     "offsetZ": 0.0
   },
   "Geo_Rock-Fungal_After_Bouncy_Grub": {
