@@ -26,8 +26,8 @@ namespace MapModS.Settings
 
     public enum OffRouteBehaviour
     {
-        None,
-        Reset,
+        Keep,
+        Cancel,
         Reevaluate
     }
 
@@ -95,6 +95,20 @@ namespace MapModS.Settings
                     break;
                 default:
                     routeTextInGame = RouteTextInGame.Hide;
+                    break;
+            }
+        }
+
+        public void ToggleWhenOffRoute()
+        {
+            switch (whenOffRoute)
+            {
+                case OffRouteBehaviour.Keep:
+                case OffRouteBehaviour.Cancel:
+                    whenOffRoute += 1;
+                    break;
+                default:
+                    whenOffRoute = OffRouteBehaviour.Keep;
                     break;
             }
         }

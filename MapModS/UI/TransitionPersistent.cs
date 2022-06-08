@@ -243,7 +243,8 @@ namespace MapModS.UI
 
                 return;
             }
-            else if (lastTransition.SceneName == "Room_Tram_RG" || lastTransition.SceneName == "Room_Tram")
+            else if (transition.ToString().Contains("Tram_")
+                && (lastTransition.SceneName == "Room_Tram_RG" || lastTransition.SceneName == "Room_Tram"))
             {
                 return;
             }
@@ -255,7 +256,7 @@ namespace MapModS.UI
         {
             switch (MapModS.GS.whenOffRoute)
             {
-                case OffRouteBehaviour.Reset:
+                case OffRouteBehaviour.Cancel:
                     selectedRoute = new();
                     lastFinalScene = "";
                     rejectedTransitionPairs.Clear();

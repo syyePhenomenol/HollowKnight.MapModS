@@ -25,6 +25,7 @@ namespace MapModS.UI
         private static TextObject benchwarp;
         private static TextObject uncheckedVisited;
         private static TextObject routeInGame;
+        private static TextObject whenOffRoute;
         private static TextObject compass;
 
         public static bool Condition()
@@ -86,6 +87,9 @@ namespace MapModS.UI
                 routeInGame = UIExtensions.PanelText(layout, "Route In Game");
                 panelContents.Children.Add(routeInGame);
 
+                whenOffRoute = UIExtensions.PanelText(layout, "Off-route");
+                panelContents.Children.Add(whenOffRoute);
+
                 compass = UIExtensions.PanelText(layout, "Compass");
                 panelContents.Children.Add(compass);
 
@@ -143,6 +147,12 @@ namespace MapModS.UI
                     TransitionWorldMap.UpdateAll();
                 }, ModifierKeys.Ctrl, () => MapModS.LS.modEnabled);
 
+                layout.ListenForHotkey(KeyCode.E, () =>
+                {
+                    MapModS.GS.ToggleWhenOffRoute();
+                    UpdateAll();
+                }, ModifierKeys.Ctrl, () => MapModS.LS.modEnabled);
+
                 layout.ListenForHotkey(KeyCode.C, () =>
                 {
                     MapModS.GS.ToggleRouteCompassEnabled();
@@ -168,6 +178,7 @@ namespace MapModS.UI
             UpdateBenchwarp();
             UpdateUnchecked();
             UpdateRouteInGame();
+            UpdateOffRoute();
             UpdateCompass();
 
             if (MapModS.GS.controlPanelOn)
@@ -183,6 +194,7 @@ namespace MapModS.UI
                     benchwarp.Visibility = Visibility.Visible;
                     uncheckedVisited.Visibility = Visibility.Visible;
                     routeInGame.Visibility = Visibility.Visible;
+                    whenOffRoute.Visibility = Visibility.Visible;
                     compass.Visibility = Visibility.Visible;
                 }
                 else
@@ -190,6 +202,7 @@ namespace MapModS.UI
                     benchwarp.Visibility = Visibility.Collapsed;
                     uncheckedVisited.Visibility = Visibility.Collapsed;
                     routeInGame.Visibility = Visibility.Collapsed;
+                    whenOffRoute.Visibility = Visibility.Collapsed;
                     compass.Visibility = Visibility.Collapsed;
                 }
             }
@@ -202,6 +215,7 @@ namespace MapModS.UI
                 benchwarp.Visibility = Visibility.Collapsed;
                 uncheckedVisited.Visibility = Visibility.Collapsed;
                 routeInGame.Visibility = Visibility.Collapsed;
+                whenOffRoute.Visibility = Visibility.Collapsed;
                 compass.Visibility = Visibility.Collapsed;
             }
         }
@@ -286,6 +300,29 @@ namespace MapModS.UI
             }
 
             routeInGame.Text = text;
+        }
+
+        public static void UpdateOffRoute()
+        {
+            string text = $"{L.Localize("When off-route")} (Ctrl-E): ";
+
+            switch (MapModS.GS.whenOffRoute)
+            {
+                case OffRouteBehaviour.Keep:
+                    whenOffRoute.ContentColor = Color.white;
+                    text += L.Localize("Keep route");
+                    break;
+                case OffRouteBehaviour.Cancel:
+                    whenOffRoute.ContentColor = Color.white;
+                    text += L.Localize("Cancel route");
+                    break;
+                case OffRouteBehaviour.Reevaluate:
+                    whenOffRoute.ContentColor = Color.green;
+                    text += L.Localize("Reevaluate route");
+                    break;
+            }
+
+            whenOffRoute.Text = text;
         }
 
         public static void UpdateCompass()
