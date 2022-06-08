@@ -17,14 +17,14 @@ namespace MapModS.Data
             localPm = new(PD.lm, RM.RS.Context);
         }
 
-        // Calculates the shortest route (by number of transitions) from startScene to finalScene.
+        // Calculates the shortest route (by number of transitions) from start to final.
         // The search space will be purely limited to rooms that have been visited + unreached reachable locations
         // A ProgressionManager is used to track logic while traversing through the search space
-        public List<string> ShortestRoute(string startScene, string finalScene, HashSet<KeyValuePair<string, string>> rejectedTransitionPairs, bool allowBenchWarp)
+        // If reevaluating, start and final are transitions instead of scenes
+        public List<string> ShortestRoute(string start, string final, HashSet<KeyValuePair<string, string>> rejectedTransitionPairs, bool allowBenchWarp, bool reevaluate)
         {
-            if (startScene == null || finalScene == null) return new();
+            if (start == null || final == null) return new();
 
-            string searchScene;
             HashSet<string> candidateReachableTransitions = new();
             HashSet<string> normalTransitionSpace = new();
 
@@ -67,23 +67,39 @@ namespace MapModS.Data
                     TryAddNode(null, transition);
                 }
             }
-            
-            searchScene = startScene;
 
             localPm.StartTemp();
 
-            // Use all normal transitions in current scene as "seed" for special transitions
-            foreach (string transition in TransitionData.GetTransitionsByScene(startScene))
+            string searchScene;
+
+            // If reevaluating, start is a transition instead of a scene
+            if (!reevaluate)
             {
-                if (normalTransitionSpace.Contains(transition))
+                // Use all normal transitions in current scene as "seed" for special transitions
+                foreach (string transition in TransitionData.GetTransitionsByScene(start))
                 {
-                    localPm.Set(transition, 1);
+                    if (normalTransitionSpace.Contains(transition))
+                    {
+                        localPm.Set(transition, 1);
+                    }
+                }
+
+                searchScene = start;
+                candidateReachableTransitions = PD.GetTransitionsInScene(start);
+
+                while (UpdateReachableTransitions()) { }
+            }
+            else
+            {
+                if (start.GetScene() != null)
+                {
+                    localPm.Set(start, 1);
+                    searchScene = start.GetScene();
+                    candidateReachableTransitions = PD.GetTransitionsInScene(start.GetScene());
+
+                    while (UpdateReachableTransitions()) { }
                 }
             }
-
-            candidateReachableTransitions = PD.GetTransitionsInScene(startScene);
-
-            while (UpdateReachableTransitions()) { }
 
             foreach (string transition in candidateReachableTransitions)
             {
@@ -100,13 +116,26 @@ namespace MapModS.Data
                 SearchNode node = queue.First();
                 queue.RemoveFirst();
 
-                // Avoid going through a rejected path, and remove redudant new paths
-                if (node.scene == finalScene && !rejectedTransitionPairs.Any(pair => pair.Key == node.route.First() && PD.GetAdjacentTransition(pair.Value) == node.lastAdjacentTransition))
+                if (!reevaluate)
                 {
-                    // No other paths to same final transition with a different starting benchwarp
-                    if (rejectedTransitionPairs.Any(pair => pair.Value.GetAdjacentTransition() == node.lastAdjacentTransition && pair.Key.StartsWith("Warp"))) continue;
+                    // Avoid going through a rejected path, and remove redudant new paths
+                    if (node.scene == final && !rejectedTransitionPairs.Any(pair => pair.Key == node.route.First() && PD.GetAdjacentTransition(pair.Value) == node.lastAdjacentTransition))
+                    {
+                        // No other paths to same final transition with a different starting benchwarp
+                        if (rejectedTransitionPairs.Any(pair => pair.Value.GetAdjacentTransition() == node.lastAdjacentTransition && pair.Key.StartsWith("Warp"))) continue;
 
-                    return node.route;
+                        return node.route;
+                    }
+                }
+                else
+                {
+                    // If reevaluating, we just check if the final transition is correct
+                    if (node.scene == final.GetScene())
+                    {
+                        if (final != "" && node.lastAdjacentTransition != final) continue;
+
+                        return node.route;
+                    }
                 }
 
                 searchScene = node.scene;

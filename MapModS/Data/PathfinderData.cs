@@ -1,4 +1,5 @@
 ﻿using RandomizerCore.Logic;
+using RandomizerMod.RandomizerData;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -13,7 +14,7 @@ namespace MapModS.Data
         internal static Dictionary<string, string> conditionalTerms;
 
         private static Dictionary<string, string> benchwarpScenes;
-        private static Dictionary<string, string> adjacentScenes;
+        private static Dictionary<string, string> specialTransitions;
         private static Dictionary<string, string> scenesByTransition;
         private static Dictionary<string, HashSet<string>> transitionsByScene;
 
@@ -25,7 +26,7 @@ namespace MapModS.Data
             persistentTerms = JsonUtil.Deserialize<HashSet<string>>("MapModS.Resources.Pathfinder.Data.persistentTerms.json");
             conditionalTerms = JsonUtil.Deserialize< Dictionary<string, string>> ("MapModS.Resources.Pathfinder.Data.conditionalTerms.json");
             benchwarpScenes = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.benchwarp.json");
-            adjacentScenes = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.adjacentScenes.json");
+            specialTransitions = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.specialTransitions.json");
             scenesByTransition = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.scenesByTransition.json");
             transitionsByScene = JsonUtil.Deserialize<Dictionary<string, HashSet<string>>>("MapModS.Resources.Pathfinder.Data.transitionsByScene.json");
             doorObjectsByScene = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Compass.doorObjectsByScene.json");
@@ -55,9 +56,12 @@ namespace MapModS.Data
             }
 
             // Set Start Warp logic
-            adjacentScenes["Warp_Start"] = RD.GetStartDef(RM.RS.GenerationSettings.StartLocationSettings.StartLocation).SceneName;
+            StartDef start = RD.GetStartDef(RM.RS.GenerationSettings.StartLocationSettings.StartLocation);
+            string startAdjacent = start.SceneName + "[]";
 
-            lmb.DoLogicEdit(new(RD.GetStartDef(RM.RS.GenerationSettings.StartLocationSettings.StartLocation).Transition, "ORIG | Warp_Start"));
+            specialTransitions["Warp_Start"] = startAdjacent;
+            lmb.AddTransition(new(startAdjacent, "FALSE"));
+            lmb.DoLogicEdit(new(start.Transition, "ORIG | " + startAdjacent));
 
             lm = new(lmb);
         }
@@ -97,6 +101,10 @@ namespace MapModS.Data
             {
                 return "";
             }
+            else if (transition.IsSpecialTransitionTarget())
+            {
+                return transition.Split('[')[0];
+            }
 
             return TransitionData.GetTransitionScene(transition);
         }
@@ -104,11 +112,6 @@ namespace MapModS.Data
         // Returns the correct adjacent scene for special transitions
         public static string GetAdjacentScene(this string transition)
         {
-            if (transition.IsSpecialTransition())
-            {
-                return adjacentScenes[transition];
-            }
-
             return transition.GetAdjacentTransition().GetScene();
         }
 
@@ -120,10 +123,9 @@ namespace MapModS.Data
                 return TransitionData.GetAdjacentTransition(source);
             }
 
-            // Special transitions don't have a well-defined adjacent transition, but it works with the pathfinder logic to return itself
             if (source.IsSpecialTransition())
             {
-                return source;
+                return specialTransitions[source];
             }
 
             MapModS.Instance.LogWarn($"No adjacent transition for {source}");
@@ -133,7 +135,12 @@ namespace MapModS.Data
 
         public static bool IsSpecialTransition(this string transition)
         {
-            return adjacentScenes.ContainsKey(transition);
+            return specialTransitions.ContainsKey(transition);
+        }
+
+        public static bool IsSpecialTransitionTarget(this string transition)
+        {
+            return specialTransitions.Values.Contains(transition);
         }
 
         public static bool IsBenchwarpTransition(this string transition)

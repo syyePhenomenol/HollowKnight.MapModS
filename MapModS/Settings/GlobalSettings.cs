@@ -24,6 +24,13 @@ namespace MapModS.Settings
         ShowNextTransitionOnly
     }
 
+    public enum OffRouteBehaviour
+    {
+        None,
+        Reset,
+        Reevaluate
+    }
+
     [Serializable]
     public class GlobalSettings
     {
@@ -40,6 +47,8 @@ namespace MapModS.Settings
         public bool lookupOn = false;
 
         public RouteTextInGame routeTextInGame = RouteTextInGame.ShowNextTransitionOnly;
+
+        public OffRouteBehaviour whenOffRoute = OffRouteBehaviour.Reevaluate;
 
         public PinStyle pinStyle = PinStyle.Normal;
 

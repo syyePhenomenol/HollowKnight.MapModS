@@ -1,4 +1,5 @@
-﻿using UnityEngine.SceneManagement;
+﻿using ItemChanger;
+using UnityEngine.SceneManagement;
 
 namespace MapModS.UI
 {
@@ -29,7 +30,9 @@ namespace MapModS.UI
             On.GameMap.QuickMapWaterways += GameMap_QuickMapWaterways;
             On.GameMap.CloseQuickMap += GameMap_CloseQuickMap;
             On.HeroController.UnPause += HeroController_UnPause;
+
             UnityEngine.SceneManagement.SceneManager.activeSceneChanged += HandleSceneChanges;
+            Events.OnBeginSceneTransition += Events_OnBeginSceneTransition;
 
             GUIController.Setup();
         }
@@ -55,7 +58,9 @@ namespace MapModS.UI
             On.GameMap.QuickMapWaterways -= GameMap_QuickMapWaterways;
             On.GameMap.CloseQuickMap -= GameMap_CloseQuickMap;
             On.HeroController.UnPause -= HeroController_UnPause;
+
             UnityEngine.SceneManagement.SceneManager.activeSceneChanged -= HandleSceneChanges;
+            Events.OnBeginSceneTransition -= Events_OnBeginSceneTransition;
 
             GUIController.Unload();
 
@@ -231,10 +236,15 @@ namespace MapModS.UI
         {
             if (GameManager.instance.sceneName != to.name) return;
 
-            TransitionPersistent.RemoveTraversedTransition(from.name, to.name);
-
             RouteCompass.CreateRouteCompass();
             RouteCompass.UpdateCompass();
+        }
+
+        private static void Events_OnBeginSceneTransition(Transition obj)
+        {
+            TransitionPersistent.UpdateRoute(obj);
+
+            MapModS.Instance.Log(obj.ToString());
         }
     }
 }

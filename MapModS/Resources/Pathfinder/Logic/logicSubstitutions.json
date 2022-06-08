@@ -2,26 +2,26 @@
   {
     "name": "Abyss_06_Core[left1]",
     "old": "Warp-Lifeblood_Core_to_Abyss",
-    "replacement": "Abyss_08[warp]"
+    "replacement": "Abyss_06_Core[door_dreamReturn]"
   },
   {
     "name": "White_Palace_06[left1]",
     "old": "Warp-Path_of_Pain_Complete",
-    "replacement": "White_Palace_20[warp]"
+    "replacement": "White_Palace_06[door_dreamReturn]"
   },
   {
     "name": "White_Palace_06[top1]",
     "old": "Warp-Path_of_Pain_Complete",
-    "replacement": "White_Palace_20[warp]"
+    "replacement": "White_Palace_06[door_dreamReturn]"
   },
   {
     "name": "White_Palace_06[bot1]",
     "old": "Warp-Path_of_Pain_Complete",
-    "replacement": "White_Palace_20[warp]"
+    "replacement": "White_Palace_06[door_dreamReturn]"
   },
   {
     "name": "White_Palace_11[door2]",
     "old": "Warp-Palace_Grounds_to_White_Palace",
-    "replacement": "Abyss_05[warp]"
+    "replacement": "White_Palace_11[door1]"
   }
 ]

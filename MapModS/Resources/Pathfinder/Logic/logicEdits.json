@@ -1,83 +1,83 @@
 ﻿[
   {
     "name": "Town",
-    "logic": "ORIG | Warp_Dirtmouth"
+    "logic": "ORIG | Town[]"
   },
   {
     "name": "Room_nailmaster[left1]",
-    "logic": "ORIG | Warp_Mato"
+    "logic": "ORIG | Room_nailmaster[]"
   },
   {
     "name": "Crossroads_30[left1]",
-    "logic": "ORIG | Warp_Crossroads_Hot_Springs"
+    "logic": "ORIG | Crossroads_30[]"
   },
   {
     "name": "Crossroads_47[right1]",
-    "logic": "ORIG | Warp_Crossroads_Stag"
+    "logic": "ORIG | Crossroads_47[]"
   },
   {
     "name": "Crossroads_04[door_charmshop]",
-    "logic": "ORIG | Warp_Salubra"
+    "logic": "ORIG | Crossroads_04[]"
   },
   {
     "name": "Crossroads_ShamanTemple[left1]",
-    "logic": "ORIG | Warp_Ancestral_Mound"
+    "logic": "ORIG | Crossroads_ShamanTemple[]"
   },
   {
     "name": "Room_temple[left1]",
-    "logic": "ORIG | Warp_Black_Egg_Temple"
+    "logic": "ORIG | Room_temple[]"
   },
   {
     "name": "Fungus1_01b[left1]",
-    "logic": "ORIG | Warp_Waterfall"
+    "logic": "ORIG | Fungus1_01b[]"
   },
   {
     "name": "Fungus1_37[left1]",
-    "logic": "ORIG | Warp_Stone_Sanctuary"
+    "logic": "ORIG | Fungus1_37[]"
   },
   {
     "name": "Fungus1_31[top1]",
-    "logic": "ORIG | Warp_Greenpath_Toll"
+    "logic": "ORIG | Fungus1_31[]"
   },
   {
     "name": "Fungus1_16_alt[right1]",
-    "logic": "ORIG | Warp_Greenpath_Stag"
+    "logic": "ORIG | Fungus1_16_alt[]"
   },
   {
     "name": "Fungus1_15[door1]",
-    "logic": "ORIG | Warp_Lake_of_Unn"
+    "logic": "ORIG | Fungus1_15[]"
   },
   {
     "name": "Room_Slug_Shrine[left1]",
-    "logic": "ORIG | Warp_Sheo"
+    "logic": "ORIG | Room_Slug_Shrine[]"
   },
   {
     "name": "Fungus3_archive[left1]",
-    "logic": "ORIG | Warp_Archives"
+    "logic": "ORIG | Fungus3_archive[]"
   },
   {
     "name": "Fungus2_02[right1]",
-    "logic": "ORIG | Warp_Queens_Station"
+    "logic": "ORIG | Fungus2_02[]"
   },
   {
     "name": "Fungus2_26[left1]",
-    "logic": "ORIG | Warp_Leg_Eater"
+    "logic": "ORIG | Fungus2_26[]"
   },
   {
     "name": "Fungus2_13[left2]",
-    "logic": "ORIG | Warp_Bretta"
+    "logic": "ORIG | Fungus2_13[]"
   },
   {
     "name": "Fungus2_31[left1]",
-    "logic": "ORIG | Warp_Mantis_Village"
+    "logic": "ORIG | Fungus2_31[]"
   },
   {
     "name": "Ruins1_02[top1]",
-    "logic": "ORIG | Warp_Quirrel"
+    "logic": "ORIG | Ruins1_02[]"
   },
   {
     "name": "Ruins1_31[left1]",
-    "logic": "ORIG | Warp_City_Toll"
+    "logic": "ORIG | Ruins1_31[]"
   },
   {
     "name": "Ruins1_31",
@@ -85,218 +85,218 @@
   },
   {
     "name": "Ruins1_29[left1]",
-    "logic": "ORIG | Warp_City_Storerooms"
+    "logic": "ORIG | Ruins1_29[]"
   },
   {
     "name": "Ruins1_18[right2]",
-    "logic": "ORIG | Warp_Watcher's_Spire"
+    "logic": "ORIG | Ruins1_18[]"
   },
   {
     "name": "Ruins2_08[left1]",
-    "logic": "ORIG | Warp_King's_Station"
+    "logic": "ORIG | Ruins2_08[]"
   },
   {
     "name": "Ruins_Bathhouse[door1]",
-    "logic": "ORIG | Warp_Pleasure_House"
+    "logic": "ORIG | Ruins_Bathhouse[]"
   },
   {
     "name": "Waterways_02[top1]",
-    "logic": "ORIG | Warp_Waterways + (LEFTCLAW | RIGHTCLAW)"
+    "logic": "ORIG | Waterways_02[] + (LEFTCLAW | RIGHTCLAW)"
   },
   {
     "name": "Waterways_02[top1]",
-    "logic": "ORIG | Warp_Waterways + (LEFTCLAW + WINGS | RIGHTCLAW)"
+    "logic": "ORIG | Waterways_02[] + (LEFTCLAW + WINGS | RIGHTCLAW)"
   },
   {
     "name": "Waterways_02[top3]",
-    "logic": "ORIG | Warp_Waterways + Broke_Waterways_Bench_Ceiling + (LEFTCLAW | RIGHTCLAW + WINGS)"
+    "logic": "ORIG | Waterways_02[] + Broke_Waterways_Bench_Ceiling + (LEFTCLAW | RIGHTCLAW + WINGS)"
   },
   {
     "name": "Waterways_02[bot1]",
-    "logic": "ORIG | Warp_Waterways + Broke_Waterways_Bench_Floor"
+    "logic": "ORIG | Waterways_02[] + Broke_Waterways_Bench_Floor"
   },
   {
     "name": "Waterways_02[bot2]",
-    "logic": "ORIG | Warp_Waterways + (SWIM | LEFTCLAW | RIGHTCLAW | RIGHTSUPERDASH | WINGS)"
+    "logic": "ORIG | Waterways_02[] + (SWIM | LEFTCLAW | RIGHTCLAW | RIGHTSUPERDASH | WINGS)"
   },
   {
     "name": "Deepnest_30[left1]",
-    "logic": "ORIG | Warp_Deepnest_Hot_Springs"
+    "logic": "ORIG | Deepnest_30[]"
   },
   {
     "name": "Deepnest_14[left1]",
-    "logic": "ORIG | Warp_Failed_Tramway"
+    "logic": "ORIG | Deepnest_14[]"
   },
   {
     "name": "Deepnest_Spider_Town[left1]",
-    "logic": "ORIG | Warp_Beast's_Den"
+    "logic": "ORIG | Deepnest_Spider_Town[]"
   },
   {
     "name": "Abyss_18[right1]",
-    "logic": "ORIG | Warp_Ancient_Basin_Toll"
+    "logic": "ORIG | Abyss_18[]"
   },
   {
     "name": "Abyss_22[left1]",
-    "logic": "ORIG | Warp_Hidden_Station"
+    "logic": "ORIG | Abyss_22[]"
   },
   {
     "name": "Deepnest_East_06[door1]",
-    "logic": "ORIG | Warp_Oro"
+    "logic": "ORIG | Deepnest_East_06[]"
   },
   {
     "name": "Deepnest_East_13[bot1]",
-    "logic": "ORIG | Warp_Kingdom's_Edge_Camp"
+    "logic": "ORIG | Deepnest_East_13[]"
   },
   {
     "name": "Room_Colosseum_02[top1]",
-    "logic": "ORIG | Warp_Colosseum + (LEFTCLAW | RIGHTCLAW)"
+    "logic": "ORIG | Room_Colosseum_02[] + (LEFTCLAW | RIGHTCLAW)"
   },
   {
     "name": "Room_Colosseum_02[top2]",
-    "logic": "ORIG | Warp_Colosseum + (LEFTCLAW | RIGHTCLAW)"
+    "logic": "ORIG | Room_Colosseum_02[] + (LEFTCLAW | RIGHTCLAW)"
   },
   {
     "name": "Hive_01[right2]",
-    "logic": "ORIG | Warp_Hive"
+    "logic": "ORIG | Hive_01[]"
   },
   {
     "name": "Mines_29[left1]",
-    "logic": "ORIG | Warp_Crystal_Peak_Dark_Room"
+    "logic": "ORIG | Mines_29[]"
   },
   {
     "name": "Mines_18[left1]",
-    "logic": "ORIG | Warp_Crystal_Guardian"
+    "logic": "ORIG | Mines_18[]"
   },
   {
     "name": "RestingGrounds_09[left1]",
-    "logic": "ORIG | Warp_Resting_Grounds_Stag"
+    "logic": "ORIG | RestingGrounds_09[]"
   },
   {
     "name": "RestingGrounds_12[door_Mansion]",
-    "logic": "ORIG | Warp_Grey_Mourner"
+    "logic": "ORIG | RestingGrounds_12[]"
   },
   {
     "name": "Fungus1_24[left1]",
-    "logic": "ORIG | Warp_Queen's_Gardens_Cornifer"
+    "logic": "ORIG | Fungus1_24[]"
   },
   {
     "name": "Fungus3_50[right1]",
-    "logic": "ORIG | Warp_Queen's_Gardens_Toll"
+    "logic": "ORIG | Fungus3_50[]"
   },
   {
     "name": "Fungus3_40[right1]",
-    "logic": "ORIG | Warp_Queen's_Gardens_Stag"
+    "logic": "ORIG | Fungus3_40[]"
   },
   {
     "name": "White_Palace_01",
-    "logic": "ORIG | Warp_White_Palace_Entrance"
+    "logic": "ORIG | White_Palace_01[]"
   },
   {
     "name": "White_Palace_03_hub",
-    "logic": "ORIG | Warp_White_Palace_Atrium"
+    "logic": "ORIG | White_Palace_03_hub[]"
   },
   {
     "name": "White_Palace_06[left1]",
-    "logic": "ORIG | Warp_White_Palace_Balcony"
+    "logic": "ORIG | White_Palace_06[]"
   },
   {
     "name": "White_Palace_06[bot1]",
-    "logic": "ORIG | Warp_White_Palace_Balcony"
+    "logic": "ORIG | White_Palace_06[]"
   },
   {
     "name": "White_Palace_06[top1]",
-    "logic": "ORIG | Warp_White_Palace_Balcony + (RIGHTCLAW + (WINGS | LEFTCLAW))"
+    "logic": "ORIG | White_Palace_06[] + (RIGHTCLAW + (WINGS | LEFTCLAW))"
   },
   {
     "name": "Crossroads_46[left1]",
-    "logic": "ORIG | Warp_Upper_Tram_ARROW_Exit_Left"
+    "logic": "ORIG | Crossroads_46[door_tram]"
   },
   {
     "name": "Crossroads_46b[right1]",
-    "logic": "ORIG | Warp_Upper_Tram_ARROW_Exit_Right"
-  },
-  {
-    "name": "Room_Town_Stag_Station[left1]",
-    "logic": "ORIG | Stag_Dirtmouth"
-  },
-  {
-    "name": "Crossroads_47[right1]",
-    "logic": "ORIG | Stag_Crossroads"
-  },
-  {
-    "name": "Fungus1_16_alt[right1]",
-    "logic": "ORIG | Stag_Greenpath"
-  },
-  {
-    "name": "Fungus2_02[right1]",
-    "logic": "ORIG | Stag_Queen's_Station"
-  },
-  {
-    "name": "Deepnest_09[left1]",
-    "logic": "ORIG | Stag_Distant_Village"
-  },
-  {
-    "name": "Abyss_22[left1]",
-    "logic": "ORIG | Stag_Hidden_Station"
-  },
-  {
-    "name": "Ruins1_29[left1]",
-    "logic": "ORIG | Stag_City_Storerooms"
-  },
-  {
-    "name": "Ruins2_08[left1]",
-    "logic": "ORIG | Stag_King's_Station"
-  },
-  {
-    "name": "RestingGrounds_09[left1]",
-    "logic": "ORIG | Stag_Resting_Grounds"
-  },
-  {
-    "name": "Fungus3_40[right1]",
-    "logic": "ORIG | Stag_Queen's_Gardens"
-  },
-  {
-    "name": "Cliffs_03[right1]",
-    "logic": "ORIG | Stag_Stag_Nest"
-  },
-  {
-    "name": "Crossroads_49[right1]",
-    "logic": "ORIG | Left_Elevator_Up"
-  },
-  {
-    "name": "Crossroads_49[left1]",
-    "logic": "ORIG | Left_Elevator_Up"
-  },
-  {
-    "name": "Crossroads_49b[right1]",
-    "logic": "ORIG | Left_Elevator_Down"
-  },
-  {
-    "name": "Ruins2_10b[right1]",
-    "logic": "ORIG | Right_Elevator_Down"
-  },
-  {
-    "name": "Ruins2_10[right1]",
-    "logic": "ORIG | Right_Elevator_Up"
-  },
-  {
-    "name": "Ruins2_10[left1]",
-    "logic": "ORIG | Right_Elevator_Up"
+    "logic": "ORIG | Crossroads_46b[door_tram]"
   },
   {
     "name": "Abyss_03_b",
-    "logic": "ORIG | Warp_Lower_Tram_ARROW_Exit_Left"
+    "logic": "ORIG | Abyss_03_b[door_tram]"
   },
   {
     "name": "Abyss_03",
-    "logic": "ORIG | Warp_Lower_Tram_ARROW_Exit_Middle"
+    "logic": "ORIG | Abyss_03[door_tram]"
   },
   {
     "name": "Abyss_03_c",
-    "logic": "ORIG | Warp_Lower_Tram_ARROW_Exit_Right"
+    "logic": "ORIG | Abyss_03_c[door_tram]"
+  },
+  {
+    "name": "Room_Town_Stag_Station[left1]",
+    "logic": "ORIG | Room_Town_Stag_Station[door_stagExit]"
+  },
+  {
+    "name": "Crossroads_47[right1]",
+    "logic": "ORIG | Crossroads_47[door_stagExit]"
+  },
+  {
+    "name": "Fungus1_16_alt[right1]",
+    "logic": "ORIG | Fungus1_16_alt[door_stagExit]"
+  },
+  {
+    "name": "Fungus2_02[right1]",
+    "logic": "ORIG | Fungus2_02[door_stagExit]"
+  },
+  {
+    "name": "Deepnest_09[left1]",
+    "logic": "ORIG | Deepnest_09[door_stagExit]"
+  },
+  {
+    "name": "Abyss_22[left1]",
+    "logic": "ORIG | Abyss_22[door_stagExit]"
+  },
+  {
+    "name": "Ruins1_29[left1]",
+    "logic": "ORIG | Ruins1_29[door_stagExit]"
+  },
+  {
+    "name": "Ruins2_08[left1]",
+    "logic": "ORIG | Ruins2_08[door_stagExit]"
+  },
+  {
+    "name": "RestingGrounds_09[left1]",
+    "logic": "ORIG | RestingGrounds_09[door_stagExit]"
+  },
+  {
+    "name": "Fungus3_40[right1]",
+    "logic": "ORIG | Fungus3_40[door_stagExit]"
+  },
+  {
+    "name": "Cliffs_03[right1]",
+    "logic": "ORIG | Cliffs_03[door_stagExit]"
+  },
+  {
+    "name": "Crossroads_49[right1]",
+    "logic": "ORIG | Crossroads_49[elev_entrance]"
+  },
+  {
+    "name": "Crossroads_49[left1]",
+    "logic": "ORIG | Crossroads_49[elev_entrance]"
+  },
+  {
+    "name": "Crossroads_49b[right1]",
+    "logic": "ORIG | Crossroads_49b[elev_entrance]"
+  },
+  {
+    "name": "Ruins2_10b[right1]",
+    "logic": "ORIG | Ruins2_10b[elev_entrance]"
+  },
+  {
+    "name": "Ruins2_10[right1]",
+    "logic": "ORIG | Ruins2_10[elev_entrance]"
+  },
+  {
+    "name": "Ruins2_10[left1]",
+    "logic": "ORIG | Ruins2_10[elev_entrance]"
   },
   {
     "name": "Abyss_05",
-    "logic": "ORIG | White_Palace_11[warp] | White_Palace_03_hub[warp]"
+    "logic": "ORIG | Abyss_05[door_dreamReturn_reality]"
   }
 ]

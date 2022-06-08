@@ -160,12 +160,7 @@ namespace MapModS.UI
 
         public static void GetRoute()
         {
-            if (!GUI.worldMapOpen
-                || GameManager.instance.IsGamePaused()
-                || pf == null)
-            {
-                return;
-            }
+            if (pf == null) return;
 
             if (lastStartScene != Utils.CurrentScene() || lastFinalScene != selectedScene)
             {
@@ -174,13 +169,38 @@ namespace MapModS.UI
 
             try
             {
-                selectedRoute = pf.ShortestRoute(Utils.CurrentScene(), selectedScene, rejectedTransitionPairs, MapModS.GS.allowBenchWarpSearch);
+                selectedRoute = pf.ShortestRoute(Utils.CurrentScene(), selectedScene, rejectedTransitionPairs, MapModS.GS.allowBenchWarpSearch, false);
             }
             catch (Exception e)
             {
                 MapModS.Instance.LogError(e);
             }
 
+            AfterGetRoute();
+        }
+
+        public static void ReevaluateRoute(ItemChanger.Transition lastTransition)
+        {
+            if (pf == null) return;
+
+            rejectedTransitionPairs.Clear();
+
+            MapModS.Instance.Log("Reevaluating: " + lastTransition.SceneName + " to " + lastFinalScene);
+
+            try
+            {
+                selectedRoute = pf.ShortestRoute(lastTransition.ToString(), lastFinalTransition.GetAdjacentTransition(), rejectedTransitionPairs, MapModS.GS.allowBenchWarpSearch, true);
+            }
+            catch (Exception e)
+            {
+                MapModS.Instance.LogError(e);
+            }
+
+            AfterGetRoute();
+        }
+
+        public static void AfterGetRoute()
+        {
             if (!selectedRoute.Any())
             {
                 lastFinalScene = "";
@@ -189,9 +209,9 @@ namespace MapModS.UI
             else
             {
                 lastStartScene = Utils.CurrentScene();
-                lastFinalScene = selectedScene;
+                lastFinalScene = selectedRoute.Last().GetAdjacentScene();
                 lastStartTransition = selectedRoute.First();
-                lastFinalTransition = selectedRoute.Last();
+                lastFinalTransition = selectedRoute.Last(); 
                 transitionsCount = selectedRoute.Count();
 
                 rejectedTransitionPairs.Add(new(selectedRoute.First(), selectedRoute.Last()));
@@ -203,28 +223,51 @@ namespace MapModS.UI
             RouteCompass.UpdateCompass();
         }
 
-        public static void RemoveTraversedTransition(string previousScene, string currentScene)
+        public static void UpdateRoute(ItemChanger.Transition lastTransition)
         {
             if (!selectedRoute.Any()) return;
 
-            previousScene = Utils.RemoveBossSuffix(previousScene);
-            currentScene = Utils.RemoveBossSuffix(currentScene);
-
             string transition = selectedRoute.First();
 
-            if (transition.IsSpecialTransition() || previousScene == transition.GetScene())
+            // Check adjacent transition matches the route's transition
+            if (lastTransition.ToString() == transition.GetAdjacentTransition())
             {
-                if (currentScene == transition.GetAdjacentScene())
+                selectedRoute.Remove(transition);
+                UpdateAll();
+                TransitionWorldMap.UpdateAll();
+
+                if (!selectedRoute.Any())
                 {
-                    selectedRoute.Remove(transition);
-                    UpdateAll();
-                    TransitionWorldMap.UpdateAll();
+                    rejectedTransitionPairs.Clear();
                 }
+
+                return;
+            }
+            else if (lastTransition.SceneName == "Room_Tram_RG" || lastTransition.SceneName == "Room_Tram")
+            {
+                return;
             }
 
-            if (!selectedRoute.Any())
+            HandleOffRoute(lastTransition);
+        }
+
+        public static void HandleOffRoute(ItemChanger.Transition lastTransition)
+        {
+            switch (MapModS.GS.whenOffRoute)
             {
-                rejectedTransitionPairs.Clear();
+                case OffRouteBehaviour.Reset:
+                    selectedRoute = new();
+                    lastFinalScene = "";
+                    rejectedTransitionPairs.Clear();
+                    UpdateAll();
+                    TransitionWorldMap.UpdateAll();
+                    RouteCompass.UpdateCompass();
+                    break;
+                case OffRouteBehaviour.Reevaluate:
+                    ReevaluateRoute(lastTransition);
+                    break;
+                default:
+                    break;
             }
         }
     }
