@@ -272,6 +272,7 @@ namespace MapModS.Map
 
             GUI.worldMapOpen = false;
             GUI.quickMapOpen = true;
+            TransitionQuickMap.UpdateAll();
 
             Finish();
         }
