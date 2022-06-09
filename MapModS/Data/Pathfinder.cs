@@ -21,7 +21,7 @@ namespace MapModS.Data
         // The search space will be purely limited to rooms that have been visited + unreached reachable locations
         // A ProgressionManager is used to track logic while traversing through the search space
         // If reevaluating, start and final are transitions instead of scenes
-        public List<string> ShortestRoute(string start, string final, HashSet<KeyValuePair<string, string>> rejectedTransitionPairs, bool allowBenchWarp, bool reevaluate)
+        public List<string> ShortestRoute(string start, string final, List<List<string>> rejectedRoutes, bool allowBenchWarp, bool reevaluate)
         {
             if (start == null || final == null) return new();
 
@@ -66,11 +66,12 @@ namespace MapModS.Data
 
                 if (!reevaluate)
                 {
-                    // Avoid going through a rejected path, and remove redudant new paths
-                    if (node.scene == final && !rejectedTransitionPairs.Any(pair => pair.Key == node.route.First() && PD.GetAdjacentTransition(pair.Value) == node.lastAdjacentTransition))
+                    // Avoid terminating on duplicate/redudant new paths
+                    if (node.scene == final && !rejectedRoutes.Any(r => r.First() == node.route.First() && r.Last().GetAdjacentTransition() == node.lastAdjacentTransition))
                     {
                         // No other paths to same final transition with a different starting benchwarp
-                        if (rejectedTransitionPairs.Any(pair => pair.Value.GetAdjacentTransition() == node.lastAdjacentTransition && pair.Key.StartsWith("Warp"))) continue;
+                        if (node.route.First().IsBenchwarpTransition()
+                            && rejectedRoutes.Any(r => r.Last().GetAdjacentTransition() == node.lastAdjacentTransition && r.First().IsBenchwarpTransition())) continue;
 
                         return node.route;
                     }
@@ -92,6 +93,7 @@ namespace MapModS.Data
 
                 localPm.Set(node.lastAdjacentTransition, 1);
 
+                // It is important we use all the reachable transitions in the room for correct logic, even if they are unchecked
                 candidateReachableTransitions = new(PD.GetTransitionsInScene(searchScene));
 
                 while (UpdateReachableTransitions()) { }
@@ -173,9 +175,6 @@ namespace MapModS.Data
                 {
                     foreach (string transition in PD.GetBenchwarpTransitions())
                     {
-                        // Remove the single transition rejected routes
-                        if (rejectedTransitionPairs.Any(p => p.Key == transition && p.Value == transition)) continue;
-
                         TryAddNode(null, transition);
                     }
                 }
@@ -213,9 +212,6 @@ namespace MapModS.Data
 
                 foreach (string transition in candidateReachableTransitions)
                 {
-                    // Remove the single transition rejected routes
-                    if (rejectedTransitionPairs.Any(p => p.Key == transition && p.Value == transition)) continue;
-
                     TryAddNode(null, transition);
                 }
 
@@ -235,31 +231,42 @@ namespace MapModS.Data
 
             void TryAddNode(SearchNode node, string transition)
             {
+                // Check if a normal transition has actually been visited so far (as opposed to unchecked)
                 if (transition.IsSpecialTransition() || normalTransitionSpace.Contains(transition))
                 {
                     SearchNode newNode;
 
                     string adjacent = transition.GetAdjacentTransition();
 
+                    if (adjacent == null) return;
+
                     if (node != null)
                     {
-                        // No circling back on previous transition
-                        if (adjacent == null || node.route.Any(t => t == adjacent)) return;
+                        // No repeated transitions
+                        if (node.route.Any(t => t == transition) || node.route.Any(t => t == adjacent)) return;
 
                         newNode = new(transition.GetAdjacentScene(), node.route, adjacent);
                         newNode.route.Add(transition);
+
+                        // Keep index of rejectedRoutes with same current transition
+                        newNode.repeatedRoutes = node.repeatedRoutes.Where(i => rejectedRoutes[i].Count >= newNode.route.Count && rejectedRoutes[i][newNode.route.Count - 1] == transition);
                     }
                     else
                     {
                         newNode = new(transition.GetAdjacentScene(), new() { transition }, adjacent);
+
+                        // Get index of rejectedRoutes with same starting transition
+                        newNode.repeatedRoutes = rejectedRoutes.Select((r, i) => new { r, i }).Where(x => x.r.First() == transition).Select(x => x.i);
                     }
 
                     queue.AddLast(newNode);
 
-                    visitedTransitions.Add(transition);
+                    // If the route matches any rejected route so far, allow for other routes to visit the same transition
+                    if (!newNode.repeatedRoutes.Any())
+                    {
+                        visitedTransitions.Add(transition);
+                    }
                 }
-
-                return;
             }
 
             // Add other in-logic transitions in the current room
@@ -312,6 +319,8 @@ namespace MapModS.Data
             public string scene;
             public List<string> route = new();
             public string lastAdjacentTransition;
+            // The indexes of the routes in rejectedRoutes this node is repeating
+            public IEnumerable<int> repeatedRoutes;
         }
     }
 }

@@ -25,7 +25,7 @@ namespace MapModS.UI
         public static int transitionsCount = 0;
         public static string selectedScene = "None";
         public static List<string> selectedRoute = new();
-        public static HashSet<KeyValuePair<string, string>> rejectedTransitionPairs = new();
+        public static List<List<string>> rejectedRoutes = new();
 
         private static bool Condition()
         {
@@ -65,7 +65,7 @@ namespace MapModS.UI
             transitionsCount = 0;
             selectedScene = "None";
             selectedRoute.Clear();
-            rejectedTransitionPairs.Clear();
+            rejectedRoutes.Clear();
         }
 
         public static void UpdateAll()
@@ -164,12 +164,12 @@ namespace MapModS.UI
 
             if (lastStartScene != Utils.CurrentScene() || lastFinalScene != selectedScene)
             {
-                rejectedTransitionPairs.Clear();
+                rejectedRoutes.Clear();
             }
 
             try
             {
-                selectedRoute = pf.ShortestRoute(Utils.CurrentScene(), selectedScene, rejectedTransitionPairs, MapModS.GS.allowBenchWarpSearch, false);
+                selectedRoute = pf.ShortestRoute(Utils.CurrentScene(), selectedScene, rejectedRoutes, MapModS.GS.allowBenchWarpSearch, false);
             }
             catch (Exception e)
             {
@@ -183,11 +183,11 @@ namespace MapModS.UI
         {
             if (pf == null) return;
 
-            rejectedTransitionPairs.Clear();
+            rejectedRoutes.Clear();
 
             try
             {
-                selectedRoute = pf.ShortestRoute(lastTransition.ToString(), lastFinalTransition.GetAdjacentTransition(), rejectedTransitionPairs, MapModS.GS.allowBenchWarpSearch, true);
+                selectedRoute = pf.ShortestRoute(lastTransition.ToString(), lastFinalTransition.GetAdjacentTransition(), rejectedRoutes, MapModS.GS.allowBenchWarpSearch, true);
             }
             catch (Exception e)
             {
@@ -202,7 +202,7 @@ namespace MapModS.UI
             if (!selectedRoute.Any())
             {
                 lastFinalScene = "";
-                rejectedTransitionPairs.Clear();
+                rejectedRoutes.Clear();
             }
             else
             {
@@ -212,11 +212,11 @@ namespace MapModS.UI
                 lastFinalTransition = selectedRoute.Last(); 
                 transitionsCount = selectedRoute.Count();
 
-                rejectedTransitionPairs.Add(new(selectedRoute.First(), selectedRoute.Last()));
+                rejectedRoutes.Add(selectedRoute);
             }
 
             UpdateAll();
-            TransitionWorldMap.UpdateAll();
+            TransitionWorldMap.UpdateRouteSummary();
 
             RouteCompass.UpdateCompass();
         }
@@ -236,7 +236,7 @@ namespace MapModS.UI
 
                 if (!selectedRoute.Any())
                 {
-                    rejectedTransitionPairs.Clear();
+                    rejectedRoutes.Clear();
                 }
 
                 return;
@@ -257,7 +257,7 @@ namespace MapModS.UI
                 case OffRouteBehaviour.Cancel:
                     selectedRoute = new();
                     lastFinalScene = "";
-                    rejectedTransitionPairs.Clear();
+                    rejectedRoutes.Clear();
                     UpdateAll();
                     TransitionWorldMap.UpdateAll();
                     RouteCompass.UpdateCompass();

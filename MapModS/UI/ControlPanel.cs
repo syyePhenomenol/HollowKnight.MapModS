@@ -126,7 +126,7 @@ namespace MapModS.UI
                 layout.ListenForHotkey(KeyCode.B, () =>
                 {
                     MapModS.GS.ToggleAllowBenchWarp();
-                    TransitionPersistent.rejectedTransitionPairs = new();
+                    TransitionPersistent.rejectedRoutes.Clear();
                     UpdateAll();
                     TransitionPersistent.UpdateAll();
                     TransitionWorldMap.UpdateAll();
