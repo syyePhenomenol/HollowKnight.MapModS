@@ -73,8 +73,9 @@ This mod has support for languages other than English. You will need to source a
 - As you make the correct transitions, they will get cleared from the route.
 - The Quick Map also shows the list of unchecked and visited transitions for the current room.
 - `CTRL-B`: Toggle including Benchwarp in the pathfinder on/off.
-- `CTRL-R`: Toggle the route to be displayed in-game full/next transition only/off.
 - `CTRL-U`: Show/hide unchecked and visited transitions in the World Map.
+- `CTRL-R`: Toggle the route to be displayed in-game to full/next transition only/off.
+- `CTRL-E`: Toggle behaviour when going off-route to keep route/cancel route/reevaluate route.
 - `CTRL-C`: Toggle the route compass on/off.
 
 # How To Install
