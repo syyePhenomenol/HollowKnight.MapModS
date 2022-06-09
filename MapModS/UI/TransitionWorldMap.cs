@@ -76,7 +76,12 @@ namespace MapModS.UI
 
         public static void UpdateInstructions()
         {
-            string text = $"{L.Localize("Selected room")}: {TP.selectedScene}.";
+            string text = "";
+
+            if (!MapModS.GS.uncheckedPanelActive)
+            {
+                text += $"{L.Localize("Selected room")}: {TP.selectedScene}.";
+            }
 
             List<InControl.BindingSource> bindings = new(InputHandler.Instance.inputActions.menuSubmit.Bindings);
 
@@ -140,7 +145,9 @@ namespace MapModS.UI
 
         public static void UpdatePanel()
         {
-            panelText.Text = TransitionData.GetUncheckedVisited(TP.selectedScene);
+            panelText.Text = TP.selectedScene + "\n\n";
+
+            panelText.Text += TransitionData.GetUncheckedVisited(TP.selectedScene);
 
             if (MapModS.GS.uncheckedPanelActive)
             {
