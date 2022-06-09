@@ -185,8 +185,6 @@ namespace MapModS.UI
 
             rejectedTransitionPairs.Clear();
 
-            MapModS.Instance.Log("Reevaluating: " + lastTransition.SceneName + " to " + lastFinalScene);
-
             try
             {
                 selectedRoute = pf.ShortestRoute(lastTransition.ToString(), lastFinalTransition.GetAdjacentTransition(), rejectedTransitionPairs, MapModS.GS.allowBenchWarpSearch, true);
