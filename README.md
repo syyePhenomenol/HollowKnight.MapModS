@@ -15,7 +15,7 @@ Dependencies:
 Compatible optional mods:
 - [AdditionalMaps](https://github.com/SFGrenade/AdditionalMaps). Highly recommended with this mod to view White Palace checks
 - [RandomizableLevers](https://github.com/flibber-hk/HollowKnight.RandomizableLevers). Shows lever checks on map
-- [RandoPlus](https://github.com/flibber-hk/HollowKnight.RandoPlus). Shows Mr Mushroom checks on map
+- [RandoPlus](https://github.com/flibber-hk/HollowKnight.RandoPlus). Shows Mr Mushroom and nail upgrade checks on map
 - Most other mods
 
 This mod has support for languages other than English. You will need to source a `language.json` file and copy it to the `Randomizer 4` directory.
@@ -30,14 +30,14 @@ This mod has support for languages other than English. You will need to source a
 </details>
 
 # Quick Start Guide
-- Press `CTRL-M` during a game to enable the mod. Alternatively, enable it from the Pause Menu.
+- Press `CTRL-M` during a game to enable the mod. Alternatively, click the red button when the game is paused.
 - [fireb0rn's quick MapModS guide (item randomizer)](https://www.youtube.com/watch?v=z35cFvU0McQ&t=1113s)
 - [fireb0rn's quick MapModS guide (transition randomizer)](https://www.youtube.com/watch?v=z35cFvU0McQ&t=1195s)
 
 # Features
 ## World Map / Quick Map
-- Big Pins: Items are reachable according to RandomizerMod's logic
-- Small Pins: Items are not randomized or not reachable
+- Big pins: Items are reachable according to RandomizerMod's logic
+- Small/grayed out pins: Items are not randomized or not reachable
 - Pins will disappear as you clear their locations. If item previews are enabled, it will show the corresponding previewed item.
 - Pin settings are displayed at the bottom. See Pause Menu for more info on the toggles.
 - ``CTRL-H``: Expand/collapse the hotkey panel
@@ -71,9 +71,9 @@ This mod has support for languages other than English. You will need to source a
 - If successful, the path route will be displayed. You can try again to change the start/final transition to what you want.
 - A compass arrow will point to the next transition you need to go to.
 - As you make the correct transitions, they will get cleared from the route.
-- The Quick Map also shows the list of unchecked and visited transitions for the current room.
+- The Quick Map also shows the list of unchecked/visited/vanilla transitions for the current room.
 - `CTRL-B`: Toggle including Benchwarp in the pathfinder on/off.
-- `CTRL-U`: Show/hide unchecked and visited transitions in the World Map.
+- `CTRL-U`: Show/hide unchecked/visited/vanilla transitions in the World Map.
 - `CTRL-R`: Toggle the route to be displayed in-game to full/next transition only/off.
 - `CTRL-E`: Toggle behaviour when going off-route to keep route/cancel route/reevaluate route.
 - `CTRL-C`: Toggle the route compass on/off.

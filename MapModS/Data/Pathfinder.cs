@@ -220,11 +220,11 @@ namespace MapModS.Data
                 if (reevaluate)
                 {
                     // Prefer doubling back if possible, so make that transition highest priority
-                    IEnumerable<SearchNode> startNode = queue.TakeWhile(n => n.route.First() == start);
+                    SearchNode startNode = queue.Where(n => n.route.First() == start).FirstOrDefault();
 
-                    if (startNode.Any())
+                    if (startNode != null && queue.Remove(startNode))
                     {
-                        queue.AddFirst(startNode.First());
+                        queue.AddFirst(startNode);
                     }
                 }
             }
