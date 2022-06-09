@@ -111,6 +111,17 @@ namespace MapModS.Data
 
             localPm.RemoveTempItems();
 
+            if (reevaluate)
+            {
+                // Prefer doubling back if possible, so make that transition highest priority
+                IEnumerable<SearchNode> startNode = queue.TakeWhile(n => n.route.First() == start);
+
+                if (startNode.Any())
+                {
+                    queue.AddFirst(startNode.First());
+                }
+            }
+
             while (queue.Any())
             {
                 SearchNode node = queue.First();
@@ -182,18 +193,18 @@ namespace MapModS.Data
                     }
                 }
 
-                // Persistent terms should always be true (reachable anywhere in the scene without movement requirements)
-                foreach (string term in PD.persistentTerms)
-                {
-                    if (Td.pm.Get(term) > 0)
-                    {
-                        localPm.Set(term, 1);
-                    }
-                }
+                //// Persistent terms should always be true (reachable anywhere in the scene without movement requirements)
+                //foreach (string term in PD.persistentTerms)
+                //{
+                //    if (Td.pm.Get(term) > 0)
+                //    {
+                //        localPm.Set(term, 1);
+                //    }
+                //}
 
                 if (PlayerData.instance.GetBool("mineLiftOpened"))
                 {
-                    localPm.Set("Town[right1]", 1);
+                    localPm.Set("Town_Lift_Activated", 1);
                 }
 
                 foreach (PersistentBoolData pbd in SceneData.instance.persistentBoolItems)
@@ -220,6 +231,11 @@ namespace MapModS.Data
                         localPm.Set("City_Toll_Elevator_Down", pid.value % 2 == 0 ? 1 : 0);
                     }
                 }
+
+                //foreach (Term term in localPm.lm.Terms)
+                //{
+                //    MapModS.Instance.Log(term.Name + ": " + localPm.Get(term));
+                //}
             }
 
             void TryAddNode(SearchNode node, string transition)
@@ -245,6 +261,8 @@ namespace MapModS.Data
 
                     queue.AddLast(newNode);
 
+                    //newNode.PrintRoute();
+
                     visitedTransitions.Add(transition);
                 }
 
@@ -266,7 +284,7 @@ namespace MapModS.Data
                     }
                 }
 
-                if (TransitionData.TryGetSceneWaypoint(searchScene, out LogicWaypoint waypoint)
+                if (PD.TryGetSceneWaypoint(searchScene, out LogicWaypoint waypoint)
                     && !localPm.Has(waypoint.term) && waypoint.CanGet(localPm))
                 {
                     localPm.Add(waypoint);

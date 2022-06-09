@@ -18,7 +18,6 @@ namespace MapModS.Data
         private static HashSet<string> _randomizedTransitions = new();
         private static Dictionary<string, TransitionPlacement> _transitionLookup = new();
         private static Dictionary<string, HashSet<string>> _transitionsByScene = new();
-        private static Dictionary<string, LogicWaypoint> _waypointScenes = new();
 
         public static bool IsTransitionRando()
         {
@@ -103,18 +102,6 @@ namespace MapModS.Data
             //MapModS.Instance.LogWarn("No transitions found for scene " + scene);
 
             return new();
-        }
-
-        public static bool TryGetSceneWaypoint(string scene, out LogicWaypoint waypoint)
-        {
-            if (_waypointScenes.ContainsKey(scene))
-            {
-                waypoint = _waypointScenes[scene];
-                return true;
-            }
-
-            waypoint = null;
-            return false;
         }
 
         public static string GetUncheckedVisited(string scene)
@@ -219,17 +206,13 @@ namespace MapModS.Data
             _randomizedTransitions = new();
             _transitionLookup = new();
             _transitionsByScene = new();
-            _waypointScenes = new();
 
             if (Ctx.transitionPlacements != null)
             {
                 _randomizedTransitions = new(Ctx.transitionPlacements.Select(tp => tp.Source.Name));
-
                 _transitionLookup = Ctx.transitionPlacements.ToDictionary(tp => tp.Source.Name, tp => tp);
             }
-
-            _waypointScenes = Lm.Waypoints.Where(w => RD.IsRoom(w.Name)).ToDictionary(w => w.Name, w => w);
-
+            
             foreach (GeneralizedPlacement gp in Ctx.Vanilla.Where(gp => RD.IsTransition(gp.Location.Name)))
             {
                 RandoModTransition target = new(Lm.GetTransition(gp.Item.Name))

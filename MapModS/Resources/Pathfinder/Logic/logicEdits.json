@@ -298,5 +298,33 @@
   {
     "name": "Abyss_05",
     "logic": "ORIG | Abyss_05[door_dreamReturn_reality]"
+  },
+  {
+    "name": "Town[door_station]",
+    "logic": "ORIG | Town + Town_Door_Station_Opened"
+  },
+  {
+    "name": "Town[door_sly]",
+    "logic": "ORIG | Town + Town_Door_Sly_Opened"
+  },
+  {
+    "name": "Town[door_jiji]",
+    "logic": "ORIG | Town + Town_Door_Jiji_Opened"
+  },
+  {
+    "name": "Town[door_bretta]",
+    "logic": "ORIG | Town + Town_Door_Bretta_Opened"
+  },
+  {
+    "name": "Town[room_divine]",
+    "logic": "ORIG | Town + Town_Door_Divine_Opened"
+  },
+  {
+    "name": "Town[room_grimm]",
+    "logic": "ORIG | Town + Town_Door_Grimm_Opened"
+  },
+  {
+    "name": "Town[right1]",
+    "logic": "ORIG | Town + Town_Lift_Activated"
   }
 ]

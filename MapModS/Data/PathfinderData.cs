@@ -10,7 +10,7 @@ namespace MapModS.Data
 {
     public static class PathfinderData
     {
-        internal static HashSet<string> persistentTerms;
+        //internal static HashSet<string> persistentTerms;
         internal static Dictionary<string, string> conditionalTerms;
 
         private static Dictionary<string, string> benchwarpScenes;
@@ -18,12 +18,14 @@ namespace MapModS.Data
         private static Dictionary<string, string> scenesByTransition;
         private static Dictionary<string, HashSet<string>> transitionsByScene;
 
+        private static Dictionary<string, LogicWaypoint> waypointScenes;
+
         internal static Dictionary<string, string> doorObjectsByScene;
         internal static Dictionary<string, string> doorObjectsByTransition;
 
         public static void Load()
         {
-            persistentTerms = JsonUtil.Deserialize<HashSet<string>>("MapModS.Resources.Pathfinder.Data.persistentTerms.json");
+            //persistentTerms = JsonUtil.Deserialize<HashSet<string>>("MapModS.Resources.Pathfinder.Data.persistentTerms.json");
             conditionalTerms = JsonUtil.Deserialize< Dictionary<string, string>> ("MapModS.Resources.Pathfinder.Data.conditionalTerms.json");
             benchwarpScenes = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.benchwarp.json");
             specialTransitions = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.specialTransitions.json");
@@ -64,6 +66,8 @@ namespace MapModS.Data
             lmb.DoLogicEdit(new(start.Transition, "ORIG | " + startAdjacent));
 
             lm = new(lmb);
+
+            waypointScenes = lm.Waypoints.Where(w => RD.IsRoom(w.Name)).ToDictionary(w => w.Name, w => w);
         }
 
         // Returns all benchwarps based on benches sat on + Start
@@ -131,6 +135,18 @@ namespace MapModS.Data
             MapModS.Instance.LogWarn($"No adjacent transition for {source}");
 
             return null;
+        }
+
+        public static bool TryGetSceneWaypoint(string scene, out LogicWaypoint waypoint)
+        {
+            if (waypointScenes.ContainsKey(scene))
+            {
+                waypoint = waypointScenes[scene];
+                return true;
+            }
+
+            waypoint = null;
+            return false;
         }
 
         public static bool IsSpecialTransition(this string transition)

@@ -70,6 +70,7 @@
     <None Remove="Resources\Pathfinder\Data\conditionalTerms.json" />
     <None Remove="Resources\Pathfinder\Data\persistentTerms.json" />
     <None Remove="Resources\Pathfinder\Data\scenesByTransition.json" />
+    <None Remove="Resources\Pathfinder\Data\specialTransitions.json" />
     <None Remove="Resources\Pathfinder\Data\transitionsbyScene.json" />
     <None Remove="Resources\Pathfinder\logicEdits.json" />
     <None Remove="Resources\Pathfinder\Logic\logicSubstitutions.json" />
@@ -248,10 +249,9 @@
     <EmbeddedResource Include="Resources\GUI\panelLeft.png" />
     <EmbeddedResource Include="Resources\Pathfinder\Compass\doorObjectsByScene.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Compass\doorObjectsByTransition.json" />
-    <EmbeddedResource Include="Resources\Pathfinder\Data\adjacentScenes.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Data\benchwarp.json" />
-    <EmbeddedResource Include="Resources\Pathfinder\Data\persistentTerms.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Data\conditionalTerms.json" />
+    <EmbeddedResource Include="Resources\Pathfinder\Data\specialTransitions.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Data\transitionsByScene.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Data\scenesByTransition.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Logic\logicSubstitutions.json" />

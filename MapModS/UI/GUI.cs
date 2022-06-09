@@ -244,7 +244,7 @@ namespace MapModS.UI
         {
             TransitionPersistent.UpdateRoute(obj);
 
-            MapModS.Instance.Log(obj.ToString());
+            //MapModS.Instance.Log(obj.ToString());
         }
     }
 }
