@@ -55,72 +55,9 @@ namespace MapModS.Data
             // Algorithm (BFS)
             HashSet<string> visitedTransitions = new();
             LinkedList<SearchNode> queue = new();
-
-            // Add initial bench warp transitions if setting is enabled
-            if (allowBenchWarp && Dependencies.HasDependency("Benchwarp"))
-            {
-                foreach (string transition in PD.GetBenchwarpTransitions())
-                {
-                    // Remove the single transition rejected routes
-                    if (rejectedTransitionPairs.Any(p => p.Key == transition && p.Value == transition)) continue;
-
-                    TryAddNode(null, transition);
-                }
-            }
-
-            localPm.StartTemp();
-
             string searchScene;
 
-            // If reevaluating, start is a transition instead of a scene
-            if (!reevaluate)
-            {
-                // Use all normal transitions in current scene as "seed" for special transitions
-                foreach (string transition in TransitionData.GetTransitionsByScene(start))
-                {
-                    if (normalTransitionSpace.Contains(transition))
-                    {
-                        localPm.Set(transition, 1);
-                    }
-                }
-
-                searchScene = start;
-                candidateReachableTransitions = PD.GetTransitionsInScene(start);
-
-                while (UpdateReachableTransitions()) { }
-            }
-            else
-            {
-                if (start.GetScene() != null)
-                {
-                    localPm.Set(start, 1);
-                    searchScene = start.GetScene();
-                    candidateReachableTransitions = PD.GetTransitionsInScene(start.GetScene());
-
-                    while (UpdateReachableTransitions()) { }
-                }
-            }
-
-            foreach (string transition in candidateReachableTransitions)
-            {
-                // Remove the single transition rejected routes
-                if (rejectedTransitionPairs.Any(p => p.Key == transition && p.Value == transition)) continue;
-
-                TryAddNode(null, transition);
-            }
-
-            localPm.RemoveTempItems();
-
-            if (reevaluate)
-            {
-                // Prefer doubling back if possible, so make that transition highest priority
-                IEnumerable<SearchNode> startNode = queue.TakeWhile(n => n.route.First() == start);
-
-                if (startNode.Any())
-                {
-                    queue.AddFirst(startNode.First());
-                }
-            }
+            InitializeNodeQueue();
 
             while (queue.Any())
             {
@@ -193,15 +130,6 @@ namespace MapModS.Data
                     }
                 }
 
-                //// Persistent terms should always be true (reachable anywhere in the scene without movement requirements)
-                //foreach (string term in PD.persistentTerms)
-                //{
-                //    if (Td.pm.Get(term) > 0)
-                //    {
-                //        localPm.Set(term, 1);
-                //    }
-                //}
-
                 if (PlayerData.instance.GetBool("mineLiftOpened"))
                 {
                     localPm.Set("Town_Lift_Activated", 1);
@@ -238,6 +166,73 @@ namespace MapModS.Data
                 //}
             }
 
+            void InitializeNodeQueue()
+            {
+                // Add initial bench warp transitions if setting is enabled
+                if (allowBenchWarp && Dependencies.HasDependency("Benchwarp"))
+                {
+                    foreach (string transition in PD.GetBenchwarpTransitions())
+                    {
+                        // Remove the single transition rejected routes
+                        if (rejectedTransitionPairs.Any(p => p.Key == transition && p.Value == transition)) continue;
+
+                        TryAddNode(null, transition);
+                    }
+                }
+
+                localPm.StartTemp();
+
+                // If reevaluating, start is a transition instead of a scene
+                if (!reevaluate)
+                {
+                    // Use all normal transitions in current scene as "seed" for special transitions
+                    foreach (string transition in TransitionData.GetTransitionsByScene(start))
+                    {
+                        if (normalTransitionSpace.Contains(transition))
+                        {
+                            localPm.Set(transition, 1);
+                        }
+                    }
+
+                    searchScene = start;
+                    candidateReachableTransitions = PD.GetTransitionsInScene(start);
+
+                    while (UpdateReachableTransitions()) { }
+                }
+                else
+                {
+                    if (start.GetScene() != null)
+                    {
+                        localPm.Set(start, 1);
+                        searchScene = start.GetScene();
+                        candidateReachableTransitions = PD.GetTransitionsInScene(start.GetScene());
+
+                        while (UpdateReachableTransitions()) { }
+                    }
+                }
+
+                foreach (string transition in candidateReachableTransitions)
+                {
+                    // Remove the single transition rejected routes
+                    if (rejectedTransitionPairs.Any(p => p.Key == transition && p.Value == transition)) continue;
+
+                    TryAddNode(null, transition);
+                }
+
+                localPm.RemoveTempItems();
+
+                if (reevaluate)
+                {
+                    // Prefer doubling back if possible, so make that transition highest priority
+                    IEnumerable<SearchNode> startNode = queue.TakeWhile(n => n.route.First() == start);
+
+                    if (startNode.Any())
+                    {
+                        queue.AddFirst(startNode.First());
+                    }
+                }
+            }
+
             void TryAddNode(SearchNode node, string transition)
             {
                 if (transition.IsSpecialTransition() || normalTransitionSpace.Contains(transition))
@@ -260,8 +255,6 @@ namespace MapModS.Data
                     }
 
                     queue.AddLast(newNode);
-
-                    //newNode.PrintRoute();
 
                     visitedTransitions.Add(transition);
                 }

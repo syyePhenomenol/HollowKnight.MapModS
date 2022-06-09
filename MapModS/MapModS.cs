@@ -110,7 +110,7 @@ namespace MapModS
             ItemTracker.Hook();
             GeoRockTracker.Hook();
 
-            // Remove Map Markers from the Shop
+            // Remove Map Markers from the Shop (when mod is enabled)
             ShopChanger.Hook();
 
             // Modify overall Map behaviour
@@ -128,7 +128,7 @@ namespace MapModS
             // Immediately update Map on scene change
             Quill.Hook();
 
-            // Add a Pause Menu GUI, map text UI and transition helper text
+            // Add all the UI elements (world map, quick map, pause menu)
             GUI.Hook();
         }
 
