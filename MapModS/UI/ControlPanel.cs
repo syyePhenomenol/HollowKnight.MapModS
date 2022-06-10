@@ -123,14 +123,17 @@ namespace MapModS.UI
                     LookupText.UpdateAll();
                 }, ModifierKeys.Ctrl, () => MapModS.LS.modEnabled);
 
-                layout.ListenForHotkey(KeyCode.B, () =>
+                if (Dependencies.HasDependency("Benchwarp"))
                 {
-                    MapModS.GS.ToggleAllowBenchWarp();
-                    TransitionPersistent.ResetRoute();
-                    UpdateAll();
-                    TransitionPersistent.UpdateAll();
-                    TransitionWorldMap.UpdateAll();
-                }, ModifierKeys.Ctrl, () => MapModS.LS.modEnabled);
+                    layout.ListenForHotkey(KeyCode.B, () =>
+                    {
+                        MapModS.GS.ToggleAllowBenchWarp();
+                        TransitionPersistent.ResetRoute();
+                        UpdateAll();
+                        TransitionPersistent.UpdateAll();
+                        TransitionWorldMap.UpdateAll();
+                    }, ModifierKeys.Ctrl, () => MapModS.LS.modEnabled);
+                }
 
                 layout.ListenForHotkey(KeyCode.U, () =>
                 {

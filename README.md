@@ -67,10 +67,10 @@ This mod has support for languages other than English. You will need to source a
 
 ## Transition Mode
 - Check out the in-game map key (`CTRL-K`) or the [Map Legend](./MAPLEGEND.md) for what the colors/brightness of each room indicate.
-- Hover over a room and press the indicated key or button to find a path.
+- Hover over a room and press the indicated key/controller bind to find a path.
 - If successful, the path route will be displayed. You can try again to change the start/final transition to what you want.
-- A compass arrow will point to the next transition you need to go to.
-- As you make the correct transitions, they will get cleared from the route.
+- If the first step in the route is to benchwarp, hold the indicated key/controller bind to do the benchwarp.
+- A compass arrow will point to the next transition you need to go to. The shown route gets updated after every transition.
 - The Quick Map also shows the list of unchecked/visited/vanilla transitions for the current room.
 - `CTRL-B`: Toggle including Benchwarp in the pathfinder on/off.
 - `CTRL-U`: Show/hide unchecked/visited/vanilla transitions in the World Map.
