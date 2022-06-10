@@ -70,6 +70,12 @@ namespace MapModS
         static object bwLocalSettings_Instance;
         static FieldInfo bwLocalSettings_VisitedBenchScenes;
         static IEnumerable bwLocalSettings_VisitedBenchScenes_Instance;
+        static Type bwBench;
+        static FieldInfo bwBench_SceneName;
+        static MethodInfo bwBench_SetBench;
+        static MethodInfo bwSetToStart;
+        static PropertyInfo bwBenches;
+        static MethodInfo bwWarpToRespawn;
         static bool isOldBenchwarp = false;
 
         public static void BenchwarpInterop()
@@ -77,27 +83,37 @@ namespace MapModS
             if (ModHooks.GetMod("Benchwarp", true) is Mod bw)
             {
                 bwLocalSettings_Instance = bw.GetType().GetProperty("LS").GetValue(bw);
-
-                Type bwLocalSettingsType = bwLocalSettings_Instance?.GetType();
-
-                bwLocalSettings_VisitedBenchScenes = bwLocalSettingsType?.GetField("visitedBenchScenes");
+                bwLocalSettings_VisitedBenchScenes = bwLocalSettings_Instance?.GetType().GetField("visitedBenchScenes");
 
                 bwBenchKey = optionalDependencies["Benchwarp"]?.GetType("Benchwarp.BenchKey");
-
                 if (bwBenchKey == null)
                 {
                     MapModS.Instance.LogWarn("Benchwarp is outdated");
                     isOldBenchwarp = true;
                     return;
                 }
+                bwBenchKey_SceneName = bwBenchKey?.GetProperty("SceneName");
 
-                bwBenchKey_SceneName = bwBenchKey.GetProperty("SceneName");
+                bwBench = optionalDependencies["Benchwarp"]?.GetType("Benchwarp.Bench");
+                bwBench_SceneName = bwBench?.GetField("sceneName");
+                bwBench_SetBench = bwBench?.GetMethod("SetBench");
 
-                if (bwBenchKey == null
+                bwSetToStart = optionalDependencies["Benchwarp"]?.GetType("Benchwarp.Events")?.GetMethod("SetToStart", BindingFlags.Public | BindingFlags.Static);
+
+                bwBenches = bwBench?.GetProperty("Benches", BindingFlags.Public | BindingFlags.Static);
+
+                bwWarpToRespawn = optionalDependencies["Benchwarp"]?.GetType("Benchwarp.ChangeScene")?.GetMethod("WarpToRespawn", BindingFlags.Public | BindingFlags.Static);
+
+                if (bwLocalSettings_Instance == null
+                    || bwLocalSettings_VisitedBenchScenes == null
+                    || bwBenchKey == null
                     || bwBenchKey_SceneName == null
-                    || bwLocalSettings_Instance == null
-                    || bwLocalSettingsType == null
-                    || bwLocalSettings_VisitedBenchScenes == null)
+                    || bwBench == null
+                    || bwBench_SceneName == null
+                    || bwBench_SetBench == null
+                    || bwBenches == null
+                    || bwWarpToRespawn == null
+                    )
                 {
                     MapModS.Instance.LogError("Found benchwarp installed, but couldn't get necessary interop info");
                 }
@@ -116,6 +132,24 @@ namespace MapModS
             }
 
             return bwLocalSettings_VisitedBenchScenes_Instance.Cast<object>().Select(s => (string)bwBenchKey_SceneName.GetValue(s));
+        }
+
+        public static void DoBenchwarp(string scene)
+        {
+            if (isOldBenchwarp) return;
+
+            if (scene != null)
+            {
+                object bench = ((IEnumerable)bwBenches.GetValue(null)).Cast<object>()
+                    .Where(s => (string)bwBench_SceneName.GetValue(s) == scene).First();
+                bwBench_SetBench.Invoke(bench, null);
+            }
+            else
+            {
+                bwSetToStart.Invoke(null, null);
+            }
+
+            bwWarpToRespawn.Invoke(null, null);
         }
     }
 }

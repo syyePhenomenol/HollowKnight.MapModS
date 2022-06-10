@@ -89,9 +89,35 @@ namespace MapModS.UI
             {
                 text += $" {L.Localize("You are here")}.";
             }
+
+            text += $" {L.Localize("Press")} ";
+
+            text += $"[{bindings.First().Name}]";
+
+            if (bindings.Count > 1 && bindings[1].BindingSourceType == InControl.BindingSourceType.DeviceBindingSource)
+            {
+                text += $" {L.Localize("or")} ";
+
+                text += $"({bindings[1].Name})";
+            }
+
+            if (TP.selectedRoute.Any()
+                && TP.selectedScene == TP.lastFinalScene
+                && TP.selectedRoute.Count() == TP.transitionsCount)
+            {
+                text += $" {L.Localize("to change starting / final transitions of current route")}.";
+            }
             else
             {
-                text += $" {L.Localize("Press")} ";
+                text += $" {L.Localize("to find a new route")}.";
+            }
+
+
+            if (TP.selectedRoute.Any() && TP.selectedRoute.First().IsBenchwarpTransition() && Dependencies.HasDependency("Benchwarp"))
+            {
+                bindings = new(InputHandler.Instance.inputActions.attack.Bindings);
+
+                text += $" {L.Localize("Hold")} ";
 
                 text += $"[{bindings.First().Name}]";
 
@@ -102,7 +128,7 @@ namespace MapModS.UI
                     text += $"({bindings[1].Name})";
                 }
 
-                text += $" {L.Localize("to find new route or switch starting / final transitions")}.";
+                text += $" {L.Localize("to benchwarp")}.";
             }
 
             instruction.Text = text;

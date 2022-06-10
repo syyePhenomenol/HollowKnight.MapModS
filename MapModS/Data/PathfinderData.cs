@@ -82,6 +82,17 @@ namespace MapModS.Data
             return transitions;
         }
 
+        public static string GetBenchwarpScene(string transition)
+        {
+            if (benchwarpScenes.ContainsKey(transition))
+            {
+                return benchwarpScenes[transition];
+            }
+
+            // Start warp (or default handling for any other warp)
+            return null;
+        }
+
         public static HashSet<string> GetTransitionsInScene(this string scene)
         {
             HashSet<string> transitions = TransitionData.GetTransitionsByScene(scene);

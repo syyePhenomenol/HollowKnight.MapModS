@@ -5,6 +5,7 @@ using MapModS.Map;
 using MapModS.Settings;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 
@@ -58,14 +59,7 @@ namespace MapModS.UI
             layout?.Destroy();
             layout = null;
 
-            lastStartScene = "";
-            lastFinalScene = "";
-            lastStartTransition = "";
-            lastFinalTransition = "";
-            transitionsCount = 0;
-            selectedScene = "None";
-            selectedRoute.Clear();
-            rejectedRoutes.Clear();
+            ResetRoute();
         }
 
         public static void UpdateAll()
@@ -137,6 +131,7 @@ namespace MapModS.UI
         }
 
         private static Thread searchThread;
+        private static Stopwatch attackHoldTimer = new();
 
         // Called every frame
         public static void Update()
@@ -144,17 +139,39 @@ namespace MapModS.UI
             if (!TransitionData.TransitionModeActive()
                 || !GUI.worldMapOpen
                 || GUI.lockToggleEnable
-                || GameManager.instance.IsGamePaused())
+                || GameManager.instance.IsGamePaused()
+                || InputHandler.Instance == null)
             {
                 return;
             }
 
             // Use menu selection button for control
-            if (InputHandler.Instance != null && InputHandler.Instance.inputActions.menuSubmit.WasPressed
+            if (InputHandler.Instance.inputActions.menuSubmit.WasPressed
                 && (searchThread == null || !searchThread.IsAlive))
             {
                 searchThread = new(GetRoute);
                 searchThread.Start();
+                attackHoldTimer.Reset();
+            }
+
+            // Hold attack to benchwarp in world map
+            if (selectedRoute.Any() && selectedRoute.First().IsBenchwarpTransition() && Dependencies.HasDependency("Benchwarp"))
+            {
+                if (InputHandler.Instance.inputActions.attack.WasPressed)
+                {
+                    attackHoldTimer.Restart();
+                }
+
+                if (InputHandler.Instance.inputActions.attack.WasReleased)
+                {
+                    attackHoldTimer.Reset();
+                }
+
+                if (attackHoldTimer.ElapsedMilliseconds >= 500)
+                {
+                    attackHoldTimer.Reset();
+                    Dependencies.DoBenchwarp(PathfinderData.GetBenchwarpScene(selectedRoute.First()));
+                }
             }
         }
 
@@ -201,8 +218,7 @@ namespace MapModS.UI
         {
             if (!selectedRoute.Any())
             {
-                lastFinalScene = "";
-                rejectedRoutes.Clear();
+                ResetRoute();
             }
             else
             {
@@ -216,9 +232,21 @@ namespace MapModS.UI
             }
 
             UpdateAll();
+            TransitionWorldMap.UpdateInstructions();
             TransitionWorldMap.UpdateRouteSummary();
 
             RouteCompass.UpdateCompass();
+        }
+
+        public static void ResetRoute()
+        {
+            lastStartScene = "";
+            lastFinalScene = "";
+            lastStartTransition = "";
+            lastFinalTransition = "";
+            transitionsCount = 0;
+            selectedRoute.Clear();
+            rejectedRoutes.Clear();
         }
 
         public static void UpdateRoute(ItemChanger.Transition lastTransition)
@@ -232,7 +260,8 @@ namespace MapModS.UI
             {
                 selectedRoute.Remove(transition);
                 UpdateAll();
-                TransitionWorldMap.UpdateAll();
+                TransitionWorldMap.UpdateInstructions();
+                TransitionWorldMap.UpdateRouteSummary();
 
                 if (!selectedRoute.Any())
                 {
@@ -255,9 +284,7 @@ namespace MapModS.UI
             switch (MapModS.GS.whenOffRoute)
             {
                 case OffRouteBehaviour.Cancel:
-                    selectedRoute = new();
-                    lastFinalScene = "";
-                    rejectedRoutes.Clear();
+                    ResetRoute();
                     UpdateAll();
                     TransitionWorldMap.UpdateAll();
                     RouteCompass.UpdateCompass();
