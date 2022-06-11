@@ -181,7 +181,7 @@ namespace MapModS.UI
         private static IEnumerator CloseInventoryBenchwarp()
         {
             GameManager.instance.inventoryFSM.SendEvent("HERO DAMAGED");
-            yield return new WaitWhile(() => GameManager.instance.inventoryFSM.ActiveStateName == "Closed");
+            yield return new WaitWhile(() => GameManager.instance.inventoryFSM.ActiveStateName != "Closed");
             Dependencies.DoBenchwarp(PathfinderData.GetBenchwarpScene(selectedRoute.First()));
         }
 
