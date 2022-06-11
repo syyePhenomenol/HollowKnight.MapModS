@@ -182,6 +182,8 @@ namespace MapModS.UI
         {
             GameManager.instance.inventoryFSM.SendEvent("HERO DAMAGED");
             yield return new WaitWhile(() => GameManager.instance.inventoryFSM.ActiveStateName != "Closed");
+            UIManager.instance.TogglePauseGame();
+            yield return new WaitWhile(() => !GameManager.instance.IsGamePaused());
             Dependencies.DoBenchwarp(PathfinderData.GetBenchwarpScene(selectedRoute.First()));
         }
 
