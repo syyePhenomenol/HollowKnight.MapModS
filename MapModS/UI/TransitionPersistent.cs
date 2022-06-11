@@ -4,10 +4,12 @@ using MapModS.Data;
 using MapModS.Map;
 using MapModS.Settings;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using UnityEngine;
 
 namespace MapModS.UI
 {
@@ -170,9 +172,17 @@ namespace MapModS.UI
                 if (attackHoldTimer.ElapsedMilliseconds >= 500)
                 {
                     attackHoldTimer.Reset();
-                    Dependencies.DoBenchwarp(PathfinderData.GetBenchwarpScene(selectedRoute.First()));
+
+                    GameManager.instance.StartCoroutine(CloseInventoryBenchwarp());
                 }
             }
+        }
+
+        private static IEnumerator CloseInventoryBenchwarp()
+        {
+            GameManager.instance.inventoryFSM.SendEvent("HERO DAMAGED");
+            yield return new WaitWhile(() => HeroController.instance.controlReqlinquished);
+            Dependencies.DoBenchwarp(PathfinderData.GetBenchwarpScene(selectedRoute.First()));
         }
 
         public static void GetRoute()
