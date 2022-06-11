@@ -36,7 +36,7 @@ namespace MapModS.Settings
     {
         public bool allowBenchWarpSearch = true;
 
-        public bool uncheckedPanelActive = false;
+        public bool uncheckedPanelActive = true;
 
         public bool routeCompassEnabled = true;
 
