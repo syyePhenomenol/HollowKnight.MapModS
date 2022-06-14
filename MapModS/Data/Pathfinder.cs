@@ -15,6 +15,9 @@ namespace MapModS.Data
         public Pathfinder()
         {
             localPm = new(PD.lm, RM.RS.Context);
+
+            // Remove startdef transition
+            localPm.Set(RandomizerMod.RandomizerData.Data.GetStartDef(RM.RS.GenerationSettings.StartLocationSettings.StartLocation).Transition, 0);
         }
 
         // Calculates the shortest route (by number of transitions) from start to final.
@@ -210,7 +213,7 @@ namespace MapModS.Data
                     }
                 }
 
-                foreach (string transition in candidateReachableTransitions)
+                foreach (string transition in candidateReachableTransitions.Where(t => localPm.Get(t) > 0))
                 {
                     TryAddNode(null, transition);
                 }

@@ -100,6 +100,7 @@ namespace MapModS.UI
             orig(self);
 
             worldMapOpen = true;
+            TransitionPersistent.UpdateRoute();
         }
 
         private static void GameMap_QuickMapAncientBasin(On.GameMap.orig_QuickMapAncientBasin orig, GameMap self)
