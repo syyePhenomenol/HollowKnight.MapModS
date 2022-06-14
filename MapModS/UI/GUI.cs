@@ -223,8 +223,8 @@ namespace MapModS.UI
 
             MapText.UpdateAll();
             TransitionPersistent.UpdateAll();
+            TransitionPersistent.attackHoldTimer.Reset();
         }
-
 
         private static void HeroController_UnPause(On.HeroController.orig_UnPause orig, HeroController self)
         {

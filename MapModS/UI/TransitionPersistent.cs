@@ -133,7 +133,7 @@ namespace MapModS.UI
         }
 
         private static Thread searchThread;
-        private static Stopwatch attackHoldTimer = new();
+        public static Stopwatch attackHoldTimer = new();
 
         // Called every frame
         public static void Update()
@@ -182,9 +182,15 @@ namespace MapModS.UI
         {
             GameManager.instance.inventoryFSM.SendEvent("HERO DAMAGED");
             yield return new WaitWhile(() => GameManager.instance.inventoryFSM.ActiveStateName != "Closed");
+            yield return new WaitForFixedUpdate();
+            yield return new WaitForFixedUpdate();
             UIManager.instance.TogglePauseGame();
             yield return new WaitWhile(() => !GameManager.instance.IsGamePaused());
-            Dependencies.DoBenchwarp(PathfinderData.GetBenchwarpScene(selectedRoute.First()));
+            yield return new WaitForSecondsRealtime (0.1f);
+            if (GameManager.instance.IsGamePaused())
+            {
+                Dependencies.DoBenchwarp(PathfinderData.GetBenchwarpScene(selectedRoute.First()));
+            }
         }
 
         public static void GetRoute()
@@ -268,7 +274,8 @@ namespace MapModS.UI
             string transition = selectedRoute.First();
 
             // Check adjacent transition matches the route's transition
-            if (lastTransition.ToString() == transition.GetAdjacentTransition())
+            if (lastTransition.ToString() == transition.GetAdjacentTransition()
+                || lastTransition.SceneName == "Room_Final_Boss_Atrium" && transition == "Warp_Black_Egg_Temple")
             {
                 selectedRoute.Remove(transition);
                 UpdateAll();

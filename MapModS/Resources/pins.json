@@ -1344,12 +1344,12 @@
   "Grub-Collector_2": {
     "offsetX": 0.4,
     "offsetY": 1.25,
-    "offsetZ": 0.0
+    "offsetZ": 0.001
   },
   "Grub-Collector_3": {
     "offsetX": 0.0,
     "offsetY": 1.25,
-    "offsetZ": 0.0
+    "offsetZ": 0.002
   },
   "Mimic_Grub-Deepnest_1": {
     "objectName": "Grub Mimic Bottle",
