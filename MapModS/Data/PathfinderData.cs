@@ -73,7 +73,7 @@ namespace MapModS.Data
         // Returns all benchwarps based on benches sat on + Start
         public static HashSet<string> GetBenchwarpTransitions()
         {
-            IEnumerable<string> visitedBenches = Dependencies.GetVisitedBenchScenes();
+            IEnumerable<string> visitedBenches = BenchInterop.GetVisitedBenchScenes().Where(b => benchwarpScenes.Values.Contains(b));
 
             HashSet<string> transitions = new(benchwarpScenes.Where(b => visitedBenches.Contains(b.Value)).Select(b => b.Key));
 
@@ -105,7 +105,6 @@ namespace MapModS.Data
             return transitions;
         }
 
-        // Don't use this after GetAdjacentTransition() unless it's a normal transition
         public static string GetScene(this string transition)
         {
             if (scenesByTransition.ContainsKey(transition))

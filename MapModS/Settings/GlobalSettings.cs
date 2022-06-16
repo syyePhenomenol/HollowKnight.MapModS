@@ -34,21 +34,23 @@ namespace MapModS.Settings
     [Serializable]
     public class GlobalSettings
     {
-        public bool allowBenchWarpSearch = true;
-
-        public bool uncheckedPanelActive = true;
-
-        public bool routeCompassEnabled = true;
-
         public bool controlPanelOn = true;
 
         public bool mapKeyOn = false;
 
         public bool lookupOn = false;
 
+        public bool benchwarpWorldMap = true;
+
+        public bool allowBenchWarpSearch = true;
+
+        public bool uncheckedPanelActive = true;
+
         public RouteTextInGame routeTextInGame = RouteTextInGame.ShowNextTransitionOnly;
 
         public OffRouteBehaviour whenOffRoute = OffRouteBehaviour.Reevaluate;
+
+        public bool routeCompassEnabled = true;
 
         public PinStyle pinStyle = PinStyle.Normal;
 
@@ -56,20 +58,6 @@ namespace MapModS.Settings
 
         public bool persistentOn = false;
 
-        public void ToggleAllowBenchWarp()
-        {
-            allowBenchWarpSearch = !allowBenchWarpSearch;
-        }
-
-        public void ToggleUncheckedPanel()
-        {
-            uncheckedPanelActive = !uncheckedPanelActive;
-        }
-
-        public void ToggleRouteCompassEnabled()
-        {
-            routeCompassEnabled = !routeCompassEnabled;
-        }
         public void ToggleControlPanel()
         {
             controlPanelOn = !controlPanelOn;
@@ -83,6 +71,21 @@ namespace MapModS.Settings
         public void ToggleLookup()
         {
             lookupOn = !lookupOn;
+        }
+
+        public void ToggleBenchwarpWorldMap()
+        {
+            benchwarpWorldMap = !benchwarpWorldMap;
+        }
+
+        public void ToggleAllowBenchWarp()
+        {
+            allowBenchWarpSearch = !allowBenchWarpSearch;
+        }
+
+        public void ToggleUncheckedPanel()
+        {
+            uncheckedPanelActive = !uncheckedPanelActive;
         }
 
         public void ToggleRouteTextInGame()
@@ -111,6 +114,11 @@ namespace MapModS.Settings
                     whenOffRoute = OffRouteBehaviour.Keep;
                     break;
             }
+        }
+
+        public void ToggleRouteCompassEnabled()
+        {
+            routeCompassEnabled = !routeCompassEnabled;
         }
 
         public void TogglePinStyle()

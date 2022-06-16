@@ -225,6 +225,7 @@ namespace MapModS.Map
             HashSet<string> transitionPinScenes = new();
 
             FullMap.PurgeMap();
+            Transition.ResetMapColors(gameMap.gameObject);
 
             if (TransitionData.TransitionModeActive())
             {

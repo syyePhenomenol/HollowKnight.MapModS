@@ -51,6 +51,8 @@ namespace MapModS.UI
                     Padding = new(160f, 170f, 10f, 10f)
                 };
 
+                ((Image)layout.GetElement("Panel Background")).Tint = Colors.GetColor(ColorSetting.UI_Borders);
+
                 panelContents = new(layout, "Panel Contents")
                 {
                     HorizontalAlignment = HorizontalAlignment.Left,
@@ -136,23 +138,23 @@ namespace MapModS.UI
 
                 counter = 0;
 
-                foreach (KeyValuePair<Transition.RoomState, Vector4> kvp in Transition.roomColor)
+                foreach (ColorSetting color in Colors.roomColors)
                 {
-                    if (kvp.Key == Transition.RoomState.Debug) continue;
+                    string cleanRoomColor = Utils.ToCleanName(color.ToString().Replace("Room_", ""));
 
-                    Image room = new Image(layout, roomCopy, kvp.Key.ToString() + " Room")
+                    Image room = new Image(layout, roomCopy, cleanRoomColor + " Room")
                     {
                         Width = 40f,
                         Height = 40f,
-                        Tint = kvp.Value,
+                        Tint = Colors.GetColor(color),
                         HorizontalAlignment = HorizontalAlignment.Right,
                         VerticalAlignment = VerticalAlignment.Center,
                         Padding = new(0f, 5f, 17f, 5f),
                     }.WithProp(GridLayout.Column, 0).WithProp(GridLayout.Row, counter);
 
-                    TextObject text = new TextObject(layout, kvp.Key.ToString() + " Text")
+                    TextObject text = new TextObject(layout, cleanRoomColor + " Text")
                     {
-                        Text = L.Localize(Utils.ToCleanName(kvp.Key.ToString())),
+                        Text = L.Localize(cleanRoomColor),
                         Padding = new(10f, 0f, 0f, 0f),
                         HorizontalAlignment = HorizontalAlignment.Left,
                         VerticalAlignment = VerticalAlignment.Center

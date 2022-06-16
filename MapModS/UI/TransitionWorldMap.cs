@@ -47,6 +47,8 @@ namespace MapModS.UI
                     Padding = new(10f, 170f, 160f, 10f)
                 };
 
+                ((Image)layout.GetElement("Panel Background")).Tint = Colors.GetColor(ColorSetting.UI_Borders);
+
                 panelText = new(layout, "Panel Text")
                 {
                     HorizontalAlignment = HorizontalAlignment.Left,
@@ -92,14 +94,7 @@ namespace MapModS.UI
 
             text += $" {L.Localize("Press")} ";
 
-            text += $"[{bindings.First().Name}]";
-
-            if (bindings.Count > 1 && bindings[1].BindingSourceType == InControl.BindingSourceType.DeviceBindingSource)
-            {
-                text += $" {L.Localize("or")} ";
-
-                text += $"({bindings[1].Name})";
-            }
+            text += Utils.GetBindingsText(bindings);
 
             if (TP.selectedRoute.Any()
                 && TP.selectedScene == TP.lastFinalScene
@@ -119,14 +114,7 @@ namespace MapModS.UI
 
                 text += $" {L.Localize("Hold")} ";
 
-                text += $"[{bindings.First().Name}]";
-
-                if (bindings.Count > 1 && bindings[1].BindingSourceType == InControl.BindingSourceType.DeviceBindingSource)
-                {
-                    text += $" {L.Localize("or")} ";
-
-                    text += $"({bindings[1].Name})";
-                }
+                text += Utils.GetBindingsText(bindings);
 
                 text += $" {L.Localize("to benchwarp")}.";
             }

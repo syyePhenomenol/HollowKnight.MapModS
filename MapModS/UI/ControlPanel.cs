@@ -1,6 +1,7 @@
 ﻿using MagicUI.Core;
 using MagicUI.Elements;
 using MagicUI.Graphics;
+using MapModS.Data;
 using MapModS.Map;
 using MapModS.Settings;
 using UnityEngine;
@@ -22,7 +23,9 @@ namespace MapModS.UI
         private static TextObject mapKey;
         private static TextObject lookup;
 
-        private static TextObject benchwarp;
+        private static TextObject benchwarpWorldMap;
+
+        private static TextObject benchwarpSearch;
         private static TextObject uncheckedVisited;
         private static TextObject routeInGame;
         private static TextObject whenOffRoute;
@@ -52,6 +55,8 @@ namespace MapModS.UI
                     Padding = new(160f, 0f, 0f, 150f)
                 };
 
+                ((Image)layout.GetElement("Panel Background")).Tint = Colors.GetColor(ColorSetting.UI_Borders);
+
                 panelContents = new(layout, "Panel Contents")
                 {
                     HorizontalAlignment = HorizontalAlignment.Center,
@@ -78,8 +83,11 @@ namespace MapModS.UI
                 lookup = UIExtensions.PanelText(layout, "Lookup");
                 panelContents.Children.Add(lookup);
 
-                benchwarp = UIExtensions.PanelText(layout, "Benchwarp");
-                panelContents.Children.Add(benchwarp);
+                benchwarpWorldMap = UIExtensions.PanelText(layout, "Benchwarp World Map");
+                panelContents.Children.Add(benchwarpWorldMap);
+
+                benchwarpSearch = UIExtensions.PanelText(layout, "Benchwarp Search");
+                panelContents.Children.Add(benchwarpSearch);
 
                 uncheckedVisited = UIExtensions.PanelText(layout, "Unchecked");
                 panelContents.Children.Add(uncheckedVisited);
@@ -122,9 +130,26 @@ namespace MapModS.UI
                     UpdateAll();
                     LookupText.UpdateAll();
                 }, ModifierKeys.Ctrl, () => MapModS.LS.modEnabled);
-
+                
                 if (Dependencies.HasDependency("Benchwarp"))
                 {
+                    layout.ListenForHotkey(KeyCode.W, () =>
+                    {
+                        MapModS.GS.ToggleBenchwarpWorldMap();
+
+                        if (MapModS.GS.lookupOn)
+                        {
+                            Benchwarp.UpdateSelectedBenchCoroutine();
+                        }
+                        else
+                        {
+                            Benchwarp.ResetBenchSelection();
+                        }
+
+                        UpdateAll();
+                        Benchwarp.UpdateAll();
+                    }, ModifierKeys.Ctrl, () => MapModS.LS.modEnabled);
+
                     layout.ListenForHotkey(KeyCode.B, () =>
                     {
                         MapModS.GS.ToggleAllowBenchWarp();
@@ -178,7 +203,8 @@ namespace MapModS.UI
             UpdateControl();
             UpdateMapKey();
             UpdateLookup();
-            UpdateBenchwarp();
+            UpdateBenchwarpWorldMap();
+            UpdateBenchwarpSearch();
             UpdateUnchecked();
             UpdateRouteInGame();
             UpdateOffRoute();
@@ -194,7 +220,8 @@ namespace MapModS.UI
                 if (MapModS.LS.mapMode == MapMode.TransitionRando
                     || MapModS.LS.mapMode == MapMode.TransitionRandoAlt)
                 {
-                    benchwarp.Visibility = Visibility.Visible;
+                    benchwarpWorldMap.Visibility = Visibility.Collapsed;
+                    benchwarpSearch.Visibility = Visibility.Visible;
                     uncheckedVisited.Visibility = Visibility.Visible;
                     routeInGame.Visibility = Visibility.Visible;
                     whenOffRoute.Visibility = Visibility.Visible;
@@ -202,7 +229,8 @@ namespace MapModS.UI
                 }
                 else
                 {
-                    benchwarp.Visibility = Visibility.Collapsed;
+                    benchwarpWorldMap.Visibility = Visibility.Visible;
+                    benchwarpSearch.Visibility = Visibility.Collapsed;
                     uncheckedVisited.Visibility = Visibility.Collapsed;
                     routeInGame.Visibility = Visibility.Collapsed;
                     whenOffRoute.Visibility = Visibility.Collapsed;
@@ -215,7 +243,8 @@ namespace MapModS.UI
                 shiftPan.Visibility = Visibility.Collapsed;
                 mapKey.Visibility = Visibility.Collapsed;
                 lookup.Visibility = Visibility.Collapsed;
-                benchwarp.Visibility = Visibility.Collapsed;
+                benchwarpWorldMap.Visibility = Visibility.Collapsed;
+                benchwarpSearch.Visibility = Visibility.Collapsed;
                 uncheckedVisited.Visibility = Visibility.Collapsed;
                 routeInGame.Visibility = Visibility.Collapsed;
                 whenOffRoute.Visibility = Visibility.Collapsed;
@@ -255,20 +284,37 @@ namespace MapModS.UI
                 );
         }
 
-        public static void UpdateBenchwarp()
+        public static void UpdateBenchwarpWorldMap()
         {
             if (Dependencies.HasDependency("Benchwarp"))
             {
                 UIExtensions.SetToggleText
                     (
-                        benchwarp,
+                        benchwarpWorldMap,
+                        $"{L.Localize("Benchwarp selection")} (Ctrl-W): ",
+                        MapModS.GS.benchwarpWorldMap
+                    );
+            }
+            else
+            {
+                benchwarpSearch.Text = "Benchwarp is not installed";
+            }
+        }
+
+        public static void UpdateBenchwarpSearch()
+        {
+            if (Dependencies.HasDependency("Benchwarp"))
+            {
+                UIExtensions.SetToggleText
+                    (
+                        benchwarpSearch,
                         $"{L.Localize("Include benchwarp")} (Ctrl-B): ",
                         MapModS.GS.allowBenchWarpSearch
                     );
             }
             else
             {
-                benchwarp.Text = "Benchwarp is not installed";
+                benchwarpSearch.Text = "Benchwarp is not installed";
             }
         }
 
@@ -289,15 +335,15 @@ namespace MapModS.UI
             switch (MapModS.GS.routeTextInGame)
             {
                 case RouteTextInGame.Hide:
-                    routeInGame.ContentColor = Color.white;
+                    routeInGame.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
                     text += L.Localize("Off");
                     break;
                 case RouteTextInGame.Show:
-                    routeInGame.ContentColor = Color.green;
+                    routeInGame.ContentColor = Colors.GetColor(ColorSetting.UI_On);
                     text += L.Localize("Full");
                     break;
                 case RouteTextInGame.ShowNextTransitionOnly:
-                    routeInGame.ContentColor = Color.green;
+                    routeInGame.ContentColor = Colors.GetColor(ColorSetting.UI_On);
                     text += L.Localize("Next transition only");
                     break;
             }
@@ -312,15 +358,15 @@ namespace MapModS.UI
             switch (MapModS.GS.whenOffRoute)
             {
                 case OffRouteBehaviour.Keep:
-                    whenOffRoute.ContentColor = Color.white;
+                    whenOffRoute.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
                     text += L.Localize("Keep route");
                     break;
                 case OffRouteBehaviour.Cancel:
-                    whenOffRoute.ContentColor = Color.white;
+                    whenOffRoute.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
                     text += L.Localize("Cancel route");
                     break;
                 case OffRouteBehaviour.Reevaluate:
-                    whenOffRoute.ContentColor = Color.green;
+                    whenOffRoute.ContentColor = Colors.GetColor(ColorSetting.UI_On);
                     text += L.Localize("Reevaluate route");
                     break;
             }

@@ -1,4 +1,9 @@
 ﻿using GlobalEnums;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+using L = RandomizerMod.Localization;
 
 namespace MapModS.Data
 {
@@ -148,6 +153,27 @@ namespace MapModS.Data
                 or "GODS_GLORY" => true,
                 _ => false,
             };
+        }
+
+        public static double DistanceToMiddle(Transform transform)
+        {
+            return Math.Pow(transform.position.x, 2) + Math.Pow(transform.position.y, 2);
+        }
+
+        public static string GetBindingsText(List<InControl.BindingSource> bindings)
+        {
+            string text = "";
+
+            text += $"[{bindings.First().Name}]";
+
+            if (bindings.Count > 1 && bindings[1].BindingSourceType == InControl.BindingSourceType.DeviceBindingSource)
+            {
+                text += $" {L.Localize("or")} ";
+
+                text += $"({bindings[1].Name})";
+            }
+
+            return text;
         }
     }
 }

@@ -1974,7 +1974,7 @@
     "objectName": "Geo Rock 1",
     "offsetX": 0.0,
     "offsetY": -0.2,
-    "offsetZ": 0.0
+    "offsetZ": 0.001
   },
   "Geo_Rock-Moss_Prophet_Dupe": {
     "objectName": "Geo Rock 2",
@@ -2909,7 +2909,7 @@
   "Geo_Rock-Waterways_East": {
     "objectName": "Geo Rock City 1",
     "offsetX": -1.0,
-    "offsetY": 0.7,
+    "offsetY": 0.3,
     "offsetZ": 0.0
   },
   "Geo_Rock-Waterways_Flukemarm": {

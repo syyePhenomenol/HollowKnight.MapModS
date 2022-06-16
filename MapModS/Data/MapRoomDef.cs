@@ -7,6 +7,7 @@ namespace MapModS.Data
         public MapZone mapZone;
         public float offsetX;
         public float offsetY;
+        public string mappedScene;
         public bool includeWithAdditionalMaps;
     }
 }

@@ -273,7 +273,6 @@
     <EmbeddedResource Include="Resources\nonMappedRooms.json" />
     <EmbeddedResource Include="Resources\pins.json" />
     <EmbeddedResource Include="Resources\pinsAM.json" />
-    <EmbeddedResource Include="Resources\pinScenes.json" />
     <EmbeddedResource Include="Resources\Pins\pinCharm.png" />
     <EmbeddedResource Include="Resources\Pins\pinCharmGreen.png" />
     <EmbeddedResource Include="Resources\Pins\pinCharmRed.png" />
@@ -408,6 +407,9 @@
       <Reference Include="Assembly-CSharp">
         <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Assembly-CSharp.dll</HintPath>
         <CopyLocal>False</CopyLocal>
+      </Reference>
+      <Reference Include="Benchwarp">
+        <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\Benchwarp\Benchwarp.dll</HintPath>
       </Reference>
       <Reference Include="ConnectionMetadataInjector">
         <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\ConnectionMetadataInjector\ConnectionMetadataInjector.dll</HintPath>

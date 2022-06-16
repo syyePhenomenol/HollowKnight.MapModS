@@ -1,15 +1,13 @@
 ﻿using MagicUI.Core;
 using MagicUI.Elements;
 using MapModS.Data;
-using MapModS.Map;
 using MapModS.Settings;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
+using static MapModS.Map.Transition;
 
 namespace MapModS.UI
 {
@@ -121,9 +119,9 @@ namespace MapModS.UI
 
             colorUpdateThread = new(() =>
             {
-                if (Transition.GetRoomClosestToMiddle(selectedScene, out selectedScene))
+                if (GetRoomClosestToMiddle(selectedScene, out selectedScene))
                 {
-                    Transition.SetSelectedRoomColor(selectedScene);
+                    SetSelectedRoomColor(selectedScene, true);
                     UpdateAll();
                     TransitionWorldMap.UpdateAll();
                 }
@@ -132,8 +130,39 @@ namespace MapModS.UI
             colorUpdateThread.Start();
         }
 
+        public static bool GetRoomClosestToMiddle(string previousScene, out string selectedScene)
+        {
+            selectedScene = null;
+            double minDistance = double.PositiveInfinity;
+
+            GameObject go_GameMap = GameManager.instance.gameMap;
+
+            if (go_GameMap == null) return false;
+
+            foreach (Transform areaObj in go_GameMap.transform)
+            {
+                foreach (Transform roomObj in areaObj.transform)
+                {
+                    if (!roomObj.gameObject.activeSelf) continue;
+
+                    ExtraMapData extra = roomObj.GetComponent<ExtraMapData>();
+
+                    if (extra == null) continue;
+
+                    double distance = Utils.DistanceToMiddle(roomObj);
+
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                        selectedScene = extra.sceneName;
+                    }
+                }
+            }
+
+            return selectedScene != previousScene;
+        }
+
         private static Thread searchThread;
-        public static Stopwatch attackHoldTimer = new();
 
         // Called every frame
         public static void Update()
@@ -153,43 +182,7 @@ namespace MapModS.UI
             {
                 searchThread = new(GetRoute);
                 searchThread.Start();
-                attackHoldTimer.Reset();
-            }
-
-            // Hold attack to benchwarp in world map
-            if (selectedRoute.Any() && selectedRoute.First().IsBenchwarpTransition() && Dependencies.HasDependency("Benchwarp"))
-            {
-                if (InputHandler.Instance.inputActions.attack.WasPressed)
-                {
-                    attackHoldTimer.Restart();
-                }
-
-                if (InputHandler.Instance.inputActions.attack.WasReleased)
-                {
-                    attackHoldTimer.Reset();
-                }
-
-                if (attackHoldTimer.ElapsedMilliseconds >= 500)
-                {
-                    attackHoldTimer.Reset();
-
-                    GameManager.instance.StartCoroutine(CloseInventoryBenchwarp());
-                }
-            }
-        }
-
-        private static IEnumerator CloseInventoryBenchwarp()
-        {
-            GameManager.instance.inventoryFSM.SendEvent("HERO DAMAGED");
-            yield return new WaitWhile(() => GameManager.instance.inventoryFSM.ActiveStateName != "Closed");
-            yield return new WaitForFixedUpdate();
-            yield return new WaitForFixedUpdate();
-            UIManager.instance.TogglePauseGame();
-            yield return new WaitWhile(() => !GameManager.instance.IsGamePaused());
-            yield return new WaitForSecondsRealtime (0.1f);
-            if (GameManager.instance.IsGamePaused())
-            {
-                Dependencies.DoBenchwarp(PathfinderData.GetBenchwarpScene(selectedRoute.First()));
+                Benchwarp.attackHoldTimer.Reset();
             }
         }
 

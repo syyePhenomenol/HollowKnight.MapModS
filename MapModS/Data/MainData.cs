@@ -17,13 +17,13 @@ namespace MapModS.Data
     {
         private static Dictionary<string, PinDef> allPins;
         private static Dictionary<string, PinDef> allPinsAM;
-        private static Dictionary<string, string> pinScenes;
         private static List<string> sortedGroups;
         private static HashSet<string> minimalMapRooms;
         private static Dictionary<string, MapRoomDef> nonMappedRooms;
 
         private static readonly Dictionary<string, PinDef> usedPins = new();
         private static Dictionary<string, string> logicLookup = new();
+
         public static List<string> usedPoolGroups = new();
 
         public static PinDef[] GetPinArray()
@@ -228,9 +228,14 @@ namespace MapModS.Data
                     pd.sceneName = "Room_Colosseum_01";
                 }
 
-                if (pinScenes.ContainsKey(pd.sceneName))
+                //if (pinScenes.ContainsKey(pd.sceneName))
+                //{
+                //    pd.pinScene = pinScenes[pd.sceneName];
+                //}
+
+                if (nonMappedRooms.ContainsKey(pd.sceneName))
                 {
-                    pd.pinScene = pinScenes[pd.sceneName];
+                    pd.pinScene = nonMappedRooms[pd.sceneName].mappedScene;
                 }
 
                 pd.mapZone = Utils.ToMapZone(RD.GetRoomDef(pd.pinScene ?? pd.sceneName).MapArea);
@@ -276,9 +281,14 @@ namespace MapModS.Data
                         pd.sceneName = "Room_Colosseum_01";
                     }
 
-                    if (pinScenes.ContainsKey(pd.sceneName))
+                    //if (pinScenes.ContainsKey(pd.sceneName))
+                    //{
+                    //    pd.pinScene = pinScenes[pd.sceneName];
+                    //}
+
+                    if (nonMappedRooms.ContainsKey(pd.sceneName))
                     {
-                        pd.pinScene = pinScenes[pd.sceneName];
+                        pd.pinScene = nonMappedRooms[pd.sceneName].mappedScene;
                     }
 
                     pd.mapZone = Utils.ToMapZone(RD.GetRoomDef(pd.pinScene ?? pd.sceneName).MapArea);
@@ -356,7 +366,6 @@ namespace MapModS.Data
         {
             allPins = JsonUtil.Deserialize<Dictionary<string, PinDef>>("MapModS.Resources.pins.json");
             allPinsAM = JsonUtil.Deserialize<Dictionary<string, PinDef>>("MapModS.Resources.pinsAM.json");
-            pinScenes = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.pinScenes.json");
             sortedGroups = JsonUtil.Deserialize<List<string>>("MapModS.Resources.sortedGroups.json");
             minimalMapRooms = JsonUtil.Deserialize<HashSet<string>>("MapModS.Resources.minimalMapRooms.json");
             nonMappedRooms = JsonUtil.Deserialize<Dictionary<string, MapRoomDef>>("MapModS.Resources.nonMappedRooms.json");

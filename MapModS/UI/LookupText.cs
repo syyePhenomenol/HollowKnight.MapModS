@@ -42,6 +42,8 @@ namespace MapModS.UI
                     Padding = new(10f, 170f, 160f, 10f)
                 };
 
+                ((Image)layout.GetElement("Panel Background")).Tint = Colors.GetColor(ColorSetting.UI_Borders);
+
                 panelText = new(layout, "Panel Text")
                 {
                     HorizontalAlignment = HorizontalAlignment.Left,

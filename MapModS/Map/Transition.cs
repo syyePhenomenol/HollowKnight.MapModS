@@ -9,7 +9,7 @@ using RM = RandomizerMod.RandomizerMod;
 
 namespace MapModS.Map
 {
-    internal static class Transition
+    internal class Transition
     {
         public static GameObject CreateExtraMapRooms(GameMap gameMap)
         {
@@ -56,25 +56,15 @@ namespace MapModS.Map
             return go_extraMapRooms;
         }
 
-        public enum RoomState
-        {
-            Normal,
-            Current,
-            Adjacent,
-            Out_of_logic,
-            Selected,
-            Debug
-        }
-
-        public readonly static Dictionary<RoomState, Vector4> roomColor = new()
-        {
-            { RoomState.Normal, new(255, 255, 255, 0.3f) }, // white
-            { RoomState.Current, new(0, 255, 0, 0.4f) }, // green
-            { RoomState.Adjacent, new(0, 255, 255, 0.4f) }, // cyan
-            { RoomState.Out_of_logic, new(255, 0, 0, 0.3f) }, // red
-            { RoomState.Selected, new(255, 255, 0, 0.7f) }, // yellow
-            { RoomState.Debug, new(0, 0, 255, 0.5f) } // blue
-        };
+        //public readonly static Dictionary<RoomState, Vector4> roomColor = new()
+        //{
+        //    { RoomState.Normal, new(1f, 1f, 1f, 0.3f) }, // white
+        //    { RoomState.Current, new(0, 1f, 0, 0.4f) }, // green
+        //    { RoomState.Adjacent, new(0, 1f, 1f, 0.4f) }, // cyan
+        //    { RoomState.Out_of_logic, new(1f, 0, 0, 0.3f) }, // red
+        //    { RoomState.Selected, new(1f, 1f, 0, 0.7f) }, // yellow
+        //    { RoomState.Debug, new(0, 0, 1f, 0.5f) } // blue
+        //};
 
         private static void SetActiveSRColor(Transform transform, bool active, SpriteRenderer sr, Vector4 color)
         {
@@ -177,40 +167,40 @@ namespace MapModS.Map
                     }
 
                     bool active = false;
-                    Vector4 color = roomColor[RoomState.Normal];
+                    Vector4 color = Colors.GetColor(ColorSetting.Room_Normal);
 
                     if (isAlt)
                     {
                         if (visitedScenes.Contains(emd.sceneName))
                         {
-                            color = roomColor[RoomState.Normal];
+                            color = Colors.GetColor(ColorSetting.Room_Normal);
                             active = true;
                         }
 
                         if (outOfLogicScenes.Contains(emd.sceneName)
                             && !inLogicScenes.Contains(emd.sceneName))
                         {
-                            color = roomColor[RoomState.Out_of_logic];
+                            color = Colors.GetColor(ColorSetting.Room_Out_of_logic);
                         }
                     }
                     else
                     {
                         if (outOfLogicScenes.Contains(emd.sceneName))
                         {
-                            color = roomColor[RoomState.Out_of_logic];
+                            color = Colors.GetColor(ColorSetting.Room_Out_of_logic);
                             active = true;
                         }
 
                         if (inLogicScenes.Contains(emd.sceneName))
                         {
-                            color = roomColor[RoomState.Normal];
+                            color = Colors.GetColor(ColorSetting.Room_Normal);
                             active = true;
                         }
                     }
 
                     if (visitedAdjacentScenes.Contains(emd.sceneName))
                     {
-                        color = roomColor[RoomState.Adjacent];
+                        color = Colors.GetColor(ColorSetting.Room_Adjacent);
                     }
 
 #if DEBUG
@@ -223,7 +213,7 @@ namespace MapModS.Map
 
                     if (emd.sceneName == Utils.CurrentScene())
                     {
-                        color = roomColor[RoomState.Current];
+                        color = Colors.GetColor(ColorSetting.Room_Current);
                     }
 
                     if (uncheckedReachableScenes.Contains(emd.sceneName))
@@ -327,7 +317,7 @@ namespace MapModS.Map
             }
         }
 
-        public static void SetSelectedRoomColor(string selectedScene)
+        public static void SetSelectedRoomColor(string selectedScene, bool transitionMode)
         {
             GameObject go_GameMap = GameManager.instance.gameMap;
 
@@ -349,7 +339,7 @@ namespace MapModS.Map
 
                         if (extra.sceneName == selectedScene)
                         {
-                            Vector4 color = roomColor[RoomState.Selected];
+                            Vector4 color = Colors.GetColor(ColorSetting.Room_Selected);
 
                             if (extra.highlight)
                             {
@@ -381,60 +371,40 @@ namespace MapModS.Map
 
                     if (sr == null) continue;
 
-                    if (extra.sceneName == selectedScene)
+
+                    if (transitionMode)
                     {
-                        Vector4 color = roomColor[RoomState.Selected];
-
-                        if (extra.highlight)
+                        if (extra.sceneName == selectedScene)
                         {
-                            color.w = 1f;
-                        }
+                            Vector4 color = Colors.GetColor(ColorSetting.Room_Selected);
 
-                        sr.color = color;
+                            if (extra.highlight)
+                            {
+                                color.w = 1f;
+                            }
+
+                            sr.color = color;
+                        }
+                        else
+                        {
+                            sr.color = extra.origTransitionColor;
+                        }
                     }
                     else
                     {
-                        sr.color = extra.origTransitionColor;
+                        if (extra.sceneName == selectedScene)
+                        {
+                            Vector4 color = Colors.GetColor(ColorSetting.Room_Benchwarp_Selected);
+
+                            sr.color = color;
+                        }
+                        else
+                        {
+                            sr.color = extra.origColor;
+                        }
                     }
                 }
             }
-        }
-
-        private static double DistanceToMiddle(Transform transform)
-        {
-            return Math.Pow(transform.position.x, 2) + Math.Pow(transform.position.y, 2);
-        }
-
-        public static bool GetRoomClosestToMiddle(string previousScene, out string selectedScene)
-        {
-            selectedScene = null;
-            double minDistance = double.PositiveInfinity;
-
-            GameObject go_GameMap = GameManager.instance.gameMap;
-
-            if (go_GameMap == null) return false;
-
-            foreach (Transform areaObj in go_GameMap.transform)
-            {
-                foreach (Transform roomObj in areaObj.transform)
-                {
-                    if (!roomObj.gameObject.activeSelf) continue;
-
-                    ExtraMapData extra = roomObj.GetComponent<ExtraMapData>();
-
-                    if (extra == null) continue;
-
-                    double distance = DistanceToMiddle(roomObj);
-
-                    if (distance < minDistance)
-                    {
-                        minDistance = distance;
-                        selectedScene = extra.sceneName;
-                    }
-                }
-            }
-
-            return selectedScene != previousScene;
         }
 
         public static void ResetMapColors(GameObject goGameMap)

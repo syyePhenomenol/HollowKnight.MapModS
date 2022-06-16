@@ -72,6 +72,7 @@ namespace MapModS.UI
             TransitionPersistent.Destroy();
             TransitionWorldMap.Destroy();
             TransitionQuickMap.Destroy();
+            Benchwarp.Destroy();
         }
 
         private static void GameMap_Start(On.GameMap.orig_Start orig, GameMap self)
@@ -93,6 +94,7 @@ namespace MapModS.UI
             TransitionPersistent.Build();
             TransitionWorldMap.Build();
             TransitionQuickMap.Build();
+            Benchwarp.Build();
         }
 
         private static void GameMap_WorldMap(On.GameMap.orig_WorldMap orig, GameMap self)
@@ -101,6 +103,7 @@ namespace MapModS.UI
 
             worldMapOpen = true;
             TransitionPersistent.UpdateRoute();
+            Benchwarp.UpdateAll();
         }
 
         private static void GameMap_QuickMapAncientBasin(On.GameMap.orig_QuickMapAncientBasin orig, GameMap self)
@@ -204,7 +207,7 @@ namespace MapModS.UI
 
             MapText.UpdateAll();
             TransitionPersistent.UpdateAll();
-            TransitionPersistent.attackHoldTimer.Reset();
+            Benchwarp.attackHoldTimer.Reset();
         }
 
         private static void HeroController_UnPause(On.HeroController.orig_UnPause orig, HeroController self)
