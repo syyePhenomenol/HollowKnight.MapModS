@@ -211,6 +211,12 @@ namespace MapModS.Data
 
                         while (UpdateReachableTransitions()) { }
                     }
+
+                    // Remove certain top transitions that can't be returned to 
+                    if (!localPm.lm.TransitionLookup[start].CanGet(localPm))
+                    {
+                        localPm.Set(start, 0);
+                    }
                 }
 
                 foreach (string transition in candidateReachableTransitions.Where(t => localPm.Get(t) > 0))
