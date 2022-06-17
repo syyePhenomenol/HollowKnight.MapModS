@@ -73,7 +73,7 @@ namespace MapModS.Data
         {
             Dictionary<string, float[]> customColorsRaw = JsonUtil.DeserializeFromExternalFile<Dictionary<string, float[]>>("colors.json");
 
-            if (customColors != null)
+            if (customColorsRaw != null)
             {
                 MapModS.Instance.Log("Custom colors loaded");
 

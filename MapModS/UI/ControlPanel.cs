@@ -136,16 +136,6 @@ namespace MapModS.UI
                     layout.ListenForHotkey(KeyCode.W, () =>
                     {
                         MapModS.GS.ToggleBenchwarpWorldMap();
-
-                        if (MapModS.GS.lookupOn)
-                        {
-                            Benchwarp.UpdateSelectedBenchCoroutine();
-                        }
-                        else
-                        {
-                            Benchwarp.ResetBenchSelection();
-                        }
-
                         UpdateAll();
                         Benchwarp.UpdateAll();
                     }, ModifierKeys.Ctrl, () => MapModS.LS.modEnabled);

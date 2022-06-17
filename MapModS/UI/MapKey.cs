@@ -4,7 +4,6 @@ using MagicUI.Graphics;
 using MapModS.Data;
 using MapModS.Map;
 using MapModS.Settings;
-using System.Collections.Generic;
 using UnityEngine;
 using L = RandomizerMod.Localization;
 
@@ -18,14 +17,6 @@ namespace MapModS.UI
         private static StackLayout panelContents;
         private static GridLayout pinKey;
         private static GridLayout roomKey;
-
-        //private static readonly Dictionary<PinBorderColor, string> _pinKey = new()
-        //{
-        //    { PinBorderColor.Normal, "pinBlank" },
-        //    { PinBorderColor.Previewed, "pinBlankGreen" },
-        //    { PinBorderColor.Out_of_logic, "pinBlankRed" },
-        //    { PinBorderColor.Persistent, "pinBlankCyan" }
-        //};
 
         public static bool Condition()
         {

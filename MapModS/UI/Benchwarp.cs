@@ -57,7 +57,6 @@ namespace MapModS.UI
         {
             selectedBenchScene = "";
             benchPointer = 0;
-            SetSelectedRoomColor(selectedBenchScene, false);
             attackHoldTimer.Reset();
         }
 
@@ -65,8 +64,14 @@ namespace MapModS.UI
         {
             if (Dependencies.HasDependency("Benchwarp"))
             {
+                if (!MapModS.GS.benchwarpWorldMap)
+                {
+                    ResetBenchSelection();
+                }
+
                 GetBenchScenes();
                 UpdateBenchwarpText();
+                SetSelectedRoomColor(selectedBenchScene, false);
             }
         }
 
@@ -124,7 +129,7 @@ namespace MapModS.UI
 
             benchUpdateThread = new(() =>
             {
-                if (GetBenchClosestToMiddle())
+                if (GetBenchClosestToMiddle(selectedBenchScene, out selectedBenchScene))
                 {
                     benchPointer = 0;
                     SetSelectedRoomColor(selectedBenchScene, false);
@@ -135,11 +140,9 @@ namespace MapModS.UI
             benchUpdateThread.Start();
         }
 
-        public static bool GetBenchClosestToMiddle()
+        public static bool GetBenchClosestToMiddle(string previousScene, out string selectedScene)
         {
-            string previousScene = selectedBenchScene;
-            selectedBenchScene = "";
-
+            selectedScene = "";
             double minDistance = double.PositiveInfinity;
 
             GameObject go_GameMap = GameManager.instance.gameMap;
@@ -161,12 +164,12 @@ namespace MapModS.UI
                     if (distance < minDistance)
                     {
                         minDistance = distance;
-                        selectedBenchScene = extra.sceneName;
+                        selectedScene = extra.sceneName;
                     }
                 }
             }
 
-            return selectedBenchScene != previousScene;
+            return selectedScene != previousScene;
         }
 
         public static Stopwatch attackHoldTimer = new();
@@ -185,7 +188,7 @@ namespace MapModS.UI
                 return;
             }
 
-            // Hold attack to benchwarp in transition world map
+            // Hold attack to benchwarp
             if (TransitionData.TransitionModeActive())
             {
                 if (!TP.selectedRoute.Any() || !TP.selectedRoute.First().IsBenchwarpTransition()) return;

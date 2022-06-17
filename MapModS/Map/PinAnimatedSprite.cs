@@ -4,19 +4,10 @@ using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
-//using PBC = MapModS.Map.PinBorderColor;
 using PLS = MapModS.Data.PinLocationState;
 
 namespace MapModS.Map
 {
-    //public enum PinBorderColor
-    //{
-    //    Normal,
-    //    Previewed,
-    //    Out_of_logic,
-    //    Persistent
-    //}
-
     public class PinAnimatedSprite : MonoBehaviour
     {
         public PinDef PD { get; private set; } = null;
@@ -102,7 +93,7 @@ namespace MapModS.Map
 
             SR.sprite = SpriteManager.GetSpriteFromPool(pool, normalOverride);
 
-            SetBorderColor();
+            SetBorderColor(false);
         }
 
         public void SetSizeAndColor()
@@ -129,15 +120,16 @@ namespace MapModS.Map
                 _ => _inactiveColor,
             };
 
-            SetBorderColor();
+            SetBorderColor(false);
         }
 
         public void SetSizeAndColorSelected()
         {
             transform.localScale = new Vector3(1.8f * GetPinScale(), 1.8f * GetPinScale(), 1f);
             SR.color = _origColor;
-            SetBorderColor();
+            SetBorderColor(true);
         }
+
         private float GetPinScale()
         {
             return MapModS.GS.pinSize switch
@@ -149,14 +141,20 @@ namespace MapModS.Map
             };
         }
         
-        private void SetBorderColor()
+        private void SetBorderColor(bool highlightOverride)
         {
-            // Set border color of pin
             switch (PD.pinLocationState)
             {
                 case PLS.UncheckedUnreachable:
                 case PLS.NonRandomizedUnchecked:
-                    BorderSR.color = GrayOut(Colors.GetColor(ColorSetting.Pin_Normal));
+                    if (highlightOverride)
+                    {
+                        BorderSR.color = Colors.GetColor(ColorSetting.Pin_Normal);
+                    }
+                    else
+                    {
+                        BorderSR.color = GrayOut(Colors.GetColor(ColorSetting.Pin_Normal));
+                    }
                     break;
                 case PLS.UncheckedReachable:
                     BorderSR.color = Colors.GetColor(ColorSetting.Pin_Normal);
@@ -173,7 +171,6 @@ namespace MapModS.Map
                         BorderSR.color = Colors.GetColor(ColorSetting.Pin_Persistent);
                     }
                     break;
-
                 default:
                     break;
             }
