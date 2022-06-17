@@ -205,7 +205,10 @@ namespace MapModS.Data
                 {
                     if (start.GetScene() != null)
                     {
-                        localPm.Set(start, 1);
+                        if (localPm.lm.TransitionLookup.ContainsKey(start))
+                        {
+                            localPm.Set(start, 1);
+                        }
                         searchScene = start.GetScene();
                         candidateReachableTransitions = PD.GetTransitionsInScene(start.GetScene());
 
@@ -213,7 +216,7 @@ namespace MapModS.Data
                     }
 
                     // Remove certain top transitions that can't be returned to 
-                    if (!localPm.lm.TransitionLookup[start].CanGet(localPm))
+                    if (localPm.lm.TransitionLookup.ContainsKey(start) && !localPm.lm.TransitionLookup[start].CanGet(localPm))
                     {
                         localPm.Set(start, 0);
                     }

@@ -5,6 +5,7 @@ using MapModS.Settings;
 using Modding;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
+using System.Linq;
 using UnityEngine;
 using Vasi;
 
@@ -60,12 +61,10 @@ namespace MapModS.Map
                         roomObj.gameObject.SetActive(true);
                     }
 
-                    foreach (Transform roomObj2 in roomObj.transform)
+                    foreach (Transform roomObj2 in roomObj.transform.Cast<Transform>()
+                        .Where(r => r.name.Contains("Area Name")))
                     {
-                        if (roomObj2.name.Contains("Area Name"))
-                        {
-                            roomObj2.gameObject.SetActive(true);
-                        }
+                        roomObj2.gameObject.SetActive(true);
                     }
                 }
             }

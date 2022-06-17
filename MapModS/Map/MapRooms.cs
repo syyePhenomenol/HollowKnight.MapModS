@@ -1,6 +1,5 @@
 ﻿using GlobalEnums;
 using MapModS.Data;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -9,8 +8,16 @@ using RM = RandomizerMod.RandomizerMod;
 
 namespace MapModS.Map
 {
-    internal class Transition
+    internal class MapRooms
     {
+        public class ExtraMapData : MonoBehaviour
+        {
+            public Color origColor;
+            public Color origTransitionColor;
+            public string sceneName;
+            public bool highlight;
+        }
+
         public static GameObject CreateExtraMapRooms(GameMap gameMap)
         {
             GameObject go_extraMapRooms = new("MMS Custom Map Rooms");
@@ -19,9 +26,9 @@ namespace MapModS.Map
             go_extraMapRooms.transform.localPosition = Vector3.zero;
             go_extraMapRooms.SetActive(false);
 
-            var areaNamePrefab = UnityEngine.Object.Instantiate(gameMap.areaCliffs.transform.GetChild(0).gameObject);
+            var areaNamePrefab = Object.Instantiate(gameMap.areaCliffs.transform.GetChild(0).gameObject);
 
-            UnityEngine.Object.Destroy(areaNamePrefab.GetComponent<DisplayOnWorldMapOnly>());
+            Object.Destroy(areaNamePrefab.GetComponent<DisplayOnWorldMapOnly>());
 
             var prefabTMP = areaNamePrefab.GetComponent<TextMeshPro>();
             prefabTMP.color = Color.white;
@@ -34,12 +41,11 @@ namespace MapModS.Map
 
             areaNamePrefab.SetActive(false);
 
-            foreach (string scene in MainData.GetNonMappedScenes())
+            foreach (string scene in MainData.GetNonMappedScenes().Where(s => RandomizerMod.RandomizerData.Data.IsRoom(s)))
             {
                 MapRoomDef mrd = MainData.GetNonMappedRoomDef(scene);
 
-                GameObject go_extraMapRoom = UnityEngine.Object.Instantiate(areaNamePrefab, go_extraMapRooms.transform);
-
+                GameObject go_extraMapRoom = Object.Instantiate(areaNamePrefab, go_extraMapRooms.transform);
                 go_extraMapRoom.name = scene;
                 go_extraMapRoom.GetComponent<SetTextMeshProGameText>().convName = scene;
                 go_extraMapRoom.transform.localPosition = new Vector3(mrd.offsetX, mrd.offsetY, 0f);
@@ -51,43 +57,27 @@ namespace MapModS.Map
                 go_extraMapRoom.SetActive(false);
             }
 
-            UnityEngine.Object.Destroy(areaNamePrefab);
+            Object.Destroy(areaNamePrefab);
 
             return go_extraMapRooms;
         }
 
-        //public readonly static Dictionary<RoomState, Vector4> roomColor = new()
-        //{
-        //    { RoomState.Normal, new(1f, 1f, 1f, 0.3f) }, // white
-        //    { RoomState.Current, new(0, 1f, 0, 0.4f) }, // green
-        //    { RoomState.Adjacent, new(0, 1f, 1f, 0.4f) }, // cyan
-        //    { RoomState.Out_of_logic, new(1f, 0, 0, 0.3f) }, // red
-        //    { RoomState.Selected, new(1f, 1f, 0, 0.7f) }, // yellow
-        //    { RoomState.Debug, new(0, 0, 1f, 0.5f) } // blue
-        //};
-
-        private static void SetActiveSRColor(Transform transform, bool active, SpriteRenderer sr, Vector4 color)
+        private static void SetActiveColor(GameObject obj, bool active, Vector4 color)
         {
-            if (sr == null)
+            if (obj.GetComponent<SpriteRenderer>() != null)
             {
-                transform.gameObject.SetActive(false);
-                return;
+                obj.SetActive(active);
+                obj.GetComponent<SpriteRenderer>().color = color;
             }
-
-            transform.gameObject.SetActive(active);
-            sr.color = color;
-        }
-
-        private static void SetActiveTMPColor(Transform transform, bool active, TextMeshPro tmp, Vector4 color)
-        {
-            if (tmp == null)
+            else if (obj.GetComponent<TextMeshPro>() != null)
             {
-                transform.gameObject.SetActive(false);
-                return;
+                obj.SetActive(active);
+                obj.GetComponent<TextMeshPro>().color = color;
             }
-
-            transform.gameObject.SetActive(active);
-            tmp.color = color;
+            else
+            {
+                obj.gameObject.SetActive(false);
+            }
         }
 
         public static HashSet<string> SetupMapTransitionMode(GameMap gameMap, MapZone mapZone)
@@ -161,7 +151,6 @@ namespace MapModS.Map
 
                     if (emd == null)
                     {
-                        //MapModS.Instance.Log(roomObj.name);
                         roomObj.gameObject.SetActive(false);
                         continue;
                     }
@@ -228,47 +217,28 @@ namespace MapModS.Map
 
                     if (areaObj.name == "MMS Custom Map Rooms")
                     {
-                        if (mapZone == MapZone.NONE || MainData.GetNonMappedRoomDef(roomObj.name).mapZone == mapZone)
-                        {
-                            TextMeshPro tmp = roomObj.gameObject.GetComponent<TextMeshPro>();
-                            SetActiveTMPColor(roomObj, active, tmp, color);
-                            emd.origTransitionColor = tmp.color;
-                        }
-                        else
-                        {
-                            roomObj.gameObject.SetActive(false);
-                        }
+                        SetActiveColor(roomObj.gameObject, active && (mapZone == MapZone.NONE || MainData.GetNonMappedRoomDef(roomObj.name).mapZone == mapZone), color);
+
+                        if (!active) continue;
+                        emd.origTransitionColor = color;
 
                         continue;
                     }
 
-                    var sr = roomObj.GetComponent<SpriteRenderer>();
+                    Transform obj = GetActualRoomObj(roomObj);
+                    if (obj == null) continue;
 
-                    // For AdditionalMaps room objects, the child has the SR
-                    if (emd.sceneName.Contains("White_Palace"))
-                    {
-                        foreach (Transform roomObj2 in roomObj.transform)
-                        {
-                            if (!roomObj2.name.Contains("RWP")) continue;
-                            sr = roomObj2.GetComponent<SpriteRenderer>();
-                            break;
-                        }
-                    }
-
-                    SetActiveSRColor(roomObj, active, sr, color);
+                    SetActiveColor(roomObj.gameObject, active, color);
 
                     if (!active) continue;
+                    emd.origTransitionColor = color;
 
                     // Force disable sub area names
-                    foreach (Transform roomObj2 in roomObj.transform)
+                    foreach (Transform roomObj2 in roomObj.transform.Cast<Transform>()
+                        .Where(r => r.name.Contains("Area Name")))
                     {
-                        if (roomObj2.name.Contains("Area Name"))
-                        {
-                            roomObj2.gameObject.SetActive(false);
-                        }
+                        roomObj2.gameObject.SetActive(false);
                     }
-
-                    emd.origTransitionColor = sr.color;
                 }
             }
 
@@ -278,14 +248,6 @@ namespace MapModS.Map
             }
 
             return new(inLogicScenes.Union(outOfLogicScenes));
-        }
-
-        public class ExtraMapData : MonoBehaviour
-        {
-            public Color origColor;
-            public Color origTransitionColor;
-            public string sceneName;
-            public bool highlight;
         }
 
         // Store original color, also store the sceneName for the room object for convenience
@@ -298,7 +260,6 @@ namespace MapModS.Map
                     //MapModS.Instance.Log(roomObj.name);
 
                     string sceneName = Utils.GetActualSceneName(roomObj.name);
-
                     if (sceneName == null) continue;
 
                     ExtraMapData extraData = roomObj.GetComponent<ExtraMapData>();
@@ -320,7 +281,6 @@ namespace MapModS.Map
         public static void SetSelectedRoomColor(string selectedScene, bool transitionMode)
         {
             GameObject go_GameMap = GameManager.instance.gameMap;
-
             if (go_GameMap == null) return;
 
             foreach (Transform areaObj in go_GameMap.transform)
@@ -329,78 +289,61 @@ namespace MapModS.Map
                 {
                     if (!roomObj.gameObject.activeSelf) continue;
 
-                    ExtraMapData extra = roomObj.GetComponent<ExtraMapData>();
-
-                    if (extra == null) continue;
+                    ExtraMapData emd = roomObj.GetComponent<ExtraMapData>();
+                    if (emd == null) continue;
 
                     if (areaObj.name == "MMS Custom Map Rooms")
                     {
                         TextMeshPro tmp = roomObj.gameObject.GetComponent<TextMeshPro>();
 
-                        if (extra.sceneName == selectedScene)
+                        if (emd.sceneName == selectedScene)
                         {
                             Vector4 color = Colors.GetColor(ColorSetting.Room_Selected);
-
-                            if (extra.highlight)
+                            if (emd.highlight)
                             {
                                 color.w = 1f;
                             }
-
                             tmp.color = color;
                         }
                         else
                         {
-                            tmp.color = extra.origTransitionColor;
+                            tmp.color = emd.origTransitionColor;
                         }
-
                         continue;
                     }
 
-                    SpriteRenderer sr = roomObj.GetComponent<SpriteRenderer>();
+                    Transform obj = GetActualRoomObj(roomObj);
+                    if (obj == null) continue;
 
-                    // For AdditionalMaps room objects, the child has the SR
-                    if (extra.sceneName.Contains("White_Palace"))
-                    {
-                        foreach (Transform roomObj2 in roomObj.transform)
-                        {
-                            if (!roomObj2.name.Contains("RWP")) continue;
-                            sr = roomObj2.GetComponent<SpriteRenderer>();
-                            break;
-                        }
-                    }
-
+                    var sr = obj.GetComponent<SpriteRenderer>();
                     if (sr == null) continue;
-
 
                     if (transitionMode)
                     {
-                        if (extra.sceneName == selectedScene)
+                        if (emd.sceneName == selectedScene)
                         {
                             Vector4 color = Colors.GetColor(ColorSetting.Room_Selected);
-
-                            if (extra.highlight)
+                            if (emd.highlight)
                             {
                                 color.w = 1f;
                             }
-
                             sr.color = color;
                         }
                         else
                         {
-                            sr.color = extra.origTransitionColor;
+                            sr.color = emd.origTransitionColor;
                         }
                     }
                     else
                     {
-                        if (extra.sceneName == selectedScene)
+                        if (emd.sceneName == selectedScene)
                         {
                             Vector4 color = Colors.GetColor(ColorSetting.Room_Benchwarp_Selected);
-
                             sr.color = color;
                         }
                         else
                         {
-                            sr.color = extra.origColor;
+                            sr.color = emd.origColor;
                         }
                     }
                 }
@@ -426,23 +369,36 @@ namespace MapModS.Map
 
                 foreach (Transform roomObj in areaObj.transform)
                 {
-                    ExtraMapData extra = roomObj.GetComponent<ExtraMapData>();
-                    var sr = roomObj.GetComponent<SpriteRenderer>();
+                    ExtraMapData emd = roomObj.GetComponent<ExtraMapData>();
+                    if (emd == null) continue;
 
-                    if (sr == null || extra == null) continue;
+                    Transform obj = GetActualRoomObj(roomObj);
+                    if (obj == null) continue;
 
-                    if (roomObj.name.Contains("White_Palace"))
-                    {
-                        foreach (Transform roomObj2 in roomObj.transform)
-                        {
-                            if (!roomObj2.name.Contains("RWP")) continue;
-                            sr = roomObj2.GetComponent<SpriteRenderer>();
-                            break;
-                        }
-                    }
+                    var sr = obj.GetComponent<SpriteRenderer>();
+                    if (sr == null) continue;
 
-                    sr.color = extra.origColor;
+                    sr.color = emd.origColor;
                 }
+            }
+        }
+
+        private static Transform GetActualRoomObj(Transform t)
+        {
+            if (t.name.Contains("White_Palace"))
+            {
+                return t.Cast<Transform>()
+                    .Where(r => r.name.Contains("RWP")).FirstOrDefault();
+            }
+            // Hotfix
+            else if (t.name.Contains("GG_Atrium"))
+            {
+                return t.Cast<Transform>()
+                    .Where(r => r.name.Contains("RGH")).FirstOrDefault();
+            }
+            else
+            {
+                return t;
             }
         }
     }

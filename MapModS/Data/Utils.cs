@@ -118,7 +118,10 @@ namespace MapModS.Data
 
             for (int i = 0; i < 2; i++)
             {
-                if (RandomizerMod.RandomizerData.Data.IsRoom(objName))
+                if (RandomizerMod.RandomizerData.Data.IsRoom(objName)
+                    // Hotfix for Godhome. When Randomizer adds roomdefs for godhome, take this out
+                    || objName == "GG_Atrium"
+                    || objName == "GG_Atrium_Roof")
                 {
                     return objName;
                 }

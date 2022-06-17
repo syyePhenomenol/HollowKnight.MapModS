@@ -238,7 +238,7 @@ namespace MapModS.UI
                 WorldMap.goCustomPins.SetActive(false);
                 WorldMap.goExtraRooms.SetActive(false);
                 FullMap.PurgeMap();
-                Transition.ResetMapColors(GameManager.instance.gameMap);
+                MapRooms.ResetMapColors(GameManager.instance.gameMap);
                 panelActive = false;
             }
 
@@ -440,7 +440,7 @@ namespace MapModS.UI
                 && (MapModS.LS.mapMode == MapMode.TransitionRando
                     || MapModS.LS.mapMode == MapMode.TransitionRandoAlt))
             {
-                Transition.ResetMapColors(GameManager.instance.gameMap);
+                MapRooms.ResetMapColors(GameManager.instance.gameMap);
             }
 
             MapModS.LS.ToggleMapMode();
@@ -570,6 +570,27 @@ namespace MapModS.UI
             }
         }
 
+        public static void TogglePersistent(Button sender)
+        {
+            MapModS.GS.TogglePersistentOn();
+
+            UpdateAll();
+        }
+
+        private static void UpdatePersistent(Button sender)
+        {
+            if (MapModS.GS.persistentOn)
+            {
+                sender.ContentColor = Colors.GetColor(ColorSetting.UI_On);
+                sender.Content = $"{L.Localize("Persistent\nitems")}: {L.Localize("On")}";
+            }
+            else
+            {
+                sender.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
+                sender.Content = $"{L.Localize("Persistent\nitems")}: {L.Localize("Off")}";
+            }
+        }
+
         public static void ToggleGroupBy(Button sender)
         {
             MapModS.LS.ToggleGroupBy();
@@ -592,27 +613,8 @@ namespace MapModS.UI
                     sender.Content = $"{L.Localize("Group by")}:\n{L.Localize("Item")}";
                     break;
             }
-        }
 
-        public static void TogglePersistent(Button sender)
-        {
-            MapModS.GS.TogglePersistentOn();
-
-            UpdateAll();
-        }
-
-        private static void UpdatePersistent(Button sender)
-        {
-            if (MapModS.GS.persistentOn)
-            {
-                sender.ContentColor = Colors.GetColor(ColorSetting.UI_On);
-                sender.Content = $"{L.Localize("Persistent\nitems")}: {L.Localize("On")}";
-            }
-            else
-            {
-                sender.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
-                sender.Content = $"{L.Localize("Persistent\nitems")}: {L.Localize("Off")}";
-            }
+            sender.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
         }
     }
 }

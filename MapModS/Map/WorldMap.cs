@@ -5,6 +5,7 @@ using MapModS.Trackers;
 using Modding;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace MapModS.Map
@@ -72,11 +73,11 @@ namespace MapModS.Map
             
             GameMap gameMap = go_gameMap.GetComponent<GameMap>();
 
-            Transition.AddExtraComponentsToMap(gameMap);
+            MapRooms.AddExtraComponentsToMap(gameMap);
 
             if (GameObject.Find("MMS Custom Map Rooms") == null)
             {
-                goExtraRooms = Transition.CreateExtraMapRooms(gameMap);
+                goExtraRooms = MapRooms.CreateExtraMapRooms(gameMap);
             }
 
             if (TransitionData.IsTransitionRando() && MapModS.LS.newSettings)
@@ -126,13 +127,9 @@ namespace MapModS.Map
                     || MapModS.LS.mapMode == MapMode.TransitionRando
                     || MapModS.LS.mapMode == MapMode.TransitionRandoAlt))
             {
-                foreach (Transform child in self.transform)
+                foreach (Transform child in self.transform.Cast<Transform>().Where(t => t.name == "WHITE_PALACE" || t.name == "GODS_GLORY"))
                 {
-                    if (child.name == "WHITE_PALACE"
-                        || child.name == "GODS_GLORY")
-                    {
-                        child.gameObject.SetActive(true);
-                    }
+                    child.gameObject.SetActive(true);
                 }
             }
 
@@ -225,14 +222,14 @@ namespace MapModS.Map
             HashSet<string> transitionPinScenes = new();
 
             FullMap.PurgeMap();
-            Transition.ResetMapColors(gameMap.gameObject);
 
             if (TransitionData.TransitionModeActive())
             {
-                transitionPinScenes = Transition.SetupMapTransitionMode(gameMap, mapZone);
+                transitionPinScenes = MapRooms.SetupMapTransitionMode(gameMap, mapZone);
             }
             else
             {
+                MapRooms.ResetMapColors(gameMap.gameObject);
                 gameMap.SetupMap();
             }
 

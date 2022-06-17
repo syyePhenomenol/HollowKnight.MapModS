@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
-using static MapModS.Map.Transition;
+using static MapModS.Map.MapRooms;
 using L = RandomizerMod.Localization;
 using TP = MapModS.UI.TransitionPersistent;
 
@@ -62,7 +62,7 @@ namespace MapModS.UI
 
         public static void UpdateAll()
         {
-            if (Dependencies.HasDependency("Benchwarp"))
+            if (Dependencies.HasDependency("Benchwarp") && !TransitionData.TransitionModeActive())
             {
                 if (!MapModS.GS.benchwarpWorldMap)
                 {
@@ -71,7 +71,11 @@ namespace MapModS.UI
 
                 GetBenchScenes();
                 UpdateBenchwarpText();
-                SetSelectedRoomColor(selectedBenchScene, false);
+
+                if (Condition())
+                {
+                    SetSelectedRoomColor(selectedBenchScene, false);
+                }
             }
         }
 
@@ -155,16 +159,15 @@ namespace MapModS.UI
                 {
                     if (!roomObj.gameObject.activeSelf || !benches.ContainsKey(roomObj.name)) continue;
 
-                    ExtraMapData extra = roomObj.GetComponent<ExtraMapData>();
-
-                    if (extra == null) continue;
+                    ExtraMapData emd = roomObj.GetComponent<ExtraMapData>();
+                    if (emd == null) continue;
 
                     double distance = Utils.DistanceToMiddle(roomObj);
 
                     if (distance < minDistance)
                     {
                         minDistance = distance;
-                        selectedScene = extra.sceneName;
+                        selectedScene = emd.sceneName;
                     }
                 }
             }
@@ -181,7 +184,6 @@ namespace MapModS.UI
                 || !GUI.worldMapOpen
                 || GUI.lockToggleEnable
                 || !Dependencies.HasDependency("Benchwarp")
-                || !MapModS.GS.benchwarpWorldMap
                 || GameManager.instance.IsGamePaused()
                 || InputHandler.Instance == null)
             {
@@ -209,7 +211,7 @@ namespace MapModS.UI
                     GameManager.instance.StartCoroutine(CloseInventoryBenchwarp(PathfinderData.GetBenchwarpScene(TP.selectedRoute.First())));
                 }
             }
-            else
+            else if (MapModS.GS.benchwarpWorldMap)
             {
                 if (selectedBenchScene == "") return;
 

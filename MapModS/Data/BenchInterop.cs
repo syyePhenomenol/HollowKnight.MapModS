@@ -58,11 +58,17 @@ namespace MapModS.Data
             this.sceneName = sceneName;
             this.benchName = benchName;
 
+            if (Dependencies.HasDependency("AdditionalMaps") && sceneName == "GG_Workshop")
+            {
+                mappedSceneName = "GG_Atrium";
+                return;
+            }
+
             if (MainData.IsNonMappedScene(sceneName))
             {
                 MapRoomDef mrd = MainData.GetNonMappedRoomDef(sceneName);
 
-                if (mrd.includeWithAdditionalMaps || !Dependencies.HasDependency("AdditionalMaps"))
+                if (!Dependencies.HasDependency("AdditionalMaps") || mrd.includeWithAdditionalMaps)
                 {
                     mappedSceneName = mrd.mappedScene;
                     return;

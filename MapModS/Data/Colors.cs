@@ -28,6 +28,28 @@ namespace MapModS.Data
 
     internal class Colors
     {
+        public static readonly List<ColorSetting> mapColors = new()
+        {
+
+        };
+
+        public static readonly List<ColorSetting> roomColors = new()
+        {
+            ColorSetting.Room_Normal,
+            ColorSetting.Room_Current,
+            ColorSetting.Room_Adjacent,
+            ColorSetting.Room_Out_of_logic,
+            ColorSetting.Room_Selected
+        };
+
+        public static readonly List<ColorSetting> pinColors = new()
+        {
+            ColorSetting.Pin_Normal,
+            ColorSetting.Pin_Previewed,
+            ColorSetting.Pin_Out_of_logic,
+            ColorSetting.Pin_Persistent
+        };
+
         private static readonly Dictionary<ColorSetting, Vector4> customColors = new();
 
         private static readonly Dictionary<ColorSetting, Vector4> defaultColors = new()
@@ -50,23 +72,6 @@ namespace MapModS.Data
             { ColorSetting.Room_Selected, new(1f, 1f, 0, 0.7f) }, // yellow
             { ColorSetting.Room_Benchwarp_Selected, new(1f, 1f, 0.2f, 1f) }, // yellow
             { ColorSetting.Room_Debug, new(0, 0, 1f, 0.5f) } // blue
-        };
-
-        public static readonly List<ColorSetting> roomColors = new()
-        {
-            ColorSetting.Room_Normal,
-            ColorSetting.Room_Current,
-            ColorSetting.Room_Adjacent,
-            ColorSetting.Room_Out_of_logic,
-            ColorSetting.Room_Selected
-        };
-
-        public static readonly List<ColorSetting> pinColors = new()
-        {
-            ColorSetting.Pin_Normal,
-            ColorSetting.Pin_Previewed,
-            ColorSetting.Pin_Out_of_logic,
-            ColorSetting.Pin_Persistent
         };
 
         public static void LoadCustomColors()

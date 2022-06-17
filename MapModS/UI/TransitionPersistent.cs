@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
-using static MapModS.Map.Transition;
+using static MapModS.Map.MapRooms;
 
 namespace MapModS.UI
 {

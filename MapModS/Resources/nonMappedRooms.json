@@ -418,5 +418,26 @@
     "offsetY": -16.3,
     "mappedScene": "Abyss_05",
     "includeWithAdditionalMaps": false
+  },
+  "GG_Atrium": {
+    "mapZone": "GODS_GLORY",
+    "offsetX": 0,
+    "offsetY": 0,
+    "mappedScene": "GG_Waterways",
+    "includeWithAdditionalMaps": false
+  },
+  "GG_Workshop": {
+    "mapZone": "GODS_GLORY",
+    "offsetX": 0,
+    "offsetY": 0,
+    "mappedScene": "GG_Waterways",
+    "includeWithAdditionalMaps": false
+  },
+  "GG_Atrium_Roof": {
+    "mapZone": "GODS_GLORY",
+    "offsetX": 0,
+    "offsetY": 0,
+    "mappedScene": "GG_Waterways",
+    "includeWithAdditionalMaps": false
   }
 }

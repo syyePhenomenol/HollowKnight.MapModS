@@ -171,11 +171,14 @@ namespace MapModS.UI
                     counter++;
                 }
 
+                Vector4 highlighted = Colors.GetColor(ColorSetting.Room_Normal);
+                highlighted.w = 1f;
+
                 Image roomHighlight = new Image(layout, roomCopy, "Highlighted Room")
                 {
                     Width = 40f,
                     Height = 40f,
-                    Tint = new(255, 255, 255, 1f),
+                    Tint = highlighted,
                     HorizontalAlignment = HorizontalAlignment.Right,
                     VerticalAlignment = VerticalAlignment.Center,
                     Padding = new(0f, 5f, 17f, 5f),
