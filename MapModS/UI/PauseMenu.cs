@@ -288,6 +288,7 @@ namespace MapModS.UI
             MapModS.LS.ToggleRandomizedOn();
             WorldMap.CustomPins.ResetPoolSettings();
             WorldMap.CustomPins.SetPinsActive();
+            WorldMap.CustomPins.SetSprites();
 
             UpdateAll();
             MapText.UpdateAll();
@@ -324,6 +325,7 @@ namespace MapModS.UI
             MapModS.LS.ToggleOthersOn();
             WorldMap.CustomPins.ResetPoolSettings();
             WorldMap.CustomPins.SetPinsActive();
+            WorldMap.CustomPins.SetSprites();
 
             UpdateAll();
             MapText.UpdateAll();

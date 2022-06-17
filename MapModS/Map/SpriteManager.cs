@@ -27,13 +27,11 @@ namespace MapModS.Map
             }
         }
 
-        public static Sprite GetSpriteFromPool(string pool, PinBorderColor color)
+        public static Sprite GetSpriteFromPool(string pool, bool normalOverride)
         {
             string spriteName = "undefined";
 
-            if (MapModS.GS.pinStyle == PinStyle.Normal
-                || color == PinBorderColor.Previewed
-                || color == PinBorderColor.Persistent)
+            if (MapModS.GS.pinStyle == PinStyle.Normal || normalOverride)
             {
                 spriteName = pool switch
                 {
@@ -102,18 +100,18 @@ namespace MapModS.Map
                 };
             }
 
-            switch (color)
-            {
-                case PinBorderColor.Previewed:
-                    spriteName += "Green";
-                    break;
-                case PinBorderColor.Out_of_logic:
-                    spriteName += "Red";
-                    break;
-                case PinBorderColor.Persistent:
-                    spriteName += "Cyan";
-                    break;
-            }
+            //switch (color)
+            //{
+            //    case PinBorderColor.Previewed:
+            //        spriteName += "Green";
+            //        break;
+            //    case PinBorderColor.Out_of_logic:
+            //        spriteName += "Red";
+            //        break;
+            //    case PinBorderColor.Persistent:
+            //        spriteName += "Cyan";
+            //        break;
+            //}
 
             return GetSprite(spriteName);
         }

@@ -19,13 +19,13 @@ namespace MapModS.UI
         private static GridLayout pinKey;
         private static GridLayout roomKey;
 
-        private static readonly Dictionary<PinBorderColor, string> _pinKey = new()
-        {
-            { PinBorderColor.Normal, "pinBlank" },
-            { PinBorderColor.Previewed, "pinBlankGreen" },
-            { PinBorderColor.Out_of_logic, "pinBlankRed" },
-            { PinBorderColor.Persistent, "pinBlankCyan" }
-        };
+        //private static readonly Dictionary<PinBorderColor, string> _pinKey = new()
+        //{
+        //    { PinBorderColor.Normal, "pinBlank" },
+        //    { PinBorderColor.Previewed, "pinBlankGreen" },
+        //    { PinBorderColor.Out_of_logic, "pinBlankRed" },
+        //    { PinBorderColor.Persistent, "pinBlankCyan" }
+        //};
 
         public static bool Condition()
         {
@@ -87,9 +87,19 @@ namespace MapModS.UI
 
                 int counter = 0;
 
-                foreach(KeyValuePair<PinBorderColor, string> kvp in _pinKey)
+                foreach(ColorSetting colorSetting in Colors.pinColors)
                 {
-                    Image pin = new Image(layout, SpriteManager.GetSprite(kvp.Value), kvp.Key.ToString() + " Pin")
+                    Panel pinPanel = new Panel(layout, SpriteManager.GetSprite("pinBlank"), colorSetting.ToString() + "Panel")
+                    {
+                        MinHeight = 50f,
+                        MinWidth = 50f,
+                        Borders = new(0f, 0f, 0f, 0f),
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        Padding = new(0f, 0f, 0f, 0f)
+                    }.WithProp(GridLayout.Column, 0).WithProp(GridLayout.Row, counter);
+
+                    Image pin = new Image(layout, SpriteManager.GetSprite("pinBorder"), colorSetting.ToString() + " Pin")
                     {
                         Width = 50f,
                         Height = 50f,
@@ -97,15 +107,19 @@ namespace MapModS.UI
                         VerticalAlignment = VerticalAlignment.Center
                     }.WithProp(GridLayout.Column, 0).WithProp(GridLayout.Row, counter);
 
-                    TextObject text = new TextObject(layout, kvp.Key.ToString() + " Text")
+                    ((Image)layout.GetElement(colorSetting.ToString() + " Pin")).Tint = Colors.GetColor(colorSetting);
+
+                    pinPanel.Child = pin;
+
+                    TextObject text = new TextObject(layout, colorSetting.ToString() + " Text")
                     {
-                        Text = L.Localize(Utils.ToCleanName(kvp.Key.ToString())),
+                        Text = L.Localize(Utils.ToCleanName(colorSetting.ToString().Replace("Pin_", ""))),
                         Padding = new(10f, 0f, 0f, 0f),
                         HorizontalAlignment = HorizontalAlignment.Left,
                         VerticalAlignment = VerticalAlignment.Center
                     }.WithProp(GridLayout.Column, 1).WithProp(GridLayout.Row, counter);
 
-                    pinKey.Children.Add(pin);
+                    pinKey.Children.Add(pinPanel);
                     pinKey.Children.Add(text);
 
                     counter++;

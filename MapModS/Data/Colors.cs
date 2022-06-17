@@ -13,6 +13,10 @@ namespace MapModS.Data
         UI_Special,
         UI_Borders,
         UI_Compass,
+        Pin_Normal,
+        Pin_Previewed,
+        Pin_Out_of_logic,
+        Pin_Persistent,
         Room_Normal,
         Room_Current,
         Room_Adjacent,
@@ -34,6 +38,10 @@ namespace MapModS.Data
             { ColorSetting.UI_Disabled, Color.red },
             { ColorSetting.UI_Special, Color.cyan },
             { ColorSetting.UI_Borders, Color.white },
+            { ColorSetting.Pin_Normal, Color.white },
+            { ColorSetting.Pin_Previewed, Color.green },
+            { ColorSetting.Pin_Out_of_logic, Color.red },
+            { ColorSetting.Pin_Persistent, Color.cyan },
             { ColorSetting.UI_Compass, new(1f, 1f, 1f, 0.83f) },
             { ColorSetting.Room_Normal, new(1f, 1f, 1f, 0.3f) }, // white
             { ColorSetting.Room_Current, new(0, 1f, 0, 0.4f) }, // green
@@ -53,6 +61,14 @@ namespace MapModS.Data
             ColorSetting.Room_Selected
         };
 
+        public static readonly List<ColorSetting> pinColors = new()
+        {
+            ColorSetting.Pin_Normal,
+            ColorSetting.Pin_Previewed,
+            ColorSetting.Pin_Out_of_logic,
+            ColorSetting.Pin_Persistent
+        };
+
         public static void LoadCustomColors()
         {
             Dictionary<string, float[]> customColorsRaw = JsonUtil.DeserializeFromExternalFile<Dictionary<string, float[]>>("colors.json");
@@ -64,6 +80,8 @@ namespace MapModS.Data
                 foreach (string colorSettingRaw in customColorsRaw.Keys)
                 {
                     if (!Enum.TryParse(colorSettingRaw, out ColorSetting colorSetting)) continue;
+                    
+                    if (customColors.ContainsKey(colorSetting)) continue;
 
                     float[] rgba = customColorsRaw[colorSettingRaw];
 

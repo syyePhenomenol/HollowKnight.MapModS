@@ -36,19 +36,33 @@ namespace MapModS.Map
 
         private void MakePin(PinDef pinDef, GameMap gameMap)
         {
-            // Create new pin GameObject
+            // Create new pin
             GameObject goPin = new($"pin_mapmod_{pinDef.name}")
             {
                 layer = 30
             };
 
-            // Attach sprite renderer to the GameObject
             SpriteRenderer sr = goPin.AddComponent<SpriteRenderer>();
 
             // Initialize sprite to vanillaPool
-            sr.sprite = SpriteManager.GetSpriteFromPool(pinDef.locationPoolGroup, PinBorderColor.Normal);
+            sr.sprite = SpriteManager.GetSpriteFromPool(pinDef.locationPoolGroup, false);
             sr.sortingLayerName = "HUD";
             sr.size = new Vector2(1f, 1f);
+
+            // Create separate colorizable border
+            GameObject goPinBorder = new($"pin_mapmod_{pinDef.name}_border")
+            {
+                layer = 30
+            };
+
+            sr = goPinBorder.AddComponent<SpriteRenderer>();
+
+            sr.sprite = SpriteManager.GetSprite("pinBorder");
+            sr.sortingLayerName = "HUD";
+            sr.size = new Vector2(1f, 1f);
+
+            goPinBorder.transform.SetParent(goPin.transform);
+            goPinBorder.transform.localPosition = new Vector3(0f, 0f, -0.0005f);
 
             // Attach pin data to the GameObject
             PinAnimatedSprite pin = goPin.AddComponent<PinAnimatedSprite>();
@@ -56,6 +70,7 @@ namespace MapModS.Map
             _pins.Add(pin);
 
             pin.gameObject.transform.SetParent(transform);
+
             SetPinPosition(pinDef, goPin, gameMap);
         }
 
