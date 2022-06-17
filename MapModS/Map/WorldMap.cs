@@ -127,9 +127,24 @@ namespace MapModS.Map
                     || MapModS.LS.mapMode == MapMode.TransitionRando
                     || MapModS.LS.mapMode == MapMode.TransitionRandoAlt))
             {
-                foreach (Transform child in self.transform.Cast<Transform>().Where(t => t.name == "WHITE_PALACE" || t.name == "GODS_GLORY"))
+                foreach (Transform roomObj in self.transform.Cast<Transform>().Where(t => t.name == "WHITE_PALACE" || t.name == "GODS_GLORY"))
                 {
-                    child.gameObject.SetActive(true);
+                    roomObj.gameObject.SetActive(true);
+
+                    // Force enable sub area names
+                    foreach (Transform roomObj2 in roomObj.transform.Cast<Transform>())
+                    {
+                        if (roomObj2.name.Contains("Area Name"))
+                        {
+                            roomObj2.gameObject.SetActive(true);
+                        }
+
+                        foreach (Transform roomObj3 in roomObj2.transform.Cast<Transform>()
+                            .Where(r => r.name.Contains("Area Name")))
+                        {
+                            roomObj3.gameObject.SetActive(true);
+                        }
+                    }
                 }
             }
 
@@ -221,14 +236,13 @@ namespace MapModS.Map
 
             HashSet<string> transitionPinScenes = new();
 
-            FullMap.PurgeMap();
-
             if (TransitionData.TransitionModeActive())
             {
                 transitionPinScenes = MapRooms.SetupMapTransitionMode(gameMap, mapZone);
             }
             else
             {
+                FullMap.PurgeMap();
                 MapRooms.ResetMapColors(gameMap.gameObject);
                 gameMap.SetupMap();
             }

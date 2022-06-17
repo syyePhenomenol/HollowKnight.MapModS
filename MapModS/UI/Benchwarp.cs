@@ -71,11 +71,7 @@ namespace MapModS.UI
 
                 GetBenchScenes();
                 UpdateBenchwarpText();
-
-                if (Condition())
-                {
-                    SetSelectedRoomColor(selectedBenchScene, false);
-                }
+                SetSelectedRoomColor(selectedBenchScene, false);
             }
         }
 

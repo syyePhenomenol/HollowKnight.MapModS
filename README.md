@@ -46,6 +46,8 @@ This mod has support for languages other than English. You will need to source a
     - Check out the [Map Legend](./MAPLEGEND.md) for more details on each pin style.
 - ``CTRL-L``: Toggle a panel for pin lookup on/off.
     - Hover over any visible pin to display info about the name, room, status, logic requirements, previewed items (if any) and spoiler items (if Spoilers on).
+- ``CTRL-W``: Toggle benchwarp from world map on/off.
+    - Hover over a room with a bench you have been to, and hold the indicated key/controller bind to do the benchwarp. Tap the same bind to switch benches located at the same map room.
 
 ## Pause Menu
 - "Mod Enabled/Disabled" `CTRL-M`: Toggle the mod on/off
@@ -78,12 +80,18 @@ This mod has support for languages other than English. You will need to source a
 - `CTRL-E`: Toggle behaviour when going off-route to keep route/cancel route/reevaluate route.
 - `CTRL-C`: Toggle the route compass on/off.
 
+## Color Customization
+- To customize, make a json file name 'colors.json', and copy it to the folder that contains the mod file 'MapModS.dll'. For Steam users, this will be in `...\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\Randomizer Map S`.
+- See the [template file](./colors.json) for an example custom theme. Colors will be interpreted in standard RGBA format.
+
 # How To Install
 Use Scarab: https://github.com/fifty-six/Scarab
 
 Or, you can install manually:
 1. Download the latest release of `MapModS.zip`.
-2. Unzip and copy the folder 'MapModS' to `...\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods`.
+2. Unzip and copy the folder 'MapModS' to `...\hollow_knight_Data\Managed\Mods`.
+
+If you need any help, feel free to ask in any of the active Hollow Knight Discord servers.
 
 # Acknowledgements
 - Special thanks to Homothety and Flib for significant coding help

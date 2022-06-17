@@ -40,17 +40,9 @@ namespace MapModS.Map
 
             foreach (Transform areaObj in go_gameMap.transform)
             {
-                if (areaObj.name == "Grub Pins"
-                        || areaObj.name == "Dream_Gate_Pin"
-                        || areaObj.name == "Compass Icon"
-                        || areaObj.name == "Shade Pos"
-                        || areaObj.name == "Flame Pins"
-                        || areaObj.name == "Dreamer Pins"
-                        || areaObj.name == "Map Markers"
-                        || areaObj.name == "WHITE_PALACE"
-                        || areaObj.name == "GODS_GLORY"
-                        || areaObj.name == "MMS Custom Pin Group"
-                        || areaObj.name == "MMS Custom Map Rooms") continue;
+                if (!Colors.mapColors.ContainsKey(areaObj.name)
+                    || areaObj.name == "WHITE_PALACE"
+                    || areaObj.name == "GODS_GLORY") continue;
 
                 foreach (Transform roomObj in areaObj.transform)
                 {

@@ -287,7 +287,7 @@ namespace MapModS.UI
             }
             else
             {
-                benchwarpSearch.Text = "Benchwarp is not installed";
+                benchwarpWorldMap.Text = "Benchwarp is not installed";
             }
         }
 

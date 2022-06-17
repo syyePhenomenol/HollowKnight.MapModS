@@ -115,6 +115,7 @@ namespace MapModS.Data
             // in these situations
 
             if (objName == "Ruins1_31_top_2") return "Ruins1_31b";
+            if (objName == "Waterways_04_part_b") return "Waterways_02";
 
             for (int i = 0; i < 2; i++)
             {

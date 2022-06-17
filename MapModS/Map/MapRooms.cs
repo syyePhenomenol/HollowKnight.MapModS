@@ -131,14 +131,7 @@ namespace MapModS.Map
             // Show rooms with custom colors
             foreach (Transform areaObj in gameMap.transform)
             {
-                if (areaObj.name == "Grub Pins"
-                        || areaObj.name == "Dream_Gate_Pin"
-                        || areaObj.name == "Compass Icon"
-                        || areaObj.name == "Shade Pos"
-                        || areaObj.name == "Flame Pins"
-                        || areaObj.name == "Dreamer Pins"
-                        || areaObj.name == "Map Markers"
-                        || areaObj.name == "MMS Custom Pin Group") continue;
+                if (!Colors.mapColors.ContainsKey(areaObj.name)) continue;
 
                 if (areaObj.name == "MMS Custom Map Rooms")
                 {
@@ -149,7 +142,7 @@ namespace MapModS.Map
                 {
                     ExtraMapData emd = roomObj.GetComponent<ExtraMapData>();
 
-                    if (emd == null)
+                    if (emd == null || roomObj.name.Contains("Area Name"))
                     {
                         roomObj.gameObject.SetActive(false);
                         continue;
@@ -255,26 +248,42 @@ namespace MapModS.Map
         {
             foreach (Transform areaObj in gameMap.transform)
             {
+                if (!Colors.mapColors.ContainsKey(areaObj.name)) continue;
+
                 foreach (Transform roomObj in areaObj.transform)
                 {
-                    //MapModS.Instance.Log(roomObj.name);
+                    TryAddExtraMapData(roomObj);
 
-                    string sceneName = Utils.GetActualSceneName(roomObj.name);
-                    if (sceneName == null) continue;
-
-                    ExtraMapData extraData = roomObj.GetComponent<ExtraMapData>();
-
-                    var sr = roomObj.GetComponent<SpriteRenderer>();
-
-                    if (sr == null) continue;
-
-                    if (extraData == null)
+                    foreach (Transform roomObj2 in roomObj.transform)
                     {
-                        extraData = roomObj.gameObject.AddComponent<ExtraMapData>();
-                        extraData.origColor = sr.color;
-                        extraData.sceneName = sceneName;
+                        TryAddExtraMapData(roomObj2);
                     }
                 }
+            }
+        }
+
+        private static void TryAddExtraMapData(Transform obj)
+        {
+            string sceneName = Utils.GetActualSceneName(obj.name);
+            if (sceneName == null && !obj.name.Contains("Area Name")) return;
+
+            if (obj.GetComponent<ExtraMapData>() != null) return;
+
+            ExtraMapData emd = obj.gameObject.AddComponent<ExtraMapData>();
+            emd.sceneName = sceneName;
+
+            if (obj.name.Contains("Area Name"))
+            {
+                emd.sceneName = sceneName + " Area Name";
+            }
+
+            if (obj.GetComponent<SpriteRenderer>() != null)
+            {
+                emd.origColor = obj.GetComponent<SpriteRenderer>().color;
+            }
+            else if (obj.GetComponent<TextMeshPro>() != null)
+            {
+                emd.origColor = obj.GetComponent<TextMeshPro>().color;
             }
         }
 
@@ -285,6 +294,10 @@ namespace MapModS.Map
 
             foreach (Transform areaObj in go_GameMap.transform)
             {
+                if (!Colors.mapColors.ContainsKey(areaObj.name)) continue;
+
+                Vector4 customMapColor = Colors.GetColor(Colors.mapColors[areaObj.name]);
+
                 foreach (Transform roomObj in areaObj.transform)
                 {
                     if (!roomObj.gameObject.activeSelf) continue;
@@ -343,7 +356,14 @@ namespace MapModS.Map
                         }
                         else
                         {
-                            sr.color = emd.origColor;
+                            if (!customMapColor.Equals(Vector4.negativeInfinity))
+                            {
+                                sr.color = customMapColor;
+                            }
+                            else
+                            {
+                                sr.color = emd.origColor;
+                            }
                         }
                     }
                 }
@@ -358,14 +378,9 @@ namespace MapModS.Map
 
             foreach (Transform areaObj in gameMap.transform)
             {
-                if (areaObj.name == "Grub Pins"
-                        || areaObj.name == "Dream_Gate_Pin"
-                        || areaObj.name == "Compass Icon"
-                        || areaObj.name == "Shade Pos"
-                        || areaObj.name == "Flame Pins"
-                        || areaObj.name == "Dreamer Pins"
-                        || areaObj.name == "Map Markers"
-                        || areaObj.name == "MMS Custom Pin Group") continue;
+                if (!Colors.mapColors.ContainsKey(areaObj.name)) continue;
+
+                Vector4 customMapColor = Colors.GetColor(Colors.mapColors[areaObj.name]);
 
                 foreach (Transform roomObj in areaObj.transform)
                 {
@@ -373,12 +388,43 @@ namespace MapModS.Map
                     if (emd == null) continue;
 
                     Transform obj = GetActualRoomObj(roomObj);
-                    if (obj == null) continue;
+                    TrySetColor(obj.gameObject, emd, customMapColor);
 
-                    var sr = obj.GetComponent<SpriteRenderer>();
-                    if (sr == null) continue;
+                    foreach (Transform roomObj2 in roomObj.transform)
+                    {
+                        emd = roomObj.GetComponent<ExtraMapData>();
+                        if (emd == null) continue;
+                        TrySetColor(obj.gameObject, emd, customMapColor);
+                    }
+                }
+            }
+        }
 
+        private static void TrySetColor(GameObject obj, ExtraMapData emd, Vector4 customMapColor)
+        {
+            var sr = obj.GetComponent<SpriteRenderer>();
+            var tmp = obj.GetComponent<TextMeshPro>();
+
+            if (sr != null)
+            {
+                if (!customMapColor.Equals(Vector4.negativeInfinity))
+                {
+                    sr.color = customMapColor;
+                }
+                else
+                {
                     sr.color = emd.origColor;
+                }
+            }
+            else if (tmp != null)
+            {
+                if (!customMapColor.Equals(Vector4.negativeInfinity))
+                {
+                    tmp.color = customMapColor;
+                }
+                else
+                {
+                    tmp.color = emd.origColor;
                 }
             }
         }
