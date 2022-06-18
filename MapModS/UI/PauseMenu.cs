@@ -449,6 +449,7 @@ namespace MapModS.UI
             MapText.UpdateAll();
             ControlPanel.UpdateAll();
             MapKey.UpdateAll();
+            TransitionPersistent.selectedScene = "None";
         }
 
         private static void UpdateMode(Button sender)

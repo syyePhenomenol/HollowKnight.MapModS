@@ -36,6 +36,14 @@ namespace MapModS.Data
         Map_Royal_Waterways,
         Map_White_Palace,
 
+        Map_Abyss,
+        Map_Hive,
+        Map_Ismas_Grove,
+        Map_Mantis_Village,
+        Map_Queens_Station,
+        Map_Soul_Sanctum,
+        Map_Watchers_Spire,
+
         Room_Normal,
         Room_Current,
         Room_Adjacent,
@@ -66,6 +74,28 @@ namespace MapModS.Data
             { "Waterways", ColorSetting.Map_Royal_Waterways },
             { "WHITE_PALACE", ColorSetting.Map_White_Palace },
         };
+
+        // When iterating through map objects, these are the first objects with unique sub area colors
+        public static readonly Dictionary<string, ColorSetting> subAreaMapColorKeys = new()
+        {
+            { "Abyss_01", ColorSetting.Map_Ancient_Basin },
+            { "Waterways_13", ColorSetting.Map_Ismas_Grove },
+            { "Abyss_02", ColorSetting.Map_Ancient_Basin },
+            { "Hive_01", ColorSetting.Map_Hive },
+            { "Fungus2_01", ColorSetting.Map_Queens_Station },
+            { "Fungus2_12", ColorSetting.Map_Mantis_Village },
+            { "Fungus2_13", ColorSetting.Map_Mantis_Village },
+            { "Tutorial_01", ColorSetting.Map_Howling_Cliffs },
+            { "Abyss_06_Core", ColorSetting.Map_Abyss },
+            { "Abyss_06_Core_b", ColorSetting.Map_Abyss },
+            { "Ruins1_09", ColorSetting.Map_Soul_Sanctum },
+            { "Ruins1_23", ColorSetting.Map_Soul_Sanctum },
+            { "Ruins2_01", ColorSetting.Map_Watchers_Spire },
+
+        };
+
+        // Dynamically get pairings of sub area objects/color setting. Key is (parent name, original color)
+        public static Dictionary<(string, Vector4), ColorSetting> subAreaMapColors = new();
 
         public static readonly List<ColorSetting> pinColors = new()
         {
