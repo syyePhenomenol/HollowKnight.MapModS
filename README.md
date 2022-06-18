@@ -80,9 +80,12 @@ This mod has support for languages other than English. You will need to source a
 - `CTRL-E`: Toggle behaviour when going off-route to keep route/cancel route/reevaluate route.
 - `CTRL-C`: Toggle the route compass on/off.
 
-## Color Customization
-- To customize, make a json file name 'colors.json', and copy it to the same folder that contains the mod file 'MapModS.dll'. For Steam + Scarab users, the default folder is `...\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\Randomizer Map S`.
-- See the [template file](./colors.json) for an example custom theme. Colors will be interpreted in standard RGBA format.
+## Customization
+- To customize colors, make a json file name 'colors.json', and copy it to the same folder that contains the mod file 'MapModS.dll'.
+    - For Steam + Scarab users, the default folder is `...\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\Randomizer Map S`.
+    - See the [template file](./colors.json) for an example custom theme. Colors will be interpreted in standard RGBA format.
+- To customize pins, make a folder called Pins containing your custom .png files, and copy it to the same folder that contains the mod file 'MapModS.dll'.
+    - See the [default pins](./MapModS/Resources) for the file names for each pin.
 
 # How To Install
 Use Scarab: https://github.com/fifty-six/Scarab

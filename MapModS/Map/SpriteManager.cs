@@ -12,18 +12,43 @@ namespace MapModS.Map
     {
         private static Dictionary<string, Sprite> _sprites;
 
-        public static void LoadEmbeddedPngs(string prefix)
+        public static void LoadPinSprites()
         {
+            string prefix = "MapModS.Resources.Pins";
+
             Assembly a = typeof(SpriteManager).Assembly;
             _sprites = new Dictionary<string, Sprite>();
 
             foreach (string name in a.GetManifestResourceNames().Where(name => name.Substring(name.Length - 3).ToLower() == "png"))
             {
-                string altName = prefix != null ? name.Substring(prefix.Length) : name;
+                Sprite sprite = FromStream(a.GetManifestResourceStream(name));
+
+                string altName = name.Substring(prefix.Length);
                 altName = altName.Remove(altName.Length - 4);
                 altName = altName.Replace(".", "");
-                Sprite sprite = FromStream(a.GetManifestResourceStream(name));
                 _sprites[altName] = sprite;
+            }
+
+            // Load custom pins
+            prefix = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Pins");
+
+            if (Directory.Exists(prefix))
+            {
+                foreach (string name in Directory.GetFiles(prefix).Where(name => name.Substring(name.Length - 3).ToLower() == "png"))
+                {
+                    Sprite sprite = FromStream(File.Open(name, FileMode.Open));
+
+                    string altName = name.Substring(prefix.Length);
+                    altName = altName.Remove(altName.Length - 4);
+                    altName = altName.Replace("\\", "");
+
+                    if (_sprites.ContainsKey(altName))
+                    {
+                        _sprites[altName] = sprite;
+                    }
+                }
+
+                MapModS.Instance.Log("Custom pin sprites loaded");
             }
         }
 
