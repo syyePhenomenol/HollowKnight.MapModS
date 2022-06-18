@@ -114,7 +114,7 @@ namespace MapModS.Data
             ColorSetting.Room_Selected
         };
 
-        private static readonly Dictionary<ColorSetting, Vector4> customColors = new();
+        private static Dictionary<ColorSetting, Vector4> customColors = new();
 
         private static readonly Dictionary<ColorSetting, Vector4> defaultColors = new()
         {
@@ -140,7 +140,19 @@ namespace MapModS.Data
 
         public static void LoadCustomColors()
         {
-            Dictionary<string, float[]> customColorsRaw = JsonUtil.DeserializeFromExternalFile<Dictionary<string, float[]>>("colors.json");
+            Dictionary<string, float[]> customColorsRaw;
+
+            try
+            {
+                 customColorsRaw = JsonUtil.DeserializeFromExternalFile<Dictionary<string, float[]>>("colors.json");
+            }
+            catch (Exception)
+            {
+                MapModS.Instance.LogError("Invalid colors.json file. Using default colors");
+                return;
+            }
+
+            customColors = new();
 
             if (customColorsRaw != null)
             {
@@ -163,7 +175,7 @@ namespace MapModS.Data
             }
             else
             {
-                MapModS.Instance.Log("colors.json missing or invalid. Using default colors");
+                MapModS.Instance.Log("No colors.json found. Using default colors");
             }
         }
 
