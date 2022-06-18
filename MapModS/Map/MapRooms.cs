@@ -13,10 +13,93 @@ namespace MapModS.Map
         public class ExtraMapData : MonoBehaviour
         {
             public Color origColor;
-            //public Color origCustomColor = Vector4.negativeInfinity;
+            public Color origCustomColor = Vector4.negativeInfinity;
             public Color origTransitionColor;
             public string sceneName;
             public bool highlight;
+        }
+
+        // Store metadata
+        public static void AddExtraComponentsToMap(GameMap gameMap)
+        {
+            foreach (Transform areaObj in gameMap.transform)
+            {
+                if (!Colors.mapColors.ContainsKey(areaObj.name)) continue;
+
+                foreach (Transform roomObj in areaObj.transform)
+                {
+                    TryAddExtraMapData(roomObj);
+
+                    foreach (Transform roomObj2 in roomObj.transform)
+                    {
+                        TryAddExtraMapData(roomObj2);
+                    }
+                }
+            }
+        }
+
+        private static void TryAddExtraMapData(Transform obj)
+        {
+            string sceneName = Utils.GetActualSceneName(obj.name);
+
+            if (obj.GetComponent<ExtraMapData>() != null
+                || obj.GetComponent<GrubPin>() != null
+                || obj.name == "Fungus3_48"
+                || (obj.parent.name != "WHITE_PALACE"
+                    && obj.parent.name != "GODS_GLORY"
+                    && MainData.IsNonMappedScene(obj.name))) return;
+
+            ExtraMapData emd;
+
+            if (sceneName != null)
+            {
+                emd = obj.gameObject.AddComponent<ExtraMapData>();
+                emd.sceneName = sceneName;
+            }
+            else if (obj.name.Contains("Area Name"))
+            {
+                emd = obj.gameObject.AddComponent<ExtraMapData>();
+                emd.sceneName = obj.parent.name + " Area Name";
+            }
+            else
+            {
+                return;
+            }
+
+            if (obj.GetComponent<SpriteRenderer>() != null)
+            {
+                emd.origColor = obj.GetComponent<SpriteRenderer>().color;
+            }
+            else if (obj.GetComponent<TextMeshPro>() != null)
+            {
+                emd.origColor = obj.GetComponent<TextMeshPro>().color;
+            }
+            else
+            {
+                Object.Destroy(emd);
+                return;
+            }
+
+            if (obj.parent.name == "Ancient Basin"
+                && (obj.name == "Area Name (2)" || obj.name == "Abyss_22"))
+            {
+                emd.origCustomColor = Colors.GetColor(ColorSetting.Map_Ancient_Basin);
+                return;
+            }
+
+            (string, Vector4) key = (obj.parent.name, emd.origColor);
+
+            if (Colors.subAreaMapColorKeys.ContainsKey(obj.name) && !Colors.subAreaMapColors.ContainsKey(key))
+            {
+                Colors.subAreaMapColors.Add(key, Colors.subAreaMapColorKeys[obj.name]);
+                emd.origCustomColor = Colors.GetColor(Colors.subAreaMapColorKeys[obj.name]);
+                return;
+            }
+
+            if (Colors.subAreaMapColors.ContainsKey(key))
+            {
+                emd.origCustomColor = Colors.GetColor(Colors.subAreaMapColors[key]);
+            }
         }
 
         public static GameObject CreateExtraMapRooms(GameMap gameMap)
@@ -59,7 +142,7 @@ namespace MapModS.Map
                 extraData.sceneName = scene;
                 // unused
                 extraData.origColor = Color.white;
-                //extraData.origCustomColor = Color.white;
+                extraData.origCustomColor = Color.white;
 
                 go_extraMapRoom.SetActive(false);
             }
@@ -67,24 +150,6 @@ namespace MapModS.Map
             Object.Destroy(areaNamePrefab);
 
             return go_extraMapRooms;
-        }
-
-        private static void SetActiveColor(GameObject obj, bool active, Vector4 color)
-        {
-            if (obj.GetComponent<SpriteRenderer>() != null)
-            {
-                obj.SetActive(active);
-                obj.GetComponent<SpriteRenderer>().color = color;
-            }
-            else if (obj.GetComponent<TextMeshPro>() != null)
-            {
-                obj.SetActive(active);
-                obj.GetComponent<TextMeshPro>().color = color;
-            }
-            else
-            {
-                obj.gameObject.SetActive(false);
-            }
         }
 
         public static HashSet<string> SetupMapTransitionMode(GameMap gameMap, MapZone mapZone)
@@ -248,81 +313,22 @@ namespace MapModS.Map
             return new(inLogicScenes.Union(outOfLogicScenes));
         }
 
-        // Store original color, also store the sceneName for the room object for convenience
-        public static void AddExtraComponentsToMap(GameMap gameMap)
+        private static void SetActiveColor(GameObject obj, bool active, Vector4 color)
         {
-            foreach (Transform areaObj in gameMap.transform)
-            {
-                if (!Colors.mapColors.ContainsKey(areaObj.name)) continue;
-
-                foreach (Transform roomObj in areaObj.transform)
-                {
-                    TryAddExtraMapData(roomObj);
-
-                    foreach (Transform roomObj2 in roomObj.transform)
-                    {
-                        TryAddExtraMapData(roomObj2);
-                    }
-                }
-            }
-
-            //foreach (KeyValuePair<(string, Vector4), string> kvp in uniqueColors)
-            //{
-            //    MapModS.Instance.Log(kvp.Key.Item1 + "    ("
-            //        + kvp.Key.Item2.x + ", "
-            //        + kvp.Key.Item2.y + ", "
-            //        + kvp.Key.Item2.z + ", "
-            //        + kvp.Key.Item2.w + ")    "
-            //        + kvp.Value);
-            //}
-        }
-
-        private static void TryAddExtraMapData(Transform obj)
-        {
-            string sceneName = Utils.GetActualSceneName(obj.name);
-
-            if (obj.GetComponent<ExtraMapData>() != null
-                || obj.GetComponent<GrubPin>() != null
-                || obj.name == "Fungus3_48"
-                || (obj.parent.name != "WHITE_PALACE" 
-                    && obj.parent.name != "GODS_GLORY"
-                    && MainData.IsNonMappedScene(obj.name))) return;
-
-            ExtraMapData emd;
-
-            if (sceneName != null)
-            {
-                emd = obj.gameObject.AddComponent<ExtraMapData>();
-                emd.sceneName = sceneName;
-            }
-            else if (obj.name.Contains("Area Name"))
-            {
-                emd = obj.gameObject.AddComponent<ExtraMapData>();
-                emd.sceneName = obj.parent.name + " Area Name";
-            }
-            else
-            {
-                return;
-            }
-
             if (obj.GetComponent<SpriteRenderer>() != null)
             {
-                emd.origColor = obj.GetComponent<SpriteRenderer>().color;
+                obj.SetActive(active);
+                obj.GetComponent<SpriteRenderer>().color = color;
             }
             else if (obj.GetComponent<TextMeshPro>() != null)
             {
-                emd.origColor = obj.GetComponent<TextMeshPro>().color;
+                obj.SetActive(active);
+                obj.GetComponent<TextMeshPro>().color = color;
             }
-
-            //if (!Colors.subAreaMapColorKeys.ContainsKey(obj.name))
-            //{
-            //    Colors.subAreaMapColors.Add((obj.parent.name, emd.origColor), Colors.subAreaMapColorKeys[obj.name]);
-            //}
-
-            //if (Colors.subAreaMapColors.ContainsKey((obj.parent.name, emd.origColor)))
-            //{
-            //    emd.origCustomColor = Colors.GetColor(Colors.subAreaMapColors[(obj.parent.name, emd.origColor)]);
-            //}
+            else
+            {
+                obj.gameObject.SetActive(false);
+            }
         }
 
         public static void SetSelectedRoomColor(string selectedScene, bool transitionMode)
@@ -401,10 +407,10 @@ namespace MapModS.Map
                         {
                             Vector4 color = customMapColor;
 
-                            //if (!emd.origCustomColor.Equals(Vector4.negativeInfinity))
-                            //{
-                            //    color = emd.origCustomColor;
-                            //}
+                            if (!emd.origCustomColor.Equals(Vector4.negativeInfinity))
+                            {
+                                color = emd.origCustomColor;
+                            }
 
                             if (!color.Equals(Vector4.negativeInfinity) && MapModS.LS.modEnabled)
                             {
@@ -457,10 +463,10 @@ namespace MapModS.Map
 
             Vector4 color = customMapColor;
 
-            //if (!emd.origCustomColor.Equals(Vector4.negativeInfinity))
-            //{
-            //    color = emd.origCustomColor;
-            //}
+            if (!emd.origCustomColor.Equals(Vector4.negativeInfinity))
+            {
+                color = emd.origCustomColor;
+            }
 
             if (sr != null)
             {
