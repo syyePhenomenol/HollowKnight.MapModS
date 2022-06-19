@@ -144,9 +144,6 @@ namespace MapModS.Map
                     extraData = go_extraMapRoom.AddComponent<ExtraMapData>();
                 }
                 extraData.sceneName = scene;
-                // unused
-                extraData.origColor = Color.white;
-                extraData.origCustomColor = Color.white;
 
                 go_extraMapRoom.SetActive(false);
             }
@@ -487,6 +484,7 @@ namespace MapModS.Map
             {
                 if (!color.Equals(Vector4.negativeInfinity) && MapModS.LS.modEnabled)
                 {
+                    color.w = 1f;
                     tmp.color = color;
                 }
                 else

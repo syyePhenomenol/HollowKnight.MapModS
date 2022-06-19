@@ -6,6 +6,13 @@
     "mappedScene": "Crossroads_02",
     "includeWithAdditionalMaps": true
   },
+  "Room_Final_Boss_Atrium": {
+    "mapZone": "CROSSROADS",
+    "offsetX": 0,
+    "offsetY": 0,
+    "mappedScene": "Crossroads_02",
+    "includeWithAdditionalMaps": true
+  },
   "Room_shop": {
     "mapZone": "TOWN",
     "offsetX": -4.7,

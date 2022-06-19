@@ -5,8 +5,10 @@ using MapModS.Data;
 using MapModS.UI;
 using Modding;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using Vasi;
+using static MapModS.Map.MapRooms;
 
 namespace MapModS.Map
 {
@@ -65,13 +67,76 @@ namespace MapModS.Map
         }
 
         // Don't show next map objects in Quick Map during Transition mode
+        // Also set custom colors for these objects properly
         private static void MapNextAreaDisplay_OnEnable(On.MapNextAreaDisplay.orig_OnEnable orig, MapNextAreaDisplay self)
         {
             orig(self);
 
+            Transform areaName = null;
+            TextMeshPro tmp = null;
+            Transform mapArrow = null;
+            SpriteRenderer sr = null;
+
+            foreach (Transform transform in self.transform)
+            {
+                if (transform.name.Contains("Area Name"))
+                {
+                    areaName = transform;
+                    tmp = areaName.GetComponent<TextMeshPro>();
+                }
+                else if (transform.name.Contains("Arrow"))
+                {
+                    mapArrow = transform;
+                    sr = mapArrow.GetComponent<SpriteRenderer>();
+                }
+            }
+
+            if (tmp == null)
+            {
+                ReflectionHelper.CallMethod(self, "DeactivateChildren");
+                return;
+            }
+
+            ExtraMapData emd = self.GetComponent<ExtraMapData>();
+
+            if (emd == null)
+            {
+                emd = self.gameObject.AddComponent<ExtraMapData>();
+                emd.sceneName = self.name + " Next Area";
+
+                emd.origColor = tmp.color;
+
+                if (sr != null)
+                {
+                    emd.origColor = sr.color;
+                }
+
+                emd.origCustomColor = Colors.GetColorFromMapZone(areaName.GetComponent<SetTextMeshProGameText>().convName);
+            }
+
             if (TransitionData.TransitionModeActive())
             {
                 ReflectionHelper.CallMethod(self, "DeactivateChildren");
+                return;
+            }
+
+            if (MapModS.LS.modEnabled && !emd.origCustomColor.Equals(Vector4.negativeInfinity))
+            {
+                tmp.color = emd.origCustomColor;
+                    
+                if (sr != null)
+                {
+                    sr.color = emd.origCustomColor;
+                }
+            }
+            else
+            {
+                tmp.color = emd.origColor;
+
+                if (sr != null)
+                {
+                    sr.color = emd.origColor;
+                }
             }
         }
 
@@ -125,6 +190,7 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.CITY);
+            SetTitleColor();
         }
 
         private static void GameMap_QuickMapCliffs(On.GameMap.orig_QuickMapCliffs orig, GameMap self)
@@ -132,6 +198,7 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.CLIFFS);
+            SetTitleColor();
         }
 
         private static void GameMap_QuickMapCrossroads(On.GameMap.orig_QuickMapCrossroads orig, GameMap self)
@@ -139,6 +206,7 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.CROSSROADS);
+            SetTitleColor();
         }
 
         private static void GameMap_QuickMapCrystalPeak(On.GameMap.orig_QuickMapCrystalPeak orig, GameMap self)
@@ -146,6 +214,7 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.MINES);
+            SetTitleColor();
         }
 
         private static void GameMap_QuickMapDeepnest(On.GameMap.orig_QuickMapDeepnest orig, GameMap self)
@@ -153,6 +222,7 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.DEEPNEST);
+            SetTitleColor();
         }
 
         private static void GameMap_QuickMapDirtmouth(On.GameMap.orig_QuickMapDirtmouth orig, GameMap self)
@@ -160,6 +230,7 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.TOWN);
+            SetTitleColor();
         }
 
         private static void GameMap_QuickMapFogCanyon(On.GameMap.orig_QuickMapFogCanyon orig, GameMap self)
@@ -167,6 +238,7 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.FOG_CANYON);
+            SetTitleColor();
         }
 
         private static void GameMap_QuickMapFungalWastes(On.GameMap.orig_QuickMapFungalWastes orig, GameMap self)
@@ -174,6 +246,7 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.WASTES);
+            SetTitleColor();
         }
 
         private static void GameMap_QuickMapGreenpath(On.GameMap.orig_QuickMapGreenpath orig, GameMap self)
@@ -181,6 +254,7 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.GREEN_PATH);
+            SetTitleColor();
         }
 
         private static void GameMap_QuickMapKingdomsEdge(On.GameMap.orig_QuickMapKingdomsEdge orig, GameMap self)
@@ -188,6 +262,7 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.OUTSKIRTS);
+            SetTitleColor();
         }
 
         private static void GameMap_QuickMapQueensGardens(On.GameMap.orig_QuickMapQueensGardens orig, GameMap self)
@@ -195,6 +270,7 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.ROYAL_GARDENS);
+            SetTitleColor();
         }
 
         private static void GameMap_QuickMapRestingGrounds(On.GameMap.orig_QuickMapRestingGrounds orig, GameMap self)
@@ -202,6 +278,7 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.RESTING_GROUNDS);
+            SetTitleColor();
         }
 
         private static void GameMap_QuickMapWaterways(On.GameMap.orig_QuickMapWaterways orig, GameMap self)
@@ -209,6 +286,36 @@ namespace MapModS.Map
             orig(self);
 
             WorldMap.UpdateMap(self, MapZone.WATERWAYS);
+            SetTitleColor();
+        }
+
+        public static void SetTitleColor()
+        {
+            GameObject title = GameCameras.instance.hudCamera.gameObject?.Child("Quick Map")?.Child("Area Name");
+            if (title == null) return;
+            
+            TextMeshPro tmp = title.GetComponent<TextMeshPro>();
+            ExtraMapData emd = title.GetComponent<ExtraMapData>();
+
+            if (emd == null)
+            {
+                emd = title.AddComponent<ExtraMapData>();
+                emd.sceneName = "Quick Map Title";
+                emd.origColor = tmp.color;
+            }
+
+            if (TransitionData.TransitionModeActive())
+            {
+                tmp.color = Colors.GetColor(ColorSetting.UI_Neutral);
+            }
+            else if (MapModS.LS.modEnabled)
+            {
+                tmp.color = Colors.GetColorFromMapZone(GameManager.instance.GetCurrentMapZone());
+            }
+            else
+            {
+                tmp.color = emd.origColor;
+            }
         }
 
         private static void GameManager_SetGameMap(On.GameManager.orig_SetGameMap orig, GameManager self, GameObject go_gameMap)
@@ -268,6 +375,7 @@ namespace MapModS.Map
             }
 
             WorldMap.UpdateMap(_GameMap, _customMapZone);
+            QuickMap.SetTitleColor();
             _GameMap.SetupMapMarkers();
 
             GUI.worldMapOpen = false;
