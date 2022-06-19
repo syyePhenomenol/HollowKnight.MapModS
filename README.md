@@ -64,8 +64,8 @@ This mod has support for languages other than English. You will need to source a
     - "Pins Over Map": Only show pins over where the corresponding map item has been obtained
 - "Customize Pins":
     - Toggle each pool on/off.
-    - Control whether the pool toggles are grouped by location, or by item (spoiler).
-    - Control whether persistent items are always showing or not.
+    - "Persistent items": Toggle persistent items to always showing or not.
+    - "Group by": Toggle the pools to be grouped by location, or by item (spoiler).
 
 ## Transition Mode
 - Check out the in-game map key (`CTRL-K`) or the [Map Legend](./MAPLEGEND.md) for what the colors/brightness of each room indicate.
@@ -75,17 +75,19 @@ This mod has support for languages other than English. You will need to source a
 - A compass arrow will point to the next transition you need to go to. The shown route gets updated after every transition.
 - The Quick Map also shows the list of unchecked/visited/vanilla transitions for the current room.
 - `CTRL-B`: Toggle including Benchwarp in the pathfinder on/off.
-- `CTRL-U`: Show/hide unchecked/visited/vanilla transitions in the World Map.
+- `CTRL-U`: Toggle a panel for unchecked/visited/vanilla transitions in the World Map on/off.
 - `CTRL-R`: Toggle the route to be displayed in-game to full/next transition only/off.
 - `CTRL-E`: Toggle behaviour when going off-route to keep route/cancel route/reevaluate route.
 - `CTRL-C`: Toggle the route compass on/off.
 
 ## Customization
-- To customize colors, make a json file name 'colors.json', and copy it to the same folder that contains the mod file 'MapModS.dll'.
-    - For Steam + Scarab users, the default folder is `...\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\Randomizer Map S`.
-    - See the [template file](./colors.json) for an example custom theme. Colors will be interpreted in standard RGBA format.
-- To customize pins, make a folder called Pins containing your custom .png files, and copy it to the same folder that contains the mod file 'MapModS.dll'.
-    - See the [default pins](./MapModS/Resources) for the file names for each pin.
+- To customize map and UI colors, download the [template file](./colors.json) and copy it to the same folder that contains the mod file 'MapModS.dll'.
+    - For Steam + Scarab users on Windows, the default folder is `...\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\Randomizer Map S`.
+    - Colors will be interpreted in standard RGBA format.
+    - If you want to keep the default color of something, delete the corresponding line in the template.
+- To customize pins, make a folder called 'Pins' containing your custom PNG files, and copy it to the same folder that contains the mod file 'MapModS.dll'.
+    - See the [default pins](./MapModS/Resources) for the file names to follow.
+    - You only need to include the files you want to replace the original ones with.
 
 # How To Install
 Use Scarab: https://github.com/fifty-six/Scarab

@@ -51,6 +51,7 @@ namespace MapModS.UI
 
                 panelText = new(layout, "Panel Text")
                 {
+                    ContentColor = Colors.GetColor(ColorSetting.UI_Neutral),
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Center,
                     Font = MagicUI.Core.UI.TrajanNormal,

@@ -41,6 +41,7 @@ namespace MapModS.UI
         {
             return new(onLayout, name)
             {
+                ContentColor = Colors.GetColor(ColorSetting.UI_Neutral),
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Top,
                 TextAlignment = HorizontalAlignment.Left,

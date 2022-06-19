@@ -19,11 +19,14 @@ namespace MapModS.Map
         {
             DestroyPins();
 
-            foreach (PinDef pinDef in MainData.GetUsedPinArray())
+            PinDef[] sortedPins = MainData.GetUsedPinArray();
+
+            for (int i = 0; i < sortedPins.Count(); i++)
             {
+                float offsetZ = (float)i / sortedPins.Count();
                 try
                 {
-                    MakePin(pinDef, gameMap);
+                    MakePin(sortedPins[i], offsetZ, gameMap);
                 }
                 catch (Exception e)
                 {
@@ -34,7 +37,7 @@ namespace MapModS.Map
             GetRandomizedOthersGroups();
         }
 
-        private void MakePin(PinDef pinDef, GameMap gameMap)
+        private void MakePin(PinDef pinDef, float offsetZ, GameMap gameMap)
         {
             // Create new pin
             GameObject goPin = new($"pin_mapmod_{pinDef.name}")
@@ -62,7 +65,7 @@ namespace MapModS.Map
             sr.size = new Vector2(1f, 1f);
 
             goPinBorder.transform.SetParent(goPin.transform);
-            goPinBorder.transform.localPosition = new Vector3(0f, 0f, -0.0005f);
+            goPinBorder.transform.localPosition = new Vector3(0f, 0f, -0.00001f);
 
             // Attach pin data to the GameObject
             PinAnimatedSprite pin = goPin.AddComponent<PinAnimatedSprite>();
@@ -71,20 +74,20 @@ namespace MapModS.Map
 
             pin.gameObject.transform.SetParent(transform);
 
-            SetPinPosition(pinDef, goPin, gameMap);
+            SetPinPosition(pinDef, goPin, offsetZ, gameMap);
         }
 
-        private void SetPinPosition(PinDef pinDef, GameObject goPin, GameMap gameMap)
+        private void SetPinPosition(PinDef pinDef, GameObject goPin, float offsetZ, GameMap gameMap)
         {
             string roomName = pinDef.pinScene ?? pinDef.sceneName;
 
-            if (TryGetRoomPos(roomName, gameMap, out Vector3 vec))
+            if (TryGetRoomPos(roomName, gameMap, out Vector2 vec))
             {
-                vec.Scale(new Vector3(1.46f, 1.46f, 1));
+                vec.Scale(new Vector2(1.46f, 1.46f));
 
-                vec += new Vector3(pinDef.offsetX, pinDef.offsetY, pinDef.offsetZ);
+                vec += new Vector2(pinDef.offsetX, pinDef.offsetY);
 
-                goPin.transform.localPosition = new Vector3(vec.x, vec.y, vec.z - 0.01f);
+                goPin.transform.localPosition = new Vector3(vec.x, vec.y, -2f + offsetZ);
             }
             else
             {
@@ -106,7 +109,7 @@ namespace MapModS.Map
         //    }
         //}
 
-        private bool TryGetRoomPos(string roomName, GameMap gameMap, out Vector3 pos)
+        private bool TryGetRoomPos(string roomName, GameMap gameMap, out Vector2 pos)
         {
             foreach (Transform areaObj in gameMap.transform)
             {
@@ -122,7 +125,7 @@ namespace MapModS.Map
                 }
             }
 
-            pos = new Vector3(0, 0, 0);
+            pos = Vector2.zero;
             return false;
         }
 

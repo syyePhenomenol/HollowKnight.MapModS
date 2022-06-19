@@ -1,3795 +1,3121 @@
 {
   "Sly": {
     "offsetX": -0.45,
-    "offsetY": -0.2,
-    "offsetZ": 0.008
+    "offsetY": -0.2
   },
   "Sly_(Key)": {
     "offsetX": -0.45,
-    "offsetY": 0.2,
-    "offsetZ": 0.007
+    "offsetY": 0.2
   },
   "Iselda": {
     "offsetX": 0.4,
-    "offsetY": -0.2,
-    "offsetZ": 0.008
+    "offsetY": -0.2
   },
   "Salubra": {
     "offsetX": 1.35,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Leg_Eater": {
     "offsetX": 0.5,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Grubfather": {
     "offsetX": -0.2,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Seer": {
     "offsetX": -0.9,
-    "offsetY": 0.9,
-    "offsetZ": 0.0
+    "offsetY": 0.9
   },
   "Egg_Shop": {
     "offsetX": 2.7,
-    "offsetY": -0.6,
-    "offsetZ": 0.0
+    "offsetY": -0.6
   },
   "Lurien": {
     "pdBool": "lurienDefeated",
     "offsetX": 0.47,
-    "offsetY": 1.3,
-    "offsetZ": 0.0
+    "offsetY": 1.3
   },
   "Monomon": {
     "pdBool": "monomonDefeated",
     "offsetX": 0.19,
-    "offsetY": -0.15,
-    "offsetZ": 0.0
+    "offsetY": -0.15
   },
   "Herrah": {
     "pdBool": "hegemolDefeated",
     "offsetX": 0.0,
-    "offsetY": 1.3,
-    "offsetZ": 0.0
+    "offsetY": 1.3
   },
   "World_Sense": {
     "offsetX": 0.2,
-    "offsetY": -0.2,
-    "offsetZ": 0.001
+    "offsetY": -0.2
   },
   "Mothwing_Cloak": {
     "pdBool": "hasDash",
     "offsetX": -0.25,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Mantis_Claw": {
     "pdBool": "hasWalljump",
     "offsetX": -1.8,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Crystal_Heart": {
     "pdBool": "hasSuperDash",
     "offsetX": 2.5,
-    "offsetY": -0.55,
-    "offsetZ": 0.0
+    "offsetY": -0.55
   },
   "Monarch_Wings": {
     "pdBool": "hasDoubleJump",
     "offsetX": -1.2,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Shade_Cloak": {
     "pdBool": "hasShadowDash",
     "offsetX": 1.05,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Isma's_Tear": {
     "pdBool": "hasAcidArmour",
     "offsetX": 0.6,
-    "offsetY": -0.7,
-    "offsetZ": 0.0
+    "offsetY": -0.7
   },
   "Dream_Nail": {
     "pdBool": "hasDreamNail",
     "offsetX": -0.13,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Vengeful_Spirit": {
     "pdInt": "fireballLevel",
     "pdIntValue": 1,
     "offsetX": 0.0,
-    "offsetY": -0.2,
-    "offsetZ": -0.5
+    "offsetY": -0.2
   },
   "Shade_Soul": {
     "pdInt": "fireballLevel",
     "pdIntValue": 2,
     "offsetX": -0.1,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Desolate_Dive": {
     "pdInt": "quakeLevel",
     "pdIntValue": 1,
     "offsetX": -0.1,
-    "offsetY": -0.7,
-    "offsetZ": 0.0
+    "offsetY": -0.7
   },
   "Descending_Dark": {
     "pdInt": "quakeLevel",
     "pdIntValue": 2,
     "offsetX": 0.0,
-    "offsetY": 0.8,
-    "offsetZ": 0.0
+    "offsetY": 0.8
   },
   "Howling_Wraiths": {
     "pdInt": "screamLevel",
     "pdIntValue": 1,
     "offsetX": -0.5,
-    "offsetY": 0.5,
-    "offsetZ": 0.0
+    "offsetY": 0.5
   },
   "Abyss_Shriek": {
     "pdInt": "screamLevel",
     "pdIntValue": 2,
     "offsetX": -1.5,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Cyclone_Slash": {
     "pdBool": "hasCyclone",
     "offsetX": 0.24,
-    "offsetY": 0.32,
-    "offsetZ": 0.0
+    "offsetY": 0.32
   },
   "Dash_Slash": {
     "pdBool": "hasUpwardSlash",
     "offsetX": -1.3,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Great_Slash": {
     "pdBool": "hasDashSlash",
     "offsetX": 0.22,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Focus": {
     "offsetX": 0.4,
-    "offsetY": -0.4,
-    "offsetZ": 0.0
+    "offsetY": -0.4
   },
   "Baldur_Shell": {
     "pdBool": "gotCharm_5",
     "offsetX": 0.2,
-    "offsetY": -0.65,
-    "offsetZ": 0.0
+    "offsetY": -0.65
   },
   "Fury_of_the_Fallen": {
     "pdBool": "gotCharm_6",
     "offsetX": 1.3,
-    "offsetY": -0.8,
-    "offsetZ": 0.001
+    "offsetY": -0.8
   },
   "Lifeblood_Core": {
     "pdBool": "gotCharm_9",
     "offsetX": 0.4,
-    "offsetY": -0.65,
-    "offsetZ": 0.0
+    "offsetY": -0.65
   },
   "Defender's_Crest": {
     "pdBool": "gotCharm_10",
     "offsetX": 0.35,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Flukenest": {
     "pdBool": "gotCharm_11",
     "offsetX": -0.85,
-    "offsetY": 0.15,
-    "offsetZ": 0.0
+    "offsetY": 0.15
   },
   "Thorns_of_Agony": {
     "pdBool": "gotCharm_12",
     "offsetX": 0.75,
-    "offsetY": 0.05,
-    "offsetZ": 0.0
+    "offsetY": 0.05
   },
   "Mark_of_Pride": {
     "pdBool": "gotCharm_13",
     "offsetX": -0.25,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Sharp_Shadow": {
     "pdBool": "gotCharm_16",
     "offsetX": 0.0,
-    "offsetY": -0.5,
-    "offsetZ": 0.0
+    "offsetY": -0.5
   },
   "Spore_Shroom": {
     "pdBool": "gotCharm_17",
     "offsetX": 0.35,
-    "offsetY": -0.25,
-    "offsetZ": 0.0
+    "offsetY": -0.25
   },
   "Soul_Catcher": {
     "pdBool": "gotCharm_20",
     "offsetX": -0.4,
-    "offsetY": -0.2,
-    "offsetZ": -0.499
+    "offsetY": -0.2
   },
   "Soul_Eater": {
     "pdBool": "gotCharm_21",
     "offsetX": 3.4,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Glowing_Womb": {
     "pdBool": "gotCharm_22",
     "offsetX": 0.8,
-    "offsetY": 0.05,
-    "offsetZ": 0.0
+    "offsetY": 0.05
   },
   "Nailmaster's_Glory": {
     "pdBool": "gotCharm_26",
     "offsetX": -0.45,
-    "offsetY": -0.6,
-    "offsetZ": 0.009
+    "offsetY": -0.6
   },
   "Joni's_Blessing": {
     "pdBool": "gotCharm_27",
     "offsetX": 0.6,
-    "offsetY": -0.5,
-    "offsetZ": 0.0
+    "offsetY": -0.5
   },
   "Shape_of_Unn": {
     "pdBool": "gotCharm_28",
     "offsetX": -0.3,
-    "offsetY": -1.0,
-    "offsetZ": 0.0
+    "offsetY": -1.0
   },
   "Hiveblood": {
     "pdBool": "gotCharm_29",
     "offsetX": 0.0,
-    "offsetY": -0.25,
-    "offsetZ": 0.0
+    "offsetY": -0.25
   },
   "Dashmaster": {
     "pdBool": "gotCharm_30",
     "offsetX": -0.4,
-    "offsetY": -0.5,
-    "offsetZ": 0.0
+    "offsetY": -0.5
   },
   "Quick_Slash": {
     "pdBool": "gotCharm_32",
     "offsetX": 0.4,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Spell_Twister": {
     "pdBool": "gotCharm_33",
     "offsetX": 0.55,
-    "offsetY": 0.45,
-    "offsetZ": 0.0
+    "offsetY": 0.45
   },
   "Deep_Focus": {
     "pdBool": "gotCharm_34",
     "offsetX": -0.1,
-    "offsetY": -0.05,
-    "offsetZ": 0.0
+    "offsetY": -0.05
   },
   "Queen_Fragment": {
     "pdBool": "gotQueenFragment",
     "offsetX": -0.15,
-    "offsetY": 1.1,
-    "offsetZ": 0.0
+    "offsetY": 1.1
   },
   "King_Fragment": {
     "pdBool": "gotKingFragment",
-    "offsetX": 0.8,
-    "offsetY": -0.2,
-    "offsetZ": 0.005
+    "offsetX": 0.4,
+    "offsetY": -0.2
   },
   "Void_Heart": {
     "pdInt": "royalCharmState",
     "pdIntValue": 4,
     "offsetX": 1.0,
-    "offsetY": -4.0,
-    "offsetZ": 0.0
+    "offsetY": -4.0
   },
   "Dreamshield": {
     "pdBool": "gotCharm_38",
     "offsetX": -0.6,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Weaversong": {
     "pdBool": "gotCharm_39",
     "offsetX": 2.5,
-    "offsetY": 0.4,
-    "offsetZ": 0.0
+    "offsetY": 0.4
   },
   "Grimmchild": {
     "pdBool": "gotCharm_40",
     "offsetX": -1.2,
-    "offsetY": -0.6,
-    "offsetZ": 0.001
+    "offsetY": -0.6
   },
   "Unbreakable_Heart": {
     "pdBool": "fragileHeart_unbreakable",
     "offsetX": -1.6,
-    "offsetY": -0.6,
-    "offsetZ": 0.002
+    "offsetY": -0.6
   },
   "Unbreakable_Greed": {
     "pdBool": "fragileGreed_unbreakable",
     "offsetX": -1.6,
-    "offsetY": -0.2,
-    "offsetZ": 0.003
+    "offsetY": -0.2
   },
   "Unbreakable_Strength": {
     "pdBool": "fragileStrength_unbreakable",
     "offsetX": -1.6,
-    "offsetY": 0.2,
-    "offsetZ": 0.004
+    "offsetY": 0.2
   },
   "City_Crest": {
     "pdBool": "hasCityKey",
     "offsetX": 0.1,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Tram_Pass": {
     "pdBool": "hasTramPass",
     "offsetX": -0.7,
-    "offsetY": -0.25,
-    "offsetZ": 0.0
+    "offsetY": -0.25
   },
   "Simple_Key-Basin": {
     "objectName": "Shiny Item Stand",
     "offsetX": -1.0,
-    "offsetY": -0.3,
-    "offsetZ": 0.0
+    "offsetY": -0.3
   },
   "Simple_Key-City": {
     "objectName": "Shiny Item",
     "offsetX": 0.8,
-    "offsetY": 0.5,
-    "offsetZ": 0.0
+    "offsetY": 0.5
   },
   "Simple_Key-Lurker": {
     "pdBool": "gotLurkerKey",
     "offsetX": 0.8,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Shopkeeper's_Key": {
     "pdBool": "hasSlykey",
     "offsetX": 0.15,
-    "offsetY": 0.35,
-    "offsetZ": 0.0
+    "offsetY": 0.35
   },
   "Love_Key": {
     "pdBool": "hasLoveKey",
     "offsetX": 1.1,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "King's_Brand": {
     "pdBool": "hasKingsBrand",
     "offsetX": -0.4,
-    "offsetY": -1.0,
-    "offsetZ": 0.0
+    "offsetY": -1.0
   },
   "Godtuner": {
     "pdBool": "hasGodfinder",
     "offsetX": -0.6,
-    "offsetY": -0.6,
-    "offsetZ": 0.0
+    "offsetY": -0.6
   },
   "Collector's_Map": {
     "pdBool": "hasPinGrub",
     "offsetX": -0.6,
-    "offsetY": 1.3,
-    "offsetZ": 0.0
+    "offsetY": 1.3
   },
   "Mask_Shard-Brooding_Mawlek": {
     "objectName": "Heart Piece",
     "offsetX": 0.5,
-    "offsetY": -0.05,
-    "offsetZ": 0.0
+    "offsetY": -0.05
   },
   "Mask_Shard-Crossroads_Goam": {
     "objectName": "Heart Piece",
     "offsetX": -0.7,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Mask_Shard-Stone_Sanctuary": {
     "objectName": "Heart Piece",
     "offsetX": 1.0,
-    "offsetY": -0.1,
-    "offsetZ": 0.001
+    "offsetY": -0.1
   },
   "Mask_Shard-Queen's_Station": {
     "objectName": "Heart Piece",
     "offsetX": 0.35,
-    "offsetY": 0.05,
-    "offsetZ": 0.0
+    "offsetY": 0.05
   },
   "Mask_Shard-Deepnest": {
     "objectName": "Heart Piece",
     "offsetX": 0.3,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Mask_Shard-Waterways": {
     "objectName": "Heart Piece",
     "offsetX": -1.15,
-    "offsetY": -0.2,
-    "offsetZ": 0.0
+    "offsetY": -0.2
   },
   "Mask_Shard-Enraged_Guardian": {
     "objectName": "Heart Piece",
     "offsetX": -0.45,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Mask_Shard-Hive": {
     "objectName": "Heart Piece",
     "offsetX": -0.8,
-    "offsetY": -0.45,
-    "offsetZ": 0.0
+    "offsetY": -0.45
   },
   "Mask_Shard-Grey_Mourner": {
     "objectName": "Heart Piece",
     "offsetX": 0.1,
-    "offsetY": -0.25,
-    "offsetZ": 0.0
+    "offsetY": -0.25
   },
   "Mask_Shard-Bretta": {
     "objectName": "Heart Piece",
     "offsetX": 0.8,
-    "offsetY": -0.2,
-    "offsetZ": 0.0085
+    "offsetY": -0.2
   },
   "Vessel_Fragment-Greenpath": {
     "objectName": "Vessel Fragment",
     "offsetX": -0.4,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Vessel_Fragment-City": {
     "objectName": "Vessel Fragment",
     "offsetX": 0.5,
-    "offsetY": -0.05,
-    "offsetZ": 0.0
+    "offsetY": -0.05
   },
   "Vessel_Fragment-Crossroads": {
     "objectName": "Vessel Fragment",
     "offsetX": -0.4,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Vessel_Fragment-Basin": {
     "objectName": "Vessel Fragment",
     "offsetX": 0.5,
-    "offsetY": 0.8,
-    "offsetZ": 0.0
+    "offsetY": 0.8
   },
   "Vessel_Fragment-Deepnest": {
     "objectName": "Vessel Fragment",
     "offsetX": 1.6,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "Vessel_Fragment-Stag_Nest": {
     "pdBool": "vesselFragStagNest",
     "offsetX": -2.4,
-    "offsetY": 1.6,
-    "offsetZ": 0.0
+    "offsetY": 1.6
   },
   "Charm_Notch-Shrumal_Ogres": {
     "objectName": "Shiny Item",
     "offsetX": 0.1,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Charm_Notch-Fog_Canyon": {
     "pdBool": "notchFogCanyon",
     "offsetX": 0.0,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Charm_Notch-Colosseum": {
     "objectName": "Shiny Item",
     "offsetX": 3.1,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Charm_Notch-Grimm": {
     "objectName": "Shiny Item",
     "offsetX": -1.2,
-    "offsetY": -0.2,
-    "offsetZ": 0.0
+    "offsetY": -0.2
   },
   "Pale_Ore-Basin": {
     "objectName": "Shiny Item Stand",
     "offsetX": -2.05,
-    "offsetY": -0.35,
-    "offsetZ": 0.0
+    "offsetY": -0.35
   },
   "Pale_Ore-Crystal_Peak": {
     "objectName": "Shiny Item Stand",
     "offsetX": -1.9,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "Pale_Ore-Nosk": {
     "objectName": "Shiny Item Stand",
     "offsetX": 2.0,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Pale_Ore-Colosseum": {
     "objectName": "Shiny Item",
     "offsetX": 3.5,
-    "offsetY": 0.0,
-    "offsetZ": 0.001
+    "offsetY": 0.0
   },
   "Geo_Chest-False_Knight": {
     "objectName": "Chest",
     "offsetX": -0.4,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Geo_Chest-Soul_Master": {
     "objectName": "Chest",
     "offsetX": -0.4,
-    "offsetY": 1.2,
-    "offsetZ": 0.0
+    "offsetY": 1.2
   },
   "Geo_Chest-Watcher_Knights": {
     "objectName": "Chest",
     "offsetX": -0.8,
-    "offsetY": 1.4,
-    "offsetZ": 0.0
+    "offsetY": 1.4
   },
   "Geo_Chest-Greenpath": {
     "objectName": "Chest",
     "offsetX": 1.45,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Geo_Chest-Mantis_Lords": {
     "objectName": "Mantis Chest (2)",
     "offsetX": 0.5,
-    "offsetY": 0.2,
-    "offsetZ": 0.002
+    "offsetY": 0.2
   },
   "Geo_Chest-Resting_Grounds": {
     "objectName": "Chest",
     "offsetX": 1.6,
-    "offsetY": -0.2,
-    "offsetZ": 0.0
+    "offsetY": -0.2
   },
   "Geo_Chest-Crystal_Peak": {
     "objectName": "Chest",
     "offsetX": 0.0,
-    "offsetY": -0.4,
-    "offsetZ": 0.001
+    "offsetY": -0.4
   },
   "Geo_Chest-Weavers_Den": {
     "objectName": "Chest",
     "offsetX": 2.9,
-    "offsetY": 0.4,
-    "offsetZ": 0.001
+    "offsetY": 0.4
   },
   "Geo_Chest-Junk_Pit_1": {
     "objectName": "Chest",
     "offsetX": -2.1,
-    "offsetY": -0.6,
-    "offsetZ": 0.005
+    "offsetY": -0.6
   },
   "Geo_Chest-Junk_Pit_2": {
     "objectName": "Chest (1)",
     "offsetX": -1.8,
-    "offsetY": -0.6,
-    "offsetZ": 0.004
+    "offsetY": -0.6
   },
   "Geo_Chest-Junk_Pit_3": {
     "objectName": "Chest (2)",
     "offsetX": -1.5,
-    "offsetY": -0.6,
-    "offsetZ": 0.003
+    "offsetY": -0.6
   },
   "Geo_Chest-Junk_Pit_5": {
     "objectName": "Chest (4)",
     "offsetX": -0.9,
-    "offsetY": -0.6,
-    "offsetZ": 0.001
+    "offsetY": -0.6
   },
   "Lumafly_Escape-Junk_Pit_Chest_4": {
     "objectName": "Chest (3)",
     "offsetX": -1.2,
-    "offsetY": -0.6,
-    "offsetZ": 0.002
+    "offsetY": -0.6
   },
   "Rancid_Egg-Sheo": {
     "objectName": "Shiny Item",
     "offsetX": -0.65,
-    "offsetY": -0.45,
-    "offsetZ": 0.0
+    "offsetY": -0.45
   },
   "Rancid_Egg-Fungal_Core": {
     "objectName": "Shiny Item",
     "offsetX": -0.8,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Rancid_Egg-Queen's_Gardens": {
     "objectName": "Shiny Item(Clone)",
     "offsetX": -0.8,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Rancid_Egg-Blue_Lake": {
     "objectName": "Shiny Item(Clone)",
     "offsetX": -0.5,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Rancid_Egg-Crystal_Peak_Dive_Entrance": {
     "objectName": "Shiny Item(Clone)",
     "offsetX": 0.3,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Rancid_Egg-Crystal_Peak_Dark_Room": {
     "objectName": "Shiny Item",
     "offsetX": -0.4,
-    "offsetY": 0.5,
-    "offsetZ": 0.0
+    "offsetY": 0.5
   },
   "Rancid_Egg-Crystal_Peak_Tall_Room": {
     "objectName": "Shiny Item(Clone)",
     "offsetX": -0.7,
-    "offsetY": 1.1,
-    "offsetZ": 0.0
+    "offsetY": 1.1
   },
   "Rancid_Egg-City_of_Tears_Left": {
     "objectName": "Shiny Item",
     "offsetX": 0.0,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Rancid_Egg-City_of_Tears_Pleasure_House": {
     "objectName": "Shiny Item",
     "offsetX": 0.2,
-    "offsetY": 0.9,
-    "offsetZ": 0.0
+    "offsetY": 0.9
   },
   "Rancid_Egg-Beast's_Den": {
     "objectName": "Shiny Item(Clone)",
     "offsetX": -0.4,
-    "offsetY": 2.1,
-    "offsetZ": 0.003
+    "offsetY": 2.1
   },
   "Rancid_Egg-Dark_Deepnest": {
     "objectName": "Shiny Item(Clone)",
     "offsetX": -1.3,
-    "offsetY": -0.6,
-    "offsetZ": 0.0
+    "offsetY": -0.6
   },
   "Rancid_Egg-Weaver's_Den": {
     "objectName": "Shiny Item",
     "offsetX": 3.3,
-    "offsetY": 0.4,
-    "offsetZ": 0.002
+    "offsetY": 0.4
   },
   "Rancid_Egg-Near_Quick_Slash": {
     "objectName": "Shiny Item(Clone)",
     "offsetX": -0.05,
-    "offsetY": -0.2,
-    "offsetZ": 0.0
+    "offsetY": -0.2
   },
   "Rancid_Egg-Upper_Kingdom's_Edge": {
     "objectName": "Shiny Item (1)",
     "offsetX": 0.2,
-    "offsetY": 1.1,
-    "offsetZ": 0.0
+    "offsetY": 1.1
   },
   "Rancid_Egg-Waterways_East": {
     "objectName": "Shiny Item(Clone)",
     "offsetX": -0.1,
-    "offsetY": -0.7,
-    "offsetZ": 0.0
+    "offsetY": -0.7
   },
   "Rancid_Egg-Waterways_Main": {
     "objectName": "Shiny Item(Clone)",
     "offsetX": -1.25,
-    "offsetY": 0.05,
-    "offsetZ": 0.0
+    "offsetY": 0.05
   },
   "Rancid_Egg-Waterways_West_Bluggsac": {
     "objectName": "Shiny Item(Clone)",
     "offsetX": -0.7,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Rancid_Egg-Waterways_West_Pickup": {
     "objectName": "Shiny Item",
     "offsetX": -0.5,
-    "offsetY": 0.5,
-    "offsetZ": 0.0
+    "offsetY": 0.5
   },
   "Rancid_Egg-Tuk_Defender's_Crest": {
     "pdBool": "tukMet",
     "offsetX": 0.0,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Wanderer's_Journal-Cliffs": {
     "objectName": "Shiny Item (1)",
     "offsetX": 1.45,
-    "offsetY": -1.5,
-    "offsetZ": 0.0
+    "offsetY": -1.5
   },
   "Wanderer's_Journal-Greenpath_Stag": {
     "objectName": "Shiny Item",
     "offsetX": 0.1,
-    "offsetY": 1.2,
-    "offsetZ": 0.0
+    "offsetY": 1.2
   },
   "Wanderer's_Journal-Greenpath_Lower": {
     "objectName": "Shiny Item",
     "offsetX": 0.45,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Wanderer's_Journal-Fungal_Wastes_Thorns_Gauntlet": {
     "objectName": "Shiny Item",
     "offsetX": 0.0,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Wanderer's_Journal-Above_Mantis_Village": {
     "objectName": "Shiny Item",
     "offsetX": 0.4,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Wanderer's_Journal-Crystal_Peak_Crawlers": {
     "objectName": "Shiny Item (1)",
     "offsetX": 0.2,
-    "offsetY": 1.4,
-    "offsetZ": 0.0
+    "offsetY": 1.4
   },
   "Wanderer's_Journal-Resting_Grounds_Catacombs": {
     "objectName": "Shiny Item",
     "offsetX": 3.4,
-    "offsetY": -0.3,
-    "offsetZ": 0.001
+    "offsetY": -0.3
   },
   "Wanderer's_Journal-King's_Station": {
     "objectName": "Shiny Item",
     "offsetX": 0.3,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Wanderer's_Journal-Pleasure_House": {
     "objectName": "Shiny Item (1)",
     "offsetX": 0.0,
-    "offsetY": -1.0,
-    "offsetZ": 0.0
+    "offsetY": -1.0
   },
   "Wanderer's_Journal-City_Storerooms": {
     "objectName": "Shiny Item",
     "offsetX": -0.2,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Wanderer's_Journal-Ancient_Basin": {
     "objectName": "Shiny Item",
     "offsetX": 1.8,
-    "offsetY": -0.2,
-    "offsetZ": 0.0
+    "offsetY": -0.2
   },
   "Wanderer's_Journal-Kingdom's_Edge_Entrance": {
     "objectName": "Shiny Item",
     "offsetX": -0.8,
-    "offsetY": -2.6,
-    "offsetZ": 0.0
+    "offsetY": -2.6
   },
   "Wanderer's_Journal-Kingdom's_Edge_Camp": {
     "objectName": "Shiny Item",
     "offsetX": -0.6,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Wanderer's_Journal-Kingdom's_Edge_Requires_Dive": {
     "objectName": "Shiny Item",
     "offsetX": -0.5,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "Hallownest_Seal-Crossroads_Well": {
     "objectName": "Shiny Item",
     "offsetX": -0.2,
-    "offsetY": 0.25,
-    "offsetZ": 0.0
+    "offsetY": 0.25
   },
   "Hallownest_Seal-Greenpath": {
     "objectName": "Shiny Item",
     "offsetX": -1.85,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Hallownest_Seal-Fog_Canyon_West": {
     "objectName": "Shiny Item",
     "offsetX": 0.2,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Hallownest_Seal-Fog_Canyon_East": {
     "objectName": "Shiny Item",
     "offsetX": -0.15,
-    "offsetY": 0.9,
-    "offsetZ": 0.0
+    "offsetY": 0.9
   },
   "Hallownest_Seal-Queen's_Station": {
     "objectName": "Shiny Item",
     "offsetX": 0.2,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Hallownest_Seal-Fungal_Wastes_Sporgs": {
     "objectName": "Shiny Item",
     "offsetX": 0.8,
-    "offsetY": 0.7,
-    "offsetZ": 0.0
+    "offsetY": 0.7
   },
   "Hallownest_Seal-Mantis_Lords": {
     "objectName": "Shiny Item",
     "offsetX": 0.1,
-    "offsetY": 0.2,
-    "offsetZ": 0.001
+    "offsetY": 0.2
   },
   "Hallownest_Seal-Resting_Grounds_Catacombs": {
     "objectName": "Shiny Item (1)",
     "offsetX": -0.4,
-    "offsetY": 0.0,
-    "offsetZ": 0.002
+    "offsetY": 0.0
   },
   "Hallownest_Seal-King's_Station": {
     "objectName": "Shiny Item",
     "offsetX": -0.4,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Hallownest_Seal-City_Rafters": {
     "objectName": "Shiny Item",
     "offsetX": 0.15,
-    "offsetY": 0.6,
-    "offsetZ": 0.0
+    "offsetY": 0.6
   },
   "Hallownest_Seal-Soul_Sanctum": {
     "objectName": "Shiny Item",
     "offsetX": 0.2,
-    "offsetY": -0.4,
-    "offsetZ": 0.0
+    "offsetY": -0.4
   },
   "Hallownest_Seal-Watcher_Knight": {
     "objectName": "Shiny Item",
     "offsetX": -0.4,
-    "offsetY": 1.4,
-    "offsetZ": 0.001
+    "offsetY": 1.4
   },
   "Hallownest_Seal-Deepnest_By_Mantis_Lords": {
     "objectName": "Shiny Item",
     "offsetX": 0.9,
-    "offsetY": 0.4,
-    "offsetZ": 0.0
+    "offsetY": 0.4
   },
   "Hallownest_Seal-Beast's_Den": {
     "objectName": "Shiny Item",
     "offsetX": 0.0,
-    "offsetY": 1.7,
-    "offsetZ": 0.001
+    "offsetY": 1.7
   },
   "Hallownest_Seal-Queen's_Gardens": {
     "objectName": "Shiny Item",
     "offsetX": -1.0,
-    "offsetY": -1.0,
-    "offsetZ": 0.0
+    "offsetY": -1.0
   },
   "King's_Idol-Cliffs": {
     "objectName": "Shiny Item",
     "offsetX": -0.6,
-    "offsetY": -2.1,
-    "offsetZ": 0.0
+    "offsetY": -2.1
   },
   "King's_Idol-Crystal_Peak": {
     "objectName": "Shiny Item Stand",
     "offsetX": 1.6,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "King's_Idol-Glade_of_Hope": {
     "objectName": "Shiny Item",
     "offsetX": 1.6,
-    "offsetY": -0.2,
-    "offsetZ": 0.0
+    "offsetY": -0.2
   },
   "King's_Idol-Dung_Defender": {
     "objectName": "Shiny Item Stand",
     "offsetX": 0.2,
-    "offsetY": 0.0,
-    "offsetZ": 0.001
+    "offsetY": 0.0
   },
   "King's_Idol-Great_Hopper": {
     "objectName": "Shiny Item",
     "offsetX": -0.5,
-    "offsetY": -0.2,
-    "offsetZ": 0.0
+    "offsetY": -0.2
   },
   "King's_Idol-Pale_Lurker": {
     "objectName": "Shiny Item",
     "offsetX": 2.1,
-    "offsetY": -0.4,
-    "offsetZ": 0.0
+    "offsetY": -0.4
   },
   "King's_Idol-Deepnest": {
     "objectName": "Shiny Item",
     "offsetX": -0.7,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Arcane_Egg-Lifeblood_Core": {
     "objectName": "Shiny Item (1)",
     "offsetX": 0.4,
-    "offsetY": -1.15,
-    "offsetZ": 0.0
+    "offsetY": -1.15
   },
   "Arcane_Egg-Shade_Cloak": {
     "objectName": "Shiny Item",
     "offsetX": 0.0,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Arcane_Egg-Birthplace": {
     "objectName": "Shiny Item",
     "offsetX": -0.6,
-    "offsetY": -4.0,
-    "offsetZ": 0.0
+    "offsetY": -4.0
   },
   "Whispering_Root-Crossroads": {
     "offsetX": -0.5,
-    "offsetY": 1.1,
-    "offsetZ": 0.0
+    "offsetY": 1.1
   },
   "Whispering_Root-Greenpath": {
     "offsetX": -1.9,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Whispering_Root-Leg_Eater": {
     "offsetX": 0.3,
-    "offsetY": -0.7,
-    "offsetZ": 0.0
+    "offsetY": -0.7
   },
   "Whispering_Root-Mantis_Village": {
     "offsetX": 0.1,
-    "offsetY": -0.25,
-    "offsetZ": 0.0
+    "offsetY": -0.25
   },
   "Whispering_Root-Deepnest": {
     "offsetX": -1.8,
-    "offsetY": -0.2,
-    "offsetZ": 0.0
+    "offsetY": -0.2
   },
   "Whispering_Root-Queens_Gardens": {
     "offsetX": 0.3,
-    "offsetY": -0.5,
-    "offsetZ": 0.0
+    "offsetY": -0.5
   },
   "Whispering_Root-Kingdoms_Edge": {
     "offsetX": 0.2,
-    "offsetY": -2.0,
-    "offsetZ": 0.0
+    "offsetY": -2.0
   },
   "Whispering_Root-Waterways": {
     "offsetX": 0.5,
-    "offsetY": -1.7,
-    "offsetZ": 0.0
+    "offsetY": -1.7
   },
   "Whispering_Root-City": {
     "offsetX": 0.8,
-    "offsetY": 0.0,
-    "offsetZ": 0.001
+    "offsetY": 0.0
   },
   "Whispering_Root-Resting_Grounds": {
     "offsetX": -0.3,
-    "offsetY": 0.5,
-    "offsetZ": 0.0
+    "offsetY": 0.5
   },
   "Whispering_Root-Spirits_Glade": {
     "offsetX": 1.5,
-    "offsetY": 0.7,
-    "offsetZ": 0.0
+    "offsetY": 0.7
   },
   "Whispering_Root-Crystal_Peak": {
     "offsetX": 0.2,
-    "offsetY": -0.4,
-    "offsetZ": 0.0
+    "offsetY": -0.4
   },
   "Whispering_Root-Howling_Cliffs": {
     "offsetX": 0.5,
-    "offsetY": -1.8,
-    "offsetZ": 0.0
+    "offsetY": -1.8
   },
   "Whispering_Root-Ancestral_Mound": {
     "offsetX": -0.4,
-    "offsetY": 0.6,
-    "offsetZ": -0.495
+    "offsetY": 0.6
   },
   "Whispering_Root-Hive": {
     "offsetX": 0.5,
-    "offsetY": -0.4,
-    "offsetZ": 0.0
+    "offsetY": -0.4
   },
   "Boss_Essence-Elder_Hu": {
     "pdBool": "killedGhostHu",
     "offsetX": 0.3,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Boss_Essence-Xero": {
     "pdBool": "killedGhostXero",
     "offsetX": 0.8,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Boss_Essence-Gorb": {
     "pdBool": "killedGhostAladar",
     "offsetX": -1.3,
-    "offsetY": 1.1,
-    "offsetZ": 0.0
+    "offsetY": 1.1
   },
   "Boss_Essence-Marmu": {
     "pdBool": "killedGhostMarmu",
     "offsetX": -0.4,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Boss_Essence-No_Eyes": {
     "pdBool": "killedGhostNoEyes",
     "offsetX": 1.4,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Boss_Essence-Galien": {
     "pdBool": "killedGhostGalien",
     "offsetX": -0.7,
-    "offsetY": -0.2,
-    "offsetZ": 0.0
+    "offsetY": -0.2
   },
   "Boss_Essence-Markoth": {
     "pdBool": "killedGhostMarkoth",
     "offsetX": -0.1,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Boss_Essence-Failed_Champion": {
     "pdBool": "falseKnightOrbsCollected",
     "offsetX": -0.1,
-    "offsetY": 0.5,
-    "offsetZ": -0.99
+    "offsetY": 0.5
   },
   "Boss_Essence-Soul_Tyrant": {
     "pdBool": "mageLordOrbsCollected",
     "offsetX": 0.3,
-    "offsetY": -0.7,
-    "offsetZ": 0.001
+    "offsetY": -0.7
   },
   "Boss_Essence-Lost_Kin": {
     "pdBool": "infectedKnightOrbsCollected",
     "offsetX": -1.35,
-    "offsetY": -0.2,
-    "offsetZ": 0.0
+    "offsetY": -0.2
   },
   "Boss_Essence-White_Defender": {
     "pdBool": "whiteDefenderOrbsCollected",
     "offsetX": -0.2,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Boss_Essence-Grey_Prince_Zote": {
     "pdBool": "greyPrinceOrbsCollected",
     "offsetX": 0.8,
-    "offsetY": -0.6,
-    "offsetZ": 0.0095
+    "offsetY": -0.6
   },
   "Grub-Crossroads_Acid": {
     "offsetX": -0.7,
-    "offsetY": 0.4,
-    "offsetZ": 0.0
+    "offsetY": 0.4
   },
   "Grub-Crossroads_Center": {
     "offsetX": 0.45,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Grub-Crossroads_Stag": {
     "offsetX": -0.2,
-    "offsetY": 0.2,
-    "offsetZ": 0.001
+    "offsetY": 0.2
   },
   "Grub-Crossroads_Spike": {
     "offsetX": -0.35,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Grub-Crossroads_Guarded": {
     "offsetX": 0.4,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Grub-Greenpath_Cornifer": {
     "offsetX": 1.5,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Grub-Greenpath_Journal": {
     "offsetX": 0.2,
-    "offsetY": -0.5,
-    "offsetZ": 0.0
+    "offsetY": -0.5
   },
   "Grub-Greenpath_MMC": {
     "offsetX": 0.5,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Grub-Greenpath_Stag": {
     "offsetX": 0.9,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Grub-Fog_Canyon": {
     "offsetX": -0.85,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Grub-Fungal_Bouncy": {
     "offsetX": 1.45,
-    "offsetY": 0.5,
-    "offsetZ": 0.0
+    "offsetY": 0.5
   },
   "Grub-Fungal_Spore_Shroom": {
     "offsetX": -0.5,
-    "offsetY": 0.35,
-    "offsetZ": 0.0
+    "offsetY": 0.35
   },
   "Grub-Deepnest_Mimic": {
     "offsetX": 0.6,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Grub-Deepnest_Nosk": {
     "offsetX": 1.3,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Grub-Deepnest_Spike": {
     "offsetX": -0.4,
-    "offsetY": 1.4,
-    "offsetZ": 0.0
+    "offsetY": 1.4
   },
   "Grub-Dark_Deepnest": {
     "offsetX": 0.4,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "Grub-Beast's_Den": {
     "offsetX": 0.0,
-    "offsetY": 2.1,
-    "offsetZ": 0.002
+    "offsetY": 2.1
   },
   "Grub-Kingdom's_Edge_Oro": {
     "offsetX": 1.6,
-    "offsetY": -0.5,
-    "offsetZ": 0.0
+    "offsetY": -0.5
   },
   "Grub-Kingdom's_Edge_Camp": {
     "offsetX": 0.2,
-    "offsetY": -0.25,
-    "offsetZ": 0.0
+    "offsetY": -0.25
   },
   "Grub-Hive_External": {
     "offsetX": -1.2,
-    "offsetY": 0.75,
-    "offsetZ": 0.0
+    "offsetY": 0.75
   },
   "Grub-Hive_Internal": {
     "offsetX": 0.7,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "Grub-Basin_Requires_Wings": {
     "offsetX": 0.05,
-    "offsetY": 1.0,
-    "offsetZ": 0.0
+    "offsetY": 1.0
   },
   "Grub-Basin_Requires_Dive": {
     "offsetX": 1.85,
-    "offsetY": -0.6,
-    "offsetZ": 0.0
+    "offsetY": -0.6
   },
   "Grub-Waterways_Main": {
     "offsetX": 1.2,
-    "offsetY": -0.25,
-    "offsetZ": 0.0
+    "offsetY": -0.25
   },
   "Grub-Isma's_Grove": {
     "offsetX": 1.0,
-    "offsetY": 0.5,
-    "offsetZ": 0.0
+    "offsetY": 0.5
   },
   "Grub-Waterways_Requires_Tram": {
     "offsetX": 1.5,
-    "offsetY": 0.25,
-    "offsetZ": 0.0
+    "offsetY": 0.25
   },
   "Grub-City_of_Tears_Left": {
     "offsetX": 0.45,
-    "offsetY": 1.5,
-    "offsetZ": 0.0
+    "offsetY": 1.5
   },
   "Grub-Soul_Sanctum": {
     "offsetX": -0.4,
-    "offsetY": -0.8,
-    "offsetZ": 0.0
+    "offsetY": -0.8
   },
   "Grub-Watcher's_Spire": {
     "offsetX": -0.1,
-    "offsetY": -0.2,
-    "offsetZ": 0.0
+    "offsetY": -0.2
   },
   "Grub-City_of_Tears_Guarded": {
     "offsetX": 1.1,
-    "offsetY": -0.3,
-    "offsetZ": 0.0
+    "offsetY": -0.3
   },
   "Grub-King's_Station": {
     "offsetX": 0.15,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Grub-Resting_Grounds": {
     "offsetX": 0.9,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Grub-Crystal_Peak_Below_Chest": {
     "offsetX": -0.3,
-    "offsetY": 0.9,
-    "offsetZ": 0.0
+    "offsetY": 0.9
   },
   "Grub-Crystallized_Mound": {
     "offsetX": 0.4,
-    "offsetY": 0.8,
-    "offsetZ": 0.001
+    "offsetY": 0.8
   },
   "Grub-Crystal_Peak_Spike": {
     "offsetX": 0.1,
-    "offsetY": 0.7,
-    "offsetZ": 0.0
+    "offsetY": 0.7
   },
   "Grub-Crystal_Peak_Mimic": {
     "offsetX": 0.3,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Grub-Crystal_Peak_Crushers": {
     "offsetX": 0.0,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Grub-Crystal_Heart": {
     "offsetX": -2.5,
-    "offsetY": 0.05,
-    "offsetZ": 0.0
+    "offsetY": 0.05
   },
   "Grub-Hallownest_Crown": {
     "offsetX": 0.0,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Grub-Howling_Cliffs": {
     "offsetX": 0.2,
-    "offsetY": 0.6,
-    "offsetZ": 0.0
+    "offsetY": 0.6
   },
   "Grub-Queen's_Gardens_Stag": {
     "offsetX": -1.0,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "Grub-Queen's_Gardens_Marmu": {
     "offsetX": -0.85,
-    "offsetY": 1.2,
-    "offsetZ": 0.0
+    "offsetY": 1.2
   },
   "Grub-Queen's_Gardens_Top": {
     "offsetX": 0.2,
-    "offsetY": 1.3,
-    "offsetZ": 0.0
+    "offsetY": 1.3
   },
   "Grub-Collector_1": {
     "offsetX": 0.8,
-    "offsetY": 1.25,
-    "offsetZ": 0.0
+    "offsetY": 1.25
   },
   "Grub-Collector_2": {
     "offsetX": 0.4,
-    "offsetY": 1.25,
-    "offsetZ": 0.001
+    "offsetY": 1.25
   },
   "Grub-Collector_3": {
     "offsetX": 0.0,
-    "offsetY": 1.25,
-    "offsetZ": 0.002
+    "offsetY": 1.25
   },
   "Mimic_Grub-Deepnest_1": {
     "objectName": "Grub Mimic Bottle",
     "offsetX": 0.0,
-    "offsetY": 0.0,
-    "offsetZ": 0.002
+    "offsetY": 0.0
   },
   "Mimic_Grub-Deepnest_2": {
     "objectName": "Grub Mimic Bottle (1)",
     "offsetX": -0.3,
-    "offsetY": 0.0,
-    "offsetZ": 0.003
+    "offsetY": 0.0
   },
   "Mimic_Grub-Deepnest_3": {
     "objectName": "Grub Mimic Bottle (2)",
     "offsetX": 0.3,
-    "offsetY": 0.0,
-    "offsetZ": 0.001
+    "offsetY": 0.0
   },
   "Mimic_Grub-Crystal_Peak": {
     "objectName": "Grub Mimic Bottle",
     "offsetX": 0.3,
-    "offsetY": -0.4,
-    "offsetZ": 0.0
+    "offsetY": -0.4
   },
   "Crossroads_Map": {
     "pdBool": "mapCrossroads",
     "offsetX": 0.1,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Greenpath_Map": {
     "pdBool": "mapGreenpath",
     "offsetX": 1.45,
-    "offsetY": -0.3,
-    "offsetZ": 0.0
+    "offsetY": -0.3
   },
   "Fog_Canyon_Map": {
     "pdBool": "mapFogCanyon",
     "offsetX": -0.3,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Fungal_Wastes_Map": {
     "pdBool": "mapFungalWastes",
     "offsetX": -1.55,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Deepnest_Map-Upper": {
     "pdBool": "mapDeepnest",
     "offsetX": -0.45,
-    "offsetY": -0.8,
-    "offsetZ": 0.0
+    "offsetY": -0.8
   },
   "Deepnest_Map-Right": {
     "pdBool": "mapDeepnest",
     "offsetX": -0.7,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Ancient_Basin_Map": {
     "pdBool": "mapAbyss",
     "offsetX": 0.5,
-    "offsetY": 0.4,
-    "offsetZ": 0.001
+    "offsetY": 0.4
   },
   "Kingdom's_Edge_Map": {
     "pdBool": "mapOutskirts",
     "offsetX": -0.7,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "City_of_Tears_Map": {
     "pdBool": "mapCity",
     "offsetX": 0.2,
-    "offsetY": -0.375,
-    "offsetZ": 0.0
+    "offsetY": -0.375
   },
   "Royal_Waterways_Map": {
     "pdBool": "mapWaterways",
     "offsetX": -0.2,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "Howling_Cliffs_Map": {
     "pdBool": "mapCliffs",
     "offsetX": 1.8,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Crystal_Peak_Map": {
     "pdBool": "mapMines",
     "offsetX": 1.35,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Queen's_Gardens_Map": {
     "pdBool": "mapRoyalGardens",
     "offsetX": 0.4,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Resting_Grounds_Map": {
     "pdBool": "mapRestingGrounds",
     "offsetX": -0.8,
-    "offsetY": -0.05,
-    "offsetZ": 0.0
+    "offsetY": -0.05
   },
   "Dirtmouth_Stag": {
     "pdBool": "openedTownBuilding",
     "offsetX": 0.4,
-    "offsetY": -0.6,
-    "offsetZ": 0.009
+    "offsetY": -0.6
   },
   "Crossroads_Stag": {
     "pdBool": "openedCrossroads",
     "offsetX": -0.3,
-    "offsetY": 0.05,
-    "offsetZ": 0.0
+    "offsetY": 0.05
   },
   "Greenpath_Stag": {
     "pdBool": "openedGreenpath",
     "offsetX": -0.15,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Queen's_Station_Stag": {
     "pdBool": "openedFungalWastes",
     "offsetX": -0.2,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Queen's_Gardens_Stag": {
     "pdBool": "openedRoyalGardens",
     "offsetX": 1.68,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "City_Storerooms_Stag": {
     "pdBool": "openedRuins1",
     "offsetX": 0.2,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "King's_Station_Stag": {
     "pdBool": "openedRuins2",
     "offsetX": 0.3,
-    "offsetY": -0.3,
-    "offsetZ": 0.0
+    "offsetY": -0.3
   },
   "Resting_Grounds_Stag": {
     "pdBool": "openedRestingGrounds",
     "offsetX": 0.15,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Distant_Village_Stag": {
     "pdBool": "openedDeepnest",
     "offsetX": 0.6,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Hidden_Station_Stag": {
     "pdBool": "openedHiddenStation",
     "offsetX": 0.1,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Stag_Nest_Stag": {
     "pdBool": "openedStagNest",
     "offsetX": -3.3,
-    "offsetY": 1.5,
-    "offsetZ": 0.0
+    "offsetY": 1.5
   },
   "Lifeblood_Cocoon-King's_Pass": {
     "offsetX": -1.25,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "Lifeblood_Cocoon-Ancestral_Mound": {
     "offsetX": -0.4,
-    "offsetY": 0.2,
-    "offsetZ": -0.497
+    "offsetY": 0.2
   },
   "Lifeblood_Cocoon-Greenpath": {
     "offsetX": -0.1,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Lifeblood_Cocoon-Fog_Canyon_West": {
     "offsetX": -0.3,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Lifeblood_Cocoon-Mantis_Village": {
     "offsetX": -0.8,
-    "offsetY": -0.8,
-    "offsetZ": 0.0
+    "offsetY": -0.8
   },
   "Lifeblood_Cocoon-Failed_Tramway": {
     "offsetX": 0.4,
-    "offsetY": 0.25,
-    "offsetZ": 0.0
+    "offsetY": 0.25
   },
   "Lifeblood_Cocoon-Galien": {
     "offsetX": -0.05,
-    "offsetY": 0.4,
-    "offsetZ": 0.0
+    "offsetY": 0.4
   },
   "Lifeblood_Cocoon-Kingdom's_Edge": {
     "offsetX": 0.4,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Grimmkin_Flame-City_Storerooms": {
     "offsetX": 0.5,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Grimmkin_Flame-Greenpath": {
     "offsetX": -0.2,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Grimmkin_Flame-Crystal_Peak": {
     "offsetX": 0.2,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Grimmkin_Flame-King's_Pass": {
     "offsetX": -0.5,
-    "offsetY": -0.3,
-    "offsetZ": 0.0
+    "offsetY": -0.3
   },
   "Grimmkin_Flame-Resting_Grounds": {
     "offsetX": -0.3,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Grimmkin_Flame-Kingdom's_Edge": {
     "offsetX": -0.3,
-    "offsetY": -0.7,
-    "offsetZ": 0.0
+    "offsetY": -0.7
   },
   "Grimmkin_Flame-Fungal_Core": {
     "offsetX": -0.1,
-    "offsetY": -0.7,
-    "offsetZ": 0.0
+    "offsetY": -0.7
   },
   "Grimmkin_Flame-Ancient_Basin": {
     "offsetX": 0.2,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Grimmkin_Flame-Hive": {
     "offsetX": 0.4,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "Grimmkin_Flame-Brumm": {
     "offsetX": -0.3,
-    "offsetY": 0.5,
-    "offsetZ": 0.0
+    "offsetY": 0.5
   },
   "Hunter's_Journal": {
     "pdBool": "hasJournal",
     "offsetX": 0.3,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Journal_Entry-Void_Tendrils": {
     "pdBool": "killedAbyssTendril",
     "offsetX": 1.8,
-    "offsetY": -0.2,
-    "offsetZ": 0.0
+    "offsetY": -0.2
   },
   "Journal_Entry-Charged_Lumafly": {
     "pdBool": "killedZapBug",
     "offsetX": -0.21,
-    "offsetY": -0.15,
-    "offsetZ": 0.001
+    "offsetY": -0.15
   },
   "Journal_Entry-Goam": {
     "pdBool": "killedWorm",
     "offsetX": -0.2,
-    "offsetY": -0.15,
-    "offsetZ": 0.0
+    "offsetY": -0.15
   },
   "Journal_Entry-Garpede": {
     "pdBool": "killedBigCentipede",
     "offsetX": -1.5,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Journal_Entry-Seal_of_Binding": {
     "pdBool": "killedBindingSeal",
-    "offsetX": 1.0,
-    "offsetY": -0.2,
-    "offsetZ": 0.008
+    "offsetX": 1.6,
+    "offsetY": -0.2
   },
   "Elevator_Pass": {
     "offsetX": 0.0,
-    "offsetY": -1.26,
-    "offsetZ": 0.0
+    "offsetY": -1.26
   },
   "Split_Mothwing_Cloak": {
     "offsetX": -0.25,
-    "offsetY": 0.4,
-    "offsetZ": 0.0
+    "offsetY": 0.4
   },
   "Left_Mantis_Claw": {
     "offsetX": -1.8,
-    "offsetY": -0.1,
-    "offsetZ": 0.001
+    "offsetY": -0.1
   },
   "Right_Mantis_Claw": {
     "offsetX": -1.4,
-    "offsetY": -0.1,
-    "offsetZ": 0.002
+    "offsetY": -0.1
   },
   "Split_Crystal_Heart": {
     "offsetX": 1.6,
-    "offsetY": -0.55,
-    "offsetZ": 0.0
+    "offsetY": -0.55
   },
   "Geo_Rock-Broken_Elevator_1": {
     "objectName": "Geo Rock 2 (1)",
     "offsetX": -0.3,
-    "offsetY": -0.8,
-    "offsetZ": 0.0
+    "offsetY": -0.8
   },
   "Geo_Rock-Broken_Elevator_2": {
     "objectName": "Geo Rock 2",
     "offsetX": 0.1,
-    "offsetY": 0.1,
-    "offsetZ": 0.001
+    "offsetY": 0.1
   },
   "Geo_Rock-Broken_Elevator_3": {
     "objectName": "Geo Rock 1",
     "offsetX": 0.1,
-    "offsetY": 0.5,
-    "offsetZ": 0.0
+    "offsetY": 0.5
   },
   "Geo_Rock-Broken_Bridge_Upper": {
     "objectName": "Geo Rock Deepnest",
     "offsetX": -0.3,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "Geo_Rock-Broken_Bridge_Lower": {
     "objectName": "Geo Rock Deepnest (1)",
     "offsetX": -1.0,
-    "offsetY": -0.3,
-    "offsetZ": 0.001
+    "offsetY": -0.3
   },
   "Geo_Rock-Broken_Bridge_Lower_Dupe": {
     "objectName": "Geo Rock Deepnest (2)",
     "offsetX": -1.3,
-    "offsetY": -0.3,
-    "offsetZ": 0.002
+    "offsetY": -0.3
   },
   "Geo_Rock-Abyss_1": {
     "objectName": "_Props/Geo Rock Abyss",
     "offsetX": 0.6,
-    "offsetY": 1.3,
-    "offsetZ": 0.0
+    "offsetY": 1.3
   },
   "Geo_Rock-Abyss_2": {
     "objectName": "Geo Rock Abyss",
     "offsetX": 0.3,
-    "offsetY": 0.9,
-    "offsetZ": 0.0
+    "offsetY": 0.9
   },
   "Geo_Rock-Abyss_3": {
     "objectName": "Geo Rock Abyss (1)",
     "offsetX": -0.2,
-    "offsetY": -1.5,
-    "offsetZ": 0.0
+    "offsetY": -1.5
   },
   "Geo_Rock-Basin_Tunnel": {
     "objectName": "Geo Rock Abyss",
     "offsetX": -0.3,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Geo_Rock-Basin_Grub": {
     "objectName": "Geo Rock Abyss",
     "offsetX": 1.4,
-    "offsetY": 0.6,
-    "offsetZ": 0.0
+    "offsetY": 0.6
   },
   "Geo_Rock-Basin_Before_Broken_Vessel": {
     "objectName": "Geo Rock Abyss (1)",
     "offsetX": 0.8,
-    "offsetY": -0.8,
-    "offsetZ": 0.0
+    "offsetY": -0.8
   },
   "Geo_Rock-Cliffs_Main_1": {
     "objectName": "Geo Rock 2 (1)",
     "offsetX": 0.3,
-    "offsetY": 0.4,
-    "offsetZ": 0.0
+    "offsetY": 0.4
   },
   "Geo_Rock-Cliffs_Main_2": {
     "objectName": "Geo Rock 2 (2)",
     "offsetX": 0.1,
-    "offsetY": -0.4,
-    "offsetZ": 0.0
+    "offsetY": -0.4
   },
   "Geo_Rock-Cliffs_Main_3": {
     "objectName": "Geo Rock 2 (4)",
     "offsetX": 1.65,
-    "offsetY": -0.5,
-    "offsetZ": 0.001
+    "offsetY": -0.5
   },
   "Geo_Rock-Cliffs_Main_4": {
     "objectName": "Geo Rock 2 (3)",
     "offsetX": 0.7,
-    "offsetY": -1.1,
-    "offsetZ": 0.0
+    "offsetY": -1.1
   },
   "Geo_Rock-Below_Gorb_Dupe": {
     "objectName": "Geo Rock 1",
     "offsetX": -1.6,
-    "offsetY": 0.5,
-    "offsetZ": 0.0
+    "offsetY": 0.5
   },
   "Geo_Rock-Below_Gorb": {
     "objectName": "Geo Rock 1 (1)",
     "offsetX": -1.2,
-    "offsetY": 0.5,
-    "offsetZ": 0.001
+    "offsetY": 0.5
   },
   "Geo_Rock-Crossroads_Well": {
     "objectName": "Geo Rock 2",
     "offsetX": -0.1,
-    "offsetY": -0.4,
-    "offsetZ": 0.0
+    "offsetY": -0.4
   },
   "Geo_Rock-Crossroads_Center_Grub": {
     "objectName": "Geo Rock 1",
     "offsetX": -0.4,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Geo_Rock-Crossroads_Root": {
     "objectName": "Geo Rock 1",
     "offsetX": 0.4,
-    "offsetY": 1.1,
-    "offsetZ": 0.003
+    "offsetY": 1.1
   },
   "Geo_Rock-Crossroads_Root_Dupe_1": {
     "objectName": "Geo Rock 1 (1)",
     "offsetX": -0.2,
-    "offsetY": 1.1,
-    "offsetZ": 0.001
+    "offsetY": 1.1
   },
   "Geo_Rock-Crossroads_Root_Dupe_2": {
     "objectName": "Geo Rock 1 (2)",
     "offsetX": 0.1,
-    "offsetY": 1.1,
-    "offsetZ": 0.002
+    "offsetY": 1.1
   },
   "Geo_Rock-Crossroads_Aspid_Arena": {
     "objectName": "Geo Rock 1 (1)",
     "offsetX": -0.3,
-    "offsetY": 0.3,
-    "offsetZ": 0.002
+    "offsetY": 0.3
   },
   "Geo_Rock-Crossroads_Aspid_Arena_Dupe_1": {
     "objectName": "Geo Rock 1 (2)",
     "offsetX": -0.3,
-    "offsetY": 0.0,
-    "offsetZ": 0.001
+    "offsetY": 0.0
   },
   "Geo_Rock-Crossroads_Aspid_Arena_Dupe_2": {
     "objectName": "Geo Rock 1 (3)",
     "offsetX": -0.3,
-    "offsetY": -0.3,
-    "offsetZ": 0.0
+    "offsetY": -0.3
   },
   "Geo_Rock-Crossroads_Aspid_Arena_Hidden": {
     "objectName": "Geo Rock 1",
     "offsetX": 0.45,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "Geo_Rock-Crossroads_Above_False_Knight": {
     "objectName": "Geo Rock 1",
     "offsetX": 0.4,
-    "offsetY": 0.5,
-    "offsetZ": -0.99
+    "offsetY": 0.5
   },
   "Geo_Rock-Crossroads_Before_Acid_Grub": {
     "objectName": "Geo Rock 2",
     "offsetX": 0.0,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Geo_Rock-Crossroads_Below_Goam_Mask_Shard": {
     "objectName": "Geo Rock 2",
     "offsetX": -0.4,
-    "offsetY": -0.1,
-    "offsetZ": 0.001
+    "offsetY": -0.1
   },
   "Geo_Rock-Crossroads_After_Goam_Mask_Shard": {
     "objectName": "Geo Rock 1",
     "offsetX": 0.6,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Geo_Rock-Crossroads_Above_Lever": {
     "objectName": "Geo Rock 2",
     "offsetX": 0.55,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Geo_Rock-Crossroads_Before_Fungal": {
     "objectName": "Geo Rock 1",
     "offsetX": -0.1,
-    "offsetY": 0.2,
-    "offsetZ": 0.001
+    "offsetY": 0.2
   },
   "Geo_Rock-Crossroads_Before_Fungal_Dupe_1": {
     "objectName": "Geo Rock 2",
     "offsetX": -0.4,
-    "offsetY": 0.2,
-    "offsetZ": 0.002
+    "offsetY": 0.2
   },
   "Geo_Rock-Crossroads_Before_Fungal_Dupe_2": {
     "objectName": "Geo Rock 3",
     "offsetX": 0.2,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Geo_Rock-Crossroads_Before_Shops": {
     "objectName": "Geo Rock 1",
     "offsetX": 0.4,
-    "offsetY": 0.4,
-    "offsetZ": 0.0
+    "offsetY": 0.4
   },
   "Geo_Rock-Crossroads_Before_Glowing_Womb": {
     "objectName": "Geo Rock 1",
     "offsetX": -0.5,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Geo_Rock-Crossroads_Above_Tram": {
     "objectName": "Geo Rock 1",
     "offsetX": 0.1,
-    "offsetY": 0.7,
-    "offsetZ": 0.0
+    "offsetY": 0.7
   },
   "Geo_Rock-Crossroads_Above_Mawlek": {
     "objectName": "Geo Rock 1",
     "offsetX": 0.25,
-    "offsetY": 0.4,
-    "offsetZ": 0.0
+    "offsetY": 0.4
   },
   "Geo_Rock-Crossroads_Vessel_Fragment": {
     "objectName": "Geo Rock 2",
     "offsetX": 0.5,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Geo_Rock-Crossroads_Goam_Alcove": {
     "objectName": "Geo Rock 1",
     "offsetX": 0.0,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Geo_Rock-Crossroads_Goam_Damage_Boost": {
     "objectName": "Geo Rock 2",
     "offsetX": 0.8,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Geo_Rock-Crossroads_Tram": {
     "objectName": "Geo Rock 1",
     "offsetX": -0.3,
-    "offsetY": -0.3,
-    "offsetZ": 0.0
+    "offsetY": -0.3
   },
   "Geo_Rock-Crossroads_Goam_Journal": {
     "objectName": "Geo Rock 1",
     "offsetX": 0.4,
-    "offsetY": -0.15,
-    "offsetZ": 0.0
+    "offsetY": -0.15
   },
   "Geo_Rock-Crossroads_Goam_Journal_Dupe": {
     "objectName": "Geo Rock 2",
     "offsetX": 0.1,
-    "offsetY": -0.15,
-    "offsetZ": 0.0
+    "offsetY": -0.15
   },
   "Geo_Rock-Ancestral_Mound": {
     "objectName": "Geo Rock 1",
     "offsetX": 0.0,
-    "offsetY": 0.2,
-    "offsetZ": -0.498
+    "offsetY": 0.2
   },
   "Geo_Rock-Ancestral_Mound_Dupe": {
     "objectName": "_Items/Geo Rock 2",
     "offsetX": 0.4,
-    "offsetY": 0.2,
-    "offsetZ": -0.497
+    "offsetY": 0.2
   },
   "Geo_Rock-Ancestral_Mound_Tree": {
     "objectName": "Geo Rock 2",
     "offsetX": 0.4,
-    "offsetY": 0.6,
-    "offsetZ": -0.495
+    "offsetY": 0.6
   },
   "Geo_Rock-Ancestral_Mound_Tree_Dupe": {
     "objectName": "Geo Rock 2 (1)",
     "offsetX": 0.0,
-    "offsetY": 0.6,
-    "offsetZ": -0.496
+    "offsetY": 0.6
   },
   "Geo_Rock-Moss_Prophet": {
     "objectName": "Geo Rock 1",
     "offsetX": 0.0,
-    "offsetY": -0.2,
-    "offsetZ": 0.001
+    "offsetY": -0.2
   },
   "Geo_Rock-Moss_Prophet_Dupe": {
     "objectName": "Geo Rock 2",
     "offsetX": -0.4,
-    "offsetY": -0.2,
-    "offsetZ": 0.0
+    "offsetY": -0.2
   },
   "Geo_Rock-Deepnest_Below_Mimics": {
     "objectName": "Geo Rock Deepnest",
     "offsetX": 0.2,
-    "offsetY": -0.6,
-    "offsetZ": 0.0
+    "offsetY": -0.6
   },
   "Geo_Rock-Deepnest_Below_Mimics_Dupe": {
     "objectName": "Geo Rock Deepnest (1)",
     "offsetX": -0.2,
-    "offsetY": -0.6,
-    "offsetZ": 0.0
+    "offsetY": -0.6
   },
   "Geo_Rock-Deepnest_Below_Spike_Grub": {
     "objectName": "Geo Rock Deepnest (1)",
     "offsetX": -0.6,
-    "offsetY": 0.8,
-    "offsetZ": 0.0
+    "offsetY": 0.8
   },
   "Geo_Rock-Deepnest_Below_Spike_Grub_Dupe": {
     "objectName": "Geo Rock Deepnest",
     "offsetX": -0.2,
-    "offsetY": 0.8,
-    "offsetZ": 0.0
+    "offsetY": 0.8
   },
   "Geo_Rock-Deepnest_Spike_Grub_Right": {
     "objectName": "Geo Rock Deepnest (2)",
     "offsetX": 0.6,
-    "offsetY": 1.4,
-    "offsetZ": 0.0
+    "offsetY": 1.4
   },
   "Geo_Rock-Deepnest_By_Mantis_Lords_Garpede_Pogo": {
     "objectName": "Geo Rock Deepnest (2)",
     "offsetX": 0.7,
-    "offsetY": -0.2,
-    "offsetZ": 0.0
+    "offsetY": -0.2
   },
   "Geo_Rock-Deepnest_By_Mantis_Lords_Garpede_Pogo_Dupe": {
     "objectName": "Geo Rock Deepnest (4)",
     "offsetX": 1.1,
-    "offsetY": -0.2,
-    "offsetZ": 0.0
+    "offsetY": -0.2
   },
   "Geo_Rock-Deepnest_By_Mantis_Lords_Requires_Claw_1": {
     "objectName": "Geo Rock Deepnest (1)",
     "offsetX": 0.2,
-    "offsetY": 0.4,
-    "offsetZ": 0.0
+    "offsetY": 0.4
   },
   "Geo_Rock-Deepnest_By_Mantis_Lords_Requires_Claw_2": {
     "objectName": "Geo Rock Deepnest",
     "offsetX": -0.3,
-    "offsetY": -0.2,
-    "offsetZ": 0.0
+    "offsetY": -0.2
   },
   "Geo_Rock-Deepnest_By_Mantis_Lords_Requires_Claw_3": {
     "objectName": "Geo Rock Deepnest (3)",
     "offsetX": -0.7,
-    "offsetY": -0.6,
-    "offsetZ": 0.0
+    "offsetY": -0.6
   },
   "Geo_Rock-Deepnest_Nosk_1": {
     "objectName": "Geo Rock Deepnest",
     "offsetX": -0.6,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "Geo_Rock-Deepnest_Nosk_2": {
     "objectName": "Geo Rock Deepnest (1)",
     "offsetX": -0.2,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Geo_Rock-Deepnest_Nosk_3": {
     "objectName": "Geo Rock Deepnest (2)",
     "offsetX": -0.9,
-    "offsetY": -0.5,
-    "offsetZ": 0.0
+    "offsetY": -0.5
   },
   "Geo_Rock-Deepnest_Above_Galien": {
     "objectName": "Geo Rock Deepnest (1)",
     "offsetX": -0.5,
-    "offsetY": 0.7,
-    "offsetZ": 0.0
+    "offsetY": 0.7
   },
   "Geo_Rock-Deepnest_Galien_Spike": {
     "objectName": "Geo Rock Deepnest",
     "offsetX": 0.05,
-    "offsetY": -0.5,
-    "offsetZ": 0.0
+    "offsetY": -0.5
   },
   "Geo_Rock-Deepnest_Garpede_1": {
     "objectName": "Geo Rock Deepnest",
     "offsetX": 0.3,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Geo_Rock-Deepnest_Garpede_2": {
     "objectName": "Geo Rock Deepnest (1)",
     "offsetX": -0.2,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "Geo_Rock-Dark_Deepnest_Above_Grub_1": {
     "objectName": "Geo Rock Deepnest",
     "offsetX": 0.8,
-    "offsetY": 0.7,
-    "offsetZ": 0.0
+    "offsetY": 0.7
   },
   "Geo_Rock-Dark_Deepnest_Above_Grub_2": {
     "objectName": "Geo Rock Deepnest (1)",
     "offsetX": -0.1,
-    "offsetY": 0.5,
-    "offsetZ": 0.0
+    "offsetY": 0.5
   },
   "Geo_Rock-Dark_Deepnest_Bottom_Left": {
     "objectName": "Geo Rock Deepnest (2)",
     "offsetX": -0.8,
-    "offsetY": -0.6,
-    "offsetZ": 0.0
+    "offsetY": -0.6
   },
   "Geo_Rock-Above_Mask_Maker_1": {
     "objectName": "Geo Rock Green Path 01",
     "offsetX": -0.3,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Geo_Rock-Above_Mask_Maker_2": {
     "objectName": "Geo Rock Green Path 01 (1)",
     "offsetX": 0.0,
-    "offsetY": -0.4,
-    "offsetZ": 0.0
+    "offsetY": -0.4
   },
   "Geo_Rock-Lower_Kingdom's_Edge_1": {
     "objectName": "Geo Rock Deepnest (1)",
     "offsetX": -0.5,
-    "offsetY": -0.5,
-    "offsetZ": 0.001
+    "offsetY": -0.5
   },
   "Geo_Rock-Lower_Kingdom's_Edge_2": {
     "objectName": "Geo Rock Deepnest",
     "offsetX": -0.7,
-    "offsetY": 0.8,
-    "offsetZ": 0.0
+    "offsetY": 0.8
   },
   "Geo_Rock-Lower_Kingdom's_Edge_3": {
     "objectName": "Geo Rock Deepnest (1)",
     "offsetX": -1.3,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Geo_Rock-Lower_Kingdom's_Edge_Dive": {
     "objectName": "Geo Rock Deepnest",
     "offsetX": 1.2,
-    "offsetY": -0.2,
-    "offsetZ": 0.0
+    "offsetY": -0.2
   },
   "Geo_Rock-Kingdom's_Edge_Below_Bardoon": {
     "objectName": "Geo Rock Outskirts",
     "offsetX": -0.4,
-    "offsetY": -1.3,
-    "offsetZ": 0.0
+    "offsetY": -1.3
   },
   "Geo_Rock-Kingdom's_Edge_Oro_Far_Left": {
     "objectName": "Geo Rock Outskirts",
     "offsetX": -3.6,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "Geo_Rock-Kingdom's_Edge_Oro_Middle_Left": {
     "objectName": "Geo Rock Outskirts (1)",
     "offsetX": -1.4,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Geo_Rock-Kingdom's_Edge_Above_Root": {
     "objectName": "Geo Rock Outskirts",
     "offsetX": 0.5,
-    "offsetY": -1.3,
-    "offsetZ": 0.0
+    "offsetY": -1.3
   },
   "Geo_Rock-Kingdom's_Edge_Above_Tower": {
     "objectName": "Geo Rock Outskirts (1)",
     "offsetX": -0.9,
-    "offsetY": -0.8,
-    "offsetZ": 0.0
+    "offsetY": -0.8
   },
   "Geo_Rock-Kingdom's_Edge_Below_Colosseum": {
     "objectName": "Geo Rock Outskirts",
     "offsetX": 1.1,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Geo_Rock-Kingdom's_Edge_Above_420_Geo_Rock": {
     "objectName": "Geo Rock Outskirts",
     "offsetX": 1.2,
-    "offsetY": -1.0,
-    "offsetZ": 0.0
+    "offsetY": -1.0
   },
   "Geo_Rock-Kingdom's_Edge_420_Geo_Rock": {
     "objectName": "Giant Geo Egg",
     "offsetX": 1.6,
-    "offsetY": -1.0,
-    "offsetZ": 0.001
+    "offsetY": -1.0
   },
   "Geo_Rock-Beast's_Den_Above_Trilobite": {
     "objectName": "Geo Rock Deepnest (5)",
     "offsetX": 0.4,
-    "offsetY": 1.7,
-    "offsetZ": 0.002
+    "offsetY": 1.7
   },
   "Geo_Rock-Beast's_Den_Above_Trilobite_Dupe": {
     "objectName": "Geo Rock Deepnest (6)",
     "offsetX": 0.4,
-    "offsetY": 1.3,
-    "offsetZ": 0.001
+    "offsetY": 1.3
   },
   "Geo_Rock-Beast's_Den_Below_Herrah": {
     "objectName": "Geo Rock Deepnest",
     "offsetX": 0.8,
-    "offsetY": 1.3,
-    "offsetZ": 0.003
+    "offsetY": 1.3
   },
   "Geo_Rock-Beast's_Den_Below_Egg": {
     "objectName": "Geo Rock Deepnest (1)",
     "offsetX": 0.8,
-    "offsetY": 1.7,
-    "offsetZ": 0.004
+    "offsetY": 1.7
   },
   "Geo_Rock-Beast's_Den_Below_Egg_Dupe": {
     "objectName": "Geo Rock Deepnest (2)",
     "offsetX": -0.8,
-    "offsetY": 1.3,
-    "offsetZ": 0.002
+    "offsetY": 1.3
   },
   "Geo_Rock-Beast's_Den_Bottom": {
     "objectName": "Geo Rock Deepnest (3)",
     "offsetX": -0.8,
-    "offsetY": 1.7,
-    "offsetZ": 0.003
+    "offsetY": 1.7
   },
   "Geo_Rock-Beast's_Den_Bottom_Dupe": {
     "objectName": "Geo Rock Deepnest (4)",
     "offsetX": -0.4,
-    "offsetY": 1.3,
-    "offsetZ": 0.001
+    "offsetY": 1.3
   },
   "Geo_Rock-Beast's_Den_After_Herrah": {
     "objectName": "Geo Rock Deepnest (7)",
     "offsetX": -0.4,
-    "offsetY": 1.7,
-    "offsetZ": 0.002
+    "offsetY": 1.7
   },
   "Geo_Rock-Greenpath_Entrance": {
     "objectName": "Geo Rock Green Path 01",
     "offsetX": -1.1,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Geo_Rock-Greenpath_Waterfall": {
     "objectName": "Geo Rock Green Path 01",
     "offsetX": -0.3,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Geo_Rock-Greenpath_Below_Skip_Squit": {
     "objectName": "Geo Rock Green Path 01 (1)",
     "offsetX": 0.0,
-    "offsetY": -0.3,
-    "offsetZ": 0.0
+    "offsetY": -0.3
   },
   "Geo_Rock-Greenpath_Skip_Squit": {
     "objectName": "Geo Rock Green Path 01",
     "offsetX": 0.3,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Geo_Rock-Greenpath_Second_Skip_Fool_Eater": {
     "objectName": "Geo Rock Green Path 01 (2)",
     "offsetX": 0.7,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "Geo_Rock-Greenpath_Second_Skip_Fool_Eater_Dupe": {
     "objectName": "Geo Rock Green Path 01 (1)",
     "offsetX": 0.3,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "Geo_Rock-Greenpath_Second_Skip_Lower": {
     "objectName": "Geo Rock Green Path 01",
     "offsetX": 0.7,
-    "offsetY": -0.3,
-    "offsetZ": 0.0
+    "offsetY": -0.3
   },
   "Geo_Rock-Greenpath_Below_Hornet": {
     "objectName": "Geo Rock Green Path 01",
     "offsetX": -0.25,
-    "offsetY": -0.4,
-    "offsetZ": 0.001
+    "offsetY": -0.4
   },
   "Geo_Rock-Greenpath_Above_Thorns": {
     "objectName": "Geo Rock 2",
     "offsetX": -0.1,
-    "offsetY": 0.5,
-    "offsetZ": 0.0
+    "offsetY": 0.5
   },
   "Geo_Rock-Greenpath_Hunter's_Journal": {
     "objectName": "Geo Rock Green Path 01",
     "offsetX": -0.5,
-    "offsetY": 0.4,
-    "offsetZ": 0.0
+    "offsetY": 0.4
   },
   "Geo_Rock-Greenpath_Acid_Bridge": {
     "objectName": "Geo Rock Green Path 01",
     "offsetX": 1.0,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Geo_Rock-Greenpath_After_MMC_Hidden": {
     "objectName": "Geo Rock Green Path 02",
     "offsetX": 0.2,
-    "offsetY": 0.5,
-    "offsetZ": 0.0
+    "offsetY": 0.5
   },
   "Geo_Rock-Greenpath_After_MMC": {
     "objectName": "Geo Rock Green Path 01",
     "offsetX": 0.2,
-    "offsetY": -0.2,
-    "offsetZ": 0.0
+    "offsetY": -0.2
   },
   "Geo_Rock-Greenpath_After_MMC_Dupe": {
     "objectName": "Geo Rock Green Path 01 (1)",
     "offsetX": -0.2,
-    "offsetY": -0.2,
-    "offsetZ": 0.0
+    "offsetY": -0.2
   },
   "Geo_Rock-Greenpath_Obbles_Fool_Eater": {
     "objectName": "Geo Rock Green Path 01",
     "offsetX": -0.7,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Geo_Rock-Greenpath_Moss_Knights": {
     "objectName": "Geo Rock Green Path 02",
     "offsetX": -0.6,
-    "offsetY": 0.4,
-    "offsetZ": 0.0
+    "offsetY": 0.4
   },
   "Geo_Rock-Greenpath_Moss_Knights_Dupe_1": {
     "objectName": "Geo Rock Green Path 02 (1)",
     "offsetX": -0.6,
-    "offsetY": 0.0,
-    "offsetZ": 0.001
+    "offsetY": 0.0
   },
   "Geo_Rock-Greenpath_Moss_Knights_Dupe_2": {
     "objectName": "Geo Rock Green Path 02 (2)",
     "offsetX": -0.6,
-    "offsetY": -0.4,
-    "offsetZ": 0.002
+    "offsetY": -0.4
   },
   "Geo_Rock-Greenpath_Below_Stag": {
     "objectName": "Geo Rock Green Path 01 (1)",
     "offsetX": -0.2,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Geo_Rock-Greenpath_Below_Stag_Fool_Eater": {
     "objectName": "Geo Rock Green Path 01",
     "offsetX": -0.2,
-    "offsetY": -1.2,
-    "offsetZ": 0.0
+    "offsetY": -1.2
   },
   "Geo_Rock-Baldur_Shell_Top_Left": {
     "objectName": "Geo Rock 2",
     "offsetX": -0.7,
-    "offsetY": -0.3,
-    "offsetZ": 0.0
+    "offsetY": -0.3
   },
   "Geo_Rock-Baldur_Shell_Alcove": {
     "objectName": "Geo Rock 1 (2)",
     "offsetX": -1.4,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Geo_Rock-Greenpath_MMC": {
     "objectName": "Geo Rock Green Path 01",
     "offsetX": -0.4,
-    "offsetY": -0.2,
-    "offsetZ": 0.0
+    "offsetY": -0.2
   },
   "Geo_Rock-Greenpath_Below_Toll": {
     "objectName": "Geo Rock Green Path 01",
     "offsetX": -0.2,
-    "offsetY": -1.3,
-    "offsetZ": 0.0
+    "offsetY": -1.3
   },
   "Geo_Rock-Greenpath_Toll_Hidden": {
     "objectName": "Geo Rock 1 (1)",
     "offsetX": -0.2,
-    "offsetY": 0.4,
-    "offsetZ": 0.0
+    "offsetY": 0.4
   },
   "Geo_Rock-Greenpath_Toll_Hidden_Dupe": {
     "objectName": "Geo Rock 2 (1)",
     "offsetX": -0.2,
-    "offsetY": 0.0,
-    "offsetZ": 0.001
+    "offsetY": 0.0
   },
   "Geo_Rock-Fungal_Below_Shrumal_Ogres": {
     "objectName": "Geo Rock Fung 01",
     "offsetX": 0.2,
-    "offsetY": 0.4,
-    "offsetZ": 0.0
+    "offsetY": 0.4
   },
   "Geo_Rock-Fungal_Above_Cloth": {
     "objectName": "Geo Rock Fung 01",
     "offsetX": -0.25,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Geo_Rock-Fungal_After_Cloth": {
     "objectName": "Geo Rock Fung 01",
     "offsetX": 0.7,
-    "offsetY": 0.7,
-    "offsetZ": 0.0
+    "offsetY": 0.7
   },
   "Geo_Rock-Fungal_Below_Pilgrim's_Way": {
     "objectName": "Geo Rock Fung 01",
     "offsetX": 0.3,
-    "offsetY": 0.6,
-    "offsetZ": 0.001
+    "offsetY": 0.6
   },
   "Geo_Rock-Fungal_Below_Pilgrim's_Way_Dupe": {
     "objectName": "Geo Rock Fung 02",
     "offsetX": 0.0,
-    "offsetY": 0.6,
-    "offsetZ": 0.0
+    "offsetY": 0.6
   },
   "Geo_Rock-Mantis_Outskirts_Guarded": {
     "objectName": "Geo Rock Fung 01",
     "offsetX": -0.4,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Geo_Rock-Mantis_Outskirts_Guarded_Dupe": {
     "objectName": "Geo Rock Fung 02",
     "offsetX": -0.1,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Geo_Rock-Mantis_Outskirts_Alcove": {
     "objectName": "Geo Rock Fung 01 (1)",
     "offsetX": 0.1,
-    "offsetY": -0.4,
-    "offsetZ": 0.0
+    "offsetY": -0.4
   },
   "Geo_Rock-Mantis_Village_After_Lever": {
     "objectName": "Geo Rock 1",
     "offsetX": -0.5,
-    "offsetY": -0.1,
-    "offsetZ": -0.95
+    "offsetY": -0.1
   },
   "Geo_Rock-Mantis_Village_Above_Claw": {
     "objectName": "Geo Rock 2 (2)",
     "offsetX": -1.4,
-    "offsetY": 0.3,
-    "offsetZ": -0.98
+    "offsetY": 0.3
   },
   "Geo_Rock-Mantis_Village_Above_Claw_Dupe": {
     "objectName": "Geo Rock 2 (3)",
     "offsetX": -1.8,
-    "offsetY": 0.3,
-    "offsetZ": -0.97
+    "offsetY": 0.3
   },
   "Geo_Rock-Mantis_Village_Below_Lore": {
     "objectName": "Geo Rock 2 (1)",
     "offsetX": -1.0,
-    "offsetY": -0.1,
-    "offsetZ": -1.0
+    "offsetY": -0.1
   },
   "Geo_Rock-Mantis_Village_Above_Lever": {
     "objectName": "Geo Rock 2",
     "offsetX": -0.1,
-    "offsetY": 0.3,
-    "offsetZ": -0.99
+    "offsetY": 0.3
   },
   "Geo_Rock-Above_Mantis_Lords_1": {
     "objectName": "Geo Rock 1",
     "offsetX": 0.0,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Geo_Rock-Above_Mantis_Lords_2": {
     "objectName": "Geo Rock 1 (1)",
     "offsetX": -0.8,
-    "offsetY": -0.4,
-    "offsetZ": 0.0
+    "offsetY": -0.4
   },
   "Geo_Rock-Fungal_After_Bouncy_Grub": {
     "objectName": "Geo Rock Fung 01",
     "offsetX": 0.5,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Geo_Rock-Fungal_After_Bouncy_Grub_Dupe": {
     "objectName": "Geo Rock Fung 02 (2)",
     "offsetX": 0.8,
-    "offsetY": 0.1,
-    "offsetZ": 0.001
+    "offsetY": 0.1
   },
   "Geo_Rock-Fungal_Bouncy_Grub_Lever": {
     "objectName": "Geo Rock Fung 02 (1)",
     "offsetX": -0.1,
-    "offsetY": -0.5,
-    "offsetZ": 0.0
+    "offsetY": -0.5
   },
   "Geo_Rock-Fungal_After_Cornifer": {
     "objectName": "Geo Rock Fung 01 (1)",
     "offsetX": -0.1,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Geo_Rock-Fungal_Above_City_Entrance": {
     "objectName": "Geo Rock 1",
     "offsetX": 0.5,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Geo_Rock-Deepnest_By_Mantis_Lords_1": {
     "objectName": "Geo Rock Deepnest (2)",
     "offsetX": -1.6,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Geo_Rock-Deepnest_By_Mantis_Lords_2": {
     "objectName": "Geo Rock Deepnest",
     "offsetX": -1.2,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Geo_Rock-Deepnest_Lower_Cornifer": {
     "objectName": "Geo Rock Deepnest (1)",
     "offsetX": -0.2,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Geo_Rock-Fungal_Core_Entrance": {
     "objectName": "Geo Rock Fung 01",
     "offsetX": 0.1,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Geo_Rock-Fungal_Core_Hidden": {
     "objectName": "Geo Rock Fung 01",
     "offsetX": 0.0,
-    "offsetY": 0.6,
-    "offsetZ": 0.001
+    "offsetY": 0.6
   },
   "Geo_Rock-Fungal_Core_Above_Elder": {
     "objectName": "Geo Rock Fung 01 (1)",
     "offsetX": 0.4,
-    "offsetY": -0.5,
-    "offsetZ": 0.0
+    "offsetY": -0.5
   },
   "Geo_Rock-Queen's_Gardens_Acid_Entrance": {
     "objectName": "Geo Rock Green Path 01",
     "offsetX": 1.2,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Geo_Rock-Queen's_Gardens_Below_Stag": {
     "objectName": "Geo Rock Green Path 01",
     "offsetX": -0.5,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "Geo_Rock-Fog_Canyon_East": {
     "objectName": "Geo Rock Green Path 01",
     "offsetX": 0.3,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Geo_Rock-Love_Key": {
     "objectName": "Geo Rock Green Path 01 (1)",
     "offsetX": -0.4,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Geo_Rock-Love_Key_Dupe": {
     "objectName": "Geo Rock Green Path 01",
     "offsetX": -1.1,
-    "offsetY": -0.4,
-    "offsetZ": 0.0
+    "offsetY": -0.4
   },
   "Geo_Rock-Queen's_Gardens_Above_Marmu": {
     "objectName": "Geo Rock Green Path 02",
     "offsetX": -0.2,
-    "offsetY": -1.0,
-    "offsetZ": 0.0
+    "offsetY": -1.0
   },
   "Geo_Rock-Pale_Lurker": {
     "objectName": "Geo Rock Outskirts",
     "offsetX": 0.3,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Geo_Rock-Godhome_Pipeway": {
     "objectName": "Geo Rock City 1",
     "offsetX": -1.2,
-    "offsetY": -0.4,
-    "offsetZ": 0.0
+    "offsetY": -0.4
   },
   "Geo_Rock-Hive_Entrance": {
     "objectName": "Geo Rock Hive",
     "offsetX": 1.0,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "Geo_Rock-Hive_Outside_Bench": {
     "objectName": "Geo Rock Hive",
     "offsetX": -0.7,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Geo_Rock-Hive_Below_Root": {
     "objectName": "Geo Rock Hive (1)",
     "offsetX": 0.9,
-    "offsetY": -0.4,
-    "offsetZ": 0.0
+    "offsetY": -0.4
   },
   "Geo_Rock-Hive_After_Root": {
     "objectName": "Geo Rock Hive (2)",
     "offsetX": -0.4,
-    "offsetY": 0.8,
-    "offsetZ": 0.0
+    "offsetY": 0.8
   },
   "Geo_Rock-Hive_Below_Stash": {
     "objectName": "Geo Rock Hive (1)",
     "offsetX": 0.8,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "Geo_Rock-Hive_Stash": {
     "objectName": "Geo Rock Hive (2)",
     "offsetX": -0.4,
-    "offsetY": 1.0,
-    "offsetZ": 0.0
+    "offsetY": 1.0
   },
   "Geo_Rock-Hive_Stash_Dupe": {
     "objectName": "Geo Rock Hive",
     "offsetX": -0.4,
-    "offsetY": 0.6,
-    "offsetZ": 0.001
+    "offsetY": 0.6
   },
   "Geo_Rock-Hive_Below_Grub": {
     "objectName": "Geo Rock Hive (1)",
     "offsetX": 0.2,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Geo_Rock-Hive_Above_Mask": {
     "objectName": "Geo Rock Hive",
     "offsetX": -1.2,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Geo_Rock-Crystal_Peak_Lower_Middle": {
     "objectName": "Geo Rock Mine (1)",
     "offsetX": 1.2,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Geo_Rock-Crystal_Peak_Lower_Conveyer_1": {
     "objectName": "Geo Rock Mine",
     "offsetX": -0.2,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Geo_Rock-Crystal_Peak_Lower_Conveyer_2": {
     "objectName": "Geo Rock 1",
     "offsetX": 0.2,
-    "offsetY": -0.1,
-    "offsetZ": 0.001
+    "offsetY": -0.1
   },
   "Geo_Rock-Crystal_Peak_Before_Dark_Room": {
     "objectName": "Geo Rock Mine",
     "offsetX": 0.1,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Geo_Rock-Crystal_Peak_Before_Dark_Room_Dupe": {
     "objectName": "Geo Rock Mine (1)",
     "offsetX": 0.1,
-    "offsetY": -0.3,
-    "offsetZ": 0.001
+    "offsetY": -0.3
   },
   "Geo_Rock-Crystal_Peak_Above_Spike_Grub": {
     "objectName": "Geo Rock Mine",
     "offsetX": -0.3,
-    "offsetY": -0.7,
-    "offsetZ": 0.0
+    "offsetY": -0.7
   },
   "Geo_Rock-Crystal_Peak_Mimic_Grub": {
     "objectName": "Geo Rock Mine",
     "offsetX": 0.0,
-    "offsetY": -0.1,
-    "offsetZ": 0.001
+    "offsetY": -0.1
   },
   "Geo_Rock-Crystal_Peak_Dive_Egg": {
     "objectName": "Geo Rock Mine (2)",
     "offsetX": -0.4,
-    "offsetY": 1.1,
-    "offsetZ": 0.001
+    "offsetY": 1.1
   },
   "Geo_Rock-Crystal_Peak_Dive_Egg_Dupe": {
     "objectName": "Geo Rock Mine (3)",
     "offsetX": -0.1,
-    "offsetY": 1.1,
-    "offsetZ": 0.001
+    "offsetY": 1.1
   },
   "Geo_Rock-Crystal_Peak_Conga_Line": {
     "objectName": "Geo Rock Mine (4)",
     "offsetX": 0.6,
-    "offsetY": 1.4,
-    "offsetZ": 0.0
+    "offsetY": 1.4
   },
   "Geo_Rock-Hallownest_Crown_Dive": {
     "objectName": "Geo Rock Mine",
     "offsetX": -0.8,
-    "offsetY": -0.2,
-    "offsetZ": 0.0
+    "offsetY": -0.2
   },
   "Geo_Rock-Hallownest_Crown_Dive_Dupe": {
     "objectName": "Geo Rock Mine (1)",
     "offsetX": -0.5,
-    "offsetY": -0.2,
-    "offsetZ": 0.001
+    "offsetY": -0.2
   },
   "Geo_Rock-Hallownest_Crown_Hidden": {
     "objectName": "Geo Rock Mine (2)",
     "offsetX": -0.5,
-    "offsetY": 0.5,
-    "offsetZ": 0.0
+    "offsetY": 0.5
   },
   "Geo_Rock-Hallownest_Crown_Hidden_Dupe_1": {
     "objectName": "Geo Rock Mine (3)",
     "offsetX": -0.2,
-    "offsetY": 0.5,
-    "offsetZ": 0.001
+    "offsetY": 0.5
   },
   "Geo_Rock-Hallownest_Crown_Hidden_Dupe_2": {
     "objectName": "Geo Rock Mine (4)",
     "offsetX": 0.1,
-    "offsetY": 0.5,
-    "offsetZ": 0.002
+    "offsetY": 0.5
   },
   "Geo_Rock-Crystal_Peak_Before_Crystal_Heart": {
     "objectName": "Geo Rock Mine",
     "offsetX": -2.2,
-    "offsetY": -0.5,
-    "offsetZ": 0.0
+    "offsetY": -0.5
   },
   "Geo_Rock-Crystal_Peak_Entrance": {
     "objectName": "Geo Rock 2",
     "offsetX": -0.3,
-    "offsetY": 0.0,
-    "offsetZ": 0.002
+    "offsetY": 0.0
   },
   "Geo_Rock-Crystal_Peak_Entrance_Dupe_1": {
     "objectName": "Geo Rock 2 (1)",
     "offsetX": 0.0,
-    "offsetY": 0.0,
-    "offsetZ": 0.001
+    "offsetY": 0.0
   },
   "Geo_Rock-Crystal_Peak_Entrance_Dupe_2": {
     "objectName": "Geo Rock 2 (2)",
     "offsetX": 0.3,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Geo_Rock-Crystal_Peak_Above_Crushers_Lower": {
     "objectName": "Geo Rock Mine",
     "offsetX": -0.4,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Geo_Rock-Crystal_Peak_Above_Crushers_Higher": {
     "objectName": "Geo Rock Mine (1)",
     "offsetX": -0.4,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "Geo_Rock-Resting_Grounds_Catacombs_Grub": {
     "objectName": "Geo Rock Grave 02",
     "offsetX": 0.4,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Geo_Rock-Resting_Grounds_Catacombs_Left_Dupe": {
     "objectName": "Geo Rock Grave 02 (1)",
     "offsetX": -1.2,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Geo_Rock-Resting_Grounds_Catacombs_Left": {
     "objectName": "Geo Rock Grave 01",
     "offsetX": -0.8,
-    "offsetY": 0.0,
-    "offsetZ": 0.001
+    "offsetY": 0.0
   },
   "Geo_Rock-Overgrown_Mound": {
     "objectName": "Geo Rock Green Path 02",
     "offsetX": -1.0,
-    "offsetY": 0.5,
-    "offsetZ": 0.0
+    "offsetY": 0.5
   },
   "Geo_Rock-Fluke_Hermit_Dupe": {
     "objectName": "Geo Rock Fung 02 (1)",
     "offsetX": 1.0,
-    "offsetY": 0.4,
-    "offsetZ": 0.0
+    "offsetY": 0.4
   },
   "Geo_Rock-Fluke_Hermit": {
     "objectName": "Geo Rock Fung 01",
     "offsetX": 0.6,
-    "offsetY": 0.4,
-    "offsetZ": 0.0
+    "offsetY": 0.4
   },
   "Geo_Rock-Pleasure_House": {
     "objectName": "Geo Rock City 1",
     "offsetX": -0.4,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Geo_Rock-City_of_Tears_Quirrel": {
     "objectName": "Geo Rock City 1",
     "offsetX": -0.8,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Geo_Rock-City_of_Tears_Lemm": {
     "objectName": "Geo Rock City 1 (1)",
     "offsetX": -0.7,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "Geo_Rock-City_of_Tears_Above_Lemm": {
     "objectName": "Geo Rock City 1",
     "offsetX": 0.0,
-    "offsetY": -0.3,
-    "offsetZ": 0.0
+    "offsetY": -0.3
   },
   "Geo_Rock-Soul_Sanctum": {
     "objectName": "Geo Rock City 1",
     "offsetX": 0.1,
-    "offsetY": 0.8,
-    "offsetZ": 0.0
+    "offsetY": 0.8
   },
   "Geo_Rock-Watcher's_Spire": {
     "objectName": "Geo Rock City 1",
     "offsetX": -0.9,
-    "offsetY": 0.7,
-    "offsetZ": 0.0
+    "offsetY": 0.7
   },
   "Geo_Rock-Above_King's_Station": {
     "objectName": "Geo Rock City 1",
     "offsetX": -0.2,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Geo_Rock-King's_Station": {
     "objectName": "Geo Rock City 1",
     "offsetX": 0.4,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Geo_Rock-King's_Pass_Left": {
     "objectName": "Geo Rock 3",
     "offsetX": -1.9,
-    "offsetY": -0.7,
-    "offsetZ": 0.0
+    "offsetY": -0.7
   },
   "Geo_Rock-King's_Pass_Below_Fury": {
     "objectName": "Geo Rock 1",
     "offsetX": 0.9,
-    "offsetY": -0.8,
-    "offsetZ": 0.0
+    "offsetY": -0.8
   },
   "Geo_Rock-King's_Pass_Hidden": {
     "objectName": "Geo Rock 2",
     "offsetX": -1.25,
-    "offsetY": -0.1,
-    "offsetZ": 0.001
+    "offsetY": -0.1
   },
   "Geo_Rock-King's_Pass_Collapse": {
     "objectName": "Geo Rock 4",
     "offsetX": -0.1,
-    "offsetY": 0.1,
-    "offsetZ": 0.001
+    "offsetY": 0.1
   },
   "Geo_Rock-King's_Pass_Above_Fury": {
     "objectName": "Geo Rock 5",
     "offsetX": 1.3,
-    "offsetY": -0.4,
-    "offsetZ": 0.002
+    "offsetY": -0.4
   },
   "Geo_Rock-Waterways_Tuk": {
     "objectName": "Geo Rock City 1 (1)",
     "offsetX": 1.6,
-    "offsetY": 0.4,
-    "offsetZ": 0.0
+    "offsetY": 0.4
   },
   "Geo_Rock-Waterways_Tuk_Alcove": {
     "objectName": "Geo Rock City 1",
     "offsetX": 0.7,
-    "offsetY": 0.05,
-    "offsetZ": 0.0
+    "offsetY": 0.05
   },
   "Geo_Rock-Waterways_Left": {
     "objectName": "Geo Rock City 1",
     "offsetX": -0.5,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Geo_Rock-Waterways_East": {
     "objectName": "Geo Rock City 1",
     "offsetX": -1.0,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "Geo_Rock-Waterways_Flukemarm": {
     "objectName": "Geo Rock City 1",
     "offsetX": -1.2,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Boss_Geo-Massive_Moss_Charger": {
     "pdBool": "megaMossChargerDefeated",
     "offsetX": 0.2,
-    "offsetY": -0.2,
-    "offsetZ": 0.0
+    "offsetY": -0.2
   },
   "Boss_Geo-Gorgeous_Husk": {
     "pdBool": "killedGorgeousHusk",
     "offsetX": -0.1,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Boss_Geo-Sanctum_Soul_Warrior": {
     "objectName": "Mage Knight",
     "offsetX": 0.1,
-    "offsetY": 0.8,
-    "offsetZ": 0.0
+    "offsetY": 0.8
   },
   "Boss_Geo-Elegant_Soul_Warrior": {
     "objectName": "Mage Knight",
     "offsetX": -0.1,
-    "offsetY": -0.2,
-    "offsetZ": 0.001
+    "offsetY": -0.2
   },
   "Boss_Geo-Crystal_Guardian": {
     "objectName": "Mega Zombie Beam Miner (1)",
     "offsetX": -0.1,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Boss_Geo-Enraged_Guardian": {
     "objectName": "Zombie Beam Miner Rematch",
     "offsetX": 0.0,
-    "offsetY": 0.0,
-    "offsetZ": 0.001
+    "offsetY": 0.0
   },
   "Boss_Geo-Gruz_Mother": {
     "objectName": "Giant Fly",
     "offsetX": 0.3,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Boss_Geo-Vengefly_King": {
     "pdBool": "zoteRescuedBuzzer",
     "offsetX": -1.0,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Soul_Totem-Basin": {
     "offsetX": -1.0,
-    "offsetY": 0.6,
-    "offsetZ": 0.0
+    "offsetY": 0.6
   },
   "Soul_Totem-Cliffs_Main": {
     "offsetX": 1.45,
-    "offsetY": -1.9,
-    "offsetZ": 0.001
+    "offsetY": -1.9
   },
   "Soul_Totem-Cliffs_Gorb": {
     "offsetX": -2.3,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Soul_Totem-Cliffs_Joni's": {
     "offsetX": 0.4,
-    "offsetY": 0.5,
-    "offsetZ": 0.0
+    "offsetY": 0.5
   },
   "Soul_Totem-Crossroads_Goam_Journal": {
     "offsetX": 0.2,
-    "offsetY": -0.4,
-    "offsetZ": 0.001
+    "offsetY": -0.4
   },
   "Soul_Totem-Crossroads_Shops": {
     "offsetX": 0.4,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Soul_Totem-Crossroads_Mawlek_Upper": {
     "offsetX": -0.5,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Soul_Totem-Crossroads_Acid": {
     "offsetX": 0.4,
-    "offsetY": -0.4,
-    "offsetZ": 0.0
+    "offsetY": -0.4
   },
   "Soul_Totem-Crossroads_Mawlek_Lower": {
     "offsetX": -0.3,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Soul_Totem-Crossroads_Myla": {
     "offsetX": 0.0,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Soul_Totem-Ancestral_Mound": {
     "offsetX": 0.4,
-    "offsetY": -0.2,
-    "offsetZ": -0.499
+    "offsetY": -0.2
   },
   "Soul_Totem-Distant_Village": {
     "offsetX": -1.0,
-    "offsetY": -1.5,
-    "offsetZ": 0.0
+    "offsetY": -1.5
   },
   "Soul_Totem-Deepnest_Vessel": {
     "offsetX": 2.0,
-    "offsetY": -0.2,
-    "offsetZ": 0.0
+    "offsetY": -0.2
   },
   "Soul_Totem-Mask_Maker": {
     "offsetX": -0.35,
-    "offsetY": -1.3,
-    "offsetZ": 0.0
+    "offsetY": -1.3
   },
   "Soul_Totem-Lower_Kingdom's_Edge_1": {
     "offsetX": -0.5,
-    "offsetY": -0.9,
-    "offsetZ": 0.0
+    "offsetY": -0.9
   },
   "Soul_Totem-Lower_Kingdom's_Edge_2": {
     "offsetX": -0.05,
-    "offsetY": -0.25,
-    "offsetZ": 0.0
+    "offsetY": -0.25
   },
   "Soul_Totem-Upper_Kingdom's_Edge": {
     "offsetX": 0.7,
-    "offsetY": 0.9,
-    "offsetZ": 0.0
+    "offsetY": 0.9
   },
   "Soul_Totem-Kingdom's_Edge_Camp": {
     "offsetX": -1.25,
-    "offsetY": 0.9,
-    "offsetZ": 0.0
+    "offsetY": 0.9
   },
   "Soul_Totem-Oro_Dive_2": {
     "offsetX": 0.8,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "Soul_Totem-Oro_Dive_1": {
     "offsetX": 1.2,
-    "offsetY": 0.3,
-    "offsetZ": 0.001
+    "offsetY": 0.3
   },
   "Soul_Totem-Oro": {
     "offsetX": 0.4,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Soul_Totem-420_Geo_Rock": {
     "offsetX": 2.0,
-    "offsetY": -1.0,
-    "offsetZ": 0.002
+    "offsetY": -1.0
   },
   "Soul_Totem-Beast's_Den": {
     "offsetX": 0.4,
-    "offsetY": 2.1,
-    "offsetZ": 0.004
+    "offsetY": 2.1
   },
   "Soul_Totem-Greenpath_Hunter's_Journal": {
     "offsetX": -0.5,
-    "offsetY": 0.0,
-    "offsetZ": 0.001
+    "offsetY": 0.0
   },
   "Soul_Totem-Greenpath_MMC": {
     "offsetX": -0.4,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Soul_Totem-Greenpath_Below_Toll": {
     "offsetX": 0.9,
-    "offsetY": -0.2,
-    "offsetZ": 0.0
+    "offsetY": -0.2
   },
   "Soul_Totem-Before_Pilgrim's_Way": {
     "offsetX": 0.45,
-    "offsetY": -0.25,
-    "offsetZ": 0.0
+    "offsetY": -0.25
   },
   "Soul_Totem-Pilgrim's_Way": {
     "offsetX": -0.2,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Soul_Totem-Fungal_Core": {
     "offsetX": -0.8,
-    "offsetY": 0.5,
-    "offsetZ": 0.0
+    "offsetY": 0.5
   },
   "Soul_Totem-Top_Left_Queen's_Gardens": {
     "offsetX": 0.7,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Soul_Totem-Below_Marmu": {
     "offsetX": -1.4,
-    "offsetY": -0.3,
-    "offsetZ": 0.0
+    "offsetY": -0.3
   },
   "Soul_Totem-Upper_Crystal_Peak": {
     "offsetX": -0.3,
-    "offsetY": -0.7,
-    "offsetZ": 0.0
+    "offsetY": -0.7
   },
   "Soul_Totem-Hallownest_Crown": {
     "offsetX": 0.1,
-    "offsetY": -0.75,
-    "offsetZ": 0.0
+    "offsetY": -0.75
   },
   "Soul_Totem-Outside_Crystallized_Mound": {
     "offsetX": 1.2,
-    "offsetY": 0.8,
-    "offsetZ": 0.002
+    "offsetY": 0.8
   },
   "Soul_Totem-Crystal_Heart_1": {
     "offsetX": -0.9,
-    "offsetY": 0.4,
-    "offsetZ": 0.0
+    "offsetY": 0.4
   },
   "Soul_Totem-Crystal_Heart_2": {
     "offsetX": 2.6,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Soul_Totem-Crystallized_Mound": {
     "offsetX": 0.8,
-    "offsetY": 0.8,
-    "offsetZ": 0.002
+    "offsetY": 0.8
   },
   "Soul_Totem-Resting_Grounds": {
     "offsetX": 0.25,
-    "offsetY": -0.35,
-    "offsetZ": 0.0
+    "offsetY": -0.35
   },
   "Soul_Totem-Below_Xero": {
     "offsetX": -1.0,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Soul_Totem-Sanctum_Below_Soul_Master": {
     "offsetX": 0.7,
-    "offsetY": -0.7,
-    "offsetZ": 0.002
+    "offsetY": -0.7
   },
   "Soul_Totem-Sanctum_Below_Chest": {
     "offsetX": -0.4,
-    "offsetY": 0.8,
-    "offsetZ": 0.001
+    "offsetY": 0.8
   },
   "Soul_Totem-Sanctum_Above_Grub": {
     "offsetX": -0.4,
-    "offsetY": -0.4,
-    "offsetZ": 0.0
+    "offsetY": -0.4
   },
   "Soul_Totem-Waterways_Entrance": {
     "offsetX": -1.4,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "Soul_Totem-Top_Left_Waterways": {
     "offsetX": -1.3,
-    "offsetY": 0.5,
-    "offsetZ": 0.0
+    "offsetY": 0.5
   },
   "Soul_Totem-Waterways_East": {
     "offsetX": -0.9,
-    "offsetY": -0.5,
-    "offsetZ": 0.0
+    "offsetY": -0.5
   },
   "Soul_Totem-Waterways_Flukemarm": {
     "offsetX": 1.2,
-    "offsetY": -0.4,
-    "offsetZ": 0.0
+    "offsetY": -0.4
   },
   "Soul_Totem-White_Palace_Entrance": {
-    "offsetX": -1.2,
-    "offsetY": -0.2,
-    "offsetZ": 0.0
+    "offsetX": -1.6,
+    "offsetY": -0.2
   },
   "Soul_Totem-White_Palace_Hub": {
-    "offsetX": -0.8,
-    "offsetY": -0.2,
-    "offsetZ": 0.001
+    "offsetX": -1.2,
+    "offsetY": -0.2
   },
   "Soul_Totem-White_Palace_Left": {
-    "offsetX": -0.4,
-    "offsetY": -0.2,
-    "offsetZ": 0.002
+    "offsetX": -0.8,
+    "offsetY": -0.2
   },
   "Soul_Totem-White_Palace_Final": {
-    "offsetX": 0.0,
-    "offsetY": -0.2,
-    "offsetZ": 0.003
+    "offsetX": -0.4,
+    "offsetY": -0.2
   },
   "Soul_Totem-White_Palace_Right": {
-    "offsetX": 0.4,
-    "offsetY": -0.2,
-    "offsetZ": 0.004
+    "offsetX": 0.0,
+    "offsetY": -0.2
   },
   "Soul_Totem-Path_of_Pain_Below_Lever": {
     "offsetX": -1.4,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "Soul_Totem-Path_of_Pain_Left_of_Lever": {
     "offsetX": -1.0,
-    "offsetY": 0.3,
-    "offsetZ": 0.001
+    "offsetY": 0.3
   },
   "Soul_Totem-Path_of_Pain_Entrance": {
     "offsetX": -0.6,
-    "offsetY": 0.3,
-    "offsetZ": 0.002
+    "offsetY": 0.3
   },
   "Soul_Totem-Path_of_Pain_Second": {
     "offsetX": -0.2,
-    "offsetY": 0.3,
-    "offsetZ": 0.003
+    "offsetY": 0.3
   },
   "Soul_Totem-Path_of_Pain_Hidden": {
     "offsetX": 0.2,
-    "offsetY": 0.3,
-    "offsetZ": 0.004
+    "offsetY": 0.3
   },
   "Soul_Totem-Path_of_Pain_Below_Thornskip": {
     "offsetX": 0.6,
-    "offsetY": 0.3,
-    "offsetZ": 0.005
+    "offsetY": 0.3
   },
   "Soul_Totem-Path_of_Pain_Final": {
     "offsetX": 1.0,
-    "offsetY": 0.3,
-    "offsetZ": 0.006
+    "offsetY": 0.3
   },
   "Soul_Totem-Pale_Lurker": {
     "offsetX": -1.1,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Lore_Tablet-City_Entrance": {
     "offsetX": 0.0,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Lore_Tablet-Pleasure_House": {
     "offsetX": 0.4,
-    "offsetY": -1.0,
-    "offsetZ": 0.001
+    "offsetY": -1.0
   },
   "Lore_Tablet-Sanctum_Entrance": {
     "offsetX": 0.5,
-    "offsetY": 0.5,
-    "offsetZ": 0.001
+    "offsetY": 0.5
   },
   "Lore_Tablet-Sanctum_Past_Soul_Master": {
     "offsetX": 0.5,
-    "offsetY": 0.8,
-    "offsetZ": 0.0
+    "offsetY": 0.8
   },
   "Lore_Tablet-Watcher's_Spire": {
     "offsetX": 0.0,
-    "offsetY": 0.7,
-    "offsetZ": 0.0
+    "offsetY": 0.7
   },
   "Lore_Tablet-Archives_Upper": {
     "offsetX": 0.19,
-    "offsetY": 0.25,
-    "offsetZ": 0.001
+    "offsetY": 0.25
   },
   "Lore_Tablet-Archives_Left": {
     "offsetX": -0.21,
-    "offsetY": 0.25,
-    "offsetZ": 0.002
+    "offsetY": 0.25
   },
   "Lore_Tablet-Archives_Right": {
     "offsetX": 0.59,
-    "offsetY": 0.25,
-    "offsetZ": 0.002
+    "offsetY": 0.25
   },
   "Lore_Tablet-Pilgrim's_Way_1": {
     "offsetX": 1.4,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Lore_Tablet-Pilgrim's_Way_2": {
     "offsetX": -1.3,
-    "offsetY": -0.4,
-    "offsetZ": 0.0
+    "offsetY": -0.4
   },
   "Lore_Tablet-Mantis_Outskirts": {
     "offsetX": 1.7,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Lore_Tablet-Mantis_Village": {
     "offsetX": -1.0,
-    "offsetY": 0.3,
-    "offsetZ": -0.97
+    "offsetY": 0.3
   },
   "Lore_Tablet-Greenpath_Upper_Hidden": {
     "offsetX": 0.7,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Lore_Tablet-Greenpath_Below_Toll": {
     "offsetX": -0.3,
-    "offsetY": -0.2,
-    "offsetZ": 0.0
+    "offsetY": -0.2
   },
   "Lore_Tablet-Greenpath_Lifeblood": {
     "offsetX": -0.5,
-    "offsetY": 0.1,
-    "offsetZ": 0.001
+    "offsetY": 0.1
   },
   "Lore_Tablet-Greenpath_Stag": {
     "offsetX": 0.9,
-    "offsetY": 0.4,
-    "offsetZ": 0.001
+    "offsetY": 0.4
   },
   "Lore_Tablet-Greenpath_QG": {
     "offsetX": -1.3,
-    "offsetY": -0.2,
-    "offsetZ": 0.0
+    "offsetY": -0.2
   },
   "Lore_Tablet-Greenpath_Lower_Hidden": {
     "offsetX": 1.2,
-    "offsetY": -0.14,
-    "offsetZ": 0.0
+    "offsetY": -0.14
   },
   "Lore_Tablet-Dung_Defender": {
     "offsetX": 0.9,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Lore_Tablet-Spore_Shroom": {
     "offsetX": 0.6,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "Lore_Tablet-Fungal_Wastes_Hidden": {
     "offsetX": -0.3,
-    "offsetY": 0.5,
-    "offsetZ": 0.0
+    "offsetY": 0.5
   },
   "Lore_Tablet-Fungal_Wastes_Below_Shrumal_Ogres": {
     "offsetX": 0.2,
-    "offsetY": -0.6,
-    "offsetZ": 0.0
+    "offsetY": -0.6
   },
   "Lore_Tablet-Fungal_Core": {
     "offsetX": 0.4,
-    "offsetY": 0.6,
-    "offsetZ": 0.0
+    "offsetY": 0.6
   },
   "Lore_Tablet-Ancient_Basin": {
     "offsetX": 0.3,
-    "offsetY": 2.7,
-    "offsetZ": 0.0
+    "offsetY": 2.7
   },
   "Lore_Tablet-King's_Pass_Focus": {
     "offsetX": 0.0,
-    "offsetY": -0.4,
-    "offsetZ": 0.0
+    "offsetY": -0.4
   },
   "Lore_Tablet-King's_Pass_Fury": {
     "offsetX": 1.7,
-    "offsetY": -0.8,
-    "offsetZ": 0.002
+    "offsetY": -0.8
   },
   "Lore_Tablet-King's_Pass_Exit": {
     "offsetX": 1.5,
-    "offsetY": 0.4,
-    "offsetZ": 0.0
+    "offsetY": 0.4
   },
   "Lore_Tablet-World_Sense": {
     "objectName": "Tut_tablet_top",
     "offsetX": -0.2,
-    "offsetY": -0.2,
-    "offsetZ": 0.001
+    "offsetY": -0.2
   },
   "Lore_Tablet-Howling_Cliffs": {
     "offsetX": 1.8,
-    "offsetY": -1.1,
-    "offsetZ": 0.0
+    "offsetY": -1.1
   },
   "Lore_Tablet-Kingdom's_Edge": {
     "offsetX": 1.2,
-    "offsetY": -0.5,
-    "offsetZ": 0.0
+    "offsetY": -0.5
   },
   "Lore_Tablet-Palace_Workshop": {
-    "offsetX": 1.2,
-    "offsetY": -0.2,
-    "offsetZ": 0.006
+    "offsetX": 0.8,
+    "offsetY": -0.2
   },
   "Lore_Tablet-Palace_Throne": {
-    "offsetX": 1.6,
-    "offsetY": -0.2,
-    "offsetZ": 0.007
+    "offsetX": 1.2,
+    "offsetY": -0.2
   },
   "Lore_Tablet-Path_of_Pain_Entrance": {
     "offsetX": 1.4,
-    "offsetY": 0.3,
-    "offsetZ": 0.007
+    "offsetY": 0.3
   },
   "Mr_Mushroom-Fungal_Wastes": {
     "offsetX": -1.85,
-    "offsetY": 0.2,
-    "offsetZ": 0.001
+    "offsetY": 0.2
   },
   "Mr_Mushroom-Kingdom's_Edge": {
     "offsetX": -0.7,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Mr_Mushroom-Deepnest": {
     "offsetX": -1.3,
-    "offsetY": -0.2,
-    "offsetZ": 0.0
+    "offsetY": -0.2
   },
   "Mr_Mushroom-Howling_Cliffs": {
     "offsetX": 0.54,
-    "offsetY": 0.32,
-    "offsetZ": 0.001
+    "offsetY": 0.32
   },
   "Mr_Mushroom-Ancient_Basin": {
     "offsetX": 0.8,
-    "offsetY": 0.4,
-    "offsetZ": 0.0
+    "offsetY": 0.4
   },
   "Mr_Mushroom-Fog_Canyon": {
     "offsetX": -0.6,
-    "offsetY": -0.4,
-    "offsetZ": 0.0
+    "offsetY": -0.4
   },
   "Mr_Mushroom-King's_Pass": {
     "offsetX": -1.4,
-    "offsetY": -0.7,
-    "offsetZ": 0.0
+    "offsetY": -0.7
   },
   "Switch-Dirtmouth_Stag": {
     "offsetX": 0.4,
-    "offsetY": -0.6,
-    "offsetZ": 0.009
+    "offsetY": -0.6
   },
   "Switch-Outside_Ancestral_Mound": {
     "offsetX": -0.4,
-    "offsetY": -0.6,
-    "offsetZ": -0.500
+    "offsetY": -0.6
   },
   "Switch-Greenpath_Stag": {
     "offsetX": 0.4,
-    "offsetY": -1.2,
-    "offsetZ": 0.0
+    "offsetY": -1.2
   },
   "Switch-Lower_Resting_Grounds": {
     "offsetX": -1.0,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "Switch-Petra_Arena": {
     "offsetX": 0.4,
-    "offsetY": -0.5,
-    "offsetZ": 0.0
+    "offsetY": -0.5
   },
   "Switch-Queen's_Gardens_Stag": {
     "offsetX": 2.5,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Switch-Crossroads_East": {
     "offsetX": 0.0,
-    "offsetY": 0.8,
-    "offsetZ": 0.0
+    "offsetY": 0.8
   },
   "Lever-Dung_Defender": {
     "offsetX": 0.9,
-    "offsetY": 0.0,
-    "offsetZ": 0.001
+    "offsetY": 0.0
   },
   "Lever-Waterways_Hwurmp_Arena": {
     "offsetX": -0.2,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Lever-Queen's_Station_Mask_Shard": {
     "offsetX": 0.75,
-    "offsetY": 0.05,
-    "offsetZ": 0.0
+    "offsetY": 0.05
   },
   "Lever-Queen's_Gardens_Ground_Block": {
     "offsetX": 0.0,
-    "offsetY": 0.4,
-    "offsetZ": 0.0
+    "offsetY": 0.4
   },
   "Lever-Below_Overgrown_Mound": {
     "offsetX": 0.6,
-    "offsetY": -0.3,
-    "offsetZ": 0.0
+    "offsetY": -0.3
   },
   "Lever-Tower_of_Love": {
     "offsetX": 0.6,
-    "offsetY": -1.7,
-    "offsetZ": 0.0
+    "offsetY": -1.7
   },
   "Lever-Resting_Grounds_Stag": {
     "offsetX": 0.15,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Lever-Abyss_Lighthouse": {
     "offsetX": -1.1,
-    "offsetY": 0.8,
-    "offsetZ": 0.0
+    "offsetY": 0.8
   },
   "Lever-Failed_Tramway_Right": {
     "offsetX": 0.9,
-    "offsetY": -0.4,
-    "offsetZ": 0.0
+    "offsetY": -0.4
   },
   "Lever-Failed_Tramway_Left": {
     "offsetX": 1.4,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Lever-Below_Spell_Twister": {
     "offsetX": -0.1,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Lever-Sanctum_East": {
     "offsetX": -0.1,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Lever-Sanctum_Soul_Warrior": {
     "offsetX": -0.3,
-    "offsetY": 0.6,
-    "offsetZ": 0.002
+    "offsetY": 0.6
   },
   "Lever-Sanctum_Bottom": {
     "offsetX": 0.4,
-    "offsetY": -0.3,
-    "offsetZ": 0.0
+    "offsetY": -0.3
   },
   "Lever-Sanctum_West_Upper": {
     "offsetX": -0.4,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Lever-Sanctum_West_Lower": {
     "offsetX": 0.2,
-    "offsetY": -0.8,
-    "offsetZ": 0.0
+    "offsetY": -0.8
   },
   "Lever-City_Fountain": {
     "offsetX": 0.6,
-    "offsetY": -0.6,
-    "offsetZ": 0.0
+    "offsetY": -0.6
   },
   "Lever-City_Spire_Sentry_Lower": {
     "offsetX": -0.3,
-    "offsetY": 0.5,
-    "offsetZ": 0.0
+    "offsetY": 0.5
   },
   "Lever-City_Spire_Sentry_Upper": {
     "offsetX": 0.2,
-    "offsetY": 1.1,
-    "offsetZ": 0.0
+    "offsetY": 1.1
   },
   "Lever-City_Bridge_Above_Fountain": {
     "offsetX": -0.6,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Lever-City_Storerooms": {
     "offsetX": -0.5,
-    "offsetY": -0.7,
-    "offsetZ": 0.0
+    "offsetY": -0.7
   },
   "Lever-City_Lemm": {
     "offsetX": -0.3,
-    "offsetY": 0.2,
-    "offsetZ": 0.0
+    "offsetY": 0.2
   },
   "Lever-City_Above_Lemm_Right": {
     "offsetX": 0.4,
-    "offsetY": -0.5,
-    "offsetZ": 0.0
+    "offsetY": -0.5
   },
   "Lever-City_Above_Lemm_Left": {
     "offsetX": -0.1,
-    "offsetY": 0.6,
-    "offsetZ": 0.0
+    "offsetY": 0.6
   },
   "Lever-City_Above_Lemm_Upper": {
     "offsetX": -0.1,
-    "offsetY": 1.5,
-    "offsetZ": 0.0
+    "offsetY": 1.5
   },
   "Lever-Shade_Soul_Exit": {
     "offsetX": 0.3,
-    "offsetY": 0.2,
-    "offsetZ": 0.001
+    "offsetY": 0.2
   },
   "Lever-Emilitia": {
     "offsetX": 0.0,
-    "offsetY": -0.7,
-    "offsetZ": 0.0
+    "offsetY": -0.7
   },
   "Lever-Mantis_Lords_Top_Left": {
     "offsetX": -0.4,
-    "offsetY": 1.2,
-    "offsetZ": 0.0
+    "offsetY": 1.2
   },
   "Lever-Mantis_Lords_Middle_Left": {
     "offsetX": -0.4,
-    "offsetY": 0.5,
-    "offsetZ": 0.0
+    "offsetY": 0.5
   },
   "Lever-Mantis_Lords_Bottom_Left": {
     "offsetX": -0.4,
-    "offsetY": -0.4,
-    "offsetZ": 0.001
+    "offsetY": -0.4
   },
   "Lever-Mantis_Lords_Middle_Right": {
     "offsetX": 0.3,
-    "offsetY": 0.8,
-    "offsetZ": 0.0
+    "offsetY": 0.8
   },
   "Lever-Mantis_Lords_Bottom_Right": {
     "offsetX": 0.5,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Lever-Mantis_Claw": {
     "offsetX": -1.8,
-    "offsetY": -0.5,
-    "offsetZ": 0.002
+    "offsetY": -0.5
   },
   "Lever-Mantis_Lords_Access": {
     "offsetX": -0.1,
-    "offsetY": -0.1,
-    "offsetZ": -0.96
+    "offsetY": -0.1
   },
   "Lever-Fungal_Wastes_Thorns_Gauntlet": {
     "offsetX": 0.4,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Lever-Fungal_Wastes_Below_Shrumal_Ogres": {
     "offsetX": 0.2,
-    "offsetY": 0.8,
-    "offsetZ": 0.0
+    "offsetY": 0.8
   },
   "Lever-Fungal_Wastes_Bouncy_Grub": {
     "offsetX": -0.1,
-    "offsetY": -0.1,
-    "offsetZ": 0.0
+    "offsetY": -0.1
   },
   "Lever-Dirtmouth_Elevator": {
     "offsetX": 2.7,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "Lever-Crystal_Peak_Tall_Room_Upper": {
     "offsetX": 0.2,
-    "offsetY": 0.8,
-    "offsetZ": 0.0
+    "offsetY": 0.8
   },
   "Lever-Crystal_Peak_Tall_Room_Middle": {
     "offsetX": -0.2,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "Lever-Crystal_Peak_Tall_Room_Lower": {
     "offsetX": 0.3,
-    "offsetY": -0.8,
-    "offsetZ": 0.0
+    "offsetY": -0.8
   },
   "Lever-Crystal_Peak_Spike_Grub": {
     "offsetX": -0.3,
-    "offsetY": 0.7,
-    "offsetZ": 0.0
+    "offsetY": 0.7
   },
   "Lever-Crystal_Peak_Below_Chest": {
     "offsetX": 0.1,
-    "offsetY": 0.9,
-    "offsetZ": 0.0
+    "offsetY": 0.9
   },
   "Lever-Crystal_Peak_Above_Chest": {
     "offsetX": 0.0,
-    "offsetY": 0.3,
-    "offsetZ": 0.0
+    "offsetY": 0.3
   },
   "Lever-Crystal_Peak_Crushers_Grub": {
     "offsetX": 0.4,
-    "offsetY": 0.1,
-    "offsetZ": 0.0
+    "offsetY": 0.1
   },
   "Lever-Crystal_Peak_Crushers_Chest": {
     "offsetX": -0.4,
-    "offsetY": -0.4,
-    "offsetZ": 0.002
+    "offsetY": -0.4
   },
   "Lever-Palace_Atrium": {
     "offsetX": -1.2,
-    "offsetY": 0.8,
-    "offsetZ": 0.001
+    "offsetY": 0.8
   },
   "Lever-Palace_Right": {
     "offsetX": -0.8,
-    "offsetY": 0.8,
-    "offsetZ": 0.002
+    "offsetY": 0.8
   },
   "Lever-Palace_Final": {
     "offsetX": -0.4,
-    "offsetY": 0.8,
-    "offsetZ": 0.003
+    "offsetY": 0.8
   },
   "Lever-Path_of_Pain": {
     "offsetX": 0.0,
-    "offsetY": 0.8,
-    "offsetZ": 0.004
+    "offsetY": 0.8
   },
   "Lever-Palace_Entrance_Orb": {
     "offsetX": 0.4,
-    "offsetY": 0.8,
-    "offsetZ": 0.005
+    "offsetY": 0.8
   },
   "Lever-Palace_Left_Orb": {
     "offsetX": 0.8,
-    "offsetY": 0.8,
-    "offsetZ": 0.006
+    "offsetY": 0.8
   },
   "Lever-Palace_Right_Orb": {
     "offsetX": 1.2,
-    "offsetY": 0.8,
-    "offsetZ": 0.007
+    "offsetY": 0.8
   },
   "Lever-Pilgrim's_Way_Left": {
     "offsetX": -0.1,
-    "offsetY": -0.4,
-    "offsetZ": 0.0
+    "offsetY": -0.4
   },
   "Lever-Pilgrim's_Way_Right": {
     "offsetX": 0.9,
-    "offsetY": -0.4,
-    "offsetZ": 0.0
+    "offsetY": -0.4
   },
   "Nailsmith_Upgrade_1": {
-    "offsetX": -2.8,
-    "offsetY": -0.7,
-    "offsetZ": 0.0
+    "offsetX": -1.6,
+    "offsetY": 0.0
   },
   "Nailsmith_Upgrade_2": {
-    "offsetX": -2.4,
-    "offsetY": -0.7,
-    "offsetZ": 0.001
+    "offsetX": -1.2,
+    "offsetY": 0.0
   },
   "Nailsmith_Upgrade_3": {
-    "offsetX": -2.0,
-    "offsetY": -0.7,
-    "offsetZ": 0.002
+    "offsetX": -0.8,
+    "offsetY": 0.0
   },
   "Nailsmith_Upgrade_4": {
-    "offsetX": -1.6,
-    "offsetY": -0.7,
-    "offsetZ": 0.003
+    "offsetX": -0.4,
+    "offsetY": 0.0
   }
 }

@@ -12,9 +12,9 @@ namespace MapModS.Map
     {
         public class ExtraMapData : MonoBehaviour
         {
-            public Color origColor;
-            public Color origCustomColor = Vector4.negativeInfinity;
-            public Color origTransitionColor;
+            public Vector4 origColor;
+            public Vector4 origCustomColor = Vector4.negativeInfinity;
+            public Vector4 origTransitionColor;
             public string sceneName;
             public bool highlight;
         }
@@ -84,21 +84,25 @@ namespace MapModS.Map
                 && (obj.name == "Area Name (2)" || obj.name == "Abyss_22"))
             {
                 emd.origCustomColor = Colors.GetColor(ColorSetting.Map_Ancient_Basin);
-                return;
+            }
+            else
+            {
+                (string, Vector4) key = (obj.parent.name, emd.origColor);
+
+                if (Colors.subAreaMapColorKeys.ContainsKey(obj.name) && !Colors.subAreaMapColors.ContainsKey(key))
+                {
+                    Colors.subAreaMapColors.Add(key, Colors.subAreaMapColorKeys[obj.name]);
+                }
+
+                if (Colors.subAreaMapColors.ContainsKey(key))
+                {
+                    emd.origCustomColor = Colors.GetColor(Colors.subAreaMapColors[key]);
+                }
             }
 
-            (string, Vector4) key = (obj.parent.name, emd.origColor);
-
-            if (Colors.subAreaMapColorKeys.ContainsKey(obj.name) && !Colors.subAreaMapColors.ContainsKey(key))
+            if (obj.name.Contains("Area Name") && !emd.origCustomColor.Equals(Vector4.negativeInfinity))
             {
-                Colors.subAreaMapColors.Add(key, Colors.subAreaMapColorKeys[obj.name]);
-                emd.origCustomColor = Colors.GetColor(Colors.subAreaMapColorKeys[obj.name]);
-                return;
-            }
-
-            if (Colors.subAreaMapColors.ContainsKey(key))
-            {
-                emd.origCustomColor = Colors.GetColor(Colors.subAreaMapColors[key]);
+                emd.origCustomColor.w = 1f;
             }
         }
 

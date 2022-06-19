@@ -123,55 +123,48 @@
     "pinScene": "White_Palace_03_hub",
     "mapZone": "WHITE_PALACE",
     "offsetX": -0.8,
-    "offsetY": 0.0,
-    "offsetZ": 0.001
+    "offsetY": 0.0
   },
   "Lever-Palace_Right": {
     "name": "Lever-Palace_Right",
     "pinScene": "White_Palace_15",
     "mapZone": "WHITE_PALACE",
     "offsetX": -0.1,
-    "offsetY": -0.2,
-    "offsetZ": 0.0
+    "offsetY": -0.2
   },
   "Lever-Palace_Final": {
     "name": "Lever-Palace_Final",
     "pinScene": "White_Palace_12",
     "mapZone": "WHITE_PALACE",
     "offsetX": 0.4,
-    "offsetY": 0.6,
-    "offsetZ": 0.0
+    "offsetY": 0.6
   },
   "Lever-Path_of_Pain": {
     "name": "Lever-Path_of_Pain",
     "pinScene": "White_Palace_17",
     "mapZone": "WHITE_PALACE",
     "offsetX": 0.5,
-    "offsetY": 0.8,
-    "offsetZ": 0.0
+    "offsetY": 0.8
   },
   "Lever-Palace_Entrance_Orb": {
     "name": "Lever-Palace_Entrance_Orb",
     "pinScene": "White_Palace_02",
     "mapZone": "WHITE_PALACE",
     "offsetX": 0.3,
-    "offsetY": 0.4,
-    "offsetZ": 0.0
+    "offsetY": 0.4
   },
   "Lever-Palace_Left_Orb": {
     "name": "Lever-Palace_Left_Orb",
     "pinScene": "White_Palace_14",
     "mapZone": "WHITE_PALACE",
     "offsetX": 1.5,
-    "offsetY": 0.0,
-    "offsetZ": 0.0
+    "offsetY": 0.0
   },
   "Lever-Palace_Right_Orb": {
     "name": "Lever-Palace_Right_Orb",
     "pinScene": "White_Palace_15",
     "mapZone": "WHITE_PALACE",
     "offsetX": -0.35,
-    "offsetY": -1.0,
-    "offsetZ": 0.0
+    "offsetY": -1.0
   }
 }

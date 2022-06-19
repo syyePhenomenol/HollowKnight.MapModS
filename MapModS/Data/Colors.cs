@@ -166,9 +166,9 @@ namespace MapModS.Data
 
                     if (rgba == null || rgba.Length < 4) continue;
 
-                    Vector4 vec = new(rgba[0] / 256f, rgba[1] / 256f, rgba[2] / 256f, rgba[3]);
+                    Vector4 color = new(rgba[0] / 256f, rgba[1] / 256f, rgba[2] / 256f, rgba[3]);
 
-                    customColors.Add(colorSetting, vec);
+                    customColors.Add(colorSetting, color);
                 }
 
                 MapModS.Instance.Log("Custom colors loaded");

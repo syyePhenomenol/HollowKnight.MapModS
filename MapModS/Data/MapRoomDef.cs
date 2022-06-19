@@ -2,6 +2,15 @@
 
 namespace MapModS.Data
 {
+    public enum RoomState
+    {
+        Normal,
+        Current,
+        Adjacent,
+        Out_of_logic,
+        Selected
+    }
+
     public class MapRoomDef
     {
         public MapZone mapZone;

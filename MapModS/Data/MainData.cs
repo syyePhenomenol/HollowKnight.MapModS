@@ -21,7 +21,7 @@ namespace MapModS.Data
         private static HashSet<string> minimalMapRooms;
         private static Dictionary<string, MapRoomDef> nonMappedRooms;
 
-        private static readonly Dictionary<string, PinDef> usedPins = new();
+        private static Dictionary<string, PinDef> usedPins = new();
         private static Dictionary<string, string> logicLookup = new();
 
         public static List<string> usedPoolGroups = new();
@@ -38,7 +38,7 @@ namespace MapModS.Data
 
         public static PinDef[] GetUsedPinArray()
         {
-            return usedPins.Values.ToArray();
+            return usedPins.Values.OrderBy(p => p.offsetX).ThenBy(p => p.offsetY).ToArray();
         }
 
         public static PinDef GetUsedPinDef(string locationName)
