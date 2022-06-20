@@ -1,13 +1,13 @@
 ﻿using MagicUI.Core;
 using MagicUI.Elements;
 using MapModS.Data;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
 using static MapModS.Map.MapRooms;
+using BI = MapModS.Data.BenchwarpInterop;
 using L = RandomizerMod.Localization;
 using TP = MapModS.UI.TransitionPersistent;
 
@@ -19,7 +19,6 @@ namespace MapModS.UI
 
         // Only for normal modes (not transition mode)
         private static TextObject benchwarpText;
-        private static Dictionary<string, List<BenchDef>> benches = new();
         private static string selectedBenchScene = "";
         private static int benchPointer = 0;
 
@@ -69,16 +68,10 @@ namespace MapModS.UI
                     ResetBenchSelection();
                 }
 
-                GetBenchScenes();
+                BI.UpdateVisitedBenches();
                 UpdateBenchwarpText();
                 SetSelectedRoomColor(selectedBenchScene, false);
             }
-        }
-
-        // Just grab one bench per actual scene for now
-        public static void GetBenchScenes()
-        {
-            benches = BenchInterop.GetVisitedBenches();
         }
 
         public static void UpdateBenchwarpText()
@@ -93,9 +86,9 @@ namespace MapModS.UI
 
                 text += Utils.GetBindingsText(bindings);
 
-                text += $" {L.Localize("to benchwarp to")} {GetSelectedBench().benchName}.";
+                text += $" {L.Localize("to warp to")} {GetSelectedBench().benchName.Replace("Warp ", "")}.";
 
-                if (benches.ContainsKey(selectedBenchScene) && benches[selectedBenchScene].Count > 1)
+                if (BI.benches.ContainsKey(selectedBenchScene) && BI.benches[selectedBenchScene].Count > 1)
                 {
                     text += $"\n{L.Localize("Tap")} ";
 
@@ -153,7 +146,7 @@ namespace MapModS.UI
             {
                 foreach (Transform roomObj in areaObj.transform)
                 {
-                    if (!roomObj.gameObject.activeSelf || !benches.ContainsKey(roomObj.name)) continue;
+                    if (!roomObj.gameObject.activeSelf || !BI.benches.ContainsKey(roomObj.name)) continue;
 
                     ExtraMapData emd = roomObj.GetComponent<ExtraMapData>();
                     if (emd == null) continue;
@@ -204,7 +197,7 @@ namespace MapModS.UI
                 if (attackHoldTimer.ElapsedMilliseconds >= 500)
                 {
                     attackHoldTimer.Reset();
-                    GameManager.instance.StartCoroutine(CloseInventoryBenchwarp(PathfinderData.GetBenchwarpScene(TP.selectedRoute.First())));
+                    GameManager.instance.StartCoroutine(BI.DoBenchwarp(TP.selectedRoute.First()));
                 }
             }
             else if (MapModS.GS.benchwarpWorldMap)
@@ -230,48 +223,33 @@ namespace MapModS.UI
                 if (attackHoldTimer.ElapsedMilliseconds >= 500)
                 {
                     attackHoldTimer.Reset();
-                    GameManager.instance.StartCoroutine(CloseInventoryBenchwarp(GetSelectedBench().sceneName));
+                    GameManager.instance.StartCoroutine(BI.DoBenchwarp(selectedBenchScene, benchPointer));
                 }
             }
         }
 
         private static void ToggleBench()
         {
-            if (!benches.ContainsKey(selectedBenchScene)
-                || benchPointer > benches[selectedBenchScene].Count - 1)
+            if (!BI.benches.ContainsKey(selectedBenchScene)
+                || benchPointer > BI.benches[selectedBenchScene].Count - 1)
             {
                 MapModS.Instance.LogWarn("Invalid bench toggle");
                 return;
             }
 
-            benchPointer = (benchPointer + 1) % benches[selectedBenchScene].Count;
+            benchPointer = (benchPointer + 1) % BI.benches[selectedBenchScene].Count;
         }
 
-        private static BenchDef GetSelectedBench()
+        private static WorldMapBenchDef GetSelectedBench()
         {
-            if (!benches.ContainsKey(selectedBenchScene)
-                || benchPointer > benches[selectedBenchScene].Count - 1)
+            if (!BI.benches.ContainsKey(selectedBenchScene)
+                || benchPointer > BI.benches[selectedBenchScene].Count - 1)
             {
                 MapModS.Instance.LogWarn("Invalid bench selection");
-                return benches.First().Value.First();
+                return BI.benches.First().Value.First();
             }
 
-            return benches[selectedBenchScene][benchPointer];
-        }
-
-        private static IEnumerator CloseInventoryBenchwarp(string scene)
-        {
-            GameManager.instance.inventoryFSM.SendEvent("HERO DAMAGED");
-            yield return new WaitWhile(() => GameManager.instance.inventoryFSM.ActiveStateName != "Closed");
-            yield return new WaitForFixedUpdate();
-            yield return new WaitForFixedUpdate();
-            UIManager.instance.TogglePauseGame();
-            yield return new WaitWhile(() => !GameManager.instance.IsGamePaused());
-            yield return new WaitForSecondsRealtime(0.1f);
-            if (GameManager.instance.IsGamePaused())
-            {
-                BenchInterop.DoBenchwarp(scene);
-            }
+            return BI.benches[selectedBenchScene][benchPointer];
         }
     }
 }

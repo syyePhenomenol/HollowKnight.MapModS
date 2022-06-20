@@ -145,7 +145,7 @@ namespace MapModS.UI
                 }
                 else
                 {
-                    text += $"{TP.lastStartTransition.ToCleanName()} ->...-> {TP.lastFinalTransition.GetAdjacentTransition().ToCleanName()}";
+                    text += $"{TP.lastStartTransition.ToCleanName()} ->...-> {TP.lastFinalTransition.GetAdjacentTerm().ToCleanName()}";
                 }
                 
                 text += $"\n\n{L.Localize("Transitions")}: {TP.transitionsCount}";

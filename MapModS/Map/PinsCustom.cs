@@ -87,7 +87,7 @@ namespace MapModS.Map
 
                 vec += new Vector2(pinDef.offsetX, pinDef.offsetY);
 
-                goPin.transform.localPosition = new Vector3(vec.x, vec.y, -2f + offsetZ);
+                goPin.transform.localPosition = new Vector3(vec.x, vec.y, -0.6f + (offsetZ * 0.1f));
             }
             else
             {
@@ -97,17 +97,21 @@ namespace MapModS.Map
             }
         }
 
+#if DEBUG
         // For debugging pins
-        //public void ReadjustPinPostiions()
-        //{
-        //    foreach (PinAnimatedSprite pin in _pins)
-        //    {
-        //        if (DataLoader.newPins.TryGetValue(pin.pinDef.name, out PinDef newPinDef))
-        //        {
-        //            SetPinPosition(newPinDef, pin.gameObject, GameManager.instance.gameMap.GetComponent<GameMap>());
-        //        }
-        //    }
-        //}
+        public void ReadjustPinPostiions()
+        {
+            foreach (PinAnimatedSprite pin in _pins)
+            {
+                if (MainData.newPins.TryGetValue(pin.PD.name, out PinDef newPD))
+                {
+                    pin.PD.offsetX = newPD.offsetX;
+                    pin.PD.offsetY = newPD.offsetY;
+                    SetPinPosition(pin.PD, pin.gameObject, -2f, GameManager.instance.gameMap.GetComponent<GameMap>());
+                }
+            }
+        }
+#endif
 
         private bool TryGetRoomPos(string roomName, GameMap gameMap, out Vector2 pos)
         {

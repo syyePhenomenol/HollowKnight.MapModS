@@ -15,7 +15,7 @@
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
+	<DebugType>portable</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -39,22 +39,35 @@
     <None Remove="Unused\**" />
   </ItemGroup>
 
+  
+
+  <ItemGroup>
+    <None Remove="Resources\Pathfinder\Data\adjacentScenes.json" />
+    <None Remove="Resources\Pathfinder\Logic\benchLogicEdits.json" />
+    <None Remove="Resources\Pathfinder\Logic\benchWaypoints.json" />
+    <None Remove="Resources\Pins\pinBench.png" />
+  </ItemGroup>
+
 
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\GUI\panelLeft.png" />
     <EmbeddedResource Include="Resources\Pathfinder\Compass\doorObjectsByScene.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Compass\doorObjectsByTransition.json" />
-    <EmbeddedResource Include="Resources\Pathfinder\Data\benchwarp.json" />
+    <EmbeddedResource Include="Resources\benchwarp.json" />
+    <EmbeddedResource Include="Resources\Pathfinder\Data\adjacentScenes.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Data\conditionalTerms.json" />
-    <EmbeddedResource Include="Resources\Pathfinder\Data\specialTransitions.json" />
+    <EmbeddedResource Include="Resources\Pathfinder\Data\adjacentTerms.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Data\transitionsByScene.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Data\scenesByTransition.json" />
+    <EmbeddedResource Include="Resources\Pathfinder\Logic\benchLogicEdits.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Logic\logicSubstitutions.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Logic\logicEdits.json" />
+    <EmbeddedResource Include="Resources\Pathfinder\Logic\benchWaypoints.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Logic\waypoints.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Logic\macros.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Logic\transitions.json" />
+    <EmbeddedResource Include="Resources\Pins\pinBench.png" />
     <EmbeddedResource Include="Resources\Pins\pinBlank.png" />
     <EmbeddedResource Include="Resources\Pins\pinBorder.png" />
     <EmbeddedResource Include="Resources\sortedGroups.json" />
@@ -130,6 +143,9 @@
       <Reference Include="Assembly-CSharp">
         <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Assembly-CSharp.dll</HintPath>
         <CopyLocal>False</CopyLocal>
+      </Reference>
+      <Reference Include="BenchRando">
+        <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\BenchRando\BenchRando.dll</HintPath>
       </Reference>
       <Reference Include="Benchwarp">
         <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\Benchwarp\Benchwarp.dll</HintPath>

@@ -21,6 +21,7 @@ namespace MapModS
         public static Dictionary<string, Assembly> optionalDependencies = new()
         {
             { "AdditionalMaps", null },
+            { "BenchRando", null},
             { "Benchwarp", null },
             { "RandomizableLevers", null },
             { "RandoPlus", null }
@@ -48,7 +49,7 @@ namespace MapModS
                 || (optionalDependencies.ContainsKey(name) && optionalDependencies[name] != null);
         }
 
-        public static void BenchwarpInterop()
+        public static void BenchwarpVersionCheck()
         {
             if (ModHooks.GetMod("Benchwarp", true) is Mod
                 && optionalDependencies["Benchwarp"]?.GetType("Benchwarp.BenchKey") == null)

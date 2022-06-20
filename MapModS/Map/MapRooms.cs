@@ -259,7 +259,7 @@ namespace MapModS.Map
 #if DEBUG
                     if (!active)
                     {
-                        color = roomColor[RoomState.Debug];
+                        color = Colors.GetColor(ColorSetting.Room_Debug);
                         active = true;
                     }
 #endif

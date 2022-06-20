@@ -215,7 +215,7 @@ namespace MapModS.UI
 
             try
             {
-                selectedRoute = pf.ShortestRoute(lastTransition.ToString(), lastFinalTransition.GetAdjacentTransition(), rejectedRoutes, MapModS.GS.allowBenchWarpSearch, true);
+                selectedRoute = pf.ShortestRoute(lastTransition.ToString(), lastFinalTransition.GetAdjacentTerm(), rejectedRoutes, MapModS.GS.allowBenchWarpSearch, true);
             }
             catch (Exception e)
             {
@@ -267,32 +267,21 @@ namespace MapModS.UI
             string transition = selectedRoute.First();
 
             // Check adjacent transition matches the route's transition
-            if (lastTransition.ToString() == transition.GetAdjacentTransition()
-                || lastTransition.SceneName == "Room_Final_Boss_Atrium" && transition == "Warp_Black_Egg_Temple")
+            if (transition.IsBenchwarpTransition())
             {
-                selectedRoute.Remove(transition);
-                UpdateAll();
-                TransitionWorldMap.UpdateInstructions();
-                TransitionWorldMap.UpdateRouteSummary();
-
-                if (!selectedRoute.Any())
+                if (PlayerData.instance.respawnMarkerName == BenchwarpInterop.benchKeys[transition].Item2)
                 {
-                    rejectedRoutes.Clear();
+                    UpdateRoute();
+                    return;
                 }
-
-                return;
             }
-            else if (transition.ToString().Contains("Tram_")
-                && (lastTransition.SceneName == "Room_Tram_RG" || lastTransition.SceneName == "Room_Tram"))
+            else if (lastTransition.ToString() == transition.GetAdjacentTerm())
             {
+                UpdateRoute();
                 return;
             }
 
-            HandleOffRoute(lastTransition);
-        }
-
-        public static void HandleOffRoute(ItemChanger.Transition lastTransition)
-        {
+            // The transition doesn't match the route
             switch (MapModS.GS.whenOffRoute)
             {
                 case OffRouteBehaviour.Cancel:
@@ -306,6 +295,19 @@ namespace MapModS.UI
                     break;
                 default:
                     break;
+            }
+
+            void UpdateRoute()
+            {
+                selectedRoute.Remove(transition);
+                UpdateAll();
+                TransitionWorldMap.UpdateInstructions();
+                TransitionWorldMap.UpdateRouteSummary();
+
+                if (!selectedRoute.Any())
+                {
+                    rejectedRoutes.Clear();
+                }
             }
         }
     }

@@ -178,6 +178,13 @@ namespace MapModS.UI
                     TransitionWorldMap.UpdateAll();
                 }, ModifierKeys.Ctrl, () => MapModS.LS.modEnabled);
 
+#if DEBUG
+                layout.ListenForHotkey(KeyCode.Alpha6, () =>
+                {
+                    MainData.LoadDebugResources();
+                    WorldMap.CustomPins.ReadjustPinPostiions();
+                }, ModifierKeys.Ctrl);
+#endif
                 UpdateAll();
             }
         }
@@ -287,7 +294,7 @@ namespace MapModS.UI
             }
             else
             {
-                benchwarpWorldMap.Text = "Benchwarp is not installed";
+                benchwarpWorldMap.Text = "Benchwarp is not installed or outdated";
             }
         }
 
@@ -304,7 +311,7 @@ namespace MapModS.UI
             }
             else
             {
-                benchwarpSearch.Text = "Benchwarp is not installed";
+                benchwarpSearch.Text = "Benchwarp is not installed or outdated";
             }
         }
 

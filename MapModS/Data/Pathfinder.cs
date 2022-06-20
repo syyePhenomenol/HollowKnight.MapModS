@@ -16,7 +16,7 @@ namespace MapModS.Data
         {
             localPm = new(PD.lm, RM.RS.Context);
 
-            // Remove startdef transition
+            // Remove start transition
             localPm.Set(RandomizerMod.RandomizerData.Data.GetStartDef(RM.RS.GenerationSettings.StartLocationSettings.StartLocation).Transition, 0);
         }
 
@@ -35,7 +35,7 @@ namespace MapModS.Data
             foreach (string transition in Td.lm.TransitionLookup.Keys)
             {
                 if (Td.uncheckedReachableTransitions.Contains(transition)
-                    || PD.GetAdjacentTransition(transition) == null) continue;
+                    || PD.GetAdjacentTerm(transition) == null) continue;
 
                 string scene = PD.GetScene(transition);
 
@@ -70,11 +70,11 @@ namespace MapModS.Data
                 if (!reevaluate)
                 {
                     // Avoid terminating on duplicate/redudant new paths
-                    if (node.scene == final && !rejectedRoutes.Any(r => r.First() == node.route.First() && r.Last().GetAdjacentTransition() == node.lastAdjacentTransition))
+                    if (node.scene == final && !rejectedRoutes.Any(r => r.First() == node.route.First() && r.Last().GetAdjacentTerm() == node.lastAdjacentTransition))
                     {
                         // No other paths to same final transition with a different starting benchwarp
                         if (node.route.First().IsBenchwarpTransition()
-                            && rejectedRoutes.Any(r => r.Last().GetAdjacentTransition() == node.lastAdjacentTransition && r.First().IsBenchwarpTransition())) continue;
+                            && rejectedRoutes.Any(r => r.Last().GetAdjacentTerm() == node.lastAdjacentTransition && r.First().IsBenchwarpTransition())) continue;
 
                         return node.route;
                     }
@@ -146,10 +146,6 @@ namespace MapModS.Data
                     {
                         localPm.Set("Broke_Waterways_Bench_Ceiling", pbd.activated ? 1 : 0);
                     }
-                    else if (pbd.sceneName == "Waterways_02" && pbd.id == "Quake Floor")
-                    {
-                        localPm.Set("Broke_Waterways_Bench_Floor", pbd.activated ? 1 : 0);
-                    }
                     else if (pbd.sceneName == "Ruins1_31" && pbd.id == "Ruins Lift")
                     {
                         localPm.Set("City_Toll_Wall_Broken", pbd.activated ? 1 : 0);
@@ -176,7 +172,7 @@ namespace MapModS.Data
                 // Add initial bench warp transitions if setting is enabled
                 if (allowBenchWarp && Dependencies.HasDependency("Benchwarp"))
                 {
-                    foreach (string transition in PD.GetBenchwarpTransitions())
+                    foreach (string transition in BenchwarpInterop.GetVisitedBenchTransitions())
                     {
                         TryAddNode(null, transition);
                     }
@@ -187,13 +183,12 @@ namespace MapModS.Data
                 // If reevaluating, start is a transition instead of a scene
                 if (!reevaluate)
                 {
-                    // Use all normal transitions in current scene as "seed" for special transitions
-                    foreach (string transition in TransitionData.GetTransitionsByScene(start))
+                    IEnumerable<string> seedTransitions = TransitionData.GetTransitionsByScene(start)
+                        .Where(t => normalTransitionSpace.Contains(t) || localPm.lm.TransitionLookup[t].CanGet(localPm));
+
+                    foreach (string transition in seedTransitions)
                     {
-                        if (normalTransitionSpace.Contains(transition))
-                        {
-                            localPm.Set(transition, 1);
-                        }
+                        localPm.Set(transition, 1);
                     }
 
                     searchScene = start;
@@ -248,9 +243,9 @@ namespace MapModS.Data
                 {
                     SearchNode newNode;
 
-                    string adjacent = transition.GetAdjacentTransition();
+                    string adjacent = transition.GetAdjacentTerm();
 
-                    if (adjacent == null) return;
+                    if (adjacent == null || !localPm.lm.TermLookup.ContainsKey(adjacent)) return;
 
                     if (node != null)
                     {

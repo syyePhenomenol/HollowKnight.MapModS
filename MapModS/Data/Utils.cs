@@ -56,15 +56,14 @@ namespace MapModS.Data
                 .Replace("<br>", "");
         }
 
-        public static string ToCleanName(string name)
+        public static string ToCleanName(this string name)
         {
-            return name.Replace("-", " ")
-                .Replace("_", " ");
+            return name.Replace("-", " ").Replace("_", " ");
         }
 
-        public static MapZone ToMapZone(string mapZone)
+        public static MapZone ToMapZone(string mapArea)
         {
-            return mapZone switch
+            return mapArea switch
             {
                 "Ancient Basin" => MapZone.ABYSS,
                 "City of Tears" => MapZone.CITY,

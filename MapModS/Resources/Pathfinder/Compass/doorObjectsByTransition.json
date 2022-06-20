@@ -19,5 +19,6 @@
   "Abyss_09[right2]": "lighthouse_top/right2",
   "White_Palace_11[warp]": "doorWarp",
   "White_Palace_03_hub[warp]": "doorWarp",
-  "White_Palace_20[warp]": "End Scene"
+  "White_Palace_20[warp]": "End Scene",
+  "Room_Temple[door1]": "Final Boss Door/door1"
 }

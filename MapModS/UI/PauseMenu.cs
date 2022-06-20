@@ -104,7 +104,14 @@ namespace MapModS.UI
 
             poolButtons.ChildrenBeforeRollover = 10;
 
-            foreach (string group in new List<string>(MainData.usedPoolGroups) { "Benches" })
+            List<string> groupButtonNames = MainData.usedPoolGroups;
+
+            if (!Dependencies.HasDependency("BenchRando") || !BenchRandoInterop.IsBenchRandoEnabled())
+            {
+                groupButtonNames.Add("Benches (Vanilla)");
+            }
+
+            foreach (string group in groupButtonNames)
             {
                 Button button = new(layout, group)
                 {
@@ -192,8 +199,10 @@ namespace MapModS.UI
                 }
             }
 
-            foreach (string group in new List<string>(MainData.usedPoolGroups) { "Benches" })
+            foreach (string group in new List<string>(MainData.usedPoolGroups) { "Benches(Vanilla)" })
             {
+                if (layout.GetElement(group) == null) continue;
+
                 UpdatePool((Button)layout.GetElement(group));
             }
 
@@ -517,7 +526,7 @@ namespace MapModS.UI
 
         public static void TogglePool(Button sender)
         {
-            if (sender.Name == "Benches")
+            if (sender.Name == "Benches(Vanilla)")
             {
                 if (!PlayerData.instance.GetBool("hasPinBench")) return;
 
@@ -543,7 +552,7 @@ namespace MapModS.UI
                 sender.Content = $"{L.Localize("Geo Rocks")}:\n" + MapModS.LS.geoRockCounter + " / " + "207";
             }
 
-            if (sender.Name == "Benches")
+            if (sender.Name == "Benches(Vanilla)")
             {
                 if (PlayerData.instance.GetBool("hasPinBench"))
                 {

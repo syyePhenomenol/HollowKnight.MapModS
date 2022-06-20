@@ -74,7 +74,6 @@ namespace MapModS.Map
 
             Transform areaName = null;
             TextMeshPro tmp = null;
-            Transform mapArrow = null;
             SpriteRenderer sr = null;
 
             foreach (Transform transform in self.transform)
@@ -86,8 +85,7 @@ namespace MapModS.Map
                 }
                 else if (transform.name.Contains("Arrow"))
                 {
-                    mapArrow = transform;
-                    sr = mapArrow.GetComponent<SpriteRenderer>();
+                    sr = transform.GetComponent<SpriteRenderer>();
                 }
             }
 

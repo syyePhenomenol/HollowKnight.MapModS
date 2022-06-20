@@ -12,7 +12,7 @@
     "offsetY": -0.2
   },
   "Salubra": {
-    "offsetX": 1.35,
+    "offsetX": 1.2,
     "offsetY": -0.1
   },
   "Leg_Eater": {
@@ -20,8 +20,8 @@
     "offsetY": 0.0
   },
   "Grubfather": {
-    "offsetX": -0.2,
-    "offsetY": 0.0
+    "offsetX": 0.3,
+    "offsetY": -0.2
   },
   "Seer": {
     "offsetX": -0.9,
@@ -128,13 +128,13 @@
   },
   "Dash_Slash": {
     "pdBool": "hasUpwardSlash",
-    "offsetX": -1.3,
-    "offsetY": 0.0
+    "offsetX": 3.0,
+    "offsetY": -0.1
   },
   "Great_Slash": {
     "pdBool": "hasDashSlash",
-    "offsetX": 0.22,
-    "offsetY": 0.0
+    "offsetX": 0,
+    "offsetY": 0.1
   },
   "Focus": {
     "offsetX": 0.4,
@@ -227,7 +227,7 @@
   },
   "Quick_Slash": {
     "pdBool": "gotCharm_32",
-    "offsetX": 0.4,
+    "offsetX": -0.7,
     "offsetY": 0.2
   },
   "Spell_Twister": {
@@ -378,7 +378,7 @@
   },
   "Mask_Shard-Grey_Mourner": {
     "objectName": "Heart Piece",
-    "offsetX": 0.1,
+    "offsetX": 0.4,
     "offsetY": -0.25
   },
   "Mask_Shard-Bretta": {
@@ -413,8 +413,8 @@
   },
   "Vessel_Fragment-Stag_Nest": {
     "pdBool": "vesselFragStagNest",
-    "offsetX": -2.4,
-    "offsetY": 1.6
+    "offsetX": -2.5,
+    "offsetY": 1.5
   },
   "Charm_Notch-Shrumal_Ogres": {
     "objectName": "Shiny Item",
@@ -679,7 +679,7 @@
   "Wanderer's_Journal-Kingdom's_Edge_Camp": {
     "objectName": "Shiny Item",
     "offsetX": -0.6,
-    "offsetY": 0.0
+    "offsetY": -0.1
   },
   "Wanderer's_Journal-Kingdom's_Edge_Requires_Dive": {
     "objectName": "Shiny Item",
@@ -763,7 +763,7 @@
   },
   "King's_Idol-Cliffs": {
     "objectName": "Shiny Item",
-    "offsetX": -0.6,
+    "offsetX": -0.1,
     "offsetY": -2.1
   },
   "King's_Idol-Crystal_Peak": {
@@ -778,7 +778,7 @@
   },
   "King's_Idol-Dung_Defender": {
     "objectName": "Shiny Item Stand",
-    "offsetX": 0.2,
+    "offsetX": 0.4,
     "offsetY": 0.0
   },
   "King's_Idol-Great_Hopper": {
@@ -923,7 +923,7 @@
   },
   "Boss_Essence-White_Defender": {
     "pdBool": "whiteDefenderOrbsCollected",
-    "offsetX": -0.2,
+    "offsetX": -0.4,
     "offsetY": 0.0
   },
   "Boss_Essence-Grey_Prince_Zote": {
@@ -1222,8 +1222,8 @@
   },
   "Queen's_Station_Stag": {
     "pdBool": "openedFungalWastes",
-    "offsetX": -0.2,
-    "offsetY": 0.0
+    "offsetX": -0.4,
+    "offsetY": 0
   },
   "Queen's_Gardens_Stag": {
     "pdBool": "openedRoyalGardens",
@@ -1237,12 +1237,12 @@
   },
   "King's_Station_Stag": {
     "pdBool": "openedRuins2",
-    "offsetX": 0.3,
+    "offsetX": 0.4,
     "offsetY": -0.3
   },
   "Resting_Grounds_Stag": {
     "pdBool": "openedRestingGrounds",
-    "offsetX": 0.15,
+    "offsetX": 0.3,
     "offsetY": 0.0
   },
   "Distant_Village_Stag": {
@@ -1334,12 +1334,12 @@
   },
   "Hunter's_Journal": {
     "pdBool": "hasJournal",
-    "offsetX": 0.3,
+    "offsetX": 0.4,
     "offsetY": -0.1
   },
   "Journal_Entry-Void_Tendrils": {
     "pdBool": "killedAbyssTendril",
-    "offsetX": 1.8,
+    "offsetX": 1.6,
     "offsetY": -0.2
   },
   "Journal_Entry-Charged_Lumafly": {
@@ -1630,12 +1630,12 @@
   "Geo_Rock-Moss_Prophet": {
     "objectName": "Geo Rock 1",
     "offsetX": 0.0,
-    "offsetY": -0.2
+    "offsetY": -0.3
   },
   "Geo_Rock-Moss_Prophet_Dupe": {
     "objectName": "Geo Rock 2",
     "offsetX": -0.4,
-    "offsetY": -0.2
+    "offsetY": -0.3
   },
   "Geo_Rock-Deepnest_Below_Mimics": {
     "objectName": "Geo Rock Deepnest",
@@ -1910,12 +1910,12 @@
   "Geo_Rock-Greenpath_After_MMC": {
     "objectName": "Geo Rock Green Path 01",
     "offsetX": 0.2,
-    "offsetY": -0.2
+    "offsetY": -0.3
   },
   "Geo_Rock-Greenpath_After_MMC_Dupe": {
     "objectName": "Geo Rock Green Path 01 (1)",
     "offsetX": -0.2,
-    "offsetY": -0.2
+    "offsetY": -0.3
   },
   "Geo_Rock-Greenpath_Obbles_Fool_Eater": {
     "objectName": "Geo Rock Green Path 01",
@@ -1949,8 +1949,8 @@
   },
   "Geo_Rock-Baldur_Shell_Top_Left": {
     "objectName": "Geo Rock 2",
-    "offsetX": -0.7,
-    "offsetY": -0.3
+    "offsetX": -0.6,
+    "offsetY": -0.5
   },
   "Geo_Rock-Baldur_Shell_Alcove": {
     "objectName": "Geo Rock 1 (2)",
@@ -2439,7 +2439,7 @@
   },
   "Boss_Geo-Crystal_Guardian": {
     "objectName": "Mega Zombie Beam Miner (1)",
-    "offsetX": -0.1,
+    "offsetX": 0.1,
     "offsetY": -0.1
   },
   "Boss_Geo-Enraged_Guardian": {
@@ -2726,8 +2726,8 @@
     "offsetY": 0.25
   },
   "Lore_Tablet-Pilgrim's_Way_1": {
-    "offsetX": 1.4,
-    "offsetY": 0.0
+    "offsetX": 1.1,
+    "offsetY": 0
   },
   "Lore_Tablet-Pilgrim's_Way_2": {
     "offsetX": -1.3,
@@ -2839,7 +2839,7 @@
     "offsetY": -0.2
   },
   "Mr_Mushroom-Howling_Cliffs": {
-    "offsetX": 0.54,
+    "offsetX": 0.64,
     "offsetY": 0.32
   },
   "Mr_Mushroom-Ancient_Basin": {
@@ -2907,7 +2907,7 @@
     "offsetY": -1.7
   },
   "Lever-Resting_Grounds_Stag": {
-    "offsetX": 0.15,
+    "offsetX": 0.3,
     "offsetY": 0.0
   },
   "Lever-Abyss_Lighthouse": {
@@ -3104,18 +3104,546 @@
   },
   "Nailsmith_Upgrade_1": {
     "offsetX": -1.6,
-    "offsetY": 0.0
+    "offsetY": -0.1
   },
   "Nailsmith_Upgrade_2": {
     "offsetX": -1.2,
-    "offsetY": 0.0
+    "offsetY": -0.1
   },
   "Nailsmith_Upgrade_3": {
     "offsetX": -0.8,
-    "offsetY": 0.0
+    "offsetY": -0.1
   },
   "Nailsmith_Upgrade_4": {
     "offsetX": -0.4,
-    "offsetY": 0.0
+    "offsetY": -0.1
+  },
+  "Bench-Dirtmouth": {
+    "offsetX": -0.025,
+    "offsetY": -0.6
+  },
+  "Bench-Mato": {
+    "offsetX": -0.26,
+    "offsetY": 0.32
+  },
+  "Bench-Crossroads_Hot_Springs": {
+    "offsetX": 0.2,
+    "offsetY": -0.1
+  },
+  "Bench-Crossroads_Stag": {
+    "offsetX": 0.1,
+    "offsetY": 0.05
+  },
+  "Bench-Salubra": {
+    "offsetX": 1.7,
+    "offsetY": -0.1
+  },
+  "Bench-Ancestral_Mound": {
+    "offsetX": 0.0,
+    "offsetY": -0.6
+  },
+  "Bench-Waterfall": {
+    "offsetX": 0.05,
+    "offsetY": 0.2
+  },
+  "Bench-Stone_Sanctuary": {
+    "offsetX": 0.1,
+    "offsetY": -0.25
+  },
+  "Bench-Greenpath_Toll": {
+    "offsetX": 0.2,
+    "offsetY": -0.3
+  },
+  "Bench-Greenpath_Stag": {
+    "offsetX": 0.2,
+    "offsetY": -0.1
+  },
+  "Bench-Lake_of_Unn": {
+    "offsetX": 0.4,
+    "offsetY": -0.3
+  },
+  "Bench-Sheo": {
+    "offsetX": 0.4,
+    "offsetY": 0.1
+  },
+  "Bench-Archives": {
+    "offsetX": 0.6,
+    "offsetY": -0.15
+  },
+  "Bench-Queen's_Station": {
+    "offsetX": 0,
+    "offsetY": 0
+  },
+  "Bench-Leg_Eater": {
+    "offsetX": 0.1,
+    "offsetY": 0
+  },
+  "Bench-Bretta": {
+    "offsetX": 0.2,
+    "offsetY": -1.0
+  },
+  "Bench-Mantis_Village": {
+    "offsetX": 0.8,
+    "offsetY": -0.2
+  },
+  "Bench-Quirrel": {
+    "offsetX": 0.2,
+    "offsetY": -0.6
+  },
+  "Bench-City_Toll": {
+    "offsetX": -0.2,
+    "offsetY": -0.4
+  },
+  "Bench-City_Storerooms": {
+    "offsetX": -0.2,
+    "offsetY": 0
+  },
+  "Bench-Watcher's_Spire": {
+    "offsetX": 0.7,
+    "offsetY": -0.15
+  },
+  "Bench-King's_Station": {
+    "offsetX": 0.0,
+    "offsetY": -0.3
+  },
+  "Bench-Pleasure_House": {
+    "offsetX": 0.5,
+    "offsetY": 0.2
+  },
+  "Bench-Waterways": {
+    "offsetX": -2.5,
+    "offsetY": 0
+  },
+  "Bench-Godhome_Atrium": {
+    "offsetX": -1.6,
+    "offsetY": -0.2
+  },
+  "Bench-Hall_of_Gods": {
+    "offsetX": -1.2,
+    "offsetY": -0.2
+  },
+  "Bench-Deepnest_Hot_Springs": {
+    "offsetX": -0.3,
+    "offsetY": -1.7
+  },
+  "Bench-Failed_Tramway": {
+    "offsetX": 0.4,
+    "offsetY": 0.5
+  },
+  "Bench-Beast's_Den": {
+    "offsetX": 0,
+    "offsetY": 0.9
+  },
+  "Bench-Basin_Toll": {
+    "offsetX": 1.9,
+    "offsetY": 0.2
+  },
+  "Bench-Hidden_Station": {
+    "offsetX": 0.6,
+    "offsetY": 0.1
+  },
+  "Bench-Oro": {
+    "offsetX": 3.4,
+    "offsetY": -0.1
+  },
+  "Bench-Camp": {
+    "offsetX": -0.1,
+    "offsetY": -0.1
+  },
+  "Bench-Colosseum": {
+    "offsetX": 3.9,
+    "offsetY": 0
+  },
+  "Bench-Hive": {
+    "offsetX": -0.65,
+    "offsetY": -0.4
+  },
+  "Bench-Peak_Dark_Room": {
+    "offsetX": 0.2,
+    "offsetY": -0.5
+  },
+  "Bench-Crystal_Guardian": {
+    "offsetX": -0.3,
+    "offsetY": -0.1
+  },
+  "Bench-Grounds_Stag": {
+    "offsetX": -0.1,
+    "offsetY": 0
+  },
+  "Bench-Grey_Mourner": {
+    "offsetX": 0.0,
+    "offsetY": -0.25
+  },
+  "Bench-Gardens_Cornifer": {
+    "offsetX": -0.5,
+    "offsetY": 0.1
+  },
+  "Bench-Gardens_Toll": {
+    "offsetX": 0.1,
+    "offsetY": -0.1
+  },
+  "Bench-Gardens_Stag": {
+    "offsetX": 2.1,
+    "offsetY": 0
+  },
+  "Bench-Palace_Entrance": {
+    "offsetX": -1.0,
+    "offsetY": 1.3
+  },
+  "Bench-Palace_Atrium": {
+    "offsetX": -0.6,
+    "offsetY": 1.3
+  },
+  "Bench-Palace_Balcony": {
+    "offsetX": -0.2,
+    "offsetY": 1.3
+  },
+  "Bench-Upper_Tram": {
+    "offsetX": 1.2,
+    "offsetY": -0.05
+  },
+  "Bench-Lower_Tram": {
+    "offsetX": 0.8,
+    "offsetY": 0.1
+  },
+  "Bench-Stag_Nest": {
+    "offsetX": -2.9,
+    "offsetY": 1.5
+  },
+  "Bench-Cliffs_Overhang": {
+    "offsetX": 1.3,
+    "offsetY": 1.2
+  },
+  "Bench-Joni's_Repose": {
+    "offsetX": -0.1,
+    "offsetY": -0.5
+  },
+  "Bench-Nightmare_Lantern": {
+    "offsetX": -0.7,
+    "offsetY": -0.1
+  },
+  "Bench-Blasted_Plains": {
+    "offsetX": -0.5,
+    "offsetY": -2.1
+  },
+  "Bench-Baldur_Cavern": {
+    "offsetX": -0.6,
+    "offsetY": -0.1
+  },
+  "Bench-Crossroads_Center": {
+    "offsetX": -0.4,
+    "offsetY": -0.1
+  },
+  "Bench-Myla": {
+    "offsetX": 0.2,
+    "offsetY": -0.4
+  },
+  "Bench-Grubfather": {
+    "offsetX": -0.3,
+    "offsetY": -0.2
+  },
+  "Bench-Crossroads_Elevator": {
+    "offsetX": -0.7,
+    "offsetY": -0.1
+  },
+  "Bench-Fungal_Road": {
+    "offsetX": -0.2,
+    "offsetY": -0.4
+  },
+  "Bench-Pilgrim's_Start": {
+    "offsetX": 1.5,
+    "offsetY": 0
+  },
+  "Bench-Canyon_Depths": {
+    "offsetX": 0,
+    "offsetY": 0.5
+  },
+  "Bench-Canyon's_End": {
+    "offsetX": 0.2,
+    "offsetY": -0.2
+  },
+  "Bench-Overgrown_Atrium": {
+    "offsetX": 0.2,
+    "offsetY": -0.3
+  },
+  "Bench-Overgrown_Mound": {
+    "offsetX": -1.5,
+    "offsetY": 0.5
+  },
+  "Bench-Millibelle": {
+    "offsetX": -0.5,
+    "offsetY": -0.1
+  },
+  "Bench-Fungal_Core": {
+    "offsetX": 0.8,
+    "offsetY": 0
+  },
+  "Bench-Fungal_Tower": {
+    "offsetX": -0.3,
+    "offsetY": 0.4
+  },
+  "Bench-Cloth's_Ambush": {
+    "offsetX": -0.4,
+    "offsetY": 0
+  },
+  "Bench-Pilgrim's_End": {
+    "offsetX": 0.2,
+    "offsetY": -0.7
+  },
+  "Bench-Mantis_Hub": {
+    "offsetX": 0.1,
+    "offsetY": 1.2
+  },
+  "Bench-Prophet's_Gate": {
+    "offsetX": -0.4,
+    "offsetY": 0.1
+  },
+  "Bench-City_Entrance": {
+    "offsetX": -0.4,
+    "offsetY": 0.1
+  },
+  "Bench-Inner_Sanctum": {
+    "offsetX": 0.3,
+    "offsetY": 0.1
+  },
+  "Bench-Outer_Sanctum": {
+    "offsetX": 0.4,
+    "offsetY": -0.9
+  },
+  "Bench-City_Fountain": {
+    "offsetX": -1.0,
+    "offsetY": -0.6
+  },
+  "Bench-Nailsmith": {
+    "offsetX": -1.2,
+    "offsetY": 0.3
+  },
+  "Bench-Flooded_Stag": {
+    "offsetX": -1.4,
+    "offsetY": 0
+  },
+  "Bench-Zote's_Skyway": {
+    "offsetX": 0.3,
+    "offsetY": 0
+  },
+  "Bench-Watcher's_Skyway": {
+    "offsetX": -1.0,
+    "offsetY": 0.2
+  },
+  "Bench-Tower_of_Love": {
+    "offsetX": 0.1,
+    "offsetY": -1.7
+  },
+  "Bench-Hive_Hideaway": {
+    "offsetX": 1.4,
+    "offsetY": 0
+  },
+  "Bench-Pure_Altar": {
+    "offsetX": -0.3,
+    "offsetY": 0.2
+  },
+  "Bench-Lurker's_Overlook": {
+    "offsetX": -1.2,
+    "offsetY": 0.8
+  },
+  "Bench-Edge_Summit": {
+    "offsetX": -0.8,
+    "offsetY": 1.8
+  },
+  "Bench-Bardoon": {
+    "offsetX": -0.2,
+    "offsetY": 2.1
+  },
+  "Bench-Bardoon's_Tail": {
+    "offsetX": -0.1,
+    "offsetY": -0.4
+  },
+  "Bench-West_Lake_Shore": {
+    "offsetX": -2.7,
+    "offsetY": -0.1
+  },
+  "Bench-East_Lake_Shore": {
+    "offsetX": 2.6,
+    "offsetY": -0.1
+  },
+  "Bench-Spirits'_Glade": {
+    "offsetX": -1.0,
+    "offsetY": -0.8
+  },
+  "Bench-Crypts": {
+    "offsetX": 0,
+    "offsetY": 0
+  },
+  "Bench-Nosk's_Lair": {
+    "offsetX": -1.7,
+    "offsetY": -0.1
+  },
+  "Bench-Weaver's_Den": {
+    "offsetX": 2.1,
+    "offsetY": 0.4
+  },
+  "Bench-Distant_Reservoir": {
+    "offsetX": 0.9,
+    "offsetY": -2.0
+  },
+  "Bench-Deepnest_Gate": {
+    "offsetX": 0.6,
+    "offsetY": -0.2
+  },
+  "Bench-Distant_Stag": {
+    "offsetX": 0,
+    "offsetY": 0
+  },
+  "Bench-Deepnest_Maze": {
+    "offsetX": -0.5,
+    "offsetY": 1.7
+  },
+  "Bench-Abyss_Workshop": {
+    "offsetX": 2.0,
+    "offsetY": -0.2
+  },
+  "Bench-Far_Basin": {
+    "offsetX": 1.3,
+    "offsetY": -0.8
+  },
+  "Bench-Basin_Hub": {
+    "offsetX": -0.3,
+    "offsetY": 0.9
+  },
+  "Bench-Palace_Grounds": {
+    "offsetX": -1.4,
+    "offsetY": -0.6
+  },
+  "Bench-Traitor's_Grave": {
+    "offsetX": 0,
+    "offsetY": 0
+  },
+  "Bench-Fort_Loodle": {
+    "offsetX": 0.1,
+    "offsetY": -0.1
+  },
+  "Bench-Far_Gardens": {
+    "offsetX": 0.3,
+    "offsetY": 0.5
+  },
+  "Bench-Dark_Gardens": {
+    "offsetX": -0.1,
+    "offsetY": -1.5
+  },
+  "Bench-Gardens_Atrium": {
+    "offsetX": 0.4,
+    "offsetY": 0.7
+  },
+  "Bench-Peak_Entrance": {
+    "offsetX": -0.1,
+    "offsetY": -0.5
+  },
+  "Bench-Crown_Ascent": {
+    "offsetX": 1.3,
+    "offsetY": -1.2
+  },
+  "Bench-Crystallized_Mound": {
+    "offsetX": 0.6,
+    "offsetY": 1.2
+  },
+  "Bench-Crusher_Refuge": {
+    "offsetX": 0,
+    "offsetY": -0.3
+  },
+  "Bench-Western_Peak": {
+    "offsetX": -1.7,
+    "offsetY": -0.2
+  },
+  "Bench-Quirrel_Peak": {
+    "offsetX": -0.6,
+    "offsetY": -0.1
+  },
+  "Bench-Peak_Ravine": {
+    "offsetX": -1.3,
+    "offsetY": -0.2
+  },
+  "Bench-Unn's_Chamber": {
+    "offsetX": 0.5,
+    "offsetY": 1.2
+  },
+  "Bench-Gulka_Gulley": {
+    "offsetX": 0.2,
+    "offsetY": 0.1
+  },
+  "Bench-Hunter's_Hideout": {
+    "offsetX": 0,
+    "offsetY": -0.1
+  },
+  "Bench-Duranda's_Trial": {
+    "offsetX": 2.5,
+    "offsetY": -0.1
+  },
+  "Bench-Greenpath_Entrance": {
+    "offsetX": 1.3,
+    "offsetY": 0.2
+  },
+  "Bench-Defender's_Repose": {
+    "offsetX": 0,
+    "offsetY": 0
+  },
+  "Bench-Hermit's_Approach": {
+    "offsetX": 0.8,
+    "offsetY": 0.8
+  },
+  "Bench-Waterways_Entrance": {
+    "offsetX": 0,
+    "offsetY": 0.2
+  },
+  "Bench-Isma's_Grove": {
+    "offsetX": -0.3,
+    "offsetY": -0.7
+  },
+  "Bench-Acid_Sluice_East": {
+    "offsetX": -0.4,
+    "offsetY": -0.5
+  },
+  "Bench-Acid_Sluice_West": {
+    "offsetX": 0.6,
+    "offsetY": -0.1
+  },
+  "Bench-Fort_Flukefey": {
+    "offsetX": -0.4,
+    "offsetY": 0.1
+  },
+  "Bench-Destroyed_Tram": {
+    "offsetX": -1.1,
+    "offsetY": -0.25
+  },
+  "Bench-Kingsmould_Duelist": {
+    "offsetX": 0.2,
+    "offsetY": 1.3
+  },
+  "Bench-Palace_West": {
+    "offsetX": 0.6,
+    "offsetY": 1.3
+  },
+  "Bench-Sawblade_Choir": {
+    "offsetX": 1.0,
+    "offsetY": 1.3
+  },
+  "Bench-Palace_East": {
+    "offsetX": -0.8,
+    "offsetY": 1.7
+  },
+  "Bench-Thorny_Respite": {
+    "offsetX": -0.4,
+    "offsetY": 1.7
+  },
+  "Bench-Palace_Workshop": {
+    "offsetX": 0,
+    "offsetY": 1.7
+  },
+  "Bench-Throne_Approach": {
+    "offsetX": 0.4,
+    "offsetY": 1.7
+  },
+  "Bench-Path_Midpoint": {
+    "offsetX": 0.8,
+    "offsetY": 1.7
   }
 }

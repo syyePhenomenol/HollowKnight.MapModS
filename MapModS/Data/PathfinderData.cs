@@ -10,11 +10,10 @@ namespace MapModS.Data
 {
     public static class PathfinderData
     {
-        //internal static HashSet<string> persistentTerms;
         internal static Dictionary<string, string> conditionalTerms;
 
-        private static Dictionary<string, string> benchwarpScenes;
-        private static Dictionary<string, string> specialTransitions;
+        private static Dictionary<string, string> adjacentScenes;
+        private static Dictionary<string, string> adjacentTerms;
         private static Dictionary<string, string> scenesByTransition;
         private static Dictionary<string, HashSet<string>> transitionsByScene;
 
@@ -25,10 +24,9 @@ namespace MapModS.Data
 
         public static void Load()
         {
-            //persistentTerms = JsonUtil.Deserialize<HashSet<string>>("MapModS.Resources.Pathfinder.Data.persistentTerms.json");
             conditionalTerms = JsonUtil.Deserialize< Dictionary<string, string>> ("MapModS.Resources.Pathfinder.Data.conditionalTerms.json");
-            benchwarpScenes = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.benchwarp.json");
-            specialTransitions = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.specialTransitions.json");
+            adjacentScenes = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.adjacentScenes.json");
+            adjacentTerms = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.adjacentTerms.json");
             scenesByTransition = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.scenesByTransition.json");
             transitionsByScene = JsonUtil.Deserialize<Dictionary<string, HashSet<string>>>("MapModS.Resources.Pathfinder.Data.transitionsByScene.json");
             doorObjectsByScene = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Compass.doorObjectsByScene.json");
@@ -44,6 +42,12 @@ namespace MapModS.Data
             (LogicManagerBuilder.JsonType.LogicSubst, "logicSubstitutions")
         };
 
+        private static readonly (LogicManagerBuilder.JsonType type, string fileName)[] benchFiles = new[]
+        {
+            (LogicManagerBuilder.JsonType.LogicEdit, "benchLogicEdits"),
+            (LogicManagerBuilder.JsonType.Waypoints, "benchWaypoints")
+        };
+
         private static LogicManagerBuilder lmb;
 
         public static LogicManager lm;
@@ -57,40 +61,38 @@ namespace MapModS.Data
                 lmb.DeserializeJson(type, Assembly.GetExecutingAssembly().GetManifestResourceStream($"MapModS.Resources.Pathfinder.Logic.{fileName}.json"));
             }
 
-            // Set Start Warp logic
-            StartDef start = RD.GetStartDef(RM.RS.GenerationSettings.StartLocationSettings.StartLocation);
-            string startAdjacent = start.SceneName + "[]";
-
-            specialTransitions["Warp_Start"] = startAdjacent;
-            lmb.AddTransition(new(startAdjacent, "FALSE"));
-            lmb.DoLogicEdit(new(start.Transition, "ORIG | " + startAdjacent));
+            if (!Dependencies.HasDependency("BenchRando") || !BenchRandoInterop.IsBenchRandoEnabled())
+            {
+                foreach ((LogicManagerBuilder.JsonType type, string fileName) in benchFiles)
+                {
+                    lmb.DeserializeJson(type, Assembly.GetExecutingAssembly().GetManifestResourceStream($"MapModS.Resources.Pathfinder.Logic.{fileName}.json"));
+                }
+            }
 
             lm = new(lmb);
 
             waypointScenes = lm.Waypoints.Where(w => RD.IsRoom(w.Name)).ToDictionary(w => w.Name, w => w);
-        }
 
-        // Returns all benchwarps based on benches sat on + Start
-        public static HashSet<string> GetBenchwarpTransitions()
-        {
-            IEnumerable<string> visitedBenches = BenchInterop.GetVisitedBenchScenes().Where(b => benchwarpScenes.Values.Contains(b));
+            // Set Start Warp
+            StartDef start = RD.GetStartDef(RM.RS.GenerationSettings.StartLocationSettings.StartLocation);
 
-            HashSet<string> transitions = new(benchwarpScenes.Where(b => visitedBenches.Contains(b.Value)).Select(b => b.Key));
-
-            transitions.Add("Warp_Start");
-
-            return transitions;
-        }
-
-        public static string GetBenchwarpScene(string transition)
-        {
-            if (benchwarpScenes.ContainsKey(transition))
+            if (adjacentScenes.ContainsKey("Warp_Start"))
             {
-                return benchwarpScenes[transition];
+                adjacentScenes["Warp_Start"] = start.SceneName;
+            }
+            else
+            {
+                adjacentScenes.Add("Warp_Start", start.SceneName);
             }
 
-            // Start warp (or default handling for any other warp)
-            return null;
+            if (adjacentTerms.ContainsKey("Warp_Start"))
+            {
+                adjacentTerms["Warp_Start"] = start.Transition;
+            }
+            else
+            {
+                adjacentTerms.Add("Warp_Start", start.Transition);
+            }
         }
 
         public static HashSet<string> GetTransitionsInScene(this string scene)
@@ -115,10 +117,6 @@ namespace MapModS.Data
             {
                 return "";
             }
-            else if (transition.IsSpecialTransitionTarget())
-            {
-                return transition.Split('[')[0];
-            }
 
             return TransitionData.GetTransitionScene(transition);
         }
@@ -126,23 +124,28 @@ namespace MapModS.Data
         // Returns the correct adjacent scene for special transitions
         public static string GetAdjacentScene(this string transition)
         {
-            return transition.GetAdjacentTransition().GetScene();
+            if (transition.IsSpecialTransition())
+            {
+                return adjacentScenes[transition];
+            }
+
+            return transition.GetAdjacentTerm().GetScene();
         }
 
-        public static string GetAdjacentTransition(this string source)
+        public static string GetAdjacentTerm(this string transition)
         {
+            if (transition.IsSpecialTransition())
+            {
+                return adjacentTerms[transition];
+            }
+
             // Some top transitions don't have an adjacent transition
-            if (TransitionData.IsInTransitionLookup(source))
+            if (TransitionData.IsInTransitionLookup(transition))
             {
-                return TransitionData.GetAdjacentTransition(source);
+                return TransitionData.GetAdjacentTransition(transition);
             }
 
-            if (source.IsSpecialTransition())
-            {
-                return specialTransitions[source];
-            }
-
-            MapModS.Instance.LogWarn($"No adjacent transition for {source}");
+            MapModS.Instance.LogWarn($"No adjacent term for {transition}");
 
             return null;
         }
@@ -161,17 +164,12 @@ namespace MapModS.Data
 
         public static bool IsSpecialTransition(this string transition)
         {
-            return specialTransitions.ContainsKey(transition);
-        }
-
-        public static bool IsSpecialTransitionTarget(this string transition)
-        {
-            return specialTransitions.Values.Contains(transition);
+            return adjacentTerms.ContainsKey(transition) || transition.IsBenchwarpTransition();
         }
 
         public static bool IsBenchwarpTransition(this string transition)
         {
-            return transition.IsSpecialTransition() && transition.StartsWith("Warp");
+            return BenchwarpInterop.benchKeys.ContainsKey(transition);
         }
 
         public static bool IsStagTransition(this string transition)
@@ -192,18 +190,6 @@ namespace MapModS.Data
         public static bool IsWarpTransition(this string transition)
         {
             return transition.IsSpecialTransition() && transition.Contains("[warp]");
-        }
-
-        public static string ToCleanName(this string transition)
-        {
-            if (transition.IsSpecialTransition())
-            {
-                return transition.Replace("_", " ").Replace("ARROW", "->");
-            }
-            else
-            {
-                return transition;
-            }
         }
     }
 }

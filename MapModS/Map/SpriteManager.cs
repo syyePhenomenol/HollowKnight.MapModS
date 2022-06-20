@@ -87,6 +87,7 @@ namespace MapModS.Map
                     "Shops" => "pinShop",
                     "Levers" => "pinLever",
                     "Mr Mushroom" => "pinLore",
+                    "Benches" => "pinBench",
                     _ => "pinUnknown",
                 };
             }

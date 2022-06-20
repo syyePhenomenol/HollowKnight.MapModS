@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Vasi;
 
 namespace MapModS.Map
 {
@@ -48,7 +49,7 @@ namespace MapModS.Map
 
             try
             {
-                Dependencies.BenchwarpInterop();
+                Dependencies.BenchwarpVersionCheck();
                 MainData.SetUsedPinDefs();
                 MainData.SetLogicLookup();
                 TransitionData.SetTransitionLookup();
