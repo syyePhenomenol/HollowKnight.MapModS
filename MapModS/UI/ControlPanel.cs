@@ -131,7 +131,7 @@ namespace MapModS.UI
                     LookupText.UpdateAll();
                 }, ModifierKeys.Ctrl, () => MapModS.LS.modEnabled);
                 
-                if (Dependencies.HasDependency("Benchwarp"))
+                if (Dependencies.HasBenchwarp())
                 {
                     layout.ListenForHotkey(KeyCode.W, () =>
                     {
@@ -283,7 +283,7 @@ namespace MapModS.UI
 
         public static void UpdateBenchwarpWorldMap()
         {
-            if (Dependencies.HasDependency("Benchwarp"))
+            if (Dependencies.HasBenchwarp())
             {
                 UIExtensions.SetToggleText
                     (
@@ -300,7 +300,7 @@ namespace MapModS.UI
 
         public static void UpdateBenchwarpSearch()
         {
-            if (Dependencies.HasDependency("Benchwarp"))
+            if (Dependencies.HasBenchwarp())
             {
                 UIExtensions.SetToggleText
                     (

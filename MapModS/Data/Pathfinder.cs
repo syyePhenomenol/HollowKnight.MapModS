@@ -170,7 +170,7 @@ namespace MapModS.Data
             void InitializeNodeQueue()
             {
                 // Add initial bench warp transitions if setting is enabled
-                if (allowBenchWarp && Dependencies.HasDependency("Benchwarp"))
+                if (allowBenchWarp && Dependencies.HasBenchwarp())
                 {
                     foreach (string transition in BenchwarpInterop.GetVisitedBenchTransitions())
                     {
@@ -265,6 +265,8 @@ namespace MapModS.Data
                         // Get index of rejectedRoutes with same starting transition
                         newNode.repeatedRoutes = rejectedRoutes.Select((r, i) => new { r, i }).Where(x => x.r.First() == transition).Select(x => x.i);
                     }
+
+                    //newNode.PrintRoute();
 
                     queue.AddLast(newNode);
 

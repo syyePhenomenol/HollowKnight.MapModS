@@ -109,7 +109,7 @@ namespace MapModS.UI
             }
 
 
-            if (TP.selectedRoute.Any() && TP.selectedRoute.First().IsBenchwarpTransition() && Dependencies.HasDependency("Benchwarp"))
+            if (TP.selectedRoute.Any() && TP.selectedRoute.First().IsBenchwarpTransition() && Dependencies.HasBenchwarp())
             {
                 bindings = new(InputHandler.Instance.inputActions.attack.Bindings);
 

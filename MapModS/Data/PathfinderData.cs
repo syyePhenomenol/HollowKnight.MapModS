@@ -61,7 +61,17 @@ namespace MapModS.Data
                 lmb.DeserializeJson(type, Assembly.GetExecutingAssembly().GetManifestResourceStream($"MapModS.Resources.Pathfinder.Logic.{fileName}.json"));
             }
 
-            if (!Dependencies.HasDependency("BenchRando") || !BenchRandoInterop.IsBenchRandoEnabled())
+            if (Dependencies.HasBenchRando() && BenchwarpInterop.IsBenchRandoEnabled())
+            {
+                foreach(KeyValuePair<(string, string), string> kvp in BenchwarpInterop.benchTransitions)
+                {
+                    adjacentScenes[kvp.Value] = kvp.Key.Item1;
+                    adjacentTerms[kvp.Value] = kvp.Value;
+                }
+
+                lmb.DeserializeJson(LogicManagerBuilder.JsonType.LogicEdit, Assembly.GetExecutingAssembly().GetManifestResourceStream($"MapModS.Resources.Pathfinder.Logic.benchRandoLogicEdits.json"));
+            }
+            else
             {
                 foreach ((LogicManagerBuilder.JsonType type, string fileName) in benchFiles)
                 {
@@ -76,23 +86,8 @@ namespace MapModS.Data
             // Set Start Warp
             StartDef start = RD.GetStartDef(RM.RS.GenerationSettings.StartLocationSettings.StartLocation);
 
-            if (adjacentScenes.ContainsKey("Warp_Start"))
-            {
-                adjacentScenes["Warp_Start"] = start.SceneName;
-            }
-            else
-            {
-                adjacentScenes.Add("Warp_Start", start.SceneName);
-            }
-
-            if (adjacentTerms.ContainsKey("Warp_Start"))
-            {
-                adjacentTerms["Warp_Start"] = start.Transition;
-            }
-            else
-            {
-                adjacentTerms.Add("Warp_Start", start.Transition);
-            }
+            adjacentScenes["Warp-Start"] = start.SceneName;
+            adjacentTerms["Warp-Start"] = start.Transition;
         }
 
         public static HashSet<string> GetTransitionsInScene(this string scene)

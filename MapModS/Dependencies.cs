@@ -43,10 +43,30 @@ namespace MapModS
             }
         }
 
-        public static bool HasDependency(string name)
+        public static bool Has(string name)
         {
             return (strictDependencies.ContainsKey(name) && strictDependencies[name] != null)
                 || (optionalDependencies.ContainsKey(name) && optionalDependencies[name] != null);
+        }
+
+        public static bool HasAdditionalMaps()
+        {
+            return optionalDependencies["AdditionalMaps"] != null;
+        }
+
+        public static bool HasBenchRando()
+        {
+            return optionalDependencies["BenchRando"] != null;
+        }
+
+        public static bool HasBenchwarp()
+        {
+            return optionalDependencies["Benchwarp"] != null;
+        }
+
+        public static bool HasRandomizableLevers()
+        {
+            return optionalDependencies["RandomizableLevers"] != null;
         }
 
         public static void BenchwarpVersionCheck()

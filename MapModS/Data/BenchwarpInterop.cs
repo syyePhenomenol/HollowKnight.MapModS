@@ -5,8 +5,6 @@ using System.Linq;
 using UnityEngine;
 using RD = RandomizerMod.RandomizerData.Data;
 using RM = RandomizerMod.RandomizerMod;
-using RandomizerMod.Settings;
-using RandomizerCore.Logic;
 
 namespace MapModS.Data
 {
@@ -26,9 +24,9 @@ namespace MapModS.Data
             benchTransitions = new();
             benchKeys = new();
 
-            if (!Dependencies.HasDependency("Benchwarp")) return;
+            if (!Dependencies.HasBenchwarp()) return;
 
-            if (Dependencies.HasDependency("BenchRando") && BenchRandoInterop.IsBenchRandoEnabled())
+            if (Dependencies.HasBenchRando() && IsBenchRandoEnabled())
             {
                 benchTransitions = BenchRandoInterop.GetBenchTransitions();
             }
@@ -46,16 +44,16 @@ namespace MapModS.Data
                 }
             }
 
-            (string, string) startKey = new(RD.GetStartDef(RM.RS.GenerationSettings.StartLocationSettings.StartLocation).SceneName, "Start");
+            (string, string) startKey = new(RD.GetStartDef(RM.RS.GenerationSettings.StartLocationSettings.StartLocation).SceneName, "ITEMCHANGER_RESPAWN_MARKER");
 
             benchTransitions.Add(startKey, "Warp-Start");
 
-            foreach (KeyValuePair<(string, string), string> kvp in benchTransitions)
-            {
-                MapModS.Instance.Log("Scene: " + kvp.Key.Item1);
-                MapModS.Instance.Log("Respawn Marker: " + kvp.Key.Item2);
-                MapModS.Instance.Log("Name: " + kvp.Value);
-            }
+            //foreach (KeyValuePair<(string, string), string> kvp in benchTransitions)
+            //{
+            //    MapModS.Instance.Log("Scene: " + kvp.Key.Item1);
+            //    MapModS.Instance.Log("Respawn Marker: " + kvp.Key.Item2);
+            //    MapModS.Instance.Log("Name: " + kvp.Value);
+            //}
 
             benchKeys = benchTransitions.ToDictionary(t => t.Value, t => t.Key);
         }
@@ -67,7 +65,7 @@ namespace MapModS.Data
                 .GroupBy(b => b.mappedSceneName)
                 .ToDictionary(b => b.First().mappedSceneName, b => b.ToList());
 
-            BenchKey startKey = new(RD.GetStartDef(RM.RS.GenerationSettings.StartLocationSettings.StartLocation).SceneName, "Start");
+            BenchKey startKey = new(RD.GetStartDef(RM.RS.GenerationSettings.StartLocationSettings.StartLocation).SceneName, "ITEMCHANGER_RESPAWN_MARKER");
             WorldMapBenchDef startDef = new(startKey);
 
             if (benches.ContainsKey(startDef.mappedSceneName))
@@ -84,7 +82,8 @@ namespace MapModS.Data
         {
             return Benchwarp.Benchwarp.LS.visitedBenchScenes
                 .Where(b => benchTransitions.ContainsKey((b.SceneName, b.RespawnMarkerName)))
-                .Select(b => benchTransitions[(b.SceneName, b.RespawnMarkerName)]);
+                .Select(b => benchTransitions[(b.SceneName, b.RespawnMarkerName)])
+                .Concat(new List<string>() { "Warp-Start" });
         }
 
         internal static IEnumerator DoBenchwarp(string transition)
@@ -127,6 +126,11 @@ namespace MapModS.Data
                 ChangeScene.WarpToRespawn();
             }
         }
+
+        internal static bool IsBenchRandoEnabled()
+        {
+            return RM.RS.Context.LM.TermLookup.Keys.Any(t => t.StartsWith("Bench-"));
+        }
     }
 
 
@@ -146,7 +150,7 @@ namespace MapModS.Data
                 benchName = sceneName + " " + respawnMarker;
             }
 
-            if (Dependencies.HasDependency("AdditionalMaps") && sceneName == "GG_Workshop")
+            if (Dependencies.HasAdditionalMaps() && sceneName == "GG_Workshop")
             {
                 mappedSceneName = "GG_Atrium";
                 return;
@@ -156,7 +160,7 @@ namespace MapModS.Data
             {
                 MapRoomDef mrd = MainData.GetNonMappedRoomDef(sceneName);
 
-                if (!Dependencies.HasDependency("AdditionalMaps") || mrd.includeWithAdditionalMaps)
+                if (!Dependencies.HasAdditionalMaps() || mrd.includeWithAdditionalMaps)
                 {
                     mappedSceneName = mrd.mappedScene;
                     return;

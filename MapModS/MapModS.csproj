@@ -44,6 +44,7 @@
   <ItemGroup>
     <None Remove="Resources\Pathfinder\Data\adjacentScenes.json" />
     <None Remove="Resources\Pathfinder\Logic\benchLogicEdits.json" />
+    <None Remove="Resources\Pathfinder\Logic\benchRandoLogicEdits.json" />
     <None Remove="Resources\Pathfinder\Logic\benchWaypoints.json" />
     <None Remove="Resources\Pins\pinBench.png" />
   </ItemGroup>
@@ -61,6 +62,7 @@
     <EmbeddedResource Include="Resources\Pathfinder\Data\transitionsByScene.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Data\scenesByTransition.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Logic\benchLogicEdits.json" />
+    <EmbeddedResource Include="Resources\Pathfinder\Logic\benchRandoLogicEdits.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Logic\logicSubstitutions.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Logic\logicEdits.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Logic\benchWaypoints.json" />

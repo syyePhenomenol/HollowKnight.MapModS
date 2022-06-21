@@ -61,7 +61,7 @@ namespace MapModS.UI
 
         public static void UpdateAll()
         {
-            if (Dependencies.HasDependency("Benchwarp") && !TransitionData.TransitionModeActive())
+            if (Dependencies.HasBenchwarp() && !TransitionData.TransitionModeActive())
             {
                 if (!MapModS.GS.benchwarpWorldMap)
                 {
@@ -78,7 +78,7 @@ namespace MapModS.UI
         {
             string text = "";
 
-            if (Dependencies.HasDependency("Benchwarp") && selectedBenchScene != "")
+            if (Dependencies.HasBenchwarp() && selectedBenchScene != "")
             {
                 List<InControl.BindingSource> bindings = new(InputHandler.Instance.inputActions.attack.Bindings);
 
@@ -86,7 +86,7 @@ namespace MapModS.UI
 
                 text += Utils.GetBindingsText(bindings);
 
-                text += $" {L.Localize("to warp to")} {GetSelectedBench().benchName.Replace("Warp ", "")}.";
+                text += $" {L.Localize("to warp to")} {GetSelectedBench().benchName.Replace("Warp ", "").Replace("Bench ", "")}.";
 
                 if (BI.benches.ContainsKey(selectedBenchScene) && BI.benches[selectedBenchScene].Count > 1)
                 {
@@ -111,7 +111,7 @@ namespace MapModS.UI
                 || TransitionData.TransitionModeActive()
                 || !GUI.worldMapOpen
                 || GUI.lockToggleEnable
-                || !Dependencies.HasDependency("Benchwarp")
+                || !Dependencies.HasBenchwarp()
                 || !MapModS.GS.benchwarpWorldMap
                 || GameManager.instance.IsGamePaused())
             {
@@ -172,7 +172,7 @@ namespace MapModS.UI
             if (!MapModS.LS.modEnabled
                 || !GUI.worldMapOpen
                 || GUI.lockToggleEnable
-                || !Dependencies.HasDependency("Benchwarp")
+                || !Dependencies.HasBenchwarp()
                 || GameManager.instance.IsGamePaused()
                 || InputHandler.Instance == null)
             {
@@ -180,50 +180,47 @@ namespace MapModS.UI
             }
 
             // Hold attack to benchwarp
-            if (TransitionData.TransitionModeActive())
+            if (InputHandler.Instance.inputActions.attack.WasPressed)
             {
-                if (!TP.selectedRoute.Any() || !TP.selectedRoute.First().IsBenchwarpTransition()) return;
-
-                if (InputHandler.Instance.inputActions.attack.WasPressed)
-                {
-                    attackHoldTimer.Restart();
-                }
-
-                if (InputHandler.Instance.inputActions.attack.WasReleased)
-                {
-                    attackHoldTimer.Reset();
-                }
-
-                if (attackHoldTimer.ElapsedMilliseconds >= 500)
-                {
-                    attackHoldTimer.Reset();
-                    GameManager.instance.StartCoroutine(BI.DoBenchwarp(TP.selectedRoute.First()));
-                }
+                attackHoldTimer.Restart();
             }
-            else if (MapModS.GS.benchwarpWorldMap)
-            {
-                if (selectedBenchScene == "") return;
 
-                if (InputHandler.Instance.inputActions.attack.WasPressed)
+            if (InputHandler.Instance.inputActions.attack.WasReleased)
+            {
+                if (!TransitionData.TransitionModeActive()
+                    && MapModS.GS.benchwarpWorldMap
+                    && attackHoldTimer.ElapsedMilliseconds < 500)
                 {
-                    attackHoldTimer.Restart();
+                    ToggleBench();
+                    UpdateBenchwarpText();
                 }
 
-                if (InputHandler.Instance.inputActions.attack.WasReleased)
+                attackHoldTimer.Reset();
+            }
+
+            if (attackHoldTimer.ElapsedMilliseconds >= 500)
+            {
+                if (TransitionData.TransitionModeActive())
                 {
-                    if (attackHoldTimer.ElapsedMilliseconds < 500)
+                    if (TP.selectedRoute.Any() && TP.selectedRoute.First().IsBenchwarpTransition())
                     {
-                        ToggleBench();
-                        UpdateBenchwarpText();
+                        attackHoldTimer.Reset();
+                        GameManager.instance.StartCoroutine(BI.DoBenchwarp(TP.selectedRoute.First()));
+                        return;
                     }
 
                     attackHoldTimer.Reset();
                 }
-
-                if (attackHoldTimer.ElapsedMilliseconds >= 500)
+                else if (MapModS.GS.benchwarpWorldMap)
                 {
+                    if (selectedBenchScene != "")
+                    {
+                        attackHoldTimer.Reset();
+                        GameManager.instance.StartCoroutine(BI.DoBenchwarp(selectedBenchScene, benchPointer));
+                        return;
+                    }
+
                     attackHoldTimer.Reset();
-                    GameManager.instance.StartCoroutine(BI.DoBenchwarp(selectedBenchScene, benchPointer));
                 }
             }
         }

@@ -53,8 +53,6 @@ namespace MapModS.UI
                 string scene = PD.GetScene(TP.selectedRoute.First());
                 string gate = "";
 
-                MapModS.Instance.Log(scene);
-
                 if (Utils.CurrentScene() == scene)
                 {
                     if (PD.doorObjectsByTransition.ContainsKey(transition))

@@ -446,5 +446,19 @@
     "offsetY": 0,
     "mappedScene": "GG_Waterways",
     "includeWithAdditionalMaps": false
+  },
+  "Room_Tram_RG": {
+    "mapZone": "CROSSROADS",
+    "offsetX": 0,
+    "offsetY": 0,
+    "mappedScene": "Crossroads_46",
+    "includeWithAdditionalMaps": true
+  },
+  "Room_Tram": {
+    "mapZone": "ABYSS",
+    "offsetX": 0,
+    "offsetY": 0,
+    "mappedScene": "Abyss_03_b",
+    "includeWithAdditionalMaps": true
   }
 }

@@ -21,7 +21,7 @@ namespace MapModS.Data
         private static HashSet<string> minimalMapRooms;
         private static Dictionary<string, MapRoomDef> nonMappedRooms;
 
-        private static Dictionary<string, PinDef> usedPins = new();
+        private static readonly Dictionary<string, PinDef> usedPins = new();
         private static Dictionary<string, string> logicLookup = new();
 
         public static List<string> usedPoolGroups = new();
@@ -53,7 +53,7 @@ namespace MapModS.Data
 
         public static IEnumerable<string> GetNonMappedScenes()
         {
-            if (Dependencies.HasDependency("AdditionalMaps"))
+            if (Dependencies.HasAdditionalMaps())
             {
                 return nonMappedRooms.Keys.Where(s => nonMappedRooms[s].includeWithAdditionalMaps);
             }
@@ -218,8 +218,6 @@ namespace MapModS.Data
                     pd.sceneName = "Room_Colosseum_01";
                 }
 
-                MapModS.Instance.Log(pd.name);
-
                 if (nonMappedRooms.ContainsKey(pd.sceneName))
                 {
                     pd.pinScene = nonMappedRooms[pd.sceneName].mappedScene;
@@ -311,15 +309,9 @@ namespace MapModS.Data
 
             usedPoolGroups.AddRange(unsortedGroups);
 
-            // Interop
-            if (Dependencies.HasDependency("AdditionalMaps"))
+            if (Dependencies.HasAdditionalMaps())
             {
                 ApplyAdditionalMapsChanges();
-            }
-
-            if (Dependencies.HasDependency("RandomizableLevers"))
-            {
-                ApplyRandomizableLeversChanges();
             }
         }
 
@@ -334,16 +326,6 @@ namespace MapModS.Data
                     pinDef.offsetX = kvp.Value.offsetX;
                     pinDef.offsetY = kvp.Value.offsetY;
                 }
-            }
-        }
-
-        public static void ApplyRandomizableLeversChanges()
-        {
-            // This is probably redundant
-            if (usedPins.Any(p => p.Key.StartsWith("Lever")))
-            {
-                usedPins.Remove("Dirtmouth_Stag");
-                usedPins.Remove("Resting_Grounds_Stag");
             }
         }
 
