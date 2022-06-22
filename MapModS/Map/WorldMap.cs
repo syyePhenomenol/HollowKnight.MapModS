@@ -53,6 +53,8 @@ namespace MapModS.Map
                 MainData.SetLogicLookup();
                 TransitionData.SetTransitionLookup();
                 PathfinderData.SetPathfinderLogic();
+                Pathfinder.Initialize();
+                Pathfinder.UpdateProgression();
 
                 if (MapModS.LS.newSettings || MapModS.LS.poolGroupSettings.Count == 0)
                 {

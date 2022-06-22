@@ -144,6 +144,7 @@ namespace MapModS.UI
                     {
                         MapModS.GS.ToggleAllowBenchWarp();
                         TransitionPersistent.ResetRoute();
+                        RouteCompass.UpdateCompass();
                         UpdateAll();
                         TransitionPersistent.UpdateAll();
                         TransitionWorldMap.UpdateAll();
@@ -183,6 +184,7 @@ namespace MapModS.UI
                 {
                     MainData.LoadDebugResources();
                     WorldMap.CustomPins.ReadjustPinPostiions();
+                    MapRooms.ReadjustRoomPostiions();
                 }, ModifierKeys.Ctrl);
 #endif
                 UpdateAll();

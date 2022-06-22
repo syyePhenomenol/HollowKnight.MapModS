@@ -87,5 +87,10 @@
   "White_Palace_20[warp]": "White_Palace_06",
 
   "Room_temple[door1]": "Room_Final_Boss_Atrium",
-  "Room_Final_Boss_Atrium[left1]": "Room_temple"
+  "Room_Final_Boss_Atrium[left1]": "Room_temple",
+
+  "GG_Waterways[warp]": "GG_Atrium",
+  "GG_Atrium[warp]": "GG_Waterways",
+  "GG_Atrium[Door_Workshop]": "GG_Workshop",
+  "GG_Workshop[left1]": "GG_Atrium"
 }

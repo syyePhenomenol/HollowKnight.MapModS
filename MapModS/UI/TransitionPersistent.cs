@@ -17,8 +17,6 @@ namespace MapModS.UI
 
         private static TextObject route;
 
-        public static Pathfinder pf;
-
         public static string lastStartScene = "";
         public static string lastFinalScene = "";
         public static string lastStartTransition = "";
@@ -50,8 +48,6 @@ namespace MapModS.UI
 
                 UpdateAll();
             }
-
-            pf = new();
         }
 
         public static void Destroy()
@@ -188,7 +184,7 @@ namespace MapModS.UI
 
         public static void GetRoute()
         {
-            if (pf == null) return;
+            if (Pathfinder.localPm == null) return;
 
             if (lastStartScene != Utils.CurrentScene() || lastFinalScene != selectedScene)
             {
@@ -197,7 +193,7 @@ namespace MapModS.UI
 
             try
             {
-                selectedRoute = pf.ShortestRoute(Utils.CurrentScene(), selectedScene, rejectedRoutes, MapModS.GS.allowBenchWarpSearch, false);
+                selectedRoute = Pathfinder.ShortestRoute(Utils.CurrentScene(), selectedScene, rejectedRoutes, MapModS.GS.allowBenchWarpSearch, false);
             }
             catch (Exception e)
             {
@@ -209,13 +205,13 @@ namespace MapModS.UI
 
         public static void ReevaluateRoute(ItemChanger.Transition lastTransition)
         {
-            if (pf == null) return;
+            if (Pathfinder.localPm == null) return;
 
             rejectedRoutes.Clear();
 
             try
             {
-                selectedRoute = pf.ShortestRoute(lastTransition.ToString(), lastFinalTransition.GetAdjacentTerm(), rejectedRoutes, MapModS.GS.allowBenchWarpSearch, true);
+                selectedRoute = Pathfinder.ShortestRoute(lastTransition.ToString(), lastFinalTransition.GetAdjacentTerm(), rejectedRoutes, MapModS.GS.allowBenchWarpSearch, true);
             }
             catch (Exception e)
             {
@@ -267,9 +263,11 @@ namespace MapModS.UI
             string transition = selectedRoute.First();
 
             // Check adjacent transition matches the route's transition
-            if (transition.IsBenchwarpTransition())
+            if (lastTransition.GateName == "" && transition.IsBenchwarpTransition())
             {
-                if (PlayerData.instance.respawnMarkerName == BenchwarpInterop.benchKeys[transition].Item2)
+                (string scene, string respawnMarker) = BenchwarpInterop.benchKeys[transition];
+
+                if (lastTransition.SceneName == scene && PlayerData.instance.respawnMarkerName == respawnMarker)
                 {
                     UpdateRoute();
                     return;

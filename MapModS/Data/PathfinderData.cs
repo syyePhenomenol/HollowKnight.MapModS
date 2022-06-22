@@ -42,6 +42,12 @@ namespace MapModS.Data
             (LogicManagerBuilder.JsonType.LogicSubst, "logicSubstitutions")
         };
 
+        private static readonly (LogicManagerBuilder.JsonType type, string fileName)[] godhomeFiles = new[]
+        {
+            (LogicManagerBuilder.JsonType.Transitions, "godhomeTransitions"),
+            (LogicManagerBuilder.JsonType.LogicSubst, "godhomeLogicSubstitutions")
+        };
+
         private static readonly (LogicManagerBuilder.JsonType type, string fileName)[] benchFiles = new[]
         {
             (LogicManagerBuilder.JsonType.LogicEdit, "benchLogicEdits"),
@@ -59,6 +65,18 @@ namespace MapModS.Data
             foreach ((LogicManagerBuilder.JsonType type, string fileName) in files)
             {
                 lmb.DeserializeJson(type, Assembly.GetExecutingAssembly().GetManifestResourceStream($"MapModS.Resources.Pathfinder.Logic.{fileName}.json"));
+            }
+
+            if (RM.RS.Context.LM.TermLookup.ContainsKey("GG_Waterways"))
+            {
+                foreach ((LogicManagerBuilder.JsonType type, string fileName) in godhomeFiles)
+                {
+                    lmb.DeserializeJson(type, Assembly.GetExecutingAssembly().GetManifestResourceStream($"MapModS.Resources.Pathfinder.Logic.{fileName}.json"));
+                }
+
+                transitionsByScene["GG_Waterways"] = new() { "GG_Waterways[warp]" };
+                transitionsByScene["GG_Atrium"] = new() { "GG_Atrium[warp]", "GG_Atrium[Door_Workshop]" };
+                transitionsByScene["GG_Workshop"] = new() { "GG_Workshop[left1]" };
             }
 
             if (Dependencies.HasBenchRando() && BenchwarpInterop.IsBenchRandoEnabled())
@@ -81,7 +99,7 @@ namespace MapModS.Data
 
             lm = new(lmb);
 
-            waypointScenes = lm.Waypoints.Where(w => RD.IsRoom(w.Name)).ToDictionary(w => w.Name, w => w);
+            waypointScenes = lm.Waypoints.Where(w => RD.IsRoom(w.Name) || w.Name.IsSpecialRoom()).ToDictionary(w => w.Name, w => w);
 
             // Set Start Warp
             StartDef start = RD.GetStartDef(RM.RS.GenerationSettings.StartLocationSettings.StartLocation);
@@ -104,16 +122,20 @@ namespace MapModS.Data
 
         public static string GetScene(this string transition)
         {
-            if (scenesByTransition.ContainsKey(transition))
+            if (TransitionData.IsInTransitionLookup(transition))
+            {
+                return TransitionData.GetTransitionScene(transition);
+            }
+            else if (scenesByTransition.ContainsKey(transition))
             {
                 return scenesByTransition[transition];
             }
-            else if (transition.IsSpecialTransition())
+            else if (transition.Contains("["))
             {
-                return "";
+                return transition.Split('[')[0];
             }
 
-            return TransitionData.GetTransitionScene(transition);
+            return null;
         }
 
         // Returns the correct adjacent scene for special transitions

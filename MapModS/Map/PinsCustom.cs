@@ -101,6 +101,8 @@ namespace MapModS.Map
         // For debugging pins
         public void ReadjustPinPostiions()
         {
+            if (MainData.newPins == null) return;
+
             foreach (PinAnimatedSprite pin in _pins)
             {
                 if (MainData.newPins.TryGetValue(pin.PD.name, out PinDef newPD))

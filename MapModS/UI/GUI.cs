@@ -1,4 +1,5 @@
 ﻿using ItemChanger;
+using MapModS.Data;
 using UnityEngine.SceneManagement;
 
 namespace MapModS.UI
@@ -103,6 +104,7 @@ namespace MapModS.UI
 
             worldMapOpen = true;
             TransitionPersistent.UpdateRoute();
+            Pathfinder.UpdateProgression();
             Benchwarp.UpdateAll();
         }
 

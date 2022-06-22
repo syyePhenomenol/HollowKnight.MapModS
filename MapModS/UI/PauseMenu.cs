@@ -459,6 +459,8 @@ namespace MapModS.UI
             ControlPanel.UpdateAll();
             MapKey.UpdateAll();
             TransitionPersistent.selectedScene = "None";
+            TransitionPersistent.ResetRoute();
+            RouteCompass.UpdateCompass();
         }
 
         private static void UpdateMode(Button sender)

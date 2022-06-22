@@ -345,10 +345,12 @@ namespace MapModS.Data
 
 #if DEBUG
         public static Dictionary<string, PinDef> newPins;
+        public static Dictionary<string, MapRoomDef> newRooms;
 
         public static void LoadDebugResources()
         {
-            newPins = JsonUtil.DeserializeFromExternalFile<Dictionary<string, PinDef>> ("newPins.json");
+            //newPins = JsonUtil.DeserializeFromExternalFile<Dictionary<string, PinDef>> ("newPins.json");
+            newRooms = JsonUtil.DeserializeFromExternalFile<Dictionary<string, MapRoomDef>>("newRooms.json");
         }
 #endif
     }

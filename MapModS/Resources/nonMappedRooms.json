@@ -428,36 +428,36 @@
   },
   "GG_Atrium": {
     "mapZone": "GODS_GLORY",
-    "offsetX": 0,
-    "offsetY": 0,
+    "offsetX": -8.6,
+    "offsetY": -8.7,
     "mappedScene": "GG_Waterways",
     "includeWithAdditionalMaps": false
   },
   "GG_Workshop": {
     "mapZone": "GODS_GLORY",
-    "offsetX": 0,
-    "offsetY": 0,
+    "offsetX": -6.4,
+    "offsetY": -8.7,
     "mappedScene": "GG_Waterways",
-    "includeWithAdditionalMaps": false
+    "includeWithAdditionalMaps": true
   },
   "GG_Atrium_Roof": {
     "mapZone": "GODS_GLORY",
-    "offsetX": 0,
-    "offsetY": 0,
+    "offsetX": -3.6,
+    "offsetY": -8.7,
     "mappedScene": "GG_Waterways",
     "includeWithAdditionalMaps": false
   },
   "Room_Tram_RG": {
     "mapZone": "CROSSROADS",
-    "offsetX": 0,
-    "offsetY": 0,
+    "offsetX": 8.6,
+    "offsetY": 5.6,
     "mappedScene": "Crossroads_46",
     "includeWithAdditionalMaps": true
   },
   "Room_Tram": {
     "mapZone": "ABYSS",
-    "offsetX": 0,
-    "offsetY": 0,
+    "offsetX": -1.2,
+    "offsetY": -10.95,
     "mappedScene": "Abyss_03_b",
     "includeWithAdditionalMaps": true
   }

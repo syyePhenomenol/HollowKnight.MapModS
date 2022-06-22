@@ -25,5 +25,7 @@
   "White_Palace_11[warp]": "doorWarp",
   "White_Palace_03_hub[warp]": "doorWarp",
   "White_Palace_20[warp]": "End Scene",
-  "Room_Temple[door1]": "Final Boss Door/door1"
+  "Room_Temple[door1]": "Final Boss Door/door1",
+  "GG_Waterways[warp]": "Godseeker Waterways",
+  "GG_Atrium[warp]": "Dream Exit Warp"
 }

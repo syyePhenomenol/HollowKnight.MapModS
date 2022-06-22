@@ -35,10 +35,6 @@
     "name": "Waterways_02",
     "logic": "ORIG | Bench-Waterways"
   },
-  //{
-  //  "name": "Waterways_02[top3]",
-  //  "logic": "ORIG | Bench-Waterways + Broke_Waterways_Bench_Ceiling + (LEFTCLAW | RIGHTCLAW + WINGS)"
-  //},
   {
     "name": "Waterways_02[bot1]",
     "logic": "ORIG | Bench-Waterways"

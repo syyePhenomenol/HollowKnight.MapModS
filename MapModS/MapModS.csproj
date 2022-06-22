@@ -31,25 +31,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
 
-  
-
   <ItemGroup>
     <Compile Remove="Unused\**" />
     <EmbeddedResource Remove="Unused\**" />
     <None Remove="Unused\**" />
   </ItemGroup>
-
-  
-
-  <ItemGroup>
-    <None Remove="Resources\Pathfinder\Data\adjacentScenes.json" />
-    <None Remove="Resources\Pathfinder\Logic\benchLogicEdits.json" />
-    <None Remove="Resources\Pathfinder\Logic\benchRandoLogicEdits.json" />
-    <None Remove="Resources\Pathfinder\Logic\benchWaypoints.json" />
-    <None Remove="Resources\Pins\pinBench.png" />
-  </ItemGroup>
-
-
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\GUI\panelLeft.png" />
@@ -63,9 +49,11 @@
     <EmbeddedResource Include="Resources\Pathfinder\Data\scenesByTransition.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Logic\benchLogicEdits.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Logic\benchRandoLogicEdits.json" />
+    <EmbeddedResource Include="Resources\Pathfinder\Logic\godhomeLogicSubstitutions.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Logic\logicSubstitutions.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Logic\logicEdits.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Logic\benchWaypoints.json" />
+    <EmbeddedResource Include="Resources\Pathfinder\Logic\godhomeTransitions.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Logic\waypoints.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Logic\macros.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Logic\transitions.json" />
@@ -240,81 +228,39 @@
       </Reference>
     </ItemGroup>
 
-
-
     <ItemGroup>
       <Reference Update="System">
         <Private>false</Private>
         <CopyLocal>False</CopyLocal>
       </Reference>
-    </ItemGroup>
-
-
-
-    <ItemGroup>
       <Reference Update="System.Core">
         <Private>false</Private>
         <CopyLocal>False</CopyLocal>
       </Reference>
-    </ItemGroup>
-
-
-
-    <ItemGroup>
       <Reference Update="System.Data">
         <Private>false</Private>
         <CopyLocal>False</CopyLocal>
       </Reference>
-    </ItemGroup>
-
-
-
-    <ItemGroup>
       <Reference Update="System.Drawing">
         <Private>false</Private>
         <CopyLocal>False</CopyLocal>
       </Reference>
-    </ItemGroup>
-
-
-
-    <ItemGroup>
       <Reference Update="System.IO.Compression.FileSystem">
         <Private>false</Private>
         <CopyLocal>False</CopyLocal>
       </Reference>
-    </ItemGroup>
-
-
-
-    <ItemGroup>
       <Reference Update="System.Numerics">
         <Private>false</Private>
         <CopyLocal>False</CopyLocal>
       </Reference>
-    </ItemGroup>
-
-
-
-    <ItemGroup>
       <Reference Update="System.Runtime.Serialization">
         <Private>false</Private>
         <CopyLocal>False</CopyLocal>
       </Reference>
-    </ItemGroup>
-
-
-
-    <ItemGroup>
       <Reference Update="System.Xml">
         <Private>false</Private>
         <CopyLocal>False</CopyLocal>
       </Reference>
-    </ItemGroup>
-
-
-
-    <ItemGroup>
       <Reference Update="System.Xml.Linq">
         <Private>false</Private>
         <CopyLocal>False</CopyLocal>

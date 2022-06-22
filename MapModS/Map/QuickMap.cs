@@ -325,7 +325,6 @@ namespace MapModS.Map
 
             // Replace all PlayerData boolNames with our own so we can show all Quick Maps,
             // without changing the existing PlayerData settings
-
             foreach (FsmState state in quickMapFSM.FsmStates)
             {
                 if (Utils.IsFSMMapState(state.Name))
@@ -336,7 +335,6 @@ namespace MapModS.Map
             }
 
             // Patch custom area quick map behaviour
-
             GameMap gameMap = go_gameMap.GetComponent<GameMap>();
 
             if (quickMapFSM.FsmStates.Any(state => state.Name == "WHITE_PALACE"))

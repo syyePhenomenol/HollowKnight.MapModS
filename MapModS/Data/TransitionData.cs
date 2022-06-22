@@ -42,6 +42,17 @@ namespace MapModS.Data
             return _transitionLookup.ContainsKey(source);
         }
 
+        public static bool IsSpecialRoom(this string room)
+        {
+            // Rooms that we care about that aren't randomized
+            return room == "Room_Tram_RG"
+             || room == "Room_Tram"
+             || room == "GG_Atrium"
+             || room == "GG_Workshop"
+             || room == "GG_Atrium_Roof";
+        }
+
+
         public static string GetTransitionScene(string source)
         {
             if (_transitionLookup.TryGetValue(source, out TransitionPlacement placement))

@@ -28,7 +28,7 @@
   "Bench-Waterways": "Bench-Waterways",
   "Bench-Godhome_Atrium": "GG_Atrium",
   "Bench-Godhome_Roof": "",
-  "Bench-Hall_of_Gods": "GG_Workshop",
+  "Bench-Hall_of_Gods": "GG_Workshop[left1]",
   "Bench-Deepnest_Hot_Springs": "Deepnest_30[left1]",
   "Bench-Failed_Tramway": "Deepnest_14[left1]",
   "Bench-Beast's_Den": "Deepnest_Spider_Town[left1]",
@@ -87,5 +87,10 @@
   "White_Palace_20[warp]": "White_Palace_06[door_dreamReturn]",
 
   "Room_temple[door1]": "Room_Final_Boss_Atrium[left1]",
-  "Room_Final_Boss_Atrium[left1]": "Room_temple[door1]"
+  "Room_Final_Boss_Atrium[left1]": "Room_temple[door1]",
+
+  "GG_Waterways[warp]": "GG_Atrium[door_dreamEnter]",
+  "GG_Atrium[warp]": "GG_Waterways[door_dreamReturn]",
+  "GG_Atrium[Door_Workshop]": "GG_Workshop[left1]",
+  "GG_Workshop[left1]": "GG_Atrium[Door_Workshop]"
 }

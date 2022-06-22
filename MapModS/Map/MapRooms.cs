@@ -129,14 +129,22 @@ namespace MapModS.Map
 
             areaNamePrefab.SetActive(false);
 
-            foreach (string scene in MainData.GetNonMappedScenes().Where(s => RandomizerMod.RandomizerData.Data.IsRoom(s)))
+            foreach (string scene in MainData.GetNonMappedScenes().Where(s => RandomizerMod.RandomizerData.Data.IsRoom(s) || s.IsSpecialRoom()))
             {
                 MapRoomDef mrd = MainData.GetNonMappedRoomDef(scene);
 
                 GameObject go_extraMapRoom = Object.Instantiate(areaNamePrefab, go_extraMapRooms.transform);
                 go_extraMapRoom.name = scene;
                 go_extraMapRoom.GetComponent<SetTextMeshProGameText>().convName = scene;
-                go_extraMapRoom.transform.localPosition = new Vector3(mrd.offsetX, mrd.offsetY, 0f);
+                
+                if (scene == "GG_Workshop" && Dependencies.HasAdditionalMaps())
+                {
+                    go_extraMapRoom.transform.localPosition = new Vector3(9.9f, 14.6f, 0f);
+                }
+                else
+                {
+                    go_extraMapRoom.transform.localPosition = new Vector3(mrd.offsetX, mrd.offsetY, 0f);
+                }
 
                 ExtraMapData extraData = go_extraMapRoom.GetComponent<ExtraMapData>();
                 if (extraData == null)
@@ -153,18 +161,31 @@ namespace MapModS.Map
             return go_extraMapRooms;
         }
 
+#if DEBUG
+        // For debugging rooms
+        public static void ReadjustRoomPostiions()
+        {
+            if (MainData.newRooms == null) return;
+
+            foreach (Transform room in WorldMap.goExtraRooms.transform)
+            {
+                if (MainData.newRooms.TryGetValue(room.name, out MapRoomDef mrd))
+                {
+                    Vector3 newPos = new(mrd.offsetX, mrd.offsetY, 0f);
+                    room.localPosition = newPos;
+                }
+            }
+        }
+#endif
+
         public static HashSet<string> SetupMapTransitionMode(GameMap gameMap, MapZone mapZone)
         {
             bool isAlt = MapModS.LS.mapMode == Settings.MapMode.TransitionRandoAlt;
 
             HashSet<string> inLogicScenes = new();
-
             HashSet<string> outOfLogicScenes = new();
-
             HashSet<string> visitedAdjacentScenes = new();
-
             HashSet<string> uncheckedReachableScenes = new();
-
             HashSet<string> visitedScenes = new(PlayerData.instance.scenesVisited);
             visitedScenes.Add(Utils.CurrentScene());
 
@@ -178,21 +199,39 @@ namespace MapModS.Map
                 if (pm.Has(t.Value.term.Id))
                 {
                     inLogicScenes.Add(scene);
-
-                    if (scene == Utils.CurrentScene())
-                    {
-                        // visitedTransitions doesn't include vanilla transitions
-                        if ((RM.RS.TrackerData.visitedTransitions.ContainsKey(t.Key) || !TransitionData.IsRandomizedTransition(t.Key))
-                            && TransitionData.GetAdjacentTransition(t.Key) != null)
-                        {
-                            visitedAdjacentScenes.Add(TransitionData.GetAdjacentScene(t.Key));
-                        }
-                    }
                 }
                 else if (PlayerData.instance.scenesVisited.Contains(scene))
                 {
                     outOfLogicScenes.Add(scene);
                 }
+            }
+
+            visitedAdjacentScenes = Pathfinder.GetAdjacentReachableScenes(Utils.CurrentScene());
+
+            // Manuallly add Godhome/Tram scenes
+            if (pm.lm.TermLookup.ContainsKey("Warp-Godhome_to_Junk_Pit") && pm.Get("Warp-Godhome_to_Junk_Pit") > 0)
+            {
+                inLogicScenes.Add("GG_Atrium");
+            }
+
+            if (pm.lm.TermLookup.ContainsKey("Warp-Junk_Pit_to_Godhome") && pm.Get("Warp-Junk_Pit_to_Godhome") > 0)
+            {
+                inLogicScenes.Add("GG_Waterways");
+            }
+
+            if (pm.lm.TermLookup.ContainsKey("GG_Workshop") && pm.Get("GG_Workshop") > 0)
+            {
+                inLogicScenes.Add("GG_Workshop");
+            }
+
+            if (pm.Get("Upper_Tram") > 0)
+            {
+                inLogicScenes.Add("Room_Tram_RG");
+            }
+
+            if (pm.Get("Lower_Tram") > 0)
+            {
+                inLogicScenes.Add("Room_Tram");
             }
 
             // Get scenes where there are unchecked reachable transitions
@@ -204,7 +243,6 @@ namespace MapModS.Map
             // Show rooms with custom colors
             foreach (Transform areaObj in gameMap.transform)
             {
-
                 if (areaObj.name == "MMS Custom Map Rooms")
                 {
                     areaObj.gameObject.SetActive(true);
