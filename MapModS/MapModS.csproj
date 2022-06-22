@@ -48,7 +48,6 @@
     <EmbeddedResource Include="Resources\Pathfinder\Data\transitionsByScene.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Data\scenesByTransition.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Logic\benchLogicEdits.json" />
-    <EmbeddedResource Include="Resources\Pathfinder\Logic\benchRandoLogicEdits.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Logic\godhomeLogicSubstitutions.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Logic\logicSubstitutions.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Logic\logicEdits.json" />

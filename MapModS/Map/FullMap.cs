@@ -71,18 +71,32 @@ namespace MapModS.Map
         // We keep a copy of the "rough map" sprite, and force-set that sprite every time before OnEnable() does its check
         private static void RoughMapRoom_OnEnable(On.RoughMapRoom.orig_OnEnable orig, RoughMapRoom self)
         {
-            SpriteCopy spriteCopy = self.gameObject.GetComponent<SpriteCopy>();
-            SpriteRenderer sr = self.gameObject.GetComponent<SpriteRenderer>();
+            SpriteCopy spriteCopy = self.GetComponent<SpriteCopy>();
+            SpriteRenderer sr = self.GetComponent<SpriteRenderer>();
 
             if (spriteCopy == null)
             {
                 spriteCopy = self.gameObject.AddComponent<SpriteCopy>();
-                spriteCopy.roughMap = self.gameObject.GetComponent<SpriteRenderer>().sprite;
+                spriteCopy.roughMap = sr.sprite;
             }
             else
             {
                 sr.sprite = spriteCopy.roughMap;
                 self.fullSpriteDisplayed = false;
+            }
+
+            ExtraMapData emd = self.GetComponent<ExtraMapData>();
+
+            if (emd != null)
+            {
+                if (MapModS.LS.modEnabled)
+                {
+                    sr.color = emd.origCustomColor;
+                }
+                else
+                {
+                    sr.color = emd.origColor;
+                }
             }
 
             orig(self);

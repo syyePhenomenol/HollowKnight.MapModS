@@ -86,7 +86,18 @@ namespace MapModS.Data
                     adjacentTerms[kvp.Value] = kvp.Value;
                 }
 
-                lmb.DeserializeJson(LogicManagerBuilder.JsonType.LogicEdit, Assembly.GetExecutingAssembly().GetManifestResourceStream($"MapModS.Resources.Pathfinder.Logic.benchRandoLogicEdits.json"));
+                if (lmb.TermLookup.ContainsKey("Bench-Upper_Tram"))
+                {
+                    lmb.DoLogicEdit(new("Upper_Tram-Left", "ORIG | Bench-Upper_Tram"));
+                    lmb.DoLogicEdit(new("Upper_Tram-Right", "ORIG | Bench-Upper_Tram"));
+                }
+
+                if (lmb.TermLookup.ContainsKey("Bench-Lower_Tram"))
+                {
+                    lmb.DoLogicEdit(new("Lower_Tram-Left", "ORIG | Bench-Lower_Tram"));
+                    lmb.DoLogicEdit(new("Lower_Tram-Middle", "ORIG | Bench-Lower_Tram"));
+                    lmb.DoLogicEdit(new("Lower_Tram-Right", "ORIG | Bench-Lower_Tram"));
+                }
             }
             else
             {
