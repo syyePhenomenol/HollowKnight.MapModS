@@ -52,7 +52,7 @@ namespace MapModS.Map
                 MainData.SetUsedPinDefs();
                 MainData.SetLogicLookup();
                 TransitionData.SetTransitionLookup();
-                PathfinderData.SetPathfinderLogic();
+                PathfinderData.Load();
                 Pathfinder.Initialize();
                 Pathfinder.UpdateProgression();
 

@@ -120,7 +120,7 @@ namespace MapModS.UI
 
                     if (MapModS.GS.lookupOn)
                     {
-                        LookupText.UpdateSelectedPin();
+                        InfoPanels.UpdateSelectedPin();
                     }
                     else
                     {
@@ -128,7 +128,7 @@ namespace MapModS.UI
                     }
 
                     UpdateAll();
-                    LookupText.UpdateAll();
+                    InfoPanels.UpdateAll();
                 }, ModifierKeys.Ctrl, () => MapModS.LS.modEnabled);
                 
                 if (Dependencies.HasBenchwarp())
@@ -156,6 +156,7 @@ namespace MapModS.UI
                     MapModS.GS.ToggleUncheckedPanel();
                     UpdateAll();
                     TransitionWorldMap.UpdateAll();
+                    InfoPanels.UpdateAll();
                 }, ModifierKeys.Ctrl, () => MapModS.LS.modEnabled);
 
                 layout.ListenForHotkey(KeyCode.R, () =>

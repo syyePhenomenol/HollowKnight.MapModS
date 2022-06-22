@@ -69,7 +69,7 @@ namespace MapModS.UI
             MapText.Destroy();
             ControlPanel.Destroy();
             MapKey.Destroy();
-            LookupText.Destroy();
+            InfoPanels.Destroy();
             TransitionPersistent.Destroy();
             TransitionWorldMap.Destroy();
             TransitionQuickMap.Destroy();
@@ -91,7 +91,7 @@ namespace MapModS.UI
             MapText.Build();
             ControlPanel.Build();
             MapKey.Build();
-            LookupText.Build();
+            InfoPanels.Build();
             TransitionPersistent.Build();
             TransitionWorldMap.Build();
             TransitionQuickMap.Build();
@@ -105,6 +105,7 @@ namespace MapModS.UI
             worldMapOpen = true;
             TransitionPersistent.UpdateRoute();
             Pathfinder.UpdateProgression();
+            InfoPanels.UpdateAll();
             Benchwarp.UpdateAll();
         }
 

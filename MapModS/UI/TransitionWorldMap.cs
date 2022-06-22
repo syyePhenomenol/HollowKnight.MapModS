@@ -16,9 +16,6 @@ namespace MapModS.UI
         private static TextObject instruction;
         private static TextObject routeSummary;
 
-        private static Panel panel;
-        private static TextObject panelText;
-
         private static bool Condition()
         {
             return TransitionData.TransitionModeActive()
@@ -37,29 +34,6 @@ namespace MapModS.UI
 
                 routeSummary = UIExtensions.TextFromEdge(layout, "Route Summary", true);
 
-                panel = new(layout, GUIController.Instance.Images["panelRight"].ToSlicedSprite(100f, 50f, 250f, 50f), "Panel")
-                {
-                    Borders = new(30f, 30f, 30f, 30f),
-                    MinWidth = 200f,
-                    MinHeight = 100f,
-                    HorizontalAlignment = HorizontalAlignment.Right,
-                    VerticalAlignment = VerticalAlignment.Top,
-                    Padding = new(10f, 170f, 160f, 10f)
-                };
-
-                ((Image)layout.GetElement("Panel Background")).Tint = Colors.GetColor(ColorSetting.UI_Borders);
-
-                panelText = new(layout, "Panel Text")
-                {
-                    ContentColor = Colors.GetColor(ColorSetting.UI_Neutral),
-                    HorizontalAlignment = HorizontalAlignment.Left,
-                    VerticalAlignment = VerticalAlignment.Center,
-                    Font = MagicUI.Core.UI.TrajanNormal,
-                    FontSize = 14
-                };
-
-                panel.Child = panelText;
-
                 UpdateAll();
             }
         }
@@ -74,7 +48,6 @@ namespace MapModS.UI
         {
             UpdateInstructions();
             UpdateRouteSummary();
-            UpdatePanel();
         }
 
         public static void UpdateInstructions()
@@ -83,12 +56,12 @@ namespace MapModS.UI
 
             if (!MapModS.GS.uncheckedPanelActive)
             {
-                text += $"{L.Localize("Selected room")}: {TP.selectedScene}.";
+                text += $"{L.Localize("Selected room")}: {InfoPanels.selectedScene}.";
             }
 
             List<InControl.BindingSource> bindings = new(InputHandler.Instance.inputActions.menuSubmit.Bindings);
 
-            if (TP.selectedScene == Utils.CurrentScene())
+            if (InfoPanels.selectedScene == Utils.CurrentScene())
             {
                 text += $" {L.Localize("You are here")}.";
             }
@@ -98,7 +71,7 @@ namespace MapModS.UI
             text += Utils.GetBindingsText(bindings);
 
             if (TP.selectedRoute.Any()
-                && TP.selectedScene == TP.lastFinalScene
+                && InfoPanels.selectedScene == TP.lastFinalScene
                 && TP.selectedRoute.Count() == TP.transitionsCount)
             {
                 text += $" {L.Localize("to change starting / final transitions of current route")}.";
@@ -158,20 +131,6 @@ namespace MapModS.UI
             routeSummary.Text = text;
         }
 
-        public static void UpdatePanel()
-        {
-            panelText.Text = TP.selectedScene + "\n\n";
 
-            panelText.Text += TransitionData.GetUncheckedVisited(TP.selectedScene);
-
-            if (MapModS.GS.uncheckedPanelActive)
-            {
-                panel.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                panel.Visibility = Visibility.Hidden;
-            }
-        }
     }
 }

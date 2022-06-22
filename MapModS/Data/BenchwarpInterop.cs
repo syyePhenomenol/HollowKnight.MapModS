@@ -48,13 +48,6 @@ namespace MapModS.Data
 
             benchTransitions.Add(startKey, "Warp-Start");
 
-            //foreach (KeyValuePair<(string, string), string> kvp in benchTransitions)
-            //{
-            //    MapModS.Instance.Log("Scene: " + kvp.Key.Item1);
-            //    MapModS.Instance.Log("Respawn Marker: " + kvp.Key.Item2);
-            //    MapModS.Instance.Log("Name: " + kvp.Value);
-            //}
-
             benchKeys = benchTransitions.ToDictionary(t => t.Value, t => t.Key);
         }
 

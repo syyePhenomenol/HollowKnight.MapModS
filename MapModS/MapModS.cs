@@ -56,7 +56,6 @@ namespace MapModS
             try
             {
                 MainData.Load();
-                PathfinderData.Load();
             }
             catch (Exception e)
             {

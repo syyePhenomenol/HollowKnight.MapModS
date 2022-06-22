@@ -272,7 +272,7 @@ namespace MapModS.UI
         {
             MapModS.LS.ToggleSpoilers();
             WorldMap.CustomPins.SetSprites();
-            LookupText.UpdateSelectedPin();
+            InfoPanels.UpdateSelectedPin();
 
             UpdateAll();
             MapText.UpdateAll();
@@ -413,7 +413,7 @@ namespace MapModS.UI
 
             if (MapModS.GS.lookupOn)
             {
-                LookupText.UpdateSelectedPin();
+                InfoPanels.UpdateSelectedPin();
             }
 
             UpdateAll();
@@ -458,7 +458,7 @@ namespace MapModS.UI
             MapText.UpdateAll();
             ControlPanel.UpdateAll();
             MapKey.UpdateAll();
-            TransitionPersistent.selectedScene = "None";
+            InfoPanels.selectedScene = "None";
             TransitionPersistent.ResetRoute();
             RouteCompass.UpdateCompass();
         }

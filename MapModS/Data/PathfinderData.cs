@@ -22,17 +22,6 @@ namespace MapModS.Data
         internal static Dictionary<string, string> doorObjectsByScene;
         internal static Dictionary<string, string> doorObjectsByTransition;
 
-        public static void Load()
-        {
-            conditionalTerms = JsonUtil.Deserialize< Dictionary<string, string>> ("MapModS.Resources.Pathfinder.Data.conditionalTerms.json");
-            adjacentScenes = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.adjacentScenes.json");
-            adjacentTerms = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.adjacentTerms.json");
-            scenesByTransition = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.scenesByTransition.json");
-            transitionsByScene = JsonUtil.Deserialize<Dictionary<string, HashSet<string>>>("MapModS.Resources.Pathfinder.Data.transitionsByScene.json");
-            doorObjectsByScene = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Compass.doorObjectsByScene.json");
-            doorObjectsByTransition = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Compass.doorObjectsByTransition.json");
-        }
-
         private static readonly (LogicManagerBuilder.JsonType type, string fileName)[] files = new[]
         {
             (LogicManagerBuilder.JsonType.Macros, "macros"),
@@ -58,8 +47,16 @@ namespace MapModS.Data
 
         public static LogicManager lm;
 
-        public static void SetPathfinderLogic()
+        public static void Load()
         {
+            conditionalTerms = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.conditionalTerms.json");
+            adjacentScenes = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.adjacentScenes.json");
+            adjacentTerms = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.adjacentTerms.json");
+            scenesByTransition = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.scenesByTransition.json");
+            transitionsByScene = JsonUtil.Deserialize<Dictionary<string, HashSet<string>>>("MapModS.Resources.Pathfinder.Data.transitionsByScene.json");
+            doorObjectsByScene = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Compass.doorObjectsByScene.json");
+            doorObjectsByTransition = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Compass.doorObjectsByTransition.json");
+
             lmb = new(RM.RS.Context.LM);
 
             foreach ((LogicManagerBuilder.JsonType type, string fileName) in files)
@@ -67,6 +64,7 @@ namespace MapModS.Data
                 lmb.DeserializeJson(type, Assembly.GetExecutingAssembly().GetManifestResourceStream($"MapModS.Resources.Pathfinder.Logic.{fileName}.json"));
             }
 
+            // Add godhome logic only for rando 4.0.6 or upwards
             if (RM.RS.Context.LM.TermLookup.ContainsKey("GG_Waterways"))
             {
                 foreach ((LogicManagerBuilder.JsonType type, string fileName) in godhomeFiles)
@@ -79,6 +77,7 @@ namespace MapModS.Data
                 transitionsByScene["GG_Workshop"] = new() { "GG_Workshop[left1]" };
             }
 
+            // Use BenchRando's BenchDefs if it is enabled for this save
             if (Dependencies.HasBenchRando() && BenchwarpInterop.IsBenchRandoEnabled())
             {
                 foreach(KeyValuePair<(string, string), string> kvp in BenchwarpInterop.benchTransitions)

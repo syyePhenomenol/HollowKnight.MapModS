@@ -8,17 +8,17 @@ using RM = RandomizerMod.RandomizerMod;
 
 namespace MapModS.Map
 {
+    public class ExtraMapData : MonoBehaviour
+    {
+        public Vector4 origColor;
+        public Vector4 origCustomColor = Vector4.negativeInfinity;
+        public Vector4 origTransitionColor;
+        public string sceneName;
+        public bool highlight;
+    }
+
     internal class MapRooms
     {
-        public class ExtraMapData : MonoBehaviour
-        {
-            public Vector4 origColor;
-            public Vector4 origCustomColor = Vector4.negativeInfinity;
-            public Vector4 origTransitionColor;
-            public string sceneName;
-            public bool highlight;
-        }
-
         // Store metadata
         public static void AddExtraComponentsToMap(GameMap gameMap)
         {
@@ -549,6 +549,38 @@ namespace MapModS.Map
             {
                 return t;
             }
+        }
+
+        public static bool GetRoomClosestToMiddle(string previousScene, out string selectedScene)
+        {
+            selectedScene = null;
+            double minDistance = double.PositiveInfinity;
+
+            GameObject go_GameMap = GameManager.instance.gameMap;
+
+            if (go_GameMap == null) return false;
+
+            foreach (Transform areaObj in go_GameMap.transform)
+            {
+                foreach (Transform roomObj in areaObj.transform)
+                {
+                    if (!roomObj.gameObject.activeSelf) continue;
+
+                    ExtraMapData extra = roomObj.GetComponent<ExtraMapData>();
+
+                    if (extra == null) continue;
+
+                    double distance = Utils.DistanceToMiddle(roomObj);
+
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                        selectedScene = extra.sceneName;
+                    }
+                }
+            }
+
+            return selectedScene != previousScene;
         }
     }
 }

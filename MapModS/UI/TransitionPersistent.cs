@@ -22,7 +22,6 @@ namespace MapModS.UI
         public static string lastStartTransition = "";
         public static string lastFinalTransition = "";
         public static int transitionsCount = 0;
-        public static string selectedScene = "None";
         public static List<string> selectedRoute = new();
         public static List<List<string>> rejectedRoutes = new();
 
@@ -97,67 +96,6 @@ namespace MapModS.UI
             route.Text = text;
         }
 
-        private static Thread colorUpdateThread;
-
-        // Called every 0.1 seconds
-        public static void UpdateSelectedScene()
-        {
-            if (layout == null
-                || !GUI.worldMapOpen
-                || GUI.lockToggleEnable
-                || GameManager.instance.IsGamePaused()
-                || !TransitionData.TransitionModeActive())
-            {
-                return;
-            }
-
-            if (colorUpdateThread != null && colorUpdateThread.IsAlive) return;
-
-            colorUpdateThread = new(() =>
-            {
-                if (GetRoomClosestToMiddle(selectedScene, out selectedScene))
-                {
-                    SetSelectedRoomColor(selectedScene, true);
-                    UpdateAll();
-                    TransitionWorldMap.UpdateAll();
-                }
-            });
-
-            colorUpdateThread.Start();
-        }
-
-        public static bool GetRoomClosestToMiddle(string previousScene, out string selectedScene)
-        {
-            selectedScene = null;
-            double minDistance = double.PositiveInfinity;
-
-            GameObject go_GameMap = GameManager.instance.gameMap;
-
-            if (go_GameMap == null) return false;
-
-            foreach (Transform areaObj in go_GameMap.transform)
-            {
-                foreach (Transform roomObj in areaObj.transform)
-                {
-                    if (!roomObj.gameObject.activeSelf) continue;
-
-                    ExtraMapData extra = roomObj.GetComponent<ExtraMapData>();
-
-                    if (extra == null) continue;
-
-                    double distance = Utils.DistanceToMiddle(roomObj);
-
-                    if (distance < minDistance)
-                    {
-                        minDistance = distance;
-                        selectedScene = extra.sceneName;
-                    }
-                }
-            }
-
-            return selectedScene != previousScene;
-        }
-
         private static Thread searchThread;
 
         // Called every frame
@@ -186,14 +124,14 @@ namespace MapModS.UI
         {
             if (Pathfinder.localPm == null) return;
 
-            if (lastStartScene != Utils.CurrentScene() || lastFinalScene != selectedScene)
+            if (lastStartScene != Utils.CurrentScene() || lastFinalScene != InfoPanels.selectedScene)
             {
                 rejectedRoutes.Clear();
             }
 
             try
             {
-                selectedRoute = Pathfinder.ShortestRoute(Utils.CurrentScene(), selectedScene, rejectedRoutes, MapModS.GS.allowBenchWarpSearch, false);
+                selectedRoute = Pathfinder.ShortestRoute(Utils.CurrentScene(), InfoPanels.selectedScene, rejectedRoutes, MapModS.GS.allowBenchWarpSearch, false);
             }
             catch (Exception e)
             {

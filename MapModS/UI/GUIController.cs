@@ -59,7 +59,7 @@ namespace MapModS.UI
             while (true)
             {
                 yield return new WaitForSecondsRealtime(0.1f);
-                TransitionPersistent.UpdateSelectedScene();
+                InfoPanels.UpdateSelectedScene();
             }
         }
 
@@ -69,7 +69,7 @@ namespace MapModS.UI
             while (true)
             {
                 yield return new WaitForSecondsRealtime(0.1f);
-                LookupText.UpdateSelectedPinCoroutine();
+                InfoPanels.UpdateSelectedPinCoroutine();
             }
         }
 

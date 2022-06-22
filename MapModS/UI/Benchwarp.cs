@@ -1,12 +1,12 @@
 ﻿using MagicUI.Core;
 using MagicUI.Elements;
 using MapModS.Data;
+using MapModS.Map;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
-using static MapModS.Map.MapRooms;
 using BI = MapModS.Data.BenchwarpInterop;
 using L = RandomizerMod.Localization;
 using TP = MapModS.UI.TransitionPersistent;
@@ -70,7 +70,7 @@ namespace MapModS.UI
 
                 BI.UpdateVisitedBenches();
                 UpdateBenchwarpText();
-                SetSelectedRoomColor(selectedBenchScene, false);
+                MapRooms.SetSelectedRoomColor(selectedBenchScene, false);
             }
         }
 
@@ -125,7 +125,7 @@ namespace MapModS.UI
                 if (GetBenchClosestToMiddle(selectedBenchScene, out selectedBenchScene))
                 {
                     benchPointer = 0;
-                    SetSelectedRoomColor(selectedBenchScene, false);
+                    MapRooms.SetSelectedRoomColor(selectedBenchScene, false);
                     UpdateBenchwarpText();
                 }
             });
