@@ -46,6 +46,7 @@ namespace MapModS.Data
             }
 
             localPm.Set("Opened_Shaman_Pillar", PlayerData.instance.GetBool("shamanPillar") ? 1 : 0);
+            localPm.Set("Opened_Mawlek_Wall", PlayerData.instance.GetBool("crossroadsMawlekWall") ? 1 : 0);
 
             foreach (PersistentBoolData pbd in SceneData.instance.persistentBoolItems)
             {
@@ -327,6 +328,14 @@ namespace MapModS.Data
             return adjacentReachableScenes;
         }
 
+        private static readonly HashSet<string> infectionBlockedTransitions = new()
+        {
+            "Crossroads_03[bot1]",
+            "Crossroads_06[right1]",
+            "Crossroads_10[left1",
+            "Crossroads_19[top1]"
+        };
+
         public static HashSet<string> GetNormalTransitionSpace()
         {
             HashSet<string> transitions = new();
@@ -349,6 +358,11 @@ namespace MapModS.Data
                 {
                     transitions.Add(transition);
                 }
+            }
+
+            if (PlayerData.instance.GetBool("crossroadsInfected") && infectionBlockedTransitions.All(t => !TransitionData.IsRandomizedTransition(t)))
+            {
+                transitions.RemoveWhere(t => infectionBlockedTransitions.Contains(t));
             }
 
             return transitions;

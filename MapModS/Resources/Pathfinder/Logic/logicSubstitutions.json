@@ -25,8 +25,13 @@
     "replacement": "White_Palace_11[door1]"
   },
   {
+    "name": "Crossroads_33[left1]",
+    "old": "Crossroads_33[left1]",
+    "replacement": "FALSE"
+  },
+  {
     "name": "Crossroads_33[right1]",
     "old": "Crossroads_33[right1]",
-    "replacement": "Crossroads_33[right1] + Opened_Shaman_Pillar"
+    "replacement": "FALSE"
   }
 ]
