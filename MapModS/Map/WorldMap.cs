@@ -240,6 +240,7 @@ namespace MapModS.Map
 
             if (TransitionData.TransitionModeActive())
             {
+                Pathfinder.UpdateProgression();
                 transitionPinScenes = MapRooms.SetupMapTransitionMode(gameMap, mapZone);
             }
             else

@@ -19,7 +19,7 @@ namespace MapModS.UI
 
         // Only for normal modes (not transition mode)
         private static TextObject benchwarpText;
-        private static string selectedBenchScene = "";
+        public static string selectedBenchScene = "";
         private static int benchPointer = 0;
 
         private static bool Condition()

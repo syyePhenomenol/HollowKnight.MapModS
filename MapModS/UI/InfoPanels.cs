@@ -228,7 +228,6 @@ namespace MapModS.UI
         public static void UpdateSelectedScene()
         {
             if (layout == null
-                || !GUI.worldMapOpen
                 || GUI.lockToggleEnable
                 || GameManager.instance.IsGamePaused()
                 || !TransitionData.TransitionModeActive())
@@ -236,20 +235,27 @@ namespace MapModS.UI
                 return;
             }
 
-            if (colorUpdateThread != null && colorUpdateThread.IsAlive) return;
-
-            colorUpdateThread = new(() =>
+            if (GUI.worldMapOpen)
             {
-                if (MapRooms.GetRoomClosestToMiddle(selectedScene, out selectedScene))
-                {
-                    MapRooms.SetSelectedRoomColor(selectedScene, true);
-                    TransitionPersistent.UpdateAll();
-                    TransitionWorldMap.UpdateAll();
-                    UpdateAll();
-                }
-            });
+                if (colorUpdateThread != null && colorUpdateThread.IsAlive) return;
 
-            colorUpdateThread.Start();
+                colorUpdateThread = new(() =>
+                {
+                    if (MapRooms.GetRoomClosestToMiddle(selectedScene, out selectedScene))
+                    {
+                        MapRooms.SetSelectedRoomColor(selectedScene, true);
+                        TransitionPersistent.UpdateAll();
+                        TransitionWorldMap.UpdateAll();
+                        UpdateAll();
+                    }
+                });
+
+                colorUpdateThread.Start();
+            }
+            else if (GUI.quickMapOpen)
+            {
+                MapRooms.SetSelectedRoomColor("", true);
+            }
         }
 
         public static void UpdateUncheckedPanel()

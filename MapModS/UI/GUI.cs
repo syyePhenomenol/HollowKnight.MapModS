@@ -104,7 +104,6 @@ namespace MapModS.UI
 
             worldMapOpen = true;
             TransitionPersistent.UpdateRoute();
-            Pathfinder.UpdateProgression();
             InfoPanels.UpdateAll();
             Benchwarp.UpdateAll();
         }
@@ -193,7 +192,7 @@ namespace MapModS.UI
             OnOpenQuickMap();
         }
 
-        private static void OnOpenQuickMap()
+        public static void OnOpenQuickMap()
         {
             worldMapOpen = false;
             quickMapOpen = true;

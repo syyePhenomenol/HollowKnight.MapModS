@@ -38,6 +38,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Map\MapObjectScript.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Include="Resources\GUI\panelLeft.png" />
     <EmbeddedResource Include="Resources\Pathfinder\Compass\doorObjectsByScene.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Compass\doorObjectsByTransition.json" />

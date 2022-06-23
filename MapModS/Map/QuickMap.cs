@@ -371,12 +371,12 @@ namespace MapModS.Map
             }
 
             WorldMap.UpdateMap(_GameMap, _customMapZone);
-            QuickMap.SetTitleColor();
-            _GameMap.SetupMapMarkers();
 
-            GUI.worldMapOpen = false;
-            GUI.quickMapOpen = true;
-            TransitionQuickMap.UpdateAll();
+            GUI.OnOpenQuickMap();
+
+            QuickMap.SetTitleColor();
+
+            _GameMap.SetupMapMarkers();
 
             Finish();
         }
