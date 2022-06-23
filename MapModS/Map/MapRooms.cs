@@ -247,8 +247,10 @@ namespace MapModS.Map
                 {
                     areaObj.gameObject.SetActive(true);
                 }
-
-                if (!Colors.mapColors.ContainsKey(areaObj.name)) continue;
+                else if (!Colors.mapColors.ContainsKey(areaObj.name))
+                {
+                    continue;
+                }
 
                 foreach (Transform roomObj in areaObj.transform)
                 {

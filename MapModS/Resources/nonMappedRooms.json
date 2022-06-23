@@ -357,7 +357,7 @@
     "includeWithAdditionalMaps": false
   },
   "White_Palace_11": {
-    "mapZone": "WHITE_PALACE",
+    "mapZone": "ABYSS",
     "offsetX": 12.0,
     "offsetY": -14.2,
     "mappedScene": "Abyss_05",

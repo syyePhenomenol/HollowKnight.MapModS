@@ -8,7 +8,7 @@
   "UI_Compass": [115, 229, 255, 0.8],
   
   "Pin_Normal": [201, 215, 223, 1],
-  "Pin_Previewed": [193, 255, 111, 1],
+  "Pin_Previewed": [164, 255, 46, 1],
   "Pin_Out_of_logic": [255, 84, 84, 1],
   "Pin_Persistent": [53, 239, 255, 1],
   
