@@ -194,7 +194,7 @@ namespace MapModS.Map
             // Get in-logic, out-of-logic, and adjacent visited scenes
             foreach (KeyValuePair<string, RandomizerCore.Logic.LogicTransition> t in RM.RS.TrackerData.lm.TransitionLookup)
             {
-                string scene = TransitionData.GetTransitionScene(t.Key);
+                string scene = TransitionData.GetScene(t.Key);
 
                 if (pm.Has(t.Value.term.Id))
                 {
@@ -237,7 +237,7 @@ namespace MapModS.Map
             // Get scenes where there are unchecked reachable transitions
             foreach (string transition in RM.RS.TrackerData.uncheckedReachableTransitions)
             {
-                uncheckedReachableScenes.Add(TransitionData.GetTransitionScene(transition));
+                uncheckedReachableScenes.Add(TransitionData.GetScene(transition));
             }
 
             // Show rooms with custom colors

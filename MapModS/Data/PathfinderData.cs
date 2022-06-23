@@ -134,7 +134,7 @@ namespace MapModS.Data
         {
             if (TransitionData.IsInTransitionLookup(transition))
             {
-                return TransitionData.GetTransitionScene(transition);
+                return TransitionData.GetScene(transition);
             }
             else if (scenesByTransition.ContainsKey(transition))
             {

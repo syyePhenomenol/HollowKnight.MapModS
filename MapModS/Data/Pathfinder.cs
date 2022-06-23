@@ -45,6 +45,8 @@ namespace MapModS.Data
                 localPm.Set("Town_Lift_Activated", 1);
             }
 
+            localPm.Set("Opened_Shaman_Pillar", PlayerData.instance.GetBool("shamanPillar") ? 1 : 0);
+
             foreach (PersistentBoolData pbd in SceneData.instance.persistentBoolItems)
             {
                 if (pbd.sceneName == "Waterways_02" && pbd.id == "Quake Floor (1)")

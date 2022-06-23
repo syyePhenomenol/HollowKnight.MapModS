@@ -53,7 +53,7 @@ namespace MapModS.Data
         }
 
 
-        public static string GetTransitionScene(string source)
+        public static string GetScene(string source)
         {
             if (_transitionLookup.TryGetValue(source, out TransitionPlacement placement))
             {
@@ -120,7 +120,7 @@ namespace MapModS.Data
             string text = "";
 
             IEnumerable<string> uncheckedTransitions = RM.RS.TrackerData.uncheckedReachableTransitions
-                .Where(t => GetTransitionScene(t) == scene);
+                .Where(t => GetScene(t) == scene);
 
             if (uncheckedTransitions.Any())
             {
@@ -140,12 +140,12 @@ namespace MapModS.Data
             }
 
             Dictionary<string, string> visitedTransitions = RM.RS.TrackerData.visitedTransitions
-                .Where(t => GetTransitionScene(t.Key) == scene).ToDictionary(t => t.Key, t => t.Value);
+                .Where(t => GetScene(t.Key) == scene).ToDictionary(t => t.Key, t => t.Value);
 
             text += BuildTransitionStringList(visitedTransitions, "Visited", false, text != "");
 
             Dictionary<string, string> visitedTransitionsTo = RM.RS.TrackerData.visitedTransitions
-            .Where(t => GetTransitionScene(t.Value) == scene).ToDictionary(t => t.Key, t => t.Value);
+            .Where(t => GetScene(t.Value) == scene).ToDictionary(t => t.Key, t => t.Value);
 
             // Display only one-way transitions in coupled rando
             if (RM.RS.GenerationSettings.TransitionSettings.Coupled)
@@ -157,7 +157,7 @@ namespace MapModS.Data
 
             Dictionary<string, string> vanillaTransitions = RM.RS.Context.Vanilla
                 .Where(t => RD.IsTransition(t.Location.Name)
-                    && GetTransitionScene(t.Location.Name) == scene
+                    && GetScene(t.Location.Name) == scene
                     && RM.RS.TrackerData.pm.Get(t.Location.Name) > 0)
                 .ToDictionary(t => t.Location.Name, t => t.Item.Name);
 
@@ -166,7 +166,7 @@ namespace MapModS.Data
 
             Dictionary<string, string> vanillaTransitionsTo = RM.RS.Context.Vanilla
                 .Where(t => RD.IsTransition(t.Location.Name)
-                    && GetTransitionScene(t.Item.Name) == scene
+                    && GetScene(t.Item.Name) == scene
                     && RM.RS.TrackerData.pm.Get(t.Item.Name) > 0
                     && !vanillaTransitions.ContainsKey(t.Item.Name))
                 .ToDictionary(t => t.Location.Name, t => t.Item.Name);

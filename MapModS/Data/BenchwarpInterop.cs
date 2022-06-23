@@ -1,4 +1,6 @@
 ﻿using Benchwarp;
+using InControl;
+using Modding;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -95,10 +97,9 @@ namespace MapModS.Data
 
         private static IEnumerator DoBenchwarpInternal(string scene, string respawnMarker)
         {
-            GameManager.instance.inventoryFSM.SendEvent("HERO DAMAGED");
+            InputHandler.Instance.inputActions.openInventory.CommitWithState(true, ReflectionHelper.GetField<OneAxisInputControl, ulong>(InputHandler.Instance.inputActions.openInventory, "pendingTick") + 1, 0);
             yield return new WaitWhile(() => GameManager.instance.inventoryFSM.ActiveStateName != "Closed");
-            yield return new WaitForFixedUpdate();
-            yield return new WaitForFixedUpdate();
+            yield return new WaitForSeconds(0.15f);
             UIManager.instance.TogglePauseGame();
             yield return new WaitWhile(() => !GameManager.instance.IsGamePaused());
             yield return new WaitForSecondsRealtime(0.1f);
