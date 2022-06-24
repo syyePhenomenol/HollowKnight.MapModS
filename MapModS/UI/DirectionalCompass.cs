@@ -38,7 +38,6 @@ namespace MapModS.UI
 
             // This object is the actual compass sprite. Set active/inactive by the script itself
             dc.compassInternal = new(name + " Internal", typeof(SpriteRenderer));
-            DontDestroyOnLoad(dc.compassInternal);
 
             dc.sr = dc.compassInternal.GetComponent<SpriteRenderer>();
             dc.sr.sprite = sprite;

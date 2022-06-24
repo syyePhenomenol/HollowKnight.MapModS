@@ -1,185 +1,5 @@
 ﻿[
   {
-    "name": "Tutorial_01[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Town[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Room_nailmaster[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Crossroads_30[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Crossroads_47[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Crossroads_04[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Crossroads_ShamanTemple[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Room_temple[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Fungus1_01b[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Fungus1_37[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Fungus1_31[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Fungus1_16_alt[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Room_Slug_Shrine[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Fungus1_15[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Fungus3_archive[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Fungus2_02[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Fungus2_26[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Fungus2_13[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Fungus2_31[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Ruins1_02[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Ruins1_31[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Ruins1_29[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Ruins1_18[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Ruins2_08[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Ruins_Bathhouse[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Waterways_02[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Deepnest_30[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Deepnest_14[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Deepnest_Spider_Town[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Abyss_18[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Abyss_22[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Deepnest_East_06[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Deepnest_East_13[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Room_Colosseum_02[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Hive_01[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Mines_29[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Mines_18[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "RestingGrounds_09[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "RestingGrounds_12[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Fungus1_24[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Fungus3_50[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "Fungus3_40[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "White_Palace_01[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "White_Palace_03_hub[]",
-    "logic": "FALSE"
-  },
-  {
-    "name": "White_Palace_06[]",
-    "logic": "FALSE"
-  },
-  {
     "name": "Crossroads_46[door_tram]",
     "logic": "FALSE"
   },
@@ -200,7 +20,7 @@
     "logic": "FALSE"
   },
   {
-    "name": "Stag_Dirtmouth",
+    "name": "Stag-Dirtmouth",
     "logic": "ATSTAGSTATION + Dirtmouth_Stag"
   },
   {
@@ -208,7 +28,7 @@
     "logic": "FALSE"
   },
   {
-    "name": "Stag_Crossroads",
+    "name": "Stag-Crossroads",
     "logic": "ATSTAGSTATION + Crossroads_Stag"
   },
   {
@@ -216,7 +36,7 @@
     "logic": "FALSE"
   },
   {
-    "name": "Stag_Greenpath",
+    "name": "Stag-Greenpath",
     "logic": "ATSTAGSTATION + Greenpath_Stag"
   },
   {
@@ -224,7 +44,7 @@
     "logic": "FALSE"
   },
   {
-    "name": "Stag_Queen's_Station",
+    "name": "Stag-Queen's_Station",
     "logic": "ATSTAGSTATION + Queen's_Station_Stag"
   },
   {
@@ -232,7 +52,7 @@
     "logic": "FALSE"
   },
   {
-    "name": "Stag_Distant_Village",
+    "name": "Stag-Distant_Village",
     "logic": "ATSTAGSTATION + Distant_Village_Stag"
   },
   {
@@ -240,7 +60,7 @@
     "logic": "FALSE"
   },
   {
-    "name": "Stag_Hidden_Station",
+    "name": "Stag-Hidden_Station",
     "logic": "ATSTAGSTATION + Hidden_Station_Stag"
   },
   {
@@ -248,7 +68,7 @@
     "logic": "FALSE"
   },
   {
-    "name": "Stag_City_Storerooms",
+    "name": "Stag-City_Storerooms",
     "logic": "ATSTAGSTATION + City_Storerooms_Stag"
   },
   {
@@ -256,7 +76,7 @@
     "logic": "FALSE"
   },
   {
-    "name": "Stag_King's_Station",
+    "name": "Stag-King's_Station",
     "logic": "ATSTAGSTATION + King's_Station_Stag"
   },
   {
@@ -264,7 +84,7 @@
     "logic": "FALSE"
   },
   {
-    "name": "Stag_Resting_Grounds",
+    "name": "Stag-Resting_Grounds",
     "logic": "ATSTAGSTATION + Resting_Grounds_Stag"
   },
   {
@@ -272,7 +92,7 @@
     "logic": "FALSE"
   },
   {
-    "name": "Stag_Queen's_Gardens",
+    "name": "Stag-Queen's_Gardens",
     "logic": "ATSTAGSTATION + Queen's_Gardens_Stag"
   },
   {
@@ -280,7 +100,7 @@
     "logic": "FALSE"
   },
   {
-    "name": "Stag_Stag_Nest",
+    "name": "Stag-Stag_Nest",
     "logic": "ATSTAGSTATION + Stag_Nest_Stag"
   },
   {
@@ -288,7 +108,7 @@
     "logic": "FALSE"
   },
   {
-    "name": "Left_Elevator_Up",
+    "name": "Left_Elevator-Up",
     "logic": "Crossroads_49b[right1] + Left_Elevator"
   },
   {
@@ -296,7 +116,7 @@
     "logic": "FALSE"
   },
   {
-    "name": "Left_Elevator_Down",
+    "name": "Left_Elevator-Down",
     "logic": "(Crossroads_49[right1] | Crossroads_49[left1]) + Left_Elevator"
   },
   {
@@ -304,7 +124,7 @@
     "logic": "FALSE"
   },
   {
-    "name": "Right_Elevator_Up",
+    "name": "Right_Elevator-Up",
     "logic": "(Ruins2_10b[right1] | Ruins2_10b[right2] | Ruins2_10b[left1]) + Right_Elevator"
   },
   {
@@ -312,7 +132,7 @@
     "logic": "FALSE"
   },
   {
-    "name": "Right_Elevator_Down",
+    "name": "Right_Elevator-Down",
     "logic": "(Ruins2_10[right1] | Ruins2_10[left1]) + Right_Elevator"
   },
   {
@@ -320,24 +140,52 @@
     "logic": "FALSE"
   },
   {
-    "name": "Upper_Tram_ARROW_Exit_Left",
-    "logic": "Crossroads_46b[right1] + Upper_Tram"
+    "name": "Crossroads_46[door_tram]",
+    "logic": "Crossroads_46[door_tram] | Crossroads_46[left1] + Upper_Tram"
   },
   {
-    "name": "Upper_Tram_ARROW_Exit_Right",
-    "logic": "Crossroads_46[left1] + Upper_Tram"
+    "name": "Crossroads_46b[door_tram]",
+    "logic": "Crossroads_46b[door_tram] | Crossroads_46b[right1] + Upper_Tram"
   },
   {
-    "name": "Lower_Tram_ARROW_Exit_Left",
-    "logic": "(Abyss_03 | Abyss_03_c) + Lower_Tram"
+    "name": "Room_Tram_RG[door1]",
+    "logic": "FALSE"
   },
   {
-    "name": "Lower_Tram_ARROW_Exit_Middle",
-    "logic": "(Abyss_03_b | Abyss_03_c) + Lower_Tram"
+    "name": "Abyss_03_b[door_tram]",
+    "logic": "Abyss_03_b[door_tram] | Abyss_03_b + Lower_Tram"
   },
   {
-    "name": "Lower_Tram_ARROW_Exit_Right",
-    "logic": "(Abyss_03_b | Abyss_03) + Lower_Tram"
+    "name": "Abyss_03[door_tram]",
+    "logic": "Abyss_03[door_tram] | Abyss_03 + Lower_Tram"
+  },
+  {
+    "name": "Abyss_03_c[door_tram]",
+    "logic": "Abyss_03_c[door_tram] | Abyss_03_c + Lower_Tram"
+  },
+  {
+    "name": "Room_Tram[door1]",
+    "logic": "FALSE"
+  },
+  {
+    "name": "Upper_Tram-Left",
+    "logic": "Room_Tram_RG[door1]"
+  },
+  {
+    "name": "Upper_Tram-Right",
+    "logic": "Room_Tram_RG[door1]"
+  },
+  {
+    "name": "Lower_Tram-Left",
+    "logic": "Room_Tram[door1]"
+  },
+  {
+    "name": "Lower_Tram-Middle",
+    "logic": "Room_Tram[door1]"
+  },
+  {
+    "name": "Lower_Tram-Right",
+    "logic": "Room_Tram[door1]"
   },
   {
     "name": "Abyss_08[warp]",
@@ -374,5 +222,13 @@
   {
     "name": "White_Palace_06[door_dreamReturn]",
     "logic": "FALSE"
+  },
+  {
+    "name": "Room_temple[door1]",
+    "logic": "TRUE"
+  },
+  {
+    "name": "Room_Final_Boss_Atrium[left1]",
+    "logic": "TRUE"
   }
 ]

@@ -36,6 +36,8 @@ namespace MapModS.UI
             StartCoroutine("UpdateSelectedScene");
 
             StartCoroutine("UpdateSelectedPin");
+
+            StartCoroutine("UpdateSelectedBench");
         }
 
         public void Update()
@@ -43,6 +45,7 @@ namespace MapModS.UI
             try
             {
                 TransitionPersistent.Update();
+                Benchwarp.Update();
             }
             catch (Exception e)
             {
@@ -56,7 +59,7 @@ namespace MapModS.UI
             while (true)
             {
                 yield return new WaitForSecondsRealtime(0.1f);
-                TransitionPersistent.UpdateSelectedScene();
+                InfoPanels.UpdateSelectedScene();
             }
         }
 
@@ -66,7 +69,17 @@ namespace MapModS.UI
             while (true)
             {
                 yield return new WaitForSecondsRealtime(0.1f);
-                LookupText.UpdateSelectedPinCoroutine();
+                InfoPanels.UpdateSelectedPinCoroutine();
+            }
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Member is actually used")]
+        IEnumerator UpdateSelectedBench()
+        {
+            while (true)
+            {
+                yield return new WaitForSecondsRealtime(0.1f);
+                Benchwarp.UpdateSelectedBenchCoroutine();
             }
         }
 

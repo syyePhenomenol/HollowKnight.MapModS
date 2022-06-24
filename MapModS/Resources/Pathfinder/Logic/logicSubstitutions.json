@@ -23,5 +23,30 @@
     "name": "White_Palace_11[door2]",
     "old": "Warp-Palace_Grounds_to_White_Palace",
     "replacement": "White_Palace_11[door1]"
+  },
+  {
+    "name": "Crossroads_33[left1]",
+    "old": "Crossroads_33[left1]",
+    "replacement": "FALSE"
+  },
+  {
+    "name": "Crossroads_33[right1]",
+    "old": "Crossroads_33[right1]",
+    "replacement": "FALSE"
+  },
+  {
+    "name": "Abyss_01[left1]",
+    "old": "Abyss_01[left1]",
+    "replacement": "FALSE"
+  },
+  {
+    "name": "Ruins1_31[left3]",
+    "old": "Ruins1_31[left3]",
+    "replacement": "FALSE"
+  },
+  {
+    "name": "Ruins1_31[left2]",
+    "old": "Ruins1_31[left2]",
+    "replacement": "FALSE"
   }
 ]

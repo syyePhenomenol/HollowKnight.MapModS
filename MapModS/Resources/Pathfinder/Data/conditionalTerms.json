@@ -1,9 +1,5 @@
 ﻿{
-  "Ruins1_31[left3]": "ELEGANT",
   "Ruins2_11_b[left1]": "LOVE",
-  "Abyss_01[left1]": "Opened_Dung_Defender_Wall",
-  "Crossroads_33[left1]": "Opened_Mawlek_Wall",
-  "Crossroads_33[right1]": "Opened_Shaman_Pillar",
   "Deepnest_East_03[left2]": "Opened_Lower_Kingdom's_Edge_Wall",
   "Fungus3_02[right1]": "Opened_Archives_Exit_Wall",
   "Fungus3_13[left2]": "Opened_Gardens_Stag_Exit",
@@ -21,7 +17,5 @@
   "Town[door_jiji]": "Town_Door_Jiji_Opened",
   "Town[door_bretta]": "Town_Door_Bretta_Opened",
   "Town[room_divine]": "Town_Door_Divine_Opened",
-  "Town[room_grimm]": "Town_Door_Grimm_Opened",
-  "Crossroads_09[left1]": "Crossroads_09[left1]",
-  "Crossroads_09[right1]": "Crossroads_09[right1]"
+  "Town[room_grimm]": "Town_Door_Grimm_Opened"
 }

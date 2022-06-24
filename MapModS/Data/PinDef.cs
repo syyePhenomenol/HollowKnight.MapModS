@@ -37,7 +37,6 @@ namespace MapModS.Data
         // The local offset of the pin relative to its pinScene/sceneName map object
         public float offsetX = 0f; 
         public float offsetY = 0f;
-        public float offsetZ = 0f;
 
         // These are assigned during SetPinDefs
         public string locationPoolGroup = "Unknown";

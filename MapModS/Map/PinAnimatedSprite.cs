@@ -4,24 +4,17 @@ using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
-using PBC = MapModS.Map.PinBorderColor;
 using PLS = MapModS.Data.PinLocationState;
 
 namespace MapModS.Map
 {
-    public enum PinBorderColor
-    {
-        Normal,
-        Previewed,
-        Out_of_logic,
-        Persistent
-    }
-
     public class PinAnimatedSprite : MonoBehaviour
     {
         public PinDef PD { get; private set; } = null;
         
         SpriteRenderer SR => gameObject.GetComponent<SpriteRenderer>();
+
+        SpriteRenderer BorderSR => transform.GetChild(0).GetComponent<SpriteRenderer>();
 
         private int spriteIndex = 0;
 
@@ -79,7 +72,7 @@ namespace MapModS.Map
             // Non-randomized
             if (PD.pinLocationState == PLS.NonRandomizedUnchecked)
             {
-                SR.sprite = SpriteManager.GetSpriteFromPool(PD.locationPoolGroup, PBC.Normal);
+                SR.sprite = SpriteManager.GetSpriteFromPool(PD.locationPoolGroup, false);
                 
                 return;
             }
@@ -88,46 +81,19 @@ namespace MapModS.Map
 
             // Set pool to display
             string pool = PD.locationPoolGroup;
+            bool normalOverride = false;
 
             if (PD.pinLocationState == PLS.Previewed
                 || PD.pinLocationState == PLS.ClearedPersistent
                 || MapModS.LS.spoilerOn)
             {
                 pool = PD.randoItems.ElementAt(spriteIndex).poolGroup;
+                normalOverride = true;
             }
 
-            // Set border color of pin
-            PBC pinBorderColor = PBC.Normal;
+            SR.sprite = SpriteManager.GetSpriteFromPool(pool, normalOverride);
 
-            switch (PD.pinLocationState)
-            {
-                case PLS.OutOfLogicReachable:
-
-                    pinBorderColor = PBC.Out_of_logic;
-
-                    break;
-
-                case PLS.Previewed:
-
-                    pinBorderColor = PBC.Previewed;
-
-                    break;
-
-                case PLS.ClearedPersistent:
-
-                    if (PD.randoItems.ElementAt(spriteIndex).persistent)
-                    {
-                        pinBorderColor = PBC.Persistent;
-                    }
-
-                    break;
-
-                default:
-
-                    break;
-            }
-
-            SR.sprite = SpriteManager.GetSpriteFromPool(pool, pinBorderColor);
+            SetBorderColor(false);
         }
 
         public void SetSizeAndColor()
@@ -138,9 +104,8 @@ namespace MapModS.Map
                 PLS.UncheckedReachable
                 or PLS.OutOfLogicReachable
                 or PLS.Previewed
-                => GetPinScale() * new Vector2(1.45f, 1.45f),
-
-                _ => GetPinScale() * new Vector2(1.015f, 1.015f),
+                =>  new Vector3(1.45f * GetPinScale(), 1.45f * GetPinScale(), 1f),
+                _ => new Vector3(1.015f * GetPinScale(), 1.015f * GetPinScale(), 1f)
             };
 
             // Color
@@ -154,12 +119,15 @@ namespace MapModS.Map
 
                 _ => _inactiveColor,
             };
+
+            SetBorderColor(false);
         }
 
         public void SetSizeAndColorSelected()
         {
-            transform.localScale = GetPinScale() * new Vector2(1.8f, 1.8f);
+            transform.localScale = new Vector3(1.8f * GetPinScale(), 1.8f * GetPinScale(), 1f);
             SR.color = _origColor;
+            SetBorderColor(true);
         }
 
         private float GetPinScale()
@@ -171,6 +139,53 @@ namespace MapModS.Map
                 PinSize.Large => 0.42f,
                 _ => throw new NotImplementedException()
             };
+        }
+        
+        private void SetBorderColor(bool highlightOverride)
+        {
+            switch (PD.pinLocationState)
+            {
+                case PLS.UncheckedUnreachable:
+                case PLS.NonRandomizedUnchecked:
+                    if (highlightOverride)
+                    {
+                        BorderSR.color = Colors.GetColor(ColorSetting.Pin_Normal);
+                    }
+                    else
+                    {
+                        BorderSR.color = GrayOut(Colors.GetColor(ColorSetting.Pin_Normal));
+                    }
+                    break;
+                case PLS.UncheckedReachable:
+                    BorderSR.color = Colors.GetColor(ColorSetting.Pin_Normal);
+                    break;
+                case PLS.OutOfLogicReachable:
+                    BorderSR.color = Colors.GetColor(ColorSetting.Pin_Out_of_logic);
+                    break;
+                case PLS.Previewed:
+                    BorderSR.color = Colors.GetColor(ColorSetting.Pin_Previewed);
+                    break;
+                case PLS.ClearedPersistent:
+                    if (PD.randoItems.ElementAt(spriteIndex).persistent)
+                    {
+                        BorderSR.color = Colors.GetColor(ColorSetting.Pin_Persistent);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private Vector4 GrayOut(Vector4 color)
+        {
+            Vector4 newColor = new();
+
+            newColor.x = color.x / 2f;
+            newColor.y = color.y / 2f;
+            newColor.z = color.z / 2f;
+            newColor.w = color.w;
+
+            return newColor;
         }
     }
 }

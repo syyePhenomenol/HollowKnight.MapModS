@@ -1,4 +1,5 @@
 ﻿using ItemChanger;
+using MapModS.Data;
 using UnityEngine.SceneManagement;
 
 namespace MapModS.UI
@@ -68,10 +69,11 @@ namespace MapModS.UI
             MapText.Destroy();
             ControlPanel.Destroy();
             MapKey.Destroy();
-            LookupText.Destroy();
+            InfoPanels.Destroy();
             TransitionPersistent.Destroy();
             TransitionWorldMap.Destroy();
             TransitionQuickMap.Destroy();
+            Benchwarp.Destroy();
         }
 
         private static void GameMap_Start(On.GameMap.orig_Start orig, GameMap self)
@@ -89,10 +91,11 @@ namespace MapModS.UI
             MapText.Build();
             ControlPanel.Build();
             MapKey.Build();
-            LookupText.Build();
+            InfoPanels.Build();
             TransitionPersistent.Build();
             TransitionWorldMap.Build();
             TransitionQuickMap.Build();
+            Benchwarp.Build();
         }
 
         private static void GameMap_WorldMap(On.GameMap.orig_WorldMap orig, GameMap self)
@@ -100,117 +103,100 @@ namespace MapModS.UI
             orig(self);
 
             worldMapOpen = true;
+            TransitionPersistent.UpdateRoute();
+            InfoPanels.UpdateAll();
+            Benchwarp.UpdateAll();
         }
 
         private static void GameMap_QuickMapAncientBasin(On.GameMap.orig_QuickMapAncientBasin orig, GameMap self)
         {
             orig(self);
-            worldMapOpen = false;
-            quickMapOpen = true;
-            TransitionQuickMap.UpdateAll();
+            OnOpenQuickMap();
         }
 
         private static void GameMap_QuickMapCity(On.GameMap.orig_QuickMapCity orig, GameMap self)
         {
             orig(self);
-            worldMapOpen = false;
-            quickMapOpen = true;
-            TransitionQuickMap.UpdateAll();
+            OnOpenQuickMap();
         }
 
         private static void GameMap_QuickMapCliffs(On.GameMap.orig_QuickMapCliffs orig, GameMap self)
         {
             orig(self);
-            worldMapOpen = false;
-            quickMapOpen = true;
-            TransitionQuickMap.UpdateAll();
+            OnOpenQuickMap();
         }
 
         private static void GameMap_QuickMapCrossroads(On.GameMap.orig_QuickMapCrossroads orig, GameMap self)
         {
             orig(self);
-            worldMapOpen = false;
-            quickMapOpen = true;
-            TransitionQuickMap.UpdateAll();
+            OnOpenQuickMap();
         }
 
         private static void GameMap_QuickMapCrystalPeak(On.GameMap.orig_QuickMapCrystalPeak orig, GameMap self)
         {
             orig(self);
-            worldMapOpen = false;
-            quickMapOpen = true;
-            TransitionQuickMap.UpdateAll();
+            OnOpenQuickMap();
         }
 
         private static void GameMap_QuickMapDeepnest(On.GameMap.orig_QuickMapDeepnest orig, GameMap self)
         {
             orig(self);
-            worldMapOpen = false;
-            quickMapOpen = true;
-            TransitionQuickMap.UpdateAll();
+            OnOpenQuickMap();
         }
 
         private static void GameMap_QuickMapDirtmouth(On.GameMap.orig_QuickMapDirtmouth orig, GameMap self)
         {
             orig(self);
-            worldMapOpen = false;
-            quickMapOpen = true;
-            TransitionQuickMap.UpdateAll();
+            OnOpenQuickMap();
         }
 
         private static void GameMap_QuickMapFogCanyon(On.GameMap.orig_QuickMapFogCanyon orig, GameMap self)
         {
             orig(self);
-            worldMapOpen = false;
-            quickMapOpen = true;
-            TransitionQuickMap.UpdateAll();
+            OnOpenQuickMap();
         }
 
         private static void GameMap_QuickMapFungalWastes(On.GameMap.orig_QuickMapFungalWastes orig, GameMap self)
         {
             orig(self);
-            worldMapOpen = false;
-            quickMapOpen = true;
-            TransitionQuickMap.UpdateAll();
+            OnOpenQuickMap();
         }
 
         private static void GameMap_QuickMapGreenpath(On.GameMap.orig_QuickMapGreenpath orig, GameMap self)
         {
             orig(self);
-            worldMapOpen = false;
-            quickMapOpen = true;
-            TransitionQuickMap.UpdateAll();
+            OnOpenQuickMap();
         }
 
         private static void GameMap_QuickMapKingdomsEdge(On.GameMap.orig_QuickMapKingdomsEdge orig, GameMap self)
         {
             orig(self);
-            worldMapOpen = false;
-            quickMapOpen = true;
-            TransitionQuickMap.UpdateAll();
+            OnOpenQuickMap();
         }
 
         private static void GameMap_QuickMapQueensGardens(On.GameMap.orig_QuickMapQueensGardens orig, GameMap self)
         {
             orig(self);
-            worldMapOpen = false;
-            quickMapOpen = true;
-            TransitionQuickMap.UpdateAll();
+            OnOpenQuickMap();
         }
 
         private static void GameMap_QuickMapRestingGrounds(On.GameMap.orig_QuickMapRestingGrounds orig, GameMap self)
         {
             orig(self);
-            worldMapOpen = false;
-            quickMapOpen = true;
-            TransitionQuickMap.UpdateAll();
+            OnOpenQuickMap();
         }
 
         private static void GameMap_QuickMapWaterways(On.GameMap.orig_QuickMapWaterways orig, GameMap self)
         {
             orig(self);
+            OnOpenQuickMap();
+        }
+
+        public static void OnOpenQuickMap()
+        {
             worldMapOpen = false;
             quickMapOpen = true;
+            TransitionPersistent.UpdateRoute();
             TransitionQuickMap.UpdateAll();
         }
 
@@ -223,8 +209,8 @@ namespace MapModS.UI
 
             MapText.UpdateAll();
             TransitionPersistent.UpdateAll();
+            Benchwarp.attackHoldTimer.Reset();
         }
-
 
         private static void HeroController_UnPause(On.HeroController.orig_UnPause orig, HeroController self)
         {

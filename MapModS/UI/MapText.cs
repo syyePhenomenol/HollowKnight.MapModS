@@ -1,5 +1,6 @@
 ﻿using MagicUI.Core;
 using MagicUI.Elements;
+using MapModS.Data;
 using MapModS.Map;
 using MapModS.Settings;
 using System;
@@ -115,12 +116,12 @@ namespace MapModS.UI
 
             if (MapModS.LS.spoilerOn)
             {
-                textObj.ContentColor = Color.green;
+                textObj.ContentColor = Colors.GetColor(ColorSetting.UI_On);
                 text += L.Localize("on");
             }
             else
             {
-                textObj.ContentColor = Color.white;
+                textObj.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
                 text += L.Localize("off");
             }
 
@@ -133,18 +134,18 @@ namespace MapModS.UI
 
             if (MapModS.LS.randomizedOn)
             {
-                textObj.ContentColor = Color.green;
+                textObj.ContentColor = Colors.GetColor(ColorSetting.UI_On);
                 text += L.Localize("on");
             }
             else
             {
-                textObj.ContentColor = Color.white;
+                textObj.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
                 text += L.Localize("off");
             }
 
             if (WorldMap.CustomPins.IsRandomizedCustom())
             {
-                textObj.ContentColor = Color.yellow;
+                textObj.ContentColor = Colors.GetColor(ColorSetting.UI_Custom);
             }
 
             textObj.Text = text;
@@ -156,18 +157,18 @@ namespace MapModS.UI
 
             if (MapModS.LS.othersOn)
             {
-                textObj.ContentColor = Color.green;
+                textObj.ContentColor = Colors.GetColor(ColorSetting.UI_On);
                 text += L.Localize("on");
             }
             else
             {
-                textObj.ContentColor = Color.white;
+                textObj.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
                 text += L.Localize("off");
             }
 
             if (WorldMap.CustomPins.IsOthersCustom())
             {
-                textObj.ContentColor = Color.yellow;
+                textObj.ContentColor = Colors.GetColor(ColorSetting.UI_Custom);
             }
 
             textObj.Text = text;
@@ -196,6 +197,7 @@ namespace MapModS.UI
                     break;
             }
 
+            textObj.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
             textObj.Text = text;
         }
 
@@ -218,6 +220,7 @@ namespace MapModS.UI
                     break;
             }
 
+            textObj.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
             textObj.Text = text;
         }
     }

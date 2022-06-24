@@ -4,7 +4,6 @@ using MagicUI.Graphics;
 using MapModS.Data;
 using MapModS.Map;
 using MapModS.Settings;
-using System.Collections.Generic;
 using UnityEngine;
 using L = RandomizerMod.Localization;
 
@@ -18,14 +17,6 @@ namespace MapModS.UI
         private static StackLayout panelContents;
         private static GridLayout pinKey;
         private static GridLayout roomKey;
-
-        private static readonly Dictionary<PinBorderColor, string> _pinKey = new()
-        {
-            { PinBorderColor.Normal, "pinBlank" },
-            { PinBorderColor.Previewed, "pinBlankGreen" },
-            { PinBorderColor.Out_of_logic, "pinBlankRed" },
-            { PinBorderColor.Persistent, "pinBlankCyan" }
-        };
 
         public static bool Condition()
         {
@@ -50,6 +41,8 @@ namespace MapModS.UI
                     VerticalAlignment = VerticalAlignment.Top,
                     Padding = new(160f, 170f, 10f, 10f)
                 };
+
+                ((Image)layout.GetElement("Panel Background")).Tint = Colors.GetColor(ColorSetting.UI_Borders);
 
                 panelContents = new(layout, "Panel Contents")
                 {
@@ -85,9 +78,19 @@ namespace MapModS.UI
 
                 int counter = 0;
 
-                foreach(KeyValuePair<PinBorderColor, string> kvp in _pinKey)
+                foreach(ColorSetting colorSetting in Colors.pinColors)
                 {
-                    Image pin = new Image(layout, SpriteManager.GetSprite(kvp.Value), kvp.Key.ToString() + " Pin")
+                    Panel pinPanel = new Panel(layout, SpriteManager.GetSprite("pinBlank"), colorSetting.ToString() + "Panel")
+                    {
+                        MinHeight = 50f,
+                        MinWidth = 50f,
+                        Borders = new(0f, 0f, 0f, 0f),
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        Padding = new(0f, 0f, 0f, 0f)
+                    }.WithProp(GridLayout.Column, 0).WithProp(GridLayout.Row, counter);
+
+                    Image pin = new Image(layout, SpriteManager.GetSprite("pinBorder"), colorSetting.ToString() + " Pin")
                     {
                         Width = 50f,
                         Height = 50f,
@@ -95,15 +98,19 @@ namespace MapModS.UI
                         VerticalAlignment = VerticalAlignment.Center
                     }.WithProp(GridLayout.Column, 0).WithProp(GridLayout.Row, counter);
 
-                    TextObject text = new TextObject(layout, kvp.Key.ToString() + " Text")
+                    ((Image)layout.GetElement(colorSetting.ToString() + " Pin")).Tint = Colors.GetColor(colorSetting);
+
+                    pinPanel.Child = pin;
+
+                    TextObject text = new TextObject(layout, colorSetting.ToString() + " Text")
                     {
-                        Text = L.Localize(Utils.ToCleanName(kvp.Key.ToString())),
+                        Text = L.Localize(Utils.ToCleanName(colorSetting.ToString().Replace("Pin_", ""))),
                         Padding = new(10f, 0f, 0f, 0f),
                         HorizontalAlignment = HorizontalAlignment.Left,
                         VerticalAlignment = VerticalAlignment.Center
                     }.WithProp(GridLayout.Column, 1).WithProp(GridLayout.Row, counter);
 
-                    pinKey.Children.Add(pin);
+                    pinKey.Children.Add(pinPanel);
                     pinKey.Children.Add(text);
 
                     counter++;
@@ -136,23 +143,23 @@ namespace MapModS.UI
 
                 counter = 0;
 
-                foreach (KeyValuePair<Transition.RoomState, Vector4> kvp in Transition.roomColor)
+                foreach (ColorSetting color in Colors.roomColors)
                 {
-                    if (kvp.Key == Transition.RoomState.Debug) continue;
+                    string cleanRoomColor = Utils.ToCleanName(color.ToString().Replace("Room_", ""));
 
-                    Image room = new Image(layout, roomCopy, kvp.Key.ToString() + " Room")
+                    Image room = new Image(layout, roomCopy, cleanRoomColor + " Room")
                     {
                         Width = 40f,
                         Height = 40f,
-                        Tint = kvp.Value,
+                        Tint = Colors.GetColor(color),
                         HorizontalAlignment = HorizontalAlignment.Right,
                         VerticalAlignment = VerticalAlignment.Center,
                         Padding = new(0f, 5f, 17f, 5f),
                     }.WithProp(GridLayout.Column, 0).WithProp(GridLayout.Row, counter);
 
-                    TextObject text = new TextObject(layout, kvp.Key.ToString() + " Text")
+                    TextObject text = new TextObject(layout, cleanRoomColor + " Text")
                     {
-                        Text = L.Localize(Utils.ToCleanName(kvp.Key.ToString())),
+                        Text = L.Localize(cleanRoomColor),
                         Padding = new(10f, 0f, 0f, 0f),
                         HorizontalAlignment = HorizontalAlignment.Left,
                         VerticalAlignment = VerticalAlignment.Center
@@ -164,11 +171,14 @@ namespace MapModS.UI
                     counter++;
                 }
 
+                Vector4 highlighted = Colors.GetColor(ColorSetting.Room_Normal);
+                highlighted.w = 1f;
+
                 Image roomHighlight = new Image(layout, roomCopy, "Highlighted Room")
                 {
                     Width = 40f,
                     Height = 40f,
-                    Tint = new(255, 255, 255, 1f),
+                    Tint = highlighted,
                     HorizontalAlignment = HorizontalAlignment.Right,
                     VerticalAlignment = VerticalAlignment.Center,
                     Padding = new(0f, 5f, 17f, 5f),

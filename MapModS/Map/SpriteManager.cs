@@ -12,28 +12,51 @@ namespace MapModS.Map
     {
         private static Dictionary<string, Sprite> _sprites;
 
-        public static void LoadEmbeddedPngs(string prefix)
+        public static void LoadPinSprites()
         {
+            string prefix = "MapModS.Resources.Pins";
+
             Assembly a = typeof(SpriteManager).Assembly;
             _sprites = new Dictionary<string, Sprite>();
 
             foreach (string name in a.GetManifestResourceNames().Where(name => name.Substring(name.Length - 3).ToLower() == "png"))
             {
-                string altName = prefix != null ? name.Substring(prefix.Length) : name;
+                Sprite sprite = FromStream(a.GetManifestResourceStream(name));
+
+                string altName = name.Substring(prefix.Length);
                 altName = altName.Remove(altName.Length - 4);
                 altName = altName.Replace(".", "");
-                Sprite sprite = FromStream(a.GetManifestResourceStream(name));
                 _sprites[altName] = sprite;
+            }
+
+            // Load custom pins
+            prefix = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Pins");
+
+            if (Directory.Exists(prefix))
+            {
+                foreach (string name in Directory.GetFiles(prefix).Where(name => name.Substring(name.Length - 3).ToLower() == "png"))
+                {
+                    Sprite sprite = FromStream(File.Open(name, FileMode.Open));
+
+                    string altName = name.Substring(prefix.Length);
+                    altName = altName.Remove(altName.Length - 4);
+                    altName = altName.Replace("\\", "");
+
+                    if (_sprites.ContainsKey(altName))
+                    {
+                        _sprites[altName] = sprite;
+                    }
+                }
+
+                MapModS.Instance.Log("Custom pin sprites loaded");
             }
         }
 
-        public static Sprite GetSpriteFromPool(string pool, PinBorderColor color)
+        public static Sprite GetSpriteFromPool(string pool, bool normalOverride)
         {
             string spriteName = "undefined";
 
-            if (MapModS.GS.pinStyle == PinStyle.Normal
-                || color == PinBorderColor.Previewed
-                || color == PinBorderColor.Persistent)
+            if (MapModS.GS.pinStyle == PinStyle.Normal || normalOverride)
             {
                 spriteName = pool switch
                 {
@@ -64,6 +87,7 @@ namespace MapModS.Map
                     "Shops" => "pinShop",
                     "Levers" => "pinLever",
                     "Mr Mushroom" => "pinLore",
+                    "Benches" => "pinBench",
                     _ => "pinUnknown",
                 };
             }
@@ -100,19 +124,6 @@ namespace MapModS.Map
                     "Shops" => "pinShop",
                     _ => "pinUnknown",
                 };
-            }
-
-            switch (color)
-            {
-                case PinBorderColor.Previewed:
-                    spriteName += "Green";
-                    break;
-                case PinBorderColor.Out_of_logic:
-                    spriteName += "Red";
-                    break;
-                case PinBorderColor.Persistent:
-                    spriteName += "Cyan";
-                    break;
             }
 
             return GetSprite(spriteName);

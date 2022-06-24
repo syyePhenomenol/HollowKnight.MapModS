@@ -5,6 +5,7 @@ using MapModS.Trackers;
 using Modding;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace MapModS.Map
@@ -47,11 +48,13 @@ namespace MapModS.Map
 
             try
             {
-                Dependencies.BenchwarpInterop();
+                Dependencies.BenchwarpVersionCheck();
                 MainData.SetUsedPinDefs();
                 MainData.SetLogicLookup();
                 TransitionData.SetTransitionLookup();
-                PathfinderData.SetPathfinderLogic();
+                PathfinderData.Load();
+                Pathfinder.Initialize();
+                Pathfinder.UpdateProgression();
 
                 if (MapModS.LS.newSettings || MapModS.LS.poolGroupSettings.Count == 0)
                 {
@@ -72,11 +75,11 @@ namespace MapModS.Map
             
             GameMap gameMap = go_gameMap.GetComponent<GameMap>();
 
-            Transition.AddExtraComponentsToMap(gameMap);
+            MapRooms.AddExtraComponentsToMap(gameMap);
 
             if (GameObject.Find("MMS Custom Map Rooms") == null)
             {
-                goExtraRooms = Transition.CreateExtraMapRooms(gameMap);
+                goExtraRooms = MapRooms.CreateExtraMapRooms(gameMap);
             }
 
             if (TransitionData.IsTransitionRando() && MapModS.LS.newSettings)
@@ -126,12 +129,23 @@ namespace MapModS.Map
                     || MapModS.LS.mapMode == MapMode.TransitionRando
                     || MapModS.LS.mapMode == MapMode.TransitionRandoAlt))
             {
-                foreach (Transform child in self.transform)
+                foreach (Transform roomObj in self.transform.Cast<Transform>().Where(t => t.name == "WHITE_PALACE" || t.name == "GODS_GLORY"))
                 {
-                    if (child.name == "WHITE_PALACE"
-                        || child.name == "GODS_GLORY")
+                    roomObj.gameObject.SetActive(true);
+
+                    // Force enable sub area names
+                    foreach (Transform roomObj2 in roomObj.transform.Cast<Transform>())
                     {
-                        child.gameObject.SetActive(true);
+                        if (roomObj2.name.Contains("Area Name"))
+                        {
+                            roomObj2.gameObject.SetActive(true);
+                        }
+
+                        foreach (Transform roomObj3 in roomObj2.transform.Cast<Transform>()
+                            .Where(r => r.name.Contains("Area Name")))
+                        {
+                            roomObj3.gameObject.SetActive(true);
+                        }
                     }
                 }
             }
@@ -224,15 +238,16 @@ namespace MapModS.Map
 
             HashSet<string> transitionPinScenes = new();
 
-            FullMap.PurgeMap();
-
             if (TransitionData.TransitionModeActive())
             {
-                transitionPinScenes = Transition.SetupMapTransitionMode(gameMap, mapZone);
+                Pathfinder.UpdateProgression();
+                transitionPinScenes = MapRooms.SetupMapTransitionMode(gameMap, mapZone);
             }
             else
             {
+                FullMap.PurgeMap();
                 gameMap.SetupMap();
+                MapRooms.ResetMapColors(gameMap.gameObject);
             }
 
             if (goCustomPins == null || !MapModS.LS.modEnabled) return;

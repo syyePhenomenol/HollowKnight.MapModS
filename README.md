@@ -36,34 +36,36 @@ This mod has support for languages other than English. You will need to source a
 
 # Features
 ## World Map / Quick Map
-- Big pins: Items are reachable according to RandomizerMod's logic
-- Small/grayed out pins: Items are not randomized or not reachable
+- Big pins: Items are reachable according to Randomizer logic.
+- Small/grayed out pins: Items are not randomized or not reachable.
 - Pins will disappear as you clear their locations. If item previews are enabled, it will show the corresponding previewed item.
-- Pin settings are displayed at the bottom. See Pause Menu for more info on the toggles.
+- Pin settings are displayed at the bottom. See [Pause Menu](#pause-menu) for more info on the toggles.
 - ``CTRL-H``: Expand/collapse the hotkey panel
 - ``SHIFT``: Pan faster (same as right thumbstick on controller).
 - ``CTRL-K``: Toggle a panel for the map key for the pin and room colors.
     - Check out the [Map Legend](./MAPLEGEND.md) for more details on each pin style.
 - ``CTRL-L``: Toggle a panel for pin lookup on/off.
     - Hover over any visible pin to display info about the name, room, status, logic requirements, previewed items (if any) and spoiler items (if Spoilers on).
+- ``CTRL-W``: Toggle benchwarp from the World Map on/off.
+    - Hover over a room with a bench you have been to, and hold the indicated key/controller bind to do the benchwarp. Tap the same bind to switch benches located at the same map room.
 
 ## Pause Menu
 - "Mod Enabled/Disabled" `CTRL-M`: Toggle the mod on/off
-- "Spoilers" `CTRL-1`: Toggle pins between vanilla (non-spoiler) and spoiler item pools
+- "Spoilers" `CTRL-1`: Toggle pins between vanilla (non-spoiler) and spoiler item pools. For most gameplay, leave this setting off.
 - "Randomized" `CTRL-2`: Toggle all pins for randomized items on/off
 - "Others" `CTRL-3`: Toggle all pins for non-randomized items on/off
 - "Pin Style" `CTRL-4`: Toggle the style of the pins
 - "Pin Size" `CTRL-5`: Toggle the size of the pins
 - "Mode": Toggle the map mode
     - "Transition": See more info below.
-    - "Transition 2": Instead of showing all in-logic + visited rooms, only visited rooms appear. Depending on your randomizer run, this might not change anything (and therefore may not be an option).
+    - "Transition 2": Instead of showing all in-logic + visited rooms, only visited rooms appear. Depending on your Randomizer run, this might not change anything (and therefore may not be an option).
     - "Full Map": Shows all pins and the full map regardless of map items obtained
     - "All Pins": Shows all pins, but only show map areas for obtained map items
     - "Pins Over Map": Only show pins over where the corresponding map item has been obtained
 - "Customize Pins":
     - Toggle each pool on/off.
-    - Control whether the pool toggles are grouped by location, or by item (spoiler).
-    - Control whether persistent items are always showing or not.
+    - "Persistent items": Toggle persistent items to always showing or not.
+    - "Group by": Toggle the pools to be grouped by location, or by item (spoiler).
 
 ## Transition Mode
 - Check out the in-game map key (`CTRL-K`) or the [Map Legend](./MAPLEGEND.md) for what the colors/brightness of each room indicate.
@@ -72,18 +74,29 @@ This mod has support for languages other than English. You will need to source a
 - If the first step in the route is to benchwarp, hold the indicated key/controller bind to do the benchwarp.
 - A compass arrow will point to the next transition you need to go to. The shown route gets updated after every transition.
 - The Quick Map also shows the list of unchecked/visited/vanilla transitions for the current room.
-- `CTRL-B`: Toggle including Benchwarp in the pathfinder on/off.
-- `CTRL-U`: Show/hide unchecked/visited/vanilla transitions in the World Map.
+- `CTRL-B`: Toggle including benchwarp in the pathfinder on/off.
+- `CTRL-U`: Toggle a panel for unchecked/visited/vanilla transitions in the World Map on/off.
 - `CTRL-R`: Toggle the route to be displayed in-game to full/next transition only/off.
 - `CTRL-E`: Toggle behaviour when going off-route to keep route/cancel route/reevaluate route.
 - `CTRL-C`: Toggle the route compass on/off.
+
+## Customization
+- To customize map and UI colors, download the [template file](https://github.com/syyePhenomenol/HollowKnight.MapModS/releases/download/v2.6.0/colors.json) and copy it to the same folder that contains the mod file 'MapModS.dll'.
+    - For Steam + Scarab users on Windows, the default folder is `...\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\Randomizer Map S`.
+    - Colors will be interpreted in standard RGBA format ('[r, g, b, a]').
+    - If you want to keep the default color of something, delete the corresponding line in the file (or change '[r, g, b, a]' to '[]').
+- To customize pins, make a folder called 'Pins' containing your custom PNG files, and copy it to the same folder that contains the mod file 'MapModS.dll'.
+    - See the [default pins](./MapModS/Resources/Pins) for reference.
+    - You only need to include the files you want to replace the original ones with.
 
 # How To Install
 Use Scarab: https://github.com/fifty-six/Scarab
 
 Or, you can install manually:
 1. Download the latest release of `MapModS.zip`.
-2. Unzip and copy the folder 'MapModS' to `...\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods`.
+2. Unzip and copy the folder 'MapModS' to `...\hollow_knight_Data\Managed\Mods`.
+
+If you need any help, feel free to ask in any of the active Hollow Knight Discord servers.
 
 # Acknowledgements
 - Special thanks to Homothety and Flib for significant coding help

@@ -17,28 +17,18 @@ namespace MapModS.Data
     {
         private static Dictionary<string, PinDef> allPins;
         private static Dictionary<string, PinDef> allPinsAM;
-        private static Dictionary<string, string> pinScenes;
         private static List<string> sortedGroups;
         private static HashSet<string> minimalMapRooms;
         private static Dictionary<string, MapRoomDef> nonMappedRooms;
 
         private static readonly Dictionary<string, PinDef> usedPins = new();
         private static Dictionary<string, string> logicLookup = new();
+
         public static List<string> usedPoolGroups = new();
-
-        public static PinDef[] GetPinArray()
-        {
-            return allPins.Values.ToArray();
-        }
-
-        public static PinDef[] GetPinAMArray()
-        {
-            return allPinsAM.Values.ToArray();
-        }
 
         public static PinDef[] GetUsedPinArray()
         {
-            return usedPins.Values.ToArray();
+            return usedPins.Values.OrderBy(p => p.offsetX).ThenBy(p => p.offsetY).ToArray();
         }
 
         public static PinDef GetUsedPinDef(string locationName)
@@ -63,7 +53,7 @@ namespace MapModS.Data
 
         public static IEnumerable<string> GetNonMappedScenes()
         {
-            if (Dependencies.HasDependency("AdditionalMaps"))
+            if (Dependencies.HasAdditionalMaps())
             {
                 return nonMappedRooms.Keys.Where(s => nonMappedRooms[s].includeWithAdditionalMaps);
             }
@@ -228,12 +218,16 @@ namespace MapModS.Data
                     pd.sceneName = "Room_Colosseum_01";
                 }
 
-                if (pinScenes.ContainsKey(pd.sceneName))
+                if (nonMappedRooms.ContainsKey(pd.sceneName))
                 {
-                    pd.pinScene = pinScenes[pd.sceneName];
+                    pd.pinScene = nonMappedRooms[pd.sceneName].mappedScene;
+                    pd.mapZone = nonMappedRooms[pd.sceneName].mapZone;
                 }
 
-                pd.mapZone = Utils.ToMapZone(RD.GetRoomDef(pd.pinScene ?? pd.sceneName).MapArea);
+                if (pd.pinScene == null)
+                {
+                    pd.mapZone = Utils.ToMapZone(RD.GetRoomDef(pd.sceneName).MapArea);
+                }
 
                 pd.randomized = true;
                 pd.randoItems = items;
@@ -276,12 +270,16 @@ namespace MapModS.Data
                         pd.sceneName = "Room_Colosseum_01";
                     }
 
-                    if (pinScenes.ContainsKey(pd.sceneName))
+                    if (nonMappedRooms.ContainsKey(pd.sceneName))
                     {
-                        pd.pinScene = pinScenes[pd.sceneName];
+                        pd.pinScene = nonMappedRooms[pd.sceneName].mappedScene;
+                        pd.mapZone = nonMappedRooms[pd.sceneName].mapZone;
                     }
 
-                    pd.mapZone = Utils.ToMapZone(RD.GetRoomDef(pd.pinScene ?? pd.sceneName).MapArea);
+                    if (pd.pinScene == null)
+                    {
+                        pd.mapZone = Utils.ToMapZone(RD.GetRoomDef(pd.sceneName).MapArea);
+                    }
 
                     if (!HasObtainedVanillaItem(pd))
                     {
@@ -311,39 +309,23 @@ namespace MapModS.Data
 
             usedPoolGroups.AddRange(unsortedGroups);
 
-            // Interop
-            if (Dependencies.HasDependency("AdditionalMaps"))
+            if (Dependencies.HasAdditionalMaps())
             {
                 ApplyAdditionalMapsChanges();
-            }
-
-            if (Dependencies.HasDependency("RandomizableLevers"))
-            {
-                ApplyRandomizableLeversChanges();
             }
         }
 
         public static void ApplyAdditionalMapsChanges()
         {
-            foreach (PinDef pinDefAM in GetPinAMArray())
+            foreach (KeyValuePair<string, PinDef> kvp in allPinsAM)
             {
-                if (usedPins.TryGetValue(pinDefAM.name, out PinDef pinDef))
+                if (usedPins.TryGetValue(kvp.Key, out PinDef pinDef))
                 {
-                    pinDef.pinScene = pinDefAM.pinScene;
-                    pinDef.mapZone = pinDefAM.mapZone;
-                    pinDef.offsetX = pinDefAM.offsetX;
-                    pinDef.offsetY = pinDefAM.offsetY;
+                    pinDef.pinScene = kvp.Value.pinScene;
+                    pinDef.mapZone = kvp.Value.mapZone;
+                    pinDef.offsetX = kvp.Value.offsetX;
+                    pinDef.offsetY = kvp.Value.offsetY;
                 }
-            }
-        }
-
-        public static void ApplyRandomizableLeversChanges()
-        {
-            // This is probably redundant
-            if (usedPins.Any(p => p.Key.StartsWith("Lever")))
-            {
-                usedPins.Remove("Dirtmouth_Stag");
-                usedPins.Remove("Resting_Grounds_Stag");
             }
         }
 
@@ -356,16 +338,19 @@ namespace MapModS.Data
         {
             allPins = JsonUtil.Deserialize<Dictionary<string, PinDef>>("MapModS.Resources.pins.json");
             allPinsAM = JsonUtil.Deserialize<Dictionary<string, PinDef>>("MapModS.Resources.pinsAM.json");
-            pinScenes = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.pinScenes.json");
             sortedGroups = JsonUtil.Deserialize<List<string>>("MapModS.Resources.sortedGroups.json");
             minimalMapRooms = JsonUtil.Deserialize<HashSet<string>>("MapModS.Resources.minimalMapRooms.json");
             nonMappedRooms = JsonUtil.Deserialize<Dictionary<string, MapRoomDef>>("MapModS.Resources.nonMappedRooms.json");
         }
 
 #if DEBUG
+        public static Dictionary<string, PinDef> newPins;
+        public static Dictionary<string, MapRoomDef> newRooms;
+
         public static void LoadDebugResources()
         {
-
+            //newPins = JsonUtil.DeserializeFromExternalFile<Dictionary<string, PinDef>> ("newPins.json");
+            newRooms = JsonUtil.DeserializeFromExternalFile<Dictionary<string, MapRoomDef>>("newRooms.json");
         }
 #endif
     }

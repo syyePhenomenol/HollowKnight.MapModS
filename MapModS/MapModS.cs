@@ -16,7 +16,7 @@ namespace MapModS
     {
         public static MapModS Instance;
 
-        public override string GetVersion() => "2.5.2";
+        public override string GetVersion() => "2.6.0";
 
         public override int LoadPriority() => 10;
 
@@ -55,18 +55,7 @@ namespace MapModS
 
             try
             {
-                SpriteManager.LoadEmbeddedPngs("MapModS.Resources.Pins");
-            }
-            catch (Exception e)
-            {
-                LogError($"Error loading sprites!\n{e}");
-                throw;
-            }
-
-            try
-            {
                 MainData.Load();
-                PathfinderData.Load();
             }
             catch (Exception e)
             {
@@ -105,6 +94,15 @@ namespace MapModS
             if (RandomizerMod.RandomizerMod.RS.GenerationSettings == null) return;
 
             Log("Activating mod");
+
+            // Load default/custom assets
+            SpriteManager.LoadPinSprites();
+            Colors.LoadCustomColors();
+
+            if (Dependencies.HasBenchwarp())
+            {
+                BenchwarpInterop.Load();
+            }
 
             // Track when items are picked up/Geo Rocks are broken
             ItemTracker.Hook();

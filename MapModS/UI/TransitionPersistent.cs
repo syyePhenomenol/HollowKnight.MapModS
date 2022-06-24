@@ -1,15 +1,13 @@
 ﻿using MagicUI.Core;
 using MagicUI.Elements;
 using MapModS.Data;
-using MapModS.Map;
 using MapModS.Settings;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
+using static MapModS.Map.MapRooms;
 
 namespace MapModS.UI
 {
@@ -19,14 +17,11 @@ namespace MapModS.UI
 
         private static TextObject route;
 
-        public static Pathfinder pf;
-
         public static string lastStartScene = "";
         public static string lastFinalScene = "";
         public static string lastStartTransition = "";
         public static string lastFinalTransition = "";
         public static int transitionsCount = 0;
-        public static string selectedScene = "None";
         public static List<string> selectedRoute = new();
         public static List<List<string>> rejectedRoutes = new();
 
@@ -52,8 +47,6 @@ namespace MapModS.UI
 
                 UpdateAll();
             }
-
-            pf = new();
         }
 
         public static void Destroy()
@@ -103,37 +96,7 @@ namespace MapModS.UI
             route.Text = text;
         }
 
-        private static Thread colorUpdateThread;
-
-        // Called every 0.1 seconds
-        public static void UpdateSelectedScene()
-        {
-            if (layout == null
-                || !GUI.worldMapOpen
-                || GUI.lockToggleEnable
-                || GameManager.instance.IsGamePaused()
-                || !TransitionData.TransitionModeActive())
-            {
-                return;
-            }
-
-            if (colorUpdateThread != null && colorUpdateThread.IsAlive) return;
-
-            colorUpdateThread = new(() =>
-            {
-                if (Transition.GetRoomClosestToMiddle(selectedScene, out selectedScene))
-                {
-                    Transition.SetSelectedRoomColor(selectedScene);
-                    UpdateAll();
-                    TransitionWorldMap.UpdateAll();
-                }
-            });
-
-            colorUpdateThread.Start();
-        }
-
         private static Thread searchThread;
-        private static Stopwatch attackHoldTimer = new();
 
         // Called every frame
         public static void Update()
@@ -153,52 +116,22 @@ namespace MapModS.UI
             {
                 searchThread = new(GetRoute);
                 searchThread.Start();
-                attackHoldTimer.Reset();
+                Benchwarp.attackHoldTimer.Reset();
             }
-
-            // Hold attack to benchwarp in world map
-            if (selectedRoute.Any() && selectedRoute.First().IsBenchwarpTransition() && Dependencies.HasDependency("Benchwarp"))
-            {
-                if (InputHandler.Instance.inputActions.attack.WasPressed)
-                {
-                    attackHoldTimer.Restart();
-                }
-
-                if (InputHandler.Instance.inputActions.attack.WasReleased)
-                {
-                    attackHoldTimer.Reset();
-                }
-
-                if (attackHoldTimer.ElapsedMilliseconds >= 500)
-                {
-                    attackHoldTimer.Reset();
-
-                    GameManager.instance.StartCoroutine(CloseInventoryBenchwarp());
-                }
-            }
-        }
-
-        private static IEnumerator CloseInventoryBenchwarp()
-        {
-            GameManager.instance.inventoryFSM.SendEvent("HERO DAMAGED");
-            yield return new WaitWhile(() => GameManager.instance.inventoryFSM.ActiveStateName != "Closed");
-            UIManager.instance.TogglePauseGame();
-            yield return new WaitWhile(() => !GameManager.instance.IsGamePaused());
-            Dependencies.DoBenchwarp(PathfinderData.GetBenchwarpScene(selectedRoute.First()));
         }
 
         public static void GetRoute()
         {
-            if (pf == null) return;
+            if (Pathfinder.localPm == null) return;
 
-            if (lastStartScene != Utils.CurrentScene() || lastFinalScene != selectedScene)
+            if (lastStartScene != Utils.CurrentScene() || lastFinalScene != InfoPanels.selectedScene)
             {
                 rejectedRoutes.Clear();
             }
 
             try
             {
-                selectedRoute = pf.ShortestRoute(Utils.CurrentScene(), selectedScene, rejectedRoutes, MapModS.GS.allowBenchWarpSearch, false);
+                selectedRoute = Pathfinder.ShortestRoute(Utils.CurrentScene(), InfoPanels.selectedScene, rejectedRoutes, MapModS.GS.allowBenchWarpSearch, false);
             }
             catch (Exception e)
             {
@@ -210,13 +143,24 @@ namespace MapModS.UI
 
         public static void ReevaluateRoute(ItemChanger.Transition lastTransition)
         {
-            if (pf == null) return;
+            if (Pathfinder.localPm == null) return;
 
             rejectedRoutes.Clear();
 
+            string transition = lastTransition.ToString();
+
+            if (transition == "Fungus2_15[top2]")
+            {
+                transition = "Fungus2_15[top3]";
+            } 
+            if (transition == "Fungus2_14[bot1]")
+            {
+                transition = "Fungus2_14[bot3]";
+            }
+
             try
             {
-                selectedRoute = pf.ShortestRoute(lastTransition.ToString(), lastFinalTransition.GetAdjacentTransition(), rejectedRoutes, MapModS.GS.allowBenchWarpSearch, true);
+                selectedRoute = Pathfinder.ShortestRoute(transition, lastFinalTransition.GetAdjacentTerm(), rejectedRoutes, MapModS.GS.allowBenchWarpSearch, true);
             }
             catch (Exception e)
             {
@@ -263,36 +207,33 @@ namespace MapModS.UI
 
         public static void UpdateRoute(ItemChanger.Transition lastTransition)
         {
+#if DEBUG
+            MapModS.Instance.Log("Last transition: " + lastTransition.ToString());
+#endif
             if (!selectedRoute.Any()) return;
 
             string transition = selectedRoute.First();
 
             // Check adjacent transition matches the route's transition
-            if (lastTransition.ToString() == transition.GetAdjacentTransition())
+            if (lastTransition.GateName == "" && transition.IsBenchwarpTransition())
             {
-                selectedRoute.Remove(transition);
-                UpdateAll();
-                TransitionWorldMap.UpdateInstructions();
-                TransitionWorldMap.UpdateRouteSummary();
+                (string scene, string respawnMarker) = BenchwarpInterop.benchKeys[transition];
 
-                if (!selectedRoute.Any())
+                if (lastTransition.SceneName == scene && PlayerData.instance.respawnMarkerName == respawnMarker)
                 {
-                    rejectedRoutes.Clear();
+                    UpdateRoute();
+                    return;
                 }
-
-                return;
             }
-            else if (transition.ToString().Contains("Tram_")
-                && (lastTransition.SceneName == "Room_Tram_RG" || lastTransition.SceneName == "Room_Tram"))
+            else if (lastTransition.ToString() == transition.GetAdjacentTerm()
+                || (lastTransition.ToString() == "Fungus2_15[top2]" && transition.GetAdjacentTerm() == "Fungus2_15[top3]")
+                || (lastTransition.ToString() == "Fungus2_14[bot1]" && transition.GetAdjacentTerm() == "Fungus2_14[bot3]"))
             {
+                UpdateRoute();
                 return;
             }
 
-            HandleOffRoute(lastTransition);
-        }
-
-        public static void HandleOffRoute(ItemChanger.Transition lastTransition)
-        {
+            // The transition doesn't match the route
             switch (MapModS.GS.whenOffRoute)
             {
                 case OffRouteBehaviour.Cancel:
@@ -306,6 +247,19 @@ namespace MapModS.UI
                     break;
                 default:
                     break;
+            }
+
+            void UpdateRoute()
+            {
+                selectedRoute.Remove(transition);
+                UpdateAll();
+                TransitionWorldMap.UpdateInstructions();
+                TransitionWorldMap.UpdateRouteSummary();
+
+                if (!selectedRoute.Any())
+                {
+                    rejectedRoutes.Clear();
+                }
             }
         }
     }

@@ -42,9 +42,5 @@
   {
     "name": "Broke_Waterways_Bench_Ceiling",
     "logic": "FALSE"
-  },
-  {
-    "name": "Broke_Waterways_Bench_Floor",
-    "logic": "FALSE"
   }
 ]

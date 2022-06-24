@@ -54,6 +54,7 @@ namespace MapModS.UI
                 TextObject title = new(layout, "MapModS")
                 {
                     TextAlignment = HorizontalAlignment.Left,
+                    ContentColor = Colors.GetColor(ColorSetting.UI_Neutral),
                     FontSize = 20,
                     Font = MagicUI.Core.UI.TrajanBold,
                     Padding = new(10f, 840f, 10f, 10f),
@@ -78,7 +79,7 @@ namespace MapModS.UI
                     {
                         HorizontalAlignment = HorizontalAlignment.Center,
                         VerticalAlignment = VerticalAlignment.Center,
-                        BorderColor = Color.white,
+                        BorderColor = Colors.GetColor(ColorSetting.UI_Borders),
                         MinHeight = 28f,
                         MinWidth = 95f,
                         Font = MagicUI.Core.UI.TrajanBold,
@@ -103,7 +104,14 @@ namespace MapModS.UI
 
             poolButtons.ChildrenBeforeRollover = 10;
 
-            foreach (string group in new List<string>(MainData.usedPoolGroups) { "Benches" })
+            List<string> groupButtonNames = MainData.usedPoolGroups;
+
+            if (!Dependencies.HasBenchRando() || !BenchwarpInterop.IsBenchRandoEnabled())
+            {
+                groupButtonNames.Add("Benches (Vanilla)");
+            }
+
+            foreach (string group in groupButtonNames)
             {
                 Button button = new(layout, group)
                 {
@@ -191,8 +199,10 @@ namespace MapModS.UI
                 }
             }
 
-            foreach (string group in new List<string>(MainData.usedPoolGroups) { "Benches" })
+            foreach (string group in new List<string>(MainData.usedPoolGroups) { "Benches(Vanilla)" })
             {
+                if (layout.GetElement(group) == null) continue;
+
                 UpdatePool((Button)layout.GetElement(group));
             }
 
@@ -237,7 +247,7 @@ namespace MapModS.UI
                 WorldMap.goCustomPins.SetActive(false);
                 WorldMap.goExtraRooms.SetActive(false);
                 FullMap.PurgeMap();
-                Transition.ResetMapColors(GameManager.instance.gameMap);
+                MapRooms.ResetMapColors(GameManager.instance.gameMap);
                 panelActive = false;
             }
 
@@ -248,12 +258,12 @@ namespace MapModS.UI
         {
             if (MapModS.LS.modEnabled)
             {
-                sender.ContentColor = Color.green;
+                sender.ContentColor = Colors.GetColor(ColorSetting.UI_On);
                 sender.Content = $"{L.Localize("Mod")}\n{L.Localize("Enabled")}";
             }
             else
             {
-                sender.ContentColor = Color.red;
+                sender.ContentColor = Colors.GetColor(ColorSetting.UI_Disabled);
                 sender.Content = $"{L.Localize("Mod")}\n{L.Localize("Disabled")}";
             }
         }
@@ -262,7 +272,7 @@ namespace MapModS.UI
         {
             MapModS.LS.ToggleSpoilers();
             WorldMap.CustomPins.SetSprites();
-            LookupText.UpdateSelectedPin();
+            InfoPanels.UpdateSelectedPin();
 
             UpdateAll();
             MapText.UpdateAll();
@@ -272,12 +282,12 @@ namespace MapModS.UI
         {
             if (MapModS.LS.spoilerOn)
             {
-                sender.ContentColor = Color.green;
+                sender.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
                 sender.Content = $"{L.Localize("Spoilers")}:\n{L.Localize("on")}";
             }
             else
             {
-                sender.ContentColor = Color.white;
+                sender.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
                 sender.Content = $"{L.Localize("Spoilers")}:\n{L.Localize("off")}";
             }
         }
@@ -287,6 +297,7 @@ namespace MapModS.UI
             MapModS.LS.ToggleRandomizedOn();
             WorldMap.CustomPins.ResetPoolSettings();
             WorldMap.CustomPins.SetPinsActive();
+            WorldMap.CustomPins.SetSprites();
 
             UpdateAll();
             MapText.UpdateAll();
@@ -300,18 +311,18 @@ namespace MapModS.UI
 
             if (MapModS.LS.randomizedOn)
             {
-                sender.ContentColor = Color.green;
+                sender.ContentColor = Colors.GetColor(ColorSetting.UI_On);
                 text += L.Localize("on");
             }
             else
             {
-                sender.ContentColor = Color.white;
+                sender.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
                 text += L.Localize("off");
             }
 
             if (WorldMap.CustomPins.IsRandomizedCustom())
             {
-                sender.ContentColor = Color.yellow;
+                sender.ContentColor = Colors.GetColor(ColorSetting.UI_Custom);
                 text += $" ({L.Localize("custom")})";
             }
 
@@ -323,6 +334,7 @@ namespace MapModS.UI
             MapModS.LS.ToggleOthersOn();
             WorldMap.CustomPins.ResetPoolSettings();
             WorldMap.CustomPins.SetPinsActive();
+            WorldMap.CustomPins.SetSprites();
 
             UpdateAll();
             MapText.UpdateAll();
@@ -336,18 +348,18 @@ namespace MapModS.UI
 
             if (MapModS.LS.othersOn)
             {
-                sender.ContentColor = Color.green;
+                sender.ContentColor = Colors.GetColor(ColorSetting.UI_On);
                 text += L.Localize("on");
             }
             else
             {
-                sender.ContentColor = Color.white;
+                sender.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
                 text += L.Localize("off");
             }
 
             if (WorldMap.CustomPins.IsOthersCustom())
             {
-                sender.ContentColor = Color.yellow;
+                sender.ContentColor = Colors.GetColor(ColorSetting.UI_Custom);
                 text += $" ({L.Localize("custom")})";
             }
 
@@ -386,6 +398,7 @@ namespace MapModS.UI
                     break;
             }
 
+            sender.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
             sender.Content = text;
         }
 
@@ -400,7 +413,7 @@ namespace MapModS.UI
 
             if (MapModS.GS.lookupOn)
             {
-                LookupText.UpdateSelectedPin();
+                InfoPanels.UpdateSelectedPin();
             }
 
             UpdateAll();
@@ -426,6 +439,7 @@ namespace MapModS.UI
                     break;
             }
 
+            sender.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
             sender.Content = text;
         }
 
@@ -435,7 +449,7 @@ namespace MapModS.UI
                 && (MapModS.LS.mapMode == MapMode.TransitionRando
                     || MapModS.LS.mapMode == MapMode.TransitionRandoAlt))
             {
-                Transition.ResetMapColors(GameManager.instance.gameMap);
+                MapRooms.ResetMapColors(GameManager.instance.gameMap);
             }
 
             MapModS.LS.ToggleMapMode();
@@ -444,6 +458,9 @@ namespace MapModS.UI
             MapText.UpdateAll();
             ControlPanel.UpdateAll();
             MapKey.UpdateAll();
+            InfoPanels.selectedScene = "None";
+            TransitionPersistent.ResetRoute();
+            RouteCompass.UpdateCompass();
         }
 
         private static void UpdateMode(Button sender)
@@ -453,27 +470,27 @@ namespace MapModS.UI
             switch (MapModS.LS.mapMode)
             {
                 case MapMode.FullMap:
-                    sender.ContentColor = Color.green;
+                    sender.ContentColor = Colors.GetColor(ColorSetting.UI_On);
                     text += L.Localize("Full Map");
                     break;
 
                 case MapMode.AllPins:
-                    sender.ContentColor = Color.white;
+                    sender.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
                     text += L.Localize("All Pins");
                     break;
 
                 case MapMode.PinsOverMap:
-                    sender.ContentColor = Color.white;
+                    sender.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
                     text += L.Localize("Pins Over Map");
                     break;
 
                 case MapMode.TransitionRando:
-                    sender.ContentColor = Color.cyan;
+                    sender.ContentColor = Colors.GetColor(ColorSetting.UI_Special);
                     text += L.Localize("Transition");
                     break;
 
                 case MapMode.TransitionRandoAlt:
-                    sender.ContentColor = Color.cyan;
+                    sender.ContentColor = Colors.GetColor(ColorSetting.UI_Special);
                     text += L.Localize("Transition") + " 2";
                     break;
             }
@@ -499,11 +516,11 @@ namespace MapModS.UI
         {
             if (MapModS.LS.modEnabled && panelActive)
             {
-                sender.ContentColor = Color.yellow;
+                sender.ContentColor = Colors.GetColor(ColorSetting.UI_Custom);
             }
             else
             {
-                sender.ContentColor = Color.white;
+                sender.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
             }
 
             sender.Content = $"{L.Localize("Customize")}\n{L.Localize("Pins")}";
@@ -511,7 +528,7 @@ namespace MapModS.UI
 
         public static void TogglePool(Button sender)
         {
-            if (sender.Name == "Benches")
+            if (sender.Name == "Benches(Vanilla)")
             {
                 if (!PlayerData.instance.GetBool("hasPinBench")) return;
 
@@ -537,15 +554,15 @@ namespace MapModS.UI
                 sender.Content = $"{L.Localize("Geo Rocks")}:\n" + MapModS.LS.geoRockCounter + " / " + "207";
             }
 
-            if (sender.Name == "Benches")
+            if (sender.Name == "Benches(Vanilla)")
             {
                 if (PlayerData.instance.GetBool("hasPinBench"))
                 {
-                    sender.ContentColor = Color.green;
+                    sender.ContentColor = Colors.GetColor(ColorSetting.UI_On);
                 }
                 else
                 {
-                    sender.ContentColor = Color.red;
+                    sender.ContentColor = Colors.GetColor(ColorSetting.UI_Disabled);
                 }
             }
             else
@@ -553,15 +570,36 @@ namespace MapModS.UI
                 switch (MapModS.LS.GetPoolGroupSetting(sender.Name))
                 {
                     case PoolGroupState.Off:
-                        sender.ContentColor = Color.white;
+                        sender.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
                         break;
                     case PoolGroupState.On:
-                        sender.ContentColor = Color.green;
+                        sender.ContentColor = Colors.GetColor(ColorSetting.UI_On);
                         break;
                     case PoolGroupState.Mixed:
-                        sender.ContentColor = Color.yellow;
+                        sender.ContentColor = Colors.GetColor(ColorSetting.UI_Custom);
                         break;
                 }
+            }
+        }
+
+        public static void TogglePersistent(Button sender)
+        {
+            MapModS.GS.TogglePersistentOn();
+
+            UpdateAll();
+        }
+
+        private static void UpdatePersistent(Button sender)
+        {
+            if (MapModS.GS.persistentOn)
+            {
+                sender.ContentColor = Colors.GetColor(ColorSetting.UI_On);
+                sender.Content = $"{L.Localize("Persistent\nitems")}: {L.Localize("On")}";
+            }
+            else
+            {
+                sender.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
+                sender.Content = $"{L.Localize("Persistent\nitems")}: {L.Localize("Off")}";
             }
         }
 
@@ -587,27 +625,8 @@ namespace MapModS.UI
                     sender.Content = $"{L.Localize("Group by")}:\n{L.Localize("Item")}";
                     break;
             }
-        }
 
-        public static void TogglePersistent(Button sender)
-        {
-            MapModS.GS.TogglePersistentOn();
-
-            UpdateAll();
-        }
-
-        private static void UpdatePersistent(Button sender)
-        {
-            if (MapModS.GS.persistentOn)
-            {
-                sender.ContentColor = Color.green;
-                sender.Content = $"{L.Localize("Persistent\nitems")}: {L.Localize("On")}";
-            }
-            else
-            {
-                sender.ContentColor = Color.white;
-                sender.Content = $"{L.Localize("Persistent\nitems")}: {L.Localize("Off")}";
-            }
+            sender.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
         }
     }
 }

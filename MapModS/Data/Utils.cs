@@ -1,4 +1,9 @@
 ﻿using GlobalEnums;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+using L = RandomizerMod.Localization;
 
 namespace MapModS.Data
 {
@@ -51,15 +56,14 @@ namespace MapModS.Data
                 .Replace("<br>", "");
         }
 
-        public static string ToCleanName(string name)
+        public static string ToCleanName(this string name)
         {
-            return name.Replace("-", " ")
-                .Replace("_", " ");
+            return name.Replace("-", " ").Replace("_", " ");
         }
 
-        public static MapZone ToMapZone(string mapZone)
+        public static MapZone ToMapZone(string mapArea)
         {
-            return mapZone switch
+            return mapArea switch
             {
                 "Ancient Basin" => MapZone.ABYSS,
                 "City of Tears" => MapZone.CITY,
@@ -110,10 +114,11 @@ namespace MapModS.Data
             // in these situations
 
             if (objName == "Ruins1_31_top_2") return "Ruins1_31b";
+            if (objName == "Waterways_04_part_b") return "Waterways_02";
 
             for (int i = 0; i < 2; i++)
             {
-                if (RandomizerMod.RandomizerData.Data.IsRoom(objName))
+                if (RandomizerMod.RandomizerData.Data.IsRoom(objName) || objName.IsSpecialRoom())
                 {
                     return objName;
                 }
@@ -148,6 +153,27 @@ namespace MapModS.Data
                 or "GODS_GLORY" => true,
                 _ => false,
             };
+        }
+
+        public static double DistanceToMiddle(Transform transform)
+        {
+            return Math.Pow(transform.position.x, 2) + Math.Pow(transform.position.y, 2);
+        }
+
+        public static string GetBindingsText(List<InControl.BindingSource> bindings)
+        {
+            string text = "";
+
+            text += $"[{bindings.First().Name}]";
+
+            if (bindings.Count > 1 && bindings[1].BindingSourceType == InControl.BindingSourceType.DeviceBindingSource)
+            {
+                text += $" {L.Localize("or")} ";
+
+                text += $"({bindings[1].Name})";
+            }
+
+            return text;
         }
     }
 }

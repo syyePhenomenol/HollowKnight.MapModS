@@ -5,6 +5,7 @@ using MapModS.Settings;
 using Modding;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
+using System.Linq;
 using UnityEngine;
 using Vasi;
 
@@ -39,17 +40,9 @@ namespace MapModS.Map
 
             foreach (Transform areaObj in go_gameMap.transform)
             {
-                if (areaObj.name == "Grub Pins"
-                        || areaObj.name == "Dream_Gate_Pin"
-                        || areaObj.name == "Compass Icon"
-                        || areaObj.name == "Shade Pos"
-                        || areaObj.name == "Flame Pins"
-                        || areaObj.name == "Dreamer Pins"
-                        || areaObj.name == "Map Markers"
-                        || areaObj.name == "WHITE_PALACE"
-                        || areaObj.name == "GODS_GLORY"
-                        || areaObj.name == "MMS Custom Pin Group"
-                        || areaObj.name == "MMS Custom Map Rooms") continue;
+                if (!Colors.mapColors.ContainsKey(areaObj.name)
+                    || areaObj.name == "WHITE_PALACE"
+                    || areaObj.name == "GODS_GLORY") continue;
 
                 foreach (Transform roomObj in areaObj.transform)
                 {
@@ -60,12 +53,10 @@ namespace MapModS.Map
                         roomObj.gameObject.SetActive(true);
                     }
 
-                    foreach (Transform roomObj2 in roomObj.transform)
+                    foreach (Transform roomObj2 in roomObj.transform.Cast<Transform>()
+                        .Where(r => r.name.Contains("Area Name")))
                     {
-                        if (roomObj2.name.Contains("Area Name"))
-                        {
-                            roomObj2.gameObject.SetActive(true);
-                        }
+                        roomObj2.gameObject.SetActive(true);
                     }
                 }
             }
@@ -80,18 +71,32 @@ namespace MapModS.Map
         // We keep a copy of the "rough map" sprite, and force-set that sprite every time before OnEnable() does its check
         private static void RoughMapRoom_OnEnable(On.RoughMapRoom.orig_OnEnable orig, RoughMapRoom self)
         {
-            SpriteCopy spriteCopy = self.gameObject.GetComponent<SpriteCopy>();
-            SpriteRenderer sr = self.gameObject.GetComponent<SpriteRenderer>();
+            SpriteCopy spriteCopy = self.GetComponent<SpriteCopy>();
+            SpriteRenderer sr = self.GetComponent<SpriteRenderer>();
 
             if (spriteCopy == null)
             {
                 spriteCopy = self.gameObject.AddComponent<SpriteCopy>();
-                spriteCopy.roughMap = self.gameObject.GetComponent<SpriteRenderer>().sprite;
+                spriteCopy.roughMap = sr.sprite;
             }
             else
             {
                 sr.sprite = spriteCopy.roughMap;
                 self.fullSpriteDisplayed = false;
+            }
+
+            ExtraMapData emd = self.GetComponent<ExtraMapData>();
+
+            if (emd != null)
+            {
+                if (MapModS.LS.modEnabled)
+                {
+                    sr.color = emd.origCustomColor;
+                }
+                else
+                {
+                    sr.color = emd.origColor;
+                }
             }
 
             orig(self);

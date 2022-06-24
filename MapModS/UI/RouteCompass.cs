@@ -32,7 +32,7 @@ namespace MapModS.UI
                 "Route Compass", // name
                 Knight, // parent entity
                 arrow, // sprite
-                new Vector4(255f, 255f, 255f, 210f) / 255f, // color
+                Colors.GetColor(ColorSetting.UI_Compass), // color
                 1.5f, // radius
                 2.0f, // scale
                 IsCompassEnabled, // bool condition
@@ -50,7 +50,7 @@ namespace MapModS.UI
             if (CompassC != null && TP.selectedRoute.Any())
             {
                 string transition = TP.selectedRoute.First();
-                string scene = PD.GetScene(TP.selectedRoute.First());
+                string scene = PD.GetScene(transition);
                 string gate = "";
 
                 if (Utils.CurrentScene() == scene)
@@ -62,6 +62,10 @@ namespace MapModS.UI
                     else if (TransitionData.IsInTransitionLookup(transition))
                     {
                         gate = TransitionData.GetTransitionDoor(transition);
+                    }
+                    else if (transition.Contains("[") && transition.Contains("]"))
+                    {
+                        gate = transition.Split(']')[0].Split('[')[1];
                     }
                 }
                 else if ((transition.IsStagTransition() || transition.IsTramTransition())

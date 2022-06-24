@@ -1,6 +1,6 @@
 ﻿using MagicUI.Core;
 using MagicUI.Elements;
-using UnityEngine;
+using MapModS.Data;
 using L = RandomizerMod.Localization;
 
 namespace MapModS.UI
@@ -13,6 +13,7 @@ namespace MapModS.UI
             {
                 return new(onLayout, name)
                 {
+                    ContentColor = Colors.GetColor(ColorSetting.UI_Neutral),
                     HorizontalAlignment = HorizontalAlignment.Right,
                     VerticalAlignment = VerticalAlignment.Top,
                     TextAlignment = HorizontalAlignment.Right,
@@ -25,6 +26,7 @@ namespace MapModS.UI
             {
                 return new(onLayout, name)
                 {
+                    ContentColor = Colors.GetColor(ColorSetting.UI_Neutral),
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Top,
                     TextAlignment = HorizontalAlignment.Left,
@@ -39,6 +41,7 @@ namespace MapModS.UI
         {
             return new(onLayout, name)
             {
+                ContentColor = Colors.GetColor(ColorSetting.UI_Neutral),
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Top,
                 TextAlignment = HorizontalAlignment.Left,
@@ -54,12 +57,12 @@ namespace MapModS.UI
 
             if (value)
             {
-                textObj.ContentColor = Color.green;
+                textObj.ContentColor = Colors.GetColor(ColorSetting.UI_On);
                 text += L.Localize("On");
             }
             else
             {
-                textObj.ContentColor = Color.white;
+                textObj.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
                 text += L.Localize("Off");
             }
 
