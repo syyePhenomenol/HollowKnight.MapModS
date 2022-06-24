@@ -79,6 +79,16 @@ namespace MapModS.Data
 
         public static string GetAdjacentTransition(string source)
         {
+            if (source == "Fungus2_14[bot1]")
+            {
+                return GetAdjacentTransition("Fungus2_14[bot3]");
+            }
+
+            if (source == "Fungus2_15[top2]")
+            {
+                return GetAdjacentTransition("Fungus2_15[top3]");
+            }
+
             if (_transitionLookup.TryGetValue(source, out TransitionPlacement placement)
                 && placement.Target != null)
             {

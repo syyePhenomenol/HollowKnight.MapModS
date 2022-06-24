@@ -33,5 +33,20 @@
     "name": "Crossroads_33[right1]",
     "old": "Crossroads_33[right1]",
     "replacement": "FALSE"
+  },
+  {
+    "name": "Abyss_01[left1]",
+    "old": "Abyss_01[left1]",
+    "replacement": "FALSE"
+  },
+  {
+    "name": "Ruins1_31[left3]",
+    "old": "Ruins1_31[left3]",
+    "replacement": "FALSE"
+  },
+  {
+    "name": "Ruins1_31[left2]",
+    "old": "Ruins1_31[left2]",
+    "replacement": "FALSE"
   }
 ]

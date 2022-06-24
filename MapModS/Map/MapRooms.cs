@@ -104,6 +104,13 @@ namespace MapModS.Map
             {
                 emd.origCustomColor.w = 1f;
             }
+
+#if DEBUG
+            MapModS.Instance.Log(obj.name);
+            MapModS.Instance.Log("- " + emd.sceneName);
+            MapModS.Instance.Log("- " + emd.origColor.ToString());
+            MapModS.Instance.Log("- " + emd.origCustomColor.ToString());
+#endif
         }
 
         public static GameObject CreateExtraMapRooms(GameMap gameMap)
@@ -483,6 +490,8 @@ namespace MapModS.Map
 
                 foreach (Transform roomObj in areaObj.transform)
                 {
+                    if (!roomObj.gameObject.activeSelf) continue;
+
                     ExtraMapData emd = roomObj.GetComponent<ExtraMapData>();
                     if (emd == null) continue;
 

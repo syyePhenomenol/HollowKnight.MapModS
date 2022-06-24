@@ -246,8 +246,8 @@ namespace MapModS.Map
             else
             {
                 FullMap.PurgeMap();
-                MapRooms.ResetMapColors(gameMap.gameObject);
                 gameMap.SetupMap();
+                MapRooms.ResetMapColors(gameMap.gameObject);
             }
 
             if (goCustomPins == null || !MapModS.LS.modEnabled) return;

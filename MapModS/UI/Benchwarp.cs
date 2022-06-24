@@ -70,7 +70,7 @@ namespace MapModS.UI
 
                 BI.UpdateVisitedBenches();
                 UpdateBenchwarpText();
-                MapRooms.SetSelectedRoomColor(selectedBenchScene, false);
+                //MapRooms.SetSelectedRoomColor(selectedBenchScene, false);
             }
         }
 
@@ -109,28 +109,33 @@ namespace MapModS.UI
             if (layout == null
                 || !MapModS.LS.modEnabled
                 || TransitionData.TransitionModeActive()
-                || !GUI.worldMapOpen
                 || GUI.lockToggleEnable
                 || !Dependencies.HasBenchwarp()
-                || !MapModS.GS.benchwarpWorldMap
                 || GameManager.instance.IsGamePaused())
             {
                 return;
             }
 
-            if (benchUpdateThread != null && benchUpdateThread.IsAlive) return;
-
-            benchUpdateThread = new(() =>
+            if (GUI.worldMapOpen && MapModS.GS.benchwarpWorldMap)
             {
-                if (GetBenchClosestToMiddle(selectedBenchScene, out selectedBenchScene))
-                {
-                    benchPointer = 0;
-                    MapRooms.SetSelectedRoomColor(selectedBenchScene, false);
-                    UpdateBenchwarpText();
-                }
-            });
+                if (benchUpdateThread != null && benchUpdateThread.IsAlive) return;
 
-            benchUpdateThread.Start();
+                benchUpdateThread = new(() =>
+                {
+                    if (GetBenchClosestToMiddle(selectedBenchScene, out selectedBenchScene))
+                    {
+                        benchPointer = 0;
+                        MapRooms.SetSelectedRoomColor(selectedBenchScene, false);
+                        UpdateBenchwarpText();
+                    }
+                });
+
+                benchUpdateThread.Start();
+            }
+            else if (GUI.quickMapOpen)
+            {
+                MapRooms.SetSelectedRoomColor("", false);
+            }
         }
 
         public static bool GetBenchClosestToMiddle(string previousScene, out string selectedScene)

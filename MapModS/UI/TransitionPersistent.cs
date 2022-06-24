@@ -147,9 +147,20 @@ namespace MapModS.UI
 
             rejectedRoutes.Clear();
 
+            string transition = lastTransition.ToString();
+
+            if (transition == "Fungus2_15[top2]")
+            {
+                transition = "Fungus2_15[top3]";
+            } 
+            if (transition == "Fungus2_14[bot1]")
+            {
+                transition = "Fungus2_14[bot3]";
+            }
+
             try
             {
-                selectedRoute = Pathfinder.ShortestRoute(lastTransition.ToString(), lastFinalTransition.GetAdjacentTerm(), rejectedRoutes, MapModS.GS.allowBenchWarpSearch, true);
+                selectedRoute = Pathfinder.ShortestRoute(transition, lastFinalTransition.GetAdjacentTerm(), rejectedRoutes, MapModS.GS.allowBenchWarpSearch, true);
             }
             catch (Exception e)
             {
@@ -196,6 +207,9 @@ namespace MapModS.UI
 
         public static void UpdateRoute(ItemChanger.Transition lastTransition)
         {
+#if DEBUG
+            MapModS.Instance.Log("Last transition: " + lastTransition.ToString());
+#endif
             if (!selectedRoute.Any()) return;
 
             string transition = selectedRoute.First();
@@ -211,7 +225,9 @@ namespace MapModS.UI
                     return;
                 }
             }
-            else if (lastTransition.ToString() == transition.GetAdjacentTerm())
+            else if (lastTransition.ToString() == transition.GetAdjacentTerm()
+                || (lastTransition.ToString() == "Fungus2_15[top2]" && transition.GetAdjacentTerm() == "Fungus2_15[top3]")
+                || (lastTransition.ToString() == "Fungus2_14[bot1]" && transition.GetAdjacentTerm() == "Fungus2_14[bot3]"))
             {
                 UpdateRoute();
                 return;

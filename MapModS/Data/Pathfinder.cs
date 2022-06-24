@@ -40,13 +40,12 @@ namespace MapModS.Data
                 }
             }
 
-            if (PlayerData.instance.GetBool("mineLiftOpened"))
-            {
-                localPm.Set("Town_Lift_Activated", 1);
-            }
-
+            localPm.Set("Town_Lift_Activated", PlayerData.instance.GetBool("mineLiftOpened") ? 1 : 0);
             localPm.Set("Opened_Shaman_Pillar", PlayerData.instance.GetBool("shamanPillar") ? 1 : 0);
             localPm.Set("Opened_Mawlek_Wall", PlayerData.instance.GetBool("crossroadsMawlekWall") ? 1 : 0);
+            localPm.Set("Opened_Dung_Defender_Wall", PlayerData.instance.GetBool("dungDefenderWallBroken") ? 1 : 0);
+            localPm.Set("ELEGANT", PlayerData.instance.GetBool("hasWhiteKey") ? 1 : 0);
+            localPm.Set("Lever-Shade_Soul", PlayerData.instance.GetBool("openedMageDoor") ? 1 : 0);
 
             foreach (PersistentBoolData pbd in SceneData.instance.persistentBoolItems)
             {
@@ -82,6 +81,8 @@ namespace MapModS.Data
         public static List<string> ShortestRoute(string start, string final, List<List<string>> rejectedRoutes, bool allowBenchWarp, bool reevaluate)
         {
             if (start == null || final == null) return new();
+
+            if (reevaluate && start == final) return new();
 
             HashSet<string> candidateReachableTransitions = new();
             HashSet<string> normalTransitionSpace = GetNormalTransitionSpace();
@@ -193,7 +194,7 @@ namespace MapModS.Data
                     }
                 }
 
-                foreach (string transition in candidateReachableTransitions.Where(t => localPm.Get(t) > 0))
+                foreach (string transition in candidateReachableTransitions.Where(t => localPm.lm.TransitionLookup[t].CanGet(localPm)))
                 {
                     TryAddNode(null, transition);
                 }
