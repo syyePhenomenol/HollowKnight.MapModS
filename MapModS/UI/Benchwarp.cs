@@ -132,7 +132,7 @@ namespace MapModS.UI
 
                 benchUpdateThread.Start();
             }
-            else if (GUI.quickMapOpen)
+            else if (GUI.worldMapOpen || GUI.quickMapOpen)
             {
                 MapRooms.SetSelectedRoomColor("", false);
             }

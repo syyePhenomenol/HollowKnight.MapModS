@@ -45,7 +45,6 @@ namespace MapModS.Data
             localPm.Set("Opened_Mawlek_Wall", PlayerData.instance.GetBool("crossroadsMawlekWall") ? 1 : 0);
             localPm.Set("Opened_Dung_Defender_Wall", PlayerData.instance.GetBool("dungDefenderWallBroken") ? 1 : 0);
             localPm.Set("ELEGANT", PlayerData.instance.GetBool("hasWhiteKey") ? 1 : 0);
-            localPm.Set("Lever-Shade_Soul", PlayerData.instance.GetBool("openedMageDoor") ? 1 : 0);
 
             foreach (PersistentBoolData pbd in SceneData.instance.persistentBoolItems)
             {
@@ -53,9 +52,13 @@ namespace MapModS.Data
                 {
                     localPm.Set("Broke_Waterways_Bench_Ceiling", pbd.activated ? 1 : 0);
                 }
-                else if (pbd.sceneName == "Ruins1_31" && pbd.id == "Ruins Lift")
+                else if (pbd.sceneName == "Ruins1_31" && pbd.id == "Breakable Wall Ruin Lift")
                 {
                     localPm.Set("City_Toll_Wall_Broken", pbd.activated ? 1 : 0);
+                }
+                else if (pbd.sceneName == "Ruins1_31" && pbd.id == "Ruins Lever")
+                {
+                    localPm.Set("Lever-Shade_Soul", pbd.activated ? 1 : 0);
                 }
             }
 
