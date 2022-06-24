@@ -26,8 +26,6 @@ namespace MapModS.Data
             benchTransitions = new();
             benchKeys = new();
 
-            if (!Dependencies.HasBenchwarp()) return;
-
             if (Dependencies.HasBenchRando() && IsBenchRandoEnabled())
             {
                 benchTransitions = BenchRandoInterop.GetBenchTransitions();

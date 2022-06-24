@@ -99,7 +99,10 @@ namespace MapModS
             SpriteManager.LoadPinSprites();
             Colors.LoadCustomColors();
 
-            BenchwarpInterop.Load();
+            if (Dependencies.HasBenchwarp())
+            {
+                BenchwarpInterop.Load();
+            }
 
             // Track when items are picked up/Geo Rocks are broken
             ItemTracker.Hook();
