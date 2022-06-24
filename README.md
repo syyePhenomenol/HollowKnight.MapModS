@@ -81,7 +81,7 @@ This mod has support for languages other than English. You will need to source a
 - `CTRL-C`: Toggle the route compass on/off.
 
 ## Customization
-- To customize map and UI colors, download the [template file](./colors.json) and copy it to the same folder that contains the mod file 'MapModS.dll'.
+- To customize map and UI colors, download the [template file](https://github.com/syyePhenomenol/HollowKnight.MapModS/releases/download/v2.6.0/colors.json) and copy it to the same folder that contains the mod file 'MapModS.dll'.
     - For Steam + Scarab users on Windows, the default folder is `...\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\Randomizer Map S`.
     - Colors will be interpreted in standard RGBA format ('[r, g, b, a]').
     - If you want to keep the default color of something, delete the corresponding line in the file (or change '[r, g, b, a]' to '[]').
