@@ -106,12 +106,7 @@ namespace MapModS.UI
 
             List<string> groupButtonNames = MainData.usedPoolGroups;
 
-            if (!Dependencies.HasBenchRando() || !BenchRandoInterop.IsBenchRandoEnabled())
-            {
-                groupButtonNames.Add("Benches (Vanilla)");
-            }
-
-            foreach (string group in groupButtonNames)
+            foreach (string group in MainData.usedPoolGroups)
             {
                 Button button = new(layout, group)
                 {
@@ -127,6 +122,25 @@ namespace MapModS.UI
                 };
 
                 button.Click += TogglePool;
+                poolButtons.Children.Add(button);
+            }
+
+            if (!Dependencies.HasBenchRando() || !BenchRandoInterop.IsBenchRandoEnabled())
+            {
+                Button button = new(layout, "Benches (Vanilla)")
+                {
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Borderless = true,
+                    MinHeight = 28f,
+                    MinWidth = 85f,
+                    Content = L.Localize("Benches (Vanilla)").Replace(" ", "\n"),
+                    Font = MagicUI.Core.UI.TrajanNormal,
+                    FontSize = 11,
+                    Margin = 0f
+                };
+
+                button.Click += ToggleBench;
                 poolButtons.Children.Add(button);
             }
 
@@ -199,11 +213,16 @@ namespace MapModS.UI
                 }
             }
 
-            foreach (string group in new List<string>(MainData.usedPoolGroups) { "Benches(Vanilla)" })
+            foreach (string group in MainData.usedPoolGroups)
             {
                 if (layout.GetElement(group) == null) continue;
 
                 UpdatePool((Button)layout.GetElement(group));
+            }
+
+            if (layout.GetElement("Benches (Vanilla)") != null)
+            {
+                UpdateBench((Button)layout.GetElement("Benches (Vanilla)"));
             }
 
             if (MapModS.LS.modEnabled && panelActive)
@@ -528,21 +547,12 @@ namespace MapModS.UI
 
         public static void TogglePool(Button sender)
         {
-            if (sender.Name == "Benches(Vanilla)")
-            {
-                if (!PlayerData.instance.GetBool("hasPinBench")) return;
+            MapModS.LS.TogglePoolGroupSetting(sender.Name);
 
-                MapModS.LS.ToggleBench();
-            }
-            else
-            {
-                MapModS.LS.TogglePoolGroupSetting(sender.Name);
+            WorldMap.CustomPins.GetRandomizedOthersGroups();
 
-                WorldMap.CustomPins.GetRandomizedOthersGroups();
-
-                UpdateAll();
-                MapText.UpdateAll();
-            }
+            UpdateAll();
+            MapText.UpdateAll();
         }
 
         private static void UpdatePool(Button sender)
@@ -554,31 +564,45 @@ namespace MapModS.UI
                 sender.Content = $"{L.Localize("Geo Rocks")}:\n" + MapModS.LS.geoRockCounter + " / " + "207";
             }
 
-            if (sender.Name == "Benches(Vanilla)")
+            switch (MapModS.LS.GetPoolGroupSetting(sender.Name))
             {
-                if (PlayerData.instance.GetBool("hasPinBench"))
+                case PoolGroupState.Off:
+                    sender.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
+                    break;
+                case PoolGroupState.On:
+                    sender.ContentColor = Colors.GetColor(ColorSetting.UI_On);
+                    break;
+                case PoolGroupState.Mixed:
+                    sender.ContentColor = Colors.GetColor(ColorSetting.UI_Custom);
+                    break;
+            }
+        }
+
+        public static void ToggleBench(Button sender)
+        {
+            if (!PlayerData.instance.GetBool("hasPinBench")) return;
+
+            MapModS.LS.ToggleBench();
+
+            UpdateAll();
+        }
+
+        public static void UpdateBench(Button sender)
+        {
+            if (PlayerData.instance.GetBool("hasPinBench"))
+            {
+                if (MapModS.LS.showBenchPins)
                 {
                     sender.ContentColor = Colors.GetColor(ColorSetting.UI_On);
                 }
                 else
                 {
-                    sender.ContentColor = Colors.GetColor(ColorSetting.UI_Disabled);
+                    sender.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
                 }
             }
             else
             {
-                switch (MapModS.LS.GetPoolGroupSetting(sender.Name))
-                {
-                    case PoolGroupState.Off:
-                        sender.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
-                        break;
-                    case PoolGroupState.On:
-                        sender.ContentColor = Colors.GetColor(ColorSetting.UI_On);
-                        break;
-                    case PoolGroupState.Mixed:
-                        sender.ContentColor = Colors.GetColor(ColorSetting.UI_Custom);
-                        break;
-                }
+                sender.ContentColor = Colors.GetColor(ColorSetting.UI_Disabled);
             }
         }
 
