@@ -26,7 +26,7 @@ namespace MapModS.Data
             benchTransitions = new();
             benchKeys = new();
 
-            if (Dependencies.HasBenchRando() && IsBenchRandoEnabled())
+            if (Dependencies.HasBenchRando() && BenchRandoInterop.IsBenchRandoEnabled())
             {
                 benchTransitions = BenchRandoInterop.GetBenchTransitions();
             }
@@ -117,11 +117,6 @@ namespace MapModS.Data
 
                 ChangeScene.WarpToRespawn();
             }
-        }
-
-        internal static bool IsBenchRandoEnabled()
-        {
-            return RM.RS.Context.LM.TermLookup.Keys.Any(t => t.StartsWith("Bench-"));
         }
     }
 

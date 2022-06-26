@@ -78,7 +78,7 @@ namespace MapModS.Data
             }
 
             // Use BenchRando's BenchDefs if it is enabled for this save
-            if (Dependencies.HasBenchRando() && BenchwarpInterop.IsBenchRandoEnabled())
+            if (Dependencies.HasBenchRando() && BenchRandoInterop.IsBenchRandoEnabled())
             {
                 foreach(KeyValuePair<(string, string), string> kvp in BenchwarpInterop.benchTransitions)
                 {

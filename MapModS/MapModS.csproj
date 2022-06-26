@@ -3,7 +3,7 @@
   <PropertyGroup>
     <ProjectGuid>{8B1AB441-2E8A-49EB-87BD-8E1C9729AD00}</ProjectGuid>
     <TargetFramework>net472</TargetFramework>
-    <AssemblyTitle>MapMod</AssemblyTitle>
+    <AssemblyTitle>MapModS</AssemblyTitle>
     <RootNamespace>MapModS</RootNamespace>
     <AssemblyVersion>4.0.0</AssemblyVersion>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
@@ -38,7 +38,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\NewData.cs" />
     <Compile Remove="Map\MapObjectScript.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Pins\pinJournal.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -63,6 +68,7 @@
     <EmbeddedResource Include="Resources\Pins\pinBench.png" />
     <EmbeddedResource Include="Resources\Pins\pinBlank.png" />
     <EmbeddedResource Include="Resources\Pins\pinBorder.png" />
+    <EmbeddedResource Include="Resources\Pins\pinJournal.png" />
     <EmbeddedResource Include="Resources\sortedGroups.json" />
   </ItemGroup>
 

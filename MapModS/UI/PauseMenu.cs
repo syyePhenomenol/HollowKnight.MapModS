@@ -106,7 +106,7 @@ namespace MapModS.UI
 
             List<string> groupButtonNames = MainData.usedPoolGroups;
 
-            if (!Dependencies.HasBenchRando() || !BenchwarpInterop.IsBenchRandoEnabled())
+            if (!Dependencies.HasBenchRando() || !BenchRandoInterop.IsBenchRandoEnabled())
             {
                 groupButtonNames.Add("Benches (Vanilla)");
             }

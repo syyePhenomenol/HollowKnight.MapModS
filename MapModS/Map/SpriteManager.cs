@@ -79,7 +79,7 @@ namespace MapModS.Map
                     "Stags" => "pinStag",
                     "Lifeblood Cocoons" => "pinCocoon",
                     "Grimmkin Flames" => "pinFlame",
-                    "Journal Entries" => "pinLore",
+                    "Journal Entries" => "pinJournal",
                     "Geo Rocks" => "pinRock",
                     "Boss Geo" => "pinGeo",
                     "Soul Totems" => "pinTotem",
