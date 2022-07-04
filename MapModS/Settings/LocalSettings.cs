@@ -1,184 +1,51 @@
-﻿using MapModS.Data;
+﻿using MapModS.Pins;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using RM = RandomizerMod.RandomizerMod;
-using TM = RandomizerMod.Settings.TransitionSettings.TransitionMode;
 
 namespace MapModS.Settings
 {
-    public enum MapMode
+    public abstract class LocalSettings
     {
-        FullMap,
-        AllPins,
-        PinsOverMap,
-        TransitionRando,
-        TransitionRandoAlt,
-    }
+        public bool InitializedPreviously = false;
+        public HashSet<string> ScenesVisited;
 
-    public enum GroupBy
-    {
-        Location,
-        Item
-    }
+        //// Vanilla only
+        //public int geoRockCounter = 0;
 
-    public enum PoolGroupState
-    {
-        Off,
-        On,
-        Mixed
-    }
+        public bool ModEnabled = false;
+        public MapMode Mode = MapMode.FullMap;
+        public bool ShowBenchPins = false;
 
-    public class SettingPair
-    {
-        public SettingPair(string poolGroup, PoolGroupState state)
+        public virtual void InitializeDerived()
         {
-            this.poolGroup = poolGroup;
-            this.state = state;
+
         }
 
-        public string poolGroup;
-        public PoolGroupState state;
-    }
-
-    [Serializable]
-    public class LocalSettings
-    {
-        public Dictionary<string, bool> obtainedVanillaItems = new();
-
-        // Vanilla only
-        public int geoRockCounter = 0;
-
-        public bool showBenchPins = false;
-
-        public bool modEnabled = false;
-
-        public MapMode mapMode = MapMode.FullMap;
-
-        public GroupBy groupBy;
-
-        public bool spoilerOn = false;
-
-        public bool randomizedOn = true;
-
-        public bool othersOn = false;
-
-        public bool newSettings = true;
-
-        public List<SettingPair> poolGroupSettings = new();
-
-        public void ToggleModEnabled()
+        public void Initialize()
         {
-            modEnabled = !modEnabled;
+            ScenesVisited = new(PlayerData.instance.scenesVisited);
+
+            if (InitializedPreviously) return;
+
+            InitializeDerived();
+
+            InitializedPreviously = true;
         }
 
-        public void ToggleMapMode()
+        internal void ToggleModEnabled()
         {
-            switch (mapMode)
-            {
-                case MapMode.FullMap:
-                    mapMode = MapMode.AllPins;
-                    break;
-
-                case MapMode.AllPins:
-                    mapMode = MapMode.PinsOverMap;
-                    break;
-
-                case MapMode.PinsOverMap:
-                    mapMode = MapMode.TransitionRando;
-                    break;
-
-                case MapMode.TransitionRando:
-                    if (RM.RS.GenerationSettings.TransitionSettings.Mode != TM.RoomRandomizer)
-                    {
-                        mapMode = MapMode.TransitionRandoAlt;
-                    }
-                    else
-                    {
-                        mapMode = MapMode.FullMap;
-                    }
-                    break;
-
-                case MapMode.TransitionRandoAlt:
-                    mapMode = MapMode.FullMap;
-                    break;
-            }
+            ModEnabled = !ModEnabled;
         }
 
-        public void ToggleBench()
+        internal void SetMode(MapMode mode)
         {
-            showBenchPins = !showBenchPins;
+            Mode = mode;
         }
 
-        public void ToggleGroupBy()
+        internal void ToggleMode()
         {
-            switch (groupBy)
-            {
-                case GroupBy.Location:
-                    groupBy += 1;
-                    break;
-                default:
-                    groupBy = GroupBy.Location;
-                    break;
-            }
-        }
-
-        public void ToggleSpoilers()
-        {
-            spoilerOn = !spoilerOn;
-        }
-
-        public void ToggleRandomizedOn()
-        {
-            randomizedOn = !randomizedOn;
-        }
-
-        public void ToggleOthersOn()
-        {
-            othersOn = !othersOn;
-        }
-
-        public void InitializePoolGroupSettings()
-        {
-            poolGroupSettings = MainData.usedPoolGroups.Select(p => new SettingPair(p, PoolGroupState.On)).ToList();
-        }
-
-        public PoolGroupState GetPoolGroupSetting(string poolGroup)
-        {
-            var item = poolGroupSettings.FirstOrDefault(s => s.poolGroup == poolGroup);
-
-            if (item != null)
-            {
-                return item.state;
-            }
-
-            return PoolGroupState.Off;
-        }
-
-        public void SetPoolGroupSetting(string poolGroup, PoolGroupState state)
-        {
-            var item = poolGroupSettings.FirstOrDefault(s => s.poolGroup == poolGroup);
-
-            if (item != null)
-            {
-                item.state = state;
-            }
-        }
-
-        public void TogglePoolGroupSetting(string poolGroup)
-        {
-            var item = poolGroupSettings.FirstOrDefault(s => s.poolGroup == poolGroup);
-
-            if (item != null)
-            {
-                item.state = item.state switch
-                {
-                    PoolGroupState.Off => PoolGroupState.On,
-                    PoolGroupState.On => PoolGroupState.Off,
-                    PoolGroupState.Mixed => PoolGroupState.On,
-                    _ => throw new NotImplementedException()
-                };
-            }
+            Mode = (MapMode)(((int)Mode + 1) % Enum.GetNames(typeof(MapMode)).Length);
         }
     }
 }

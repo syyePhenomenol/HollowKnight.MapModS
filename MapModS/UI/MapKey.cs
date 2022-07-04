@@ -21,7 +21,7 @@ namespace MapModS.UI
         public static bool Condition()
         {
             return GUI.worldMapOpen
-                && MapModS.LS.modEnabled
+                && MapModS.LS.ModEnabled
                 && !GUI.lockToggleEnable;
         }
 
@@ -212,7 +212,7 @@ namespace MapModS.UI
 
         public static void UpdatePanel()
         {
-            if (MapModS.GS.mapKeyOn)
+            if (MapModS.GS.MapKeyOn)
             {
                 panel.Visibility = Visibility.Visible;
             }
@@ -221,8 +221,8 @@ namespace MapModS.UI
                 panel.Visibility = Visibility.Hidden;
             }
 
-            if (MapModS.LS.mapMode == MapMode.TransitionRando
-                || MapModS.LS.mapMode == MapMode.TransitionRandoAlt)
+            if (MapModS.LS.Mode == MapMode.Transition
+                || MapModS.LS.Mode == MapMode.TransitionVisitedOnly)
             {
                 roomKey.Visibility = Visibility.Visible;
             }

@@ -3,18 +3,7 @@ using System.Collections.Generic;
 
 namespace MapModS.Data
 {
-    public enum PinLocationState
-    {
-        UncheckedUnreachable,
-        UncheckedReachable,
-        NonRandomizedUnchecked,
-        OutOfLogicReachable,
-        Previewed,
-        Cleared,
-        ClearedPersistent
-    }
-
-    public class PinDef
+    public class OldPin
     {
         public string name;
 
@@ -45,7 +34,7 @@ namespace MapModS.Data
 
         public IEnumerable<ItemDef> randoItems;
         public bool canPreviewItem;
-        public PinLocationState pinLocationState;
+        public PinState pinLocationState;
 
         public bool canShowOnMap = false;
     }

@@ -112,7 +112,7 @@ namespace MapModS.Data
                 }
                 else
                 {
-                    Events.SetToStart();
+                    Benchwarp.Events.SetToStart();
                 }
 
                 ChangeScene.WarpToRespawn();

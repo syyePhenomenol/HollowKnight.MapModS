@@ -29,7 +29,7 @@ namespace MapModS.UI
         public static bool Condition()
         {
             return GUI.worldMapOpen
-                && MapModS.LS.modEnabled
+                && MapModS.LS.ModEnabled
                 && !GUI.lockToggleEnable;
         }
 
@@ -121,68 +121,68 @@ namespace MapModS.UI
 
         public static void UpdateLookupPanel()
         {
-            if (MapModS.GS.lookupOn)
+            if (MapModS.GS.LookupOn)
             {
                 string text = $"{Utils.ToCleanName(selectedLocation)}";
 
-                PinDef pd = MainData.GetUsedPinDef(selectedLocation);
+                //OldPin pd = MainData.GetUsedPinDef(selectedLocation);
 
-                if (pd != null)
-                {
-                    text += $"\n\n{L.Localize("Room")}: {pd.sceneName}";
+                //if (pd != null)
+                //{
+                //    text += $"\n\n{L.Localize("Room")}: {pd.sceneName}";
 
-                    text += $"\n\n{L.Localize("Status")}:";
+                //    text += $"\n\n{L.Localize("Status")}:";
 
-                    text += pd.pinLocationState switch
-                    {
-                        PinLocationState.UncheckedUnreachable => $" {L.Localize("Randomized, unchecked, unreachable")}",
-                        PinLocationState.UncheckedReachable => $" {L.Localize("Randomized, unchecked, reachable")}",
-                        PinLocationState.NonRandomizedUnchecked => $" {L.Localize("Not randomized, either unchecked or persistent")}",
-                        PinLocationState.OutOfLogicReachable => $" {L.Localize("Randomized, unchecked, reachable through sequence break")}",
-                        PinLocationState.Previewed => $" {L.Localize("Randomized, previewed")}",
-                        PinLocationState.Cleared => $" {L.Localize("Cleared")}",
-                        PinLocationState.ClearedPersistent => $" {L.Localize("Randomized, cleared, persistent")}",
-                        _ => ""
-                    };
+                //    text += pd.pinLocationState switch
+                //    {
+                //        PinState.UncheckedUnreachable => $" {L.Localize("Randomized, unchecked, unreachable")}",
+                //        PinState.UncheckedReachable => $" {L.Localize("Randomized, unchecked, reachable")}",
+                //        PinState.NonRandomizedUnchecked => $" {L.Localize("Not randomized, either unchecked or persistent")}",
+                //        PinState.OutOfLogicReachable => $" {L.Localize("Randomized, unchecked, reachable through sequence break")}",
+                //        PinState.Previewed => $" {L.Localize("Randomized, previewed")}",
+                //        PinState.Cleared => $" {L.Localize("Cleared")}",
+                //        PinState.ClearedPersistent => $" {L.Localize("Randomized, cleared, persistent")}",
+                //        _ => ""
+                //    };
 
-                    if (MainData.IsInLogicLookup(selectedLocation))
-                    {
-                        text += $"\n\n{L.Localize("Logic")}: {MainData.GetRawLogic(selectedLocation)}";
-                    }
+                //    if (MainData.IsInLogicLookup(selectedLocation))
+                //    {
+                //        text += $"\n\n{L.Localize("Logic")}: {MainData.GetRawLogic(selectedLocation)}";
+                //    }
 
-                    if (RM.RS.TrackerData.previewedLocations.Contains(pd.name))
-                    {
-                        text += $"\n\n{L.Localize("Previewed item(s)")}:";
+                //    if (RM.RS.TrackerData.previewedLocations.Contains(pd.name))
+                //    {
+                //        text += $"\n\n{L.Localize("Previewed item(s)")}:";
 
-                        string[] previewText = MainData.GetPreviewText(pd.name);
+                //        string[] previewText = pd.name.PreviewText();
 
-                        if (previewText == null) return;
+                //        if (previewText == null) return;
 
-                        foreach (string textPiece in previewText)
-                        {
-                            text += $" {Utils.ToCleanPreviewText(textPiece)},";
-                        }
+                //        foreach (string textPiece in previewText)
+                //        {
+                //            text += $" {Utils.ToCleanPreviewText(textPiece)},";
+                //        }
 
-                        text = text.Substring(0, text.Length - 1);
-                    }
+                //        text = text.Substring(0, text.Length - 1);
+                //    }
 
-                    if (MapModS.LS.spoilerOn
-                        && pd.randoItems != null
-                        && pd.randoItems.Any()
-                        && (!RM.RS.TrackerData.previewedLocations.Contains(pd.name)
-                            || (RM.RS.TrackerData.previewedLocations.Contains(pd.name)
-                                && !pd.canPreviewItem)))
-                    {
-                        text += $"\n\n{L.Localize("Spoiler item(s)")}:";
+                //    if (MapModS.LS.spoilerOn
+                //        && pd.randoItems != null
+                //        && pd.randoItems.Any()
+                //        && (!RM.RS.TrackerData.previewedLocations.Contains(pd.name)
+                //            || (RM.RS.TrackerData.previewedLocations.Contains(pd.name)
+                //                && !pd.canPreviewItem)))
+                //    {
+                //        text += $"\n\n{L.Localize("Spoiler item(s)")}:";
 
-                        foreach (ItemDef item in pd.randoItems)
-                        {
-                            text += $" {Utils.ToCleanName(item.itemName)},";
-                        }
+                //        foreach (ItemDef item in pd.randoItems)
+                //        {
+                //            text += $" {Utils.ToCleanName(item.itemName)},";
+                //        }
 
-                        text = text.Substring(0, text.Length - 1);
-                    }
-                }
+                //        text = text.Substring(0, text.Length - 1);
+                //    }
+                //}
 
                 lookupPanelText.Text = text;
                 lookupPanel.Visibility = Visibility.Visible;
@@ -197,30 +197,30 @@ namespace MapModS.UI
         public static void UpdateSelectedPinCoroutine()
         {
             if (!GUI.worldMapOpen
-                || WorldMap.goCustomPins == null
-                || WorldMap.CustomPins == null
+                //|| WorldMap.goCustomPins == null
+                //|| WorldMap.CustomPins == null
                 || GameManager.instance.IsGamePaused()
                 || !Condition()
-                || !MapModS.GS.lookupOn)
+                || !MapModS.GS.LookupOn)
             {
                 return;
             }
 
-            if (WorldMap.CustomPins.GetPinClosestToMiddle(selectedLocation, out selectedLocation))
-            {
-                UpdateSelectedPin();
-            }
+            //if (WorldMap.CustomPins.GetPinClosestToMiddle(selectedLocation, out selectedLocation))
+            //{
+            //    UpdateSelectedPin();
+            //}
         }
 
-        public static void UpdateSelectedPin()
-        {
-            if (!GUI.worldMapOpen
-                || WorldMap.goCustomPins == null
-                || WorldMap.CustomPins == null) return;
+        //public static void UpdateSelectedPin()
+        //{
+        //    if (!GUI.worldMapOpen
+        //        || WorldMap.goCustomPins == null
+        //        || WorldMap.CustomPins == null) return;
 
-            WorldMap.CustomPins.ResizePins(selectedLocation);
-            UpdateAll();
-        }
+        //    WorldMap.CustomPins.ResizePins(selectedLocation);
+        //    UpdateAll();
+        //}
 
         private static Thread colorUpdateThread;
 
@@ -260,7 +260,7 @@ namespace MapModS.UI
 
         public static void UpdateUncheckedPanel()
         {
-            if (TransitionData.TransitionModeActive() && MapModS.GS.uncheckedPanelActive)
+            if (TransitionData.TransitionModeActive() && MapModS.GS.ShowUncheckedPanel)
             {
                 uncheckedPanelText.Text = selectedScene + "\n\n";
                 uncheckedPanelText.Text += TransitionData.GetUncheckedVisited(selectedScene);

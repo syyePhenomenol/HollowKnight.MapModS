@@ -1,4 +1,5 @@
-﻿using RandomizerCore.Logic;
+﻿using MapModS.Data;
+using RandomizerCore.Logic;
 using RandomizerMod.RandomizerData;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Reflection;
 using RD = RandomizerMod.RandomizerData.Data;
 using RM = RandomizerMod.RandomizerMod;
 
-namespace MapModS.Data
+namespace MapModS.Pathfinding
 {
     public static class PathfinderData
     {
@@ -49,13 +50,13 @@ namespace MapModS.Data
 
         public static void Load()
         {
-            conditionalTerms = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.conditionalTerms.json");
-            adjacentScenes = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.adjacentScenes.json");
-            adjacentTerms = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.adjacentTerms.json");
-            scenesByTransition = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.scenesByTransition.json");
-            transitionsByScene = JsonUtil.Deserialize<Dictionary<string, HashSet<string>>>("MapModS.Resources.Pathfinder.Data.transitionsByScene.json");
-            doorObjectsByScene = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Compass.doorObjectsByScene.json");
-            doorObjectsByTransition = JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Compass.doorObjectsByTransition.json");
+            conditionalTerms = Data.JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.conditionalTerms.json");
+            adjacentScenes = Data.JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.adjacentScenes.json");
+            adjacentTerms = Data.JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.adjacentTerms.json");
+            scenesByTransition = Data.JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Data.scenesByTransition.json");
+            transitionsByScene = Data.JsonUtil.Deserialize<Dictionary<string, HashSet<string>>>("MapModS.Resources.Pathfinder.Data.transitionsByScene.json");
+            doorObjectsByScene = Data.JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Compass.doorObjectsByScene.json");
+            doorObjectsByTransition = Data.JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.Pathfinder.Compass.doorObjectsByTransition.json");
 
             lmb = new(RM.RS.Context.LM);
 

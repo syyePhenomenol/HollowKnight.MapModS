@@ -1,10 +1,11 @@
-﻿using RandomizerCore.Logic;
+﻿using MapModS.Data;
+using RandomizerCore.Logic;
 using System.Collections.Generic;
 using System.Linq;
-using PD = MapModS.Data.PathfinderData;
+using PD = MapModS.Pathfinding.PathfinderData;
 using RM = RandomizerMod.RandomizerMod;
 
-namespace MapModS.Data
+namespace MapModS.Pathfinding
 {
     public static class Pathfinder
     {
@@ -352,7 +353,7 @@ namespace MapModS.Data
 
                 string scene = PD.GetScene(transition);
 
-                if (MapModS.LS.mapMode == Settings.MapMode.TransitionRandoAlt
+                if (MapModS.LS.Mode == Settings.MapMode.TransitionVisitedOnly
                     && !PlayerData.instance.scenesVisited.Contains(scene)) continue;
 
                 if (Td.pm.Get(transition) > 0

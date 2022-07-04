@@ -38,15 +38,36 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Data\NewData.cs" />
+    <Compile Remove="Data\OldPin.cs" />
+    <Compile Remove="Map\FullMap.cs" />
     <Compile Remove="Map\MapObjectScript.cs" />
+    <Compile Remove="Map\MapRooms.cs" />
+    <Compile Remove="Map\PinAnimatedSprite.cs" />
+    <Compile Remove="Map\PinsCustom.cs" />
+    <Compile Remove="Map\PinsVanilla.cs" />
+    <Compile Remove="Map\QuickMap.cs" />
+    <Compile Remove="Map\Quill.cs" />
+    <Compile Remove="Map\WorldMap.cs" />
+    <Compile Remove="UI\Benchwarp.cs" />
+    <Compile Remove="UI\InfoPanels.cs" />
+    <Compile Remove="UI\MapKey.cs" />
+    <Compile Remove="UI\MapText.cs" />
+    <Compile Remove="UI\RouteCompass.cs" />
+    <Compile Remove="UI\TransitionPersistent.cs" />
+    <Compile Remove="UI\TransitionQuickMap.cs" />
+    <Compile Remove="UI\TransitionWorldMap.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Resources\pinsAM.json" />
+    <None Remove="Resources\pinScenes.json" />
     <None Remove="Resources\Pins\pinJournal.png" />
+    <None Remove="Resources\rooms.json" />
+    <None Remove="Resources\tracking.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Resources\rooms.json" />
     <EmbeddedResource Include="Resources\GUI\panelLeft.png" />
     <EmbeddedResource Include="Resources\Pathfinder\Compass\doorObjectsByScene.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Compass\doorObjectsByTransition.json" />
@@ -65,6 +86,7 @@
     <EmbeddedResource Include="Resources\Pathfinder\Logic\waypoints.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Logic\macros.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Logic\transitions.json" />
+    <EmbeddedResource Include="Resources\pinsAM.json" />
     <EmbeddedResource Include="Resources\Pins\pinBench.png" />
     <EmbeddedResource Include="Resources\Pins\pinBlank.png" />
     <EmbeddedResource Include="Resources\Pins\pinBorder.png" />
@@ -78,7 +100,7 @@
     <EmbeddedResource Include="Resources\minimalMapRooms.json" />
     <EmbeddedResource Include="Resources\nonMappedRooms.json" />
     <EmbeddedResource Include="Resources\pins.json" />
-    <EmbeddedResource Include="Resources\pinsAM.json" />
+    <EmbeddedResource Include="Resources\fsmOverrides.json" />
     <EmbeddedResource Include="Resources\Pins\pinCharm.png" />
     <EmbeddedResource Include="Resources\Pins\pinCocoon.png" />
     <EmbeddedResource Include="Resources\Pins\pinDreamer.png" />
@@ -111,6 +133,7 @@
     <EmbeddedResource Include="Resources\Pins\pinUnknown_Totem.png" />
     <EmbeddedResource Include="Resources\Pins\pinUnknown_TotemInv.png" />
     <EmbeddedResource Include="Resources\Pins\pinVessel.png" />
+    <EmbeddedResource Include="Resources\tracking.json" />
   </ItemGroup>
 
 	<Target Name="CopyMod" AfterTargets="PostBuildEvent">

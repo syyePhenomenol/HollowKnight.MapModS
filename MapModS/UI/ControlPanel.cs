@@ -33,7 +33,7 @@ namespace MapModS.UI
 
         public static bool Condition()
         {
-            return MapModS.LS.modEnabled
+            return MapModS.LS.ModEnabled
                 && GUI.worldMapOpen
                 && !GUI.lockToggleEnable;
         }
@@ -105,31 +105,31 @@ namespace MapModS.UI
                 {
                     MapModS.GS.ToggleControlPanel();
                     UpdateAll();
-                }, ModifierKeys.Ctrl, () => MapModS.LS.modEnabled);
+                }, ModifierKeys.Ctrl, () => MapModS.LS.ModEnabled);
 
                 layout.ListenForHotkey(KeyCode.K, () =>
                 {
                     MapModS.GS.ToggleMapKey();
                     UpdateAll();
-                    MapKey.UpdateAll();
-                }, ModifierKeys.Ctrl, () => MapModS.LS.modEnabled);
+                    //MapKey.UpdateAll();
+                }, ModifierKeys.Ctrl, () => MapModS.LS.ModEnabled);
 
                 layout.ListenForHotkey(KeyCode.L, () =>
                 {
                     MapModS.GS.ToggleLookup();
 
-                    if (MapModS.GS.lookupOn)
-                    {
-                        InfoPanels.UpdateSelectedPin();
-                    }
-                    else
-                    {
-                        WorldMap.CustomPins.ResizePins("None selected");
-                    }
+                    //if (MapModS.GS.lookupOn)
+                    //{
+                    //    InfoPanels.UpdateSelectedPin();
+                    //}
+                    //else
+                    //{
+                    //    WorldMap.CustomPins.ResizePins("None selected");
+                    //}
 
                     UpdateAll();
-                    InfoPanels.UpdateAll();
-                }, ModifierKeys.Ctrl, () => MapModS.LS.modEnabled);
+                    //InfoPanels.UpdateAll();
+                }, ModifierKeys.Ctrl, () => MapModS.LS.ModEnabled);
                 
                 if (Dependencies.HasBenchwarp())
                 {
@@ -137,55 +137,55 @@ namespace MapModS.UI
                     {
                         MapModS.GS.ToggleBenchwarpWorldMap();
                         UpdateAll();
-                        Benchwarp.UpdateAll();
-                    }, ModifierKeys.Ctrl, () => MapModS.LS.modEnabled);
+                        //Benchwarp.UpdateAll();
+                    }, ModifierKeys.Ctrl, () => MapModS.LS.ModEnabled);
 
                     layout.ListenForHotkey(KeyCode.B, () =>
                     {
                         MapModS.GS.ToggleAllowBenchWarp();
-                        TransitionPersistent.ResetRoute();
-                        RouteCompass.UpdateCompass();
-                        UpdateAll();
-                        TransitionPersistent.UpdateAll();
-                        TransitionWorldMap.UpdateAll();
-                    }, ModifierKeys.Ctrl, () => MapModS.LS.modEnabled);
+                        //TransitionPersistent.ResetRoute();
+                        //RouteCompass.UpdateCompass();
+                        //UpdateAll();
+                        //TransitionPersistent.UpdateAll();
+                        //TransitionWorldMap.UpdateAll();
+                    }, ModifierKeys.Ctrl, () => MapModS.LS.ModEnabled);
                 }
 
                 layout.ListenForHotkey(KeyCode.U, () =>
                 {
                     MapModS.GS.ToggleUncheckedPanel();
                     UpdateAll();
-                    TransitionWorldMap.UpdateAll();
-                    InfoPanels.UpdateAll();
-                }, ModifierKeys.Ctrl, () => MapModS.LS.modEnabled);
+                    //TransitionWorldMap.UpdateAll();
+                    //InfoPanels.UpdateAll();
+                }, ModifierKeys.Ctrl, () => MapModS.LS.ModEnabled);
 
                 layout.ListenForHotkey(KeyCode.R, () =>
                 {
                     MapModS.GS.ToggleRouteTextInGame();
                     UpdateAll();
-                    TransitionPersistent.UpdateAll();
-                    TransitionWorldMap.UpdateAll();
-                }, ModifierKeys.Ctrl, () => MapModS.LS.modEnabled);
+                    //TransitionPersistent.UpdateAll();
+                    //TransitionWorldMap.UpdateAll();
+                }, ModifierKeys.Ctrl, () => MapModS.LS.ModEnabled);
 
                 layout.ListenForHotkey(KeyCode.E, () =>
                 {
                     MapModS.GS.ToggleWhenOffRoute();
                     UpdateAll();
-                }, ModifierKeys.Ctrl, () => MapModS.LS.modEnabled);
+                }, ModifierKeys.Ctrl, () => MapModS.LS.ModEnabled);
 
                 layout.ListenForHotkey(KeyCode.C, () =>
                 {
                     MapModS.GS.ToggleRouteCompassEnabled();
                     UpdateAll();
-                    TransitionWorldMap.UpdateAll();
-                }, ModifierKeys.Ctrl, () => MapModS.LS.modEnabled);
+                    //TransitionWorldMap.UpdateAll();
+                }, ModifierKeys.Ctrl, () => MapModS.LS.ModEnabled);
 
 #if DEBUG
                 layout.ListenForHotkey(KeyCode.Alpha6, () =>
                 {
                     MainData.LoadDebugResources();
-                    WorldMap.CustomPins.ReadjustPinPostiions();
-                    MapRooms.ReadjustRoomPostiions();
+                    //WorldMap.CustomPins.ReadjustPinPostiions();
+                    //MapRooms.ReadjustRoomPostiions();
                 }, ModifierKeys.Ctrl);
 #endif
                 UpdateAll();
@@ -210,15 +210,15 @@ namespace MapModS.UI
             UpdateOffRoute();
             UpdateCompass();
 
-            if (MapModS.GS.controlPanelOn)
+            if (MapModS.GS.ControlPanelOn)
             {
                 modEnabled.Visibility = Visibility.Visible;
                 shiftPan.Visibility = Visibility.Visible;
                 mapKey.Visibility = Visibility.Visible;
                 lookup.Visibility = Visibility.Visible;
 
-                if (MapModS.LS.mapMode == MapMode.TransitionRando
-                    || MapModS.LS.mapMode == MapMode.TransitionRandoAlt)
+                if (MapModS.LS.Mode == MapMode.Transition
+                    || MapModS.LS.Mode == MapMode.TransitionVisitedOnly)
                 {
                     benchwarpWorldMap.Visibility = Visibility.Collapsed;
                     benchwarpSearch.Visibility = Visibility.Visible;
@@ -254,7 +254,7 @@ namespace MapModS.UI
 
         public static void UpdateControl()
         {
-            if (MapModS.GS.controlPanelOn)
+            if (MapModS.GS.ControlPanelOn)
             {
                 control.Text = $"Ctrl-H: {L.Localize("Hide hotkeys")}";
             }
@@ -270,7 +270,7 @@ namespace MapModS.UI
                 (
                     mapKey,
                     $"{L.Localize("Toggle map key")} (Ctrl-K): ",
-                    MapModS.GS.mapKeyOn
+                    MapModS.GS.MapKeyOn
                 );
         }
 
@@ -280,7 +280,7 @@ namespace MapModS.UI
                 (
                     lookup,
                     $"{L.Localize("Toggle lookup")} (Ctrl-L): ",
-                    MapModS.GS.lookupOn
+                    MapModS.GS.LookupOn
                 );
         }
 
@@ -292,7 +292,7 @@ namespace MapModS.UI
                     (
                         benchwarpWorldMap,
                         $"{L.Localize("Benchwarp selection")} (Ctrl-W): ",
-                        MapModS.GS.benchwarpWorldMap
+                        MapModS.GS.BenchwarpWorldMap
                     );
             }
             else
@@ -309,7 +309,7 @@ namespace MapModS.UI
                     (
                         benchwarpSearch,
                         $"{L.Localize("Include benchwarp")} (Ctrl-B): ",
-                        MapModS.GS.allowBenchWarpSearch
+                        MapModS.GS.AllowBenchWarpSearch
                     );
             }
             else
@@ -324,7 +324,7 @@ namespace MapModS.UI
                 (
                     uncheckedVisited,
                     $"{L.Localize("Show unchecked/visited")} (Ctrl-U): ",
-                    MapModS.GS.uncheckedPanelActive
+                    MapModS.GS.ShowUncheckedPanel
                 );
         }
 
@@ -332,7 +332,7 @@ namespace MapModS.UI
         {
             string text = $"{L.Localize("Show route in-game")} (Ctrl-R): ";
 
-            switch (MapModS.GS.routeTextInGame)
+            switch (MapModS.GS.RouteTextInGame)
             {
                 case RouteTextInGame.Hide:
                     routeInGame.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
@@ -342,7 +342,7 @@ namespace MapModS.UI
                     routeInGame.ContentColor = Colors.GetColor(ColorSetting.UI_On);
                     text += L.Localize("Full");
                     break;
-                case RouteTextInGame.ShowNextTransitionOnly:
+                case RouteTextInGame.NextTransitionOnly:
                     routeInGame.ContentColor = Colors.GetColor(ColorSetting.UI_On);
                     text += L.Localize("Next transition only");
                     break;
@@ -355,7 +355,7 @@ namespace MapModS.UI
         {
             string text = $"{L.Localize("When off-route")} (Ctrl-E): ";
 
-            switch (MapModS.GS.whenOffRoute)
+            switch (MapModS.GS.WhenOffRoute)
             {
                 case OffRouteBehaviour.Keep:
                     whenOffRoute.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
@@ -380,7 +380,7 @@ namespace MapModS.UI
                 (
                     compass,
                     $"{L.Localize("Show route compass")} (Ctrl-C): ",
-                    MapModS.GS.routeCompassEnabled
+                    MapModS.GS.ShowRouteCompass
                 );
         }
     }

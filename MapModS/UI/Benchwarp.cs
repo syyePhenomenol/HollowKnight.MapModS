@@ -2,6 +2,7 @@
 using MagicUI.Elements;
 using MapModS.Data;
 using MapModS.Map;
+using MapModS.Pathfinding;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -24,11 +25,11 @@ namespace MapModS.UI
 
         private static bool Condition()
         {
-            return MapModS.LS.modEnabled
+            return MapModS.LS.ModEnabled
                 && !TransitionData.TransitionModeActive()
                 && !GUI.lockToggleEnable
                 && GUI.worldMapOpen
-                && MapModS.GS.benchwarpWorldMap;
+                && MapModS.GS.BenchwarpWorldMap;
         }
 
         public static void Build()
@@ -63,7 +64,7 @@ namespace MapModS.UI
         {
             if (Dependencies.HasBenchwarp() && !TransitionData.TransitionModeActive())
             {
-                if (!MapModS.GS.benchwarpWorldMap)
+                if (!MapModS.GS.BenchwarpWorldMap)
                 {
                     ResetBenchSelection();
                 }
@@ -107,7 +108,7 @@ namespace MapModS.UI
         public static void UpdateSelectedBenchCoroutine()
         {
             if (layout == null
-                || !MapModS.LS.modEnabled
+                || !MapModS.LS.ModEnabled
                 || TransitionData.TransitionModeActive()
                 || GUI.lockToggleEnable
                 || !Dependencies.HasBenchwarp()
@@ -116,7 +117,7 @@ namespace MapModS.UI
                 return;
             }
 
-            if (GUI.worldMapOpen && MapModS.GS.benchwarpWorldMap)
+            if (GUI.worldMapOpen && MapModS.GS.BenchwarpWorldMap)
             {
                 if (benchUpdateThread != null && benchUpdateThread.IsAlive) return;
 
@@ -174,7 +175,7 @@ namespace MapModS.UI
         // Called every frame
         public static void Update()
         {
-            if (!MapModS.LS.modEnabled
+            if (!MapModS.LS.ModEnabled
                 || !GUI.worldMapOpen
                 || GUI.lockToggleEnable
                 || !Dependencies.HasBenchwarp()
@@ -193,7 +194,7 @@ namespace MapModS.UI
             if (InputHandler.Instance.inputActions.attack.WasReleased)
             {
                 if (!TransitionData.TransitionModeActive()
-                    && MapModS.GS.benchwarpWorldMap
+                    && MapModS.GS.BenchwarpWorldMap
                     && attackHoldTimer.ElapsedMilliseconds < 500)
                 {
                     ToggleBench();
@@ -216,7 +217,7 @@ namespace MapModS.UI
 
                     attackHoldTimer.Reset();
                 }
-                else if (MapModS.GS.benchwarpWorldMap)
+                else if (MapModS.GS.BenchwarpWorldMap)
                 {
                     if (selectedBenchScene != "")
                     {

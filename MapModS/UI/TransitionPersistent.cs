@@ -1,13 +1,14 @@
 ﻿using MagicUI.Core;
 using MagicUI.Elements;
 using MapModS.Data;
+using MapModS.Pathfinding;
 using MapModS.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
-using static MapModS.Map.MapRooms;
+//using static MapModS.Map.MapRooms;
 
 namespace MapModS.UI
 {
@@ -32,8 +33,8 @@ namespace MapModS.UI
                 && (GUI.worldMapOpen
                     || GUI.quickMapOpen
                     || (!GameManager.instance.IsGamePaused()
-                        && (MapModS.GS.routeTextInGame == RouteTextInGame.ShowNextTransitionOnly
-                            || MapModS.GS.routeTextInGame == RouteTextInGame.Show)));
+                        && (MapModS.GS.RouteTextInGame == RouteTextInGame.NextTransitionOnly
+                            || MapModS.GS.RouteTextInGame == RouteTextInGame.Show)));
         }
 
         public static void Build()
@@ -73,7 +74,7 @@ namespace MapModS.UI
 
             if (selectedRoute.Any())
             {
-                if (MapModS.GS.routeTextInGame == RouteTextInGame.ShowNextTransitionOnly
+                if (MapModS.GS.RouteTextInGame == RouteTextInGame.NextTransitionOnly
                     && !GUI.quickMapOpen && !GUI.worldMapOpen)
                 {
                     text += " -> " + selectedRoute.First().ToCleanName();
@@ -131,7 +132,7 @@ namespace MapModS.UI
 
             try
             {
-                selectedRoute = Pathfinder.ShortestRoute(Utils.CurrentScene(), InfoPanels.selectedScene, rejectedRoutes, MapModS.GS.allowBenchWarpSearch, false);
+                selectedRoute = Pathfinder.ShortestRoute(Utils.CurrentScene(), InfoPanels.selectedScene, rejectedRoutes, MapModS.GS.AllowBenchWarpSearch, false);
             }
             catch (Exception e)
             {
@@ -160,7 +161,7 @@ namespace MapModS.UI
 
             try
             {
-                selectedRoute = Pathfinder.ShortestRoute(transition, lastFinalTransition.GetAdjacentTerm(), rejectedRoutes, MapModS.GS.allowBenchWarpSearch, true);
+                selectedRoute = Pathfinder.ShortestRoute(transition, lastFinalTransition.GetAdjacentTerm(), rejectedRoutes, MapModS.GS.AllowBenchWarpSearch, true);
             }
             catch (Exception e)
             {
@@ -207,9 +208,8 @@ namespace MapModS.UI
 
         public static void UpdateRoute(ItemChanger.Transition lastTransition)
         {
-#if DEBUG
-            MapModS.Instance.Log("Last transition: " + lastTransition.ToString());
-#endif
+            MapModS.Instance.LogDebug("Last transition: " + lastTransition.ToString());
+
             if (!selectedRoute.Any()) return;
 
             string transition = selectedRoute.First();
@@ -234,7 +234,7 @@ namespace MapModS.UI
             }
 
             // The transition doesn't match the route
-            switch (MapModS.GS.whenOffRoute)
+            switch (MapModS.GS.WhenOffRoute)
             {
                 case OffRouteBehaviour.Cancel:
                     ResetRoute();

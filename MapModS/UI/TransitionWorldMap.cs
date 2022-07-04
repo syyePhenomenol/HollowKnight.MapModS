@@ -2,6 +2,7 @@
 using MagicUI.Elements;
 using MagicUI.Graphics;
 using MapModS.Data;
+using MapModS.Pathfinding;
 using System.Collections.Generic;
 using System.Linq;
 using L = RandomizerMod.Localization;
@@ -54,7 +55,7 @@ namespace MapModS.UI
         {
             string text = "";
 
-            if (!MapModS.GS.uncheckedPanelActive)
+            if (!MapModS.GS.ShowUncheckedPanel)
             {
                 text += $"{L.Localize("Selected room")}: {InfoPanels.selectedScene}.";
             }

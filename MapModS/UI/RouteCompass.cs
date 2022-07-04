@@ -1,9 +1,10 @@
 ﻿using System.Linq;
 using MapModS.Data;
+using MapModS.Pathfinding;
 using MapModS.Settings;
 using Modding.Utils;
 using UnityEngine;
-using PD = MapModS.Data.PathfinderData;
+using PD = MapModS.Pathfinding.PathfinderData;
 using SM = UnityEngine.SceneManagement.SceneManager;
 using TP = MapModS.UI.TransitionPersistent;
 
@@ -105,10 +106,10 @@ namespace MapModS.UI
 
         public static bool IsCompassEnabled()
         {
-            return (MapModS.LS.modEnabled
-                && (MapModS.LS.mapMode == MapMode.TransitionRando
-                    || MapModS.LS.mapMode == MapMode.TransitionRandoAlt)
-                && MapModS.GS.routeCompassEnabled);
+            return (MapModS.LS.ModEnabled
+                && (MapModS.LS.Mode == MapMode.Transition
+                    || MapModS.LS.Mode == MapMode.TransitionVisitedOnly)
+                && MapModS.GS.ShowRouteCompass);
         }
     }
 }

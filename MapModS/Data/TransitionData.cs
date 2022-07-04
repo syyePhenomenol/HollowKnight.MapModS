@@ -27,9 +27,9 @@ namespace MapModS.Data
 
         public static bool TransitionModeActive()
         {
-            return MapModS.LS.modEnabled
-                && (MapModS.LS.mapMode == Settings.MapMode.TransitionRando
-                    || MapModS.LS.mapMode == Settings.MapMode.TransitionRandoAlt);
+            return MapModS.LS.ModEnabled
+                && (MapModS.LS.Mode == Settings.MapMode.Transition
+                    || MapModS.LS.Mode == Settings.MapMode.TransitionVisitedOnly);
         }
 
         public static bool IsRandomizedTransition(string source)

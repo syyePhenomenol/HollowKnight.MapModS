@@ -2,157 +2,87 @@
 
 namespace MapModS.Settings
 {
-    public enum PinSize
+    public abstract class GlobalSettings
     {
-        Small,
-        Medium,
-        Large
-    }
+        public bool ControlPanelOn = true;
+        public bool MapKeyOn = false;
+        public bool LookupOn = false;
+        public bool BenchwarpWorldMap = true;
+        public bool AllowBenchWarpSearch = true;
+        public bool ShowUncheckedPanel = true;
+        public RouteTextInGame RouteTextInGame = RouteTextInGame.NextTransitionOnly;
+        public OffRouteBehaviour WhenOffRoute = OffRouteBehaviour.Reevaluate;
+        public bool ShowRouteCompass = true;
+        public PinStyle PinStyle = PinStyle.Normal;
+        public PinSize PinSize = PinSize.Medium;
+        public bool PersistentOn = false;
 
-    public enum PinStyle
-    {
-        Normal,
-        Q_Marks_1,
-        Q_Marks_2,
-        Q_Marks_3
-    }
+        /// <summary>
+        /// By default, the mode is set to Full Map in item rando, and Transition in a transition rando (at
+        /// least one randomized transition). Use the below settings to override them.
+        /// </summary>
+        public bool OverrideDefaultMode = false;
+        public MapMode ItemRandoModeOverride = MapMode.FullMap;
+        public MapMode TransitionRandoModeOverride = MapMode.Transition;
 
-    public enum RouteTextInGame
-    {
-        Hide,
-        Show,
-        ShowNextTransitionOnly
-    }
-
-    public enum OffRouteBehaviour
-    {
-        Keep,
-        Cancel,
-        Reevaluate
-    }
-
-    [Serializable]
-    public class GlobalSettings
-    {
-        public bool controlPanelOn = true;
-
-        public bool mapKeyOn = false;
-
-        public bool lookupOn = false;
-
-        public bool benchwarpWorldMap = true;
-
-        public bool allowBenchWarpSearch = true;
-
-        public bool uncheckedPanelActive = true;
-
-        public RouteTextInGame routeTextInGame = RouteTextInGame.ShowNextTransitionOnly;
-
-        public OffRouteBehaviour whenOffRoute = OffRouteBehaviour.Reevaluate;
-
-        public bool routeCompassEnabled = true;
-
-        public PinStyle pinStyle = PinStyle.Normal;
-
-        public PinSize pinSize = PinSize.Medium;
-
-        public bool persistentOn = false;
-
-        public void ToggleControlPanel()
+        internal void ToggleControlPanel()
         {
-            controlPanelOn = !controlPanelOn;
+            ControlPanelOn = !ControlPanelOn;
         }
 
-        public void ToggleMapKey()
+        internal void ToggleMapKey()
         {
-            mapKeyOn = !mapKeyOn;
+            MapKeyOn = !MapKeyOn;
         }
 
-        public void ToggleLookup()
+        internal void ToggleLookup()
         {
-            lookupOn = !lookupOn;
+            LookupOn = !LookupOn;
         }
 
-        public void ToggleBenchwarpWorldMap()
+        internal void ToggleBenchwarpWorldMap()
         {
-            benchwarpWorldMap = !benchwarpWorldMap;
+            BenchwarpWorldMap = !BenchwarpWorldMap;
         }
 
-        public void ToggleAllowBenchWarp()
+        internal void ToggleAllowBenchWarp()
         {
-            allowBenchWarpSearch = !allowBenchWarpSearch;
+            AllowBenchWarpSearch = !AllowBenchWarpSearch;
         }
 
-        public void ToggleUncheckedPanel()
+        internal void ToggleUncheckedPanel()
         {
-            uncheckedPanelActive = !uncheckedPanelActive;
+            ShowUncheckedPanel = !ShowUncheckedPanel;
         }
 
-        public void ToggleRouteTextInGame()
+        internal void ToggleRouteTextInGame()
         {
-            switch (routeTextInGame)
-            {
-                case RouteTextInGame.Hide:
-                case RouteTextInGame.Show:
-                    routeTextInGame += 1;
-                    break;
-                default:
-                    routeTextInGame = RouteTextInGame.Hide;
-                    break;
-            }
+            RouteTextInGame = (RouteTextInGame)(((int)RouteTextInGame + 1) % Enum.GetNames(typeof(RouteTextInGame)).Length);
         }
 
-        public void ToggleWhenOffRoute()
+        internal void ToggleWhenOffRoute()
         {
-            switch (whenOffRoute)
-            {
-                case OffRouteBehaviour.Keep:
-                case OffRouteBehaviour.Cancel:
-                    whenOffRoute += 1;
-                    break;
-                default:
-                    whenOffRoute = OffRouteBehaviour.Keep;
-                    break;
-            }
+            WhenOffRoute = (OffRouteBehaviour)(((int)WhenOffRoute + 1) % Enum.GetNames(typeof(OffRouteBehaviour)).Length);
         }
 
-        public void ToggleRouteCompassEnabled()
+        internal void ToggleRouteCompassEnabled()
         {
-            routeCompassEnabled = !routeCompassEnabled;
+            ShowRouteCompass = !ShowRouteCompass;
         }
 
-        public void TogglePinStyle()
+        internal void TogglePinStyle()
         {
-            switch (pinStyle)
-            {
-                case PinStyle.Normal:
-                case PinStyle.Q_Marks_1:
-                case PinStyle.Q_Marks_2:
-                    pinStyle += 1;
-                    break;
-                default:
-                    pinStyle = PinStyle.Normal;
-                    break;
-            }
+            PinStyle = (PinStyle)(((int)PinStyle + 1) % Enum.GetNames(typeof(PinStyle)).Length);
         }
 
-        public void TogglePinSize()
+        internal void TogglePinSize()
         {
-            switch (pinSize)
-            {
-                case PinSize.Small:
-                case PinSize.Medium:
-                    pinSize += 1;
-                    break;
-                default:
-                    pinSize = PinSize.Small;
-                    break;
-            }
+            PinSize = (PinSize)(((int)PinSize + 1) % Enum.GetNames(typeof(PinSize)).Length);
         }
 
-        public void TogglePersistentOn()
+        internal void TogglePersistentOn()
         {
-            persistentOn = !persistentOn;
+            PersistentOn = !PersistentOn;
         }
     }
 }

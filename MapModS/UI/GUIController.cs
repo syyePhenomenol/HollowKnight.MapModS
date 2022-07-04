@@ -42,15 +42,15 @@ namespace MapModS.UI
 
         public void Update()
         {
-            try
-            {
-                TransitionPersistent.Update();
-                Benchwarp.Update();
-            }
-            catch (Exception e)
-            {
-                MapModS.Instance.LogError(e);
-            }
+            //try
+            //{
+            //    TransitionPersistent.Update();
+            //    Benchwarp.Update();
+            //}
+            //catch (Exception e)
+            //{
+            //    MapModS.Instance.LogError(e);
+            //}
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Member is actually used")]
@@ -59,7 +59,7 @@ namespace MapModS.UI
             while (true)
             {
                 yield return new WaitForSecondsRealtime(0.1f);
-                InfoPanels.UpdateSelectedScene();
+                //InfoPanels.UpdateSelectedScene();
             }
         }
 
@@ -69,7 +69,7 @@ namespace MapModS.UI
             while (true)
             {
                 yield return new WaitForSecondsRealtime(0.1f);
-                InfoPanels.UpdateSelectedPinCoroutine();
+                //InfoPanels.UpdateSelectedPinCoroutine();
             }
         }
 
@@ -79,7 +79,7 @@ namespace MapModS.UI
             while (true)
             {
                 yield return new WaitForSecondsRealtime(0.1f);
-                Benchwarp.UpdateSelectedBenchCoroutine();
+                //Benchwarp.UpdateSelectedBenchCoroutine();
             }
         }
 

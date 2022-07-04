@@ -4,13 +4,13 @@ using UnityEngine.SceneManagement;
 
 namespace MapModS.UI
 {
-    public static class GUI
+    internal class GUI : HookModule
     {
         public static bool worldMapOpen = false;
         public static bool quickMapOpen = false;
         public static bool lockToggleEnable = false;
 
-        public static void Hook()
+        internal override void Hook()
         {
             On.GameMap.Start += GameMap_Start;
             On.GameManager.SetGameMap += GameManager_SetGameMap;
@@ -33,12 +33,12 @@ namespace MapModS.UI
             On.HeroController.UnPause += HeroController_UnPause;
 
             UnityEngine.SceneManagement.SceneManager.activeSceneChanged += HandleSceneChanges;
-            Events.OnBeginSceneTransition += Events_OnBeginSceneTransition;
+            ItemChanger.Events.OnBeginSceneTransition += Events_OnBeginSceneTransition;
 
             GUIController.Setup();
         }
 
-        public static void Unhook()
+        internal override void Unhook()
         {
             On.GameMap.Start -= GameMap_Start;
             On.GameManager.SetGameMap -= GameManager_SetGameMap;
@@ -61,19 +61,19 @@ namespace MapModS.UI
             On.HeroController.UnPause -= HeroController_UnPause;
 
             UnityEngine.SceneManagement.SceneManager.activeSceneChanged -= HandleSceneChanges;
-            Events.OnBeginSceneTransition -= Events_OnBeginSceneTransition;
+            ItemChanger.Events.OnBeginSceneTransition -= Events_OnBeginSceneTransition;
 
-            GUIController.Unload();
+            //GUIController.Unload();
 
-            PauseMenu.Destroy();
-            MapText.Destroy();
-            ControlPanel.Destroy();
-            MapKey.Destroy();
-            InfoPanels.Destroy();
-            TransitionPersistent.Destroy();
-            TransitionWorldMap.Destroy();
-            TransitionQuickMap.Destroy();
-            Benchwarp.Destroy();
+            //PauseMenu.Destroy();
+            //MapText.Destroy();
+            //ControlPanel.Destroy();
+            //MapKey.Destroy();
+            //InfoPanels.Destroy();
+            //TransitionPersistent.Destroy();
+            //TransitionWorldMap.Destroy();
+            //TransitionQuickMap.Destroy();
+            //Benchwarp.Destroy();
         }
 
         private static void GameMap_Start(On.GameMap.orig_Start orig, GameMap self)
@@ -88,14 +88,14 @@ namespace MapModS.UI
             orig(self, go_gameMap);
 
             PauseMenu.Build();
-            MapText.Build();
+            //MapText.Build();
             ControlPanel.Build();
-            MapKey.Build();
-            InfoPanels.Build();
-            TransitionPersistent.Build();
-            TransitionWorldMap.Build();
-            TransitionQuickMap.Build();
-            Benchwarp.Build();
+            //MapKey.Build();
+            //InfoPanels.Build();
+            //TransitionPersistent.Build();
+            //TransitionWorldMap.Build();
+            //TransitionQuickMap.Build();
+            //Benchwarp.Build();
         }
 
         private static void GameMap_WorldMap(On.GameMap.orig_WorldMap orig, GameMap self)
@@ -103,9 +103,9 @@ namespace MapModS.UI
             orig(self);
 
             worldMapOpen = true;
-            TransitionPersistent.UpdateRoute();
-            InfoPanels.UpdateAll();
-            Benchwarp.UpdateAll();
+            //TransitionPersistent.UpdateRoute();
+            //InfoPanels.UpdateAll();
+            //Benchwarp.UpdateAll();
         }
 
         private static void GameMap_QuickMapAncientBasin(On.GameMap.orig_QuickMapAncientBasin orig, GameMap self)
@@ -196,8 +196,8 @@ namespace MapModS.UI
         {
             worldMapOpen = false;
             quickMapOpen = true;
-            TransitionPersistent.UpdateRoute();
-            TransitionQuickMap.UpdateAll();
+            //TransitionPersistent.UpdateRoute();
+            //TransitionQuickMap.UpdateAll();
         }
 
         private static void GameMap_CloseQuickMap(On.GameMap.orig_CloseQuickMap orig, GameMap self)
@@ -207,9 +207,9 @@ namespace MapModS.UI
             quickMapOpen = false;
             lockToggleEnable = false;
 
-            MapText.UpdateAll();
-            TransitionPersistent.UpdateAll();
-            Benchwarp.attackHoldTimer.Reset();
+            //MapText.UpdateAll();
+            //TransitionPersistent.UpdateAll();
+            //Benchwarp.attackHoldTimer.Reset();
         }
 
         private static void HeroController_UnPause(On.HeroController.orig_UnPause orig, HeroController self)
@@ -222,13 +222,13 @@ namespace MapModS.UI
         {
             if (GameManager.instance.sceneName != to.name) return;
 
-            RouteCompass.CreateRouteCompass();
-            RouteCompass.UpdateCompass();
+            //RouteCompass.CreateRouteCompass();
+            //RouteCompass.UpdateCompass();
         }
 
-        private static void Events_OnBeginSceneTransition(Transition obj)
+        private static void Events_OnBeginSceneTransition(ItemChanger.Transition obj)
         {
-            TransitionPersistent.UpdateRoute(obj);
+            //TransitionPersistent.UpdateRoute(obj);
 
             //MapModS.Instance.Log(obj.ToString());
         }

@@ -52,13 +52,13 @@ namespace MapModS.Map
             }
         }
 
-        public static Sprite GetSpriteFromPool(string pool, bool normalOverride)
+        public static Sprite GetSpriteFromPoolGroup(string poolGroup, bool normalOverride = false)
         {
             string spriteName = "undefined";
 
-            if (MapModS.GS.pinStyle == PinStyle.Normal || normalOverride)
+            if (MapModS.GS.PinStyle == PinStyle.Normal || normalOverride)
             {
-                spriteName = pool switch
+                spriteName = poolGroup switch
                 {
                     "Dreamers" => "pinDreamer",
                     "Skills" => "pinSkill",
@@ -91,17 +91,17 @@ namespace MapModS.Map
                     _ => "pinUnknown",
                 };
             }
-            else if (MapModS.GS.pinStyle == PinStyle.Q_Marks_1)
+            else if (MapModS.GS.PinStyle == PinStyle.Q_Marks_1)
             {
-                spriteName = pool switch
+                spriteName = poolGroup switch
                 {
                     "Shops" => "pinShop",
                     _ => "pinUnknown",
                 };
             }
-            else if (MapModS.GS.pinStyle == PinStyle.Q_Marks_2)
+            else if (MapModS.GS.PinStyle == PinStyle.Q_Marks_2)
             {
-                spriteName = pool switch
+                spriteName = poolGroup switch
                 {
                     "Grubs" => "pinUnknown_GrubInv",
                     "Mimics" => "pinUnknown_GrubInv",
@@ -112,9 +112,9 @@ namespace MapModS.Map
                     _ => "pinUnknown",
                 };
             }
-            else if (MapModS.GS.pinStyle == PinStyle.Q_Marks_3)
+            else if (MapModS.GS.PinStyle == PinStyle.Q_Marks_3)
             {
-                spriteName = pool switch
+                spriteName = poolGroup switch
                 {
                     "Grubs" => "pinUnknown_Grub",
                     "Mimics" => "pinUnknown_Grub",

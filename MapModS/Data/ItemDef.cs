@@ -8,10 +8,10 @@ namespace MapModS.Data
     {
         public ItemDef(AbstractItem item)
         {
-            id = item.RandoItemId();
-            itemName = item.RandoItemName();
-            poolGroup = SupplementalMetadata.Of(item).Get(CMI.ItemPoolGroup);
-            persistent = item.IsPersistent();
+            //id = item.RandoItemId();
+            //itemName = item.RandoItemName();
+            //poolGroup = SupplementalMetadata.Of(item).Get(CMI.ItemPoolGroup);
+            //persistent = item.IsPersistent();
         }
 
         public int id;

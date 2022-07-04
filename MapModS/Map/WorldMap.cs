@@ -1,5 +1,7 @@
 ﻿using GlobalEnums;
 using MapModS.Data;
+using MapModS.Pathfinding;
+using MapModS.Pins;
 using MapModS.Settings;
 using MapModS.Trackers;
 using Modding;
@@ -10,10 +12,11 @@ using UnityEngine;
 
 namespace MapModS.Map
 {
-    public static class WorldMap
+    internal static class WorldMap
     {
-        public static GameObject goCustomPins = null;
-        public static PinsCustom CustomPins => goCustomPins.GetComponent<PinsCustom>();
+        //public static GameObject goPinGroup = null;
+        internal static PinGroup pinGroup;
+        //public static PinsCustom CustomPins => goCustomPins.GetComponent<PinsCustom>();
 
         public static GameObject goExtraRooms = null;
 
@@ -49,17 +52,17 @@ namespace MapModS.Map
             try
             {
                 Dependencies.BenchwarpVersionCheck();
-                MainData.SetUsedPinDefs();
-                MainData.SetLogicLookup();
+                //MainData.SetUsedPinDefs();
+                //MainData.SetLogicLookup();
                 TransitionData.SetTransitionLookup();
                 PathfinderData.Load();
                 Pathfinder.Initialize();
                 Pathfinder.UpdateProgression();
 
-                if (MapModS.LS.newSettings || MapModS.LS.poolGroupSettings.Count == 0)
+                if (MapModS.LS.InitializedPreviously || MapModS.LS.PoolSettings.Count == 0)
                 {
-                    MapModS.LS.InitializePoolGroupSettings();
-                    MapModS.LS.newSettings = true;
+                    //MapModS.LS.InitializePoolGroupSettings();
+                    MapModS.LS.InitializedPreviously = true;
                 }
             }
             catch (Exception e)
@@ -82,40 +85,40 @@ namespace MapModS.Map
                 goExtraRooms = MapRooms.CreateExtraMapRooms(gameMap);
             }
 
-            if (TransitionData.IsTransitionRando() && MapModS.LS.newSettings)
+            if (TransitionData.IsTransitionRando() && MapModS.LS.InitializedPreviously)
             {
-                MapModS.LS.mapMode = MapMode.TransitionRando;
+                MapModS.LS.Mode = MapMode.Transition;
             }
 
-            if (goCustomPins != null)
-            {
-                goCustomPins.GetComponent<PinsCustom>().DestroyPins();
-                UnityEngine.Object.Destroy(goCustomPins);
-            }
+            //if (goPinGroup != null)
+            //{
+            //    //goCustomPins.GetComponent<PinsCustom>().DestroyPins();
+            //    UnityEngine.Object.Destroy(goPinGroup);
+            //}
 
             MapModS.Instance.Log("Adding Custom Pins...");
-
-            goCustomPins = new GameObject($"MMS Custom Pin Group");
-            goCustomPins.AddComponent<PinsCustom>();
+            //goCustomPins.AddComponent<PinsCustom>();
 
             // Setting parent here is only for controlling local position,
             // not active/not active (need separate mechanism)
-            goCustomPins.transform.SetParent(go_gameMap.transform);
+            //goCustomPins.transform.SetParent(go_gameMap.transform);
 
-            CustomPins.MakePins(gameMap);
+            //PinGroup.Make(go_gameMap);
 
-            CustomPins.GetRandomizedOthersGroups();
+            //CustomPins.MakePins(gameMap);
 
-            if (MapModS.LS.newSettings)
-            {
-                CustomPins.ResetPoolSettings();
-            }
+            //CustomPins.GetRandomizedOthersGroups();
 
-            CustomPins.UpdatePins(MapZone.NONE, new());
+            //if (MapModS.LS.newSettings)
+            //{
+            //    CustomPins.ResetPoolSettings();
+            //}
+
+            //CustomPins.UpdatePins(MapZone.NONE, new());
 
             MapModS.Instance.Log("Adding Custom Pins done.");
 
-            MapModS.LS.newSettings = false;
+            MapModS.LS.InitializedPreviously = false;
         }
 
         // Called every time we open the World Map
@@ -124,10 +127,10 @@ namespace MapModS.Map
             orig(self);
 
             // Easiest way to force AdditionalMaps custom areas to show
-            if (MapModS.LS.modEnabled
-                && (MapModS.LS.mapMode == MapMode.FullMap
-                    || MapModS.LS.mapMode == MapMode.TransitionRando
-                    || MapModS.LS.mapMode == MapMode.TransitionRandoAlt))
+            if (MapModS.LS.ModEnabled
+                && (MapModS.LS.Mode == MapMode.FullMap
+                    || MapModS.LS.Mode == MapMode.Transition
+                    || MapModS.LS.Mode == MapMode.TransitionVisitedOnly))
             {
                 foreach (Transform roomObj in self.transform.Cast<Transform>().Where(t => t.name == "WHITE_PALACE" || t.name == "GODS_GLORY"))
                 {
@@ -165,16 +168,16 @@ namespace MapModS.Map
         {
             orig(self);
 
-            if (!MapModS.LS.modEnabled || goCustomPins == null) return;
+            if (!MapModS.LS.ModEnabled || pinGroup == null) return;
 
-            goCustomPins.SetActive(true);
+            pinGroup.gameObject.SetActive(true);
         }
 
         private static void GameMap_DisableMarkers(On.GameMap.orig_DisableMarkers orig, GameMap self)
         {
-            if (goCustomPins != null)
+            if (pinGroup != null)
             {
-                goCustomPins.SetActive(false);
+                pinGroup.gameObject.SetActive(false);
             }
 
             if (goExtraRooms != null)
@@ -203,38 +206,12 @@ namespace MapModS.Map
             return orig;
         }
 
-        // Zoom faster on keyboard by holding down shift key, similarly to right analog stick on controller
-        private static void GameMap_Update(On.GameMap.orig_Update orig, GameMap self)
-        {
-            if (MapModS.LS.modEnabled
-                && self.canPan
-                && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
-            {
-                if (InputHandler.Instance.inputActions.down.IsPressed)
-                {
-                    self.transform.position = new Vector3(self.transform.position.x, self.transform.position.y + self.panSpeed * Time.deltaTime, self.transform.position.z);
-                }
-                if (InputHandler.Instance.inputActions.up.IsPressed)
-                {
-                    self.transform.position = new Vector3(self.transform.position.x, self.transform.position.y - self.panSpeed * Time.deltaTime, self.transform.position.z);
-                }
-                if (InputHandler.Instance.inputActions.left.IsPressed)
-                {
-                    self.transform.position = new Vector3(self.transform.position.x + self.panSpeed * Time.deltaTime, self.transform.position.y, self.transform.position.z);
-                }
-                if (InputHandler.Instance.inputActions.right.IsPressed)
-                {
-                    self.transform.position = new Vector3(self.transform.position.x - self.panSpeed * Time.deltaTime, self.transform.position.y, self.transform.position.z);
-                }
-            }
 
-            orig(self);
-        }
 
         // The main method for updating map objects and pins when opening either World Map or Quick Map
         public static void UpdateMap(GameMap gameMap, MapZone mapZone)
         {
-            ItemTracker.UpdateObtainedItems();
+            //ItemTracker.UpdateObtainedItems();
 
             HashSet<string> transitionPinScenes = new();
 
@@ -245,12 +222,12 @@ namespace MapModS.Map
             }
             else
             {
-                FullMap.PurgeMap();
+                //FullMap.PurgeMap();
                 gameMap.SetupMap();
                 MapRooms.ResetMapColors(gameMap.gameObject);
             }
 
-            if (goCustomPins == null || !MapModS.LS.modEnabled) return;
+            if (pinGroup == null || !MapModS.LS.ModEnabled) return;
 
             gameMap.panMinX = -29f;
             gameMap.panMaxX = 26f;
@@ -259,10 +236,10 @@ namespace MapModS.Map
 
             PinsVanilla.ForceDisablePins(gameMap.gameObject);
 
-            CustomPins.UpdatePins(mapZone, transitionPinScenes);
-            CustomPins.ResizePins("None selected");
-            CustomPins.SetPinsActive();
-            CustomPins.SetSprites();
+            //CustomPins.UpdatePins(mapZone, transitionPinScenes);
+            //CustomPins.ResizePins("None selected");
+            //CustomPins.SetPinsActive();
+            //CustomPins.SetSprites();
         }
     }
 }

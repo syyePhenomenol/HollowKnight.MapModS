@@ -1,5 +1,6 @@
 ﻿using GlobalEnums;
 using MapModS.Data;
+using MapModS.Pathfinding;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -105,12 +106,10 @@ namespace MapModS.Map
                 emd.origCustomColor.w = 1f;
             }
 
-#if DEBUG
-            MapModS.Instance.Log(obj.name);
-            MapModS.Instance.Log("- " + emd.sceneName);
-            MapModS.Instance.Log("- " + emd.origColor.ToString());
-            MapModS.Instance.Log("- " + emd.origCustomColor.ToString());
-#endif
+            MapModS.Instance.LogDebug(obj.name);
+            MapModS.Instance.LogDebug("- " + emd.sceneName);
+            MapModS.Instance.LogDebug("- " + emd.origColor.ToString());
+            MapModS.Instance.LogDebug("- " + emd.origCustomColor.ToString());
         }
 
         public static GameObject CreateExtraMapRooms(GameMap gameMap)
@@ -187,7 +186,7 @@ namespace MapModS.Map
 
         public static HashSet<string> SetupMapTransitionMode(GameMap gameMap, MapZone mapZone)
         {
-            bool isAlt = MapModS.LS.mapMode == Settings.MapMode.TransitionRandoAlt;
+            bool isAlt = MapModS.LS.Mode == Settings.MapMode.TransitionVisitedOnly;
 
             HashSet<string> inLogicScenes = new();
             HashSet<string> outOfLogicScenes = new();
@@ -462,7 +461,7 @@ namespace MapModS.Map
                                 color = emd.origCustomColor;
                             }
 
-                            if (!color.Equals(Vector4.negativeInfinity) && MapModS.LS.modEnabled)
+                            if (!color.Equals(Vector4.negativeInfinity) && MapModS.LS.ModEnabled)
                             {
                                 sr.color = color;
                             }
@@ -522,7 +521,7 @@ namespace MapModS.Map
 
             if (sr != null)
             {
-                if (!color.Equals(Vector4.negativeInfinity) && MapModS.LS.modEnabled)
+                if (!color.Equals(Vector4.negativeInfinity) && MapModS.LS.ModEnabled)
                 {
                     sr.color = color;
                 }
@@ -533,7 +532,7 @@ namespace MapModS.Map
             }
             else if (tmp != null)
             {
-                if (!color.Equals(Vector4.negativeInfinity) && MapModS.LS.modEnabled)
+                if (!color.Equals(Vector4.negativeInfinity) && MapModS.LS.ModEnabled)
                 {
                     color.w = 1f;
                     tmp.color = color;

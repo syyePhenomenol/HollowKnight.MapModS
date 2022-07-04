@@ -1,32 +1,37 @@
-﻿using MapModS.Data;
+﻿using GlobalEnums;
+using MapModS.Data;
 using MapModS.Map;
+using MapModS.Pins;
 using MapModS.Settings;
-using MapModS.Shop;
-using MapModS.Trackers;
 using MapModS.UI;
 using Modding;
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using UnityEngine;
 
 namespace MapModS
 {
-    public class MapModS : Mod, ILocalSettings<LocalSettings>, IGlobalSettings<GlobalSettings>
+    public class MapModS : Mod, ILocalSettings<RandoLocalSettings>, IGlobalSettings<RandoGlobalSettings>
     {
-        public static MapModS Instance;
+        internal static MapModS Instance;
 
         public override string GetVersion() => "2.6.0";
 
         public override int LoadPriority() => 10;
 
-        public static LocalSettings LS = new();
-        public void OnLoadLocal(LocalSettings ls) => LS = ls;
-        public LocalSettings OnSaveLocal() => LS;
+        public static RandoLocalSettings LS = new();
+        public void OnLoadLocal(RandoLocalSettings ls) => LS = ls;
+        public RandoLocalSettings OnSaveLocal() => LS;
 
-        public static GlobalSettings GS = new();
-        public void OnLoadGlobal(GlobalSettings gs) => GS = gs;
-        public GlobalSettings OnSaveGlobal() => GS;
+        public static RandoGlobalSettings GS = new();
+        public void OnLoadGlobal(RandoGlobalSettings gs) => GS = gs;
+        public RandoGlobalSettings OnSaveGlobal() => GS;
+
+        public static bool WorldMapOpen { get; internal set; }
+        public static bool QuickMapOpen { get; internal set; }
+        public static MapZone CurrentMapZone { get; internal set; }
 
         public override void Initialize()
         {
@@ -56,6 +61,10 @@ namespace MapModS
             try
             {
                 MainData.Load();
+                MapData.LoadGlobalMapDefs();
+                RandoPinData.LoadGlobalPinDefs();
+                VariableOverrides.LoadOverrideDefs();
+                ItemTracker.LoadTrackingDefs();
             }
             catch (Exception e)
             {
@@ -63,84 +72,76 @@ namespace MapModS
                 throw;
             }
 
-            ModHooks.NewGameHook += ModHooks_NewGameHook;
-            On.GameManager.LoadGame += GameManager_LoadGame;
-            On.QuitToMenu.Start += QuitToMenu_Start;
+            AddHookModule<ItemTracker>();
+            AddHookModule<GUI>();
+
+            Events.OnEnterGame += OnEnterGame;
+            Events.OnSetGameMap += OnSetGameMap;
+
+            Events.Initialize();
 
             Log("Initialization complete.");
         }
 
-        private void ModHooks_NewGameHook()
-        {
-            Hook();
-        }
-
-        private void GameManager_LoadGame(On.GameManager.orig_LoadGame orig, GameManager self, int saveSlot, Action<bool> callback)
-        {
-            orig(self, saveSlot, callback);
-
-            Hook();
-        }
-
-        private IEnumerator QuitToMenu_Start(On.QuitToMenu.orig_Start orig, QuitToMenu self)
-        {
-            Unhook();
-
-            return orig(self);
-        }
-
-        private void Hook()
+        private static void OnEnterGame()
         {
             if (RandomizerMod.RandomizerMod.RS.GenerationSettings == null) return;
 
-            Log("Activating mod");
+            Instance.Log("Activating mod");
 
-            // Load default/custom assets
-            SpriteManager.LoadPinSprites();
-            Colors.LoadCustomColors();
-
-            if (Dependencies.HasBenchwarp())
-            {
-                BenchwarpInterop.Load();
-            }
-
-            // Track when items are picked up/Geo Rocks are broken
-            ItemTracker.Hook();
-            GeoRockTracker.Hook();
-
-            // Remove Map Markers from the Shop (when mod is enabled)
-            ShopChanger.Hook();
-
-            // Modify overall Map behaviour
-            WorldMap.Hook();
-
-            // Modify overall Quick Map behaviour
-            QuickMap.Hook();
-
-            // Allow the full Map to be toggled
-            FullMap.Hook();
-
-            // Disable Vanilla Pins when mod is enabled
-            PinsVanilla.Hook();
-
-            // Immediately update Map on scene change
-            Quill.Hook();
-
-            // Add all the UI elements (world map, quick map, pause menu)
-            GUI.Hook();
+            ItemTracker.GetPreviouslyObtainedItems();
+            RandoPinData.SetPinDefs();
+            //ItemTracker.VerifyTrackingDefs();
+            LS.Initialize();
         }
 
-        private void Unhook()
+        private const float OFFSETZ_BASE = -0.6f;
+        private const float OFFSETZ_RANGE = 0.1f;
+
+        public static MapObjectGroup randoPinGroup;
+
+        private static void OnSetGameMap(GameObject goMap)
         {
-            ItemTracker.Unhook();
-            GeoRockTracker.Unhook();
-            ShopChanger.Unhook();
-            WorldMap.Unhook();
-            QuickMap.Unhook();
-            FullMap.Unhook();
-            PinsVanilla.Unhook();
-            Quill.Unhook();
-            GUI.Unhook();
+            //MakeMonoBehaviour<RandoPinGroup>(goMap, RandoPinGroup.Name);
+            randoPinGroup = MakeMonoBehaviour<MapObjectGroup>(goMap, "Rando Pin Group");
+
+            IEnumerable<RandomizerModPinDef> pinDefs = RandoPinData.PinDefs.Values.OrderBy(pinDef => pinDef.OffsetX).ThenBy(pinDef => pinDef.OffsetY);
+            for (int i = 0; i < pinDefs.Count(); i++)
+            {
+                pinDefs.ElementAt(i).OffsetZ = OFFSETZ_BASE + (float)i / pinDefs.Count() * OFFSETZ_RANGE;
+                RandoPin pin = MakeMonoBehaviour<RandoPin>(randoPinGroup.gameObject, pinDefs.ElementAt(i).Name);
+                pin.RMDef = pinDefs.ElementAt(i);
+                pin.SetPosition();
+                randoPinGroup.MapObjects.Add(pin);
+            }
+        }
+
+        /// <summary>
+        /// Adds a custom HookModule, for hooking to other events not in Events
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public static void AddHookModule<T>() where T : HookModule
+        {
+            if (Events.HookModules.Any(hookModule => hookModule.GetType() == typeof(T)))
+            {
+                Instance.LogWarn($"HookModule of type {typeof(T).Name} has already been added!");
+                return;
+            }
+            Events.HookModules.Add((T)Activator.CreateInstance(typeof(T)));
+        }
+
+        /// <summary>
+        /// Generic method for creating a new GameObject with the MonoBehaviour,
+        /// and returning the MonoBehaviour
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="parent"></param>
+        /// <returns>The new MonoBehaviour instance</returns>
+        public static T MakeMonoBehaviour<T>(GameObject parent, string name) where T : MonoBehaviour
+        {
+            GameObject newObject = new(name);
+            newObject.transform.SetParent(parent.transform);
+            return newObject.AddComponent<T>();
         }
     }
 }

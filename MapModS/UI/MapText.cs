@@ -70,23 +70,23 @@ namespace MapModS.UI
 
         public static void UpdateAll()
         {
-            foreach (string textName in _textObjects.Keys)
-            {
-                TextObject textObj = (TextObject)layout.GetElement(textName);
+            //foreach (string textName in _textObjects.Keys)
+            //{
+            //    TextObject textObj = (TextObject)layout.GetElement(textName);
 
-                _textObjects[textName].Item2.Invoke(textObj);
+            //    _textObjects[textName].Item2.Invoke(textObj);
 
-                if (MapModS.LS.modEnabled)
-                {
-                    textObj.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    textObj.Visibility = Visibility.Hidden;
-                }
-            }
+            //    if (MapModS.LS.ModEnabled)
+            //    {
+            //        textObj.Visibility = Visibility.Visible;
+            //    }
+            //    else
+            //    {
+            //        textObj.Visibility = Visibility.Hidden;
+            //    }
+            //}
 
-            refresh.Visibility = Visibility.Hidden;
+            //refresh.Visibility = Visibility.Hidden;
         }
 
         public static void SetToRefresh()
@@ -100,7 +100,7 @@ namespace MapModS.UI
 
             refresh.Visibility = Visibility.Visible;
 
-            if (MapModS.LS.modEnabled)
+            if (MapModS.LS.ModEnabled)
             {
                 refresh.Text = L.Localize("MapModS enabled. Close map to refresh");
             }
@@ -114,7 +114,7 @@ namespace MapModS.UI
         {
             string text = $"{L.Localize("Spoilers")} (ctrl-1): ";
 
-            if (MapModS.LS.spoilerOn)
+            if (MapModS.LS.SpoilerOn)
             {
                 textObj.ContentColor = Colors.GetColor(ColorSetting.UI_On);
                 text += L.Localize("on");
@@ -130,55 +130,55 @@ namespace MapModS.UI
 
         private static void UpdateRandomized(TextObject textObj)
         {
-            string text = $"{L.Localize("Randomized")} (ctrl-2): ";
+            //string text = $"{L.Localize("Randomized")} (ctrl-2): ";
 
-            if (MapModS.LS.randomizedOn)
-            {
-                textObj.ContentColor = Colors.GetColor(ColorSetting.UI_On);
-                text += L.Localize("on");
-            }
-            else
-            {
-                textObj.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
-                text += L.Localize("off");
-            }
+            //if (MapModS.LS.randomizedOn)
+            //{
+            //    textObj.ContentColor = Colors.GetColor(ColorSetting.UI_On);
+            //    text += L.Localize("on");
+            //}
+            //else
+            //{
+            //    textObj.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
+            //    text += L.Localize("off");
+            //}
 
-            if (WorldMap.CustomPins.IsRandomizedCustom())
-            {
-                textObj.ContentColor = Colors.GetColor(ColorSetting.UI_Custom);
-            }
+            //if (WorldMap.CustomPins.IsRandomizedCustom())
+            //{
+            //    textObj.ContentColor = Colors.GetColor(ColorSetting.UI_Custom);
+            //}
 
-            textObj.Text = text;
+            //textObj.Text = text;
         }
 
         private static void UpdateOthers(TextObject textObj)
         {
-            string text = $"{L.Localize("Others")} (ctrl-3): ";
+            //string text = $"{L.Localize("Others")} (ctrl-3): ";
 
-            if (MapModS.LS.othersOn)
-            {
-                textObj.ContentColor = Colors.GetColor(ColorSetting.UI_On);
-                text += L.Localize("on");
-            }
-            else
-            {
-                textObj.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
-                text += L.Localize("off");
-            }
+            //if (MapModS.LS.othersOn)
+            //{
+            //    textObj.ContentColor = Colors.GetColor(ColorSetting.UI_On);
+            //    text += L.Localize("on");
+            //}
+            //else
+            //{
+            //    textObj.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
+            //    text += L.Localize("off");
+            //}
 
-            if (WorldMap.CustomPins.IsOthersCustom())
-            {
-                textObj.ContentColor = Colors.GetColor(ColorSetting.UI_Custom);
-            }
+            //if (WorldMap.CustomPins.IsOthersCustom())
+            //{
+            //    textObj.ContentColor = Colors.GetColor(ColorSetting.UI_Custom);
+            //}
 
-            textObj.Text = text;
+            //textObj.Text = text;
         }
 
         private static void UpdateStyle(TextObject textObj)
         {
             string text = $"{L.Localize("Style")} (ctrl-4): ";
 
-            switch (MapModS.GS.pinStyle)
+            switch (MapModS.GS.PinStyle)
             {
                 case PinStyle.Normal:
                     text += L.Localize("normal");
@@ -205,7 +205,7 @@ namespace MapModS.UI
         {
             string text = $"{L.Localize("Size")} (ctrl-5): ";
 
-            switch (MapModS.GS.pinSize)
+            switch (MapModS.GS.PinSize)
             {
                 case PinSize.Small:
                     text += L.Localize("small");

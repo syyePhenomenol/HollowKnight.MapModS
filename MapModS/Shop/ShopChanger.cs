@@ -19,7 +19,7 @@ namespace MapModS.Shop
         {
             orig(self);
 
-            if (!MapModS.LS.modEnabled) return;
+            if (!MapModS.LS.ModEnabled) return;
 
             if (self.gameObject.scene.name != "Room_mapper" || self.gameObject.name != "Shop Menu") return;
 
