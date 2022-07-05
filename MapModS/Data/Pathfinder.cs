@@ -16,10 +16,10 @@ namespace MapModS.Data
         {
             localPm = new(PD.lm, RM.RS.Context);
 
-            // Remove start transitions
-            foreach (string transition in PD.GetStartTransitions())
+            // Remove start terms
+            foreach (string term in PD.GetStartTerms())
             {
-                localPm.Set(transition, 0);
+                localPm.Set(term, 0);
             }
         }
 

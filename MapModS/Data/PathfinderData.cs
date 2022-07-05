@@ -107,16 +107,15 @@ namespace MapModS.Data
                 }
             }
 
-            // Set Start Warp
-            string[] startTransitions = GetStartTransitions();
-            if (startTransitions.Length > 0)
+            string[] startTerms = GetStartTerms();
+            if (startTerms.Length > 0)
             {
                 adjacentScenes["Warp-Start"] = ItemChanger.Internal.Ref.Settings.Start.SceneName;
                 adjacentTerms["Warp-Start"] = "Warp-Start";
                 lmb.AddWaypoint(new("Warp-Start", "FALSE"));
-                foreach (string transition in startTransitions)
+                foreach (string term in startTerms)
                 {
-                    lmb.DoLogicEdit(new(transition, "ORIG | Warp-Start"));
+                    lmb.DoLogicEdit(new(term, "ORIG | Warp-Start"));
                 }
             }
 
@@ -125,12 +124,12 @@ namespace MapModS.Data
             waypointScenes = lm.Waypoints.Where(w => RD.IsRoom(w.Name) || w.Name.IsSpecialRoom()).ToDictionary(w => w.Name, w => w);
         }
 
-        public static string[] GetStartTransitions()
+        public static string[] GetStartTerms()
         {
             if (RM.RS.Context.InitialProgression is ProgressionInitializer pi)
             {
                 return pi.Setters.Concat(pi.Increments)
-                            .Where(tv => RM.RS.Context.LM.TransitionLookup.ContainsKey(tv.Term.Name) && tv.Value > 0)
+                            .Where(tv => tv.Value > 0)
                             .Select(tv => tv.Term.Name)
                             .ToArray();
             }
