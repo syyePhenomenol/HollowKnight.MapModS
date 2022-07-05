@@ -16,8 +16,11 @@ namespace MapModS.Data
         {
             localPm = new(PD.lm, RM.RS.Context);
 
-            // Remove start transition
-            localPm.Set(RandomizerMod.RandomizerData.Data.GetStartDef(RM.RS.GenerationSettings.StartLocationSettings.StartLocation).Transition, 0);
+            // Remove start transitions
+            foreach (string transition in PD.GetStartTransitions())
+            {
+                localPm.Set(transition, 0);
+            }
         }
 
         public static void UpdateProgression()
@@ -105,11 +108,11 @@ namespace MapModS.Data
                 if (!reevaluate)
                 {
                     // Avoid terminating on duplicate/redudant new paths
-                    if (node.scene == final && !rejectedRoutes.Any(r => r.First() == node.route.First() && r.Last().GetAdjacentTerm() == node.lastAdjacentTransition))
+                    if (node.scene == final && !rejectedRoutes.Any(r => r.First() == node.route.First() && r.Last().GetAdjacentTerm() == node.lastAdjacentTerm))
                     {
                         // No other paths to same final transition with a different starting benchwarp
                         if (node.route.First().IsBenchwarpTransition()
-                            && rejectedRoutes.Any(r => r.Last().GetAdjacentTerm() == node.lastAdjacentTransition && r.First().IsBenchwarpTransition())) continue;
+                            && rejectedRoutes.Any(r => r.Last().GetAdjacentTerm() == node.lastAdjacentTerm && r.First().IsBenchwarpTransition())) continue;
 
                         return node.route;
                     }
@@ -117,7 +120,7 @@ namespace MapModS.Data
                 else
                 {
                     // If reevaluating, we just check if the final transition is correct
-                    if (final != "" && node.lastAdjacentTransition == final)
+                    if (final != "" && node.lastAdjacentTerm == final)
                     {
                         return node.route;
                     }
@@ -127,7 +130,7 @@ namespace MapModS.Data
 
                 localPm.StartTemp();
 
-                localPm.Set(node.lastAdjacentTransition, 1);
+                localPm.Set(node.lastAdjacentTerm, 1);
 
                 // It is important we use all the reachable transitions in the room for correct logic, even if they are unchecked
                 candidateReachableTransitions = new(PD.GetTransitionsInScene(searchScene));
@@ -279,7 +282,7 @@ namespace MapModS.Data
             {
                 this.scene = scene;
                 this.route = new(route);
-                lastAdjacentTransition = lat;
+                lastAdjacentTerm = lat;
             }
 
             public void PrintRoute()
@@ -296,7 +299,7 @@ namespace MapModS.Data
 
             public string scene;
             public List<string> route = new();
-            public string lastAdjacentTransition;
+            public string lastAdjacentTerm;
             // The indexes of the routes in rejectedRoutes this node is repeating
             public IEnumerable<int> repeatedRoutes;
         }

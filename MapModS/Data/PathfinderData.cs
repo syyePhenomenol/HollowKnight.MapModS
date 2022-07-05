@@ -1,5 +1,5 @@
 ﻿using RandomizerCore.Logic;
-using RandomizerMod.RandomizerData;
+using RandomizerMod.RC;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -107,15 +107,34 @@ namespace MapModS.Data
                 }
             }
 
+            // Set Start Warp
+            string[] startTransitions = GetStartTransitions();
+            if (startTransitions.Length > 0)
+            {
+                adjacentScenes["Warp-Start"] = ItemChanger.Internal.Ref.Settings.Start.SceneName;
+                adjacentTerms["Warp-Start"] = "Warp-Start";
+                lmb.AddWaypoint(new("Warp-Start", "FALSE"));
+                foreach (string transition in startTransitions)
+                {
+                    lmb.DoLogicEdit(new(transition, "ORIG | Warp-Start"));
+                }
+            }
+
             lm = new(lmb);
 
             waypointScenes = lm.Waypoints.Where(w => RD.IsRoom(w.Name) || w.Name.IsSpecialRoom()).ToDictionary(w => w.Name, w => w);
+        }
 
-            // Set Start Warp
-            StartDef start = RD.GetStartDef(RM.RS.GenerationSettings.StartLocationSettings.StartLocation);
-
-            adjacentScenes["Warp-Start"] = start.SceneName;
-            adjacentTerms["Warp-Start"] = start.Transition;
+        public static string[] GetStartTransitions()
+        {
+            if (RM.RS.Context.InitialProgression is ProgressionInitializer pi)
+            {
+                return pi.Setters.Concat(pi.Increments)
+                            .Where(tv => RM.RS.Context.LM.TransitionLookup.ContainsKey(tv.Term.Name) && tv.Value > 0)
+                            .Select(tv => tv.Term.Name)
+                            .ToArray();
+            }
+            return new string[] { };
         }
 
         public static HashSet<string> GetTransitionsInScene(this string scene)
@@ -161,7 +180,7 @@ namespace MapModS.Data
 
         public static string GetAdjacentTerm(this string transition)
         {
-            if (transition.IsSpecialTransition())
+            if (adjacentTerms.ContainsKey(transition))
             {
                 return adjacentTerms[transition];
             }
