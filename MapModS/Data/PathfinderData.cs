@@ -107,6 +107,7 @@ namespace MapModS.Data
                 }
             }
 
+            // Set Start Warp
             string[] startTerms = GetStartTerms();
             if (startTerms.Length > 0)
             {
@@ -126,10 +127,10 @@ namespace MapModS.Data
 
         public static string[] GetStartTerms()
         {
-            if (RM.RS.Context.InitialProgression is ProgressionInitializer pi)
+            if (RM.RS.Context.InitialProgression is ProgressionInitializer pi && RM.RS.Context.LM is LogicManager lm)
             {
                 return pi.Setters.Concat(pi.Increments)
-                            .Where(tv => tv.Value > 0)
+                            .Where(tv => (lm.TransitionLookup.ContainsKey(tv.Term.Name) || lm.Waypoints.Any(waypoint => waypoint.Name == tv.Term.Name)) && tv.Value > 0)
                             .Select(tv => tv.Term.Name)
                             .ToArray();
             }
