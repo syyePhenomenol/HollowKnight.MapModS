@@ -38,7 +38,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\BenchRandoInterop.cs" />
+    <Compile Remove="Data\BenchwarpInterop.cs" />
+    <Compile Remove="Data\ItemDef.cs" />
+    <Compile Remove="Data\MainData.cs" />
+    <Compile Remove="Data\MapRoomDef.cs" />
     <Compile Remove="Data\OldPin.cs" />
+    <Compile Remove="Data\TransitionData.cs" />
     <Compile Remove="Map\FullMap.cs" />
     <Compile Remove="Map\MapObjectScript.cs" />
     <Compile Remove="Map\MapRooms.cs" />
@@ -48,6 +54,13 @@
     <Compile Remove="Map\QuickMap.cs" />
     <Compile Remove="Map\Quill.cs" />
     <Compile Remove="Map\WorldMap.cs" />
+    <Compile Remove="Pathfinding\Pathfinder.cs" />
+    <Compile Remove="Pathfinding\PathfinderData.cs" />
+    <Compile Remove="Pins\BorderedPin.cs" />
+    <Compile Remove="Pins\Pin.cs" />
+    <Compile Remove="Pins\PinGroup.cs" />
+    <Compile Remove="Pins\RandoPin.cs" />
+    <Compile Remove="Pins\RandoPinGroup.cs" />
     <Compile Remove="UI\Benchwarp.cs" />
     <Compile Remove="UI\InfoPanels.cs" />
     <Compile Remove="UI\MapKey.cs" />
@@ -59,15 +72,23 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="MapChanger\Resources\AdditionalMaps\mappedScenes.json" />
+    <None Remove="MapChanger\Resources\AdditionalMaps\roomObjects.json" />
+    <None Remove="MapChanger\Resources\locations.json" />
+    <None Remove="Resources\mapZones.json" />
+    <None Remove="Resources\newMapRoomObjects.json" />
     <None Remove="Resources\pinsAM.json" />
     <None Remove="Resources\pinScenes.json" />
     <None Remove="Resources\Pins\pinJournal.png" />
-    <None Remove="Resources\rooms.json" />
     <None Remove="Resources\tracking.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\rooms.json" />
+    <EmbeddedResource Include="MapChanger\Resources\AdditionalMaps\mappedScenes.json" />
+    <EmbeddedResource Include="MapChanger\Resources\AdditionalMaps\roomObjects.json" />
+    <EmbeddedResource Include="MapChanger\Resources\mappedScenes.json" />
+    <EmbeddedResource Include="MapChanger\Resources\locations.json" />
+    <EmbeddedResource Include="MapChanger\Resources\roomObjects.json" />
     <EmbeddedResource Include="Resources\GUI\panelLeft.png" />
     <EmbeddedResource Include="Resources\Pathfinder\Compass\doorObjectsByScene.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Compass\doorObjectsByTransition.json" />
@@ -86,21 +107,18 @@
     <EmbeddedResource Include="Resources\Pathfinder\Logic\waypoints.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Logic\macros.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Logic\transitions.json" />
-    <EmbeddedResource Include="Resources\pinsAM.json" />
+    <EmbeddedResource Include="MapChanger\Resources\AdditionalMaps\locations.json" />
     <EmbeddedResource Include="Resources\Pins\pinBench.png" />
     <EmbeddedResource Include="Resources\Pins\pinBlank.png" />
     <EmbeddedResource Include="Resources\Pins\pinBorder.png" />
     <EmbeddedResource Include="Resources\Pins\pinJournal.png" />
-    <EmbeddedResource Include="Resources\sortedGroups.json" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\GUI\arrow.png" />
     <EmbeddedResource Include="Resources\GUI\panelRight.png" />
     <EmbeddedResource Include="Resources\minimalMapRooms.json" />
-    <EmbeddedResource Include="Resources\nonMappedRooms.json" />
-    <EmbeddedResource Include="Resources\pins.json" />
-    <EmbeddedResource Include="Resources\fsmOverrides.json" />
+    <EmbeddedResource Include="MapChanger\Resources\fsmOverrides.json" />
     <EmbeddedResource Include="Resources\Pins\pinCharm.png" />
     <EmbeddedResource Include="Resources\Pins\pinCocoon.png" />
     <EmbeddedResource Include="Resources\Pins\pinDreamer.png" />
@@ -133,7 +151,7 @@
     <EmbeddedResource Include="Resources\Pins\pinUnknown_Totem.png" />
     <EmbeddedResource Include="Resources\Pins\pinUnknown_TotemInv.png" />
     <EmbeddedResource Include="Resources\Pins\pinVessel.png" />
-    <EmbeddedResource Include="Resources\tracking.json" />
+    <EmbeddedResource Include="MapChanger\Resources\tracking.json" />
   </ItemGroup>
 
 	<Target Name="CopyMod" AfterTargets="PostBuildEvent">
@@ -297,6 +315,11 @@
         <Private>false</Private>
         <CopyLocal>False</CopyLocal>
       </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="MapChanger\IC\" />
+      <Folder Include="Pathfinding\" />
     </ItemGroup>
 
 </Project>

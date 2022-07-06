@@ -1,0 +1,58 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
+
+namespace MapChanger
+{
+    internal static class Dependencies
+    {
+        private const string MAGIC_UI = "MagicUI";
+        private const string VASI = "Vasi";
+        private const string ADDITIONAL_MAPS = "AdditionalMaps";
+        private const string ITEM_CHANGER = "ItemChanger";
+        private const string CONNECTION_METADATA_INJECTOR = "ConnectionMetadataInjector";
+
+        public static Dictionary<string, Assembly> strictDependencies = new()
+        {
+            { MAGIC_UI, null },
+            { VASI, null }
+        };
+
+        public static Dictionary<string, Assembly> optionalDependencies = new()
+        {
+            { ADDITIONAL_MAPS, null },
+            { ITEM_CHANGER, null },
+            { CONNECTION_METADATA_INJECTOR, null },
+        };
+
+        public static void GetDependencies()
+        {
+            foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                if (strictDependencies.ContainsKey(assembly.GetName().Name))
+                {
+                    strictDependencies[assembly.GetName().Name] = assembly;
+                }
+                if (optionalDependencies.ContainsKey(assembly.GetName().Name))
+                {
+                    optionalDependencies[assembly.GetName().Name] = assembly;
+                }
+            }
+        }
+
+        public static bool HasAdditionalMaps()
+        {
+            return optionalDependencies[ADDITIONAL_MAPS] != null;
+        }
+
+        public static bool HasItemChanger()
+        {
+            return optionalDependencies[ITEM_CHANGER] != null;
+        }
+
+        public static bool HasConnectionMetadataInjector()
+        {
+            return optionalDependencies[CONNECTION_METADATA_INJECTOR] != null;
+        }
+    }
+}

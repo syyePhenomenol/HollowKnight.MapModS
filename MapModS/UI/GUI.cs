@@ -1,5 +1,4 @@
-﻿using ItemChanger;
-using MapModS.Data;
+﻿using MapChanger;
 using UnityEngine.SceneManagement;
 
 namespace MapModS.UI
@@ -10,7 +9,7 @@ namespace MapModS.UI
         public static bool quickMapOpen = false;
         public static bool lockToggleEnable = false;
 
-        internal override void Hook()
+        public override void Hook()
         {
             On.GameMap.Start += GameMap_Start;
             On.GameManager.SetGameMap += GameManager_SetGameMap;
@@ -38,7 +37,7 @@ namespace MapModS.UI
             GUIController.Setup();
         }
 
-        internal override void Unhook()
+        public override void Unhook()
         {
             On.GameMap.Start -= GameMap_Start;
             On.GameManager.SetGameMap -= GameManager_SetGameMap;

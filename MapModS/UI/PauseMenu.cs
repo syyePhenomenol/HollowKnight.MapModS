@@ -3,6 +3,7 @@ using MagicUI.Elements;
 using MapModS.Data;
 using MapModS.Map;
 using MapModS.Pins;
+using MapChanger;
 using MapModS.Settings;
 using System;
 using System.Collections.Generic;
@@ -105,45 +106,45 @@ namespace MapModS.UI
 
             poolButtons.ChildrenBeforeRollover = 10;
 
-            List<string> groupButtonNames = MainData.usedPoolGroups;
+            //List<string> groupButtonNames = MainData.usedPoolGroups;
 
-            foreach (string group in MainData.usedPoolGroups)
-            {
-                Button button = new(layout, group)
-                {
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    VerticalAlignment = VerticalAlignment.Center,
-                    Borderless = true,
-                    MinHeight = 28f,
-                    MinWidth = 85f,
-                    Content = L.Localize(group).Replace(" ", "\n"),
-                    Font = MagicUI.Core.UI.TrajanNormal,
-                    FontSize = 11,
-                    Margin = 0f
-                };
+            //foreach (string group in MainData.usedPoolGroups)
+            //{
+            //    Button button = new(layout, group)
+            //    {
+            //        HorizontalAlignment = HorizontalAlignment.Center,
+            //        VerticalAlignment = VerticalAlignment.Center,
+            //        Borderless = true,
+            //        MinHeight = 28f,
+            //        MinWidth = 85f,
+            //        Content = L.Localize(group).Replace(" ", "\n"),
+            //        Font = MagicUI.Core.UI.TrajanNormal,
+            //        FontSize = 11,
+            //        Margin = 0f
+            //    };
 
-                button.Click += TogglePool;
-                poolButtons.Children.Add(button);
-            }
+            //    button.Click += TogglePool;
+            //    poolButtons.Children.Add(button);
+            //}
 
-            if (!Dependencies.HasBenchRando() || !BenchRandoInterop.IsBenchRandoEnabled())
-            {
-                Button button = new(layout, "Benches (Vanilla)")
-                {
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    VerticalAlignment = VerticalAlignment.Center,
-                    Borderless = true,
-                    MinHeight = 28f,
-                    MinWidth = 85f,
-                    Content = L.Localize("Benches (Vanilla)").Replace(" ", "\n"),
-                    Font = MagicUI.Core.UI.TrajanNormal,
-                    FontSize = 11,
-                    Margin = 0f
-                };
+            //if (!Dependencies.HasBenchRando() || !BenchRandoInterop.IsBenchRandoEnabled())
+            //{
+            //    Button button = new(layout, "Benches (Vanilla)")
+            //    {
+            //        HorizontalAlignment = HorizontalAlignment.Center,
+            //        VerticalAlignment = VerticalAlignment.Center,
+            //        Borderless = true,
+            //        MinHeight = 28f,
+            //        MinWidth = 85f,
+            //        Content = L.Localize("Benches (Vanilla)").Replace(" ", "\n"),
+            //        Font = MagicUI.Core.UI.TrajanNormal,
+            //        FontSize = 11,
+            //        Margin = 0f
+            //    };
 
-                button.Click += ToggleBench;
-                poolButtons.Children.Add(button);
-            }
+            //    button.Click += ToggleBench;
+            //    poolButtons.Children.Add(button);
+            //}
 
             StackLayout auxButtons = new(layout, "Aux Buttons")
             {
@@ -214,12 +215,12 @@ namespace MapModS.UI
                 }
             }
 
-            foreach (string group in MainData.usedPoolGroups)
-            {
-                if (layout.GetElement(group) == null) continue;
+            //foreach (string group in MainData.usedPoolGroups)
+            //{
+            //    if (layout.GetElement(group) == null) continue;
 
-                UpdatePool((Button)layout.GetElement(group));
-            }
+            //    UpdatePool((Button)layout.GetElement(group));
+            //}
 
             if (layout.GetElement("Benches (Vanilla)") != null)
             {

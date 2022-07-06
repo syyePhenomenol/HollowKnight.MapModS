@@ -1,8 +1,8 @@
 ﻿using ConnectionMetadataInjector;
 using ItemChanger;
-using MapModS.Data;
+using MapChanger;
+using MapChanger.Defs;
 using MapModS.Map;
-using RandomizerMod.RC;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -22,25 +22,15 @@ namespace MapModS.Pins
         private IEnumerable<AbstractItem> remainingItems;
         private int itemIndex = 0;
 
-        internal RandoPinDef(AbstractPlacement placement, RandoModLocation rml, VanillaPinDef vpd = null) : base()
+        internal RandoPinDef(AbstractPlacement placement) : base(MapChanger.Finder.GetLocation(placement.Name))
         {
+            if (MapPosition is null)
+            {
+                MapChangerMod.Instance.LogWarn($"No valid MapPositionDef found for RandoPinDef! {placement.Name}");
+                return;
+            }
+
             this.placement = placement;
-
-            Name = rml.Name;
-            Scene = rml.LocationDef.SceneName;
-
-            SetMapData();
-
-            if (vpd != null)
-            {
-                OffsetX = vpd.OffsetX;
-                OffsetY = vpd.OffsetY;
-            }
-            else
-            {
-                OffsetX = 0f;
-                OffsetY = 0f;
-            }
 
             LocationPoolGroup = SupplementalMetadata.OfPlacementAndLocations(placement).Get(CMI.LocationPoolGroup);
             if (LocationPoolGroup == null)
@@ -102,7 +92,7 @@ namespace MapModS.Pins
             base.Update();
         }
 
-        public override Sprite GetMainSprite()
+        public override Sprite GetSprite()
         {
             if (MapModS.LS.SpoilerOn)
             {
@@ -134,7 +124,7 @@ namespace MapModS.Pins
             }
         }
 
-        public override Vector4 GetMainColor()
+        public override Vector4 GetSpriteColor()
         {
             Vector4 color = Color.white;
 
@@ -169,9 +159,9 @@ namespace MapModS.Pins
             return color;
         }
 
-        public override Vector3 GetScale()
+        public override Vector2 GetScale()
         {
-            Vector2 scale = Vector2.one;
+            Vector2 scale = Vector2.one * GetPinSizeScale();
 
             //if (Selected)
             //{
@@ -179,19 +169,16 @@ namespace MapModS.Pins
             //}
             //else
             //{
-                if (placementState == RandoPlacementState.UncheckedUnreachable)
-                {
-                    scale *= UNREACHABLE_SIZE_SCALE;
-                }
-                else
-                {
-                    scale *= REACHABLE_SIZE_SCALE;
-                }
-            //}
+            if (placementState == RandoPlacementState.UncheckedUnreachable)
+            {
+                scale *= UNREACHABLE_SIZE_SCALE;
+            }
+            else
+            {
+                scale *= REACHABLE_SIZE_SCALE;
+            }
 
-            scale *= GetPinSizeScale();
-
-            return new Vector3(scale.x, scale.y, 1f);
+            return scale;
         }
 
         private void UpdateRemainingItems()

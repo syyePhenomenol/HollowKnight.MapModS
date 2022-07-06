@@ -1,5 +1,6 @@
 ﻿using ConnectionMetadataInjector.Util;
 using ItemChanger;
+using MapChanger.Defs;
 using MapModS.Data;
 using RandomizerCore;
 using RandomizerMod.IC;
@@ -109,24 +110,13 @@ namespace MapModS.Pins
             }
 
             RandoModLocation rml = placement.RandoLocation();
-            RandoPinDef rpd;
-            if (globalPinDefs.ContainsKey(rml.Name))
-            {
-                rpd = new(placement, rml, globalPinDefs[rml.Name]);
-            }
-            else
-            {
-                MapModS.Instance.Log("Unknown placement. Making a 'best guess' for the placement");
-                rpd = new(placement, rml);
-            }
 
-            PinDefs.Add(rml.Name, rpd);
+            PinDefs.Add(rml.Name, new RandoPinDef(placement));
         }
 
         private static void AddVanillaPinDef(GeneralizedPlacement placement)
         {
             string name = placement.Location.Name;
-            // TODO: support vanilla multi-item placements
             if (PinDefs.ContainsKey(name)) return;
 
             placement.LogDebug();
@@ -137,7 +127,7 @@ namespace MapModS.Pins
                 return;
             }
 
-            PinDefs.Add(name, globalPinDefs[name]);
+            PinDefs.Add(name, new VanillaPinDef(name));
         }
 
         private static void SetPoolGroups()

@@ -1,41 +1,29 @@
 ﻿using ConnectionMetadataInjector.Util;
-using Newtonsoft.Json;
+using MapChanger;
+using MapChanger.Defs;
 using MapModS.Map;
-using RD = RandomizerMod.RandomizerData;
-using UnityEngine;
-using MapModS.Data;
+using Newtonsoft.Json;
+using RandomizerCore;
 using System.Collections.Generic;
+using UnityEngine;
+using RD = RandomizerMod.RandomizerData;
 
 namespace MapModS.Pins
 {
     public class VanillaPinDef : RandomizerModPinDef
     {
-        private readonly string objectName;
-        private readonly string pdBool;
-        private readonly string pdInt;
-        private readonly int pdIntValue;
-
         internal override HashSet<string> ItemPoolGroups => new() { LocationPoolGroup };
 
         [JsonConstructor]
-        internal VanillaPinDef(string name, string objectName, string pdBool, string pdInt, int pdIntValue, float offsetX, float offsetY) : base()
+        internal VanillaPinDef(string name) : base(Finder.GetLocation(name))
         {
-            Name = name;
-            OffsetX = offsetX;
-            OffsetY = offsetY;
+            if (MapPosition is null)
+            {
+                MapChangerMod.Instance.LogWarn($"No valid MapPositionDef found for VanillaPinDef! {name}");
+                return;
+            }
 
-            if (!RD.Data.IsLocation(name)) return;
-
-            this.objectName = objectName;
-            this.pdBool = pdBool;
-            this.pdInt = pdInt;
-            this.pdIntValue = pdIntValue;
-
-            Scene = RD.Data.GetLocationDef(name).SceneName;
-
-            SetMapData();
-
-            LocationPoolGroup = SubcategoryFinder.GetLocationPoolGroup(name).FriendlyName();
+            LocationPoolGroup = SubcategoryFinder.GetLocationPoolGroup(Name).FriendlyName();
             if (LocationPoolGroup == null)
             {
                 LocationPoolGroup = PoolGroupNames.UNKNOWN;
@@ -45,22 +33,17 @@ namespace MapModS.Pins
         public override void Update()
         {
             Active = MapModS.LS.GetPoolGroupSetting(LocationPoolGroup) == Settings.PoolState.On || MapModS.LS.VanillaOn
-                && !(ItemTracker.HasObtainedItem(objectName, Scene)
-                    || (pdBool != null && PlayerData.instance.GetBool(pdBool))
-                    || (pdInt != null && PlayerData.instance.GetInt(pdInt) >= pdIntValue)
-                    || (LocationPoolGroup == PoolGroupNames.WHISPERINGROOTS && PlayerData.instance.scenesEncounteredDreamPlantC.Contains(Scene))
-                    || (LocationPoolGroup == PoolGroupNames.GRUBS && PlayerData.instance.scenesGrubRescued.Contains(Scene))
-                    || (LocationPoolGroup == PoolGroupNames.GRIMMKINFLAMES && PlayerData.instance.scenesFlameCollected.Contains(Scene)));
+                        && !LocationTracker.HasClearedLocation(Name);
             
             base.Update();
         }
 
-        public override Sprite GetMainSprite()
+        public override Sprite GetSprite()
         {
             return SpriteManager.GetSpriteFromPoolGroup(LocationPoolGroup);
         }
 
-        public override Vector4 GetMainColor()
+        public override Vector4 GetSpriteColor()
         {
             Vector3 color = Colors.GetColor(ColorSetting.Pin_Normal) * UNREACHABLE_COLOR_SCALE;
             return new(color.x, color.y, color.z, 1f);
@@ -77,14 +60,14 @@ namespace MapModS.Pins
             return new(color.x, color.y, color.z, 1f);
         }
 
-        public override Vector3 GetScale()
+        public override Vector2 GetScale()
         {
         //    if (Selected)
         //    {
         //        // do something
         //    }
 
-            return Vector3.one * UNREACHABLE_SIZE_SCALE * GetPinSizeScale();
+            return Vector2.one * UNREACHABLE_SIZE_SCALE * GetPinSizeScale();
         }
 
         internal override string[] GetPreviewText()

@@ -1,0 +1,1474 @@
+﻿{
+  "Abyss_03": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "Abyss_04": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "Abyss_05": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "Abyss_06_Core": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "Abyss_08": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "Abyss_09": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "Abyss_10": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "Abyss_12": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "Abyss_15": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "Abyss_16": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "Abyss_17": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "Abyss_18": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "Abyss_19": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "Abyss_20": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "Abyss_21": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "Abyss_22": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "Abyss_Lighthouse_room": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "Crossroads_49b": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Room_nailsmith": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins_Bathhouse": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins_Elevator": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins_House_01": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins_House_02": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins_House_03": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins1_01": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins1_02": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins1_03": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins1_04": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins1_05": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins1_05b": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins1_05c": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins1_06": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins1_09": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins1_17": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins1_18": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins1_23": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins1_24": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins1_25": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins1_27": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins1_28": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins1_29": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins1_30": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins1_31": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins1_31b": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins1_32": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins2_01": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins2_01_b": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins2_03": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins2_03b": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins2_04": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins2_05": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins2_06": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins2_07": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins2_08": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins2_09": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins2_10b": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins2_11": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins2_11_b": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Ruins2_Watcher_Room": {
+    "MappedScene": "",
+    "MapZone": "CITY"
+  },
+  "Mines_01": {
+    "MappedScene": "",
+    "MapZone": "MINES"
+  },
+  "Mines_02": {
+    "MappedScene": "",
+    "MapZone": "MINES"
+  },
+  "Mines_03": {
+    "MappedScene": "",
+    "MapZone": "MINES"
+  },
+  "Mines_04": {
+    "MappedScene": "",
+    "MapZone": "MINES"
+  },
+  "Mines_05": {
+    "MappedScene": "",
+    "MapZone": "MINES"
+  },
+  "Mines_06": {
+    "MappedScene": "",
+    "MapZone": "MINES"
+  },
+  "Mines_07": {
+    "MappedScene": "",
+    "MapZone": "MINES"
+  },
+  "Mines_10": {
+    "MappedScene": "",
+    "MapZone": "MINES"
+  },
+  "Mines_11": {
+    "MappedScene": "",
+    "MapZone": "MINES"
+  },
+  "Mines_13": {
+    "MappedScene": "",
+    "MapZone": "MINES"
+  },
+  "Mines_16": {
+    "MappedScene": "",
+    "MapZone": "MINES"
+  },
+  "Mines_17": {
+    "MappedScene": "",
+    "MapZone": "MINES"
+  },
+  "Mines_18": {
+    "MappedScene": "",
+    "MapZone": "MINES"
+  },
+  "Mines_19": {
+    "MappedScene": "",
+    "MapZone": "MINES"
+  },
+  "Mines_20": {
+    "MappedScene": "",
+    "MapZone": "MINES"
+  },
+  "Mines_23": {
+    "MappedScene": "",
+    "MapZone": "MINES"
+  },
+  "Mines_24": {
+    "MappedScene": "",
+    "MapZone": "MINES"
+  },
+  "Mines_25": {
+    "MappedScene": "",
+    "MapZone": "MINES"
+  },
+  "Mines_28": {
+    "MappedScene": "",
+    "MapZone": "MINES"
+  },
+  "Mines_29": {
+    "MappedScene": "",
+    "MapZone": "MINES"
+  },
+  "Mines_30": {
+    "MappedScene": "",
+    "MapZone": "MINES"
+  },
+  "Mines_31": {
+    "MappedScene": "",
+    "MapZone": "MINES"
+  },
+  "Mines_32": {
+    "MappedScene": "",
+    "MapZone": "MINES"
+  },
+  "Mines_34": {
+    "MappedScene": "",
+    "MapZone": "MINES"
+  },
+  "Mines_35": {
+    "MappedScene": "",
+    "MapZone": "MINES"
+  },
+  "Mines_36": {
+    "MappedScene": "",
+    "MapZone": "MINES"
+  },
+  "Mines_37": {
+    "MappedScene": "",
+    "MapZone": "MINES"
+  },
+  "Abyss_03_b": {
+    "MappedScene": "",
+    "MapZone": "DEEPNEST"
+  },
+  "Deepnest_01b": {
+    "MappedScene": "",
+    "MapZone": "DEEPNEST"
+  },
+  "Deepnest_02": {
+    "MappedScene": "",
+    "MapZone": "DEEPNEST"
+  },
+  "Deepnest_03": {
+    "MappedScene": "",
+    "MapZone": "DEEPNEST"
+  },
+  "Deepnest_09": {
+    "MappedScene": "",
+    "MapZone": "DEEPNEST"
+  },
+  "Deepnest_10": {
+    "MappedScene": "",
+    "MapZone": "DEEPNEST"
+  },
+  "Deepnest_14": {
+    "MappedScene": "",
+    "MapZone": "DEEPNEST"
+  },
+  "Deepnest_16": {
+    "MappedScene": "",
+    "MapZone": "DEEPNEST"
+  },
+  "Deepnest_17": {
+    "MappedScene": "",
+    "MapZone": "DEEPNEST"
+  },
+  "Deepnest_26": {
+    "MappedScene": "",
+    "MapZone": "DEEPNEST"
+  },
+  "Deepnest_26b": {
+    "MappedScene": "",
+    "MapZone": "DEEPNEST"
+  },
+  "Deepnest_30": {
+    "MappedScene": "",
+    "MapZone": "DEEPNEST"
+  },
+  "Deepnest_31": {
+    "MappedScene": "",
+    "MapZone": "DEEPNEST"
+  },
+  "Deepnest_32": {
+    "MappedScene": "",
+    "MapZone": "DEEPNEST"
+  },
+  "Deepnest_33": {
+    "MappedScene": "",
+    "MapZone": "DEEPNEST"
+  },
+  "Deepnest_34": {
+    "MappedScene": "",
+    "MapZone": "DEEPNEST"
+  },
+  "Deepnest_35": {
+    "MappedScene": "",
+    "MapZone": "DEEPNEST"
+  },
+  "Deepnest_36": {
+    "MappedScene": "",
+    "MapZone": "DEEPNEST"
+  },
+  "Deepnest_37": {
+    "MappedScene": "",
+    "MapZone": "DEEPNEST"
+  },
+  "Deepnest_38": {
+    "MappedScene": "",
+    "MapZone": "DEEPNEST"
+  },
+  "Deepnest_39": {
+    "MappedScene": "",
+    "MapZone": "DEEPNEST"
+  },
+  "Deepnest_40": {
+    "MappedScene": "",
+    "MapZone": "DEEPNEST"
+  },
+  "Deepnest_41": {
+    "MappedScene": "",
+    "MapZone": "DEEPNEST"
+  },
+  "Deepnest_42": {
+    "MappedScene": "",
+    "MapZone": "DEEPNEST"
+  },
+  "Deepnest_44": {
+    "MappedScene": "",
+    "MapZone": "DEEPNEST"
+  },
+  "Deepnest_45_v02": {
+    "MappedScene": "",
+    "MapZone": "DEEPNEST"
+  },
+  "Deepnest_Spider_Town": {
+    "MappedScene": "",
+    "MapZone": "DEEPNEST"
+  },
+  "Fungus2_25": {
+    "MappedScene": "",
+    "MapZone": "DEEPNEST"
+  },
+  "Room_Mask_Maker": {
+    "MappedScene": "",
+    "MapZone": "DEEPNEST"
+  },
+  "Room_spider_small": {
+    "MappedScene": "",
+    "MapZone": "DEEPNEST"
+  },
+  "Grimm_Divine": {
+    "MappedScene": "",
+    "MapZone": "TOWN"
+  },
+  "Grimm_Main_Tent": {
+    "MappedScene": "",
+    "MapZone": "TOWN"
+  },
+  "Room_Bretta": {
+    "MappedScene": "",
+    "MapZone": "TOWN"
+  },
+  "Room_mapper": {
+    "MappedScene": "",
+    "MapZone": "TOWN"
+  },
+  "Room_Ouiji": {
+    "MappedScene": "",
+    "MapZone": "TOWN"
+  },
+  "Room_shop": {
+    "MappedScene": "",
+    "MapZone": "TOWN"
+  },
+  "Room_Town_Stag_Station": {
+    "MappedScene": "",
+    "MapZone": "TOWN"
+  },
+  "Town": {
+    "MappedScene": "",
+    "MapZone": "TOWN"
+  },
+  "Tutorial_01": {
+    "MappedScene": "",
+    "MapZone": "TOWN"
+  },
+  "Fungus3_01": {
+    "MappedScene": "",
+    "MapZone": "FOG_CANYON"
+  },
+  "Fungus3_02": {
+    "MappedScene": "",
+    "MapZone": "FOG_CANYON"
+  },
+  "Fungus3_03": {
+    "MappedScene": "",
+    "MapZone": "FOG_CANYON"
+  },
+  "Fungus3_24": {
+    "MappedScene": "",
+    "MapZone": "FOG_CANYON"
+  },
+  "Fungus3_25": {
+    "MappedScene": "",
+    "MapZone": "FOG_CANYON"
+  },
+  "Fungus3_25b": {
+    "MappedScene": "",
+    "MapZone": "FOG_CANYON"
+  },
+  "Fungus3_26": {
+    "MappedScene": "",
+    "MapZone": "FOG_CANYON"
+  },
+  "Fungus3_27": {
+    "MappedScene": "",
+    "MapZone": "FOG_CANYON"
+  },
+  "Fungus3_28": {
+    "MappedScene": "",
+    "MapZone": "FOG_CANYON"
+  },
+  "Fungus3_30": {
+    "MappedScene": "",
+    "MapZone": "FOG_CANYON"
+  },
+  "Fungus3_35": {
+    "MappedScene": "",
+    "MapZone": "FOG_CANYON"
+  },
+  "Fungus3_44": {
+    "MappedScene": "",
+    "MapZone": "FOG_CANYON"
+  },
+  "Fungus3_47": {
+    "MappedScene": "",
+    "MapZone": "FOG_CANYON"
+  },
+  "Fungus3_archive": {
+    "MappedScene": "",
+    "MapZone": "FOG_CANYON"
+  },
+  "Fungus3_archive_02": {
+    "MappedScene": "",
+    "MapZone": "FOG_CANYON"
+  },
+  "Room_Fungus_Shaman": {
+    "MappedScene": "",
+    "MapZone": "FOG_CANYON"
+  },
+  "Crossroads_01": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_02": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_03": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_04": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_05": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_06": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_07": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_08": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_09": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_10": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_11_alt": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_12": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_13": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_14": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_15": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_16": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_18": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_19": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_21": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_22": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_25": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_27": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_30": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_31": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_33": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_35": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_36": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_37": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_38": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_39": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_40": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_42": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_43": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_45": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_46": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_47": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_48": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_49": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_52": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Crossroads_ShamanTemple": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Mines_33": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Room_Charm_Shop": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Room_Mender_House": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Room_ruinhouse": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Room_temple": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Room_Final_Boss_Atrium": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Deepnest_01": {
+    "MappedScene": "",
+    "MapZone": "WASTES"
+  },
+  "Fungus2_01": {
+    "MappedScene": "",
+    "MapZone": "WASTES"
+  },
+  "Fungus2_02": {
+    "MappedScene": "",
+    "MapZone": "WASTES"
+  },
+  "Fungus2_03": {
+    "MappedScene": "",
+    "MapZone": "WASTES"
+  },
+  "Fungus2_04": {
+    "MappedScene": "",
+    "MapZone": "WASTES"
+  },
+  "Fungus2_05": {
+    "MappedScene": "",
+    "MapZone": "WASTES"
+  },
+  "Fungus2_06": {
+    "MappedScene": "",
+    "MapZone": "WASTES"
+  },
+  "Fungus2_07": {
+    "MappedScene": "",
+    "MapZone": "WASTES"
+  },
+  "Fungus2_08": {
+    "MappedScene": "",
+    "MapZone": "WASTES"
+  },
+  "Fungus2_09": {
+    "MappedScene": "",
+    "MapZone": "WASTES"
+  },
+  "Fungus2_10": {
+    "MappedScene": "",
+    "MapZone": "WASTES"
+  },
+  "Fungus2_11": {
+    "MappedScene": "",
+    "MapZone": "WASTES"
+  },
+  "Fungus2_12": {
+    "MappedScene": "",
+    "MapZone": "WASTES"
+  },
+  "Fungus2_13": {
+    "MappedScene": "",
+    "MapZone": "WASTES"
+  },
+  "Fungus2_14": {
+    "MappedScene": "",
+    "MapZone": "WASTES"
+  },
+  "Fungus2_15": {
+    "MappedScene": "",
+    "MapZone": "WASTES"
+  },
+  "Fungus2_17": {
+    "MappedScene": "",
+    "MapZone": "WASTES"
+  },
+  "Fungus2_18": {
+    "MappedScene": "",
+    "MapZone": "WASTES"
+  },
+  "Fungus2_19": {
+    "MappedScene": "",
+    "MapZone": "WASTES"
+  },
+  "Fungus2_20": {
+    "MappedScene": "",
+    "MapZone": "WASTES"
+  },
+  "Fungus2_21": {
+    "MappedScene": "",
+    "MapZone": "WASTES"
+  },
+  "Fungus2_23": {
+    "MappedScene": "",
+    "MapZone": "WASTES"
+  },
+  "Fungus2_26": {
+    "MappedScene": "",
+    "MapZone": "WASTES"
+  },
+  "Fungus2_28": {
+    "MappedScene": "",
+    "MapZone": "WASTES"
+  },
+  "Fungus2_29": {
+    "MappedScene": "",
+    "MapZone": "WASTES"
+  },
+  "Fungus2_30": {
+    "MappedScene": "",
+    "MapZone": "WASTES"
+  },
+  "Fungus2_31": {
+    "MappedScene": "",
+    "MapZone": "WASTES"
+  },
+  "Fungus2_32": {
+    "MappedScene": "",
+    "MapZone": "WASTES"
+  },
+  "Fungus2_33": {
+    "MappedScene": "",
+    "MapZone": "WASTES"
+  },
+  "Fungus2_34": {
+    "MappedScene": "",
+    "MapZone": "WASTES"
+  },
+  "Fungus1_01": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_01b": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_02": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_03": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_04": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_05": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_06": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_07": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_08": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_09": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_10": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_11": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_12": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_13": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_14": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_15": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_16_alt": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_17": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_19": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_20_v02": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_21": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_22": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_25": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_26": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_29": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_30": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_31": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_32": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_34": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_35": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_36": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_37": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Fungus1_Slug": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Room_nailmaster_02": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Room_Slug_Shrine": {
+    "MappedScene": "",
+    "MapZone": "GREEN_PATH"
+  },
+  "Cliffs_01": {
+    "MappedScene": "",
+    "MapZone": "CLIFFS"
+  },
+  "Cliffs_02": {
+    "MappedScene": "",
+    "MapZone": "CLIFFS"
+  },
+  "Cliffs_03": {
+    "MappedScene": "",
+    "MapZone": "CLIFFS"
+  },
+  "Cliffs_04": {
+    "MappedScene": "",
+    "MapZone": "CLIFFS"
+  },
+  "Cliffs_05": {
+    "MappedScene": "",
+    "MapZone": "CLIFFS"
+  },
+  "Cliffs_06": {
+    "MappedScene": "",
+    "MapZone": "CLIFFS"
+  },
+  "Fungus1_28": {
+    "MappedScene": "",
+    "MapZone": "CLIFFS"
+  },
+  "Room_nailmaster": {
+    "MappedScene": "",
+    "MapZone": "CLIFFS"
+  },
+  "Abyss_03_c": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "Deepnest_East_01": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "Deepnest_East_02": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "Deepnest_East_03": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "Deepnest_East_04": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "Deepnest_East_06": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "Deepnest_East_07": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "Deepnest_East_08": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "Deepnest_East_09": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "Deepnest_East_10": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "Deepnest_East_11": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "Deepnest_East_12": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "Deepnest_East_13": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "Deepnest_East_14": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "Deepnest_East_14b": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "Deepnest_East_15": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "Deepnest_East_16": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "Deepnest_East_17": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "Deepnest_East_18": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "Deepnest_East_Hornet": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "GG_Lurker": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "Hive_01": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "Hive_02": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "Hive_03": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "Hive_03_c": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "Hive_04": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "Hive_05": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "Room_Colosseum_01": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "Room_Colosseum_02": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "Room_Colosseum_Spectate": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "Room_nailmaster_03": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "Room_Wyrm": {
+    "MappedScene": "",
+    "MapZone": "OUTSKIRTS"
+  },
+  "Deepnest_43": {
+    "MappedScene": "",
+    "MapZone": "ROYAL_GARDENS"
+  },
+  "Fungus1_23": {
+    "MappedScene": "",
+    "MapZone": "ROYAL_GARDENS"
+  },
+  "Fungus1_24": {
+    "MappedScene": "",
+    "MapZone": "ROYAL_GARDENS"
+  },
+  "Fungus3_04": {
+    "MappedScene": "",
+    "MapZone": "ROYAL_GARDENS"
+  },
+  "Fungus3_05": {
+    "MappedScene": "",
+    "MapZone": "ROYAL_GARDENS"
+  },
+  "Fungus3_08": {
+    "MappedScene": "",
+    "MapZone": "ROYAL_GARDENS"
+  },
+  "Fungus3_10": {
+    "MappedScene": "",
+    "MapZone": "ROYAL_GARDENS"
+  },
+  "Fungus3_11": {
+    "MappedScene": "",
+    "MapZone": "ROYAL_GARDENS"
+  },
+  "Fungus3_13": {
+    "MappedScene": "",
+    "MapZone": "ROYAL_GARDENS"
+  },
+  "Fungus3_21": {
+    "MappedScene": "",
+    "MapZone": "ROYAL_GARDENS"
+  },
+  "Fungus3_22": {
+    "MappedScene": "",
+    "MapZone": "ROYAL_GARDENS"
+  },
+  "Fungus3_23": {
+    "MappedScene": "",
+    "MapZone": "ROYAL_GARDENS"
+  },
+  "Fungus3_34": {
+    "MappedScene": "",
+    "MapZone": "ROYAL_GARDENS"
+  },
+  "Fungus3_39": {
+    "MappedScene": "",
+    "MapZone": "ROYAL_GARDENS"
+  },
+  "Fungus3_40": {
+    "MappedScene": "",
+    "MapZone": "ROYAL_GARDENS"
+  },
+  "Fungus3_48": {
+    "MappedScene": "",
+    "MapZone": "ROYAL_GARDENS"
+  },
+  "Fungus3_49": {
+    "MappedScene": "",
+    "MapZone": "ROYAL_GARDENS"
+  },
+  "Fungus3_50": {
+    "MappedScene": "",
+    "MapZone": "ROYAL_GARDENS"
+  },
+  "Room_Queen": {
+    "MappedScene": "",
+    "MapZone": "ROYAL_GARDENS"
+  },
+  "Crossroads_46b": {
+    "MappedScene": "",
+    "MapZone": "RESTING_GROUNDS"
+  },
+  "Crossroads_50": {
+    "MappedScene": "",
+    "MapZone": "RESTING_GROUNDS"
+  },
+  "RestingGrounds_02": {
+    "MappedScene": "",
+    "MapZone": "RESTING_GROUNDS"
+  },
+  "RestingGrounds_04": {
+    "MappedScene": "",
+    "MapZone": "RESTING_GROUNDS"
+  },
+  "RestingGrounds_05": {
+    "MappedScene": "",
+    "MapZone": "RESTING_GROUNDS"
+  },
+  "RestingGrounds_06": {
+    "MappedScene": "",
+    "MapZone": "RESTING_GROUNDS"
+  },
+  "RestingGrounds_07": {
+    "MappedScene": "",
+    "MapZone": "RESTING_GROUNDS"
+  },
+  "RestingGrounds_08": {
+    "MappedScene": "",
+    "MapZone": "RESTING_GROUNDS"
+  },
+  "RestingGrounds_09": {
+    "MappedScene": "",
+    "MapZone": "RESTING_GROUNDS"
+  },
+  "RestingGrounds_10": {
+    "MappedScene": "",
+    "MapZone": "RESTING_GROUNDS"
+  },
+  "RestingGrounds_12": {
+    "MappedScene": "",
+    "MapZone": "RESTING_GROUNDS"
+  },
+  "RestingGrounds_17": {
+    "MappedScene": "",
+    "MapZone": "RESTING_GROUNDS"
+  },
+  "Room_Mansion": {
+    "MappedScene": "",
+    "MapZone": "RESTING_GROUNDS"
+  },
+  "Ruins2_10": {
+    "MappedScene": "",
+    "MapZone": "RESTING_GROUNDS"
+  },
+  "Abyss_01": {
+    "MappedScene": "",
+    "MapZone": "WATERWAYS"
+  },
+  "Abyss_02": {
+    "MappedScene": "",
+    "MapZone": "WATERWAYS"
+  },
+  "GG_Pipeway": {
+    "MappedScene": "",
+    "MapZone": "WATERWAYS"
+  },
+  "GG_Waterways": {
+    "MappedScene": "",
+    "MapZone": "WATERWAYS"
+  },
+  "Room_GG_Shortcut": {
+    "MappedScene": "",
+    "MapZone": "WATERWAYS"
+  },
+  "Waterways_01": {
+    "MappedScene": "",
+    "MapZone": "WATERWAYS"
+  },
+  "Waterways_02": {
+    "MappedScene": "",
+    "MapZone": "WATERWAYS"
+  },
+  "Waterways_03": {
+    "MappedScene": "",
+    "MapZone": "WATERWAYS"
+  },
+  "Waterways_04": {
+    "MappedScene": "",
+    "MapZone": "WATERWAYS"
+  },
+  "Waterways_04b": {
+    "MappedScene": "",
+    "MapZone": "WATERWAYS"
+  },
+  "Waterways_05": {
+    "MappedScene": "",
+    "MapZone": "WATERWAYS"
+  },
+  "Waterways_06": {
+    "MappedScene": "",
+    "MapZone": "WATERWAYS"
+  },
+  "Waterways_07": {
+    "MappedScene": "",
+    "MapZone": "WATERWAYS"
+  },
+  "Waterways_08": {
+    "MappedScene": "",
+    "MapZone": "WATERWAYS"
+  },
+  "Waterways_09": {
+    "MappedScene": "",
+    "MapZone": "WATERWAYS"
+  },
+  "Waterways_12": {
+    "MappedScene": "",
+    "MapZone": "WATERWAYS"
+  },
+  "Waterways_13": {
+    "MappedScene": "",
+    "MapZone": "WATERWAYS"
+  },
+  "Waterways_14": {
+    "MappedScene": "",
+    "MapZone": "WATERWAYS"
+  },
+  "Waterways_15": {
+    "MappedScene": "",
+    "MapZone": "WATERWAYS"
+  },
+  "White_Palace_01": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "White_Palace_02": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "White_Palace_03_hub": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "White_Palace_04": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "White_Palace_05": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "White_Palace_06": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "White_Palace_07": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "White_Palace_08": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "White_Palace_09": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "White_Palace_11": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "White_Palace_12": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "White_Palace_13": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "White_Palace_14": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "White_Palace_15": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "White_Palace_16": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "White_Palace_17": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "White_Palace_18": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "White_Palace_19": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "White_Palace_20": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  },
+  "GG_Atrium": {
+    "MappedScene": "",
+    "MapZone": "WATERWAYS"
+  },
+  "GG_Workshop": {
+    "MappedScene": "",
+    "MapZone": "WATERWAYS"
+  },
+  "GG_Atrium_Roof": {
+    "MappedScene": "",
+    "MapZone": "WATERWAYS"
+  },
+  "Room_Tram_RG": {
+    "MappedScene": "",
+    "MapZone": "CROSSROADS"
+  },
+  "Room_Tram": {
+    "MappedScene": "",
+    "MapZone": "ABYSS"
+  }
+}

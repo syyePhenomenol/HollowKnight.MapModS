@@ -1,4 +1,6 @@
-﻿using MapModS.Map;
+﻿using MapChanger;
+using MapChanger.Defs;
+using MapModS.Map;
 using MapModS.Settings;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,25 +18,20 @@ namespace MapModS.Pins
         private const float MEDIUM_SCALE = 0.37f;
         private const float LARGE_SCALE = 0.44f;
 
+        public RandomizerModPinDef(MapPositionDef mpd) : base(mpd)
+        {
+
+        }
+
         internal string LocationPoolGroup { get; private protected init; }
         internal abstract HashSet<string> ItemPoolGroups { get; }
-
-        private protected RandomizerModPinDef()
-        {
-            BorderPlacement = BorderPlacement.InFront;
-        }
 
         public override void Update()
         {
             Active = Active
-                && ((MapModS.QuickMapOpen && MapModS.CurrentMapZone == MapZone)
-                    || (MapModS.WorldMapOpen && (MapModS.LS.Mode != MapMode.PinsOverMap || Utils.HasMapSetting(MapZone))));
+                && ((States.QuickMapOpen && States.CurrentMapZone == MapPosition.MapZone)
+                    || (States.WorldMapOpen && (MapChanger.Settings.ForceFullMap || Utils.HasMapSetting(MapPosition.MapZone))));
             //TODO: Transition mode settings here
-        }
-
-        public override Sprite GetBorderSprite()
-        {
-            return SpriteManager.GetSprite("pinBorder");
         }
 
         internal virtual string[] GetPreviewText()
@@ -62,24 +59,15 @@ namespace MapModS.Pins
             };
         }
 
-        public override Sprite GetMainSprite()
+        public abstract Vector4 GetSpriteColor();
+
+        public Sprite GetBorderSprite()
         {
-            return null;
+            return SpriteManager.GetSprite("pinBorder");
         }
 
-        public override Vector4 GetMainColor()
-        {
-            return Vector4.negativeInfinity;
-        }
+        public abstract Vector4 GetBorderColor();
 
-        public override Vector4 GetBorderColor()
-        {
-            return Vector4.negativeInfinity;
-        }
-
-        public override Vector3 GetScale()
-        {
-            return Vector3.negativeInfinity;
-        }
+        public abstract Vector2 GetScale();
     }
 }

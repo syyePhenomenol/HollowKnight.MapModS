@@ -1,4 +1,7 @@
-﻿using MapModS.Pins;
+﻿using MapChanger;
+using MapChanger.Defs;
+using MapChanger.Objects;
+using MapModS.Pins;
 using System.Collections;
 using UnityEngine;
 
@@ -9,13 +12,16 @@ namespace MapModS
         private const float SELECTED_SIZE_SCALE = 1.8f;
         public float UpdateWaitSeconds { get; } = 1f;
 
-        public RandomizerModPinDef RMDef { get; set; }
-        public override IMapPosition MapPosition { get => RMDef; }
+        public RandomizerModPinDef RMPinDef { get; set; }
+        public override IMapPosition MapPosition { get => RMPinDef.MapPosition; }
 
-        public override void Awake()
+        public void Initialize(RandomizerModPinDef rmPinDef, float offsetZ)
         {
-            base.Awake();
-            BorderPlacement = BorderPlacement.InFront;
+            base.Initialize();
+
+            RMPinDef = rmPinDef;
+            transform.SetPositionZ(offsetZ);
+            BorderPlacement = MapChanger.Objects.BorderPlacement.InFront;
         }
 
         public bool CanSelect()
@@ -51,12 +57,15 @@ namespace MapModS
         {
             StopAllCoroutines();
 
-            RMDef.Update();
+            RMPinDef.Update();
 
-            if (RMDef.Active)
+            if (RMPinDef.Active)
             {
                 gameObject.SetActive(true);
-                base.Set();
+                SetSprite();
+                SetSpriteColor();
+                SetBorderColor();
+                SetScale();
                 StartCoroutine(PeriodicUpdate());
             }
             else
@@ -67,27 +76,27 @@ namespace MapModS
 
         public override void SetSprite()
         {
-            SR.sprite = RMDef.GetMainSprite();
+            SR.sprite = RMPinDef.GetSprite();
         }
 
         public override void SetSpriteColor()
         {
-            SR.color = RMDef.GetMainColor();
+            SR.color = RMPinDef.GetSpriteColor();
         }
 
         public override void SetBorderSprite()
         {
-            BorderSR.sprite = RMDef.GetBorderSprite();
+            BorderSR.sprite = RMPinDef.GetBorderSprite();
         }
 
         public override void SetBorderColor()
         {
-            BorderSR.color = RMDef.GetBorderColor();
+            BorderSR.color = RMPinDef.GetBorderColor();
         }
 
         public override void SetScale()
         {
-            transform.localScale = RMDef.GetScale();
+            transform.localScale = RMPinDef.GetScale();
         }
     }
 }

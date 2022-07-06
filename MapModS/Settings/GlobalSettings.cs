@@ -2,7 +2,7 @@
 
 namespace MapModS.Settings
 {
-    public abstract class GlobalSettings
+    public class GlobalSettings
     {
         public bool ControlPanelOn = true;
         public bool MapKeyOn = false;
