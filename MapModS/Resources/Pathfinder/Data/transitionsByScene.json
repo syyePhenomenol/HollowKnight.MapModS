@@ -120,6 +120,7 @@
     "Stag-Resting_Grounds",
     "Stag-Stag_Nest"
   ],
+  // TODO: REMOVE, THERE IS NO BELL HERE
   "Cliffs_03": [
     "Stag-Crossroads",
     "Stag-Dirtmouth",

@@ -551,7 +551,7 @@
   },
   "Quick Map-Quick Map": {
     "BoolsIndex": {
-      "Ancient Basin": [
+      "Abyss": [
         {
           "Index": 0,
           "Type": "Map"
@@ -587,7 +587,7 @@
           "Type": "Map"
         }
       ],
-      "Fungus": [
+      "Fungal Wastes": [
         {
           "Index": 0,
           "Type": "Map"
@@ -659,12 +659,12 @@
   },
   "Map Key-Control": {
     "BoolsIndex": {
-      "Draw Pins": [
-        {
-          "Index": 0,
-          "Type": "Pins"
-        }
-      ],
+      //"Draw Pins": [
+      //  {
+      //    "Index": 0,
+      //    "Type": "Pins"
+      //  }
+      //],
       "Check Bench": [
         {
           "Index": 0,
@@ -747,7 +747,6 @@
     "BoolsRange": {
     }
   },
-
   "Check Grub Map Owned": {
     "BoolsIndex": {
       "Check": [
@@ -814,11 +813,11 @@
         {
           "Index": 0,
           "Type": "Pins"
-        },
-        {
-          "Index": 2,
-          "Type": "Pins"
         }
+        //{
+        //  "Index": 2,
+        //  "Type": "Pins"
+        //}
       ]
     },
     "BoolsRange": {
@@ -990,11 +989,11 @@
         {
           "Index": 0,
           "Type": "Pins"
-        },
-        {
-          "Index": 2,
-          "Type": "Pins"
         }
+        //{
+        //  "Index": 2,
+        //  "Type": "Pins"
+        //}
       ]
     },
     "BoolsRange": {
@@ -1007,6 +1006,10 @@
           "Index": 0,
           "Type": "Pins"
         }
+        //{
+        //  "Index": 2,
+        //  "Type": "Pins"
+        //}
       ]
     },
     "BoolsRange": {
@@ -1018,11 +1021,11 @@
         {
           "Index": 0,
           "Type": "Pins"
-        },
-        {
-          "Index": 2,
-          "Type": "Pins"
         }
+        //{
+        //  "Index": 2,
+        //  "Type": "Pins"
+        //}
       ]
     },
     "BoolsRange": {
@@ -1034,11 +1037,11 @@
         {
           "Index": 0,
           "Type": "Pins"
-        },
-        {
-          "Index": 2,
-          "Type": "Pins"
         }
+        //{
+        //  "Index": 2,
+        //  "Type": "Pins"
+        //}
       ]
     },
     "BoolsRange": {
@@ -1051,6 +1054,10 @@
           "Index": 0,
           "Type": "Pins"
         }
+        //{
+        //  "Index": 2,
+        //  "Type": "Pins"
+        //}
       ]
     },
     "BoolsRange": {
@@ -1063,6 +1070,10 @@
           "Index": 0,
           "Type": "Pins"
         }
+        //{
+        //  "Index": 2,
+        //  "Type": "Pins"
+        //}
       ]
     },
     "BoolsRange": {

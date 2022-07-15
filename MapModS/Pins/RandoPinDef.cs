@@ -1,8 +1,7 @@
 ﻿using ConnectionMetadataInjector;
 using ItemChanger;
 using MapChanger;
-using MapChanger.Defs;
-using MapModS.Map;
+//using MapModS.Map;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -100,27 +99,26 @@ namespace MapModS.Pins
             }
             else
             {
-                switch (placementState)
+                return placementState switch
                 {
-                    case RandoPlacementState.UncheckedUnreachable:
-                    case RandoPlacementState.UncheckedReachable:
-                    case RandoPlacementState.OutOfLogicReachable:
-                        return GetLocationSprite();
-                    case RandoPlacementState.Previewed:
-                    case RandoPlacementState.ClearedPersistent:
-                        return GetItemSprite();
-                    default:
-                        return GetLocationSprite();
-                }
+                    RandoPlacementState.UncheckedUnreachable
+                    or RandoPlacementState.UncheckedReachable
+                    or RandoPlacementState.OutOfLogicReachable => GetLocationSprite(),
+                    RandoPlacementState.Previewed
+                    or RandoPlacementState.ClearedPersistent => GetItemSprite(),
+                    _ => GetLocationSprite(),
+                };
             }
 
             Sprite GetLocationSprite()
             {
-                return SpriteManager.GetSpriteFromPoolGroup(LocationPoolGroup);
+                return null;
+                //return SpriteManager.GetSpriteFromPoolGroup(LocationPoolGroup);
             }
             Sprite GetItemSprite()
             {
-                return SpriteManager.GetSpriteFromPoolGroup(GetNextItemPoolGroup(), true);
+                return null;
+                //return SpriteManager.GetSpriteFromPoolGroup(GetNextItemPoolGroup(), true);
             }
         }
 
@@ -159,9 +157,9 @@ namespace MapModS.Pins
             return color;
         }
 
-        public override Vector2 GetScale()
+        public override float GetScale()
         {
-            Vector2 scale = Vector2.one * GetPinSizeScale();
+            float scale = GetPinSizeScale();
 
             //if (Selected)
             //{

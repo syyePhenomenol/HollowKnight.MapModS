@@ -1,9 +1,7 @@
-﻿using MapChanger.Objects;
-using UnityEngine;
-
-namespace MapChanger.UI
+﻿namespace MapChanger.UI
 {
-    public class MapUILayer : MonoBehaviour
+    public class MapUILayer
     {
+
     }
 }

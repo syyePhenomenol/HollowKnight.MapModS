@@ -1,14 +1,9 @@
-﻿using GlobalEnums;
-using MapChanger;
-using MapChanger.Objects;
-using MapModS.Data;
-using MapModS.Pins;
+﻿using MapChanger;
+using MapChanger.MonoBehaviours;
 using MapModS.Settings;
-using MapModS.UI;
 using Modding;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
@@ -59,7 +54,7 @@ namespace MapModS
             {
                 //MainData.Load();
                 //MapData.LoadGlobalMapDefs();
-                //RandoPinData.LoadGlobalPinDefs();
+                //RandoPinData.InjectRandoLocations();
             }
             catch (Exception e)
             {
@@ -67,10 +62,10 @@ namespace MapModS
                 throw;
             }
 
-            Utils.AddHookModule<GUI>();
+            //Utils.AddHookModule<GUI>();
 
-            Events.OnEnterGame += OnEnterGame;
-            Events.OnSetGameMap += OnSetGameMap;
+            Events.AfterEnterGame += OnEnterGame;
+            Events.AfterSetGameMap += OnSetGameMap;
 
             Log("Initialization complete.");
         }
@@ -79,12 +74,42 @@ namespace MapModS
         {
             if (RandomizerMod.RandomizerMod.RS.GenerationSettings == null) return;
 
-            Instance.Log("Activating mod");
+            //SpriteManager.LoadPinSprites();
 
-            LocationTracker.GetPreviouslyObtainedItems();
-            RandoPinData.SetPinDefs();
-            //ItemTracker.VerifyTrackingDefs();
-            LS.Initialize();
+            MapChanger.Settings.Modes.Add(new MapModeSetting()
+            {
+                ModeName = "Full Map",
+                ForceHasMap = true,
+                ForceHasQuill = true,
+                ImmediateMapUpdate = true,
+                ForceFullMap = true,
+                DisableAreaNames = false,
+                DisableNextArea = false,
+                DisableVanillaPins = false,
+                EnableCustomColors = true,
+                EnableExtraRoomNames = false,
+            });
+
+            MapChanger.Settings.Modes.Add(new MapModeSetting()
+            {
+                ModeName = "Transition",
+                ForceHasMap = true,
+                ForceHasQuill = true,
+                ImmediateMapUpdate = true,
+                ForceFullMap = true,
+                DisableAreaNames = true,
+                DisableNextArea = true,
+                DisableVanillaPins = true,
+                EnableCustomColors = true,
+                EnableExtraRoomNames = true,
+                OnRoomSpriteSet = SetTransitionRoomColors,
+            });
+
+            //MapChanger.Settings.ToggleMode();
+
+            Instance.Log("Activating mod");
+            //RandoPinData.SetPinDefs();
+            //LS.Initialize();
         }
 
         private const float OFFSETZ_BASE = -0.6f;
@@ -92,18 +117,32 @@ namespace MapModS
 
         public static MapObjectGroup randoPinGroup;
 
+        private static bool SetTransitionRoomColors(RoomSprite roomSprite)
+        {
+            roomSprite.gameObject.SetActive(true);
+
+            if (roomSprite.Selected)
+            {
+                roomSprite.Sr.color = Colors.GetColor(ColorSetting.Room_Selected);
+            }
+            else
+            {
+                roomSprite.Sr.color = Colors.GetColor(ColorSetting.Room_Normal);
+            }
+            return true;
+        }
+
         private static void OnSetGameMap(GameObject goMap)
         {
-            //MakeMonoBehaviour<RandoPinGroup>(goMap, RandoPinGroup.Name);
-            randoPinGroup = Utils.MakeMonoBehaviour<MapObjectGroup>(goMap, "Rando Pin Group");
+            //randoPinGroup = Utils.MakeMonoBehaviour<MapObjectGroup>(goMap, "Rando Pin Group");
 
-            IEnumerable<RandomizerModPinDef> pinDefs = RandoPinData.PinDefs.Values.OrderBy(pinDef => pinDef.MapPosition.OffsetX).ThenBy(pinDef => pinDef.MapPosition.OffsetY);
-            for (int i = 0; i < pinDefs.Count(); i++)
-            {
-                RandoPin pin = Utils.MakeMonoBehaviour<RandoPin>(randoPinGroup.gameObject, pinDefs.ElementAt(i).Name);
-                pin.Initialize(pinDefs.ElementAt(i), OFFSETZ_BASE + (float)i / pinDefs.Count() * OFFSETZ_RANGE);
-                randoPinGroup.MapObjects.Add(pin);
-            }
+            //IEnumerable<RandomizerModPinDef> pinDefs = RandoPinData.PinDefs.Values.OrderBy(pinDef => pinDef.MapPosition.OffsetX).ThenBy(pinDef => pinDef.MapPosition.OffsetY);
+            //for (int i = 0; i < pinDefs.Count(); i++)
+            //{
+            //    RandoPin pin = Utils.MakeMonoBehaviour<RandoPin>(randoPinGroup.gameObject, pinDefs.ElementAt(i).Name);
+            //    pin.Initialize(pinDefs.ElementAt(i), OFFSETZ_BASE + (float)i / pinDefs.Count() * OFFSETZ_RANGE);
+            //    randoPinGroup.MapObjects.Add(pin);
+            //}
         }
     }
 }

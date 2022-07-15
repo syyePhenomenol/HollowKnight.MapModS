@@ -59,29 +59,27 @@ namespace MapModS.Pins
             PoolGroupNames.SHOPS,
         };
 
-        public static Dictionary<string, MapPositionDef> LocationLookup;
-
-        public static Dictionary<string, VanillaPinDef> globalPinDefs;
-
         internal static Dictionary<string, RandomizerModPinDef> PinDefs;
 
         internal static List<string> PoolGroups { get; private set; }
         internal static HashSet<string> RandoPoolGroups { get; private set; }
         internal static HashSet<string> VanillaPoolGroups { get; private set; }
 
-        internal static void LoadGlobalPinDefs()
+        internal static void InjectRandoLocations()
         {
-            LocationLookup = JsonUtil.Deserialize<Dictionary<string, MapPositionDef>>("MapModS.Resources.pins.json");
+            Dictionary<string, MapLocationDef> randoLocations = JsonUtil.Deserialize<Dictionary<string, MapLocationDef>>("MapModS.Resources.randoPins.json");
 
-            globalPinDefs = JsonUtil.Deserialize<Dictionary<string, VanillaPinDef>>("MapModS.Resources.pins.json");
+            //MapChanger.Finder.ScaleOffsets(randoLocations, "randolocations.json");
+
+            MapChanger.Finder.InjectLocations(randoLocations);
 
             if (!Dependencies.HasAdditionalMaps()) return;
 
-            Dictionary<string, MapPositionDef> pinDefsAM = JsonUtil.Deserialize<Dictionary<string, MapPositionDef>>("MapModS.Resources.pinsAM.json");
-            foreach((string name, MapPositionDef mpd) in pinDefsAM.Select(kvp => (kvp.Key, kvp.Value)))
-            {
-                globalPinDefs[name].SetPosition(mpd);
-            }
+            Dictionary<string, MapLocationDef> randoLocationsAM = JsonUtil.Deserialize<Dictionary<string, MapLocationDef>>("MapModS.Resources.AdditionalMaps.randoPins.json");
+
+            //MapChanger.Finder.ScaleOffsets(randoLocationsAM, "randolocationsAM.json");
+
+            MapChanger.Finder.InjectLocations(randoLocationsAM);
         }
 
         internal static void SetPinDefs()

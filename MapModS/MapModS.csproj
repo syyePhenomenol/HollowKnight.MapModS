@@ -32,8 +32,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Resources\GUI\**" />
+    <Compile Remove="Resources\Pins\**" />
     <Compile Remove="Unused\**" />
+    <EmbeddedResource Remove="Resources\GUI\**" />
+    <EmbeddedResource Remove="Resources\Pins\**" />
     <EmbeddedResource Remove="Unused\**" />
+    <None Remove="Resources\GUI\**" />
+    <None Remove="Resources\Pins\**" />
     <None Remove="Unused\**" />
   </ItemGroup>
 
@@ -72,24 +78,40 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="MapChanger\Resources\AdditionalMaps\locations.json" />
     <None Remove="MapChanger\Resources\AdditionalMaps\mappedScenes.json" />
-    <None Remove="MapChanger\Resources\AdditionalMaps\roomObjects.json" />
+    <None Remove="MapChanger\Resources\AdditionalMaps\roomTexts.json" />
+    <None Remove="MapChanger\Resources\defaultMapObjects1.json" />
     <None Remove="MapChanger\Resources\locations.json" />
+    <None Remove="MapChanger\Resources\locations1.json" />
+    <None Remove="MapChanger\Resources\miscObjects.json" />
+    <None Remove="MapChanger\Resources\roomSprites.json" />
+    <None Remove="MapChanger\Resources\selector.png" />
+    <None Remove="Resources\AdditionalMaps\randoPins.json" />
+    <None Remove="Resources\AdditionalMaps\randoPins1.json" />
     <None Remove="Resources\mapZones.json" />
     <None Remove="Resources\newMapRoomObjects.json" />
     <None Remove="Resources\pinsAM.json" />
     <None Remove="Resources\pinScenes.json" />
-    <None Remove="Resources\Pins\pinJournal.png" />
+    <None Remove="Resources\randoPins.json" />
+    <None Remove="Resources\randoPins1.json" />
     <None Remove="Resources\tracking.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="MapChanger\Resources\AdditionalMaps\locations.json" />
     <EmbeddedResource Include="MapChanger\Resources\AdditionalMaps\mappedScenes.json" />
-    <EmbeddedResource Include="MapChanger\Resources\AdditionalMaps\roomObjects.json" />
-    <EmbeddedResource Include="MapChanger\Resources\mappedScenes.json" />
+    <EmbeddedResource Include="MapChanger\Resources\AdditionalMaps\roomTexts.json" />
+    <EmbeddedResource Include="MapChanger\Resources\miscObjects.json" />
+    <EmbeddedResource Include="MapChanger\Resources\roomSprites.json" />
+    <EmbeddedResource Include="MapChanger\Resources\defaultMapObjects1.json" />
     <EmbeddedResource Include="MapChanger\Resources\locations.json" />
-    <EmbeddedResource Include="MapChanger\Resources\roomObjects.json" />
-    <EmbeddedResource Include="Resources\GUI\panelLeft.png" />
+    <EmbeddedResource Include="MapChanger\Resources\mappedScenes.json" />
+    <EmbeddedResource Include="MapChanger\Resources\locations1.json" />
+    <EmbeddedResource Include="MapChanger\Resources\roomTexts.json" />
+    <EmbeddedResource Include="MapChanger\Resources\Sprites\selector.png" />
+    <EmbeddedResource Include="Resources\AdditionalMaps\randoPins.json" />
+    <EmbeddedResource Include="Resources\AdditionalMaps\randoPins1.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Compass\doorObjectsByScene.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Compass\doorObjectsByTransition.json" />
     <EmbeddedResource Include="Resources\benchwarp.json" />
@@ -107,51 +129,15 @@
     <EmbeddedResource Include="Resources\Pathfinder\Logic\waypoints.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Logic\macros.json" />
     <EmbeddedResource Include="Resources\Pathfinder\Logic\transitions.json" />
-    <EmbeddedResource Include="MapChanger\Resources\AdditionalMaps\locations.json" />
-    <EmbeddedResource Include="Resources\Pins\pinBench.png" />
-    <EmbeddedResource Include="Resources\Pins\pinBlank.png" />
-    <EmbeddedResource Include="Resources\Pins\pinBorder.png" />
-    <EmbeddedResource Include="Resources\Pins\pinJournal.png" />
+    <EmbeddedResource Include="MapChanger\Resources\AdditionalMaps\locations1.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\GUI\arrow.png" />
-    <EmbeddedResource Include="Resources\GUI\panelRight.png" />
-    <EmbeddedResource Include="Resources\minimalMapRooms.json" />
+    <EmbeddedResource Include="MapChanger\Resources\minimalMap.json" />
     <EmbeddedResource Include="MapChanger\Resources\fsmOverrides.json" />
-    <EmbeddedResource Include="Resources\Pins\pinCharm.png" />
-    <EmbeddedResource Include="Resources\Pins\pinCocoon.png" />
-    <EmbeddedResource Include="Resources\Pins\pinDreamer.png" />
-    <EmbeddedResource Include="Resources\Pins\pinEgg.png" />
-    <EmbeddedResource Include="Resources\Pins\pinEssenceBoss.png" />
-    <EmbeddedResource Include="Resources\Pins\pinFlame.png" />
-    <EmbeddedResource Include="Resources\Pins\pinGeo.png" />
-    <EmbeddedResource Include="Resources\Pins\pinGrub.png" />
-    <EmbeddedResource Include="Resources\Pins\pinKey.png" />
-    <EmbeddedResource Include="Resources\Pins\pinLever.png" />
-    <EmbeddedResource Include="Resources\Pins\pinLore.png" />
-    <EmbeddedResource Include="Resources\Pins\pinMap.png" />
-    <EmbeddedResource Include="Resources\Pins\pinMask.png" />
-    <EmbeddedResource Include="Resources\Pins\pinNotch.png" />
-    <EmbeddedResource Include="Resources\Pins\pinOre.png" />
-    <EmbeddedResource Include="Resources\Pins\pinRelic.png" />
-    <EmbeddedResource Include="Resources\Pins\pinRock.png" />
-    <EmbeddedResource Include="Resources\Pins\pinRoot.png" />
-    <EmbeddedResource Include="Resources\Pins\pinShop.png" />
-    <EmbeddedResource Include="Resources\Pins\pinSkill.png" />
-    <EmbeddedResource Include="Resources\Pins\pinStag.png" />
-    <EmbeddedResource Include="Resources\Pins\pinTotem.png" />
-    <EmbeddedResource Include="Resources\Pins\pinUnknown.png" />
-    <EmbeddedResource Include="Resources\Pins\pinUnknown_GeoRock.png" />
-    <EmbeddedResource Include="Resources\Pins\pinUnknown_GeoRockInv.png" />
-    <EmbeddedResource Include="Resources\Pins\pinUnknown_Grub.png" />
-    <EmbeddedResource Include="Resources\Pins\pinUnknown_GrubInv.png" />
-    <EmbeddedResource Include="Resources\Pins\pinUnknown_Lifeblood.png" />
-    <EmbeddedResource Include="Resources\Pins\pinUnknown_LifebloodInv.png" />
-    <EmbeddedResource Include="Resources\Pins\pinUnknown_Totem.png" />
-    <EmbeddedResource Include="Resources\Pins\pinUnknown_TotemInv.png" />
-    <EmbeddedResource Include="Resources\Pins\pinVessel.png" />
     <EmbeddedResource Include="MapChanger\Resources\tracking.json" />
+    <EmbeddedResource Include="Resources\randoPins.json" />
+    <EmbeddedResource Include="Resources\randoPins1.json" />
   </ItemGroup>
 
 	<Target Name="CopyMod" AfterTargets="PostBuildEvent">
@@ -318,7 +304,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="MapChanger\IC\" />
+      <Folder Include="Map\" />
       <Folder Include="Pathfinding\" />
     </ItemGroup>
 

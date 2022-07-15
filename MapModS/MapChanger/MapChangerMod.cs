@@ -12,8 +12,6 @@ namespace MapChanger
 
         public override void Initialize()
         {
-            Log("Initializing...");
-
             Instance = this;
 
             Dependencies.GetDependencies();
@@ -36,7 +34,9 @@ namespace MapChanger
             }
 
             Finder.Load();
-            LocationTracker.Load();
+            SpriteManager.Load();
+            Tracker.Load();
+            BuiltInObjects.Load();
             VariableOverrides.Load();
 
             Events.Initialize();

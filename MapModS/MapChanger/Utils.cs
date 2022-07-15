@@ -1,7 +1,9 @@
 ﻿using GlobalEnums;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using SM = UnityEngine.SceneManagement.SceneManager;
 
 namespace MapChanger
 {
@@ -30,46 +32,25 @@ namespace MapChanger
         public static T MakeMonoBehaviour<T>(GameObject parent, string name) where T : MonoBehaviour
         {
             GameObject newObject = new(name);
-            newObject.transform.SetParent(parent.transform);
+            if (parent is not null)
+            {
+                newObject.transform.SetParent(parent.transform);
+            }
             return newObject.AddComponent<T>();
         }
 
-
-        public static string ToCleanPreviewText(string text)
-        {
-            return text.Replace("Pay ", "")
-                .Replace("Once you own ", "")
-                .Replace(", I'll gladly sell it to you.", "")
-                .Replace("Requires ", "")
-                .Replace("<br>", "");
-        }
-
-        public static string ToCleanName(this string name)
-        {
-            return name.Replace("-", " ").Replace("_", " ");
-        }
-
-        //public static MapZone ToMapZone(string mapArea)
+        //public static string ToCleanPreviewText(string text)
         //{
-        //    return mapArea switch
-        //    {
-        //        "Ancient Basin" => MapZone.ABYSS,
-        //        "City of Tears" => MapZone.CITY,
-        //        "Crystal Peak" => MapZone.MINES,
-        //        "Deepnest" => MapZone.DEEPNEST,
-        //        "Dirtmouth" => MapZone.TOWN,
-        //        "Fog Canyon" => MapZone.FOG_CANYON,
-        //        "Forgotten Crossroads" => MapZone.CROSSROADS,
-        //        "Fungal Wastes" => MapZone.WASTES,
-        //        "Greenpath" => MapZone.GREEN_PATH,
-        //        "Howling Cliffs" => MapZone.CLIFFS,
-        //        "Kingdom's Edge" => MapZone.OUTSKIRTS,
-        //        "Queen's Gardens" => MapZone.ROYAL_GARDENS,
-        //        "Resting Grounds" => MapZone.RESTING_GROUNDS,
-        //        "Royal Waterways" => MapZone.WATERWAYS,
-        //        "White Palace" => MapZone.WHITE_PALACE,
-        //        _ => MapZone.NONE
-        //    };
+        //    return text.Replace("Pay ", "")
+        //        .Replace("Once you own ", "")
+        //        .Replace(", I'll gladly sell it to you.", "")
+        //        .Replace("Requires ", "")
+        //        .Replace("<br>", "");
+        //}
+
+        //public static string ToCleanName(this string name)
+        //{
+        //    return name.Replace("-", " ").Replace("_", " ");
         //}
 
         public static bool HasMapSetting(MapZone mapZone)
@@ -96,26 +77,60 @@ namespace MapChanger
             };
         }
 
-        //public static string GetActualSceneName(string objName)
-        //{
-        //    // Some room objects have non-standard scene names, so we truncate the name
-        //    // in these situations
+        public static string DropSuffix(this string scene)
+        {
+            if (scene == "") return "";
+            string[] sceneSplit = scene.Split('_');
+            string truncatedScene = sceneSplit[0];
+            for (int i = 1; i < sceneSplit.Length - 1; i++)
+            {
+                truncatedScene += "_" + sceneSplit[i];
+            }
+            return truncatedScene;
+        }
 
-        //    if (objName == "Ruins1_31_top_2") return "Ruins1_31b";
-        //    if (objName == "Waterways_04_part_b") return "Waterways_02";
+        private static readonly List<GameObject> rootObjects = new(500);
+        /// <summary>
+        /// Copied from ItemChanger by homothety.
+        /// Finds a GameObject in the current scene by its full path.
+        /// </summary>
+        /// <param name="path">The full path to the GameObject, with forward slash ('/') separators.</param>
+        /// <returns></returns>
+        public static GameObject FindGameObjectInCurrentScene(string path)
+        {
+            SM.GetActiveScene().GetRootGameObjects(rootObjects); // clears list
 
-        //    for (int i = 0; i < 2; i++)
-        //    {
-        //        if (RandomizerMod.RandomizerData.Data.IsRoom(objName) || objName.IsSpecialRoom())
-        //        {
-        //            return objName;
-        //        }
+            int index = path.IndexOf('/');
+            GameObject result = null;
+            if (index >= 0)
+            {
+                string rootName = path.Substring(0, index);
+                GameObject root = rootObjects.FirstOrDefault(g => g.name == rootName);
+                if (root != null) result = root.transform.Find(path.Substring(index + 1)).gameObject;
+            }
+            else
+            {
+                result = rootObjects.FirstOrDefault(g => g.name == path);
+            }
 
-        //        objName = DropSuffix(objName);
-        //    }
+            rootObjects.Clear();
+            return result;
+        }
 
-        //    return null;
-        //}
+        public static Transform FindChildInHierarchy(this Transform parent, string pathName)
+        {
+            string[] splitNames = pathName.Split('/');
+            Transform transform = parent;
+
+            foreach (string splitName in splitNames)
+            {
+                if (splitName == "") return transform;
+                Transform child = transform.Find(splitName);
+                if (child is null) return null;
+                transform = child;
+            }
+            return transform;
+        }
 
         //public static bool IsFSMMapState(string name)
         //{
@@ -143,11 +158,6 @@ namespace MapChanger
         //    };
         //}
 
-        //public static double DistanceToMiddle(Transform transform)
-        //{
-        //    return Math.Pow(transform.position.x, 2) + Math.Pow(transform.position.y, 2);
-        //}
-
         //public static string GetBindingsText(List<InControl.BindingSource> bindings)
         //{
         //    string text = "";
@@ -163,5 +173,7 @@ namespace MapChanger
 
         //    return text;
         //}
+
+
     }
 }

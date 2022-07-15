@@ -1,7 +1,7 @@
 ﻿using ConnectionMetadataInjector.Util;
 using MapChanger;
 using MapChanger.Defs;
-using MapModS.Map;
+//using MapModS.Map;
 using Newtonsoft.Json;
 using RandomizerCore;
 using System.Collections.Generic;
@@ -33,14 +33,15 @@ namespace MapModS.Pins
         public override void Update()
         {
             Active = MapModS.LS.GetPoolGroupSetting(LocationPoolGroup) == Settings.PoolState.On || MapModS.LS.VanillaOn
-                        && !LocationTracker.HasClearedLocation(Name);
+                        && !Tracker.HasClearedLocation(Name);
             
             base.Update();
         }
 
         public override Sprite GetSprite()
         {
-            return SpriteManager.GetSpriteFromPoolGroup(LocationPoolGroup);
+            return null;
+            //return SpriteManager.GetSpriteFromPoolGroup(LocationPoolGroup);
         }
 
         public override Vector4 GetSpriteColor()
@@ -60,14 +61,14 @@ namespace MapModS.Pins
             return new(color.x, color.y, color.z, 1f);
         }
 
-        public override Vector2 GetScale()
+        public override float GetScale()
         {
         //    if (Selected)
         //    {
         //        // do something
         //    }
 
-            return Vector2.one * UNREACHABLE_SIZE_SCALE * GetPinSizeScale();
+            return UNREACHABLE_SIZE_SCALE * GetPinSizeScale();
         }
 
         internal override string[] GetPreviewText()

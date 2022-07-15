@@ -1,13 +1,12 @@
-﻿using MapChanger;
-using MapChanger.Defs;
-using MapChanger.Objects;
+﻿using MapChanger.Defs;
+using MapChanger.MonoBehaviours;
 using MapModS.Pins;
 using System.Collections;
 using UnityEngine;
 
 namespace MapModS
 {
-    public class RandoPin: BorderedMapObject, IPeriodicUpdater, ISelectable
+    public class RandoPin: BorderedPin, IPeriodicUpdater, ISelectable
     {
         private const float SELECTED_SIZE_SCALE = 1.8f;
         public float UpdateWaitSeconds { get; } = 1f;
@@ -15,33 +14,38 @@ namespace MapModS
         public RandomizerModPinDef RMPinDef { get; set; }
         public override IMapPosition MapPosition { get => RMPinDef.MapPosition; }
 
+        public bool Selected { get; private set; }
+
         public void Initialize(RandomizerModPinDef rmPinDef, float offsetZ)
         {
-            base.Initialize();
-
             RMPinDef = rmPinDef;
+            RMPinDef.Update();
             transform.SetPositionZ(offsetZ);
-            BorderPlacement = MapChanger.Objects.BorderPlacement.InFront;
+            BorderPlacement = BorderPlacement.InFront;
+
+            base.Initialize();
         }
 
-        public bool CanSelect()
+        public bool CanUsePosition()
         {
             return gameObject.activeSelf;
         }
 
-        public Vector2 GetPosition()
+        public (string, Vector2) GetKeyAndPosition()
         {
-            return gameObject.transform.position;
+            return (RMPinDef.Name, transform.position);
         }
 
         public void Select()
         {
-
+            Selected = true;
+            Set();
         }
 
         public void Deselect()
         {
-
+            Selected = false;
+            Set();
         }
 
         public IEnumerator PeriodicUpdate()
@@ -76,12 +80,12 @@ namespace MapModS
 
         public override void SetSprite()
         {
-            SR.sprite = RMPinDef.GetSprite();
+            Sr.sprite = RMPinDef.GetSprite();
         }
 
         public override void SetSpriteColor()
         {
-            SR.color = RMPinDef.GetSpriteColor();
+            Sr.color = RMPinDef.GetSpriteColor();
         }
 
         public override void SetBorderSprite()
@@ -96,7 +100,7 @@ namespace MapModS
 
         public override void SetScale()
         {
-            transform.localScale = RMPinDef.GetScale();
+            transform.localScale = new(RMPinDef.GetScale(), RMPinDef.GetScale(), 1f);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using MapChanger;
 using MapChanger.Defs;
-using MapModS.Map;
+//using MapModS.Map;
 using MapModS.Settings;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +8,7 @@ using RM = RandomizerMod.RandomizerMod;
 
 namespace MapModS.Pins
 {
-    public abstract class RandomizerModPinDef : AbstractPinDef
+    public abstract class RandomizerModPinDef : MapObjectDef
     {
         private protected const float REACHABLE_SIZE_SCALE = 1f;
         private protected const float UNREACHABLE_SIZE_SCALE = 0.7f;
@@ -18,7 +18,7 @@ namespace MapModS.Pins
         private const float MEDIUM_SCALE = 0.37f;
         private const float LARGE_SCALE = 0.44f;
 
-        public RandomizerModPinDef(MapPositionDef mpd) : base(mpd)
+        public RandomizerModPinDef(MapLocationDef mpd) : base(mpd)
         {
 
         }
@@ -28,9 +28,7 @@ namespace MapModS.Pins
 
         public override void Update()
         {
-            Active = Active
-                && ((States.QuickMapOpen && States.CurrentMapZone == MapPosition.MapZone)
-                    || (States.WorldMapOpen && (MapChanger.Settings.ForceFullMap || Utils.HasMapSetting(MapPosition.MapZone))));
+            base.Update();
             //TODO: Transition mode settings here
         }
 
@@ -59,6 +57,8 @@ namespace MapModS.Pins
             };
         }
 
+        public abstract Sprite GetSprite();
+
         public abstract Vector4 GetSpriteColor();
 
         public Sprite GetBorderSprite()
@@ -68,6 +68,6 @@ namespace MapModS.Pins
 
         public abstract Vector4 GetBorderColor();
 
-        public abstract Vector2 GetScale();
+        public abstract float GetScale();
     }
 }

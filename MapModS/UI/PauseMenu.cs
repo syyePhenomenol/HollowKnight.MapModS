@@ -1,7 +1,7 @@
 ﻿using MagicUI.Core;
 using MagicUI.Elements;
 using MapModS.Data;
-using MapModS.Map;
+//using MapModS.Map;
 using MapModS.Pins;
 using MapChanger;
 using MapModS.Settings;
@@ -197,23 +197,23 @@ namespace MapModS.UI
 
         private static void UpdateAll()
         {
-            foreach (KeyValuePair<string, (Action<Button>, Action<Button>)> kvp in _mainButtons)
-            {
-                Button button = (Button)layout.GetElement(kvp.Key);
+            //foreach (KeyValuePair<string, (Action<Button>, Action<Button>)> kvp in _mainButtons)
+            //{
+            //    Button button = (Button)layout.GetElement(kvp.Key);
 
-                kvp.Value.Item2.Invoke(button);
+            //    kvp.Value.Item2.Invoke(button);
 
-                if (kvp.Key == "Enabled") continue;
+            //    if (kvp.Key == "Enabled") continue;
 
-                if (MapModS.LS.ModEnabled)
-                {
-                    button.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    button.Visibility = Visibility.Hidden;
-                }
-            }
+            //    if (MapModS.LS.ModEnabled)
+            //    {
+            //        button.Visibility = Visibility.Visible;
+            //    }
+            //    else
+            //    {
+            //        button.Visibility = Visibility.Hidden;
+            //    }
+            //}
 
             //foreach (string group in MainData.usedPoolGroups)
             //{
@@ -292,7 +292,7 @@ namespace MapModS.UI
         public static void ToggleSpoilers(Button sender)
         {
             MapModS.LS.ToggleSpoilers();
-            MapModS.randoPinGroup.SetPins();
+            MapModS.randoPinGroup.Set();
             //WorldMap.CustomPins.SetSprites();
             //InfoPanels.UpdateSelectedPin();
 
@@ -317,7 +317,7 @@ namespace MapModS.UI
         public static void ToggleRandomized(Button sender)
         {
             MapModS.LS.ToggleRandomizedOn();
-            MapModS.randoPinGroup.SetPins();
+            MapModS.randoPinGroup.Set();
 
             //WorldMap.CustomPins.ResetPoolSettings();
             //WorldMap.CustomPins.SetPinsActive();
@@ -356,7 +356,7 @@ namespace MapModS.UI
         public static void ToggleVanilla(Button sender)
         {
             MapModS.LS.ToggleOthersOn();
-            MapModS.randoPinGroup.SetPins();
+            MapModS.randoPinGroup.Set();
             //WorldMap.CustomPins.ResetPoolSettings();
             //WorldMap.CustomPins.SetPinsActive();
             //WorldMap.CustomPins.SetSprites();
@@ -394,7 +394,7 @@ namespace MapModS.UI
         public static void ToggleStyle(Button sender)
         {
             MapModS.GS.TogglePinStyle();
-            MapModS.randoPinGroup.SetPins();
+            MapModS.randoPinGroup.Set();
             //WorldMap.CustomPins.SetSprites();
 
             //UpdateAll();
@@ -479,7 +479,7 @@ namespace MapModS.UI
             //}
 
             MapModS.LS.ToggleMode();
-
+            MapChanger.Settings.ToggleMode();
             UpdateAll();
             //MapText.UpdateAll();
             //ControlPanel.UpdateAll();

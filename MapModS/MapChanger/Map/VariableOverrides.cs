@@ -1,12 +1,14 @@
-﻿using HutongGames.PlayMaker;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using HutongGames.PlayMaker;
 using HutongGames.PlayMaker.Actions;
 using Modding;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using UnityEngine;
+using Vasi;
 
 namespace MapChanger.Map
 {
@@ -34,7 +36,6 @@ namespace MapChanger.Map
         {
             [JsonProperty]
             internal int Index { get; init; }
-
             [JsonProperty]
             internal OverrideType Type { get; init; }
         }
@@ -43,7 +44,6 @@ namespace MapChanger.Map
         {
             [JsonProperty]
             internal int Range { get; init; }
-
             [JsonProperty]
             internal OverrideType Type { get; init; }
         }
@@ -51,10 +51,12 @@ namespace MapChanger.Map
         private const string MAP_PREFIX = "MCO0";
         private const string PINS_PREFIX = "MCO1";
         private const string HAS_MAP = "hasMap";
+        private const string GOT_WHITE_PALACE_MAP = "AdditionalMapsGotWpMap";
+        private const string GOT_GODHOME_MAP = "AdditionalMapsGotGhMap";
 
         private static readonly Dictionary<string, string> ilVariables = new()
         {
-            { "hasQuill", MAP_PREFIX },
+            //{ "hasQuill", MAP_PREFIX },
             { "mapAllRooms", MAP_PREFIX },
             { "mapAbyss", MAP_PREFIX },
             { "mapCity", MAP_PREFIX },
@@ -69,9 +71,11 @@ namespace MapChanger.Map
             { "mapRoyalGardens", MAP_PREFIX },
             { "mapRestingGrounds", MAP_PREFIX },
             { "mapWaterways", MAP_PREFIX },
-            { "scenesEncounteredCocoon", PINS_PREFIX },
-            { "scenesEncounteredDreamPlant", PINS_PREFIX },
-            { "scenesEncounteredDreamPlantC", PINS_PREFIX }
+            { "AdditionalMapsGotWpMap", MAP_PREFIX },
+            { "AdditionalMapsGotGhMap", MAP_PREFIX },
+            //{ "scenesEncounteredCocoon", PINS_PREFIX },
+            //{ "scenesEncounteredDreamPlant", PINS_PREFIX },
+            //{ "scenesEncounteredDreamPlantC", PINS_PREFIX }
         };
 
         private static Dictionary<string, FsmBoolOverrideDef> fsmOverrideDefs;
@@ -83,54 +87,63 @@ namespace MapChanger.Map
 
         public override void Hook()
         {
-            On.PlayMakerFSM.OnEnable += ReplaceVariablesFSM;
+            On.PlayMakerFSM.Start += ReplaceVariablesFSM;
+            //On.PlayMakerFSM.OnEnable += ReplaceVariablesFSM;
 
             IL.GameMap.WorldMap += ReplaceVariablesIL;
-            IL.GameMap.SetupMap += ReplaceVariablesIL;
+            //IL.GameMap.SetupMap += ReplaceVariablesIL;
             IL.RoughMapRoom.OnEnable += ReplaceVariablesIL;
 
-            ModHooks.GetPlayerBoolHook += BoolGetOverride;
-            ModHooks.GetPlayerVariableHook += ModHooks_GetPlayerVariableHook;
+            ModHooks.GetPlayerBoolHook += GetBoolOverride;
+            ModHooks.GetPlayerVariableHook += GetVariableOverride;
         }
 
         public override void Unhook()
         {
-            On.PlayMakerFSM.OnEnable -= ReplaceVariablesFSM;
+            On.PlayMakerFSM.Start -= ReplaceVariablesFSM;
+            //On.PlayMakerFSM.OnEnable -= ReplaceVariablesFSM;
 
             IL.GameMap.WorldMap -= ReplaceVariablesIL;
-            IL.GameMap.SetupMap -= ReplaceVariablesIL;
+            //IL.GameMap.SetupMap -= ReplaceVariablesIL;
             IL.RoughMapRoom.OnEnable -= ReplaceVariablesIL;
 
-            ModHooks.GetPlayerBoolHook -= BoolGetOverride;
-            ModHooks.GetPlayerVariableHook -= ModHooks_GetPlayerVariableHook;
+            ModHooks.GetPlayerBoolHook -= GetBoolOverride;
+            ModHooks.GetPlayerVariableHook -= GetVariableOverride;
         }
 
-        private static void ReplaceVariablesFSM(On.PlayMakerFSM.orig_OnEnable orig, PlayMakerFSM self)
+        private static void ReplaceVariablesFSM(On.PlayMakerFSM.orig_Start orig, PlayMakerFSM self)
         {
-            orig(self);
-
-            if (fsmOverrideDefs.TryGetValue(self.FsmName, out FsmBoolOverrideDef fod)
-                || fsmOverrideDefs.TryGetValue(self.name + "-" + self.FsmName, out fod))
+            try
             {
-                foreach (FsmState state in self.FsmStates)
+                if (fsmOverrideDefs.TryGetValue(self.FsmName, out FsmBoolOverrideDef fod)
+                || fsmOverrideDefs.TryGetValue(self.name + "-" + self.FsmName, out fod))
                 {
-                    //MapModS.Instance.LogDebug($"Trying to replace bools in {state.Name} of {self.FsmName}");
-                    if (fod.BoolsIndex.TryGetValue(state.Name, out FsmActionBoolOverride[] overrides))
+                    foreach (FsmState state in self.FsmStates)
                     {
-                        foreach(FsmActionBoolOverride boolOverride in overrides)
+                        //MapModS.Instance.LogDebug($"Trying to replace bools in {state.Name} of {self.FsmName}");
+                        if (fod.BoolsIndex.TryGetValue(state.Name, out FsmActionBoolOverride[] overrides))
                         {
-                            ReplaceBool(state, boolOverride.Index, boolOverride.Type);
+                            foreach (FsmActionBoolOverride boolOverride in overrides)
+                            {
+                                ReplaceBool(state, boolOverride.Index, boolOverride.Type);
+                            }
                         }
-                    }
-                    if (fod.BoolsRange.TryGetValue(state.Name, out FsmActionBoolRangeOverride overrideRange))
-                    {
-                        for (int i = 0; i < overrideRange.Range; i++)
+                        if (fod.BoolsRange.TryGetValue(state.Name, out FsmActionBoolRangeOverride overrideRange))
                         {
-                            ReplaceBool(state, i, overrideRange.Type);
+                            for (int i = 0; i < overrideRange.Range; i++)
+                            {
+                                ReplaceBool(state, i, overrideRange.Type);
+                            }
                         }
                     }
                 }
             }
+            catch (Exception e)
+            {
+                MapChangerMod.Instance.LogError(e);
+            }
+
+            orig(self);
 
             static void ReplaceBool(FsmState state, int index, OverrideType type)
             {
@@ -155,23 +168,22 @@ namespace MapChanger.Map
                 }
                 MapChangerMod.Instance.LogWarn($"Unrecognized FsmAction: {state.Name}, {index}");
                 return;
-            }
 
-            static FsmString NewBoolName(FsmString name, OverrideType type)
-            {
-                if (name.ToString() == ""
-                    || name.ToString().StartsWith(MAP_PREFIX)
-                    || name.ToString().StartsWith(PINS_PREFIX))
+                static FsmString NewBoolName(FsmString name, OverrideType type)
                 {
-                    return name;
+                    if (name.ToString().StartsWith(MAP_PREFIX)
+                        || name.ToString().StartsWith(PINS_PREFIX))
+                    {
+                        return name;
+                    }
+                    MapChangerMod.Instance.LogDebug($"Replacement of {name} is successful");
+                    return type switch
+                    {
+                        OverrideType.Map => MAP_PREFIX + name,
+                        OverrideType.Pins => PINS_PREFIX + name,
+                        _ => name
+                    };
                 }
-                MapChangerMod.Instance.LogDebug($"Replacement of {name} is successful");
-                return type switch
-                {
-                    OverrideType.Map => MAP_PREFIX + name,
-                    OverrideType.Pins => PINS_PREFIX + name,
-                    _ => name
-                };
             }
         }
         
@@ -186,8 +198,13 @@ namespace MapChanger.Map
             }
         }
 
-        private static bool BoolGetOverride(string name, bool orig)
+        private static bool GetBoolOverride(string name, bool orig)
         {
+            if ((name is GOT_WHITE_PALACE_MAP or GOT_GODHOME_MAP)
+                && Settings.CurrentMode().ForceFullMap)
+            {
+                return true;
+            }
             if (!name.StartsWith(MAP_PREFIX) && !name.StartsWith(PINS_PREFIX))
             {
                 return orig;
@@ -198,19 +215,27 @@ namespace MapChanger.Map
             }
             if (name == MAP_PREFIX + HAS_MAP)
             {
-                return true;
+                if (Settings.CurrentMode().ForceHasMap)
+                {
+                    return true;
+                }
+                return GetOriginalBool(name);
             }
             if (name.StartsWith(MAP_PREFIX))
             {
-                if (Settings.ForceFullMap)
+                if (Settings.CurrentMode().ForceFullMap)
                 {
-                    return GetOriginalBool(name);
+                    return true;
                 }
-                return true;
+                return GetOriginalBool(name);
             }
             if (name.StartsWith(PINS_PREFIX))
             {
-                return false;
+                if (Settings.CurrentMode().DisableVanillaPins)
+                {
+                    return false;
+                }
+                return GetOriginalBool(name);
             }
             return orig;
 
@@ -220,8 +245,15 @@ namespace MapChanger.Map
             }
         }
 
-        private static object ModHooks_GetPlayerVariableHook(Type type, string name, object value)
+        private static object GetVariableOverride(Type type, string name, object value)
         {
+            if (name is "scenesMapped"
+                && Settings.MapModEnabled
+                && Settings.CurrentMode().ImmediateMapUpdate
+                && (PlayerData.instance.GetBool("hasQuill") || Settings.CurrentMode().ForceHasQuill))
+            {
+                return Tracker.ScenesVisited.ToList();
+            }
             if (!name.StartsWith(MAP_PREFIX) && !name.StartsWith(PINS_PREFIX))
             {
                 return value;
@@ -232,7 +264,11 @@ namespace MapChanger.Map
             }
             if (name.StartsWith(PINS_PREFIX) && type == typeof(List<string>))
             {
-                return new List<string> { };
+                if (Settings.CurrentMode().DisableVanillaPins)
+                {
+                    return new List<string> { };
+                }
+                return GetOriginalVariable<List<string>>(name);
             }
             return value;
 

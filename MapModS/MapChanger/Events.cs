@@ -1,27 +1,26 @@
-﻿using MapModS.Data;
-using MapModS.Map;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System;
 using GlobalEnums;
 using HutongGames.PlayMaker;
+using MapChanger.Map;
+using MapChanger.MonoBehaviours;
+using MapChanger.UI;
 using UnityEngine;
 using Vasi;
-using MapChanger.Map;
 
 namespace MapChanger
 {
-    /// <summary>
-    /// Contains some common/map-related events to hook to.
-    /// </summary>
     public static class Events
     {
-        public static event Action OnEnterGame;
-        public static event Action OnQuitToMenu;
-        public static event Action<GameObject> OnSetGameMap;
-        public static event Action<GameMap> OnOpenWorldMap;
-        public static event Action<GameMap, MapZone> OnOpenQuickMap;
-        public static event Action<GameMap> OnCloseMap;
+        public static event Action AfterEnterGame;
+        public static event Action BeforeQuitToMenu;
+        public static event Action<GameObject> AfterSetGameMap;
+        public static event Action<GameMap> BeforeOpenWorldMap;
+        public static event Action<GameMap> AfterOpenWorldMap;
+        public static event Action<GameMap, MapZone> BeforeOpenQuickMap;
+        public static event Action<GameMap, MapZone> AfterOpenQuickMap;
+        public static event Action<GameMap> BeforeCloseMap;
 
         private class QuickMapCustom : FsmStateAction
         {
@@ -36,16 +35,17 @@ namespace MapChanger
 
             public override void OnEnter()
             {
-                OpenQuickMapEvent(gameMap, mapZone);
+                AfterOpenQuickMapEvent(gameMap, mapZone);
+                Finish();
             }
         }
 
         internal static readonly List<HookModule> HookModules = new()
         {
-            new LocationTracker(),
-            new MethodOverrides(),
+            new Tracker(),
             new VariableOverrides(),
-            new QoL()
+            new BehaviourChanges(),
+            new Hotkeys()
         };
 
         private static readonly MapZone[] customMapZones =
@@ -93,7 +93,7 @@ namespace MapChanger
         private static void EnterGameEvent()
         {
             // Load default/custom assets
-            SpriteManager.LoadPinSprites();
+            Settings.Initialize();
             Colors.LoadCustomColors();
 
             foreach (HookModule hookModule in HookModules)
@@ -101,7 +101,7 @@ namespace MapChanger
                 hookModule.Hook();
             }
 
-            try { OnEnterGame?.Invoke(); }
+            try { AfterEnterGame?.Invoke(); }
             catch (Exception e) { MapChangerMod.Instance.LogError(e); }
         }
 
@@ -112,7 +112,7 @@ namespace MapChanger
                 hookModule.Unhook();
             }
 
-            try { OnQuitToMenu?.Invoke(); }
+            try { BeforeQuitToMenu?.Invoke(); }
             catch (Exception e) { MapChangerMod.Instance.LogError(e); }
 
             return orig(self);
@@ -123,7 +123,7 @@ namespace MapChanger
             orig(self, goMap);
             HookQuickMapCustom();
 
-            try { OnSetGameMap?.Invoke(goMap); }
+            try { AfterSetGameMap?.Invoke(goMap); }
             catch (Exception e) { MapChangerMod.Instance.LogError(e); }
 
             static void HookQuickMapCustom()
@@ -143,20 +143,30 @@ namespace MapChanger
 
         private static void OpenWorldMapEvent(On.GameMap.orig_WorldMap orig, GameMap self)
         {
-            orig(self);
             States.WorldMapOpen = true;
             States.CurrentMapZone = MapZone.NONE;
 
-            try { OnOpenWorldMap?.Invoke(self); }
+            try { BeforeOpenWorldMap?.Invoke(self); }
+            catch (Exception e) { MapChangerMod.Instance.LogError(e); }
+
+            orig(self);
+
+            try { AfterOpenWorldMap?.Invoke(self); }
             catch (Exception e) { MapChangerMod.Instance.LogError(e); }
         }
 
-        private static void OpenQuickMapEvent(GameMap gameMap, MapZone mapZone)
+        private static void BeforeOpenQuickMapEvent(GameMap gameMap, MapZone mapZone)
         {
             States.QuickMapOpen = true;
             States.CurrentMapZone = mapZone;
 
-            try { OnOpenQuickMap?.Invoke(gameMap, mapZone); }
+            try { BeforeOpenQuickMap?.Invoke(gameMap, mapZone); }
+            catch (Exception e) { MapChangerMod.Instance.LogError(e); }
+        }
+
+        private static void AfterOpenQuickMapEvent(GameMap gameMap, MapZone mapZone)
+        {
+            try { AfterOpenQuickMap?.Invoke(gameMap, mapZone); }
             catch (Exception e) { MapChangerMod.Instance.LogError(e); }
         }
 
@@ -166,7 +176,7 @@ namespace MapChanger
             States.QuickMapOpen = false;
             States.CurrentMapZone = MapZone.NONE;
 
-            try { OnCloseMap?.Invoke(self); }
+            try { BeforeCloseMap?.Invoke(self); }
             catch (Exception e) { MapChangerMod.Instance.LogError(e); }
 
             orig(self);
@@ -174,86 +184,100 @@ namespace MapChanger
 
         private static void OnOpenQuickMapAncientBasin(On.GameMap.orig_QuickMapAncientBasin orig, GameMap self)
         {
+            BeforeOpenQuickMapEvent(self, MapZone.ABYSS);
             orig(self);
-            OpenQuickMapEvent(self, MapZone.ABYSS);
+            AfterOpenQuickMapEvent(self, MapZone.ABYSS);
         }
 
         private static void OnOpenQuickMapCity(On.GameMap.orig_QuickMapCity orig, GameMap self)
         {
+            BeforeOpenQuickMapEvent(self, MapZone.CITY);
             orig(self);
-            OpenQuickMapEvent(self, MapZone.CITY);
+            AfterOpenQuickMapEvent(self, MapZone.CITY);
         }
 
         private static void OnOpenQuickMapCliffs(On.GameMap.orig_QuickMapCliffs orig, GameMap self)
         {
+            BeforeOpenQuickMapEvent(self, MapZone.CLIFFS);
             orig(self);
-            OpenQuickMapEvent(self, MapZone.CLIFFS);
+            AfterOpenQuickMapEvent(self, MapZone.CLIFFS);
         }
 
         private static void OnOpenQuickMapCrossroads(On.GameMap.orig_QuickMapCrossroads orig, GameMap self)
         {
+            BeforeOpenQuickMapEvent(self, MapZone.CROSSROADS);
             orig(self);
-            OpenQuickMapEvent(self, MapZone.CROSSROADS);
+            AfterOpenQuickMapEvent(self, MapZone.CROSSROADS);
         }
 
         private static void OnOpenQuickMapCrystalPeak(On.GameMap.orig_QuickMapCrystalPeak orig, GameMap self)
         {
+            BeforeOpenQuickMapEvent(self, MapZone.MINES);
             orig(self);
-            OpenQuickMapEvent(self, MapZone.MINES);
+            AfterOpenQuickMapEvent(self, MapZone.MINES);
         }
 
         private static void OnOpenQuickMapDeepnest(On.GameMap.orig_QuickMapDeepnest orig, GameMap self)
         {
+            BeforeOpenQuickMapEvent(self, MapZone.DEEPNEST);
             orig(self);
-            OpenQuickMapEvent(self, MapZone.DEEPNEST);
+            AfterOpenQuickMapEvent(self, MapZone.DEEPNEST);
         }
 
         private static void OnOpenQuickMapDirtmouth(On.GameMap.orig_QuickMapDirtmouth orig, GameMap self)
         {
+            BeforeOpenQuickMapEvent(self, MapZone.TOWN);
             orig(self);
-            OpenQuickMapEvent(self, MapZone.TOWN);
+            AfterOpenQuickMapEvent(self, MapZone.TOWN);
         }
 
         private static void OnOpenQuickMapFogCanyon(On.GameMap.orig_QuickMapFogCanyon orig, GameMap self)
         {
+            BeforeOpenQuickMapEvent(self, MapZone.FOG_CANYON);
             orig(self);
-            OpenQuickMapEvent(self, MapZone.FOG_CANYON);
+            AfterOpenQuickMapEvent(self, MapZone.FOG_CANYON);
         }
 
         private static void OnOpenQuickMapFungalWastes(On.GameMap.orig_QuickMapFungalWastes orig, GameMap self)
         {
+            BeforeOpenQuickMapEvent(self, MapZone.WASTES);
             orig(self);
-            OpenQuickMapEvent(self, MapZone.WASTES);
+            AfterOpenQuickMapEvent(self, MapZone.WASTES);
         }
 
         private static void OnOpenQuickMapGreenpath(On.GameMap.orig_QuickMapGreenpath orig, GameMap self)
         {
+            BeforeOpenQuickMapEvent(self, MapZone.GREEN_PATH);
             orig(self);
-            OpenQuickMapEvent(self, MapZone.GREEN_PATH);
+            AfterOpenQuickMapEvent(self, MapZone.GREEN_PATH);
         }
 
         private static void OnOpenQuickMapKingdomsEdge(On.GameMap.orig_QuickMapKingdomsEdge orig, GameMap self)
         {
+            BeforeOpenQuickMapEvent(self, MapZone.OUTSKIRTS);
             orig(self);
-            OpenQuickMapEvent(self, MapZone.OUTSKIRTS);
+            AfterOpenQuickMapEvent(self, MapZone.OUTSKIRTS);
         }
 
         private static void OnOpenQuickMapQueensGardens(On.GameMap.orig_QuickMapQueensGardens orig, GameMap self)
         {
+            BeforeOpenQuickMapEvent(self, MapZone.ROYAL_GARDENS);
             orig(self);
-            OpenQuickMapEvent(self, MapZone.ROYAL_GARDENS);
+            AfterOpenQuickMapEvent(self, MapZone.ROYAL_GARDENS);
         }
 
         private static void OnOpenQuickMapRestingGrounds(On.GameMap.orig_QuickMapRestingGrounds orig, GameMap self)
         {
+            BeforeOpenQuickMapEvent(self, MapZone.RESTING_GROUNDS);
             orig(self);
-            OpenQuickMapEvent(self, MapZone.RESTING_GROUNDS);
+            AfterOpenQuickMapEvent(self, MapZone.RESTING_GROUNDS);
         }
 
         private static void OnOpenQuickMapWaterways(On.GameMap.orig_QuickMapWaterways orig, GameMap self)
         {
+            BeforeOpenQuickMapEvent(self, MapZone.WATERWAYS);
             orig(self);
-            OpenQuickMapEvent(self, MapZone.WATERWAYS);
+            AfterOpenQuickMapEvent(self, MapZone.WATERWAYS);
         }
     }
 }

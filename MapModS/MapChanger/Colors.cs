@@ -7,6 +7,8 @@ namespace MapChanger
 {
     public enum ColorSetting
     {
+        None,
+
         UI_On,
         UI_Neutral,
         UI_Custom,
@@ -56,6 +58,8 @@ namespace MapChanger
 
     public static class Colors
     {
+        public static bool HasCustomColors { get; private set; } = false;
+
         public static readonly Dictionary<string, ColorSetting> mapColors = new()
         {
             { "Ancient Basin", ColorSetting.Map_Ancient_Basin },
@@ -75,28 +79,6 @@ namespace MapChanger
             { "Waterways", ColorSetting.Map_Royal_Waterways },
             { "WHITE_PALACE", ColorSetting.Map_White_Palace },
         };
-
-        // When iterating through map objects, these are the first objects with unique sub area colors
-        public static readonly Dictionary<string, ColorSetting> subAreaMapColorKeys = new()
-        {
-            { "Abyss_01", ColorSetting.Map_Ancient_Basin },
-            { "Waterways_13", ColorSetting.Map_Ismas_Grove },
-            { "Abyss_02", ColorSetting.Map_Ancient_Basin },
-            { "Hive_01", ColorSetting.Map_Hive },
-            { "Fungus2_01", ColorSetting.Map_Queens_Station },
-            { "Fungus2_12", ColorSetting.Map_Mantis_Village },
-            { "Fungus2_13", ColorSetting.Map_Mantis_Village },
-            { "Tutorial_01", ColorSetting.Map_Howling_Cliffs },
-            { "Abyss_06_Core", ColorSetting.Map_Abyss },
-            { "Abyss_06_Core_b", ColorSetting.Map_Abyss },
-            { "Ruins1_09", ColorSetting.Map_Soul_Sanctum },
-            { "Ruins1_23", ColorSetting.Map_Soul_Sanctum },
-            { "Ruins2_01", ColorSetting.Map_Watchers_Spire },
-
-        };
-
-        // Dynamically get pairings of sub area objects/color setting. Key is (parent name, original color)
-        public static Dictionary<(string, Vector4), ColorSetting> subAreaMapColors = new();
 
         public static readonly List<ColorSetting> pinColors = new()
         {
@@ -119,6 +101,7 @@ namespace MapChanger
 
         private static readonly Dictionary<ColorSetting, Vector4> defaultColors = new()
         {
+            { ColorSetting.None, Color.white },
             { ColorSetting.UI_On, Color.green},
             { ColorSetting.UI_Neutral, Color.white },
             { ColorSetting.UI_Custom, Color.yellow },
@@ -173,6 +156,7 @@ namespace MapChanger
                 }
 
                 MapChangerMod.Instance.Log("Custom colors loaded");
+                HasCustomColors = true;
             }
             else
             {
@@ -193,6 +177,21 @@ namespace MapChanger
             }
 
             return Vector4.negativeInfinity;
+        }
+
+        public static bool TryGetCustomColor(ColorSetting colorSetting, out Vector4 color)
+        {
+            color = Vector4.negativeInfinity;
+
+            if (customColors is not null && customColors.TryGetValue(colorSetting, out color))
+            {
+                return true;
+            }
+            if (defaultColors.ContainsKey(colorSetting))
+            {
+                color =  defaultColors[colorSetting];
+            }
+            return false;
         }
 
         public static Vector4 GetColorFromMapZone(MapZone mapZone)

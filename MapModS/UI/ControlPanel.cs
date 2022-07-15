@@ -2,7 +2,7 @@
 using MagicUI.Elements;
 using MagicUI.Graphics;
 using MapModS.Data;
-using MapModS.Map;
+//using MapModS.Map;
 using MapChanger;
 using MapModS.Settings;
 using UnityEngine;
@@ -184,7 +184,7 @@ namespace MapModS.UI
 #if DEBUG
                 layout.ListenForHotkey(KeyCode.Alpha6, () =>
                 {
-                    //MainData.LoadDebugResources();
+                    //MapChanger.Finder.ReloadLocations();
                     //WorldMap.CustomPins.ReadjustPinPostiions();
                     //MapRooms.ReadjustRoomPostiions();
                 }, ModifierKeys.Ctrl);
