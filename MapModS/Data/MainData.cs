@@ -199,7 +199,7 @@ namespace MapModS.Data
 
                 if (!items.Any()) continue;
 
-                RandoModLocation rml = placement.Value.RandoLocation();
+                RandoModLocation rml = placement.Value.Items.First().RandoPlacement().Location;
 
                 if (rml == null || rml.Name == "Start" || rml.LocationDef.SceneName == null) continue;
 
@@ -235,7 +235,7 @@ namespace MapModS.Data
 
                 // UpdatePins will set it to the correct state
                 pd.pinLocationState = PinLocationState.UncheckedUnreachable;
-                pd.locationPoolGroup = SupplementalMetadata.OfPlacementAndLocations(placement.Value).Get(CMI.LocationPoolGroup);
+                pd.locationPoolGroup = SupplementalMetadata.OfPlacementAndLocations(placement.Value).Get(InjectedProps.LocationPoolGroup);
 
                 usedPins.Add(rml.Name, pd);
 

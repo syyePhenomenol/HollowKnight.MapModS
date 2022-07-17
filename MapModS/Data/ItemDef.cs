@@ -1,6 +1,5 @@
 ﻿using ConnectionMetadataInjector;
 using ItemChanger;
-using CMI = ConnectionMetadataInjector.ConnectionMetadataInjector;
 
 namespace MapModS.Data
 {
@@ -10,7 +9,7 @@ namespace MapModS.Data
         {
             id = item.RandoItemId();
             itemName = item.RandoItemName();
-            poolGroup = SupplementalMetadata.Of(item).Get(CMI.ItemPoolGroup);
+            poolGroup = SupplementalMetadata.Of(item).Get(InjectedProps.ItemPoolGroup);
             persistent = item.IsPersistent();
         }
 
