@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using GlobalEnums;
 using MapChanger.Defs;
@@ -21,8 +22,6 @@ namespace MapChanger
             locations = JsonUtil.Deserialize<Dictionary<string, MapLocationDef>>("MapModS.MapChanger.Resources.locations.json");
             minimalMapScenes = JsonUtil.Deserialize<HashSet<string>>("MapModS.MapChanger.Resources.minimalMap.json");
 
-            //ScaleOffsets(locations, "locations.json");
-
             if (Dependencies.HasAdditionalMaps())
             {
                 Dictionary<string, MappedSceneDef> mappedSceneLookupAM = JsonUtil.Deserialize<Dictionary<string, MappedSceneDef>>("MapModS.MapChanger.Resources.AdditionalMaps.mappedScenes.json");
@@ -36,129 +35,14 @@ namespace MapChanger
                 {
                     locations[name] = mpd;
                 }
-                //ScaleOffsets(locationLookupAM, "locationsAM.json");
             }
 
-            foreach ((string name, MapLocationDef mpd) in locations.Select(kvp => (kvp.Key, kvp.Value)))
-            {
-                CompleteLocationDef(name, mpd);
-            }
+            //foreach ((string name, MapLocationDef mpd) in locations.Select(kvp => (kvp.Key, kvp.Value)))
+            //{
+            //    CompleteLocationDef(name, mpd);
+            //}
         }
 
-        //public static void GetAllMapObjectData(GameObject goMap)
-        //{
-        //    MapChangerMod.Instance.LogDebug("GetAllMapObjectData");
-
-        //    Dictionary<string, BuiltInObjectDefOld> defaultMapObjectDefs = new();
-
-        //    try
-        //    {
-        //        defaultMapObjectDefs = JsonUtil.Deserialize<Dictionary<string, BuiltInObjectDefOld>>("MapModS.MapChanger.Resources.defaultMapObjects.json");
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        MapChangerMod.Instance.LogError(e);
-        //    }
-
-        //    Dictionary<string, BuiltInObjectDefOld> defaultMapObjects = new();
-
-        //    MapChangerMod.Instance.LogDebug("Entering for loop");
-
-        //    try
-        //    {
-        //        for (int index0 = 0; index0 < goMap.transform.childCount; index0++)
-        //        {
-        //            Transform t0 = goMap.transform.GetChild(index0);
-        //            TryCreateMapObjectData(t0.name, new int[] { index0 }, t0);
-
-        //            for (int index1 = 0; index1 < t0.childCount; index1++)
-        //            {
-        //                Transform t1 = t0.GetChild(index1);
-        //                TryCreateMapObjectData(t0.name + "/" + t1.name, new int[] { index0, index1 }, t1);
-
-        //                for (int index2 = 0; index2 < t1.childCount; index2++)
-        //                {
-        //                    Transform t2 = t1.GetChild(index2);
-        //                    TryCreateMapObjectData(t0.name + "/" + t1.name + "/" + t2.name, new int[] { index0, index1, index2 }, t2);
-
-        //                    for (int index3 = 0; index3 < t2.childCount; index3++)
-        //                    {
-        //                        Transform t3 = t2.GetChild(index3);
-        //                        TryCreateMapObjectData(t0.name + "/" + t1.name + "/" + t2.name + "/" + t3.name, new int[] { index0, index1, index2, index3 }, t3);
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        MapChangerMod.Instance.LogError(e);
-        //    }
-
-        //    try
-        //    {
-        //        JsonUtil.Serialize(defaultMapObjects, "defaultMapObjects.json");
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        MapChangerMod.Instance.LogError(e);
-        //    }
-
-        //    MapChangerMod.Instance.LogDebug("~GetAllMapObjectData");
-
-        //    void TryCreateMapObjectData(string name, int[] indices, Transform transform)
-        //    {
-        //        if (transform.GetComponent<SpriteRenderer>() is null && transform.GetComponent<TextMeshPro>() is null) return;
-
-        //        if (defaultMapObjectDefs.TryGetValue(name, out BuiltInObjectDefOld dmod))
-        //        {
-        //            dmod.Indices = indices;
-        //        }
-        //        else
-        //        {
-        //            dmod = new BuiltInObjectDefOld() { Indices = indices };
-        //        }
-
-        //        if (defaultMapObjects.ContainsKey(name))
-        //        {
-        //            defaultMapObjects[name + " Dupe"] = dmod;
-        //        }
-        //        else
-        //        {
-        //            defaultMapObjects[name] = dmod;
-        //        }
-        //    }
-
-            //void TryCreateMapObjectData(string name, Transform transform)
-            //{
-            //    if (transform.gameObject.GetComponent<SpriteRenderer>() is SpriteRenderer sr)
-            //    {
-            //        CreateMapObjectData(name, sr.color, false);
-            //    }
-            //    if (transform.gameObject.GetComponent<TextMeshPro>() is TextMeshPro tmp)
-            //    {
-            //        CreateMapObjectData(name, tmp.color, true);
-            //    }
-            //}
-
-            //void CreateMapObjectData(string name, Vector4 color, bool isText)
-            //{
-            //    MapObjectData mapObjectData = new();
-            //    mapObjectData.isText = isText;
-
-            //    if (!colorIndices.TryGetValue(color, out int index))
-            //    {
-            //        index = colorIndices.Count();
-            //        colorIndices[color] = index;
-            //    }
-            //    mapObjectData.colorIndex = index;
-
-            //    mapObjectData.Color = new float[] { color.x, color.y, color.z, color.w };
-
-            //    defaultMapObjects[name] = mapObjectData;
-            //}
-        //}
-        
         internal static void SetMappedScenePositions(List<MapObject> roomSprites)
         {
             mappedScenePositions = roomSprites.Where(rs => IsScene(rs.transform.name))
@@ -173,7 +57,8 @@ namespace MapChanger
 
             if (mappedScenePositions.ContainsKey(scene))
             {
-                position = mappedScenePositions[scene];
+                position = mappedScenePositions[scene].Snap();
+
                 return true;
             }
             return false;
@@ -183,7 +68,7 @@ namespace MapChanger
         {
             foreach ((string name, MapLocationDef mpd) in locations.Select(kvp => (kvp.Key, kvp.Value)))
             {
-                CompleteLocationDef(name, mpd);
+                //CompleteLocationDef(name, mpd);
                 injectedLocations[name] = mpd;
             }
         }
@@ -203,12 +88,17 @@ namespace MapChanger
             return default;
         }
 
+        public static Dictionary<string, MapLocationDef> GetAllVanillaLocations()
+        {
+            return locations;
+        }
+
         public static Dictionary<string, MapLocationDef> GetAllLocations()
         {
             Dictionary<string, MapLocationDef> newLocations = new(locations);
-            foreach ((string name, MapLocationDef mpd) in injectedLocations.Select(kvp => (kvp.Key, kvp.Value)))
+            foreach ((string name, MapLocationDef mld) in injectedLocations.Select(kvp => (kvp.Key, kvp.Value)))
             {
-                newLocations[name] = mpd;
+                newLocations[name] = mld;
             }
 
             return newLocations;
@@ -219,30 +109,20 @@ namespace MapChanger
             return minimalMapScenes.Contains(scene);
         }
 
-        private static void CompleteLocationDef(string name, MapLocationDef mpd)
-        {
-            if (mpd.Name is null)
-            {
-                mpd.Name = name;
-            }
-            if (mpd.SceneName is null && Dependencies.HasItemChanger())
-            {
-                mpd.SceneName = IC.ICInterop.GetScene(name);
-            }
-            if (mpd.MappedScene is null)
-            {
-                mpd.MappedScene = GetMappedScene(mpd.SceneName);
-            }
-        }
-
-        //public static void ScaleOffsets(Dictionary<string, MapLocationDef> locations, string name)
+        //private static void CompleteLocationDef(string name, MapLocationDef mpd)
         //{
-        //    foreach (MapLocationDef mld in locations.Values)
+        //    if (mpd.Name is null)
         //    {
-        //        mld.OffsetX = (float)Math.Round(mld.OffsetX / 1.46f, 1);
-        //        mld.OffsetY = (float)Math.Round(mld.OffsetY / 1.46f, 1);
+        //        mpd.Name = name;
         //    }
-        //    JsonUtil.Serialize(locations, name);
+        //    if (mpd.SceneName is null && Dependencies.HasItemChanger())
+        //    {
+        //        mpd.SceneName = IC.ICInterop.GetScene(name);
+        //    }
+        //    if (mpd.MappedScene is null)
+        //    {
+        //        mpd.MappedScene = GetMappedScene(mpd.SceneName);
+        //    }
         //}
 
         public static string GetMappedScene(string scene)
@@ -283,17 +163,18 @@ namespace MapChanger
 
         public static string CurrentScene()
         {
-            string scene = GameManager.instance.sceneName;
-            if (scene is null) return default;
-            if (scene.EndsWith("_boss") || scene.EndsWith("_preload"))
-            {
-                return scene.DropSuffix();
-            }
-            if (scene.EndsWith("_boss_defeated"))
-            {
-                return scene.DropSuffix().DropSuffix();
-            }
-            return scene;
+            return GameManager.GetBaseSceneName(GameManager.instance.sceneName);
+            //string scene = GameManager.instance.sceneName;
+            //if (scene is null) return default;
+            //if (scene.EndsWith("_boss") || scene.EndsWith("_preload"))
+            //{
+            //    return scene.DropSuffix();
+            //}
+            //if (scene.EndsWith("_boss_defeated"))
+            //{
+            //    return scene.DropSuffix().DropSuffix();
+            //}
+            //return scene;
         }
 
         public static MapZone GetCurrentMapZone()

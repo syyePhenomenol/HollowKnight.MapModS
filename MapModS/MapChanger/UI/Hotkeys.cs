@@ -8,7 +8,7 @@ namespace MapChanger.UI
     {
         private static LayoutRoot layout;
 
-        public override void Hook()
+        internal override void Hook()
         {
             if (layout == null)
             {
@@ -16,17 +16,26 @@ namespace MapChanger.UI
 
                 layout.ListenForHotkey(KeyCode.M, () =>
                 {
-                    Settings.ToggleMode();
+                    Settings.ToggleModEnabled();
                 }, ModifierKeys.Ctrl);
 
+                layout.ListenForHotkey(KeyCode.T, () =>
+                {
+                    Settings.ToggleMode();
+                    //BuiltInObjects.RoomSelector.Toggle();
+                }, ModifierKeys.Ctrl);
                 layout.ListenForHotkey(KeyCode.E, () =>
                 {
-                    BuiltInObjects.ExportRoomTextDefs();
+                    BuiltInObjects.ExportDefs();
                 }, ModifierKeys.Ctrl);
+                //layout.ListenForHotkey(KeyCode.D, () =>
+                //{
+                //    BuiltInObjects.ImportDefs();
+                //}, ModifierKeys.Ctrl);
             }
         }
 
-        public override void Unhook()
+        internal override void Unhook()
         {
             layout?.Destroy();
             layout = null;

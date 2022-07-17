@@ -5,32 +5,40 @@ using UnityEngine;
 
 namespace MapChanger.MonoBehaviours
 {
-    public class Selector : MapObject, IPeriodicUpdater, ISpriteRenderer
+    public class Selector : MapObject, IPeriodicUpdater, ISpriteRenderer, IToggleable
     {
-        public event Action<string> OnSelectionChanged;
+        internal event Action<string> OnSet;
 
         public const string NONE_SELECTED = "None selected";
+        
+        private const float DEFAULT_SIZE = 0.3f;
+        private const float MAP_FRONT_Z = -23f;
+        private const string SELECTOR = "selector";
+
         public Dictionary<string, List<ISelectable>> Objects { get; set; } = new();
         public Vector2 TargetPosition { get; set; } = Vector2.zero;
         public float UpdateWaitSeconds { get; set; } = 0.1f;
 
         public SpriteRenderer Sr => GetComponent<SpriteRenderer>();
 
-        private string selectedObjectKey = NONE_SELECTED;
+        internal string SelectedObjectKey { get; private set; } = NONE_SELECTED;
 
+        private bool isActive = true;
+
+        // Coroutines stop when the GameObject is set inactive!
         public IEnumerator PeriodicUpdate()
         {
             while (true)
             {
                 yield return new WaitForSecondsRealtime(UpdateWaitSeconds);
 
-                if (!gameObject.activeSelf) continue;
+                if (!isActive) continue;
 
                 if (TryGetKeyOfObjectClosestToTarget(out string newKey))
                 {
-                    if (Objects.ContainsKey(selectedObjectKey))
+                    if (Objects.ContainsKey(SelectedObjectKey))
                     {
-                        foreach (ISelectable selectable in Objects[selectedObjectKey])
+                        foreach (ISelectable selectable in Objects[SelectedObjectKey])
                         {
                             selectable.Deselect();
                         }
@@ -42,7 +50,7 @@ namespace MapChanger.MonoBehaviours
                             selectable.Select();
                         }
                     }
-                    selectedObjectKey = newKey;
+                    SelectedObjectKey = newKey;
                     Set();
                 }
             }
@@ -75,7 +83,7 @@ namespace MapChanger.MonoBehaviours
                     }
                 }
 
-                return newKey != selectedObjectKey;
+                return newKey != SelectedObjectKey;
 
                 double HorizontalDistanceToTarget(Vector2 position)
                 {
@@ -96,61 +104,66 @@ namespace MapChanger.MonoBehaviours
 
         public void Awake()
         {
-            gameObject.layer = 5;
+            base.Initialize();
 
             gameObject.AddComponent<SpriteRenderer>();
-            Sr.sprite = SpriteManager.GetSprite("selector");
+            Sr.sprite = SpriteManager.GetSprite(SELECTOR);
             Sr.sortingLayerName = HUD;
 
-            transform.localScale = Vector3.one * 0.3f;
-            transform.localPosition = new Vector3(0, 0, -23f);
-
-            gameObject.SetActive(false);
+            transform.localScale = Vector3.one * DEFAULT_SIZE;
+            transform.localPosition = new Vector3(0, 0, MAP_FRONT_Z);
 
             Events.AfterOpenWorldMap += OnOpenWorldMap;
             Events.BeforeCloseMap += OnCloseMap;
+            Events.BeforeQuitToMenu += OnQuitToMenu;
         }
 
         private void OnOpenWorldMap(GameMap gameMap)
         {
-            StopAllCoroutines();
             Set();
-            StartCoroutine(PeriodicUpdate());
         }
 
         private void OnCloseMap(GameMap gameMap)
         {
-            StopAllCoroutines();
             Set();
         }
 
-        public void OnDestroy()
+        /// <summary>
+        /// As this GameObject doesn't have a parent, we need to manually destroy it
+        /// </summary>
+        private void OnQuitToMenu()
         {
             Events.AfterOpenWorldMap -= OnOpenWorldMap;
             Events.BeforeCloseMap -= OnCloseMap;
+            Events.BeforeQuitToMenu -= OnQuitToMenu;
+            gameObject.DestroyAll();
         }
 
         public override void Set()
         {
-            try { OnSelectionChanged?.Invoke(selectedObjectKey); }
+            try { OnSet?.Invoke(SelectedObjectKey); }
             catch (Exception e) { MapChangerMod.Instance.LogError(e); }
 
-            if (Settings.MapModEnabled && States.WorldMapOpen)
+            if (Settings.MapModEnabled && States.WorldMapOpen && isActive)
             {
-                gameObject.SetActive(true);
+                if (!gameObject.activeSelf)
+                {
+                    gameObject.SetActive(true);
+                    StartCoroutine(PeriodicUpdate());
+                }
             }
             else
             {
                 gameObject.SetActive(false);
 
-                if (selectedObjectKey != NONE_SELECTED)
+                if (SelectedObjectKey != NONE_SELECTED)
                 {
-                    foreach (ISelectable selectable in Objects[selectedObjectKey])
+                    foreach (ISelectable selectable in Objects[SelectedObjectKey])
                     {
                         selectable.Deselect();
                     }
 
-                    selectedObjectKey = NONE_SELECTED;
+                    SelectedObjectKey = NONE_SELECTED;
                 }
             }
 
@@ -174,6 +187,18 @@ namespace MapChanger.MonoBehaviours
             //{
             //    Sr.color = Colors.GetColor(ColorSetting.Room_Normal);
             //}
+        }
+
+        public void SetActive(bool value)
+        {
+            isActive = value;
+            Set();
+        }
+
+        public void Toggle()
+        {
+            isActive = !isActive;
+            Set();
         }
     }
 }

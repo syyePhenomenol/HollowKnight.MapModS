@@ -107,9 +107,9 @@ namespace MapModS.Pins
                 return;
             }
 
-            RandoModLocation rml = placement.RandoLocation();
+            //RandoModLocation rml = placement.RandoLocation();
 
-            PinDefs.Add(rml.Name, new RandoPinDef(placement));
+            //PinDefs.Add(rml.Name, new RandoPinDef(placement));
         }
 
         private static void AddVanillaPinDef(GeneralizedPlacement placement)

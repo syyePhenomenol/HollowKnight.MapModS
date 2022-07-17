@@ -7,8 +7,6 @@ using Modding;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using Newtonsoft.Json;
-using UnityEngine;
-using Vasi;
 
 namespace MapChanger.Map
 {
@@ -85,7 +83,7 @@ namespace MapChanger.Map
             fsmOverrideDefs = JsonUtil.Deserialize<Dictionary<string, FsmBoolOverrideDef>>("MapModS.MapChanger.Resources.fsmOverrides.json");
         }
 
-        public override void Hook()
+        internal override void Hook()
         {
             On.PlayMakerFSM.Start += ReplaceVariablesFSM;
             //On.PlayMakerFSM.OnEnable += ReplaceVariablesFSM;
@@ -98,7 +96,7 @@ namespace MapChanger.Map
             ModHooks.GetPlayerVariableHook += GetVariableOverride;
         }
 
-        public override void Unhook()
+        internal override void Unhook()
         {
             On.PlayMakerFSM.Start -= ReplaceVariablesFSM;
             //On.PlayMakerFSM.OnEnable -= ReplaceVariablesFSM;
@@ -200,8 +198,8 @@ namespace MapChanger.Map
 
         private static bool GetBoolOverride(string name, bool orig)
         {
-            if ((name is GOT_WHITE_PALACE_MAP or GOT_GODHOME_MAP)
-                && Settings.CurrentMode().ForceFullMap)
+            if (name is GOT_WHITE_PALACE_MAP or GOT_GODHOME_MAP
+                && Settings.MapModEnabled && Settings.CurrentMode().ForceFullMap)
             {
                 return true;
             }

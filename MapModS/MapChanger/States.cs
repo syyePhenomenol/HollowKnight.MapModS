@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using GlobalEnums;
+﻿using GlobalEnums;
 
 namespace MapChanger
 {

@@ -67,7 +67,7 @@ namespace MapChanger.Map
             AreaNames = Utils.MakeMonoBehaviour<MapObjectGroup>(goMap, nameof(AreaNames));
             NextAreas = Utils.MakeMonoBehaviour<MapObjectGroup>(goMap, nameof(NextAreas));
 
-            RoomSelector = Utils.MakeMonoBehaviour<Selector>(null, nameof(RoomSelector));
+            //RoomSelector = Utils.MakeMonoBehaviour<Selector>(null, nameof(RoomSelector));
 
             foreach (Transform t0 in goMap.transform)
             {
@@ -103,14 +103,14 @@ namespace MapChanger.Map
                 roomSprite.Initialize(rsd);
                 RoomSprites.MapObjects.Add(roomSprite);
 
-                if (RoomSelector.Objects.ContainsKey(roomSprite.SceneName))
-                {
-                    RoomSelector.Objects[roomSprite.SceneName].Add(roomSprite);
-                }
-                else
-                {
-                    RoomSelector.Objects[roomSprite.SceneName] = new() { roomSprite }; 
-                }
+                //if (RoomSelector.Objects.ContainsKey(roomSprite.SceneName))
+                //{
+                //    RoomSelector.Objects[roomSprite.SceneName].Add(roomSprite);
+                //}
+                //else
+                //{
+                //    RoomSelector.Objects[roomSprite.SceneName] = new() { roomSprite }; 
+                //}
 
                 MapChangerMod.Instance.LogDebug($"Attaching: {pathName}");
             }
@@ -135,7 +135,7 @@ namespace MapChanger.Map
                 RoomText roomText = goRoomText.AddComponent<RoomText>();
                 roomText.Initialize(mld);
                 RoomTexts.MapObjects.Add(roomText);
-                RoomSelector.Objects[roomText.SceneName] = new() { roomText };
+                //RoomSelector.Objects[roomText.SceneName] = new() { roomText };
                 MapChangerMod.Instance.LogDebug($"Creating RoomText: {scene}");
             }
 
@@ -180,10 +180,54 @@ namespace MapChanger.Map
             MapChangerMod.Instance.LogDebug("~AttachMapModifiers");
         }
 
-        public static void ExportRoomTextDefs()
+
+        public static void ImportDefs()
         {
-            JsonUtil.Serialize(roomTextDefs, "roomTexts.json");
+            //try
+            //{
+            //    Dictionary<string, MapLocationDef> mlds = JsonUtil.DeserializeFromExternalFile<Dictionary<string, MapLocationDef>>("locations.json");
+
+            //    foreach (TestPin tp in TempPins.MapObjects)
+            //    {
+            //        tp.SetPosition(mlds[tp.Location.Name]);
+            //    }
+            //}
+            //catch (Exception e)
+            //{
+            //    MapChangerMod.Instance.LogError(e);
+            //}
+
+            //try
+            //{
+            //    Dictionary<string, MapLocationDef> mlds = JsonUtil.DeserializeFromExternalFile<Dictionary<string, MapLocationDef>>("locationsAM.json");
+
+            //    foreach (VanillaPin tp in TempPins.MapObjects)
+            //    {
+            //        if (mlds.ContainsKey(tp.Location.Name))
+            //        {
+            //            tp.SetPosition(mlds[tp.Location.Name]);
+            //        }
+            //    }
+            //}
+            //catch (Exception e)
+            //{
+            //    MapChangerMod.Instance.LogError(e);
+            //}
+
+            //JsonUtil.Serialize(roomTextDefs, "roomTexts.json");
             //JsonUtil.Serialize(roomTextDefsAM, "roomTextsAM.json");
+        }
+
+        public static void ExportDefs()
+        {
+            try
+            {
+                JsonUtil.Serialize(Finder.GetAllLocations(), "locations.json");
+            }
+            catch (Exception e)
+            {
+                MapChangerMod.Instance.LogError(e);
+            }
         }
     }
 }

@@ -1,13 +1,17 @@
-﻿namespace MapChanger.UI
+﻿using MagicUI.Core;
+
+namespace MapChanger.UI
 {
     internal class PauseMenu : HookModule
     {
-        public override void Hook()
+        internal LayoutRoot Layout { get; set; }
+
+        internal override void Hook()
         {
 
         }
 
-        public override void Unhook()
+        internal override void Unhook()
         {
 
         }

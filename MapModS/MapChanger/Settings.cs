@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using MapChanger.MonoBehaviours;
 
 namespace MapChanger
 {
     public record MapModeSetting
     {
-        public string ModeName { get; init; } = "Default";
+        public string ModeKey { get; init; } = "Disabled";
+        public string ModeName { get; init; } = "Disabled";
         public bool ForceHasMap { get; init; } = false;
         public bool ForceHasQuill { get; init; } = false;
         /// <summary>
@@ -19,51 +21,66 @@ namespace MapChanger
         public bool DisableVanillaPins { get; init; } = false;
         public bool EnableCustomColors { get; init; } = false;
         public bool EnableExtraRoomNames { get; init; } = false;
-        public Func<RoomSprite, bool> OnRoomSpriteSet { get; init; } = (roomSprite) => { return false; };
-        public Func<RoomText, bool> OnRoomTextSet { get; init; } = (roomText) => { return false; };
+        public Func<RoomSprite, bool> OnRoomSpriteSet { get; init; }
+        public Func<RoomText, bool> OnRoomTextSet { get; init; }
     }
 
     public static class Settings
     {
-        public static bool MapModEnabled { get; set; }
+        public static bool MapModEnabled { get; private set; } = false;
 
-        public static List<MapModeSetting> Modes;
+        private static List<MapModeSetting> Modes;
 
         private static int modeIndex = 0;
 
         internal static void Initialize()
         {
-            Modes = new() { new MapModeSetting() };
-            RoomSprite.OnSet += CurrentMode().OnRoomSpriteSet;
-            RoomText.OnSet += CurrentMode().OnRoomTextSet;
+            Modes = new();
+        }
+
+        public static void AddModes(MapModeSetting[] modes)
+        {
+            foreach (MapModeSetting mode in modes)
+            {
+                if (Modes.Any(existingMode => existingMode.ModeKey == mode.ModeKey))
+                {
+                    MapChangerMod.Instance.LogDebug($"A mode with the same key has already been added! {mode.ModeKey}");
+                    continue;
+                }
+
+                Modes.Add(mode);
+            }
+        }
+
+        public static void ToggleModEnabled()
+        {
+            MapModEnabled = !MapModEnabled;
+
+            if (MapModEnabled)
+            {
+                MapChangerMod.Instance.LogDebug($"MapMod Enabled");
+            }
+            else
+            {
+                MapChangerMod.Instance.LogDebug($"MapMod Disabled");
+            }
         }
 
         public static void ToggleMode()
         {
-            RoomSprite.OnSet -= CurrentMode().OnRoomSpriteSet;
-            RoomText.OnSet -= CurrentMode().OnRoomTextSet;
+            if (!MapModEnabled) return;
 
             modeIndex = (modeIndex + 1) % Modes.Count;
 
-            RoomSprite.OnSet += CurrentMode().OnRoomSpriteSet;
-            RoomText.OnSet += CurrentMode().OnRoomTextSet;
-
             MapChangerMod.Instance.LogDebug($"Mode set to {CurrentMode().ModeName}");
-
-            if (modeIndex is 0)
-            {
-                MapChangerMod.Instance.LogDebug($"MapMod Disabled");
-                MapModEnabled = false;
-            }
-            else
-            {
-                MapChangerMod.Instance.LogDebug($"MapMod Enabled");
-                MapModEnabled = true;
-            }
         }
 
         public static MapModeSetting CurrentMode()
         {
+            if (!Modes.Any())
+            {
+                return new();
+            }
             if (modeIndex > Modes.Count)
             {
                 MapChangerMod.Instance.LogWarn("Mode index overflow");

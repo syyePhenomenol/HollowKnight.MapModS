@@ -9,9 +9,12 @@ namespace MapChanger.MonoBehaviours
         public SpriteRenderer Sr { get; set; }
         public abstract IMapPosition MapPosition { get; }
 
+        public Vector2 BaseOffset { get; private set; }
+
         public override void Initialize()
         {
-            gameObject.layer = UI_LAYER;
+            base.Initialize();
+
             SetPosition();
             SetScale();
 
@@ -29,7 +32,11 @@ namespace MapChanger.MonoBehaviours
         {
             if (Finder.TryGetMappedScenePosition(MapPosition.MappedScene, out Vector2 position))
             {
-                transform.localPosition = new(position.x + MapPosition.OffsetX, position.y + MapPosition.OffsetY, transform.localPosition.z);
+                BaseOffset = position;
+
+                Vector2 snappedPosition = new Vector2(position.x + MapPosition.OffsetX, position.y + MapPosition.OffsetY).Snap();
+
+                transform.localPosition = new(snappedPosition.x, snappedPosition.y, transform.localPosition.z);
             }
             else
             {

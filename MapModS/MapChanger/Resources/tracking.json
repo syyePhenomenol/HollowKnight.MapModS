@@ -102,27 +102,27 @@
   },
   "Vengeful_Spirit": {
     "PdIntName": "fireballLevel",
-    "PdIntNameValue": 1
+    "PdIntValue": 1
   },
   "Shade_Soul": {
     "PdIntName": "fireballLevel",
-    "PdIntNameValue": 2
+    "PdIntValue": 2
   },
   "Desolate_Dive": {
     "PdIntName": "quakeLevel",
-    "PdIntNameValue": 1
+    "PdIntValue": 1
   },
   "Descending_Dark": {
     "PdIntName": "quakeLevel",
-    "PdIntNameValue": 2
+    "PdIntValue": 2
   },
   "Howling_Wraiths": {
     "PdIntName": "screamLevel",
-    "PdIntNameValue": 1
+    "PdIntValue": 1
   },
   "Abyss_Shriek": {
     "PdIntName": "screamLevel",
-    "PdIntNameValue": 2
+    "PdIntValue": 2
   },
   "Cyclone_Slash": {
     "PdBoolName": "hasCyclone"
@@ -201,7 +201,7 @@
   },
   "Void_Heart": {
     "PdIntName": "royalCharmState",
-    "PdIntNameValue": 4
+    "PdIntValue": 4
   },
   "Dreamshield": {
     "PdBoolName": "gotCharm_38"

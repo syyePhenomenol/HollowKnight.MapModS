@@ -13,7 +13,7 @@ namespace MapChanger
         /// For hooking to events not in MapChanger.Events.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public static void AddHookModule<T>() where T : HookModule
+        internal static void AddHookModule<T>() where T : HookModule
         {
             if (Events.HookModules.Any(hookModule => hookModule.GetType() == typeof(T)))
             {
@@ -130,6 +130,12 @@ namespace MapChanger
                 transform = child;
             }
             return transform;
+        }
+
+        public static Vector2 Snap(this Vector2 vec)
+        {
+            // Snap to nearest 0.05
+            return new((float)Math.Round(vec.x * 10f, MidpointRounding.AwayFromZero) / 10f, (float)Math.Round(vec.y * 10f, MidpointRounding.AwayFromZero) / 10f);
         }
 
         //public static bool IsFSMMapState(string name)

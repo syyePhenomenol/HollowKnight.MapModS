@@ -13,8 +13,6 @@ namespace MapChanger
 
         public static void Load()
         {
-            string prefix = "MapModS.MapChanger.Resources.Sprites";
-
             Assembly a = typeof(SpriteManager).Assembly;
             _sprites = new Dictionary<string, Sprite>();
 
@@ -24,9 +22,7 @@ namespace MapChanger
 
                 MapChangerMod.Instance.LogDebug(name);
 
-                string altName = name.Substring(prefix.Length);
-                altName = altName.Remove(altName.Length - 4);
-                altName = altName.Replace(".", "");
+                string altName = name.Remove(name.Length - 4).Split('.').Last();
                 _sprites[altName] = sprite;
             }
         }
@@ -69,6 +65,46 @@ namespace MapChanger
 
                 MapChangerMod.Instance.Log("Custom pin sprites loaded");
             }
+        }
+
+        public static Sprite GetSpriteFromPoolGroup(string poolGroup)
+        {
+            string spriteName = poolGroup switch
+            {
+                "Dreamers" => "pinDreamer",
+                "Skills" => "pinSkill",
+                "Charms" => "pinCharm",
+                "Keys" => "pinKey",
+                "Mask Shards" => "pinMask",
+                "Vessel Fragments" => "pinVessel",
+                "Charm Notches" => "pinNotch",
+                "Pale Ore" => "pinOre",
+                "Geo Chests" => "pinGeo",
+                "Rancid Eggs" => "pinEgg",
+                "Relics" => "pinRelic",
+                "Whispering Roots" => "pinRoot",
+                "Boss Essence" => "pinEssenceBoss",
+                "Grubs" => "pinGrub",
+                "Mimics" => "pinGrub",
+                "Maps" => "pinMap",
+                "Stags" => "pinStag",
+                "Lifeblood Cocoons" => "pinCocoon",
+                "Grimmkin Flames" => "pinFlame",
+                "Journal Entries" => "pinJournal",
+                "Geo Rocks" => "pinRock",
+                "Boss Geo" => "pinGeo",
+                "SoulTotems" => "pinTotem",
+                "Soul Totems" => "pinTotem",
+                "LoreTablets" => "pinLore",
+                "Lore Tablets" => "pinLore",
+                "Shops" => "pinShop",
+                "Levers" => "pinLever",
+                "Mr Mushroom" => "pinLore",
+                "Benches" => "pinBench",
+                _ => "pinUnknown",
+            };
+
+            return GetSprite(spriteName);
         }
 
         //public static Sprite GetSpriteFromPoolGroup(string poolGroup, bool normalOverride = false)

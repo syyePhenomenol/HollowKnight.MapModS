@@ -1,122 +1,138 @@
 {
   "King_Fragment": {
+    "Name": "King_Fragment",
+    "SceneName": "White_Palace_09",
     "MappedScene": "White_Palace_09",
     "OffsetX": -0.2,
-    "OffsetY": 0.2
+    "OffsetY": 0.2,
+    "MapZone": "WHITE_PALACE"
   },
   "Journal_Entry-Seal_of_Binding": {
+    "Name": "Journal_Entry-Seal_of_Binding",
+    "SceneName": "White_Palace_20",
     "MappedScene": "White_Palace_20",
     "OffsetX": 1.6,
-    "OffsetY": 0.4
+    "OffsetY": 0.4,
+    "MapZone": "WHITE_PALACE"
   },
   "Soul_Totem-White_Palace_Entrance": {
+    "Name": "Soul_Totem-White_Palace_Entrance",
+    "SceneName": "White_Palace_02",
     "MappedScene": "White_Palace_02",
     "OffsetX": -0.6,
-    "OffsetY": 0.1
+    "OffsetY": 0.1,
+    "MapZone": "WHITE_PALACE"
   },
   "Soul_Totem-White_Palace_Hub": {
+    "Name": "Soul_Totem-White_Palace_Hub",
+    "SceneName": "White_Palace_03_hub",
     "MappedScene": "White_Palace_03_hub",
     "OffsetX": -0.5,
-    "OffsetY": -0.3
+    "OffsetY": -0.3,
+    "MapZone": "WHITE_PALACE"
   },
   "Soul_Totem-White_Palace_Left": {
+    "Name": "Soul_Totem-White_Palace_Left",
+    "SceneName": "White_Palace_04",
     "MappedScene": "White_Palace_04",
     "OffsetX": -0.3,
-    "OffsetY": 0.2
+    "OffsetY": 0.2,
+    "MapZone": "WHITE_PALACE"
   },
   "Soul_Totem-White_Palace_Final": {
+    "Name": "Soul_Totem-White_Palace_Final",
+    "SceneName": "White_Palace_09",
     "MappedScene": "White_Palace_09",
     "OffsetX": -0.3,
-    "OffsetY": -0.5
+    "OffsetY": -0.5,
+    "MapZone": "WHITE_PALACE"
   },
   "Soul_Totem-White_Palace_Right": {
+    "Name": "Soul_Totem-White_Palace_Right",
+    "SceneName": "White_Palace_15",
     "MappedScene": "White_Palace_15",
     "OffsetX": -0.2,
-    "OffsetY": 0.6
+    "OffsetY": 0.6,
+    "MapZone": "WHITE_PALACE"
   },
   "Soul_Totem-Path_of_Pain_Below_Lever": {
+    "Name": "Soul_Totem-Path_of_Pain_Below_Lever",
+    "SceneName": "White_Palace_17",
     "MappedScene": "White_Palace_17",
     "OffsetX": 0.2,
-    "OffsetY": -0.4
+    "OffsetY": -0.4,
+    "MapZone": "WHITE_PALACE"
   },
   "Soul_Totem-Path_of_Pain_Left_of_Lever": {
+    "Name": "Soul_Totem-Path_of_Pain_Left_of_Lever",
+    "SceneName": "White_Palace_17",
     "MappedScene": "White_Palace_17",
     "OffsetX": 0.0,
-    "OffsetY": 0.1
+    "OffsetY": 0.1,
+    "MapZone": "WHITE_PALACE"
   },
   "Soul_Totem-Path_of_Pain_Entrance": {
+    "Name": "Soul_Totem-Path_of_Pain_Entrance",
+    "SceneName": "White_Palace_18",
     "MappedScene": "White_Palace_18",
     "OffsetX": 1.2,
-    "OffsetY": -0.6
+    "OffsetY": -0.6,
+    "MapZone": "WHITE_PALACE"
   },
   "Soul_Totem-Path_of_Pain_Second": {
+    "Name": "Soul_Totem-Path_of_Pain_Second",
+    "SceneName": "White_Palace_18",
     "MappedScene": "White_Palace_18",
     "OffsetX": 0.1,
-    "OffsetY": -0.6
+    "OffsetY": -0.6,
+    "MapZone": "WHITE_PALACE"
   },
   "Soul_Totem-Path_of_Pain_Hidden": {
+    "Name": "Soul_Totem-Path_of_Pain_Hidden",
+    "SceneName": "White_Palace_19",
     "MappedScene": "White_Palace_19",
     "OffsetX": 0.8,
-    "OffsetY": 0.4
+    "OffsetY": 0.4,
+    "MapZone": "WHITE_PALACE"
   },
   "Soul_Totem-Path_of_Pain_Below_Thornskip": {
+    "Name": "Soul_Totem-Path_of_Pain_Below_Thornskip",
+    "SceneName": "White_Palace_19",
     "MappedScene": "White_Palace_19",
     "OffsetX": 0.2,
-    "OffsetY": -0.8
+    "OffsetY": -0.8,
+    "MapZone": "WHITE_PALACE"
   },
   "Soul_Totem-Path_of_Pain_Final": {
+    "Name": "Soul_Totem-Path_of_Pain_Final",
+    "SceneName": "White_Palace_20",
     "MappedScene": "White_Palace_20",
     "OffsetX": -1.4,
-    "OffsetY": 1.0
+    "OffsetY": 1.0,
+    "MapZone": "WHITE_PALACE"
   },
   "Lore_Tablet-Palace_Workshop": {
+    "Name": "Lore_Tablet-Palace_Workshop",
+    "SceneName": "White_Palace_08",
     "MappedScene": "White_Palace_08",
     "OffsetX": 0.3,
-    "OffsetY": -0.1
+    "OffsetY": -0.1,
+    "MapZone": "WHITE_PALACE"
   },
   "Lore_Tablet-Palace_Throne": {
+    "Name": "Lore_Tablet-Palace_Throne",
+    "SceneName": "White_Palace_09",
     "MappedScene": "White_Palace_09",
     "OffsetX": 0.4,
-    "OffsetY": 0.2
+    "OffsetY": 0.2,
+    "MapZone": "WHITE_PALACE"
   },
   "Lore_Tablet-Path_of_Pain_Entrance": {
+    "Name": "Lore_Tablet-Path_of_Pain_Entrance",
+    "SceneName": "White_Palace_18",
     "MappedScene": "White_Palace_18",
     "OffsetX": 1.5,
-    "OffsetY": -0.6
-  },
-  "Lever-Palace_Atrium": {
-    "MappedScene": "White_Palace_03_hub",
-    "OffsetX": -0.5,
-    "OffsetY": 0.0
-  },
-  "Lever-Palace_Right": {
-    "MappedScene": "White_Palace_15",
-    "OffsetX": -0.1,
-    "OffsetY": -0.1
-  },
-  "Lever-Palace_Final": {
-    "MappedScene": "White_Palace_12",
-    "OffsetX": 0.3,
-    "OffsetY": 0.4
-  },
-  "Lever-Path_of_Pain": {
-    "MappedScene": "White_Palace_17",
-    "OffsetX": 0.3,
-    "OffsetY": 0.5
-  },
-  "Lever-Palace_Entrance_Orb": {
-    "MappedScene": "White_Palace_02",
-    "OffsetX": 0.2,
-    "OffsetY": 0.3
-  },
-  "Lever-Palace_Left_Orb": {
-    "MappedScene": "White_Palace_14",
-    "OffsetX": 1.0,
-    "OffsetY": 0.0
-  },
-  "Lever-Palace_Right_Orb": {
-    "MappedScene": "White_Palace_15",
-    "OffsetX": -0.2,
-    "OffsetY": -0.7
+    "OffsetY": -0.6,
+    "MapZone": "WHITE_PALACE"
   }
 }

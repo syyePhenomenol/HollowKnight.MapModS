@@ -9,7 +9,7 @@ namespace MapModS.UI
         public static bool quickMapOpen = false;
         public static bool lockToggleEnable = false;
 
-        public override void Hook()
+        internal override void Hook()
         {
             On.GameMap.Start += GameMap_Start;
             On.GameManager.SetGameMap += GameManager_SetGameMap;
@@ -37,7 +37,7 @@ namespace MapModS.UI
             GUIController.Setup();
         }
 
-        public override void Unhook()
+        internal override void Unhook()
         {
             On.GameMap.Start -= GameMap_Start;
             On.GameManager.SetGameMap -= GameManager_SetGameMap;

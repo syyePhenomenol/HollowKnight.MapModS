@@ -8,9 +8,6 @@ namespace MapChanger.MonoBehaviours
 {
     public class RoomSprite : MapObject, ISpriteRenderer, IMapRoom, ISelectable
     {
-        /// <returns>
-        /// Whether or not to disable the normal setting behaviour afterwards.
-        /// </returns>
         internal static event Func<RoomSprite, bool> OnSet;
         public string SceneName => rsd.SceneName;
         public MapZone MapZone => rsd.MapZone;
@@ -62,10 +59,20 @@ namespace MapChanger.MonoBehaviours
 
         public override void Set()
         {
-            try { if (OnSet.Invoke(this)) return; }
-            catch (Exception e) { MapChangerMod.Instance.LogError(e); }
+            try
+            {
+                if (Settings.MapModEnabled && Settings.CurrentMode().OnRoomSpriteSet is not null)
+                {
+                    if (Settings.CurrentMode().OnRoomSpriteSet.Invoke(this)) return;
+                }
+            }
+            catch (Exception e)
+            { 
+                MapChangerMod.Instance.LogError(e); 
+            }
 
-            gameObject.SetActive(Settings.CurrentMode().ForceFullMap
+            gameObject.SetActive(
+                Settings.CurrentMode().ForceFullMap
                 || PlayerData.instance.GetVariable<List<string>>("scenesMapped").Contains(SceneName)
                 || Finder.IsMinimalMapScene(transform.name));
 

@@ -88,7 +88,7 @@ namespace MapChanger
             }
         }
 
-        public override void Hook()
+        internal override void Hook()
         {
             ScenesVisited = new(PlayerData.instance.scenesVisited);
             GetPreviouslyObtainedItems();
@@ -100,7 +100,7 @@ namespace MapChanger
             UnityEngine.SceneManagement.SceneManager.activeSceneChanged += AddSceneVisited;
         }
 
-        public override void Unhook()
+        internal override void Unhook()
         {
             On.PlayMakerFSM.OnEnable -= AddItemTrackers;
             On.HealthManager.SendDeathEvent -= TrackBossGeo;
@@ -109,7 +109,7 @@ namespace MapChanger
             UnityEngine.SceneManagement.SceneManager.activeSceneChanged -= AddSceneVisited;
         }
 
-        internal static bool HasClearedLocation(string name)
+        public static bool HasClearedLocation(string name)
         {
             if (trackingDefs.TryGetValue(name, out TrackingDef td))
             {
@@ -274,7 +274,6 @@ namespace MapChanger
         {
             clearedLocations.Add($"{objectName}-{scene}");
         }
-
 
         private static void AddSceneVisited(Scene from, Scene to)
         {

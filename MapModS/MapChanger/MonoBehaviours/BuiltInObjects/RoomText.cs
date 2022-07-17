@@ -8,9 +8,6 @@ namespace MapChanger.MonoBehaviours
 {
     public class RoomText : MapObject, ITextMeshPro, IMapRoom, ISelectable
     {        
-        /// <returns>
-        /// Whether or not to disable the normal setting behaviour afterwards.
-        /// </returns>
         internal static event Func<RoomText, bool> OnSet;
         public TextMeshPro Tmp => GetComponent<TextMeshPro>();
         public string SceneName => mld.SceneName;
@@ -58,10 +55,20 @@ namespace MapChanger.MonoBehaviours
 
         public override void Set()
         {
-            try { if (OnSet.Invoke(this)) return; }
-            catch (Exception e) { MapChangerMod.Instance.LogError(e); }
+            try
+            {
+                if (Settings.MapModEnabled && Settings.CurrentMode().OnRoomTextSet is not null)
+                {
+                    if (Settings.CurrentMode().OnRoomTextSet.Invoke(this)) return;
+                }
+            }
+            catch (Exception e)
+            {
+                MapChangerMod.Instance.LogError(e);
+            }
 
-            gameObject.SetActive(Settings.MapModEnabled
+            gameObject.SetActive(
+                Settings.MapModEnabled
                 && (States.WorldMapOpen
                     || (States.QuickMapOpen && States.CurrentMapZone == MapZone))
                 && Settings.CurrentMode().EnableExtraRoomNames);

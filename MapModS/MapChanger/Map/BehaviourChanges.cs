@@ -64,7 +64,7 @@ namespace MapChanger.Map
             .FindChildInHierarchy("Inventory")?.FindChildInHierarchy("Map")?
             .FindChildInHierarchy("World Map")?.FindChildInHierarchy("Map Marker Action");
 
-        public override void Hook()
+        internal override void Hook()
         {
             On.PlayMakerFSM.Start += ModifyFsms;
             On.RoughMapRoom.OnEnable += StoreRoughMapCopy;
@@ -80,10 +80,11 @@ namespace MapChanger.Map
             On.GameMap.Update += ZoomFasterOnKeyboard;
             On.GameManager.UpdateGameMap += DisableUpdatedMapPrompt;
 
+            //Events.AfterSetGameMap += MoveIconsForward;
             Events.AfterOpenWorldMap += IncreasePanningRange;
         }
 
-        public override void Unhook()
+        internal override void Unhook()
         {
             On.PlayMakerFSM.Start -= ModifyFsms;
             On.RoughMapRoom.OnEnable -= StoreRoughMapCopy;
@@ -99,6 +100,7 @@ namespace MapChanger.Map
             On.GameMap.Update -= ZoomFasterOnKeyboard;
             On.GameManager.UpdateGameMap -= DisableUpdatedMapPrompt;
 
+            //Events.AfterSetGameMap -= MoveIconsForward;
             Events.AfterOpenWorldMap -= IncreasePanningRange;
         }
 
@@ -253,6 +255,15 @@ namespace MapChanger.Map
 
             return orig(self);
         }
+
+        //TODO: these don't work
+        //private static void MoveIconsForward(GameObject goMap)
+        //{
+        //    Transform dgPin = goMap.transform.Find("Dream_Gate_Pin").transform;
+        //    dgPin.localPosition = new(dgPin.localPosition.x, dgPin.localPosition.y, -1.5f);
+        //    Transform compass = goMap.transform.Find("Compass Icon").transform;
+        //    compass.localPosition = new(dgPin.localPosition.x, dgPin.localPosition.y, -1.4f);
+        //}
 
         private static void IncreasePanningRange(GameMap gameMap)
         {

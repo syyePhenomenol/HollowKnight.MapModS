@@ -8,7 +8,7 @@ namespace MapChanger.IC
         {
             if (ItemChanger.Finder.GetLocation(locationName) is AbstractLocation al)
             {
-                return al.name;
+                return al.sceneName;
             }
             return default;
         }
