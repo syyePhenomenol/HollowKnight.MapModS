@@ -1,28 +1,70 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
+using GlobalEnums;
 
 namespace MapChanger.UI
 {
-    internal class MapUI : HookModule
+    internal class MapUI : IMainHooks
     {
-        private List<MapUILayer> layers = new();
+        internal static MapUI Instance { get; private set; }
 
-        internal override void Hook()
+        private static readonly List<UILayer> layers = new();
+
+        public void OnEnterGame()
         {
-
+            Instance = this;
+            //    Events.AfterOpenWorldMap += OnOpenWorldMap;
+            //    Events.AfterOpenQuickMap += OnOpenQuickMap;
+            //    Events.BeforeCloseMap += OnCloseMap;
         }
 
-        internal override void Unhook()
+        public void OnQuitToMenu()
         {
+        //    Events.AfterOpenWorldMap -= OnOpenWorldMap;
+        //    Events.AfterOpenQuickMap -= OnOpenQuickMap;
+        //    Events.BeforeCloseMap -= OnCloseMap;
 
+            RemoveLayers();
         }
 
-        internal void AddMapUILayer(MapUILayer ml)
+        internal static void AddLayer(UILayer layer)
         {
+            layers.Add(layer);
+            layer.Build();
+        }
 
+        internal static void RemoveLayers()
+        {
+            foreach (UILayer layer in layers)
+            {
+                layer.Destroy();
+            }
+
+            layers.Clear();
+        }
+
+        //private static void OnOpenWorldMap(GameMap obj)
+        //{
+        //    Set();
+        //}
+
+        //private static void OnOpenQuickMap(GameMap gameMap, MapZone mapZone)
+        //{
+        //    Set();
+        //}
+
+        //private static void OnCloseMap(GameMap obj)
+        //{
+        //    Set();
+        //}
+
+        public static void Set()
+        {
+            foreach (UILayer layer in layers)
+            {
+                layer.Set();
+            }
         }
     }
 }

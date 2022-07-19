@@ -31,7 +31,7 @@ namespace MapModS.Pins
 
             this.placement = placement;
 
-            LocationPoolGroup = SupplementalMetadata.OfPlacementAndLocations(placement).Get(CMI.LocationPoolGroup);
+            LocationPoolGroup = SupplementalMetadata.OfPlacementAndLocations(placement).Get(InjectedProps.LocationPoolGroup);
             if (LocationPoolGroup == null)
             {
                 LocationPoolGroup = PoolGroupNames.UNKNOWN;
@@ -40,7 +40,7 @@ namespace MapModS.Pins
             itemPoolGroups = new();
             foreach (AbstractItem item in placement.Items)
             {
-                itemPoolGroups[item] = SupplementalMetadata.Of(item).Get(CMI.ItemPoolGroup);
+                itemPoolGroups[item] = SupplementalMetadata.Of(item).Get(InjectedProps.ItemPoolGroup);
                 if (itemPoolGroups[item] == null)
                 {
                     itemPoolGroups[item] = PoolGroupNames.UNKNOWN;

@@ -5,15 +5,19 @@ using MapChanger.MonoBehaviours;
 
 namespace VanillaMapMod
 {
-    internal class VmmPinGroup : MapObjectGroup
+    internal class VMMPinGroup : MapObjectGroup
     {
-        internal Dictionary<PoolGroup, List<VmmPin>> GroupedPins { get; private set; } = new();
+        internal static VMMPinGroup Instance { get; private set; }
+
+        internal Dictionary<PoolGroup, List<VMMPin>> GroupedPins { get; private set; } = new();
 
         public void InitializeGroups()
         {
+            Instance = this;
+
             foreach (MapObject mapObject in MapObjects)
             {
-                if (mapObject is VmmPin pin)
+                if (mapObject is VMMPin pin)
                 {
                     if (GroupedPins.ContainsKey(pin.PoolGroup))
                     {
@@ -35,9 +39,9 @@ namespace VanillaMapMod
 
         private void SetActive()
         {
-            foreach ((PoolGroup poolGroup, List<VmmPin> pins) in GroupedPins.Select(kvp => (kvp.Key, kvp.Value)))
+            foreach ((PoolGroup poolGroup, List<VMMPin> pins) in GroupedPins.Select(kvp => (kvp.Key, kvp.Value)))
             {
-                foreach (VmmPin pin in pins)
+                foreach (VMMPin pin in pins)
                 {
                     pin.Active = VanillaMapMod.LS.GetPoolGroupSetting(poolGroup);
                 }

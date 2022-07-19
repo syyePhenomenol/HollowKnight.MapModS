@@ -13,7 +13,7 @@ namespace MapChanger
         /// For hooking to events not in MapChanger.Events.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        internal static void AddHookModule<T>() where T : HookModule
+        internal static void AddHookModule<T>() where T : IMainHooks
         {
             if (Events.HookModules.Any(hookModule => hookModule.GetType() == typeof(T)))
             {
@@ -136,6 +136,11 @@ namespace MapChanger
         {
             // Snap to nearest 0.05
             return new((float)Math.Round(vec.x * 10f, MidpointRounding.AwayFromZero) / 10f, (float)Math.Round(vec.y * 10f, MidpointRounding.AwayFromZero) / 10f);
+        }
+
+        public static string CurrentScene()
+        {
+            return GameManager.GetBaseSceneName(GameManager.instance.sceneName);
         }
 
         //public static bool IsFSMMapState(string name)

@@ -8,7 +8,7 @@ using VanillaMapMod.Settings;
 
 namespace VanillaMapMod
 {
-    internal class VmmPin : Pin, ISelectable
+    internal class VMMPin : Pin, ISelectable
     {
         private const float SMALL_SCALE = 0.31f;
         private const float MEDIUM_SCALE = 0.37f;
@@ -63,9 +63,8 @@ namespace VanillaMapMod
 
             gameObject.SetActive(
                 MapChanger.Settings.MapModEnabled
-                && (MapChanger.Settings.CurrentMode().ModeKey is "VMMFullMap"
-                //TODO: implement purchased pins
-                || (MapChanger.Settings.CurrentMode().ModeKey is "VMMNormal"))
+                && (MapChanger.Settings.CurrentMode().ModeKey is ("VanillaMapMod", "Normal") 
+                    || MapChanger.Settings.CurrentMode().ModeKey is ("VanillaMapMod", "Full Map"))
                 && Active && !Obtained
                 && (States.WorldMapOpen || (States.QuickMapOpen && States.CurrentMapZone == Location.MapZone)));
                 

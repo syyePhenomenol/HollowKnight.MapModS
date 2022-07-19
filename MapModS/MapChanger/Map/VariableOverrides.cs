@@ -14,7 +14,7 @@ namespace MapChanger.Map
     /// Replaces the name of variables, so we can override their values
     /// to enable enable full map or disable vanilla pins with the mod enabled.
     /// </summary>
-    internal class VariableOverrides : HookModule
+    internal class VariableOverrides : IMainHooks
     {
         private enum OverrideType
         {
@@ -83,7 +83,7 @@ namespace MapChanger.Map
             fsmOverrideDefs = JsonUtil.Deserialize<Dictionary<string, FsmBoolOverrideDef>>("MapModS.MapChanger.Resources.fsmOverrides.json");
         }
 
-        internal override void Hook()
+        public void OnEnterGame()
         {
             On.PlayMakerFSM.Start += ReplaceVariablesFSM;
             //On.PlayMakerFSM.OnEnable += ReplaceVariablesFSM;
@@ -96,7 +96,7 @@ namespace MapChanger.Map
             ModHooks.GetPlayerVariableHook += GetVariableOverride;
         }
 
-        internal override void Unhook()
+        public void OnQuitToMenu()
         {
             On.PlayMakerFSM.Start -= ReplaceVariablesFSM;
             //On.PlayMakerFSM.OnEnable -= ReplaceVariablesFSM;

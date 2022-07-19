@@ -161,25 +161,9 @@ namespace MapChanger
             return false;
         }
 
-        public static string CurrentScene()
-        {
-            return GameManager.GetBaseSceneName(GameManager.instance.sceneName);
-            //string scene = GameManager.instance.sceneName;
-            //if (scene is null) return default;
-            //if (scene.EndsWith("_boss") || scene.EndsWith("_preload"))
-            //{
-            //    return scene.DropSuffix();
-            //}
-            //if (scene.EndsWith("_boss_defeated"))
-            //{
-            //    return scene.DropSuffix().DropSuffix();
-            //}
-            //return scene;
-        }
-
         public static MapZone GetCurrentMapZone()
         {
-            return GetMapZone(CurrentScene());
+            return GetMapZone(Utils.CurrentScene());
         }
     }
 }

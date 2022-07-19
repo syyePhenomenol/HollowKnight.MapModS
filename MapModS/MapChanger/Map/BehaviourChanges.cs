@@ -12,7 +12,7 @@ namespace MapChanger.Map
     /// Many changes to the map behaviour with respect to removing buggy base game behaviour,
     /// getting toggles to work, and QoL improvements.
     /// </summary>
-    internal class BehaviourChanges : HookModule
+    internal class BehaviourChanges : IMainHooks
     {
         private class MapKeyUpCheck : FsmStateAction
         {
@@ -64,7 +64,7 @@ namespace MapChanger.Map
             .FindChildInHierarchy("Inventory")?.FindChildInHierarchy("Map")?
             .FindChildInHierarchy("World Map")?.FindChildInHierarchy("Map Marker Action");
 
-        internal override void Hook()
+        public void OnEnterGame()
         {
             On.PlayMakerFSM.Start += ModifyFsms;
             On.RoughMapRoom.OnEnable += StoreRoughMapCopy;
@@ -84,7 +84,7 @@ namespace MapChanger.Map
             Events.AfterOpenWorldMap += IncreasePanningRange;
         }
 
-        internal override void Unhook()
+        public void OnQuitToMenu()
         {
             On.PlayMakerFSM.Start -= ModifyFsms;
             On.RoughMapRoom.OnEnable -= StoreRoughMapCopy;

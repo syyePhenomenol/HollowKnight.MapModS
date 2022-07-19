@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace MapChanger.UI
 {
-    internal class Hotkeys : HookModule
+    internal class Hotkeys : IMainHooks
     {
         private static LayoutRoot layout;
 
-        internal override void Hook()
+        public void OnEnterGame()
         {
             if (layout == null)
             {
@@ -35,7 +35,7 @@ namespace MapChanger.UI
             }
         }
 
-        internal override void Unhook()
+        public void OnQuitToMenu()
         {
             layout?.Destroy();
             layout = null;

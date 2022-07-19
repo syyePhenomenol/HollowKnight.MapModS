@@ -9,7 +9,7 @@ using Vasi;
 
 namespace MapChanger
 {
-    internal class Tracker : HookModule
+    internal class Tracker : IMainHooks
     {
         internal record TrackingDef
         {
@@ -60,7 +60,7 @@ namespace MapChanger
 
             public override void OnEnter()
             {
-                string scene = Finder.CurrentScene() ?? "";
+                string scene = Utils.CurrentScene() ?? "";
                 if (name.Contains("-")) return;
                 AddVanillaItem(name, scene);
                 MapChangerMod.Instance.LogDebug("Item picked up");
@@ -88,7 +88,7 @@ namespace MapChanger
             }
         }
 
-        internal override void Hook()
+        public void OnEnterGame()
         {
             ScenesVisited = new(PlayerData.instance.scenesVisited);
             GetPreviouslyObtainedItems();
@@ -100,7 +100,7 @@ namespace MapChanger
             UnityEngine.SceneManagement.SceneManager.activeSceneChanged += AddSceneVisited;
         }
 
-        internal override void Unhook()
+        public void OnQuitToMenu()
         {
             On.PlayMakerFSM.OnEnable -= AddItemTrackers;
             On.HealthManager.SendDeathEvent -= TrackBossGeo;
@@ -137,7 +137,7 @@ namespace MapChanger
                         return PlayerData.instance.GetVariable<List<string>>(td.PdListName).Contains(location.sceneName);
                     }
                 }
-                MapChangerMod.Instance.LogDebug($"Everything is null!");
+                MapChangerMod.Instance.LogWarn($"All members of TrackingDef are null! {name}");
             }
             return false;
         }
@@ -204,7 +204,7 @@ namespace MapChanger
                 case "Mega Zombie Beam Miner (1)":
                 case "Zombie Beam Miner Rematch":
                 case "Giant Fly":
-                    AddVanillaItem(self.gameObject.name, Finder.CurrentScene()??"");
+                    AddVanillaItem(self.gameObject.name, Utils.CurrentScene()??"");
                     break;
                 default:
                     break;

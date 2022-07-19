@@ -12,6 +12,7 @@ namespace MapModS
 {
     public class MapModS : Mod, ILocalSettings<LocalSettings>, IGlobalSettings<GlobalSettings>
     {
+
         internal static MapModS Instance;
 
         public override string GetVersion() => "2.6.0";
@@ -79,35 +80,7 @@ namespace MapModS
 
             MapChanger.Settings.AddModes(new MapModeSetting[]
             {
-                new()
-                {
-                    ModeKey = "RMM-Full Map",
-                    ModeName = "Full Map",
-                    ForceHasMap = true,
-                    ForceHasQuill = true,
-                    ImmediateMapUpdate = true,
-                    ForceFullMap = true,
-                    DisableAreaNames = false,
-                    DisableNextArea = false,
-                    DisableVanillaPins = false,
-                    EnableCustomColors = true,
-                    EnableExtraRoomNames = false
-                },
-                new()
-                {
-                    ModeKey = "RMM-Transition",
-                    ModeName = "Transition",
-                    ForceHasMap = true,
-                    ForceHasQuill = true,
-                    ImmediateMapUpdate = true,
-                    ForceFullMap = true,
-                    DisableAreaNames = true,
-                    DisableNextArea = true,
-                    DisableVanillaPins = true,
-                    EnableCustomColors = true,
-                    EnableExtraRoomNames = true,
-                    OnRoomSpriteSet = SetTransitionRoomColors,
-                }
+                
             });
             //MapChanger.Settings.ToggleMode();
 

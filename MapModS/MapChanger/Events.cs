@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using GlobalEnums;
 using HutongGames.PlayMaker;
 using MapChanger.Map;
-using MapChanger.MonoBehaviours;
 using MapChanger.UI;
+using Modding;
 using UnityEngine;
 using Vasi;
 
@@ -40,12 +40,14 @@ namespace MapChanger
             }
         }
 
-        internal static readonly List<HookModule> HookModules = new()
+        internal static readonly List<IMainHooks> HookModules = new()
         {
             new Tracker(),
             new VariableOverrides(),
             new BehaviourChanges(),
-            new Hotkeys()
+            new Hotkeys(),
+            new MapUI(),
+            new PauseMenu()
         };
 
         private static readonly MapZone[] customMapZones =
@@ -76,6 +78,14 @@ namespace MapChanger
             On.GameMap.QuickMapRestingGrounds += OnOpenQuickMapRestingGrounds;
             On.GameMap.QuickMapWaterways += OnOpenQuickMapWaterways;
             On.GameMap.CloseQuickMap += CloseMapEvent;
+
+            foreach (Mod mod in ModHooks.GetAllMods())
+            {
+                if (mod is MapMod mapMod)
+                {
+                    HookModules.Add(mapMod);
+                }
+            }
         }
 
         private static void AfterStartNewGame(On.GameManager.orig_StartNewGame orig, GameManager self, bool permadeathMode, bool bossRushMode)
@@ -96,9 +106,9 @@ namespace MapChanger
             Settings.Initialize();
             Colors.LoadCustomColors();
 
-            foreach (HookModule hookModule in HookModules)
+            foreach (IMainHooks hookModule in HookModules)
             {
-                hookModule.Hook();
+                hookModule.OnEnterGame();
             }
 
             try { AfterEnterGame?.Invoke(); }
@@ -107,9 +117,9 @@ namespace MapChanger
 
         private static IEnumerator QuitToMenuEvent(On.QuitToMenu.orig_Start orig, QuitToMenu self)
         {
-            foreach (HookModule hookModule in HookModules)
+            foreach (IMainHooks hookModule in HookModules)
             {
-                hookModule.Unhook();
+                hookModule.OnQuitToMenu();
             }
 
             try { BeforeQuitToMenu?.Invoke(); }

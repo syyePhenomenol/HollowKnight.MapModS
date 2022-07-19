@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using MapChanger.MonoBehaviours;
+using MapChanger.UI;
 
 namespace MapChanger
 {
     public record MapModeSetting
     {
-        public string ModeKey { get; init; } = "Disabled";
+        public (string, string) ModeKey => (Mod, ModeName);
+        public string Mod { get; init; } = "MapChangerMod";
         public string ModeName { get; init; } = "Disabled";
         public bool ForceHasMap { get; init; } = false;
         public bool ForceHasQuill { get; init; } = false;
@@ -55,6 +57,9 @@ namespace MapChanger
         public static void ToggleModEnabled()
         {
             MapModEnabled = !MapModEnabled;
+
+            UIManager.instance.checkpointSprite.Show();
+            UIManager.instance.checkpointSprite.Hide();
 
             if (MapModEnabled)
             {

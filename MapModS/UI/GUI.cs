@@ -3,13 +3,13 @@ using UnityEngine.SceneManagement;
 
 namespace MapModS.UI
 {
-    internal class GUI : HookModule
+    internal class GUI : IMainHooks
     {
         public static bool worldMapOpen = false;
         public static bool quickMapOpen = false;
         public static bool lockToggleEnable = false;
 
-        internal override void Hook()
+        public void OnEnterGame()
         {
             On.GameMap.Start += GameMap_Start;
             On.GameManager.SetGameMap += GameManager_SetGameMap;
@@ -37,7 +37,7 @@ namespace MapModS.UI
             GUIController.Setup();
         }
 
-        internal override void Unhook()
+        public void OnQuitToMenu()
         {
             On.GameMap.Start -= GameMap_Start;
             On.GameManager.SetGameMap -= GameManager_SetGameMap;
