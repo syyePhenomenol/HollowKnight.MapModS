@@ -6,101 +6,84 @@ using UnityEngine;
 
 namespace MapChanger.MonoBehaviours
 {
-    public class RoomSprite : MapObject, ISpriteRenderer, IMapRoom, ISelectable
+    public class RoomSprite : MapObject, ISelectable
     {
-        internal static event Func<RoomSprite, bool> OnSet;
-        public string SceneName => rsd.SceneName;
-        public MapZone MapZone => rsd.MapZone;
-        public SpriteRenderer Sr => GetComponent<SpriteRenderer>();
-        public Vector4 OrigColor { get; set; }
+        public RoomSpriteDef Rsd { get; private set; }
 
-        private RoomSpriteDef rsd;
-        private bool canSelect = false;
-        public bool Selected { get; private set; } = false;
-
-        public bool CanUsePosition()
+        private SpriteRenderer sr;
+        public Vector4 OrigColor { get; private set; }
+        public Vector4 Color
         {
-            return gameObject.activeSelf && canSelect;
+            get => sr.color;
+            set
+            {
+                sr.color = value;
+            }
         }
 
-        public void Select()
+        private bool selected = false;
+        public bool Selected
         {
-            MapChangerMod.Instance.LogDebug($"Currently selected: {transform.name}");
-            Selected = true;
-            Set();
-        }
-
-        public void Deselect()
-        {
-            MapChangerMod.Instance.LogDebug($"Currently deselected: {transform.name}");
-            Selected = false;
-            Set();
-        }
-
-        public (string, Vector2) GetKeyAndPosition()
-        {
-            return (SceneName, transform.position);
+            get => selected;
+            set
+            {
+                if (Selected != value)
+                {
+                    selected = value;
+                    UpdateColor();
+                }
+            }
         }
 
         internal void Initialize(RoomSpriteDef rsd)
         {
-            this.rsd = rsd;
-            canSelect = Finder.IsScene(transform.name) || Finder.IsScene(transform.parent.name);
-            OrigColor = Sr.color;
+            Rsd = rsd;
 
-            if (!Finder.IsScene(SceneName))
+            ActiveModifiers.Add(IsActive);
+            
+            sr = GetComponent<SpriteRenderer>();
+            OrigColor = sr.color;
+
+            if (!Finder.IsScene(Rsd.SceneName))
             {
-                MapChangerMod.Instance.LogDebug($"Not a scene: {SceneName}");
+                MapChangerMod.Instance.LogDebug($"Not a scene: {Rsd.SceneName}");
             }
 
-            SetSprite();
-            SetSpriteColor();
+            MapObjectUpdater.Add(this);
         }
 
-        public override void Set()
+        private bool IsActive()
         {
-            try
+            if (Settings.CurrentMode().RoomSpriteActiveOverride is not null)
             {
-                if (Settings.MapModEnabled && Settings.CurrentMode().OnRoomSpriteSet is not null)
-                {
-                    if (Settings.CurrentMode().OnRoomSpriteSet.Invoke(this)) return;
-                }
-            }
-            catch (Exception e)
-            { 
-                MapChangerMod.Instance.LogError(e); 
+                try { return Settings.CurrentMode().RoomSpriteActiveOverride.Invoke(this); }
+                catch (Exception e) { MapChangerMod.Instance.LogError(e); }
             }
 
-            gameObject.SetActive(
-                Settings.CurrentMode().ForceFullMap
-                || PlayerData.instance.GetVariable<List<string>>("scenesMapped").Contains(SceneName)
-                || Finder.IsMinimalMapScene(transform.name));
-
-            SetSprite();
-            SetSpriteColor();
+            return Settings.CurrentMode().FullMap
+                || PlayerData.instance.GetVariable<List<string>>("scenesMapped").Contains(Rsd.SceneName)
+                || Finder.IsMinimalMapScene(transform.name);
         }
 
-        public void SetSprite()
+        public void OnEnable()
         {
-
+            UpdateColor();
         }
 
-        public void SetSpriteColor()
+        public void UpdateColor()
         {
-            if (Settings.MapModEnabled)
-            {
-                if (Selected)
-                {
-                    Sr.color = Colors.GetColor(ColorSetting.Room_Selected);
-                    return;
-                }
-                else if (Settings.CurrentMode().EnableCustomColors && Colors.TryGetCustomColor(rsd.ColorSetting, out Vector4 color))
-                {
-                    Sr.color = color;
-                    return;
-                }
-            }
-            Sr.color = OrigColor;
+            try { Settings.CurrentMode().OnRoomUpdateColor?.Invoke(this); }
+            catch (Exception e) { MapChangerMod.Instance.LogError(e); }
+        }
+
+        public bool CanSelect()
+        {
+            return gameObject.activeSelf;
+        }
+
+        public (string, Vector2) GetKeyAndPosition()
+        {
+            return (Rsd.SceneName, transform.localPosition);
         }
     }
 }

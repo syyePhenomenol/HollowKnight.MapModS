@@ -14,32 +14,20 @@ namespace VanillaMapMod.Settings
 
         public bool ModEnabled = false;
 
-        public MapMode Mode = MapMode.VMM_FullMap;
+        public VMMMode Mode = VMMMode.Full_Map;
 
         public Dictionary<PoolGroup, bool> PoolSettings = Enum.GetValues(typeof(PoolGroup))
                .Cast<PoolGroup>()
+               .Where(poolGroup => poolGroup is not PoolGroup.Other)
                .ToDictionary(t => t, t => true);
+
+        public bool VanillaPinsOn = false;
 
         internal void Initialize()
         {
             if (InitializedPreviously) return;
 
             InitializedPreviously = true;
-        }
-
-        internal void ToggleModEnabled()
-        {
-            ModEnabled = !ModEnabled;
-        }
-
-        internal void SetMode(MapMode mode)
-        {
-            Mode = mode;
-        }
-
-        internal void ToggleMode()
-        {
-            Mode = (MapMode)(((int)Mode + 1) % Enum.GetNames(typeof(MapMode)).Length);
         }
 
         internal bool GetPoolGroupSetting(PoolGroup poolGroup)
@@ -64,6 +52,26 @@ namespace VanillaMapMod.Settings
             if (!PoolSettings.ContainsKey(poolGroup)) return;
 
             PoolSettings[poolGroup] = !PoolSettings[poolGroup];
+        }
+
+        internal void ToggleAllPools()
+        {
+            bool value = false;
+
+            if (PoolSettings.Values.Any(value => !value))
+            {
+                value = true;
+            }
+
+            foreach (PoolGroup poolGroup in Enum.GetValues(typeof(PoolGroup)).Cast<PoolGroup>().Where(poolGroup => poolGroup is not PoolGroup.Other))
+            {
+                PoolSettings[poolGroup] = value;
+            }
+        }
+
+        internal void ToggleVanillaPins()
+        {
+            VanillaPinsOn = !VanillaPinsOn;
         }
     }
 }

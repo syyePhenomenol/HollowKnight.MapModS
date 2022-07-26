@@ -4,11 +4,8 @@ namespace MapChanger.MonoBehaviours
 {
     public interface ISelectable
     {
-        bool CanUsePosition();
+        bool Selected { get; set; }
+        bool CanSelect();
         (string, Vector2) GetKeyAndPosition();
-        void Select();
-        void Deselect();
-
-        bool Selected { get; }
     }
 }

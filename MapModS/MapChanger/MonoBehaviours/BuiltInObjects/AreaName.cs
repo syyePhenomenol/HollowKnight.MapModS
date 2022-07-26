@@ -4,51 +4,42 @@ using UnityEngine;
 
 namespace MapChanger.MonoBehaviours
 {
-    internal class AreaName : MapObject, ITextMeshPro
+    public class AreaName : MapObject
     {
-        private MiscObjectDef mod;
-        private Vector4 OrigColor;
+        public MiscObjectDef MiscObjectDef { get; private set; }
 
-        public TextMeshPro Tmp => GetComponent<TextMeshPro>();
-
-        internal void Initialize(MiscObjectDef mod)
+        private TextMeshPro tmp;
+        public Vector4 OrigColor { get; private set; }
+        public Vector4 Color
         {
-            this.mod = mod;
+            get => tmp.color;
+            set
+            {
+                tmp.color = value;
+            }
+        }
 
-            if (Tmp is null)
+        internal void Initialize(MiscObjectDef miscObjectDef)
+        {
+            ActiveModifiers.Add(AreaNamesEnabled);
+
+            MiscObjectDef = miscObjectDef;
+
+            tmp = GetComponent<TextMeshPro>();
+
+            if (tmp is null)
             {
                 MapChangerMod.Instance.LogWarn($"Missing component references! {transform.name}");
                 Destroy(this);
                 return;
             }
-  
-            gameObject.SetActive(false);
 
-            OrigColor = Tmp.color;
+            OrigColor = tmp.color;
         }
 
-        public override void Set()
+        private bool AreaNamesEnabled()
         {
-            gameObject.SetActive(!Settings.CurrentMode().DisableAreaNames);
-
-            SetTextColor();
-        }
-
-        public void SetText()
-        {
-
-        }
-
-        public void SetTextColor()
-        {
-            if (Settings.MapModEnabled && Settings.CurrentMode().EnableCustomColors && Colors.TryGetCustomColor(mod.ColorSetting, out Vector4 color))
-            {
-                Tmp.color = color;
-            }
-            else
-            {
-                Tmp.color = OrigColor;
-            }
+            return !Settings.CurrentMode().DisableAreaNames;
         }
     }
 }

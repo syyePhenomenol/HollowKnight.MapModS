@@ -9,19 +9,19 @@ namespace MapChanger
 {
     public static class Utils
     {
-        /// <summary>
-        /// For hooking to events not in MapChanger.Events.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        internal static void AddHookModule<T>() where T : IMainHooks
-        {
-            if (Events.HookModules.Any(hookModule => hookModule.GetType() == typeof(T)))
-            {
-                MapChangerMod.Instance.LogWarn($"HookModule of type {typeof(T).Name} has already been added!");
-                return;
-            }
-            Events.HookModules.Add((T)Activator.CreateInstance(typeof(T)));
-        }
+        ///// <summary>
+        ///// For hooking to events not in MapChanger.Events.
+        ///// </summary>
+        ///// <typeparam name="T"></typeparam>
+        //internal static void AddHookModule<T>() where T : IMainHooks
+        //{
+        //    if (Events.HookModules.Any(hookModule => hookModule.GetType() == typeof(T)))
+        //    {
+        //        MapChangerMod.Instance.LogWarn($"HookModule of type {typeof(T).Name} has already been added!");
+        //        return;
+        //    }
+        //    Events.HookModules.Add((T)Activator.CreateInstance(typeof(T)));
+        //}
 
         /// <summary>
         /// Generic method for creating a new GameObject with the MonoBehaviour, and returning the MonoBehaviour.
@@ -44,14 +44,13 @@ namespace MapChanger
         //    return text.Replace("Pay ", "")
         //        .Replace("Once you own ", "")
         //        .Replace(", I'll gladly sell it to you.", "")
-        //        .Replace("Requires ", "")
-        //        .Replace("<br>", "");
+        //        .Replace("Requires ", "");
         //}
 
-        //public static string ToCleanName(this string name)
-        //{
-        //    return name.Replace("-", " ").Replace("_", " ");
-        //}
+        public static string ToCleanName(this string name)
+        {
+            return name.Replace("-", " ").Replace("_", " ");
+        }
 
         public static bool HasMapSetting(MapZone mapZone)
         {
@@ -132,42 +131,21 @@ namespace MapChanger
             return transform;
         }
 
+        public static float Snap(this float offset)
+        {
+            // Snap to nearest 0.1
+            return (float)Math.Round(offset * 10f, MidpointRounding.AwayFromZero) / 10f;
+        }
+
         public static Vector2 Snap(this Vector2 vec)
         {
-            // Snap to nearest 0.05
-            return new((float)Math.Round(vec.x * 10f, MidpointRounding.AwayFromZero) / 10f, (float)Math.Round(vec.y * 10f, MidpointRounding.AwayFromZero) / 10f);
+            return new(vec.x.Snap(), vec.y.Snap());
         }
 
         public static string CurrentScene()
         {
             return GameManager.GetBaseSceneName(GameManager.instance.sceneName);
         }
-
-        //public static bool IsFSMMapState(string name)
-        //{
-        //    return name switch
-        //    {
-        //        "Abyss"
-        //        or "Ancient Basin"
-        //        or "City"
-        //        or "Cliffs"
-        //        or "Crossroads"
-        //        or "Deepnest"
-        //        or "Fog Canyon"
-        //        or "Fungal Wastes"
-        //        or "Fungus"
-        //        or "Greenpath"
-        //        or "Hive"
-        //        or "Mines"
-        //        or "Outskirts"
-        //        or "Resting Grounds"
-        //        or "Royal Gardens"
-        //        or "Waterways"
-        //        or "WHITE_PALACE"
-        //        or "GODS_GLORY" => true,
-        //        _ => false,
-        //    };
-        //}
 
         //public static string GetBindingsText(List<InControl.BindingSource> bindings)
         //{

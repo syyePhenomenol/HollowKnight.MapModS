@@ -4,7 +4,6 @@ using GlobalEnums;
 using HutongGames.PlayMaker;
 using UnityEngine;
 using Vasi;
-using UnityEngine.SceneManagement;
 
 namespace MapChanger.Map
 {
@@ -18,8 +17,9 @@ namespace MapChanger.Map
         {
             public override void OnEnter()
             {
-                if (!Settings.MapModEnabled || !Settings.CurrentMode().DisableVanillaPins)
+                if (!Settings.MapModEnabled || Settings.CurrentMode().VanillaPins != OverrideType.ForceOff)
                 {
+                    PlayMakerFSM.BroadcastEvent("NEW MAP KEY ADDED");
                     MapKey?.gameObject.LocateMyFSM("Control")?.SendEvent("MAP KEY UP");
                 }
                 Finish();
@@ -37,7 +37,7 @@ namespace MapChanger.Map
 
             public override void OnEnter()
             {
-                gameObject?.SetActive(!Settings.MapModEnabled || !Settings.CurrentMode().DisableVanillaPins);
+                gameObject?.SetActive(!Settings.MapModEnabled || Settings.CurrentMode().VanillaPins != OverrideType.ForceOff);
                 Finish();
             }
         }
@@ -80,7 +80,6 @@ namespace MapChanger.Map
             On.GameMap.Update += ZoomFasterOnKeyboard;
             On.GameManager.UpdateGameMap += DisableUpdatedMapPrompt;
 
-            //Events.AfterSetGameMap += MoveIconsForward;
             Events.AfterOpenWorldMap += IncreasePanningRange;
         }
 
@@ -100,7 +99,6 @@ namespace MapChanger.Map
             On.GameMap.Update -= ZoomFasterOnKeyboard;
             On.GameManager.UpdateGameMap -= DisableUpdatedMapPrompt;
 
-            //Events.AfterSetGameMap -= MoveIconsForward;
             Events.AfterOpenWorldMap -= IncreasePanningRange;
         }
 
@@ -113,8 +111,6 @@ namespace MapChanger.Map
                 {
                     state.RemoveAction(1);
                     state.InsertAction(1, new MapKeyUpCheck());
-                    state.RemoveAction(6);
-                    state.InsertAction(6, new ActivateGoCheck(MarkerAction?.gameObject));
                 }
             }
             catch (Exception e)
@@ -152,7 +148,7 @@ namespace MapChanger.Map
 
         private static void SetupMarkersOverride(On.GameMap.orig_SetupMapMarkers orig, GameMap self)
         {
-            if (Settings.MapModEnabled)
+            if (!PlayerData.instance.GetBool("hasMarker"))
             {
                 self.gameObject.Child(MAP_MARKERS).SetActive(false);
                 return;
@@ -256,15 +252,6 @@ namespace MapChanger.Map
             return orig(self);
         }
 
-        //TODO: these don't work
-        //private static void MoveIconsForward(GameObject goMap)
-        //{
-        //    Transform dgPin = goMap.transform.Find("Dream_Gate_Pin").transform;
-        //    dgPin.localPosition = new(dgPin.localPosition.x, dgPin.localPosition.y, -1.5f);
-        //    Transform compass = goMap.transform.Find("Compass Icon").transform;
-        //    compass.localPosition = new(dgPin.localPosition.x, dgPin.localPosition.y, -1.4f);
-        //}
-
         private static void IncreasePanningRange(GameMap gameMap)
         {
             gameMap.panMinX = -29f;
@@ -272,7 +259,5 @@ namespace MapChanger.Map
             gameMap.panMinY = -25f;
             gameMap.panMaxY = 20f;
         }
-
-        //TODO: quill stuff - store mapped scenes in separate hashset?
     }
 }

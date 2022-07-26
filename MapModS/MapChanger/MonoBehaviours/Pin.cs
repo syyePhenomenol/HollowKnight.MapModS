@@ -1,49 +1,89 @@
-﻿using MapChanger.Defs;
+﻿using GlobalEnums;
+using MapChanger.Defs;
 using UnityEngine;
 
 namespace MapChanger.MonoBehaviours
 {
-    public abstract class Pin : MapObject, ISpriteRenderer
+    public class Pin : MapObject
     {
-        public Transform GameMap => transform.parent.transform.parent;
-        public SpriteRenderer Sr { get; set; }
-        public abstract IMapPosition MapPosition { get; }
+        private bool snapPosition = true;
+        public bool SnapPosition
+        {
+            get => snapPosition;
+            set
+            {
+                if (snapPosition != value)
+                {
+                    snapPosition = value;
+                    UpdatePosition();
+                }
+            }
+        }
 
-        public Vector2 BaseOffset { get; private set; }
+        private IMapPosition mapPosition;
+        public IMapPosition MapPosition
+        {
+            get => mapPosition;
+            set
+            {
+                if (mapPosition != value)
+                {
+                    mapPosition = value;
+                    UpdatePosition();
+                }
+            }
+        }
+
+        protected SpriteRenderer Sr { get; private set; }
+        public Sprite Sprite
+        {
+            get => Sr.sprite;
+            set
+            {
+                Sr.sprite = value;
+            }
+        }
+
+        public Vector4 Color
+        {
+            get => Sr.color;
+            set
+            {
+                Sr.color = value;
+            }
+        }
+
+        private float size = 1f;
+        public float Size
+        {
+            get => size;
+            set
+            {
+                size = value;
+                transform.localScale = new(size, size, transform.localScale.z);
+            }
+        }
 
         public override void Initialize()
         {
             base.Initialize();
 
-            SetPosition();
-            SetScale();
-
             Sr = gameObject.AddComponent<SpriteRenderer>();
             Sr.sortingLayerName = HUD;
-            SetSprite();
-            SetSpriteColor();
         }
 
-        public abstract void SetSprite();
-
-        public abstract void SetSpriteColor();
-
-        public virtual void SetPosition()
+        private void UpdatePosition()
         {
-            if (Finder.TryGetMappedScenePosition(MapPosition.MappedScene, out Vector2 position))
+            if (mapPosition is null) return;
+
+            if (snapPosition)
             {
-                BaseOffset = position;
-
-                Vector2 snappedPosition = new Vector2(position.x + MapPosition.OffsetX, position.y + MapPosition.OffsetY).Snap();
-
-                transform.localPosition = new(snappedPosition.x, snappedPosition.y, transform.localPosition.z);
+                transform.localPosition = new Vector3(mapPosition.X.Snap(), mapPosition.Y.Snap(), transform.localPosition.z);
             }
             else
             {
-                MapChangerMod.Instance.LogWarn($"{MapPosition.MappedScene} not found on the map!");
+                transform.localPosition = new Vector3(mapPosition.X, mapPosition.Y, transform.localPosition.z);
             }
         }
-
-        public abstract void SetScale();
     }
 }

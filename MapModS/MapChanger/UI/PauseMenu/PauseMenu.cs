@@ -44,7 +44,7 @@ namespace MapChanger.UI
 
         public override void BuildLayout()
         {
-            Root.RenderDebugLayoutBounds = true;
+            //Root.RenderDebugLayoutBounds = true;
 
             Title = new(Root, "MapMod Title")
             {
@@ -80,7 +80,7 @@ namespace MapChanger.UI
 
             foreach (MainButton mainButton in masterButtons)
             {
-                mainButton.Make();
+                mainButton.Make(MainButtonsGrid);
             }
 
             Set();
@@ -112,6 +112,17 @@ namespace MapChanger.UI
             }
 
             Set();
+        }
+
+        internal static void HideOtherPanels(ExtraButtonPanel visiblePanel)
+        {
+            foreach (ExtraButtonPanel ebp in ExtraButtonPanels)
+            {
+                if (ebp != visiblePanel)
+                {
+                    ebp?.Hide();
+                }
+            }
         }
     }
 }

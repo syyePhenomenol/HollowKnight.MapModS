@@ -70,10 +70,7 @@ namespace MapChanger.Map
             { "mapRestingGrounds", MAP_PREFIX },
             { "mapWaterways", MAP_PREFIX },
             { "AdditionalMapsGotWpMap", MAP_PREFIX },
-            { "AdditionalMapsGotGhMap", MAP_PREFIX },
-            //{ "scenesEncounteredCocoon", PINS_PREFIX },
-            //{ "scenesEncounteredDreamPlant", PINS_PREFIX },
-            //{ "scenesEncounteredDreamPlantC", PINS_PREFIX }
+            { "AdditionalMapsGotGhMap", MAP_PREFIX }
         };
 
         private static Dictionary<string, FsmBoolOverrideDef> fsmOverrideDefs;
@@ -86,10 +83,8 @@ namespace MapChanger.Map
         public void OnEnterGame()
         {
             On.PlayMakerFSM.Start += ReplaceVariablesFSM;
-            //On.PlayMakerFSM.OnEnable += ReplaceVariablesFSM;
 
             IL.GameMap.WorldMap += ReplaceVariablesIL;
-            //IL.GameMap.SetupMap += ReplaceVariablesIL;
             IL.RoughMapRoom.OnEnable += ReplaceVariablesIL;
 
             ModHooks.GetPlayerBoolHook += GetBoolOverride;
@@ -99,10 +94,8 @@ namespace MapChanger.Map
         public void OnQuitToMenu()
         {
             On.PlayMakerFSM.Start -= ReplaceVariablesFSM;
-            //On.PlayMakerFSM.OnEnable -= ReplaceVariablesFSM;
 
             IL.GameMap.WorldMap -= ReplaceVariablesIL;
-            //IL.GameMap.SetupMap -= ReplaceVariablesIL;
             IL.RoughMapRoom.OnEnable -= ReplaceVariablesIL;
 
             ModHooks.GetPlayerBoolHook -= GetBoolOverride;
@@ -199,9 +192,21 @@ namespace MapChanger.Map
         private static bool GetBoolOverride(string name, bool orig)
         {
             if (name is GOT_WHITE_PALACE_MAP or GOT_GODHOME_MAP
-                && Settings.MapModEnabled && Settings.CurrentMode().ForceFullMap)
+                && Settings.MapModEnabled && Settings.CurrentMode().FullMap)
             {
                 return true;
+            }
+            if (name.StartsWith("hasMarker"))
+            {
+                if (Settings.CurrentMode().MapMarkers == MapChanger.OverrideType.ForceOn)
+                {
+                    return true;
+                }
+                if (Settings.CurrentMode().MapMarkers == MapChanger.OverrideType.ForceOff)
+                {
+                    return false;
+                }
+                return orig;
             }
             if (!name.StartsWith(MAP_PREFIX) && !name.StartsWith(PINS_PREFIX))
             {
@@ -221,7 +226,7 @@ namespace MapChanger.Map
             }
             if (name.StartsWith(MAP_PREFIX))
             {
-                if (Settings.CurrentMode().ForceFullMap)
+                if (Settings.CurrentMode().FullMap)
                 {
                     return true;
                 }
@@ -229,7 +234,11 @@ namespace MapChanger.Map
             }
             if (name.StartsWith(PINS_PREFIX))
             {
-                if (Settings.CurrentMode().DisableVanillaPins)
+                if (Settings.CurrentMode().VanillaPins == MapChanger.OverrideType.ForceOn)
+                {
+                    return true;
+                }
+                if (Settings.CurrentMode().VanillaPins == MapChanger.OverrideType.ForceOff)
                 {
                     return false;
                 }
@@ -262,7 +271,7 @@ namespace MapChanger.Map
             }
             if (name.StartsWith(PINS_PREFIX) && type == typeof(List<string>))
             {
-                if (Settings.CurrentMode().DisableVanillaPins)
+                if (Settings.CurrentMode().VanillaPins == MapChanger.OverrideType.ForceOff)
                 {
                     return new List<string> { };
                 }

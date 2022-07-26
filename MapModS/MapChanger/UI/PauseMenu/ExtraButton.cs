@@ -5,14 +5,12 @@ namespace MapChanger.UI
 {
     public abstract class ExtraButton : ButtonWrapper
     {
-        private ExtraButtonPanel ebp;
-
-        public ExtraButton(string name, ExtraButtonPanel ebp) : base(name)
+        public ExtraButton(string name) : base(name)
         {
-            this.ebp = ebp;
+
         }
 
-        internal override void Make()
+        internal override void Make(Layout parent)
         {
             Button = new(PauseMenu.Instance.Root, Name)
             {
@@ -28,7 +26,7 @@ namespace MapChanger.UI
             };
 
             Button.Click += OnClick;
-            ebp.ExtraButtonsGrid.Children.Add(Button);
+            parent.Children.Add(Button);
         }
     }
 }

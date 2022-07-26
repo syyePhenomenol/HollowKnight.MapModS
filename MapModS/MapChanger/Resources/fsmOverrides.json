@@ -145,12 +145,12 @@
           "Type": "Map"
         }
       ],
-      "Have Markers?": [
-        {
-          "Index": 0,
-          "Type": "Pins"
-        }
-      ],
+      //"Have Markers?": [
+      //  {
+      //    "Index": 0,
+      //    "Type": "Pins"
+      //  }
+      //],
       "To Map": [
         {
           "Index": 1,
@@ -659,12 +659,12 @@
   },
   "Map Key-Control": {
     "BoolsIndex": {
-      //"Draw Pins": [
-      //  {
-      //    "Index": 0,
-      //    "Type": "Pins"
-      //  }
-      //],
+      "Draw Pins": [
+        {
+          "Index": 0,
+          "Type": "Pins"
+        }
+      ],
       "Check Bench": [
         {
           "Index": 0,

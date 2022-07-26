@@ -4,75 +4,49 @@ using UnityEngine;
 
 namespace MapChanger.MonoBehaviours
 {
-    internal class NextArea : MapObject, ISpriteRenderer, ITextMeshPro
+    public class NextArea : MapObject
     {
-        private MiscObjectDef mod;
-        private Vector4 tmpOrigColor;
-        private Vector4 srOrigColor;
+        public MiscObjectDef MiscObjectDef { get; private set; }
 
-        public TextMeshPro Tmp { get; private set; }
-        public SpriteRenderer Sr { get; private set; }
+        private TextMeshPro tmp;
+        private SpriteRenderer sr;
+        public Vector4 OrigColor { get; private set; }
+        public Vector4 Color
+        {
+            get => tmp.color;
+            set
+            {
+                tmp.color = value;
+                sr.color = value;
+            }
+        }
+
         private MapNextAreaDisplay Mnad => GetComponent<MapNextAreaDisplay>();
 
-        internal void Initialize(MiscObjectDef mod)
+        internal void Initialize(MiscObjectDef miscObjectDef)
         {
-            this.mod = mod;
+            MiscObjectDef = miscObjectDef;
 
-            Tmp = transform.FindChildInHierarchy("Area Name")?.GetComponent<TextMeshPro>();
-            Sr = transform.FindChildInHierarchy("Map_Arrow")?.GetComponent<SpriteRenderer>();
+            ActiveModifiers.Add(IsActive);
 
-            if (Tmp is null || Sr is null)
+            tmp = transform.FindChildInHierarchy("Area Name")?.GetComponent<TextMeshPro>();
+            sr = transform.FindChildInHierarchy("Map_Arrow")?.GetComponent<SpriteRenderer>();
+
+            if (tmp is null || sr is null)
             {
                 MapChangerMod.Instance.LogWarn($"Missing component references! {transform.name}");
                 Destroy(this);
                 return;
             }
-  
-            gameObject.SetActive(false);
-            Tmp.gameObject.SetActive(true);
-            Sr.gameObject.SetActive(true);
 
-            tmpOrigColor = Tmp.color;
-            srOrigColor = Sr.color;
+            OrigColor = tmp.color;
         }
 
-        public override void Set()
+        private bool IsActive()
         {
-            gameObject.SetActive(States.QuickMapOpen
+            return States.QuickMapOpen
                 && !Settings.CurrentMode().DisableNextArea
-                && (Mnad.visitedString is ""
-                    || PlayerData.instance.GetBool(Mnad.visitedString)));
-
-            SetTextColor();
-        }
-
-        public void SetText()
-        {
-
-        }
-
-        public void SetTextColor()
-        {
-            if (Settings.MapModEnabled && Settings.CurrentMode().EnableCustomColors && Colors.TryGetCustomColor(mod.ColorSetting, out Vector4 color))
-            {
-                Tmp.color = color;
-                Sr.color = color;
-            }
-            else
-            {
-                Tmp.color = tmpOrigColor;
-                Sr.color = srOrigColor;
-            }
-        }
-
-        public void SetSprite()
-        {
-
-        }
-
-        public void SetSpriteColor()
-        {
-
+                && (Mnad.visitedString is "" || PlayerData.instance.GetBool(Mnad.visitedString));
         }
     }
 }

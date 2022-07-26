@@ -15,9 +15,9 @@
         Q_Marks_3
     }
 
-    public enum MapMode
+    public enum VMMMode
     {
-        VMM_Normal,
-        VMM_FullMap
+        Normal,
+        Full_Map
     }
 }

@@ -2,13 +2,10 @@
 
 namespace MapChanger.MonoBehaviours
 {
-    internal class LifebloodPin : MapObject
+    internal class LifebloodPin : VanillaPin
     {
-        public override void Set()
-        {
-            gameObject.SetActive((!Settings.MapModEnabled || !Settings.CurrentMode().DisableVanillaPins)
-                && PlayerData.instance.GetBool("hasPinCocoon")
-                && PlayerData.instance.GetVariable<List<string>>("scenesEncounteredCocoon").Contains(transform.parent.name));
-        }
+        private protected override string HasPinBoolName => "hasPinCocoon";
+
+        private protected override string SceneListName => "scenesEncounteredCocoon";
     }
 }

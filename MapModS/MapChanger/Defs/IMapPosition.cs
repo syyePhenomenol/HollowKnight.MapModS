@@ -1,14 +1,15 @@
-﻿using Newtonsoft.Json;
-
-namespace MapChanger.Defs
+﻿namespace MapChanger.Defs
 {
     public interface IMapPosition
     {
-        [JsonProperty]
-        string MappedScene { get; set; }
-        [JsonProperty]
-        float OffsetX { get; set; }
-        [JsonProperty]
-        float OffsetY { get; set; }
+        /// <summary>
+        /// The X offset relative to the center of the GameMap transform.
+        /// </summary>
+        float X { get; }
+
+        /// <summary>
+        /// The Y offset relative to the center of the GameMap transform.
+        /// </summary>
+        float Y { get; }
     }
 }

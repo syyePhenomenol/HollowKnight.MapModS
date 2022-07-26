@@ -6,5 +6,6 @@ namespace MapChanger.MonoBehaviours
     {
         string SceneName { get; }
         MapZone MapZone { get; }
+        bool Visible { get; }
     }
 }

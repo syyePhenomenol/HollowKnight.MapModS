@@ -73,7 +73,7 @@ namespace MapChanger
 
         private static HashSet<string> clearedLocations;
 
-        internal static HashSet<string> ScenesVisited = new();
+        public static HashSet<string> ScenesVisited = new();
 
         internal static void Load()
         {

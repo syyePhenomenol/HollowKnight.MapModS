@@ -32,69 +32,47 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Resources\GUI\**" />
-    <Compile Remove="Resources\Pins\**" />
-    <Compile Remove="Resources\GUI\**" />
-    <Compile Remove="Resources\Pins\**" />
-    <Compile Remove="Resources\GUI\**" />
-    <Compile Remove="Resources\Pins\**" />
+    <Compile Remove="RandoMapMod\UI\**" />
     <Compile Remove="Unused\**" />
-    <EmbeddedResource Remove="Resources\GUI\**" />
-    <EmbeddedResource Remove="Resources\Pins\**" />
-    <EmbeddedResource Remove="Resources\GUI\**" />
-    <EmbeddedResource Remove="Resources\Pins\**" />
-    <EmbeddedResource Remove="Resources\GUI\**" />
-    <EmbeddedResource Remove="Resources\Pins\**" />
+    <EmbeddedResource Remove="RandoMapMod\UI\**" />
     <EmbeddedResource Remove="Unused\**" />
-    <None Remove="Resources\GUI\**" />
-    <None Remove="Resources\Pins\**" />
-    <None Remove="Resources\GUI\**" />
-    <None Remove="Resources\Pins\**" />
-    <None Remove="Resources\GUI\**" />
-    <None Remove="Resources\Pins\**" />
+    <None Remove="RandoMapMod\UI\**" />
     <None Remove="Unused\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Data\BenchRandoInterop.cs" />
-    <Compile Remove="Data\BenchwarpInterop.cs" />
-    <Compile Remove="Data\ItemDef.cs" />
-    <Compile Remove="Data\MainData.cs" />
-    <Compile Remove="Data\MapRoomDef.cs" />
-    <Compile Remove="Data\OldPin.cs" />
-    <Compile Remove="Data\TransitionData.cs" />
-    <Compile Remove="MapChanger\IC\ICInterop.cs" />
-    <Compile Remove="Map\FullMap.cs" />
-    <Compile Remove="Map\MapObjectScript.cs" />
-    <Compile Remove="Map\MapRooms.cs" />
-    <Compile Remove="Map\PinAnimatedSprite.cs" />
-    <Compile Remove="Map\PinsCustom.cs" />
-    <Compile Remove="Map\PinsVanilla.cs" />
-    <Compile Remove="Map\QuickMap.cs" />
-    <Compile Remove="Map\Quill.cs" />
-    <Compile Remove="Map\WorldMap.cs" />
-    <Compile Remove="Pathfinding\Pathfinder.cs" />
-    <Compile Remove="Pathfinding\PathfinderData.cs" />
-    <Compile Remove="Pins\BorderedPin.cs" />
-    <Compile Remove="Pins\Pin.cs" />
-    <Compile Remove="Pins\PinGroup.cs" />
-    <Compile Remove="Pins\RandoPin.cs" />
-    <Compile Remove="Pins\RandoPinGroup.cs" />
-    <Compile Remove="UI\Benchwarp.cs" />
-    <Compile Remove="UI\InfoPanels.cs" />
-    <Compile Remove="UI\MapKey.cs" />
-    <Compile Remove="UI\MapText.cs" />
-    <Compile Remove="UI\RouteCompass.cs" />
-    <Compile Remove="UI\TransitionPersistent.cs" />
-    <Compile Remove="UI\TransitionQuickMap.cs" />
-    <Compile Remove="UI\TransitionWorldMap.cs" />
+    <Compile Remove="MapChanger\Defs\MapObjectDef.cs" />
+    <Compile Remove="MapChanger\MonoBehaviours\Interfaces\IBorder.cs" />
+    <Compile Remove="MapChanger\MonoBehaviours\Interfaces\IMapRoom.cs" />
+    <Compile Remove="MapChanger\MonoBehaviours\Interfaces\ISpriteRenderer.cs" />
+    <Compile Remove="MapChanger\MonoBehaviours\Interfaces\ITextMeshPro.cs" />
+    <Compile Remove="MapChanger\MonoBehaviours\MapObjectGroup.cs" />
+    <Compile Remove="RandoMapMod\BenchRandoInterop.cs" />
+    <Compile Remove="RandoMapMod\BenchwarpInterop.cs" />
+    <Compile Remove="RandoMapMod\Data\JsonUtil.cs" />
+    <Compile Remove="RandoMapMod\Data\MapRoomDef.cs" />
+    <Compile Remove="RandoMapMod\Defs\RandomizedPinDef.cs" />
+    <Compile Remove="RandoMapMod\Defs\RMMPinDef.cs" />
+    <Compile Remove="RandoMapMod\Defs\VanillaPinDef.cs" />
+    <Compile Remove="RandoMapMod\Map\MapRooms.cs" />
+    <Compile Remove="RandoMapMod\Map\Quill.cs" />
+    <Compile Remove="RandoMapMod\Modes\TransitionAllRoomsMode.cs" />
+    <Compile Remove="RandoMapMod\Modes\TransitionMode.cs" />
+    <Compile Remove="RandoMapMod\Modes\TransitionNormalMode.cs" />
+    <Compile Remove="RandoMapMod\Modes\TransitionVisitedOnlyMode.cs" />
+    <Compile Remove="RandoMapMod\Pins\RMMPinGroup.cs" />
+    <Compile Remove="RandoMapMod\RoomText.cs" />
+    <Compile Remove="RandoMapMod\Transition\Pathfinder.cs" />
+    <Compile Remove="RandoMapMod\Transition\PathfinderData.cs" />
+    <Compile Remove="RandoMapMod\Transition\TransitionData.cs" />
+    <Compile Remove="RandoMapMod\Transition\TransitionTracker.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="MapChanger\Resources\AdditionalMaps\locations.json" />
+    <None Remove="MapChanger\Resources\AdditionalMaps\locations1.json" />
     <None Remove="MapChanger\Resources\AdditionalMaps\mappedScenes.json" />
     <None Remove="MapChanger\Resources\AdditionalMaps\roomTexts.json" />
-    <None Remove="MapChanger\Resources\defaultMapObjects1.json" />
     <None Remove="MapChanger\Resources\locations.json" />
     <None Remove="MapChanger\Resources\locations1.json" />
     <None Remove="MapChanger\Resources\miscObjects.json" />
@@ -136,27 +114,18 @@
     <None Remove="MapChanger\Resources\Sprites\Pins\pinUnknown_Totem.png" />
     <None Remove="MapChanger\Resources\Sprites\Pins\pinUnknown_TotemInv.png" />
     <None Remove="MapChanger\Resources\Sprites\Pins\pinVessel.png" />
-    <None Remove="Resources\AdditionalMaps\randoPins.json" />
-    <None Remove="Resources\AdditionalMaps\randoPins1.json" />
-    <None Remove="Resources\mapZones.json" />
-    <None Remove="Resources\newMapRoomObjects.json" />
-    <None Remove="Resources\pinsAM.json" />
-    <None Remove="Resources\pinScenes.json" />
-    <None Remove="Resources\randoPins.json" />
-    <None Remove="Resources\randoPins1.json" />
-    <None Remove="Resources\tracking.json" />
+    <None Remove="RandoMapMod\Resources\AdditionalMaps\randoPins.json" />
+    <None Remove="RandoMapMod\Resources\AdditionalMaps\randoPins1.json" />
+    <None Remove="RandoMapMod\Resources\randoPins1.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="MapChanger\Resources\AdditionalMaps\locations.json" />
     <EmbeddedResource Include="MapChanger\Resources\AdditionalMaps\mappedScenes.json" />
     <EmbeddedResource Include="MapChanger\Resources\AdditionalMaps\roomTexts.json" />
     <EmbeddedResource Include="MapChanger\Resources\locations.json" />
     <EmbeddedResource Include="MapChanger\Resources\miscObjects.json" />
     <EmbeddedResource Include="MapChanger\Resources\roomSprites.json" />
-    <EmbeddedResource Include="MapChanger\Resources\defaultMapObjects1.json" />
     <EmbeddedResource Include="MapChanger\Resources\mappedScenes.json" />
-    <EmbeddedResource Include="MapChanger\Resources\locations1.json" />
     <EmbeddedResource Include="MapChanger\Resources\roomTexts.json" />
     <EmbeddedResource Include="MapChanger\Resources\Sprites\Pins\pinBench.png" />
     <EmbeddedResource Include="MapChanger\Resources\Sprites\Pins\pinBlank.png" />
@@ -195,34 +164,12 @@
     <EmbeddedResource Include="MapChanger\Resources\Sprites\Pins\pinUnknown_TotemInv.png" />
     <EmbeddedResource Include="MapChanger\Resources\Sprites\Pins\pinVessel.png" />
     <EmbeddedResource Include="MapChanger\Resources\Sprites\selector.png" />
-    <EmbeddedResource Include="Resources\AdditionalMaps\randoPins.json" />
-    <EmbeddedResource Include="Resources\AdditionalMaps\randoPins1.json" />
-    <EmbeddedResource Include="Resources\Pathfinder\Compass\doorObjectsByScene.json" />
-    <EmbeddedResource Include="Resources\Pathfinder\Compass\doorObjectsByTransition.json" />
-    <EmbeddedResource Include="Resources\benchwarp.json" />
-    <EmbeddedResource Include="Resources\Pathfinder\Data\adjacentScenes.json" />
-    <EmbeddedResource Include="Resources\Pathfinder\Data\conditionalTerms.json" />
-    <EmbeddedResource Include="Resources\Pathfinder\Data\adjacentTerms.json" />
-    <EmbeddedResource Include="Resources\Pathfinder\Data\transitionsByScene.json" />
-    <EmbeddedResource Include="Resources\Pathfinder\Data\scenesByTransition.json" />
-    <EmbeddedResource Include="Resources\Pathfinder\Logic\benchLogicEdits.json" />
-    <EmbeddedResource Include="Resources\Pathfinder\Logic\godhomeLogicSubstitutions.json" />
-    <EmbeddedResource Include="Resources\Pathfinder\Logic\logicSubstitutions.json" />
-    <EmbeddedResource Include="Resources\Pathfinder\Logic\logicEdits.json" />
-    <EmbeddedResource Include="Resources\Pathfinder\Logic\benchWaypoints.json" />
-    <EmbeddedResource Include="Resources\Pathfinder\Logic\godhomeTransitions.json" />
-    <EmbeddedResource Include="Resources\Pathfinder\Logic\waypoints.json" />
-    <EmbeddedResource Include="Resources\Pathfinder\Logic\macros.json" />
-    <EmbeddedResource Include="Resources\Pathfinder\Logic\transitions.json" />
-    <EmbeddedResource Include="MapChanger\Resources\AdditionalMaps\locations1.json" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="MapChanger\Resources\minimalMap.json" />
     <EmbeddedResource Include="MapChanger\Resources\fsmOverrides.json" />
     <EmbeddedResource Include="MapChanger\Resources\tracking.json" />
-    <EmbeddedResource Include="Resources\randoPins.json" />
-    <EmbeddedResource Include="Resources\randoPins1.json" />
   </ItemGroup>
 
 	<Target Name="CopyMod" AfterTargets="PostBuildEvent">
@@ -390,9 +337,12 @@
 
     <ItemGroup>
       <Folder Include="bin\" />
-      <Folder Include="MapChanger\IC\" />
-      <Folder Include="Map\" />
-      <Folder Include="Pathfinding\" />
+      <Folder Include="RandoMapMod\Data\" />
+      <Folder Include="RandoMapMod\Map\" />
+      <Folder Include="RandoMapMod\Resources\AdditionalMaps\" />
+      <Folder Include="RandoMapMod\Transition\" />
     </ItemGroup>
+
+    <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
 
 </Project>

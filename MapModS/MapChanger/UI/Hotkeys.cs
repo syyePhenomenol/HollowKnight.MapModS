@@ -26,7 +26,7 @@ namespace MapChanger.UI
                 }, ModifierKeys.Ctrl);
                 layout.ListenForHotkey(KeyCode.E, () =>
                 {
-                    BuiltInObjects.ExportDefs();
+                    //BuiltInObjects.ExportDefs();
                 }, ModifierKeys.Ctrl);
                 //layout.ListenForHotkey(KeyCode.D, () =>
                 //{

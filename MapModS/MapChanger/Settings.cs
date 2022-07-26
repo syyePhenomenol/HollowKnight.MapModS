@@ -2,47 +2,32 @@
 using System.Collections.Generic;
 using System.Linq;
 using MapChanger.MonoBehaviours;
-using MapChanger.UI;
+using Modding;
 
 namespace MapChanger
 {
-    public record MapModeSetting
+    public class Settings : IMainHooks
     {
-        public (string, string) ModeKey => (Mod, ModeName);
-        public string Mod { get; init; } = "MapChangerMod";
-        public string ModeName { get; init; } = "Disabled";
-        public bool ForceHasMap { get; init; } = false;
-        public bool ForceHasQuill { get; init; } = false;
-        /// <summary>
-        /// Determines if the map immediately gets filled in when visiting a new scene with Quill.
-        /// </summary>
-        public bool ImmediateMapUpdate { get; init; } = false;
-        public bool ForceFullMap { get; init; } = false;
-        public bool DisableAreaNames { get; init; } = false;
-        public bool DisableNextArea { get; init; } = false;
-        public bool DisableVanillaPins { get; init; } = false;
-        public bool EnableCustomColors { get; init; } = false;
-        public bool EnableExtraRoomNames { get; init; } = false;
-        public Func<RoomSprite, bool> OnRoomSpriteSet { get; init; }
-        public Func<RoomText, bool> OnRoomTextSet { get; init; }
-    }
-
-    public static class Settings
-    {
+        public static event Action OnSettingChanged;
         public static bool MapModEnabled { get; private set; } = false;
 
-        private static List<MapModeSetting> Modes;
+        private static List<MapMode> Modes = new ();
 
         private static int modeIndex = 0;
 
-        internal static void Initialize()
+        public void OnEnterGame()
+        {
+
+        }
+
+        public void OnQuitToMenu()
         {
             Modes = new();
         }
 
-        public static void AddModes(MapModeSetting[] modes)
+        internal static void AddModes(MapMode[] modes)
         {
-            foreach (MapModeSetting mode in modes)
+            foreach (MapMode mode in modes)
             {
                 if (Modes.Any(existingMode => existingMode.ModeKey == mode.ModeKey))
                 {
@@ -58,16 +43,14 @@ namespace MapChanger
         {
             MapModEnabled = !MapModEnabled;
 
-            UIManager.instance.checkpointSprite.Show();
-            UIManager.instance.checkpointSprite.Hide();
+            SettingChanged();
+        }
 
-            if (MapModEnabled)
+        public static void SetModEnabled(bool enabled)
+        {
+            if (MapModEnabled != enabled)
             {
-                MapChangerMod.Instance.LogDebug($"MapMod Enabled");
-            }
-            else
-            {
-                MapChangerMod.Instance.LogDebug($"MapMod Disabled");
+                ToggleModEnabled();
             }
         }
 
@@ -77,10 +60,29 @@ namespace MapChanger
 
             modeIndex = (modeIndex + 1) % Modes.Count;
 
-            MapChangerMod.Instance.LogDebug($"Mode set to {CurrentMode().ModeName}");
+            SettingChanged();
+
+            MapChangerMod.Instance.LogDebug($"Mode set to {CurrentMode().ModeKey}");
         }
 
-        public static MapModeSetting CurrentMode()
+        public static void SetMode(string mod, string modeName)
+        {
+            if (!MapModEnabled) return;
+
+            for (int i = 0; i < Modes.Count; i++)
+            {
+                if (Modes[i].ModeKey == (mod, modeName))
+                {
+                    modeIndex = i;
+                }
+            }
+
+            SettingChanged();
+
+            MapChangerMod.Instance.LogDebug($"Mode set to {CurrentMode().ModeKey}");
+        }
+
+        public static MapMode CurrentMode()
         {
             if (!Modes.Any())
             {
@@ -92,6 +94,12 @@ namespace MapChanger
                 modeIndex = 0;
             }
             return Modes[modeIndex];
+        }
+
+        private static void SettingChanged()
+        {
+            try { OnSettingChanged?.Invoke(); }
+            catch (Exception e) { MapChangerMod.Instance.LogError(e); }
         }
     }
 }

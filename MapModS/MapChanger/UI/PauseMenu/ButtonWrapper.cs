@@ -1,4 +1,5 @@
-﻿using MagicUI.Elements;
+﻿using MagicUI.Core;
+using MagicUI.Elements;
 
 namespace MapChanger.UI
 {
@@ -12,7 +13,10 @@ namespace MapChanger.UI
             Name = name;
         }
 
-        internal abstract void Make();
+        internal virtual void Make(Layout parent)
+        {
+
+        }
 
         public virtual void OnClick(Button button)
         {

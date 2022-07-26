@@ -1,20 +1,26 @@
-﻿using MagicUI.Core;
+﻿using System.Collections.Generic;
+using MagicUI.Core;
 using MagicUI.Elements;
 
 namespace MapChanger.UI
 {
-    public class ExtraButtonPanel
+    public abstract class ExtraButtonPanel
     {
         public readonly string Name;
+        public readonly string Mod;
+        private readonly float leftPadding;
+        private readonly int rowSize;
 
-        private readonly ExtraButton[] extraButtons;
+        protected List<ExtraButton> ExtraButtons { get; private set; }
 
         public DynamicUniformGrid ExtraButtonsGrid { get; private set; }
 
-        public ExtraButtonPanel(string name, ExtraButton[] extraButtons)
+        public ExtraButtonPanel(string name, string mod, float leftPadding, int rowSize)
         {
             Name = name;
-            this.extraButtons = extraButtons;
+            Mod = mod;
+            this.leftPadding = leftPadding;
+            this.rowSize = rowSize;
         }
 
         internal void Make()
@@ -24,19 +30,25 @@ namespace MapChanger.UI
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Top,
                 Orientation = Orientation.Vertical,
-                Padding = new(415f, 865f, 10f, 10f),
+                Padding = new(leftPadding, 865f, 10f, 10f),
                 HorizontalSpacing = 0f,
                 VerticalSpacing = 5f
             };
 
-            ExtraButtonsGrid.ChildrenBeforeRollover = 10;
+            ExtraButtonsGrid.ChildrenBeforeRollover = rowSize;
 
-            foreach (ExtraButton extraButton in extraButtons)
-            {
-                extraButton.Make();
-            }
+            ExtraButtons = new();
+            MakeButtons();
 
             PauseMenu.ExtraButtonPanels.Add(this);
+        }
+
+        protected abstract void MakeButtons();
+
+        public void Show()
+        {
+            PauseMenu.HideOtherPanels(this);
+            ExtraButtonsGrid.Visibility = Visibility.Visible;
         }
 
         public void Hide()
@@ -44,9 +56,26 @@ namespace MapChanger.UI
             ExtraButtonsGrid.Visibility = Visibility.Hidden;
         }
 
+        public void Toggle()
+        {
+            if (ExtraButtonsGrid.Visibility == Visibility.Hidden)
+            {
+                Show();
+            }
+            else
+            {
+                Hide();
+            }
+        }
+
         public void Set()
         {
-            foreach (ExtraButton extraButton in extraButtons)
+            if (!Settings.MapModEnabled || Settings.CurrentMode().Mod != Mod)
+            {
+                Hide();
+            }
+
+            foreach (ExtraButton extraButton in ExtraButtons)
             {
                 extraButton.Set();
             }

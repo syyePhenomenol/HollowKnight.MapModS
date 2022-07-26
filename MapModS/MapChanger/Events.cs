@@ -13,6 +13,7 @@ namespace MapChanger
 {
     public static class Events
     {
+        public static event Action BeforeEnterGame;
         public static event Action AfterEnterGame;
         public static event Action BeforeQuitToMenu;
         public static event Action<GameObject> AfterSetGameMap;
@@ -47,7 +48,8 @@ namespace MapChanger
             new BehaviourChanges(),
             new Hotkeys(),
             new MapUI(),
-            new PauseMenu()
+            new PauseMenu(),
+            new MapObjectUpdater()
         };
 
         private static readonly MapZone[] customMapZones =
@@ -90,20 +92,29 @@ namespace MapChanger
 
         private static void AfterStartNewGame(On.GameManager.orig_StartNewGame orig, GameManager self, bool permadeathMode, bool bossRushMode)
         {
+            BeforeEnterGameEvent();
             orig(self, permadeathMode, bossRushMode);
-            EnterGameEvent();
+            AfterEnterGameEvent();
         }
 
         private static void AfterContinueGame(On.GameManager.orig_ContinueGame orig, GameManager self)
         {
+            BeforeEnterGameEvent();
             orig(self);
-            EnterGameEvent();
+            AfterEnterGameEvent();
         }
 
-        private static void EnterGameEvent()
+        private static void BeforeEnterGameEvent()
+        {
+            //Settings.Initialize();
+
+            try { BeforeEnterGame?.Invoke(); }
+            catch (Exception e) { MapChangerMod.Instance.LogError(e); }
+        }
+
+        private static void AfterEnterGameEvent()
         {
             // Load default/custom assets
-            Settings.Initialize();
             Colors.LoadCustomColors();
 
             foreach (IMainHooks hookModule in HookModules)

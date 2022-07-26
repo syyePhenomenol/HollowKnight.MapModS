@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GlobalEnums;
 using MapChanger.Defs;
+using MapChanger.IC;
 using MapChanger.MonoBehaviours;
 using UnityEngine;
 
@@ -10,7 +11,6 @@ namespace MapChanger
 {
     public static class Finder
     {
-        private static Dictionary<string, Vector2> mappedScenePositions;
         private static Dictionary<string, MappedSceneDef> mappedScenes;
         private static Dictionary<string, MapLocationDef> locations;
         private static HashSet<string> minimalMapScenes;
@@ -30,45 +30,18 @@ namespace MapChanger
                     mappedScenes[scene] = msd;
                 }
 
-                Dictionary<string, MapLocationDef> locationLookupAM = JsonUtil.Deserialize<Dictionary<string, MapLocationDef>>("MapModS.MapChanger.Resources.AdditionalMaps.locations.json");
-                foreach ((string name, MapLocationDef mpd) in locationLookupAM.Select(kvp => (kvp.Key, kvp.Value)))
-                {
-                    locations[name] = mpd;
-                }
+                //Dictionary<string, MapLocationDef> locationLookupAM = JsonUtil.Deserialize<Dictionary<string, MapLocationDef>>("MapModS.MapChanger.Resources.AdditionalMaps.locations.json");
+                //foreach ((string name, MapLocationDef mpd) in locationLookupAM.Select(kvp => (kvp.Key, kvp.Value)))
+                //{
+                //    locations[name] = mpd;
+                //}
             }
-
-            //foreach ((string name, MapLocationDef mpd) in locations.Select(kvp => (kvp.Key, kvp.Value)))
-            //{
-            //    CompleteLocationDef(name, mpd);
-            //}
-        }
-
-        internal static void SetMappedScenePositions(List<MapObject> roomSprites)
-        {
-            mappedScenePositions = roomSprites.Where(rs => IsScene(rs.transform.name))
-                .ToDictionary(rs => rs.transform.name, rs => (Vector2)(rs.transform.localPosition + rs.transform.parent.transform.localPosition));
-        }
-
-        internal static bool TryGetMappedScenePosition(string scene, out Vector2 position)
-        {
-            position = Vector2.zero;
-
-            if (scene is null) return false;
-
-            if (mappedScenePositions.ContainsKey(scene))
-            {
-                position = mappedScenePositions[scene].Snap();
-
-                return true;
-            }
-            return false;
         }
 
         public static void InjectLocations(Dictionary<string, MapLocationDef> locations)
         {
             foreach ((string name, MapLocationDef mpd) in locations.Select(kvp => (kvp.Key, kvp.Value)))
             {
-                //CompleteLocationDef(name, mpd);
                 injectedLocations[name] = mpd;
             }
         }
@@ -76,15 +49,20 @@ namespace MapChanger
         public static MapLocationDef GetLocation(string name)
         {
             if (name is null) return default;
-            if (injectedLocations.TryGetValue(name, out MapLocationDef mpd))
+            if (injectedLocations.TryGetValue(name, out MapLocationDef mld))
             {
-                return mpd;
+                return mld;
             }
-            if (locations.TryGetValue(name, out mpd))
+            if (locations.TryGetValue(name, out mld))
             {
-                return mpd;
+                return mld;
             }
             //TODO: Best guess here
+            //mpd = new();
+            //mpd.Name = name;
+            //mpd.SceneName = ICInterop.GetScene(name);
+            //mpd.MappedScene = GetMappedScene(mpd.SceneName);
+            //return mpd;
             return default;
         }
 
@@ -109,22 +87,6 @@ namespace MapChanger
             return minimalMapScenes.Contains(scene);
         }
 
-        //private static void CompleteLocationDef(string name, MapLocationDef mpd)
-        //{
-        //    if (mpd.Name is null)
-        //    {
-        //        mpd.Name = name;
-        //    }
-        //    if (mpd.SceneName is null && Dependencies.HasItemChanger())
-        //    {
-        //        mpd.SceneName = IC.ICInterop.GetScene(name);
-        //    }
-        //    if (mpd.MappedScene is null)
-        //    {
-        //        mpd.MappedScene = GetMappedScene(mpd.SceneName);
-        //    }
-        //}
-
         public static string GetMappedScene(string scene)
         {
             if (scene is null) return default;
@@ -148,7 +110,7 @@ namespace MapChanger
         public static bool IsScene(string scene)
         {
             if (scene is null) return false;
-            return (mappedScenes.ContainsKey(scene));
+            return mappedScenes.ContainsKey(scene);
         }
 
         public static bool IsMappedScene(string scene)

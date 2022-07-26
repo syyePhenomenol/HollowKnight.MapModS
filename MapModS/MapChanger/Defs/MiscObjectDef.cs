@@ -2,15 +2,17 @@
 
 namespace MapChanger.Defs
 {
-    internal enum MiscObjectType
+    public enum MiscObjectType
     { 
         AreaName,
         NextArea
     }
 
-    internal record MiscObjectDef : BuiltInObjectDef
+    public record MiscObjectDef
     {
         [JsonProperty]
         internal MiscObjectType Type { get; init; }
+        [JsonProperty]
+        public ColorSetting ColorSetting { get; init; }
     }
 }

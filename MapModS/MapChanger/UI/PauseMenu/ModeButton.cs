@@ -5,7 +5,12 @@ namespace MapChanger.UI
 {
     public class ModeButton : MainButton
     {
-        public ModeButton() : base("Mode", "MapChangerMod", 1, 0) { }
+        public static ModeButton Instance { get; private set; }
+
+        public ModeButton() : base("Mode", "MapChangerMod", 1, 0)
+        {
+            Instance = this;
+        }
 
         public override void OnClick(Button button)
         {

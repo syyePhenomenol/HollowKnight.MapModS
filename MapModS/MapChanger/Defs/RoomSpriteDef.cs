@@ -3,8 +3,10 @@ using Newtonsoft.Json;
 
 namespace MapChanger.Defs
 {
-    internal record RoomSpriteDef : BuiltInObjectDef
+    public record RoomSpriteDef
     {
+        [JsonProperty]
+        public ColorSetting ColorSetting { get; init; }
         [JsonProperty]
         internal string SceneName { get; init; }
         [JsonIgnore]

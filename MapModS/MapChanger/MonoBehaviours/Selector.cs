@@ -5,25 +5,70 @@ using UnityEngine;
 
 namespace MapChanger.MonoBehaviours
 {
-    public class Selector : MapObject, IPeriodicUpdater, ISpriteRenderer, IToggleable
+    /// <summary>
+    /// A MapObject with a reticle for selecting MapObjects on the world map.
+    /// </summary>
+    public abstract class Selector : MapObject, IPeriodicUpdater
     {
-        internal event Action<string> OnSet;
-
         public const string NONE_SELECTED = "None selected";
-        
-        private const float DEFAULT_SIZE = 0.3f;
-        private const float MAP_FRONT_Z = -23f;
-        private const string SELECTOR = "selector";
 
-        public Dictionary<string, List<ISelectable>> Objects { get; set; } = new();
-        public Vector2 TargetPosition { get; set; } = Vector2.zero;
-        public float UpdateWaitSeconds { get; set; } = 0.1f;
+        protected const float MAP_FRONT_Z = -30f;
+        protected const float DEFAULT_SIZE = 0.3f;
+        protected const float DEFAULT_SELECTION_RADIUS = 0.7f;
+        protected static readonly Vector4 DEFAULT_COLOR = new(1f, 1f, 1f, 0.6f);
+        protected const string SELECTOR_SPRITE = "selector";
 
-        public SpriteRenderer Sr => GetComponent<SpriteRenderer>();
+        public Dictionary<string, List<ISelectable>> Objects { get; } = new();
+        public virtual Vector2 TargetPosition { get; } = Vector2.zero;
+        public virtual float UpdateWaitSeconds { get; } = 0.1f;
+        public virtual float SelectionRadius { get; } = DEFAULT_SELECTION_RADIUS;
 
-        internal string SelectedObjectKey { get; private set; } = NONE_SELECTED;
+        protected SpriteRenderer Sr { get; private set; }
 
-        private bool isActive = true;
+        private string selectedObjectKey = NONE_SELECTED;
+        public string SelectedObjectKey
+        {
+            get => selectedObjectKey;
+            private set
+            {
+                if (selectedObjectKey != value)
+                {
+                    if (selectedObjectKey is not NONE_SELECTED)
+                    {
+                        Deselect(selectedObjectKey);
+                    }
+
+                    if (value is not NONE_SELECTED)
+                    {
+                        Select(value);
+                    }
+
+                    selectedObjectKey = value;
+                }
+            }
+        }
+
+        private void Select(string objectKey)
+        {
+            if (Objects.ContainsKey(objectKey))
+            {
+                foreach (ISelectable selectable in Objects[objectKey])
+                {
+                    Select(selectable);
+                }
+            }
+        }
+
+        private void Deselect(string objectKey)
+        {
+            if (Objects.ContainsKey(objectKey))
+            {
+                foreach (ISelectable selectable in Objects[objectKey])
+                {
+                    Deselect(selectable);
+                }
+            }
+        }
 
         // Coroutines stop when the GameObject is set inactive!
         public IEnumerator PeriodicUpdate()
@@ -32,49 +77,24 @@ namespace MapChanger.MonoBehaviours
             {
                 yield return new WaitForSecondsRealtime(UpdateWaitSeconds);
 
-                if (!isActive) continue;
-
-                if (TryGetKeyOfObjectClosestToTarget(out string newKey))
-                {
-                    if (Objects.ContainsKey(SelectedObjectKey))
-                    {
-                        foreach (ISelectable selectable in Objects[SelectedObjectKey])
-                        {
-                            selectable.Deselect();
-                        }
-                    }
-                    if (Objects.ContainsKey(newKey))
-                    {
-                        foreach (ISelectable selectable in Objects[newKey])
-                        {
-                            selectable.Select();
-                        }
-                    }
-                    SelectedObjectKey = newKey;
-                    Set();
-                }
-            }
-
-            bool TryGetKeyOfObjectClosestToTarget(out string newKey)
-            {
-                newKey = NONE_SELECTED;
-                double minDistance = double.PositiveInfinity;
+                double minDistance = SelectionRadius;
+                string newKey = NONE_SELECTED;
 
                 foreach (List<ISelectable> selectables in Objects.Values)
                 {
                     foreach (ISelectable selectable in selectables)
                     {
-                        if (!selectable.CanUsePosition()) continue;
+                        if (!selectable.CanSelect()) continue;
 
                         (string key, Vector2 position) = selectable.GetKeyAndPosition();
 
-                        double distanceX = HorizontalDistanceToTarget(position);
+                        double distanceX = Math.Abs(position.x - TargetPosition.x);
                         if (distanceX > minDistance) continue;
 
-                        double distanceY = VerticalDistanceToTarget(position);
+                        double distanceY = Math.Abs(position.y - TargetPosition.y);
                         if (distanceY > minDistance) continue;
 
-                        double euclidDistance = EuclideanDistanceToTarget(distanceX, distanceY);
+                        double euclidDistance = Math.Pow(distanceX, 2) + Math.Pow(distanceY, 2);
                         if (euclidDistance < minDistance)
                         {
                             newKey = key;
@@ -83,122 +103,47 @@ namespace MapChanger.MonoBehaviours
                     }
                 }
 
-                return newKey != SelectedObjectKey;
-
-                double HorizontalDistanceToTarget(Vector2 position)
-                {
-                    return Math.Abs(position.x - TargetPosition.x);
-                }
-
-                double VerticalDistanceToTarget(Vector2 position)
-                {
-                    return Math.Abs(position.y - TargetPosition.y);
-                }
-
-                double EuclideanDistanceToTarget(double distanceX, double distanceY)
-                {
-                    return Math.Pow(distanceX, 2) + Math.Pow(distanceY, 2);
-                }
+                SelectedObjectKey = newKey;
             }
         }
 
-        public void Awake()
+        public override void Initialize()
         {
             base.Initialize();
 
-            gameObject.AddComponent<SpriteRenderer>();
-            Sr.sprite = SpriteManager.GetSprite(SELECTOR);
+            gameObject.SetActive(false);
+            DontDestroyOnLoad(this);
+
+            ActiveModifiers.Add(WorldMapOpen);
+
+            Sr = gameObject.AddComponent<SpriteRenderer>();
+            Sr.sprite = SpriteManager.GetSprite(SELECTOR_SPRITE);
+            Sr.color = DEFAULT_COLOR;
             Sr.sortingLayerName = HUD;
 
             transform.localScale = Vector3.one * DEFAULT_SIZE;
             transform.localPosition = new Vector3(0, 0, MAP_FRONT_Z);
 
-            Events.AfterOpenWorldMap += OnOpenWorldMap;
-            Events.BeforeCloseMap += OnCloseMap;
-            Events.BeforeQuitToMenu += OnQuitToMenu;
+            MapObjectUpdater.Add(this);
         }
 
-        private void OnOpenWorldMap(GameMap gameMap)
+        private bool WorldMapOpen()
         {
-            Set();
+            return States.WorldMapOpen;
         }
 
-        private void OnCloseMap(GameMap gameMap)
+        public void OnEnable()
         {
-            Set();
+            StartCoroutine(PeriodicUpdate());
         }
 
-        /// <summary>
-        /// As this GameObject doesn't have a parent, we need to manually destroy it
-        /// </summary>
-        private void OnQuitToMenu()
+        public void OnDisable()
         {
-            Events.AfterOpenWorldMap -= OnOpenWorldMap;
-            Events.BeforeCloseMap -= OnCloseMap;
-            Events.BeforeQuitToMenu -= OnQuitToMenu;
-            gameObject.DestroyAll();
+            SelectedObjectKey = NONE_SELECTED;
         }
 
-        public override void Set()
-        {
-            try { OnSet?.Invoke(SelectedObjectKey); }
-            catch (Exception e) { MapChangerMod.Instance.LogError(e); }
+        protected abstract void Select(ISelectable selectable);
 
-            if (Settings.MapModEnabled && States.WorldMapOpen && isActive)
-            {
-                if (!gameObject.activeSelf)
-                {
-                    gameObject.SetActive(true);
-                    StartCoroutine(PeriodicUpdate());
-                }
-            }
-            else
-            {
-                gameObject.SetActive(false);
-
-                if (SelectedObjectKey != NONE_SELECTED)
-                {
-                    foreach (ISelectable selectable in Objects[SelectedObjectKey])
-                    {
-                        selectable.Deselect();
-                    }
-
-                    SelectedObjectKey = NONE_SELECTED;
-                }
-            }
-
-            SetSpriteColor();
-        }
-
-        public void SetSprite()
-        {
-            
-        }
-
-        public void SetSpriteColor()
-        {
-            Sr.color = new Vector4(1f, 1f, 1f, 0.5f);
-
-            //if (selectedObjectKey is not NONE_SELECTED)
-            //{
-            //    Sr.color = Colors.GetColor(ColorSetting.Room_Selected);
-            //}
-            //else
-            //{
-            //    Sr.color = Colors.GetColor(ColorSetting.Room_Normal);
-            //}
-        }
-
-        public void SetActive(bool value)
-        {
-            isActive = value;
-            Set();
-        }
-
-        public void Toggle()
-        {
-            isActive = !isActive;
-            Set();
-        }
+        protected abstract void Deselect(ISelectable selectable);
     }
 }

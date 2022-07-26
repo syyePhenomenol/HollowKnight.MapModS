@@ -25,14 +25,6 @@ namespace MapChanger
                 }
             }
 
-            foreach (KeyValuePair<string, Assembly> pair in Dependencies.optionalDependencies)
-            {
-                if (pair.Value == null)
-                {
-                    Log($"{pair.Key} is not installed. Some features are disabled.");
-                }
-            }
-
             Finder.Load();
             SpriteManager.Load();
             Tracker.Load();

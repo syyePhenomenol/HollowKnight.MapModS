@@ -6,27 +6,19 @@ namespace MapChanger
 {
     public abstract class MapMod : Mod, IMainHooks
     {
-        private readonly string[] dependencies;
+        protected abstract string[] Dependencies { get; }
 
-        private readonly MapModeSetting[] modes;
+        public abstract MapMode[] Modes { get; }
 
-        private readonly MainButton[] mainButtons;
+        protected abstract MainButton[] MainButtons { get; }
 
-        private readonly ExtraButtonPanel[] extraButtonPanels;
-
-        protected MapMod(string[] dependencies, MapModeSetting[] modes, MainButton[] mainButtons, ExtraButtonPanel[] extraButtonPanels)
-        {
-            this.dependencies = dependencies;
-            this.modes = modes;
-            this.mainButtons = mainButtons;
-            this.extraButtonPanels = extraButtonPanels;
-        }
+        protected abstract ExtraButtonPanel[] ExtraButtonPanels { get; }
 
         public sealed override void Initialize()
         {
             LogDebug($"Initializing {GetType().Name}");
 
-            foreach (string dependency in dependencies)
+            foreach (string dependency in Dependencies)
             {
                 if (ModHooks.GetMod(dependency) is not Mod)
                 {
@@ -44,14 +36,15 @@ namespace MapChanger
         {
             if (ActivateCondition())
             {
-                Settings.AddModes(modes);
+                Settings.AddModes(Modes);
+                ImportLS();
 
-                foreach (MainButton button in mainButtons)
+                foreach (MainButton button in MainButtons)
                 {
-                    button.Make();
+                    button.Make(PauseMenu.MainButtonsGrid);
                 }
 
-                foreach (ExtraButtonPanel ebp in extraButtonPanels)
+                foreach (ExtraButtonPanel ebp in ExtraButtonPanels)
                 {
                     ebp.Make();
                 }
@@ -63,6 +56,11 @@ namespace MapChanger
         public void OnQuitToMenu()
         {
             Events.AfterSetGameMap -= CreateMapObjects;
+        }
+
+        public virtual void ImportLS()
+        {
+
         }
 
         protected virtual void LoadGlobalData()
@@ -81,11 +79,9 @@ namespace MapChanger
 
         }
 
-        protected virtual void AddUI()
+        protected virtual void CreateMapObjects(GameObject goMap)
         {
 
         }
-
-        protected abstract void CreateMapObjects(GameObject goMap);
     }
 }
