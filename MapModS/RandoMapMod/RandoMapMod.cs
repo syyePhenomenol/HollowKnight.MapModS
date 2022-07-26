@@ -1,4 +1,7 @@
-﻿using MapChanger;
+﻿using System;
+using System.Collections.Generic;
+using MapChanger;
+using MapChanger.Defs;
 using MapChanger.UI;
 using Modding;
 using RandoMapMod.Modes;
@@ -14,7 +17,7 @@ namespace RandoMapMod
         protected override string[] Dependencies => new string[]
         {
             "MapChangerMod",
-            "RandomizerMod",
+            "Randomizer 4",
             "CMICore",
         };
 
@@ -60,9 +63,16 @@ namespace RandoMapMod
 
         protected override void LoadGlobalData()
         {
-            Interop.FindInteropMods();
-            RandoPinData.InjectRandoLocations();
-
+            try
+            {
+                Interop.FindInteropMods();
+                Finder.InjectLocations(JsonUtil.Deserialize<Dictionary<string, MapLocationDef>>("MapModS.RandoMapMod.Resources.locations.json"));
+            }
+            catch (Exception e)
+            {
+                LogError(e);
+            }
+            
             //TODO: pathfinder, transition, etc.
         }
 
@@ -92,11 +102,9 @@ namespace RandoMapMod
             //PathfinderData.Load();
             //Pathfinder.Initialize();
 
-            //RandoPinData.SetPinDefs();
+            RmmPinMaster.MakePins(goMap);
 
             LS.Initialize();
-
-            //RMMPinGroup.Make(goMap);
         }
     }
 }

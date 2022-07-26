@@ -46,16 +46,17 @@ namespace MapChanger
             }
         }
 
-        public static MapLocationDef GetLocation(string name)
+        public static bool TryGetLocation(string name, out MapLocationDef mld)
         {
-            if (name is null) return default;
-            if (injectedLocations.TryGetValue(name, out MapLocationDef mld))
+            mld = null;
+            if (name is null) return false;
+            if (injectedLocations.TryGetValue(name, out mld))
             {
-                return mld;
+                return true;
             }
             if (locations.TryGetValue(name, out mld))
             {
-                return mld;
+                return true;
             }
             //TODO: Best guess here
             //mpd = new();
@@ -63,7 +64,7 @@ namespace MapChanger
             //mpd.SceneName = ICInterop.GetScene(name);
             //mpd.MappedScene = GetMappedScene(mpd.SceneName);
             //return mpd;
-            return default;
+            return false;
         }
 
         public static Dictionary<string, MapLocationDef> GetAllVanillaLocations()

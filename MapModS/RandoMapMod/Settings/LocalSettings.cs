@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using RandoMapMod.Pins;
 
 namespace RandoMapMod.Settings
 {
@@ -27,32 +28,32 @@ namespace RandoMapMod.Settings
 
             if (InitializedPreviously) return;
 
-            PoolSettings = RandoPinData.PoolGroups.ToDictionary(poolGroup => poolGroup, poolGroup => PoolState.On);
+            PoolSettings = RmmPinMaster.PoolGroups.ToDictionary(poolGroup => poolGroup, poolGroup => PoolState.On);
 
-            if (RandoMapMod.GS.OverrideDefaultMode)
-            {
-                // Replace with condition that at least one randomized transition exists
-                if (true)
-                {
-                    SetMode(RandoMapMod.GS.TransitionRandoModeOverride);
-                }
-                else
-                {
-                    SetMode(RandoMapMod.GS.ItemRandoModeOverride);
-                }
-            }
-            else
-            {
-                // Replace with condition that at least one randomized transition exists
-                if (true)
-                {
-                    SetMode(RMMMode.Full_Map);
-                }
-                else
-                {
-                    SetMode(RMMMode.Transition_1);
-                }
-            }
+            //if (RandoMapMod.GS.OverrideDefaultMode)
+            //{
+            //    // Replace with condition that at least one randomized transition exists
+            //    if (true)
+            //    {
+            //        SetMode(RandoMapMod.GS.TransitionRandoModeOverride);
+            //    }
+            //    else
+            //    {
+            //        SetMode(RandoMapMod.GS.ItemRandoModeOverride);
+            //    }
+            //}
+            //else
+            //{
+            //    // Replace with condition that at least one randomized transition exists
+            //    if (true)
+            //    {
+            //        SetMode(RMMMode.Full_Map);
+            //    }
+            //    else
+            //    {
+            //        SetMode(RMMMode.Transition_1);
+            //    }
+            //}
 
             ResetPoolSettings();
 
@@ -133,15 +134,15 @@ namespace RandoMapMod.Settings
 
         private void ResetPoolSettings()
         {
-            foreach (string poolGroup in RandoPinData.PoolGroups)
+            foreach (string poolGroup in RmmPinMaster.PoolGroups)
             {
                 SetPoolGroupSetting(poolGroup, GetResetPoolState(poolGroup));
             }
 
             PoolState GetResetPoolState(string poolGroup)
             {
-                bool IsRando = RandoPinData.RandoPoolGroups.Contains(poolGroup);
-                bool IsVanilla = RandoPinData.VanillaPoolGroups.Contains(poolGroup);
+                bool IsRando = RmmPinMaster.RandoPoolGroups.Contains(poolGroup);
+                bool IsVanilla = RmmPinMaster.VanillaPoolGroups.Contains(poolGroup);
 
                 if (IsRando && IsVanilla && RandoMapMod.LS.RandomizedOn != RandoMapMod.LS.VanillaOn)
                 {

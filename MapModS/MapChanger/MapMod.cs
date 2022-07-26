@@ -14,6 +14,8 @@ namespace MapChanger
 
         protected abstract ExtraButtonPanel[] ExtraButtonPanels { get; }
 
+        private bool activated = true;
+
         public sealed override void Initialize()
         {
             LogDebug($"Initializing {GetType().Name}");
@@ -23,6 +25,7 @@ namespace MapChanger
                 if (ModHooks.GetMod(dependency) is not Mod)
                 {
                     MapChangerMod.Instance.LogWarn($"Dependency not found for {GetType().Name}: {dependency}");
+                    activated = false;
                     return;
                 }
             }
@@ -34,7 +37,7 @@ namespace MapChanger
 
         public void OnEnterGame()
         {
-            if (ActivateCondition())
+            if (ActivateCondition() && activated)
             {
                 Settings.AddModes(Modes);
                 ImportLS();

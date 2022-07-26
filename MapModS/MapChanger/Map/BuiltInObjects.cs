@@ -88,6 +88,7 @@ namespace MapChanger.Map
                     continue;
                 }
 
+                child.gameObject.SetActive(false);
                 RoomSprite roomSprite = child.gameObject.AddComponent<RoomSprite>();
                 roomSprite.Initialize(rsd);
 

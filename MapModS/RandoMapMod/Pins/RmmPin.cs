@@ -66,6 +66,7 @@ namespace RandoMapMod.Pins
                 {
                     CorrectMapOpen,
                     ActiveByCurrentMode,
+                    ActiveByPoolSetting,
                     LocationNotCleared
                 }
             );
@@ -86,10 +87,13 @@ namespace RandoMapMod.Pins
 
         private protected virtual void OnEnable()
         {
+            UpdatePinSprite();
             UpdatePinSize();
             UpdatePinColor();
             UpdateBorderColor();
         }
+
+        protected private abstract void UpdatePinSprite();
 
         protected private abstract void UpdatePinSize();
 
@@ -106,6 +110,8 @@ namespace RandoMapMod.Pins
         {
             return MapChanger.Settings.CurrentMode().Mod is "RandoMapMod";
         }
+
+        protected private abstract bool ActiveByPoolSetting();
 
         protected private abstract bool LocationNotCleared();
 

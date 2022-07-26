@@ -41,7 +41,7 @@ namespace MapChanger.MonoBehaviours
 
             ActiveModifiers.Add(IsActive);
             
-            sr = GetComponent<SpriteRenderer>();
+            sr = GetComponentInChildren<SpriteRenderer>();
             OrigColor = sr.color;
 
             if (!Finder.IsScene(Rsd.SceneName))

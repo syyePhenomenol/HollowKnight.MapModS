@@ -93,7 +93,24 @@ namespace RandoMapMod.Pins
                 return;
             }
 
-            Initialize(MapChanger.Finder.GetLocation(placement.Name).MapLocations);
+            if (MapChanger.Finder.TryGetLocation(name, out MapLocationDef mld))
+            {
+                Initialize(mld.MapLocations);
+                return;
+            }
+
+            RandoMapMod.Instance.LogWarn($"No MapLocationDef found for randomized placement {name}");
+            Initialize();
+        }
+
+        private protected override bool ActiveByPoolSetting()
+        {
+            return RandoMapMod.LS.GroupBy switch
+            {
+                Settings.GroupBySetting.Location => RandoMapMod.LS.GetPoolGroupSetting(LocationPoolGroup) == Settings.PoolState.On || RandoMapMod.LS.RandomizedOn,
+                Settings.GroupBySetting.Item => itemPoolGroups.Values.Any(poolGroup => RandoMapMod.LS.GetPoolGroupSetting(poolGroup) == Settings.PoolState.On || RandoMapMod.LS.RandomizedOn),
+                _ => true
+            };
         }
 
         private protected override bool LocationNotCleared()
@@ -111,6 +128,40 @@ namespace RandoMapMod.Pins
             StartCoroutine(PeriodicUpdate());
 
             base.OnEnable();
+        }
+
+        private protected override void UpdatePinSprite()
+        {
+            if (RandoMapMod.LS.SpoilerOn)
+            {
+                Sprite = GetItemSprite();
+            }
+            else
+            {
+                Sprite = placementState switch
+                {
+                    RandoPlacementState.UncheckedUnreachable
+                    or RandoPlacementState.UncheckedReachable
+                    or RandoPlacementState.OutOfLogicReachable => GetLocationSprite(),
+                    RandoPlacementState.Previewed
+                    or RandoPlacementState.ClearedPersistent => GetItemSprite(),
+                    _ => GetLocationSprite(),
+                };
+            }
+
+            Sprite GetLocationSprite()
+            {
+                if (LocationSprite is not null) return LocationSprite;
+                return PinSprites.GetSpriteFromPoolGroup(LocationPoolGroup);
+            }
+            Sprite GetItemSprite()
+            {
+                itemIndex = (itemIndex + 1) % remainingItems.Count();
+                AbstractItem item = remainingItems.ElementAt(itemIndex);
+
+                if (ItemSprites.TryGetValue(item, out Sprite itemSprite)) return itemSprite;
+                return PinSprites.GetSpriteFromPoolGroup(itemPoolGroups[item], true);
+            }
         }
 
         private protected override void UpdatePinSize()
@@ -199,40 +250,6 @@ namespace RandoMapMod.Pins
             else
             {
                 remainingItems = placement.Items.Where(item => !item.WasEverObtained());
-            }
-        }
-
-        private void UpdatePinSprite()
-        {
-            if (RandoMapMod.LS.SpoilerOn)
-            {
-                Sprite = GetItemSprite();
-            }
-            else
-            {
-                Sprite = placementState switch
-                {
-                    RandoPlacementState.UncheckedUnreachable
-                    or RandoPlacementState.UncheckedReachable
-                    or RandoPlacementState.OutOfLogicReachable => GetLocationSprite(),
-                    RandoPlacementState.Previewed
-                    or RandoPlacementState.ClearedPersistent => GetItemSprite(),
-                    _ => GetLocationSprite(),
-                };
-            }
-
-            Sprite GetLocationSprite()
-            {
-                if (LocationSprite is not null) return LocationSprite;
-                return PinSprites.GetSpriteFromPoolGroup(LocationPoolGroup);
-            }
-            Sprite GetItemSprite()
-            {
-                itemIndex = (itemIndex + 1) % remainingItems.Count();
-                AbstractItem item = remainingItems.ElementAt(itemIndex);
-
-                if (ItemSprites.TryGetValue(item, out Sprite itemSprite)) return itemSprite;
-                return PinSprites.GetSpriteFromPoolGroup(itemPoolGroups[item], true);
             }
         }
 

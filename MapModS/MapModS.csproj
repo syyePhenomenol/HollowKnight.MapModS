@@ -61,6 +61,7 @@
     <Compile Remove="RandoMapMod\Modes\TransitionNormalMode.cs" />
     <Compile Remove="RandoMapMod\Modes\TransitionVisitedOnlyMode.cs" />
     <Compile Remove="RandoMapMod\Pins\RMMPinGroup.cs" />
+    <Compile Remove="RandoMapMod\RandoPinData.cs" />
     <Compile Remove="RandoMapMod\RoomText.cs" />
     <Compile Remove="RandoMapMod\Transition\Pathfinder.cs" />
     <Compile Remove="RandoMapMod\Transition\PathfinderData.cs" />
@@ -116,6 +117,7 @@
     <None Remove="MapChanger\Resources\Sprites\Pins\pinVessel.png" />
     <None Remove="RandoMapMod\Resources\AdditionalMaps\randoPins.json" />
     <None Remove="RandoMapMod\Resources\AdditionalMaps\randoPins1.json" />
+    <None Remove="RandoMapMod\Resources\locations.json" />
     <None Remove="RandoMapMod\Resources\randoPins1.json" />
   </ItemGroup>
 
@@ -170,6 +172,7 @@
     <EmbeddedResource Include="MapChanger\Resources\minimalMap.json" />
     <EmbeddedResource Include="MapChanger\Resources\fsmOverrides.json" />
     <EmbeddedResource Include="MapChanger\Resources\tracking.json" />
+    <EmbeddedResource Include="RandoMapMod\Resources\locations.json" />
   </ItemGroup>
 
 	<Target Name="CopyMod" AfterTargets="PostBuildEvent">

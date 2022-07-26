@@ -58,6 +58,7 @@ namespace MapChanger.MonoBehaviours
 
             goBorder.layer = UI_LAYER;
             goBorder.transform.SetParent(transform);
+            goBorder.transform.localScale = Vector3.one;
 
             borderSr = goBorder.AddComponent<SpriteRenderer>();
             borderSr.sortingLayerName = HUD;

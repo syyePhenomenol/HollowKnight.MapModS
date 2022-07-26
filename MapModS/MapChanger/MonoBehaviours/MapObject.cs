@@ -10,7 +10,7 @@ namespace MapChanger.MonoBehaviours
     /// you probably want to initialize with DontDestroyOnLoad(), and to manually destroy it
     /// at some point.
     /// </summary>
-    public abstract class MapObject : MonoBehaviour
+    public class MapObject : MonoBehaviour
     {
         /// <summary>
         /// A list of conditions to determine whether or not the GameObject should be set active or not.
@@ -60,9 +60,6 @@ namespace MapChanger.MonoBehaviours
         public virtual void Initialize()
         {
             gameObject.layer = UI_LAYER;
-            gameObject.SetActive(false);
-
-            transform.localScale = Vector3.one;
 
             ActiveModifiers.Add(() => { return Settings.MapModEnabled; });
         } 
@@ -71,7 +68,7 @@ namespace MapChanger.MonoBehaviours
         /// Sets the gameObject as active/inactive based on the conjunction of a list of conditions.
         /// Also calls UpdateActive on its children.
         /// </summary>
-        protected internal void UpdateActive()
+        public void UpdateActive()
         {
             bool value = true;
 

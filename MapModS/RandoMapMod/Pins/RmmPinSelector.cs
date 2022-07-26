@@ -1,18 +1,18 @@
 ﻿using System.Collections.Generic;
 using MapChanger.MonoBehaviours;
 
-namespace VanillaMapMod
+namespace RandoMapMod.Pins
 {
 
     internal class RmmPinSelector : Selector
     {
-        internal void Initialize(IEnumerable<VmmPin> pins)
+        internal void Initialize(IEnumerable<RmmPin> pins)
         {
             base.Initialize();
 
             ActiveModifiers.Add(ActiveByCurrentMode);
 
-            foreach (VmmPin pin in pins)
+            foreach (RmmPin pin in pins)
             {
                 if (Objects.TryGetValue(pin.name, out List<ISelectable> selectables))
                 {
@@ -27,25 +27,25 @@ namespace VanillaMapMod
 
         protected override void Select(ISelectable selectable)
         {
-            if (selectable is VmmPin pin)
+            if (selectable is RmmPin pin)
             {
-                VanillaMapMod.Instance.LogDebug($"Selected {pin.name}");
+                RandoMapMod.Instance.LogDebug($"Selected {pin.name}");
                 pin.Selected = true;
             }
         }
 
         protected override void Deselect(ISelectable selectable)
         {
-            if (selectable is VmmPin pin)
+            if (selectable is RmmPin pin)
             {
-                VanillaMapMod.Instance.LogDebug($"Deselected {pin.name}");
+                RandoMapMod.Instance.LogDebug($"Deselected {pin.name}");
                 pin.Selected = false;
             }
         }
 
         private bool ActiveByCurrentMode()
         {
-            return MapChanger.Settings.CurrentMode() is NormalMode or FullMapMode;
+            return MapChanger.Settings.CurrentMode().Mod is "RandoMapMod";
         }
     }
 }

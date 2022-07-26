@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ConnectionMetadataInjector.Util;
 using MapChanger;
+using MapChanger.Defs;
 using RandomizerCore;
 using UnityEngine;
 
@@ -17,14 +18,29 @@ namespace RandoMapMod.Pins
         {
             LocationPoolGroup = SubcategoryFinder.GetLocationPoolGroup(placement.Location.Name).FriendlyName();
 
-            Sprite = SpriteManager.GetSpriteFromPoolGroup(LocationPoolGroup);
+            if (Finder.TryGetLocation(placement.Location.Name, out MapLocationDef mld))
+            {
+                Initialize(mld.MapLocations);
+                return;
+            }
 
-            Initialize(Finder.GetLocation(placement.Location.Name).MapLocations);
+            RandoMapMod.Instance.LogWarn($"No MapLocationDef found for vanilla placement {name}");
+            Initialize();
+        }
+
+        private protected override bool ActiveByPoolSetting()
+        {
+            return RandoMapMod.LS.GetPoolGroupSetting(LocationPoolGroup) == Settings.PoolState.On || RandoMapMod.LS.VanillaOn;
         }
 
         private protected override bool LocationNotCleared()
         {
             return !Tracker.HasClearedLocation(name);
+        }
+
+        private protected override void UpdatePinSprite()
+        {
+            Sprite = SpriteManager.GetSpriteFromPoolGroup(LocationPoolGroup);
         }
 
         private protected override void UpdatePinSize()

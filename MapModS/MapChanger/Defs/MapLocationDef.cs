@@ -5,7 +5,7 @@ namespace MapChanger.Defs
     public record MapLocationDef
     {
         /// <summary>
-        /// Multiple MapLocationDefs (representing different objects) can share the same Name.
+        /// Must be unique.
         /// </summary>
         [JsonProperty]
         public string Name { get; init; }

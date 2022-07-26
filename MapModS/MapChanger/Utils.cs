@@ -31,12 +31,14 @@ namespace MapChanger
         /// <returns>The new MonoBehaviour instance</returns>
         public static T MakeMonoBehaviour<T>(GameObject parent, string name) where T : MonoBehaviour
         {
-            GameObject newObject = new(name);
+            GameObject go = new(name);
             if (parent is not null)
             {
-                newObject.transform.SetParent(parent.transform);
+                go.transform.SetParent(parent.transform);
             }
-            return newObject.AddComponent<T>();
+            go.transform.localScale = Vector3.one;
+            go.SetActive(false);
+            return go.AddComponent<T>();
         }
 
         //public static string ToCleanPreviewText(string text)

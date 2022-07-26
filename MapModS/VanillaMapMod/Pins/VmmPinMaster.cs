@@ -14,7 +14,7 @@ namespace VanillaMapMod
         private const float OFFSETZ_BASE = -1.4f;
         private const float OFFSETZ_RANGE = 0.4f;
 
-        internal static List<VmmPin> Pins { get; private set; } = new();
+        internal static Dictionary<string, VmmPin> Pins { get; private set; } = new();
 
         internal static Dictionary<PoolGroup, VmmPinGroup> PinGroups { get; private set; } = new();
 
@@ -36,11 +36,11 @@ namespace VanillaMapMod
                 VmmPin pin = Utils.MakeMonoBehaviour<VmmPin>(goMap, mld.Name);
                 pin.Initialize(mld, PinGroups[SubcategoryFinder.GetLocationPoolGroup(mld.Name)]);
 
-                Pins.Add(pin);
+                Pins[mld.Name] = pin;
             }
 
             // Stagger the Z offset of each pin
-            IEnumerable<MapObject> PinsSorted = Pins.OrderBy(mapObj => mapObj.transform.position.x).ThenBy(mapObj => mapObj.transform.position.y);
+            IEnumerable<MapObject> PinsSorted = Pins.Values.OrderBy(mapObj => mapObj.transform.position.x).ThenBy(mapObj => mapObj.transform.position.y);
 
             for (int i = 0; i < PinsSorted.Count(); i++)
             {
@@ -48,13 +48,13 @@ namespace VanillaMapMod
                 transform.localPosition = new(transform.localPosition.x, transform.localPosition.y, OFFSETZ_BASE + (float)i / Pins.Count() * OFFSETZ_RANGE);
             }
 
-            VmmPinSelector pinSelector = Utils.MakeMonoBehaviour<VmmPinSelector>(null, "Pin Selector");
-            pinSelector.Initialize(Pins);
+            RmmPinSelector pinSelector = Utils.MakeMonoBehaviour<RmmPinSelector>(null, "Pin Selector");
+            pinSelector.Initialize(Pins.Values);
         }
 
-        internal static void UpdatePinSizes()
+        internal static void UpdatePinSize()
         {
-            foreach (VmmPin pin in Pins)
+            foreach (VmmPin pin in Pins.Values)
             {
                 pin.UpdatePinSize();
             }
