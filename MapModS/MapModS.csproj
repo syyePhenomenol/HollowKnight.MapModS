@@ -32,16 +32,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="RandoMapMod\UI\**" />
     <Compile Remove="Unused\**" />
-    <EmbeddedResource Remove="RandoMapMod\UI\**" />
     <EmbeddedResource Remove="Unused\**" />
-    <None Remove="RandoMapMod\UI\**" />
     <None Remove="Unused\**" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="MapChanger\Defs\MapObjectDef.cs" />
+    <Compile Remove="MapChanger\MapMod.cs" />
     <Compile Remove="MapChanger\MonoBehaviours\Interfaces\IBorder.cs" />
     <Compile Remove="MapChanger\MonoBehaviours\Interfaces\IMapRoom.cs" />
     <Compile Remove="MapChanger\MonoBehaviours\Interfaces\ISpriteRenderer.cs" />
@@ -67,6 +65,20 @@
     <Compile Remove="RandoMapMod\Transition\PathfinderData.cs" />
     <Compile Remove="RandoMapMod\Transition\TransitionData.cs" />
     <Compile Remove="RandoMapMod\Transition\TransitionTracker.cs" />
+    <Compile Remove="RandoMapMod\UI\Benchwarp.cs" />
+    <Compile Remove="RandoMapMod\UI\ControlPanel.cs" />
+    <Compile Remove="RandoMapMod\UI\DirectionalCompass.cs" />
+    <Compile Remove="RandoMapMod\UI\GUI.cs" />
+    <Compile Remove="RandoMapMod\UI\GUIController.cs" />
+    <Compile Remove="RandoMapMod\UI\InfoPanels.cs" />
+    <Compile Remove="RandoMapMod\UI\MapKey.cs" />
+    <Compile Remove="RandoMapMod\UI\MapText.cs" />
+    <Compile Remove="RandoMapMod\UI\PauseMenu.cs" />
+    <Compile Remove="RandoMapMod\UI\RouteCompass.cs" />
+    <Compile Remove="RandoMapMod\UI\TransitionPersistent.cs" />
+    <Compile Remove="RandoMapMod\UI\TransitionQuickMap.cs" />
+    <Compile Remove="RandoMapMod\UI\TransitionWorldMap.cs" />
+    <Compile Remove="RandoMapMod\UI\UIExtensions.cs" />
   </ItemGroup>
 
   <ItemGroup>

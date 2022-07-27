@@ -90,13 +90,13 @@ namespace RandoMapMod.Settings
             SpoilerOn = !SpoilerOn;
         }
 
-        internal void ToggleRandomizedOn()
+        internal void ToggleRandomized()
         {
             RandomizedOn = !RandomizedOn;
             ResetPoolSettings();
         }
 
-        internal void ToggleOthersOn()
+        internal void ToggleVanilla()
         {
             VanillaOn = !VanillaOn;
             ResetPoolSettings();

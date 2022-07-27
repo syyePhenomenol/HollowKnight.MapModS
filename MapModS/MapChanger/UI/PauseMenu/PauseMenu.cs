@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace MapChanger.UI
 {
-    internal class PauseMenu : UILayer, IMainHooks
+    internal class PauseMenu : UILayer
     {
         private static readonly MainButton[] masterButtons =
         {
@@ -13,26 +13,26 @@ namespace MapChanger.UI
             new ModeButton()
         };
 
-        public static PauseMenu Instance { get; private set; }
+        internal static PauseMenu Instance { get; private set; } = new();
         internal static TextObject Title { get; private set; }
         internal static GridLayout MainButtonsGrid { get; private set; }
         internal static List<MainButton> MainButtons { get; private set; } = new();
         internal static List<ExtraButtonPanel> ExtraButtonPanels { get; private set; } = new();
 
-        public void OnEnterGame()
+        internal static void OnEnterGame()
         {
-            Instance = this;
-            Build();
+            Instance.Build();
 
             On.HeroController.Pause += OnPause;
         }
 
-        public void OnQuitToMenu()
+        internal static void OnQuitToMenu()
         {
+            Instance.Destroy();
+
+            Instance = new();
             MainButtons = new();
             ExtraButtonPanels = new();
-
-            Destroy();
 
             On.HeroController.Pause -= OnPause;
         }
@@ -83,25 +83,25 @@ namespace MapChanger.UI
                 mainButton.Make(MainButtonsGrid);
             }
 
-            Set();
+            Update();
         }
 
-        public static new void Set()
+        public override void Update()
         {
             Title.Text = Settings.CurrentMode().Mod;
 
             foreach (MainButton mainButton in MainButtons)
             {
-                mainButton.Set();
+                mainButton.Update();
             }
 
             foreach (ExtraButtonPanel ebp in ExtraButtonPanels)
             {
-                ebp.Set();
+                ebp.Update();
             }
         }
 
-        private void OnPause(On.HeroController.orig_Pause orig, HeroController self)
+        private static void OnPause(On.HeroController.orig_Pause orig, HeroController self)
         {
             orig(self);
             MapChangerMod.Instance.LogDebug("Pause Game");
@@ -111,7 +111,7 @@ namespace MapChanger.UI
                 ebp.Hide();
             }
 
-            Set();
+            Instance.Update();
         }
 
         internal static void HideOtherPanels(ExtraButtonPanel visiblePanel)

@@ -1,14 +1,13 @@
 ﻿using MagicUI.Core;
-using MapChanger.Map;
 using UnityEngine;
 
 namespace MapChanger.UI
 {
-    internal class Hotkeys : IMainHooks
+    internal class Hotkeys : HookModule
     {
         private static LayoutRoot layout;
 
-        public void OnEnterGame()
+        internal override void OnEnterGame()
         {
             if (layout == null)
             {
@@ -35,7 +34,7 @@ namespace MapChanger.UI
             }
         }
 
-        public void OnQuitToMenu()
+        internal override void OnQuitToMenu()
         {
             layout?.Destroy();
             layout = null;

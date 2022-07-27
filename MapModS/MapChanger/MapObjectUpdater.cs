@@ -8,19 +8,19 @@ namespace MapChanger
     /// <summary>
     /// Updates MapObjects when a map is opened or closed.
     /// </summary>
-    public class MapObjectUpdater : IMainHooks
+    public class MapObjectUpdater : HookModule
     {
         private static readonly List<MapObject> mapObjects = new();
         public static ReadOnlyCollection<MapObject> MapObjects => mapObjects.AsReadOnly();
 
-        public void OnEnterGame()
+        internal override void OnEnterGame()
         {
             Events.BeforeOpenWorldMap += BeforeOpenWorldMap;
             Events.BeforeOpenQuickMap += BeforeOpenQuickMap;
             Events.BeforeCloseMap += BeforeCloseMap;
         }
 
-        public void OnQuitToMenu()
+        internal override void OnQuitToMenu()
         {
             foreach (MapObject mapObject in mapObjects)
             {

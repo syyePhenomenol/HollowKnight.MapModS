@@ -19,7 +19,7 @@ namespace MapChanger.UI
             base.OnClick(button);
         }
 
-        public override void Set()
+        public override void Update()
         {
             if (Settings.MapModEnabled)
             {

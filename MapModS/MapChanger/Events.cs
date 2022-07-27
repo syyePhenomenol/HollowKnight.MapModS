@@ -41,14 +41,14 @@ namespace MapChanger
             }
         }
 
-        internal static readonly List<IMainHooks> HookModules = new()
+        internal static readonly List<HookModule> HookModules = new()
         {
+            new Settings(),
             new Tracker(),
             new VariableOverrides(),
             new BehaviourChanges(),
             new Hotkeys(),
-            new MapUI(),
-            new PauseMenu(),
+            new UIMaster(),
             new MapObjectUpdater()
         };
 
@@ -81,13 +81,13 @@ namespace MapChanger
             On.GameMap.QuickMapWaterways += OnOpenQuickMapWaterways;
             On.GameMap.CloseQuickMap += CloseMapEvent;
 
-            foreach (Mod mod in ModHooks.GetAllMods())
-            {
-                if (mod is MapMod mapMod)
-                {
-                    HookModules.Add(mapMod);
-                }
-            }
+            //foreach (Mod mod in ModHooks.GetAllMods())
+            //{
+            //    if (mod is MapMod mapMod)
+            //    {
+            //        HookModules.Add(mapMod);
+            //    }
+            //}
         }
 
         private static void AfterStartNewGame(On.GameManager.orig_StartNewGame orig, GameManager self, bool permadeathMode, bool bossRushMode)
@@ -117,7 +117,7 @@ namespace MapChanger
             // Load default/custom assets
             Colors.LoadCustomColors();
 
-            foreach (IMainHooks hookModule in HookModules)
+            foreach (HookModule hookModule in HookModules)
             {
                 hookModule.OnEnterGame();
             }
@@ -128,7 +128,7 @@ namespace MapChanger
 
         private static IEnumerator QuitToMenuEvent(On.QuitToMenu.orig_Start orig, QuitToMenu self)
         {
-            foreach (IMainHooks hookModule in HookModules)
+            foreach (HookModule hookModule in HookModules)
             {
                 hookModule.OnQuitToMenu();
             }

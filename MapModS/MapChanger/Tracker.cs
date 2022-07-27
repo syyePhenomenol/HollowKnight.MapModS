@@ -9,7 +9,7 @@ using Vasi;
 
 namespace MapChanger
 {
-    internal class Tracker : IMainHooks
+    internal class Tracker : HookModule
     {
         internal record TrackingDef
         {
@@ -88,7 +88,7 @@ namespace MapChanger
             }
         }
 
-        public void OnEnterGame()
+        internal override void OnEnterGame()
         {
             ScenesVisited = new(PlayerData.instance.scenesVisited);
             GetPreviouslyObtainedItems();
@@ -100,7 +100,7 @@ namespace MapChanger
             UnityEngine.SceneManagement.SceneManager.activeSceneChanged += AddSceneVisited;
         }
 
-        public void OnQuitToMenu()
+        internal override void OnQuitToMenu()
         {
             On.PlayMakerFSM.OnEnable -= AddItemTrackers;
             On.HealthManager.SendDeathEvent -= TrackBossGeo;

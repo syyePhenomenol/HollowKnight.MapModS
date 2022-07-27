@@ -1,13 +1,13 @@
 ﻿using MagicUI.Elements;
 using MapChanger.UI;
 
-namespace VanillaMapMod
+namespace RandoMapMod.UI
 {
     internal class PoolsPanelButton : MainButton
     {
         internal static PoolsPanelButton Instance { get; private set; }
 
-        public PoolsPanelButton() : base("Pools Panel Button", "VanillaMapMod", 1, 2)
+        public PoolsPanelButton() : base("Pools Panel Button", "RandoMapMod", 1, 2)
         {
 
         }

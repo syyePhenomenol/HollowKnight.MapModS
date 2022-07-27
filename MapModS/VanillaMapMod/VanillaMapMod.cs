@@ -7,21 +7,21 @@ using VanillaMapMod.Settings;
 
 namespace VanillaMapMod
 {
-    public sealed class VanillaMapMod : MapMod, ILocalSettings<LocalSettings>, IGlobalSettings<GlobalSettings>
+    public sealed class VanillaMapMod : Mod, ILocalSettings<LocalSettings>, IGlobalSettings<GlobalSettings>
     {
-        protected override string[] Dependencies => new string[] 
+        private static readonly string[] dependencies = new string[] 
         { 
             "MapChangerMod", 
             "CMICore"
         };
 
-        public override MapMode[] Modes => new MapMode[]
+        private static readonly MapMode[] modes = new MapMode[]
         {
             new NormalMode(),
             new FullMapMode()
         };
 
-        protected override MainButton[] MainButtons => new MainButton[] 
+        private static readonly MainButton[] mainButtons = new MainButton[] 
         { 
             new PinSizeButton(),
             new ModPinsButton(),
@@ -29,7 +29,7 @@ namespace VanillaMapMod
             new PoolsPanelButton(),
         };
 
-        protected override ExtraButtonPanel[] ExtraButtonPanels => new ExtraButtonPanel[]
+        private static readonly ExtraButtonPanel[] extraButtonPanels = new ExtraButtonPanel[]
         { 
             new PoolsPanel() 
         };
@@ -67,22 +67,67 @@ namespace VanillaMapMod
         public void OnLoadGlobal(GlobalSettings gs) => GS = gs;
         public GlobalSettings OnSaveGlobal() => GS;
 
-        public override void ImportLS()
+        public override void Initialize()
         {
-            MapChanger.Settings.SetModEnabled(LS.ModEnabled);
+            LogDebug($"Initializing");
 
-            MapChanger.Settings.SetMode("VanillaMapMod", LS.Mode.ToString().Replace('_', ' '));
-        }
+            foreach (string dependency in dependencies)
+            {
+                if (ModHooks.GetMod(dependency) is not Mod)
+                {
+                    MapChangerMod.Instance.LogWarn($"Dependency not found for {GetType().Name}: {dependency}");
+                    return;
+                }
+            }
 
-        protected override void CreateMapObjects(GameObject goMap)
-        {
             try
             {
-                VmmPinMaster.MakePins(goMap);
+                Events.AfterEnterGame += OnEnterGame;
+                Events.BeforeQuitToMenu += OnQuitToMenu;
             }
             catch (Exception e)
             {
                 LogError(e);
+            }
+
+            LogDebug($"Initialization complete.");
+        }
+
+        private static void OnEnterGame()
+        {
+            MapChanger.Settings.AddModes(modes);
+
+            MapChanger.Settings.SetModEnabled(LS.ModEnabled);
+
+            MapChanger.Settings.SetMode("VanillaMapMod", LS.Mode.ToString().Replace('_', ' '));
+
+            Events.AfterSetGameMap += OnSetGameMap;
+        }
+
+        private static void OnQuitToMenu()
+        {
+            Events.AfterSetGameMap -= OnSetGameMap;
+        }
+
+        private static void OnSetGameMap(GameObject goMap)
+        {
+            try
+            {
+                VmmPinMaster.MakePins(goMap);
+
+                foreach (MainButton button in mainButtons)
+                {
+                    button.Make(PauseMenu.MainButtonsGrid);
+                }
+
+                foreach (ExtraButtonPanel ebp in extraButtonPanels)
+                {
+                    ebp.Make();
+                }
+            }
+            catch (Exception e)
+            {
+                Instance.LogError(e);
             }
         }
     }

@@ -1,22 +1,22 @@
 ﻿using MagicUI.Elements;
 using MapChanger;
 using MapChanger.UI;
-using VanillaMapMod.Settings;
+using RandoMapMod.Settings;
 
-namespace VanillaMapMod
+namespace RandoMapMod.UI
 {
     internal class PinSizeButton : MainButton
     {
         public static PinSizeButton Instance { get; private set; }
 
-        public PinSizeButton() : base("Pin Size", "VanillaMapMod", 1, 1)
+        public PinSizeButton() : base("Pin Size", "RandoMapMod", 1, 1)
         {
             Instance = this;
         }
 
         public override void OnClick(Button button)
         {
-            VanillaMapMod.GS.TogglePinSize();
+            RandoMapMod.GS.TogglePinSize();
 
             base.OnClick(button);
         }
@@ -27,7 +27,7 @@ namespace VanillaMapMod
 
             string text = $"Pin Size\n";
 
-            switch (VanillaMapMod.GS.PinSize)
+            switch (RandoMapMod.GS.PinSize)
             {
                 case PinSize.Small:
                     text += "small";

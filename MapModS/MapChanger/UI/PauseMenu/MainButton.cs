@@ -9,7 +9,7 @@ namespace MapChanger.UI
         public readonly int Row;
         public readonly int Column;
 
-        public MainButton(string name, string mod, int row, int column) : base(name)
+        public MainButton(string name, string mod, int row, int column) : base($"{mod} {name}")
         {
             Mod = mod;
             Row = row;
@@ -35,7 +35,7 @@ namespace MapChanger.UI
             PauseMenu.MainButtons.Add(this);
         }
 
-        public override void Set()
+        public override void Update()
         {
             if (Settings.MapModEnabled && Settings.CurrentMode().Mod == Mod)
             {

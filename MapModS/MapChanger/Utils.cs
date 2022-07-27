@@ -35,8 +35,8 @@ namespace MapChanger
             if (parent is not null)
             {
                 go.transform.SetParent(parent.transform);
+                go.transform.localScale = Vector3.one;
             }
-            go.transform.localScale = Vector3.one;
             go.SetActive(false);
             return go.AddComponent<T>();
         }

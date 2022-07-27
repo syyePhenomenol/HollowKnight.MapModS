@@ -6,7 +6,7 @@ namespace VanillaMapMod
 {
     internal class VanillaPinsButton : MainButton
     {
-        public VanillaPinsButton() : base("Vanilla Toggle", "VanillaMapMod", 0, 1)
+        public VanillaPinsButton() : base("Vanilla Toggle", "VanillaMapMod", 0, 2)
         {
 
         }
@@ -18,9 +18,9 @@ namespace VanillaMapMod
             base.OnClick(button);
         }
 
-        public override void Set()
+        public override void Update()
         {
-            base.Set();
+            base.Update();
 
             string text = $"Vanilla Pins:\n";
 

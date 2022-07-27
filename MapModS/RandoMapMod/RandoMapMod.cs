@@ -7,21 +7,22 @@ using Modding;
 using RandoMapMod.Modes;
 using RandoMapMod.Pins;
 using RandoMapMod.Settings;
+using RandoMapMod.UI;
 //using RandoMapMod.Transition;
 using UnityEngine;
 
 namespace RandoMapMod
 {
-    public class RandoMapMod : MapMod, ILocalSettings<LocalSettings>, IGlobalSettings<GlobalSettings>
+    public class RandoMapMod : Mod, ILocalSettings<LocalSettings>, IGlobalSettings<GlobalSettings>
     {
-        protected override string[] Dependencies => new string[]
+        private static readonly string[] dependencies = new string[]
         {
             "MapChangerMod",
             "Randomizer 4",
             "CMICore",
         };
 
-        public override MapMode[] Modes => new MapMode[]
+        private static readonly MapMode[] modes = new MapMode[]
         {
             new FullMapMode(),
             new AllPinsMode(),
@@ -32,14 +33,17 @@ namespace RandoMapMod
         };
 
 
-        protected override MainButton[] MainButtons => new MainButton[]
+        private static readonly MainButton[] mainButtons = new MainButton[]
         {
-
+            new PinSizeButton(),
+            new RandomizedButton(),
+            new VanillaButton(),
+            new PoolsPanelButton(),
         };
 
-        protected override ExtraButtonPanel[] ExtraButtonPanels => new ExtraButtonPanel[]
+        private static readonly ExtraButtonPanel[] extraButtonPanels = new ExtraButtonPanel[]
         {
-
+            new PoolsPanel()
         };
 
         internal static RandoMapMod Instance;
@@ -61,19 +65,70 @@ namespace RandoMapMod
         public void OnLoadGlobal(GlobalSettings gs) => GS = gs;
         public GlobalSettings OnSaveGlobal() => GS;
 
-        protected override void LoadGlobalData()
+        public override void Initialize()
         {
+            LogDebug($"Initializing");
+
+            foreach (string dependency in dependencies)
+            {
+                if (ModHooks.GetMod(dependency) is not Mod)
+                {
+                    MapChangerMod.Instance.LogWarn($"Dependency not found for {GetType().Name}: {dependency}");
+                    return;
+                }
+            }
+
             try
             {
                 Interop.FindInteropMods();
                 Finder.InjectLocations(JsonUtil.Deserialize<Dictionary<string, MapLocationDef>>("MapModS.RandoMapMod.Resources.locations.json"));
+
+                Events.AfterEnterGame += OnEnterGame;
+                Events.BeforeQuitToMenu += OnQuitToMenu;
             }
             catch (Exception e)
             {
                 LogError(e);
             }
+
+            LogDebug($"Initialization complete.");
             
             //TODO: pathfinder, transition, etc.
+        }
+
+        private static void OnEnterGame()
+        {
+            if (RandomizerMod.RandomizerMod.RS.GenerationSettings is null) return;
+
+            MapChanger.Settings.AddModes(modes);
+
+            Events.AfterSetGameMap += SetMapObjects;
+        }
+
+        private static void SetMapObjects(GameObject goMap)
+        {
+            //TransitionData.SetTransitionLookup();
+            //PathfinderData.Load();
+            //Pathfinder.Initialize();
+
+            RmmPinMaster.MakePins(goMap);
+
+            LS.Initialize();
+
+            foreach (MainButton button in mainButtons)
+            {
+                button.Make(PauseMenu.MainButtonsGrid);
+            }
+
+            foreach (ExtraButtonPanel ebp in extraButtonPanels)
+            {
+                ebp.Make();
+            }
+        }
+
+        private static void OnQuitToMenu()
+        {
+            Events.AfterSetGameMap -= SetMapObjects;
         }
 
         //private static bool SetTransitionRoomColors(RoomSprite roomSprite)
@@ -90,21 +145,5 @@ namespace RandoMapMod
         //    }
         //    return true;
         //}
-
-        protected override bool ActivateCondition()
-        {
-            return RandomizerMod.RandomizerMod.RS.GenerationSettings is not null;
-        }
-
-        protected override void CreateMapObjects(GameObject goMap)
-        {
-            //TransitionData.SetTransitionLookup();
-            //PathfinderData.Load();
-            //Pathfinder.Initialize();
-
-            RmmPinMaster.MakePins(goMap);
-
-            LS.Initialize();
-        }
     }
 }

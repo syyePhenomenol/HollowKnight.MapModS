@@ -5,9 +5,11 @@ namespace MapChanger.UI
 {
     public abstract class ExtraButton : ButtonWrapper
     {
-        public ExtraButton(string name) : base(name)
-        {
+        public readonly string Mod;
 
+        public ExtraButton(string name, string mod) : base($"{mod} {name}")
+        {
+            Mod = mod;
         }
 
         internal override void Make(Layout parent)

@@ -20,9 +20,9 @@ namespace MapChanger.UI
 
         public virtual void OnClick(Button button)
         {
-            PauseMenu.Set();
+            PauseMenu.Instance.Update();
         }
 
-        public abstract void Set();
+        public abstract void Update();
     }
 }

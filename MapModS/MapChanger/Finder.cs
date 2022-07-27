@@ -58,12 +58,6 @@ namespace MapChanger
             {
                 return true;
             }
-            //TODO: Best guess here
-            //mpd = new();
-            //mpd.Name = name;
-            //mpd.SceneName = ICInterop.GetScene(name);
-            //mpd.MappedScene = GetMappedScene(mpd.SceneName);
-            //return mpd;
             return false;
         }
 

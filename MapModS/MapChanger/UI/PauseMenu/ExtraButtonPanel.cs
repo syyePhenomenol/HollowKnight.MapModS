@@ -25,7 +25,7 @@ namespace MapChanger.UI
 
         internal void Make()
         {
-            ExtraButtonsGrid = new(PauseMenu.Instance.Root, Name)
+            ExtraButtonsGrid = new(PauseMenu.Instance.Root, $"{Mod} {Name}")
             {
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Top,
@@ -68,7 +68,7 @@ namespace MapChanger.UI
             }
         }
 
-        public void Set()
+        public void Update()
         {
             if (!Settings.MapModEnabled || Settings.CurrentMode().Mod != Mod)
             {
@@ -77,7 +77,7 @@ namespace MapChanger.UI
 
             foreach (ExtraButton extraButton in ExtraButtons)
             {
-                extraButton.Set();
+                extraButton.Update();
             }
         }
     }

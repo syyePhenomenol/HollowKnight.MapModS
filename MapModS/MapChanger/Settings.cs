@@ -1,26 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using MapChanger.MonoBehaviours;
-using Modding;
 
 namespace MapChanger
 {
-    public class Settings : IMainHooks
+    public class Settings : HookModule
     {
         public static event Action OnSettingChanged;
         public static bool MapModEnabled { get; private set; } = false;
 
-        private static List<MapMode> Modes = new ();
+        private static List<MapMode> Modes = new();
 
         private static int modeIndex = 0;
 
-        public void OnEnterGame()
+        internal override void OnEnterGame()
         {
 
         }
 
-        public void OnQuitToMenu()
+        internal override void OnQuitToMenu()
         {
             Modes = new();
         }

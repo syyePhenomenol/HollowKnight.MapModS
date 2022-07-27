@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ConnectionMetadataInjector.Util;
+using ItemChanger;
 using MapChanger;
 using MapChanger.Defs;
 using RandomizerCore;
@@ -18,13 +19,22 @@ namespace RandoMapMod.Pins
         {
             LocationPoolGroup = SubcategoryFinder.GetLocationPoolGroup(placement.Location.Name).FriendlyName();
 
-            if (Finder.TryGetLocation(placement.Location.Name, out MapLocationDef mld))
+            if (MapChanger.Finder.TryGetLocation(placement.Location.Name, out MapLocationDef mld))
             {
                 Initialize(mld.MapLocations);
                 return;
             }
 
             RandoMapMod.Instance.LogWarn($"No MapLocationDef found for vanilla placement {name}");
+
+            if (ItemChanger.Finder.GetLocation(name) is AbstractLocation al)
+            {
+                RandoMapMod.Instance.LogWarn($"Placed {name} at the center of {al.sceneName}");
+                Initialize(new MapLocation[] { new MapLocation() { MappedScene = al.sceneName } });
+            }
+
+            RandoMapMod.Instance.LogWarn($"Unable to guess a MapLocation for {name}");
+
             Initialize();
         }
 

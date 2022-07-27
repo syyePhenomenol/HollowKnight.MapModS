@@ -33,7 +33,7 @@ namespace MapChanger.UI
             }
         }
 
-        public override void Set()
+        public override void Update()
         { 
             foreach (TextObject text in MapTexts)
             {

@@ -9,7 +9,7 @@ namespace VanillaMapMod
     {
         internal PoolGroup PoolGroup { get; init; }
 
-        public PoolButton(PoolGroup poolGroup) : base(poolGroup.FriendlyName())
+        public PoolButton(PoolGroup poolGroup) : base(poolGroup.FriendlyName(), "VanillaMapMod")
         {
             PoolGroup = poolGroup;
         }
@@ -21,7 +21,7 @@ namespace VanillaMapMod
             base.OnClick(button);
         }
 
-        public override void Set()
+        public override void Update()
         {
             Button.Content = PoolGroup.FriendlyName().Replace(" ", "\n")
                 + "\n" + VmmPinMaster.GetPoolGroupCounter(PoolGroup);

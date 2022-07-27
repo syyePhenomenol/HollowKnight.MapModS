@@ -5,6 +5,7 @@ using ConnectionMetadataInjector.Util;
 using ItemChanger;
 using MapChanger;
 using MapChanger.MonoBehaviours;
+using RandoMapMod.Settings;
 using RandomizerCore;
 using RandomizerMod.IC;
 using UnityEngine;

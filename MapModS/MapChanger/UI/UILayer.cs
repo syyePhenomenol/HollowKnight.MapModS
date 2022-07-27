@@ -27,9 +27,6 @@ namespace MapChanger.UI
 
         public abstract void BuildLayout();
 
-        public virtual void Set()
-        {
-
-        }
+        public abstract void Update();
     }
 }

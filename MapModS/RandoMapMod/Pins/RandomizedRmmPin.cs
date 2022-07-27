@@ -100,6 +100,15 @@ namespace RandoMapMod.Pins
             }
 
             RandoMapMod.Instance.LogWarn($"No MapLocationDef found for randomized placement {name}");
+
+            if (ItemChanger.Finder.GetLocation(name) is AbstractLocation al)
+            {
+                RandoMapMod.Instance.LogWarn($"Placed {name} at the center of {al.sceneName}");
+                Initialize(new MapLocation[] { new MapLocation() { MappedScene = al.sceneName } });
+            }
+
+            RandoMapMod.Instance.LogWarn($"Unable to guess a MapLocation for {name}");
+
             Initialize();
         }
 
