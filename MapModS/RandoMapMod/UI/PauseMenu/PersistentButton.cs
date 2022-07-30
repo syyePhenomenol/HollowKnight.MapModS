@@ -26,17 +26,19 @@ namespace RandoMapMod.UI
         {
             base.Update();
 
+            Button.BorderColor = RmmColors.GetColor(RmmColorSetting.UI_Borders);
+
             string text = $"{L.Localize("Persistent\nitems")}: ";
 
             if (RandoMapMod.GS.PersistentOn)
             {
                 text += L.Localize("On");
-                Button.ContentColor = Colors.GetColor(ColorSetting.UI_On);
+                Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_On);
             }
             else
             {
                 text += L.Localize("Off");
-                Button.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
+                Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Neutral);
             }
 
             Button.Content = text;

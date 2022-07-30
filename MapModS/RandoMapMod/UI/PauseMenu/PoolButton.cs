@@ -28,10 +28,10 @@ namespace RandoMapMod.UI
 
             Button.ContentColor = RandoMapMod.LS.GetPoolGroupSetting(PoolGroup) switch
             {
-                PoolState.On => Colors.GetColor(ColorSetting.UI_On),
-                PoolState.Off => Colors.GetColor(ColorSetting.UI_Neutral),
-                PoolState.Mixed => Colors.GetColor(ColorSetting.UI_Custom),
-                _ => Colors.GetColor(ColorSetting.UI_On)
+                PoolState.On => RmmColors.GetColor(RmmColorSetting.UI_On),
+                PoolState.Off => RmmColors.GetColor(RmmColorSetting.UI_Neutral),
+                PoolState.Mixed => RmmColors.GetColor(RmmColorSetting.UI_Custom),
+                _ => RmmColors.GetColor(RmmColorSetting.UI_On)
             };
         }
     }

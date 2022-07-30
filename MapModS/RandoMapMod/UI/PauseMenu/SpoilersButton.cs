@@ -1,5 +1,4 @@
 ﻿using MagicUI.Elements;
-using MapChanger;
 using MapChanger.UI;
 using L = RandomizerMod.Localization;
 
@@ -23,14 +22,16 @@ namespace RandoMapMod.UI
         {
             base.Update();
 
+            Button.BorderColor = RmmColors.GetColor(RmmColorSetting.UI_Borders);
+
             if (RandoMapMod.LS.SpoilerOn)
             {
-                Button.ContentColor = Colors.GetColor(ColorSetting.UI_On);
+                Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_On);
                 Button.Content = $"{L.Localize("Spoilers")}:\n{L.Localize("on")}";
             }
             else
             {
-                Button.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
+                Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Neutral);
                 Button.Content = $"{L.Localize("Spoilers")}:\n{L.Localize("off")}";
             }
         }

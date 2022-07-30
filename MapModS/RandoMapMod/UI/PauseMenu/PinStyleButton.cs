@@ -26,6 +26,8 @@ namespace RandoMapMod.UI
         {
             base.Update();
 
+            Button.BorderColor = RmmColors.GetColor(RmmColorSetting.UI_Borders);
+
             string text = $"{L.Localize("Pin Style")}:\n";
 
             switch (RandoMapMod.GS.PinStyle)
@@ -47,7 +49,7 @@ namespace RandoMapMod.UI
                     break;
             }
 
-            Button.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
+            Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Neutral);
             Button.Content = text;
         }
     }

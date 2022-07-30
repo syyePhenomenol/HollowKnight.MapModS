@@ -1,5 +1,4 @@
 ﻿using MagicUI.Elements;
-using MapChanger;
 using MapChanger.UI;
 using RandoMapMod.Settings;
 using L = RandomizerMod.Localization;
@@ -26,6 +25,8 @@ namespace RandoMapMod.UI
         {
             base.Update();
 
+            Button.BorderColor = RmmColors.GetColor(RmmColorSetting.UI_Borders);
+
             string text = $"{L.Localize("Group by")}:\n";
 
             switch (RandoMapMod.LS.GroupBy)
@@ -40,7 +41,7 @@ namespace RandoMapMod.UI
             }
 
             Button.Content = text;
-            Button.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
+            Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Neutral);
         }
     }
 }

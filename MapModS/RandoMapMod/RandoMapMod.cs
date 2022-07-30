@@ -107,6 +107,8 @@ namespace RandoMapMod
 
             MapChanger.Settings.AddModes(modes);
 
+            RmmColors.LoadCustomColors();
+
             Events.AfterSetGameMap += OnSetGameMap;
         }
 

@@ -1,4 +1,5 @@
-﻿using MapChanger.Defs;
+﻿using System;
+using MapChanger.Defs;
 using TMPro;
 using UnityEngine;
 
@@ -47,6 +48,23 @@ namespace MapChanger.MonoBehaviours
             return States.QuickMapOpen
                 && !Settings.CurrentMode().DisableNextArea
                 && (Mnad.visitedString is "" || PlayerData.instance.GetBool(Mnad.visitedString));
+        }
+
+        public void OnEnable()
+        {
+            UpdateColor();
+        }
+
+        public void UpdateColor()
+        {
+            if (!Settings.MapModEnabled)
+            {
+                Color = OrigColor;
+                return;
+            }
+
+            try { Settings.CurrentMode().OnNextAreaUpdateColor?.Invoke(this); }
+            catch (Exception e) { MapChangerMod.Instance.LogError(e); }
         }
     }
 }

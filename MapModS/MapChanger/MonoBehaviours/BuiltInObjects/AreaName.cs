@@ -1,4 +1,5 @@
-﻿using MapChanger.Defs;
+﻿using System;
+using MapChanger.Defs;
 using TMPro;
 using UnityEngine;
 
@@ -40,6 +41,23 @@ namespace MapChanger.MonoBehaviours
         private bool AreaNamesEnabled()
         {
             return !Settings.CurrentMode().DisableAreaNames;
+        }
+
+        public void OnEnable()
+        {
+            UpdateColor();
+        }
+
+        public void UpdateColor()
+        {
+            if (!Settings.MapModEnabled)
+            {
+                Color = OrigColor;
+                return;
+            }
+
+            try { Settings.CurrentMode().OnAreaNameUpdateColor?.Invoke(this); }
+            catch (Exception e) { MapChangerMod.Instance.LogError(e); }
         }
     }
 }

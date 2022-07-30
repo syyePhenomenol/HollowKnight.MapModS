@@ -72,6 +72,12 @@ namespace MapChanger.MonoBehaviours
 
         public void UpdateColor()
         {
+            if (!Settings.MapModEnabled)
+            {
+                Color = OrigColor;
+                return;
+            }
+
             try { Settings.CurrentMode().OnRoomUpdateColor?.Invoke(this); }
             catch (Exception e) { MapChangerMod.Instance.LogError(e); }
         }

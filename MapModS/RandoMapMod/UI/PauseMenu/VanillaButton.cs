@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using MagicUI.Elements;
-using MapChanger;
 using MapChanger.UI;
 using RandoMapMod.Pins;
 using RandoMapMod.Settings;
@@ -26,22 +25,24 @@ namespace RandoMapMod.UI
         {
             base.Update();
 
+            Button.BorderColor = RmmColors.GetColor(RmmColorSetting.UI_Borders);
+
             string text = $"{L.Localize("Vanilla")}:\n";
 
             if (RandoMapMod.LS.VanillaOn)
             {
-                Button.ContentColor = Colors.GetColor(ColorSetting.UI_On);
+                Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_On);
                 text += L.Localize("on");
             }
             else
             {
-                Button.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
+                Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Neutral);
                 text += L.Localize("off");
             }
 
             if (IsVanillaCustom())
             {
-                Button.ContentColor = Colors.GetColor(ColorSetting.UI_Custom);
+                Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Custom);
                 text += $" ({L.Localize("custom")})";
             }
 

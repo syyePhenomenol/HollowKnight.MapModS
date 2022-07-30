@@ -26,6 +26,8 @@ namespace RandoMapMod.UI
         {
             base.Update();
 
+            Button.BorderColor = RmmColors.GetColor(RmmColorSetting.UI_Borders);
+
             string text = $"{L.Localize("Pin Size")}:\n";
 
             switch (RandoMapMod.GS.PinSize)
@@ -43,7 +45,7 @@ namespace RandoMapMod.UI
                     break;
             }
 
-            Button.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
+            Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Neutral);
             Button.Content = text;
         }
     }

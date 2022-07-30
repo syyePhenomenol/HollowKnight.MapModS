@@ -158,10 +158,10 @@ namespace RandoMapMod.Pins
         {
             Vector4 color = placementState switch
             {
-                RandoPlacementState.OutOfLogicReachable => Colors.GetColor(ColorSetting.Pin_Out_of_logic),
-                RandoPlacementState.Previewed => Colors.GetColor(ColorSetting.Pin_Previewed),
-                RandoPlacementState.ClearedPersistent => Colors.GetColor(ColorSetting.Pin_Persistent),
-                _ => Colors.GetColor(ColorSetting.Pin_Normal),
+                RandoPlacementState.OutOfLogicReachable => RmmColors.GetColor(RmmColorSetting.Pin_Out_of_logic),
+                RandoPlacementState.Previewed => RmmColors.GetColor(RmmColorSetting.Pin_Previewed),
+                RandoPlacementState.ClearedPersistent => RmmColors.GetColor(RmmColorSetting.Pin_Persistent),
+                _ => RmmColors.GetColor(RmmColorSetting.Pin_Normal),
             };
 
             if (placementState == RandoPlacementState.UncheckedUnreachable && !Selected)

@@ -80,14 +80,6 @@ namespace MapChanger
             On.GameMap.QuickMapRestingGrounds += OnOpenQuickMapRestingGrounds;
             On.GameMap.QuickMapWaterways += OnOpenQuickMapWaterways;
             On.GameMap.CloseQuickMap += CloseMapEvent;
-
-            //foreach (Mod mod in ModHooks.GetAllMods())
-            //{
-            //    if (mod is MapMod mapMod)
-            //    {
-            //        HookModules.Add(mapMod);
-            //    }
-            //}
         }
 
         private static void AfterStartNewGame(On.GameManager.orig_StartNewGame orig, GameManager self, bool permadeathMode, bool bossRushMode)
@@ -106,17 +98,12 @@ namespace MapChanger
 
         private static void BeforeEnterGameEvent()
         {
-            //Settings.Initialize();
-
             try { BeforeEnterGame?.Invoke(); }
             catch (Exception e) { MapChangerMod.Instance.LogError(e); }
         }
 
         private static void AfterEnterGameEvent()
         {
-            // Load default/custom assets
-            Colors.LoadCustomColors();
-
             foreach (HookModule hookModule in HookModules)
             {
                 hookModule.OnEnterGame();
