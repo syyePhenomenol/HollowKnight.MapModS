@@ -1,4 +1,5 @@
 ﻿using System;
+using GlobalEnums;
 using MapChanger.MonoBehaviours;
 
 namespace MapChanger
@@ -32,29 +33,9 @@ namespace MapChanger
         public virtual bool DisableNextArea => false;
 
         public virtual Func<RoomSprite, bool> RoomSpriteActiveOverride => null;
-
-        public virtual Action<RoomSprite> OnRoomUpdateColor => SetDefaultRoomColor;
-
-        public virtual Action<AreaName> OnAreaNameUpdateColor => SetDefaultAreaNameColor;
-
-        public virtual Action<NextArea> OnNextAreaUpdateColor => SetDefaultNextAreaColor;
-
-        private void SetDefaultRoomColor(RoomSprite roomSprite)
-        {
-            roomSprite.Color = roomSprite.OrigColor;
-        }
-
-        private void SetDefaultAreaNameColor(AreaName areaName)
-        {
-            areaName.Color = areaName.OrigColor;
-        }
-
-        private void SetDefaultNextAreaColor(NextArea nextArea)
-        {
-            nextArea.Color = nextArea.OrigColor;
-        }
-
-        //public virtual Func<RoomSprite, bool> OnRoomSpriteSet => null;
-        //public virtual Func<RoomText, bool> OnRoomTextSet => null;
+        public virtual Action<RoomSprite> OnRoomUpdateColor => (roomSprite) => { roomSprite.ResetColor(); };
+        public virtual Action<AreaName> OnAreaNameUpdateColor => (areaName) => { areaName.ResetColor(); };
+        public virtual Action<NextArea> OnNextAreaUpdateColor => (nextArea) => { nextArea.ResetColor(); };
+        public virtual Action<QuickMapTitle, MapZone> OnQuickMapTitleUpdateColor => (qmt, mapZone) => { qmt.ResetColor(); };
     }
 }

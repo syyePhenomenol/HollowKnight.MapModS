@@ -9,20 +9,6 @@ namespace MapChanger
 {
     public static class Utils
     {
-        ///// <summary>
-        ///// For hooking to events not in MapChanger.Events.
-        ///// </summary>
-        ///// <typeparam name="T"></typeparam>
-        //internal static void AddHookModule<T>() where T : IMainHooks
-        //{
-        //    if (Events.HookModules.Any(hookModule => hookModule.GetType() == typeof(T)))
-        //    {
-        //        MapChangerMod.Instance.LogWarn($"HookModule of type {typeof(T).Name} has already been added!");
-        //        return;
-        //    }
-        //    Events.HookModules.Add((T)Activator.CreateInstance(typeof(T)));
-        //}
-
         /// <summary>
         /// Generic method for creating a new GameObject with the MonoBehaviour, and returning the MonoBehaviour.
         /// </summary>
@@ -164,7 +150,5 @@ namespace MapChanger
 
         //    return text;
         //}
-
-
     }
 }

@@ -144,6 +144,8 @@ namespace MapChanger.Map
                     continue;
                 }
 
+                child.gameObject.SetActive(false);
+
                 if (mod.Type == MiscObjectType.NextArea)
                 {
                     NextArea nextArea = child.gameObject.AddComponent<NextArea>();
@@ -157,6 +159,11 @@ namespace MapChanger.Map
 
                 MapChangerMod.Instance.LogDebug($"Attaching: {pathName}");
             }
+
+            GameObject goQmt = GameCameras.instance.hudCamera.transform.FindChildInHierarchy("Quick Map/Area Name").gameObject;
+            goQmt.SetActive(false);
+            QuickMapTitle qmt = goQmt.AddComponent<QuickMapTitle>();
+            qmt.Initialize();
 
             MapChangerMod.Instance.LogDebug("~AttachMapModifiers");
         }

@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using GlobalEnums;
 using MapChanger.Defs;
 using UnityEngine;
 
 namespace MapChanger.MonoBehaviours
 {
-    public class RoomSprite : MapObject, ISelectable
+    public class RoomSprite : ColoredMapObject, ISelectable
     {
         public RoomSpriteDef Rsd { get; private set; }
 
         private SpriteRenderer sr;
-        public Vector4 OrigColor { get; private set; }
-        public Vector4 Color
+        public override Vector4 Color
         {
             get => sr.color;
             set
@@ -65,16 +63,11 @@ namespace MapChanger.MonoBehaviours
                 || Finder.IsMinimalMapScene(transform.name);
         }
 
-        public void OnEnable()
-        {
-            UpdateColor();
-        }
-
-        public void UpdateColor()
+        public override void UpdateColor()
         {
             if (!Settings.MapModEnabled)
             {
-                Color = OrigColor;
+                ResetColor();
                 return;
             }
 

@@ -31,6 +31,7 @@ namespace RandoMapMod
             //new TransitionAllRoomsMode()
         };
 
+        private static readonly Title title = new RmmTitle();
 
         private static readonly MainButton[] mainButtons = new MainButton[]
         {
@@ -123,6 +124,8 @@ namespace RandoMapMod
                 RmmPinMaster.MakePins(goMap);
 
                 LS.Initialize();
+
+                title.Make();
 
                 foreach (MainButton button in mainButtons)
                 {

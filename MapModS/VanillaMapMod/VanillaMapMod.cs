@@ -21,6 +21,8 @@ namespace VanillaMapMod
             new FullMapMode()
         };
 
+        private static readonly Title title = new VmmTitle();
+
         private static readonly MainButton[] mainButtons = new MainButton[] 
         { 
             new ModEnabledButton(),
@@ -101,6 +103,8 @@ namespace VanillaMapMod
                 VmmPinMaster.MakePins(goMap);
 
                 LS.Initialize();
+
+                title.Make();
 
                 foreach (MainButton button in mainButtons)
                 {

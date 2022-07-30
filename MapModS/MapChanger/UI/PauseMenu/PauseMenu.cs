@@ -8,7 +8,8 @@ namespace MapChanger.UI
     internal class PauseMenu : UILayer
     {
         internal static PauseMenu Instance { get; private set; } = new();
-        internal static TextObject Title { get; private set; }
+
+        internal static List<Title> Titles { get; private set; } = new();
         internal static GridLayout MainButtonsGrid { get; private set; }
         internal static List<MainButton> MainButtons { get; private set; } = new();
         internal static List<ExtraButtonPanel> ExtraButtonPanels { get; private set; } = new();
@@ -25,6 +26,7 @@ namespace MapChanger.UI
             Instance.Destroy();
 
             Instance = new();
+            Titles = new();
             MainButtons = new();
             ExtraButtonPanels = new();
 
@@ -40,15 +42,15 @@ namespace MapChanger.UI
         {
             //Root.RenderDebugLayoutBounds = true;
 
-            Title = new(Root, "MapMod Title")
-            {
-                TextAlignment = HorizontalAlignment.Left,
-                ContentColor = Color.white,
-                FontSize = 20,
-                Font = MagicUI.Core.UI.TrajanBold,
-                Padding = new(10f, 840f, 10f, 10f),
-                Text = "Placeholder",
-            };
+            //Title = new(Root, "MapMod Title")
+            //{
+            //    TextAlignment = HorizontalAlignment.Left,
+            //    ContentColor = Color.white,
+            //    FontSize = 20,
+            //    Font = MagicUI.Core.UI.TrajanBold,
+            //    Padding = new(10f, 840f, 10f, 10f),
+            //    Text = "Placeholder",
+            //};
 
             MainButtonsGrid = new(Root, "Main Buttons")
             {
@@ -77,7 +79,10 @@ namespace MapChanger.UI
 
         public override void Update()
         {
-            Title.Text = Settings.CurrentMode().Mod;
+            foreach (Title title in Titles)
+            {
+                title.Update();
+            }
 
             foreach (MainButton mainButton in MainButtons)
             {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using GlobalEnums;
 using MapChanger;
 using UnityEngine;
 
@@ -203,32 +204,29 @@ namespace RandoMapMod
         //    return false;
         //}
 
-        //public static Vector4 GetColorFromMapZone(MapZone mapZone)
-        //{
-        //    Vector4 color = mapZone switch
-        //    {
-        //        MapZone.ABYSS => GetColor(ColorSetting.Map_Ancient_Basin),
-        //        MapZone.CITY => GetColor(ColorSetting.Map_City_of_Tears),
-        //        MapZone.CLIFFS => GetColor(ColorSetting.Map_Howling_Cliffs),
-        //        MapZone.CROSSROADS => GetColor(ColorSetting.Map_Forgotten_Crossroads),
-        //        MapZone.MINES => GetColor(ColorSetting.Map_Crystal_Peak),
-        //        MapZone.DEEPNEST => GetColor(ColorSetting.Map_Deepnest),
-        //        MapZone.TOWN => GetColor(ColorSetting.Map_Dirtmouth),
-        //        MapZone.FOG_CANYON => GetColor(ColorSetting.Map_Fog_Canyon),
-        //        MapZone.WASTES => GetColor(ColorSetting.Map_Fungal_Wastes),
-        //        MapZone.GREEN_PATH => GetColor(ColorSetting.Map_Greenpath),
-        //        MapZone.OUTSKIRTS => GetColor(ColorSetting.Map_Kingdoms_Edge),
-        //        MapZone.ROYAL_GARDENS => GetColor(ColorSetting.Map_Queens_Gardens),
-        //        MapZone.RESTING_GROUNDS => GetColor(ColorSetting.Map_Resting_Grounds),
-        //        MapZone.WATERWAYS => GetColor(ColorSetting.Map_Royal_Waterways),
-        //        MapZone.WHITE_PALACE => GetColor(ColorSetting.Map_White_Palace),
-        //        MapZone.GODS_GLORY => GetColor(ColorSetting.Map_Godhome),
-        //        _ => Color.white
-        //    };
-
-        //    color.w = 1f;
-        //    return color;
-        //}
+        public static Vector4 GetColorFromMapZone(MapZone mapZone)
+        {
+            return mapZone switch
+            {
+                MapZone.ABYSS => GetColor(RmmColorSetting.Map_Ancient_Basin),
+                MapZone.CITY => GetColor(RmmColorSetting.Map_City_of_Tears),
+                MapZone.CLIFFS => GetColor(RmmColorSetting.Map_Howling_Cliffs),
+                MapZone.CROSSROADS => GetColor(RmmColorSetting.Map_Forgotten_Crossroads),
+                MapZone.MINES => GetColor(RmmColorSetting.Map_Crystal_Peak),
+                MapZone.DEEPNEST => GetColor(RmmColorSetting.Map_Deepnest),
+                MapZone.TOWN => GetColor(RmmColorSetting.Map_Dirtmouth),
+                MapZone.FOG_CANYON => GetColor(RmmColorSetting.Map_Fog_Canyon),
+                MapZone.WASTES => GetColor(RmmColorSetting.Map_Fungal_Wastes),
+                MapZone.GREEN_PATH => GetColor(RmmColorSetting.Map_Greenpath),
+                MapZone.OUTSKIRTS => GetColor(RmmColorSetting.Map_Kingdoms_Edge),
+                MapZone.ROYAL_GARDENS => GetColor(RmmColorSetting.Map_Queens_Gardens),
+                MapZone.RESTING_GROUNDS => GetColor(RmmColorSetting.Map_Resting_Grounds),
+                MapZone.WATERWAYS => GetColor(RmmColorSetting.Map_Royal_Waterways),
+                MapZone.WHITE_PALACE => GetColor(RmmColorSetting.Map_White_Palace),
+                MapZone.GODS_GLORY => GetColor(RmmColorSetting.Map_Godhome),
+                _ => Color.white
+            };
+        }
 
         //public static Vector4 GetColorFromMapZone(string mapZoneString)
         //{
