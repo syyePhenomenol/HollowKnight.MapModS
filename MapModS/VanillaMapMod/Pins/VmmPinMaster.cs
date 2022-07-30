@@ -23,7 +23,7 @@ namespace VanillaMapMod
             Pins = new();
             PinGroups = new();
 
-            foreach (PoolGroup poolGroup in Enum.GetValues(typeof(PoolGroup)).Cast<PoolGroup>())
+            foreach (PoolGroup poolGroup in Enum.GetValues(typeof(PoolGroup)).Cast<PoolGroup>().Where(poolGroup => poolGroup is not PoolGroup.Other))
             {
                 VmmPinGroup pinGroup = Utils.MakeMonoBehaviour<VmmPinGroup>(goMap, poolGroup.FriendlyName());
                 pinGroup.Initialize(poolGroup);
@@ -48,8 +48,8 @@ namespace VanillaMapMod
                 transform.localPosition = new(transform.localPosition.x, transform.localPosition.y, OFFSETZ_BASE + (float)i / Pins.Count() * OFFSETZ_RANGE);
             }
 
-            RmmPinSelector pinSelector = Utils.MakeMonoBehaviour<RmmPinSelector>(null, "Pin Selector");
-            pinSelector.Initialize(Pins.Values);
+            //VmmPinSelector pinSelector = Utils.MakeMonoBehaviour<VmmPinSelector>(null, "Pin Selector");
+            //pinSelector.Initialize(Pins.Values);
         }
 
         internal static void UpdatePinSize()

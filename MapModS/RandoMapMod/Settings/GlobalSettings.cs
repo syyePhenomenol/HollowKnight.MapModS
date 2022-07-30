@@ -23,7 +23,7 @@ namespace RandoMapMod.Settings
         /// </summary>
         public bool OverrideDefaultMode = false;
         public RMMMode ItemRandoModeOverride = RMMMode.Full_Map;
-        public RMMMode TransitionRandoModeOverride = RMMMode.Transition_1;
+        public RMMMode TransitionRandoModeOverride = RMMMode.Transition_Normal;
 
         internal void ToggleControlPanel()
         {
@@ -80,7 +80,7 @@ namespace RandoMapMod.Settings
             PinSize = (PinSize)(((int)PinSize + 1) % Enum.GetNames(typeof(PinSize)).Length);
         }
 
-        internal void TogglePersistentOn()
+        internal void TogglePersistent()
         {
             PersistentOn = !PersistentOn;
         }

@@ -16,7 +16,7 @@ namespace MapChanger.MonoBehaviours
         protected const float DEFAULT_SIZE = 0.3f;
         protected const float DEFAULT_SELECTION_RADIUS = 0.7f;
         protected static readonly Vector4 DEFAULT_COLOR = new(1f, 1f, 1f, 0.6f);
-        protected const string SELECTOR_SPRITE = "selector";
+        protected const string SELECTOR_SPRITE = "GUI.Selector";
 
         public Dictionary<string, List<ISelectable>> Objects { get; } = new();
         public virtual Vector2 TargetPosition { get; } = Vector2.zero;
@@ -117,7 +117,7 @@ namespace MapChanger.MonoBehaviours
             ActiveModifiers.Add(WorldMapOpen);
 
             Sr = gameObject.AddComponent<SpriteRenderer>();
-            Sr.sprite = SpriteManager.GetSprite(SELECTOR_SPRITE);
+            Sr.sprite = SpriteManager.Instance.GetSprite(SELECTOR_SPRITE);
             Sr.color = DEFAULT_COLOR;
             Sr.sortingLayerName = HUD;
 

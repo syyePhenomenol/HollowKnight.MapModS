@@ -1,5 +1,4 @@
-﻿using ConnectionMetadataInjector.Util;
-using MagicUI.Elements;
+﻿using MagicUI.Elements;
 using MapChanger;
 using MapChanger.UI;
 using RandoMapMod.Settings;

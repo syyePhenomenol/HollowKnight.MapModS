@@ -4,6 +4,7 @@ using GlobalEnums;
 using MapChanger;
 using MapChanger.Defs;
 using MapChanger.MonoBehaviours;
+using RandoMapMod.Modes;
 using RandoMapMod.Settings;
 using UnityEngine;
 
@@ -11,9 +12,9 @@ namespace RandoMapMod.Pins
 {
     internal abstract class RmmPin: BorderedPin, ISelectable
     {
-        private const float SMALL_SCALE = 0.31f;
-        private const float MEDIUM_SCALE = 0.37f;
-        private const float LARGE_SCALE = 0.44f;
+        private const float SMALL_SCALE = 0.56f;
+        private const float MEDIUM_SCALE = 0.67f;
+        private const float LARGE_SCALE = 0.8f;
 
         private protected const float UNREACHABLE_SIZE_MULTIPLIER = 0.7f;
         private protected const float UNREACHABLE_COLOR_MULTIPLIER = 0.5f;
@@ -47,7 +48,7 @@ namespace RandoMapMod.Pins
         internal abstract HashSet<string> ItemPoolGroups { get; }
         internal MapZone MapZone { get; private set; } = MapZone.NONE;
 
-        public void Initialize(MapLocation[] mapLocations)
+        public void Initialize((string, float, float)[] mapLocations)
         {
             MapLocationPosition mlp = new(mapLocations);
             MapPosition = mlp;
@@ -71,7 +72,7 @@ namespace RandoMapMod.Pins
                 }
             );
 
-            BorderSprite = SpriteManager.GetSprite("pinBorder");
+            BorderSprite = new EmbeddedSprite("Pins.Border").Value;
             BorderPlacement = BorderPlacement.InFront;
         }
 
@@ -108,7 +109,8 @@ namespace RandoMapMod.Pins
 
         protected private bool ActiveByCurrentMode()
         {
-            return MapChanger.Settings.CurrentMode().Mod is "RandoMapMod";
+            return MapChanger.Settings.CurrentMode() is FullMapMode or AllPinsMode
+                || (MapChanger.Settings.CurrentMode() is PinsOverMapMode && Utils.HasMapSetting(MapZone));
         }
 
         protected private abstract bool ActiveByPoolSetting();

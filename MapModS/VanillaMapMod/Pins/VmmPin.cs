@@ -11,9 +11,9 @@ namespace VanillaMapMod
 {
     internal class VmmPin : Pin, ISelectable
     {
-        private const float SMALL_SCALE = 0.31f;
-        private const float MEDIUM_SCALE = 0.37f;
-        private const float LARGE_SCALE = 0.44f;
+        private const float SMALL_SCALE = 0.56f;
+        private const float MEDIUM_SCALE = 0.67f;
+        private const float LARGE_SCALE = 0.8f;
 
         private const float SELECTED_MULTIPLIER = 1.5f;
 
@@ -57,7 +57,7 @@ namespace VanillaMapMod
             Parent = parent;
             Mlp = new MapLocationPosition(mld.MapLocations);
             MapPosition = Mlp;
-            Sprite = SpriteManager.GetSpriteFromPoolGroup(parent.PoolGroup.FriendlyName());
+            Sprite = GetSpriteFromPoolGroup(parent.PoolGroup);
         }
 
         private void OnEnable()
@@ -99,6 +99,41 @@ namespace VanillaMapMod
         private bool LocationNotCleared()
         {
             return !Tracker.HasClearedLocation(name);
+        }
+
+        private static Sprite GetSpriteFromPoolGroup(PoolGroup poolGroup)
+        {
+            string spriteName = poolGroup switch
+            {
+                PoolGroup.Dreamers => "Dreamer",
+                PoolGroup.Skills => "Skill",
+                PoolGroup.Charms => "Charm",
+                PoolGroup.Keys => "Key",
+                PoolGroup.MaskShards => "Mask",
+                PoolGroup.VesselFragments => "Vessel",
+                PoolGroup.CharmNotches => "Notch",
+                PoolGroup.PaleOre => "Ore",
+                PoolGroup.GeoChests => "Geo",
+                PoolGroup.RancidEggs => "Egg",
+                PoolGroup.Relics => "Relic",
+                PoolGroup.WhisperingRoots => "Root",
+                PoolGroup.BossEssence => "EssenceBoss",
+                PoolGroup.Grubs => "Grub",
+                PoolGroup.Mimics => "Grub",
+                PoolGroup.Maps => "Map",
+                PoolGroup.Stags => "Stag",
+                PoolGroup.LifebloodCocoons => "Cocoon",
+                PoolGroup.GrimmkinFlames => "Flame",
+                PoolGroup.JournalEntries => "Journal",
+                PoolGroup.GeoRocks => "Rock",
+                PoolGroup.BossGeo => "Geo",
+                PoolGroup.SoulTotems => "Totem",
+                PoolGroup.LoreTablets => "Lore",
+                PoolGroup.Shops => "Shop",
+                _ => "Unknown",
+            };
+
+            return SpriteManager.Instance.GetSprite($"Pins.{spriteName}");
         }
     }
 }

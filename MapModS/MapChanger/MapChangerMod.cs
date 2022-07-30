@@ -26,7 +26,7 @@ namespace MapChanger
             }
 
             Finder.Load();
-            SpriteManager.Load();
+            //SpriteManager.Load();
             Tracker.Load();
             BuiltInObjects.Load();
             VariableOverrides.Load();

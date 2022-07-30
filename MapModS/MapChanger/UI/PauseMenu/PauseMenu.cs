@@ -7,12 +7,6 @@ namespace MapChanger.UI
 {
     internal class PauseMenu : UILayer
     {
-        private static readonly MainButton[] masterButtons =
-        {
-            new ModEnabledButton(),
-            new ModeButton()
-        };
-
         internal static PauseMenu Instance { get; private set; } = new();
         internal static TextObject Title { get; private set; }
         internal static GridLayout MainButtonsGrid { get; private set; }
@@ -77,11 +71,6 @@ namespace MapChanger.UI
                 VerticalAlignment = VerticalAlignment.Top,
                 Padding = new(10f, 865f, 10f, 10f)
             };
-
-            foreach (MainButton mainButton in masterButtons)
-            {
-                mainButton.Make(MainButtonsGrid);
-            }
 
             Update();
         }

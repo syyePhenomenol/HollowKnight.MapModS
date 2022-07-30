@@ -5,7 +5,6 @@ using ConnectionMetadataInjector.Util;
 using ItemChanger;
 using MapChanger;
 using MapChanger.MonoBehaviours;
-using RandoMapMod.Settings;
 using RandomizerCore;
 using RandomizerMod.IC;
 using UnityEngine;
@@ -22,9 +21,11 @@ namespace RandoMapMod.Pins
         internal static MapObject MoPins;
         internal static Dictionary<string, RmmPin> Pins { get; private set; } = new();
 
-        internal static List<string> PoolGroups { get; private set; }
-        internal static HashSet<string> RandoPoolGroups { get; private set; }
-        internal static HashSet<string> VanillaPoolGroups { get; private set; }
+        internal static List<string> AllPoolGroups { get; private set; }
+        internal static HashSet<string> RandoLocationPoolGroups { get; private set; }
+        internal static HashSet<string> RandoItemPoolGroups { get; private set; }
+        internal static HashSet<string> VanillaLocationPoolGroups { get; private set; }
+        internal static HashSet<string> VanillaItemPoolGroups { get; private set; }
 
         internal static void MakePins(GameObject goMap)
         {
@@ -45,7 +46,7 @@ namespace RandoMapMod.Pins
             }
 
             StaggerPins();
-            SetPoolGroups();
+            InitializePoolGroups();
 
             //VmmPinSelector pinSelector = Utils.MakeMonoBehaviour<VmmPinSelector>(null, "Pin Selector");
             //pinSelector.Initialize(Pins);
@@ -98,29 +99,9 @@ namespace RandoMapMod.Pins
             }
         }
 
-        //internal static string GetPoolGroupCounter(PoolGroup poolGroup)
-        //{
-        //    string text;
-
-        //    IReadOnlyCollection<MapObject> pins = PinGroups[poolGroup].GetChildren();
-
-        //    if (IsPersistent(poolGroup))
-        //    {
-        //        text = "";
-        //    }
-        //    else
-        //    {
-        //        text = pins.Where(pin => Tracker.HasClearedLocation(pin.name)).Count().ToString() + " / ";
-        //    }
-
-        //    return text + pins.Count().ToString();
-        //}
-
-        //private static bool IsPersistent(PoolGroup poolGroup)
-        //{
-        //    return poolGroup is PoolGroup.LifebloodCocoons or PoolGroup.SoulTotems or PoolGroup.LoreTablets;
-        //}
-
+        /// <summary>
+        /// Makes sure all the Z offsets for the pins aren't the same.
+        /// </summary>
         private static void StaggerPins()
         {
             IEnumerable<MapObject> PinsSorted = Pins.Values.OrderBy(mapObj => mapObj.transform.position.x).ThenBy(mapObj => mapObj.transform.position.y);
@@ -132,43 +113,58 @@ namespace RandoMapMod.Pins
             }
         }
 
-        private static void SetPoolGroups()
+        /// <summary>
+        /// Sets all the sorted, randomized/vanilla location/item PoolGroups.
+        /// </summary>
+        private static void InitializePoolGroups()
         {
-            PoolGroups = new();
-            RandoPoolGroups = new();
-            VanillaPoolGroups = new();
+            AllPoolGroups = new();
+            RandoLocationPoolGroups = new();
+            RandoItemPoolGroups = new();
+            VanillaLocationPoolGroups = new();
+            VanillaItemPoolGroups = new();
 
             foreach (RmmPin pin in Pins.Values)
             {
-                if (pin is RandomizedRmmPin randoPin)
+                if (pin is RandomizedRmmPin)
                 {
-                    RandoPoolGroups.Add(randoPin.LocationPoolGroup);
-                    RandoPoolGroups.UnionWith(randoPin.ItemPoolGroups);
-
+                    RandoLocationPoolGroups.Add(pin.LocationPoolGroup);
+                    RandoItemPoolGroups.UnionWith(pin.ItemPoolGroups);
                 }
-                if (pin is VanillaRmmPin vanillaPin)
+                if (pin is VanillaRmmPin)
                 {
-                    VanillaPoolGroups.Add(vanillaPin.LocationPoolGroup);
-                    VanillaPoolGroups.UnionWith(vanillaPin.ItemPoolGroups);
+                    VanillaLocationPoolGroups.Add(pin.LocationPoolGroup);
+                    VanillaItemPoolGroups.UnionWith(pin.ItemPoolGroups);
                 }
-            }
-            foreach (string poolGroup in Enum.GetValues(typeof(PoolGroup)).Cast<PoolGroup>().Select(poolGroup => poolGroup.FriendlyName()).Where(poolGroup => RandoPoolGroups.Contains(poolGroup) || VanillaPoolGroups.Contains(poolGroup)))
-            {
-                PoolGroups.Add(poolGroup);
-            }
-            foreach (string poolGroup in RandoPoolGroups.Union(VanillaPoolGroups).Where(poolGroup => !PoolGroups.Contains(poolGroup)))
-            {
-                PoolGroups.Add(poolGroup);
             }
 
-            foreach (string poolGroup in RandoPoolGroups)
+            foreach (string poolGroup in Enum.GetValues(typeof(PoolGroup))
+                .Cast<PoolGroup>()
+                .Select(poolGroup => poolGroup.FriendlyName())
+                .Where(poolGroup => RandoLocationPoolGroups.Contains(poolGroup)
+                    || RandoItemPoolGroups.Contains(poolGroup)
+                    || VanillaLocationPoolGroups.Contains(poolGroup)
+                    || VanillaItemPoolGroups.Contains(poolGroup)))
             {
-                RandoMapMod.Instance.LogDebug($"Randomized Pool Group: {poolGroup}");
+                AllPoolGroups.Add(poolGroup);
             }
-            foreach (string poolGroup in VanillaPoolGroups)
+            foreach (string poolGroup in RandoLocationPoolGroups
+                .Union(RandoItemPoolGroups)
+                .Union(VanillaLocationPoolGroups)
+                .Union(VanillaItemPoolGroups)
+                .Where(poolGroup => !AllPoolGroups.Contains(poolGroup)))
             {
-                RandoMapMod.Instance.LogDebug($"Vanilla Pool Group: {poolGroup}");
+                AllPoolGroups.Add(poolGroup);
             }
+
+            //foreach (string poolGroup in ActiveRandoPoolGroups)
+            //{
+            //    RandoMapMod.Instance.LogDebug($"Randomized Pool Group: {poolGroup}");
+            //}
+            //foreach (string poolGroup in ActiveVanillaPoolGroups)
+            //{
+            //    RandoMapMod.Instance.LogDebug($"Vanilla Pool Group: {poolGroup}");
+            //}
         }
     }
 }

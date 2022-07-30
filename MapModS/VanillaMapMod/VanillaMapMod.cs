@@ -23,6 +23,8 @@ namespace VanillaMapMod
 
         private static readonly MainButton[] mainButtons = new MainButton[] 
         { 
+            new ModEnabledButton(),
+            new ModeButton(),
             new PinSizeButton(),
             new ModPinsButton(),
             new VanillaPinsButton(),
@@ -48,20 +50,7 @@ namespace VanillaMapMod
 
         public void OnLoadLocal(LocalSettings ls) => LS = ls;
 
-        public LocalSettings OnSaveLocal()
-        {
-            //VanillaMapMod.Instance.LogDebug("On Save Local");
-
-            LS.ModEnabled = MapChanger.Settings.MapModEnabled;
-
-            if (MapChanger.Settings.CurrentMode().Mod is "VanillaMapMod"
-                && Enum.TryParse(MapChanger.Settings.CurrentMode().ModeName, out VMMMode mode))
-            {
-                LS.Mode = mode;
-            }
-
-            return LS;
-        }
+        public LocalSettings OnSaveLocal() => LS;
 
         internal static GlobalSettings GS = new();
         public void OnLoadGlobal(GlobalSettings gs) => GS = gs;
@@ -97,10 +86,6 @@ namespace VanillaMapMod
         {
             MapChanger.Settings.AddModes(modes);
 
-            MapChanger.Settings.SetModEnabled(LS.ModEnabled);
-
-            MapChanger.Settings.SetMode("VanillaMapMod", LS.Mode.ToString().Replace('_', ' '));
-
             Events.AfterSetGameMap += OnSetGameMap;
         }
 
@@ -114,6 +99,8 @@ namespace VanillaMapMod
             try
             {
                 VmmPinMaster.MakePins(goMap);
+
+                LS.Initialize();
 
                 foreach (MainButton button in mainButtons)
                 {

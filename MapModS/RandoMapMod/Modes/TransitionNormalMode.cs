@@ -7,6 +7,6 @@ namespace RandoMapMod.Modes
     internal class TransitionNormalMode : TransitionMode
     {
         public override string Mod => "RandoMapMod";
-        public override string ModeName => "Transition 1";
+        public override string ModeName => "Transition Normal";
     }
 }

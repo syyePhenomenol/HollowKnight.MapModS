@@ -34,9 +34,9 @@
         Full_Map,
         All_Pins,
         Pins_Over_Map,
-        Transition_1,
-        Transition_2,
-        Transition_3,
+        Transition_Normal,
+        Transition_VisitedOnly,
+        Transition_All_Rooms,
     }
 
     public enum GroupBySetting

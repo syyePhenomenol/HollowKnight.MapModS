@@ -1,0 +1,45 @@
+﻿using MagicUI.Elements;
+using MapChanger;
+using MapChanger.UI;
+using RandoMapMod.Settings;
+using L = RandomizerMod.Localization;
+
+namespace RandoMapMod.UI
+{
+    internal class PersistentButton : MainButton
+    {
+        internal static PersistentButton Instance { get; private set; }
+
+        public PersistentButton() : base("Persistent Button", "RandoMapMod", 2, 2)
+        {
+
+        }
+
+        public override void OnClick(Button button)
+        {
+            RandoMapMod.GS.TogglePersistent();
+
+            base.OnClick(button);
+        }
+
+        public override void Update()
+        {
+            base.Update();
+
+            string text = $"{L.Localize("Persistent\nitems")}: ";
+
+            if (RandoMapMod.GS.PersistentOn)
+            {
+                text += L.Localize("On");
+                Button.ContentColor = Colors.GetColor(ColorSetting.UI_On);
+            }
+            else
+            {
+                text += L.Localize("Off");
+                Button.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
+            }
+
+            Button.Content = text;
+        }
+    }
+}

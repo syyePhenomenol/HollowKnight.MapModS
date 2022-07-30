@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ConnectionMetadataInjector.Util;
-using ItemChanger;
 using MapChanger;
-using MapChanger.Defs;
 using RandomizerCore;
 using UnityEngine;
 
@@ -11,46 +9,44 @@ namespace RandoMapMod.Pins
 {
     internal sealed class VanillaRmmPin : RmmPin
     {
+        private GeneralizedPlacement placement;
+
         private static readonly Vector4 vanillaColor = new(UNREACHABLE_COLOR_MULTIPLIER, UNREACHABLE_COLOR_MULTIPLIER, UNREACHABLE_COLOR_MULTIPLIER, 1f);
 
         internal override HashSet<string> ItemPoolGroups => new() { LocationPoolGroup };
 
         internal void Initialize(GeneralizedPlacement placement)
         {
+            this.placement = placement;
+
             LocationPoolGroup = SubcategoryFinder.GetLocationPoolGroup(placement.Location.Name).FriendlyName();
 
-            if (MapChanger.Finder.TryGetLocation(placement.Location.Name, out MapLocationDef mld))
-            {
-                Initialize(mld.MapLocations);
-                return;
-            }
-
-            RandoMapMod.Instance.LogWarn($"No MapLocationDef found for vanilla placement {name}");
-
-            if (ItemChanger.Finder.GetLocation(name) is AbstractLocation al)
-            {
-                RandoMapMod.Instance.LogWarn($"Placed {name} at the center of {al.sceneName}");
-                Initialize(new MapLocation[] { new MapLocation() { MappedScene = al.sceneName } });
-            }
-
-            RandoMapMod.Instance.LogWarn($"Unable to guess a MapLocation for {name}");
-
-            Initialize();
+            Initialize(InteropProperties.GetDefaultMapLocations(name));
         }
 
         private protected override bool ActiveByPoolSetting()
         {
-            return RandoMapMod.LS.GetPoolGroupSetting(LocationPoolGroup) == Settings.PoolState.On || RandoMapMod.LS.VanillaOn;
+            Settings.PoolState poolState = RandoMapMod.LS.GetPoolGroupSetting(LocationPoolGroup);
+
+            return poolState == Settings.PoolState.On || (poolState == Settings.PoolState.Mixed && RandoMapMod.LS.VanillaOn);
         }
 
-        private protected override bool LocationNotCleared()
+        protected private override bool LocationNotCleared()
         {
             return !Tracker.HasClearedLocation(name);
         }
 
         private protected override void UpdatePinSprite()
         {
-            Sprite = SpriteManager.GetSpriteFromPoolGroup(LocationPoolGroup);
+            if (RandoMapMod.LS.SpoilerOn)
+            {
+                Sprite = PinSprites.GetItemSprite(LocationPoolGroup).Value;
+            }
+            else
+            {
+                Sprite = PinSprites.GetLocationSprite(LocationPoolGroup).Value;
+            }
+            
         }
 
         private protected override void UpdatePinSize()

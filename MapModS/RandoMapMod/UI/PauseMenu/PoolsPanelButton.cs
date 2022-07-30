@@ -1,5 +1,7 @@
 ﻿using MagicUI.Elements;
+using MapChanger;
 using MapChanger.UI;
+using L = RandomizerMod.Localization;
 
 namespace RandoMapMod.UI
 {
@@ -7,7 +9,7 @@ namespace RandoMapMod.UI
     {
         internal static PoolsPanelButton Instance { get; private set; }
 
-        public PoolsPanelButton() : base("Pools Panel Button", "RandoMapMod", 1, 2)
+        public PoolsPanelButton() : base("Pools Panel Button", "RandoMapMod", 1, 3)
         {
 
         }
@@ -23,7 +25,16 @@ namespace RandoMapMod.UI
         {
             base.Update();
 
-            Button.Content = "Customize\nPins";
+            if (PoolsPanel.Instance.ExtraButtonsGrid.Visibility == MagicUI.Core.Visibility.Visible)
+            {
+                Button.ContentColor = Colors.GetColor(ColorSetting.UI_Custom);
+            }
+            else
+            {
+                Button.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
+            }
+
+            Button.Content = $"{L.Localize("Customize")}\n{L.Localize("Pins")}";
         }
     }
 }

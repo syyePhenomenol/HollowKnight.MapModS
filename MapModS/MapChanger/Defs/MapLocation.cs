@@ -15,5 +15,10 @@ namespace MapChanger.Defs
         {
             return new() { MappedScene = tuple.Item1, X = tuple.Item2, Y = tuple.Item3 };
         }
+
+        public static implicit operator (string, float, float)(MapLocation mapLocation)
+        {
+            return new (mapLocation.MappedScene, mapLocation.X, mapLocation.Y);
+        }
     }
 }

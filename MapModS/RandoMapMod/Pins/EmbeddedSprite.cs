@@ -1,0 +1,24 @@
+﻿using ItemChanger;
+using UnityEngine;
+
+namespace RandoMapMod.Pins
+{
+    /// <summary>
+    /// Uses MapChanger's SpriteManager to get an ISprite.
+    /// </summary>
+    public class EmbeddedSprite : ISprite
+    {
+        public string key;
+        public Sprite Value => MapChanger.SpriteManager.Instance.GetSprite(key);
+
+        public EmbeddedSprite(string key)
+        {
+            this.key = key;
+        }
+
+        public ISprite Clone()
+        {
+            return (ISprite)MemberwiseClone();
+        }
+    }
+}

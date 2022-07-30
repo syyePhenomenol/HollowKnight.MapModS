@@ -8,7 +8,6 @@ using RandoMapMod.Modes;
 using RandoMapMod.Pins;
 using RandoMapMod.Settings;
 using RandoMapMod.UI;
-//using RandoMapMod.Transition;
 using UnityEngine;
 
 namespace RandoMapMod
@@ -35,10 +34,16 @@ namespace RandoMapMod
 
         private static readonly MainButton[] mainButtons = new MainButton[]
         {
+            new ModEnabledButton(),
+            new ModeButton(),
             new PinSizeButton(),
+            new PinStyleButton(),
             new RandomizedButton(),
             new VanillaButton(),
+            new SpoilersButton(),
             new PoolsPanelButton(),
+            new PersistentButton(),
+            new GroupByButton()
         };
 
         private static readonly ExtraButtonPanel[] extraButtonPanels = new ExtraButtonPanel[]
@@ -102,33 +107,40 @@ namespace RandoMapMod
 
             MapChanger.Settings.AddModes(modes);
 
-            Events.AfterSetGameMap += SetMapObjects;
+            Events.AfterSetGameMap += OnSetGameMap;
         }
 
-        private static void SetMapObjects(GameObject goMap)
+        private static void OnSetGameMap(GameObject goMap)
         {
             //TransitionData.SetTransitionLookup();
             //PathfinderData.Load();
             //Pathfinder.Initialize();
 
-            RmmPinMaster.MakePins(goMap);
-
-            LS.Initialize();
-
-            foreach (MainButton button in mainButtons)
+            try
             {
-                button.Make(PauseMenu.MainButtonsGrid);
+                RmmPinMaster.MakePins(goMap);
+
+                LS.Initialize();
+
+                foreach (MainButton button in mainButtons)
+                {
+                    button.Make(PauseMenu.MainButtonsGrid);
+                }
+
+                foreach (ExtraButtonPanel ebp in extraButtonPanels)
+                {
+                    ebp.Make();
+                }
             }
-
-            foreach (ExtraButtonPanel ebp in extraButtonPanels)
+            catch (Exception e)
             {
-                ebp.Make();
+                Instance.LogError(e);
             }
         }
 
         private static void OnQuitToMenu()
         {
-            Events.AfterSetGameMap -= SetMapObjects;
+            Events.AfterSetGameMap -= OnSetGameMap;
         }
 
         //private static bool SetTransitionRoomColors(RoomSprite roomSprite)

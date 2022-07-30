@@ -11,6 +11,17 @@ namespace MapChanger.Defs
         public string MappedScene { get; private set; }
         public MapZone MapZone { get; private set; }
 
+        public MapLocationPosition((string, float, float)[] mapLocations)
+        {
+            foreach (MapLocation mapLocation in mapLocations)
+            {
+                if (TrySetPosition(mapLocation))
+                {
+                    break;
+                }
+            }
+        }
+
         public MapLocationPosition(MapLocation[] mapLocations)
         {
             foreach (MapLocation mapLocation in mapLocations)

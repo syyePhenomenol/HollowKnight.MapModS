@@ -3,8 +3,7 @@ using MapChanger.MonoBehaviours;
 
 namespace VanillaMapMod
 {
-
-    internal class RmmPinSelector : Selector
+    internal class VmmPinSelector : Selector
     {
         internal void Initialize(IEnumerable<VmmPin> pins)
         {

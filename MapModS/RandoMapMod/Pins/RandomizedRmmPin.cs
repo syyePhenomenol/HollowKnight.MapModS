@@ -3,11 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using ConnectionMetadataInjector;
-using ConnectionMetadataInjector.Util;
 using ItemChanger;
-using ItemChanger.Tags;
 using MapChanger;
-using MapChanger.Defs;
 using MapChanger.MonoBehaviours;
 using RandoMapMod.Defs;
 using UnityEngine;
@@ -26,11 +23,6 @@ namespace RandoMapMod.Pins
         private Dictionary<AbstractItem, string> itemPoolGroups;
         internal override HashSet<string> ItemPoolGroups => new(itemPoolGroups.Values);
 
-        // Interop properties
-        internal Sprite LocationSprite { get; private set; } = null;
-        internal Dictionary<AbstractItem, Sprite> ItemSprites { get; private set; } = new();
-        internal string[] HighlightScenes { get; private set; } = { };
-
         public float UpdateWaitSeconds { get; } = 1f;
 
         public IEnumerator PeriodicUpdate()
@@ -47,88 +39,53 @@ namespace RandoMapMod.Pins
             this.placement = placement;
 
             LocationPoolGroup = SupplementalMetadata.OfPlacementAndLocations(placement).Get(InjectedProps.LocationPoolGroup);
-            if (LocationPoolGroup == null)
-            {
-                LocationPoolGroup = PoolGroup.Other.FriendlyName();
-            }
 
             itemPoolGroups = new();
             foreach (AbstractItem item in placement.Items)
             {
                 itemPoolGroups[item] = SupplementalMetadata.Of(item).Get(InjectedProps.ItemPoolGroup);
-                if (itemPoolGroups[item] == null)
-                {
-                    itemPoolGroups[item] = PoolGroup.Other.FriendlyName();
-                }
             }
 
-            Sprite locationSprite = null;
-            if (placement.GetTags<InteropTag>().Any(tag => tag.TryGetProperty("LocationPinSprite", out locationSprite)))
+            if (SupplementalMetadata.Of(placement).Get(InteropProperties.HighlightScenes) is string[] highlightScenes)
             {
-                LocationSprite = locationSprite;
-            }
-
-            foreach (AbstractItem item in placement.Items)
-            {
-                Sprite itemSprite = null;
-                if (item.GetTags<InteropTag>().Any(tag => tag.TryGetProperty("ItemPinSprite", out itemSprite)))
-                {
-                    ItemSprites[item] = itemSprite;
-                }
-            }
-
-            string[] highlightScenes = { };
-            if (placement.GetTags<InteropTag>().Any(tag => tag.TryGetProperty("HighlightScenes", out highlightScenes)))
-            {
-                HighlightScenes = highlightScenes;
                 // Place over panel
                 Initialize();
                 return;
             }
 
-            MapLocation[] mapLocations = { };
-            if (placement.GetTags<InteropTag>().Any(tag => tag.TryGetProperty("MapLocations", out mapLocations)))
-            {
-                Initialize(mapLocations);
-                return;
-            }
-
-            if (MapChanger.Finder.TryGetLocation(name, out MapLocationDef mld))
-            {
-                Initialize(mld.MapLocations);
-                return;
-            }
-
-            RandoMapMod.Instance.LogWarn($"No MapLocationDef found for randomized placement {name}");
-
-            if (ItemChanger.Finder.GetLocation(name) is AbstractLocation al)
-            {
-                RandoMapMod.Instance.LogWarn($"Placed {name} at the center of {al.sceneName}");
-                Initialize(new MapLocation[] { new MapLocation() { MappedScene = al.sceneName } });
-            }
-
-            RandoMapMod.Instance.LogWarn($"Unable to guess a MapLocation for {name}");
-
-            Initialize();
+            Initialize(SupplementalMetadata.Of(placement).Get(InteropProperties.MapLocations));
         }
 
-        private protected override bool ActiveByPoolSetting()
+        protected private override bool ActiveByPoolSetting()
         {
-            return RandoMapMod.LS.GroupBy switch
+            if (RandoMapMod.LS.GroupBy == Settings.GroupBySetting.Item)
             {
-                Settings.GroupBySetting.Location => RandoMapMod.LS.GetPoolGroupSetting(LocationPoolGroup) == Settings.PoolState.On || RandoMapMod.LS.RandomizedOn,
-                Settings.GroupBySetting.Item => itemPoolGroups.Values.Any(poolGroup => RandoMapMod.LS.GetPoolGroupSetting(poolGroup) == Settings.PoolState.On || RandoMapMod.LS.RandomizedOn),
-                _ => true
-            };
+                foreach (string poolGroup in remainingItems.Select(item => itemPoolGroups[item]))
+                {
+                    Settings.PoolState poolState = RandoMapMod.LS.GetPoolGroupSetting(poolGroup);
+
+                    if (poolState == Settings.PoolState.On || (poolState == Settings.PoolState.Mixed && RandoMapMod.LS.RandomizedOn))
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            else
+            {
+                Settings.PoolState poolState = RandoMapMod.LS.GetPoolGroupSetting(LocationPoolGroup);
+
+                return poolState == Settings.PoolState.On || (poolState == Settings.PoolState.Mixed && RandoMapMod.LS.RandomizedOn);
+            }
         }
 
-        private protected override bool LocationNotCleared()
+        protected private override bool LocationNotCleared()
         {
             return placementState != RandoPlacementState.Cleared
                 && (placementState != RandoPlacementState.ClearedPersistent || RandoMapMod.GS.PersistentOn);
         }
 
-        private protected override void OnEnable()
+        protected private override void OnEnable()
         {
             UpdatePlacementState();
             UpdatePinSprite();
@@ -139,7 +96,7 @@ namespace RandoMapMod.Pins
             base.OnEnable();
         }
 
-        private protected override void UpdatePinSprite()
+        protected private override void UpdatePinSprite()
         {
             if (RandoMapMod.LS.SpoilerOn)
             {
@@ -160,20 +117,17 @@ namespace RandoMapMod.Pins
 
             Sprite GetLocationSprite()
             {
-                if (LocationSprite is not null) return LocationSprite;
-                return PinSprites.GetSpriteFromPoolGroup(LocationPoolGroup);
+                return SupplementalMetadata.OfPlacementAndLocations(placement).Get(InteropProperties.LocationPinSprite).Value;
             }
+
             Sprite GetItemSprite()
             {
                 itemIndex = (itemIndex + 1) % remainingItems.Count();
-                AbstractItem item = remainingItems.ElementAt(itemIndex);
-
-                if (ItemSprites.TryGetValue(item, out Sprite itemSprite)) return itemSprite;
-                return PinSprites.GetSpriteFromPoolGroup(itemPoolGroups[item], true);
+                return SupplementalMetadata.Of(remainingItems.ElementAt(itemIndex)).Get(InteropProperties.ItemPinSprite).Value;
             }
         }
 
-        private protected override void UpdatePinSize()
+        protected private override void UpdatePinSize()
         {
             Size = pinSizes[RandoMapMod.GS.PinSize];
 
@@ -187,7 +141,7 @@ namespace RandoMapMod.Pins
             }
         }
 
-        private protected override void UpdatePinColor()
+        protected private override void UpdatePinColor()
         {
             Vector4 color = UnityEngine.Color.white;
 
@@ -200,7 +154,7 @@ namespace RandoMapMod.Pins
             Color = color;
         }
 
-        private protected override void UpdateBorderColor()
+        protected private override void UpdateBorderColor()
         {
             Vector4 color = placementState switch
             {

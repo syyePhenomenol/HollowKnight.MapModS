@@ -2,6 +2,7 @@
 using MapChanger;
 using MapChanger.UI;
 using RandoMapMod.Settings;
+using L = RandomizerMod.Localization;
 
 namespace RandoMapMod.UI
 {
@@ -9,7 +10,7 @@ namespace RandoMapMod.UI
     {
         public static PinSizeButton Instance { get; private set; }
 
-        public PinSizeButton() : base("Pin Size", "RandoMapMod", 1, 1)
+        public PinSizeButton() : base("Pin Size", "RandoMapMod", 1, 2)
         {
             Instance = this;
         }
@@ -25,20 +26,20 @@ namespace RandoMapMod.UI
         {
             base.Update();
 
-            string text = $"Pin Size\n";
+            string text = $"{L.Localize("Pin Size")}:\n";
 
             switch (RandoMapMod.GS.PinSize)
             {
                 case PinSize.Small:
-                    text += "small";
+                    text += L.Localize("small");
                     break;
 
                 case PinSize.Medium:
-                    text += "medium";
+                    text += L.Localize("medium");
                     break;
 
                 case PinSize.Large:
-                    text += "large";
+                    text += L.Localize("large");
                     break;
             }
 

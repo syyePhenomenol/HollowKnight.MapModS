@@ -8,7 +8,6 @@ namespace RandoMapMod.Settings
     public class LocalSettings
     {
         public bool InitializedPreviously = false;
-        public HashSet<string> ScenesVisited;
 
         //// Vanilla only
         //public int geoRockCounter = 0;
@@ -24,11 +23,12 @@ namespace RandoMapMod.Settings
 
         public void Initialize()
         {
-            ScenesVisited = new(PlayerData.instance.scenesVisited);
+            MapChanger.Settings.SetModEnabled(ModEnabled);
+            MapChanger.Settings.SetMode("RandoMapMod", Mode.ToString().Replace('_', ' '));
 
             if (InitializedPreviously) return;
 
-            PoolSettings = RmmPinMaster.PoolGroups.ToDictionary(poolGroup => poolGroup, poolGroup => PoolState.On);
+            PoolSettings = RmmPinMaster.AllPoolGroups.ToDictionary(poolGroup => poolGroup, poolGroup => PoolState.On);
 
             //if (RandoMapMod.GS.OverrideDefaultMode)
             //{
@@ -60,24 +60,28 @@ namespace RandoMapMod.Settings
             InitializedPreviously = true;
         }
 
-        internal void ToggleModEnabled()
+        //internal void ToggleModEnabled()
+        //{
+        //    ModEnabled = !ModEnabled;
+        //}
+
+        internal void SetMode(string mode)
         {
-            ModEnabled = !ModEnabled;
+            if (Enum.TryParse(mode.Replace(' ', '_'), out RMMMode rmmMode))
+            {
+                Mode = rmmMode;
+            }
         }
 
-        internal void SetMode(RMMMode mode)
-        {
-            Mode = mode;
-        }
-
-        internal void ToggleMode()
-        {
-            Mode = (RMMMode)(((int)Mode + 1) % Enum.GetNames(typeof(RMMMode)).Length);
-        }
+        //internal void ToggleMode()
+        //{
+        //    Mode = (RMMMode)(((int)Mode + 1) % Enum.GetNames(typeof(RMMMode)).Length);
+        //}
 
         internal void ToggleGroupBy()
         {
             GroupBy = (GroupBySetting)(((int)GroupBy + 1) % Enum.GetNames(typeof(GroupBySetting)).Length);
+            ResetPoolSettings();
         }
 
         internal void ToggleBench()
@@ -132,17 +136,34 @@ namespace RandoMapMod.Settings
             };
         }
 
+        /// <summary>
+        /// Reset the PoolGroups that are active based on the RandomizedOn, VanillaOn and Group By settings.
+        /// When an individual pool that by default contains a mixed of randomized/vanilla placements gets toggled,
+        /// It will either be forced to "On" or "Off" and the corresponding affected RandommizedOn/VanillaOn setting
+        /// appears as "Custom" in the UI.
+        /// </summary>
         private void ResetPoolSettings()
         {
-            foreach (string poolGroup in RmmPinMaster.PoolGroups)
+            foreach (string poolGroup in RmmPinMaster.AllPoolGroups)
             {
                 SetPoolGroupSetting(poolGroup, GetResetPoolState(poolGroup));
             }
 
             PoolState GetResetPoolState(string poolGroup)
             {
-                bool IsRando = RmmPinMaster.RandoPoolGroups.Contains(poolGroup);
-                bool IsVanilla = RmmPinMaster.VanillaPoolGroups.Contains(poolGroup);
+                bool IsRando;
+                bool IsVanilla;
+
+                if (GroupBy == GroupBySetting.Item)
+                {
+                    IsRando = RmmPinMaster.RandoItemPoolGroups.Contains(poolGroup);
+                    IsVanilla = RmmPinMaster.VanillaItemPoolGroups.Contains(poolGroup);
+                }
+                else
+                {
+                    IsRando = RmmPinMaster.RandoLocationPoolGroups.Contains(poolGroup);
+                    IsVanilla = RmmPinMaster.VanillaLocationPoolGroups.Contains(poolGroup);
+                }
 
                 if (IsRando && IsVanilla && RandoMapMod.LS.RandomizedOn != RandoMapMod.LS.VanillaOn)
                 {

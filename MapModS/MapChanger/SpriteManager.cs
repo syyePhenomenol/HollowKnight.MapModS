@@ -4,128 +4,114 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
-// Code borrowed from homothety: https://github.com/homothetyhk/RandomizerMod/
 namespace MapChanger
 {
-    internal static class SpriteManager
+    /// <summary>
+    /// Code copied from ItemChanger, originally written by Homothety.
+    /// The main difference is that mipmapping is enabled, making smaller scaled sprites look a bit better.
+    /// https://github.com/homothetyhk/HollowKnight.ItemChanger/blob/master/ItemChanger/Internal/SpriteManager.cs
+    /// </summary>
+    public class SpriteManager
     {
-        private static Dictionary<string, Sprite> _sprites;
+        private readonly Assembly _assembly;
+        private readonly Dictionary<string, string> _resourcePaths;
+        private readonly Dictionary<string, Sprite> _cachedSprites = new();
+        private readonly Info _info;
 
-        public static void Load()
+        public class Info
         {
-            Assembly a = typeof(SpriteManager).Assembly;
-            _sprites = new Dictionary<string, Sprite>();
+            public Dictionary<string, float> overridePPUs;
+            public Dictionary<string, FilterMode> overrideFilterModes;
+            public FilterMode defaultFilterMode = FilterMode.Bilinear;
+            public float defaultPixelsPerUnit = 100f;
 
-            foreach (string name in a.GetManifestResourceNames().Where(name => name.Substring(name.Length - 3).ToLower() == "png"))
+            public virtual float GetPixelsPerUnit(string name)
             {
-                Sprite sprite = FromStream(a.GetManifestResourceStream(name));
+                if (overridePPUs != null && overridePPUs.TryGetValue(name, out float ppu)) return ppu;
+                return defaultPixelsPerUnit;
+            }
 
-                MapChangerMod.Instance.LogDebug(name);
-
-                string altName = name.Remove(name.Length - 4).Split('.').Last();
-                _sprites[altName] = sprite;
+            public virtual FilterMode GetFilterMode(string name)
+            {
+                if (overrideFilterModes != null && overrideFilterModes.TryGetValue(name, out FilterMode mode)) return mode;
+                return defaultFilterMode;
             }
         }
 
-        public static void LoadPinSprites()
+        /// <summary>
+        /// The SpriteManager with access to embedded MapChanger pngs.
+        /// </summary>
+        public static SpriteManager Instance { get; } = new(
+            typeof(SpriteManager).Assembly,
+            "MapModS.MapChanger.Resources.Sprites.",
+            new Info()
+            {
+                defaultFilterMode = FilterMode.Bilinear,
+                defaultPixelsPerUnit = 100f,
+            });
+
+        /// <summary>
+        /// Creates a SpriteManager to lazily load and cache Sprites from the embedded png files in the specified assembly.
+        /// <br/>Only filepaths with the matching prefix are considered, and the prefix is removed to determine sprite names (e.g. "ItemChangerMod.Resources." is the prefix for Instance).
+        /// <br/>Images will be loaded with default Bilinear filter mode and 100 pixels per unit.
+        /// </summary>
+        public SpriteManager(Assembly a, string resourcePrefix) : this(a, resourcePrefix, new()) { }
+
+        /// <summary>
+        /// Creates a SpriteManager to lazily load and cache Sprites from the embedded png files in the specified assembly.
+        /// <br/>Only filepaths with the matching prefix are considered, and the prefix is removed to determine sprite names (e.g. "ItemChangerMod.Resources." is the prefix for Instance).
+        /// </summary>
+        public SpriteManager(Assembly a, string resourcePrefix, Info info)
         {
-            string prefix = "MapModS.Resources.Pins";
+            _assembly = a;
+            _resourcePaths = a.GetManifestResourceNames()
+                .Where(n => n.EndsWith(".png") && n.StartsWith(resourcePrefix))
+                .ToDictionary(n => n.Substring(resourcePrefix.Length, n.Length - resourcePrefix.Length - ".png".Length));
+            _info = info;
+        }
 
-            Assembly a = typeof(SpriteManager).Assembly;
-            _sprites = new Dictionary<string, Sprite>();
-
-            foreach (string name in a.GetManifestResourceNames().Where(name => name.Substring(name.Length - 3).ToLower() == "png"))
+        /// <summary>
+        /// Fetches the Sprite with the specified name. If it has not yet been loaded, loads it from embedded resources and caches the result.
+        /// <br/>The name is the path of the image as an embedded resource, with the SpriteManager prefix and file extension removed.
+        /// <br/>For example, the image at "ItemChanger.Resources.ShopIcons.Geo.png" has key "ShopIcons.Geo" in SpriteManager.Instance.
+        /// </summary>
+        public Sprite GetSprite(string name)
+        {
+            if (_cachedSprites.TryGetValue(name, out Sprite sprite)) return sprite;
+            else if (_resourcePaths.TryGetValue(name, out string path))
             {
-                Sprite sprite = FromStream(a.GetManifestResourceStream(name));
-
-                string altName = name.Substring(prefix.Length);
-                altName = altName.Remove(altName.Length - 4);
-                altName = altName.Replace(".", "");
-                _sprites[altName] = sprite;
+                using Stream s = _assembly.GetManifestResourceStream(path);
+                return _cachedSprites[name] = Load(ToArray(s), _info.GetFilterMode(name), _info.GetPixelsPerUnit(name));
             }
-
-            // Load custom pins
-            prefix = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Pins");
-
-            if (Directory.Exists(prefix))
+            else
             {
-                foreach (string name in Directory.GetFiles(prefix).Where(name => name.Substring(name.Length - 3).ToLower() == "png"))
-                {
-                    Sprite sprite = FromStream(File.Open(name, FileMode.Open));
-
-                    string altName = name.Substring(prefix.Length);
-                    altName = altName.Remove(altName.Length - 4);
-                    altName = altName.Replace("\\", "");
-
-                    if (_sprites.ContainsKey(altName))
-                    {
-                        _sprites[altName] = sprite;
-                    }
-                }
-
-                MapChangerMod.Instance.Log("Custom pin sprites loaded");
+                MapChangerMod.Instance.LogError($"{name} did not correspond to an embedded image file.");
+                return Modding.CanvasUtil.NullSprite();
             }
         }
 
-        public static Sprite GetSpriteFromPoolGroup(string poolGroup)
+        /// <summary>
+        /// Loads a sprite from the png file passed as a stream.
+        /// </summary>
+        public static Sprite Load(Stream data, FilterMode filterMode = FilterMode.Bilinear)
         {
-            string spriteName = poolGroup switch
-            {
-                "Dreamers" => "pinDreamer",
-                "Skills" => "pinSkill",
-                "Charms" => "pinCharm",
-                "Keys" => "pinKey",
-                "Mask Shards" => "pinMask",
-                "Vessel Fragments" => "pinVessel",
-                "Charm Notches" => "pinNotch",
-                "Pale Ore" => "pinOre",
-                "Geo Chests" => "pinGeo",
-                "Rancid Eggs" => "pinEgg",
-                "Relics" => "pinRelic",
-                "Whispering Roots" => "pinRoot",
-                "Boss Essence" => "pinEssenceBoss",
-                "Grubs" => "pinGrub",
-                "Mimics" => "pinGrub",
-                "Maps" => "pinMap",
-                "Stags" => "pinStag",
-                "Lifeblood Cocoons" => "pinCocoon",
-                "Grimmkin Flames" => "pinFlame",
-                "Journal Entries" => "pinJournal",
-                "Geo Rocks" => "pinRock",
-                "Boss Geo" => "pinGeo",
-                "SoulTotems" => "pinTotem",
-                "Soul Totems" => "pinTotem",
-                "LoreTablets" => "pinLore",
-                "Lore Tablets" => "pinLore",
-                "Shops" => "pinShop",
-                "Levers" => "pinLever",
-                "Mr Mushroom" => "pinLore",
-                "Benches" => "pinBench",
-                _ => "pinUnknown",
-            };
-
-            return GetSprite(spriteName);
+            return Load(ToArray(data), filterMode);
         }
 
-        public static Sprite GetSprite(string name)
+        /// <summary>
+        /// Loads a sprite from the png file passed as a byte array.
+        /// </summary>
+        public static Sprite Load(byte[] data, FilterMode filterMode)
         {
-            if (_sprites.TryGetValue(name, out Sprite sprite))
-            {
-                return sprite;
-            }
-
-            MapChangerMod.Instance.LogWarn("Failed to load sprite named '" + name + "'");
-
-            return _sprites["pinUnknown"];
+            return Load(data, filterMode, 100f);
         }
 
-        private static Sprite FromStream(Stream s)
+        public static Sprite Load(byte[] data, FilterMode filterMode, float pixelsPerUnit)
         {
-            Texture2D tex = new(1, 1);
-            byte[] buffer = ToArray(s);
-            _ = tex.LoadImage(buffer, markNonReadable: true);
-            tex.filterMode = FilterMode.Bilinear;
-            return Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f), 55);
+            Texture2D tex = new(1, 1, TextureFormat.RGBA32, true);
+            tex.LoadImage(data, markNonReadable: true);
+            tex.filterMode = filterMode;
+            return Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f), pixelsPerUnit);
         }
 
         private static byte[] ToArray(Stream s)

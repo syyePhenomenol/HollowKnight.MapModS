@@ -9,9 +9,6 @@ namespace VanillaMapMod.Settings
     {
         public bool InitializedPreviously = false;
 
-        //// Vanilla only
-        //public int geoRockCounter = 0;
-
         public bool ModEnabled = false;
 
         public VMMMode Mode = VMMMode.Full_Map;
@@ -25,10 +22,31 @@ namespace VanillaMapMod.Settings
 
         internal void Initialize()
         {
+            MapChanger.Settings.SetModEnabled(ModEnabled);
+            MapChanger.Settings.SetMode("VanillaMapMod", Mode.ToString().Replace('_', ' '));
+
             if (InitializedPreviously) return;
 
             InitializedPreviously = true;
         }
+
+        //internal void ToggleModEnabled()
+        //{
+        //    ModEnabled = !ModEnabled;
+        //}
+
+        internal void SetMode(string mode)
+        {
+            if (Enum.TryParse(mode.Replace(' ', '_'), out VMMMode vmmMode))
+            {
+                Mode = vmmMode;
+            }
+        }
+
+        //internal void ToggleMode()
+        //{
+        //    Mode = (VMMMode)(((int)Mode + 1) % Enum.GetNames(typeof(VMMMode)).Length);
+        //}
 
         internal bool GetPoolGroupSetting(PoolGroup poolGroup)
         {
