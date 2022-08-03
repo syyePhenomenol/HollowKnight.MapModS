@@ -1,29 +1,31 @@
 ﻿using System.Collections.Generic;
 using MapChanger;
+using RandoMapMod.Settings;
+using UnityEngine;
 using RM = RandomizerMod.RandomizerMod;
 
 namespace RandoMapMod.Transition
 {
-    internal class TransitionTracker : IMainHooks
+    internal class TransitionTracker
     {
         internal static HashSet<string> InLogicScenes { get; private set; }
         internal static HashSet<string> OutOfLogicScenes { get; private set; }
         internal static HashSet<string> VisitedAdjacentScenes { get; private set; }
         internal static HashSet<string> UncheckedReachableScenes { get; private set; }
 
-        public void OnEnterGame()
+        public static void OnEnterGame()
         {
-            Update();
-
             RandomizerMod.IC.TrackerUpdate.OnFinishedUpdate += OnFinishedUpdate;
+
+            Update();
         }
 
-        public void OnQuitToMenu()
+        public static void OnQuitToMenu()
         {
             RandomizerMod.IC.TrackerUpdate.OnFinishedUpdate -= OnFinishedUpdate;
         }
 
-        private void OnFinishedUpdate()
+        private static void OnFinishedUpdate()
         {
             Update();
         }
@@ -46,7 +48,7 @@ namespace RandoMapMod.Transition
                 {
                     InLogicScenes.Add(scene);
                 }
-                else if (PlayerData.instance.scenesVisited.Contains(scene))
+                else
                 {
                     OutOfLogicScenes.Add(scene);
                 }
@@ -85,6 +87,44 @@ namespace RandoMapMod.Transition
             {
                 UncheckedReachableScenes.Add(TransitionData.GetScene(transition));
             }
+        }
+
+        internal static bool GetRoomActive(string scene)
+        {
+            return RandoMapMod.LS.Mode switch
+            {
+                RMMMode.Transition_Normal => Tracker.HasVisitedScene(scene) || InLogicScenes.Contains(scene),
+                RMMMode.Transition_Visited_Only => Tracker.HasVisitedScene(scene),
+                RMMMode.Transition_All_Rooms => true,
+                _ => true,
+            };
+        }
+
+        internal static Vector4 GetRoomColor(string scene)
+        {
+            Vector4 color = RmmColors.GetColor(RmmColorSetting.Room_Normal);
+
+            if (OutOfLogicScenes.Contains(scene))
+            {
+                color = RmmColors.GetColor(RmmColorSetting.Room_Out_of_logic);
+            }
+
+            if (VisitedAdjacentScenes.Contains(scene))
+            {
+                color = RmmColors.GetColor(RmmColorSetting.Room_Adjacent);
+            }
+
+            if (scene == Utils.CurrentScene())
+            {
+                color = RmmColors.GetColor(RmmColorSetting.Room_Current);
+            }
+
+            if (UncheckedReachableScenes.Contains(scene))
+            {
+                color.w = 1f;
+            }
+
+            return color;
         }
     }
 }

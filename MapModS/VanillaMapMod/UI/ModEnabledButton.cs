@@ -37,12 +37,12 @@ namespace VanillaMapMod
             if (VanillaMapMod.LS.ModEnabled)
             {
                 Button.ContentColor = Colors.GetColor(ColorSetting.UI_On);
-                Button.Content = "Mod\nEnabled";
+                Button.Content = "Map Mod\nEnabled";
             }
             else
             {
                 Button.ContentColor = Colors.GetColor(ColorSetting.UI_Disabled);
-                Button.Content = "Mod\nDisabled";
+                Button.Content = "Map Mod\nDisabled";
             }
         }
     }

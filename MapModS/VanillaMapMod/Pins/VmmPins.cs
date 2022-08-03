@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace VanillaMapMod
 {
-    internal static class VmmPinMaster
+    internal static class VmmPins
     {
         private const float OFFSETZ_BASE = -1.4f;
         private const float OFFSETZ_RANGE = 0.4f;

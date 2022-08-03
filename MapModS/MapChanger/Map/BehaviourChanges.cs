@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using GlobalEnums;
 using HutongGames.PlayMaker;
 using UnityEngine;
@@ -53,10 +52,10 @@ namespace MapChanger.Map
         }
 
         private const string MAP_MARKERS = "Map Markers";
-        private const string PLACED_MARKERS_B = "placedMarkers_b";
-        private const string PLACED_MARKERS_R = "placedMarkers_r";
-        private const string PLACED_MARKERS_Y = "placedMarkers_y";
-        private const string PLACED_MARKERS_W = "placedMarkers_w";
+        //private const string PLACED_MARKERS_B = "placedMarkers_b";
+        //private const string PLACED_MARKERS_R = "placedMarkers_r";
+        //private const string PLACED_MARKERS_Y = "placedMarkers_y";
+        //private const string PLACED_MARKERS_W = "placedMarkers_w";
 
         internal static Transform MapKey => GameCameras.instance.hudCamera.transform
             .FindChildInHierarchy("Inventory")?.FindChildInHierarchy("Map Key");
@@ -148,38 +147,15 @@ namespace MapChanger.Map
 
         private static void SetupMarkersOverride(On.GameMap.orig_SetupMapMarkers orig, GameMap self)
         {
-            if (!PlayerData.instance.GetBool("hasMarker"))
-            {
-                self.gameObject.Child(MAP_MARKERS).SetActive(false);
-                return;
-            }
+            orig(self);
 
-            // Basically do the same stuff as the vanilla implementation, but avoid calling DisableMarkers()
-            self.gameObject.Child(MAP_MARKERS).SetActive(true);
-            for (int i = 0; i < PlayerData.instance.GetVariable<List<Vector3>>(PLACED_MARKERS_B).Count; i++)
-            {
-                self.mapMarkersBlue[i].SetActive(true);
-                self.mapMarkersBlue[i].transform.localPosition = PlayerData.instance.GetVariable<List<Vector3>>(PLACED_MARKERS_B)[i];
-            }
-            for (int j = 0; j < PlayerData.instance.GetVariable<List<Vector3>>(PLACED_MARKERS_R).Count; j++)
-            {
-                self.mapMarkersRed[j].SetActive(true);
-                self.mapMarkersRed[j].transform.localPosition = PlayerData.instance.GetVariable<List<Vector3>>(PLACED_MARKERS_R)[j];
-            }
-            for (int k = 0; k < PlayerData.instance.GetVariable<List<Vector3>>(PLACED_MARKERS_Y).Count; k++)
-            {
-                self.mapMarkersYellow[k].SetActive(true);
-                self.mapMarkersYellow[k].transform.localPosition = PlayerData.instance.GetVariable<List<Vector3>>(PLACED_MARKERS_Y)[k];
-            }
-            for (int l = 0; l < PlayerData.instance.GetVariable<List<Vector3>>(PLACED_MARKERS_W).Count; l++)
-            {
-                self.mapMarkersWhite[l].SetActive(true);
-                self.mapMarkersWhite[l].transform.localPosition = PlayerData.instance.GetVariable<List<Vector3>>(PLACED_MARKERS_W)[l];
-            }
+            self.gameObject.Child(MAP_MARKERS).SetActive(PlayerData.instance.GetBool("hasMarker"));
         }
 
         private static void DisableMarkersOverride(On.GameMap.orig_DisableMarkers orig, GameMap self)
         {
+            orig(self);
+
             self.gameObject.Child(MAP_MARKERS).SetActive(false);
         }
 

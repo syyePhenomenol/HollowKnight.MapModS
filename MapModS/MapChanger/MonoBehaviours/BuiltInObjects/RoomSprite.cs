@@ -52,7 +52,7 @@ namespace MapChanger.MonoBehaviours
 
         private bool IsActive()
         {
-            if (Settings.CurrentMode().RoomSpriteActiveOverride is not null)
+            if (Settings.MapModEnabled && Settings.CurrentMode().RoomSpriteActiveOverride is not null)
             {
                 try { return Settings.CurrentMode().RoomSpriteActiveOverride.Invoke(this); }
                 catch (Exception e) { MapChangerMod.Instance.LogError(e); }

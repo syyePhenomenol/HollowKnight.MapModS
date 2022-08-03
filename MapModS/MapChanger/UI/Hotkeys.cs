@@ -26,6 +26,7 @@ namespace MapChanger.UI
                 layout.ListenForHotkey(KeyCode.E, () =>
                 {
                     //BuiltInObjects.ExportDefs();
+                    //RandoMapMod.RoomTexts.ExportDefs();
                 }, ModifierKeys.Ctrl);
                 //layout.ListenForHotkey(KeyCode.D, () =>
                 //{

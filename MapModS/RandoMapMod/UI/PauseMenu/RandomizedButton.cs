@@ -49,21 +49,21 @@ namespace RandoMapMod.UI
             Button.Content = text;
         }
 
-        private static bool IsRandomizedCustom()
+        internal static bool IsRandomizedCustom()
         {
             if (RandoMapMod.LS.GroupBy == GroupBySetting.Item)
             {
-                if (!RmmPinMaster.RandoItemPoolGroups.Any()) return false;
+                if (!RmmPins.RandoItemPoolGroups.Any()) return false;
 
-                return (!RandoMapMod.LS.RandomizedOn && RmmPinMaster.RandoItemPoolGroups.Any(group => RandoMapMod.LS.GetPoolGroupSetting(group) == PoolState.On))
-                || (RandoMapMod.LS.RandomizedOn && RmmPinMaster.RandoItemPoolGroups.Any(group => RandoMapMod.LS.GetPoolGroupSetting(group) == PoolState.Off));
+                return (!RandoMapMod.LS.RandomizedOn && RmmPins.RandoItemPoolGroups.Any(group => RandoMapMod.LS.GetPoolGroupSetting(group) == PoolState.On))
+                || (RandoMapMod.LS.RandomizedOn && RmmPins.RandoItemPoolGroups.Any(group => RandoMapMod.LS.GetPoolGroupSetting(group) == PoolState.Off));
             }
             else
             {
-                if (!RmmPinMaster.RandoLocationPoolGroups.Any()) return false;
+                if (!RmmPins.RandoLocationPoolGroups.Any()) return false;
 
-                return (!RandoMapMod.LS.RandomizedOn && RmmPinMaster.RandoLocationPoolGroups.Any(group => RandoMapMod.LS.GetPoolGroupSetting(group) == PoolState.On))
-                || (RandoMapMod.LS.RandomizedOn && RmmPinMaster.RandoLocationPoolGroups.Any(group => RandoMapMod.LS.GetPoolGroupSetting(group) == PoolState.Off));
+                return (!RandoMapMod.LS.RandomizedOn && RmmPins.RandoLocationPoolGroups.Any(group => RandoMapMod.LS.GetPoolGroupSetting(group) == PoolState.On))
+                || (RandoMapMod.LS.RandomizedOn && RmmPins.RandoLocationPoolGroups.Any(group => RandoMapMod.LS.GetPoolGroupSetting(group) == PoolState.Off));
             }
         }
     }

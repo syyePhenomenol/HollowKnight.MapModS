@@ -56,7 +56,7 @@ namespace RandoMapMod.UI
                     text += L.Localize("Transition") + " 1";
                     break;
 
-                case RMMMode.Transition_VisitedOnly:
+                case RMMMode.Transition_Visited_Only:
                     Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Special);
                     text += L.Localize("Transition") + " 2";
                     break;

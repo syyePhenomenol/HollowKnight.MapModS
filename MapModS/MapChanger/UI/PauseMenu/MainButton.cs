@@ -16,7 +16,7 @@ namespace MapChanger.UI
             Column = column;
         }
 
-        internal override void Make(Layout parent)
+        internal override void Make()
         {
             Button = new Button(PauseMenu.Instance.Root, Name)
             {
@@ -31,7 +31,7 @@ namespace MapChanger.UI
             }.WithProp(GridLayout.Row, Row).WithProp(GridLayout.Column, Column);
 
             Button.Click += OnClick;
-            parent.Children.Add(Button);
+            PauseMenu.MainButtonsGrid.Children.Add(Button);
             PauseMenu.MainButtons.Add(this);
         }
 

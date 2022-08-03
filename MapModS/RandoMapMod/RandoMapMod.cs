@@ -7,6 +7,7 @@ using Modding;
 using RandoMapMod.Modes;
 using RandoMapMod.Pins;
 using RandoMapMod.Settings;
+using RandoMapMod.Transition;
 using RandoMapMod.UI;
 using UnityEngine;
 
@@ -26,9 +27,9 @@ namespace RandoMapMod
             new FullMapMode(),
             new AllPinsMode(),
             new PinsOverMapMode(),
-            //new TransitionNormalMode(),
-            //new TransitionVisitedOnlyMode(),
-            //new TransitionAllRoomsMode()
+            new TransitionNormalMode(),
+            new TransitionVisitedOnlyMode(),
+            new TransitionAllRoomsMode()
         };
 
         private static readonly Title title = new RmmTitle();
@@ -50,6 +51,11 @@ namespace RandoMapMod
         private static readonly ExtraButtonPanel[] extraButtonPanels = new ExtraButtonPanel[]
         {
             new PoolsPanel()
+        };
+
+        private static readonly UILayer[] mapUILayers = new UILayer[]
+        {
+            new RmmBottomRowText()
         };
 
         internal static RandoMapMod Instance;
@@ -107,21 +113,26 @@ namespace RandoMapMod
             if (RandomizerMod.RandomizerMod.RS.GenerationSettings is null) return;
 
             MapChanger.Settings.AddModes(modes);
+            MapChanger.Settings.SetModEnabled(LS.ModEnabled);
+            MapChanger.Settings.SetMode("RandoMapMod", LS.Mode.ToString().Replace('_', ' '));
 
             RmmColors.LoadCustomColors();
 
             Events.AfterSetGameMap += OnSetGameMap;
+
+            RoomTexts.Load();
+            TransitionData.SetTransitionLookup();
+            PathfinderData.Load();
+            Pathfinder.Initialize();
+            TransitionTracker.OnEnterGame();
         }
 
         private static void OnSetGameMap(GameObject goMap)
         {
-            //TransitionData.SetTransitionLookup();
-            //PathfinderData.Load();
-            //Pathfinder.Initialize();
-
             try
             {
-                RmmPinMaster.MakePins(goMap);
+                RoomTexts.Make(goMap);
+                RmmPins.Make(goMap);
 
                 LS.Initialize();
 
@@ -129,12 +140,17 @@ namespace RandoMapMod
 
                 foreach (MainButton button in mainButtons)
                 {
-                    button.Make(PauseMenu.MainButtonsGrid);
+                    button.Make();
                 }
 
                 foreach (ExtraButtonPanel ebp in extraButtonPanels)
                 {
                     ebp.Make();
+                }
+
+                foreach (UILayer uiLayer in mapUILayers)
+                {
+                    UIMaster.AddMapLayer(uiLayer);
                 }
             }
             catch (Exception e)
@@ -146,6 +162,8 @@ namespace RandoMapMod
         private static void OnQuitToMenu()
         {
             Events.AfterSetGameMap -= OnSetGameMap;
+
+            TransitionTracker.OnQuitToMenu();
         }
 
         //private static bool SetTransitionRoomColors(RoomSprite roomSprite)

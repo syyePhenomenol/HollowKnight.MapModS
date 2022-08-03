@@ -10,44 +10,14 @@ namespace MapChanger.Map
 {
     public static class BuiltInObjects
     {
-
         private static Dictionary<string, RoomSpriteDef> roomSpriteDefs;
-        //private static Dictionary<string, MapLocationDef> roomTextDefs;
-        //private static Dictionary<string, MapLocationDef> roomTextDefsAM;
         private static Dictionary<string, MiscObjectDef> miscObjectDefs;
         public static Dictionary<string, RoomSprite> MappedRooms { get; private set; }
 
         internal static void Load()
         {
             roomSpriteDefs = JsonUtil.Deserialize<Dictionary<string, RoomSpriteDef>>("MapModS.MapChanger.Resources.roomSprites.json");
-            //roomTextDefs = JsonUtil.Deserialize<Dictionary<string, MapLocationDef>>("MapModS.MapChanger.Resources.roomTexts.json");
             miscObjectDefs = JsonUtil.Deserialize<Dictionary<string, MiscObjectDef>>("MapModS.MapChanger.Resources.miscObjects.json");
-
-            //if (Dependencies.HasAdditionalMaps())
-            //{
-            //    roomTextDefsAM = JsonUtil.Deserialize<Dictionary<string, MapLocationDef>>("MapModS.MapChanger.Resources.AdditionalMaps.roomTexts.json");
-            //    foreach ((string scene, MapLocationDef roomTextDef) in roomTextDefsAM.Select(kvp => (kvp.Key, kvp.Value)))
-            //    {
-            //        if (!roomTextDefs.ContainsKey(scene)) continue;
-            //        if (roomTextDef is null)
-            //        {
-            //            MapChangerMod.Instance.LogDebug($"Null: {scene}");
-            //            roomTextDefs.Remove(scene);
-            //        }
-            //        else
-            //        {
-            //            roomTextDefs[scene] = roomTextDef;
-            //        }
-            //    }
-            //}
-
-            //foreach ((string scene, MapLocationDef roomTextDef) in roomTextDefs.Select(kvp => (kvp.Key, kvp.Value)))
-            //{
-            //    roomTextDef.Name = scene;
-            //    roomTextDef.SceneName = scene;
-            //    roomTextDef.MappedScene = Finder.GetMappedScene(scene);
-            //}
-
             Events.AfterSetGameMap += Make;
         }
 
@@ -96,32 +66,6 @@ namespace MapChanger.Map
 
                 MapChangerMod.Instance.LogDebug($"Attaching: {pathName}");
             }
-
-            //var textPrefab = UnityEngine.Object.Instantiate(goMap.transform.Find("Cliffs").Find("Area Name (1)").gameObject);
-            //var tmpPrefab = textPrefab.GetComponent<TextMeshPro>();
-            //tmpPrefab.color = Color.white;
-            //tmpPrefab.fontSize = 1.8f;
-            //tmpPrefab.enableWordWrapping = false;
-            //tmpPrefab.margin = new Vector4(1f, 1f, 1f, 1f);
-            //tmpPrefab.alignment = TextAlignmentOptions.Center;
-
-            //UnityEngine.Object.Destroy(textPrefab.GetComponent<DisplayOnWorldMapOnly>());
-            //UnityEngine.Object.Destroy(textPrefab.GetComponent<SetTextMeshProGameText>());
-            //UnityEngine.Object.Destroy(textPrefab.GetComponent<ChangeFontByLanguage>());
-
-            //foreach ((string scene, MapLocationDef mld) in roomTextDefs.Select(kvp => (kvp.Key, kvp.Value)))
-            //{
-            //    GameObject goRoomText = UnityEngine.Object.Instantiate(textPrefab, RoomTexts.transform);
-            //    RoomText roomText = goRoomText.AddComponent<RoomText>();
-            //    roomText.Initialize(mld);
-            //    roomText.Parent = RoomTexts;
-            //    //RoomSelector.Objects[roomText.SceneName] = new() { roomText };
-            //    MapChangerMod.Instance.LogDebug($"Creating RoomText: {scene}");
-
-            //    MapRoomLookup[roomText.SceneName] = roomText;
-            //}
-
-            //UnityEngine.Object.Destroy(textPrefab);
 
             // Disable extra map arrow
             goMap.transform.FindChildInHierarchy("Deepnest/Fungus2_25/Next Area (3)")?.gameObject.SetActive(false);

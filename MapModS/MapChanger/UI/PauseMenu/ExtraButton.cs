@@ -12,7 +12,7 @@ namespace MapChanger.UI
             Mod = mod;
         }
 
-        internal override void Make(Layout parent)
+        internal override void Make()
         {
             Button = new(PauseMenu.Instance.Root, Name)
             {
@@ -28,7 +28,6 @@ namespace MapChanger.UI
             };
 
             Button.Click += OnClick;
-            parent.Children.Add(Button);
         }
     }
 }

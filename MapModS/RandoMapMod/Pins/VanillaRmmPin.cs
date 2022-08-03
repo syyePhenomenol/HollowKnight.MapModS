@@ -19,6 +19,8 @@ namespace RandoMapMod.Pins
         {
             this.placement = placement;
 
+            SceneName = RandomizerMod.RandomizerData.Data.GetLocationDef(name)?.SceneName ?? ItemChanger.Finder.GetLocation(name)?.sceneName;
+
             LocationPoolGroup = SubcategoryFinder.GetLocationPoolGroup(placement.Location.Name).FriendlyName();
 
             Initialize(InteropProperties.GetDefaultMapLocations(name));

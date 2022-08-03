@@ -6,7 +6,8 @@ namespace MapChanger.UI
 {
     public abstract class BottomRowText : UILayer
     {
-        protected List<TextObject> MapTexts { get; private set; }
+        public virtual string[] TextNames { get; } = { };
+        protected Dictionary<string, TextObject> MapTexts { get; private set; }
 
         public override bool Condition()
         {
@@ -24,25 +25,25 @@ namespace MapChanger.UI
                 Padding = new(20f)
             };
 
-            BuildTexts();
+            for (int i = 0; i < TextNames.Length; i++)
+            {
+                TextObject textObject = new TextObject(Root, TextNames[i])
+                {
+                    Text = TextNames[i],
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Font = MagicUI.Core.UI.TrajanNormal,
+                    FontSize = 16,
+                }.WithProp(GridLayout.Column, i);
 
-            foreach (TextObject text in MapTexts)
+                MapTexts[TextNames[i]] = textObject;
+            }
+
+            foreach (TextObject text in MapTexts.Values)
             {
                 grid.ColumnDefinitions.Add(new GridDimension(200f, GridUnit.AbsoluteMin));
                 grid.Children.Add(text);
             }
         }
-
-        public override void Update()
-        { 
-            foreach (TextObject text in MapTexts)
-            {
-                SetText(text);
-            }
-        }
-
-        public abstract void BuildTexts();
-
-        public abstract void SetText(TextObject textObject);
     }
 }

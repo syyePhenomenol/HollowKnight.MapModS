@@ -35,7 +35,7 @@
         All_Pins,
         Pins_Over_Map,
         Transition_Normal,
-        Transition_VisitedOnly,
+        Transition_Visited_Only,
         Transition_All_Rooms,
     }
 

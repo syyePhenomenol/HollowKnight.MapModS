@@ -13,7 +13,7 @@ namespace MapChanger.MonoBehaviours
     public class MapObject : MonoBehaviour
     {
         /// <summary>
-        /// A list of conditions to determine whether or not the GameObject should be set active or not.
+        /// A list of conditions to determine whether or not the GameObject should be set active or inactive.
         /// </summary>
         public readonly List<Func<bool>> ActiveModifiers = new();
 
@@ -65,7 +65,7 @@ namespace MapChanger.MonoBehaviours
         } 
 
         /// <summary>
-        /// Sets the gameObject as active/inactive based on the conjunction of a list of conditions.
+        /// Sets the GameObject as active/inactive based on the conjunction of a list of conditions.
         /// Also calls UpdateActive on its children.
         /// </summary>
         public void UpdateActive()

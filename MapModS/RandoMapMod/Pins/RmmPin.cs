@@ -6,11 +6,12 @@ using MapChanger.Defs;
 using MapChanger.MonoBehaviours;
 using RandoMapMod.Modes;
 using RandoMapMod.Settings;
+using RandoMapMod.Transition;
 using UnityEngine;
 
 namespace RandoMapMod.Pins
 {
-    internal abstract class RmmPin: BorderedPin, ISelectable
+    internal abstract class RmmPin : BorderedPin, ISelectable
     {
         private const float SMALL_SCALE = 0.56f;
         private const float MEDIUM_SCALE = 0.67f;
@@ -44,8 +45,9 @@ namespace RandoMapMod.Pins
             }
         }
 
-        internal string LocationPoolGroup { get; private protected set; }
+        internal string LocationPoolGroup { get; protected private set; }
         internal abstract HashSet<string> ItemPoolGroups { get; }
+        internal string SceneName { get; protected private set; }
         internal MapZone MapZone { get; private set; } = MapZone.NONE;
 
         public void Initialize((string, float, float)[] mapLocations)
@@ -60,6 +62,8 @@ namespace RandoMapMod.Pins
         public override void Initialize()
         {
             base.Initialize();
+
+            RandoMapMod.Instance.LogDebug($"{name}: {SceneName}");
 
             ActiveModifiers.AddRange
             (
@@ -110,7 +114,9 @@ namespace RandoMapMod.Pins
         protected private bool ActiveByCurrentMode()
         {
             return MapChanger.Settings.CurrentMode() is FullMapMode or AllPinsMode
-                || (MapChanger.Settings.CurrentMode() is PinsOverMapMode && Utils.HasMapSetting(MapZone));
+                || (MapChanger.Settings.CurrentMode() is PinsOverMapMode && Utils.HasMapSetting(MapZone))
+                || (MapChanger.Settings.CurrentMode().GetType().IsSubclassOf(typeof(TransitionMode))
+                    && (SceneName is null || TransitionTracker.GetRoomActive(SceneName)));
         }
 
         protected private abstract bool ActiveByPoolSetting();

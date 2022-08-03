@@ -39,12 +39,12 @@ namespace RandoMapMod.UI
             if (RandoMapMod.LS.ModEnabled)
             {
                 Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_On);
-                Button.Content = $"{L.Localize("Mod")}\n{L.Localize("Enabled")}";
+                Button.Content = $"{L.Localize("Map Mod")}\n{L.Localize("Enabled")}";
             }
             else
             {
                 Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Disabled);
-                Button.Content = $"{L.Localize("Mod")}\n{L.Localize("Disabled")}";
+                Button.Content = $"{L.Localize("Map Mod")}\n{L.Localize("Disabled")}";
             }
         }
     }

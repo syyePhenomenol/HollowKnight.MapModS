@@ -21,7 +21,8 @@ namespace VanillaMapMod
                 if (poolGroup is PoolGroup.Other) continue;
 
                 PoolButton poolButton = new(poolGroup);
-                poolButton.Make(ExtraButtonsGrid);
+                poolButton.Make();
+                ExtraButtonsGrid.Children.Add(poolButton.Button);
                 ExtraButtons.Add(poolButton);
             }
         }

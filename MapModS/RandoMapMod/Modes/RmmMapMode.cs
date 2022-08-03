@@ -16,13 +16,8 @@ namespace RandoMapMod.Modes
         public override bool FullMap => true;
 
         public override Action<RoomSprite> OnRoomUpdateColor => (roomSprite) => { roomSprite.Color = RmmColors.GetColor(roomSprite.Rsd.ColorSetting); };
-        public override Action<AreaName> OnAreaNameUpdateColor => (areaName) => { areaName.Color = ToOpaque(RmmColors.GetColor(areaName.MiscObjectDef.ColorSetting)); };
-        public override Action<NextArea> OnNextAreaUpdateColor => (nextArea) => { nextArea.Color = ToOpaque(RmmColors.GetColor(nextArea.MiscObjectDef.ColorSetting)); };
-        public override Action<QuickMapTitle, MapZone> OnQuickMapTitleUpdateColor => (qmt, mapZone) => { qmt.Color = ToOpaque(RmmColors.GetColorFromMapZone(mapZone)); };
-
-        private Vector4 ToOpaque(Vector4 color)
-        {
-            return new(color.x, color.y, color.z, 1f);
-        }
+        public override Action<AreaName> OnAreaNameUpdateColor => (areaName) => { areaName.Color = RmmColors.GetColor(areaName.MiscObjectDef.ColorSetting).ToOpaque(); };
+        public override Action<NextArea> OnNextAreaUpdateColor => (nextArea) => { nextArea.Color = RmmColors.GetColor(nextArea.MiscObjectDef.ColorSetting).ToOpaque(); };
+        public override Action<QuickMapTitle, MapZone> OnQuickMapTitleUpdateColor => (qmt, mapZone) => { qmt.Color = RmmColors.GetColorFromMapZone(mapZone).ToOpaque(); };
     }
 }

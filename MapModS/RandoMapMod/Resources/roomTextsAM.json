@@ -10,10 +10,8 @@
   "White_Palace_09": null,
   "White_Palace_11": {
     "Name": "White_Palace_11",
-    "SceneName": "White_Palace_11",
-    "MappedScene": "White_Palace_01",
-    "OffsetX": -5.1,
-    "OffsetY": 9.6,
+    "X": -7.4,
+    "Y": 14.0,
     "MapZone": "WHITE_PALACE"
   },
   "White_Palace_12": null,
@@ -28,10 +26,8 @@
   "GG_Atrium": null,
   "GG_Workshop": {
     "Name": "GG_Workshop",
-    "SceneName": "GG_Workshop",
-    "MappedScene": "GG_Atrium",
-    "OffsetX": 6.5,
-    "OffsetY": 10.3,
+    "X": 9.4,
+    "Y": 14.9,
     "MapZone": "GODS_GLORY"
   },
   "GG_Atrium_Roof": null

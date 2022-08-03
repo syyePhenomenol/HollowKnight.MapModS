@@ -40,18 +40,6 @@ namespace MapChanger.UI
 
         public override void BuildLayout()
         {
-            //Root.RenderDebugLayoutBounds = true;
-
-            //Title = new(Root, "MapMod Title")
-            //{
-            //    TextAlignment = HorizontalAlignment.Left,
-            //    ContentColor = Color.white,
-            //    FontSize = 20,
-            //    Font = MagicUI.Core.UI.TrajanBold,
-            //    Padding = new(10f, 840f, 10f, 10f),
-            //    Text = "Placeholder",
-            //};
-
             MainButtonsGrid = new(Root, "Main Buttons")
             {
                 RowDefinitions =

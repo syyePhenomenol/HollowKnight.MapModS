@@ -49,21 +49,21 @@ namespace RandoMapMod.UI
             Button.Content = text;
         }
 
-        private static bool IsVanillaCustom()
+        internal static bool IsVanillaCustom()
         {
             if (RandoMapMod.LS.GroupBy == GroupBySetting.Item)
             {
-                if (!RmmPinMaster.VanillaItemPoolGroups.Any()) return false;
+                if (!RmmPins.VanillaItemPoolGroups.Any()) return false;
 
-                return (!RandoMapMod.LS.VanillaOn && RmmPinMaster.VanillaItemPoolGroups.Any(group => RandoMapMod.LS.GetPoolGroupSetting(group) == PoolState.On))
-                || (RandoMapMod.LS.VanillaOn && RmmPinMaster.VanillaItemPoolGroups.Any(group => RandoMapMod.LS.GetPoolGroupSetting(group) == PoolState.Off));
+                return (!RandoMapMod.LS.VanillaOn && RmmPins.VanillaItemPoolGroups.Any(group => RandoMapMod.LS.GetPoolGroupSetting(group) == PoolState.On))
+                || (RandoMapMod.LS.VanillaOn && RmmPins.VanillaItemPoolGroups.Any(group => RandoMapMod.LS.GetPoolGroupSetting(group) == PoolState.Off));
             }
             else
             {
-                if (!RmmPinMaster.RandoLocationPoolGroups.Any()) return false;
+                if (!RmmPins.RandoLocationPoolGroups.Any()) return false;
 
-                return (!RandoMapMod.LS.VanillaOn && RmmPinMaster.VanillaLocationPoolGroups.Any(group => RandoMapMod.LS.GetPoolGroupSetting(group) == PoolState.On))
-                || (RandoMapMod.LS.VanillaOn && RmmPinMaster.VanillaLocationPoolGroups.Any(group => RandoMapMod.LS.GetPoolGroupSetting(group) == PoolState.Off));
+                return (!RandoMapMod.LS.VanillaOn && RmmPins.VanillaLocationPoolGroups.Any(group => RandoMapMod.LS.GetPoolGroupSetting(group) == PoolState.On))
+                || (RandoMapMod.LS.VanillaOn && RmmPins.VanillaLocationPoolGroups.Any(group => RandoMapMod.LS.GetPoolGroupSetting(group) == PoolState.Off));
             }
         }
     }

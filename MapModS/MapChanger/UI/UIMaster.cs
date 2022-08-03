@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using GlobalEnums;
 
 namespace MapChanger.UI
 {
@@ -10,17 +11,17 @@ namespace MapChanger.UI
         {
             PauseMenu.OnEnterGame();
 
-            //    Events.AfterOpenWorldMap += OnOpenWorldMap;
-            //    Events.AfterOpenQuickMap += OnOpenQuickMap;
-            //    Events.BeforeCloseMap += OnCloseMap;
+            Events.AfterOpenWorldMap += OnOpenWorldMap;
+            Events.AfterOpenQuickMap += OnOpenQuickMap;
+            Events.BeforeCloseMap += OnCloseMap;
         }
 
         internal override void OnQuitToMenu()
         {
             PauseMenu.OnQuitToMenu();
-            //    Events.AfterOpenWorldMap -= OnOpenWorldMap;
-            //    Events.AfterOpenQuickMap -= OnOpenQuickMap;
-            //    Events.BeforeCloseMap -= OnCloseMap;
+            Events.AfterOpenWorldMap += OnOpenWorldMap;
+            Events.AfterOpenQuickMap += OnOpenQuickMap;
+            Events.BeforeCloseMap += OnCloseMap;
 
             RemoveMapLayers();
         }
@@ -41,22 +42,22 @@ namespace MapChanger.UI
             mapLayers.Clear();
         }
 
-        //private static void OnOpenWorldMap(GameMap obj)
-        //{
-        //    Set();
-        //}
+        private static void OnOpenWorldMap(GameMap obj)
+        {
+            UpdateMapLayers();
+        }
 
-        //private static void OnOpenQuickMap(GameMap gameMap, MapZone mapZone)
-        //{
-        //    Set();
-        //}
+        private static void OnOpenQuickMap(GameMap gameMap, MapZone mapZone)
+        {
+            UpdateMapLayers();
+        }
 
-        //private static void OnCloseMap(GameMap obj)
-        //{
-        //    Set();
-        //}
+        private static void OnCloseMap(GameMap obj)
+        {
+            UpdateMapLayers();
+        }
 
-        public static void UpdateMap()
+        public static void UpdateMapLayers()
         {
             foreach (UILayer layer in mapLayers)
             {

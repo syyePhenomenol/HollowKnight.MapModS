@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using ConnectionMetadataInjector;
 using ItemChanger;
-using MapChanger;
 using MapChanger.MonoBehaviours;
 using RandoMapMod.Defs;
 using UnityEngine;
@@ -37,6 +36,8 @@ namespace RandoMapMod.Pins
         internal void Initialize(AbstractPlacement placement)
         {
             this.placement = placement;
+
+            SceneName = placement.RandoModLocation()?.LocationDef?.SceneName ?? ItemChanger.Finder.GetLocation(name)?.sceneName;
 
             LocationPoolGroup = SupplementalMetadata.OfPlacementAndLocations(placement).Get(InjectedProps.LocationPoolGroup);
 

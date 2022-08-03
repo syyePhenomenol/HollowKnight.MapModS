@@ -111,7 +111,6 @@ namespace MapChanger.MonoBehaviours
         {
             base.Initialize();
 
-            gameObject.SetActive(false);
             DontDestroyOnLoad(this);
 
             ActiveModifiers.Add(WorldMapOpen);

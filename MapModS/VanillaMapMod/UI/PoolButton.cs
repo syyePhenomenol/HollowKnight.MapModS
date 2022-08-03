@@ -24,7 +24,7 @@ namespace VanillaMapMod
         public override void Update()
         {
             Button.Content = PoolGroup.FriendlyName().Replace(" ", "\n")
-                + "\n" + VmmPinMaster.GetPoolGroupCounter(PoolGroup);
+                + "\n" + VmmPins.GetPoolGroupCounter(PoolGroup);
 
             if (VanillaMapMod.LS.GetPoolGroupSetting(PoolGroup))
             {

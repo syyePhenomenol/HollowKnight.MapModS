@@ -1,25 +1,33 @@
 ﻿using System;
+using GlobalEnums;
 using MapChanger;
 using MapChanger.MonoBehaviours;
+using RandoMapMod.Transition;
 
 namespace RandoMapMod.Modes
 {
-    internal abstract class TransitionMode : MapMode
+    internal abstract class TransitionMode : RmmMapMode
     {
-        public override bool ForceHasMap => true;
-        public override bool ForceHasQuill => true;
-        public override OverrideType VanillaPins => OverrideType.ForceOff;
-        public override OverrideType MapMarkers => OverrideType.ForceOff;
-        public override bool ImmediateMapUpdate => true;
-        public override bool FullMap => true;
         public override bool DisableAreaNames => true;
         public override bool DisableNextArea => true;
-        public override bool EnableExtraRoomNames => true;
-        public override Func<RoomSprite, bool> OnRoomSpriteSet => SetColor;
-
-        private bool SetColor(RoomSprite roomSprite)
+        public override Func<RoomSprite, bool> RoomSpriteActiveOverride => (roomSprite) =>
         {
-            return true;
-        }
+            return TransitionTracker.GetRoomActive(roomSprite.Rsd.SceneName);
+        };
+        public override Action<RoomSprite> OnRoomUpdateColor => (roomSprite) => 
+        {
+            if (roomSprite.Selected)
+            {
+                roomSprite.Color = RmmColors.GetColor(RmmColorSetting.Room_Selected);
+            }
+            else
+            {
+                roomSprite.Color = TransitionTracker.GetRoomColor(roomSprite.Rsd.SceneName);
+            }
+        };
+
+        public override Action<AreaName> OnAreaNameUpdateColor => (areaName) => { areaName.ResetColor(); };
+        public override Action<NextArea> OnNextAreaUpdateColor => (nextArea) => { nextArea.ResetColor(); };
+        public override Action<QuickMapTitle, MapZone> OnQuickMapTitleUpdateColor => (qmt, mapZone) => { qmt.Color = RmmColors.GetColor(ColorSetting.UI_Neutral); };
     }
 }

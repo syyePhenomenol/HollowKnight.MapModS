@@ -36,7 +36,7 @@ namespace RandoMapMod.Pins
 
             if (ItemChanger.Finder.GetLocation(name) is AbstractLocation al && al.sceneName is not null)
             {
-                return new (string, float, float)[] { new MapLocation() { MappedScene = al.sceneName } };
+                return new (string, float, float)[] { new MapLocation() { MappedScene = MapChanger.Finder.GetMappedScene(al.sceneName) } };
             }
 
             RandoMapMod.Instance.LogWarn($"No MapLocation found for {name}!");

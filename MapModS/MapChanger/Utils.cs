@@ -130,6 +130,11 @@ namespace MapChanger
             return new(vec.x.Snap(), vec.y.Snap());
         }
 
+        public static Vector4 ToOpaque(this Vector4 color)
+        {
+            return new(color.x, color.y, color.z, 1f);
+        }
+
         public static string CurrentScene()
         {
             return GameManager.GetBaseSceneName(GameManager.instance.sceneName);

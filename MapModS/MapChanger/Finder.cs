@@ -23,17 +23,11 @@ namespace MapChanger
 
             if (Dependencies.HasAdditionalMaps())
             {
-                Dictionary<string, MappedSceneDef> mappedSceneLookupAM = JsonUtil.Deserialize<Dictionary<string, MappedSceneDef>>("MapModS.MapChanger.Resources.AdditionalMaps.mappedScenes.json");
+                Dictionary<string, MappedSceneDef> mappedSceneLookupAM = JsonUtil.Deserialize<Dictionary<string, MappedSceneDef>>("MapModS.MapChanger.Resources.mappedScenesAM.json");
                 foreach ((string scene, MappedSceneDef msd) in mappedSceneLookupAM.Select(kvp => (kvp.Key, kvp.Value)))
                 {
                     mappedScenes[scene] = msd;
                 }
-
-                //Dictionary<string, MapLocationDef> locationLookupAM = JsonUtil.Deserialize<Dictionary<string, MapLocationDef>>("MapModS.MapChanger.Resources.AdditionalMaps.locations.json");
-                //foreach ((string name, MapLocationDef mpd) in locationLookupAM.Select(kvp => (kvp.Key, kvp.Value)))
-                //{
-                //    locations[name] = mpd;
-                //}
             }
         }
 

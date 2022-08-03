@@ -52,7 +52,6 @@ namespace RandoMapMod.Transition
              || room == "GG_Atrium_Roof";
         }
 
-
         public static string GetScene(string source)
         {
             if (_transitionLookup.TryGetValue(source, out TransitionPlacement placement))

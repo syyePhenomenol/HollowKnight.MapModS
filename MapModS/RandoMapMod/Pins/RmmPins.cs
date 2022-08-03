@@ -13,12 +13,12 @@ using RM = RandomizerMod.RandomizerMod;
 
 namespace RandoMapMod.Pins
 {
-    internal static class RmmPinMaster
+    internal static class RmmPins
     {
         private const float OFFSETZ_BASE = -1.4f;
         private const float OFFSETZ_RANGE = 0.4f;
 
-        internal static MapObject MoPins;
+        internal static MapObject MoPins { get; private set; }
         internal static Dictionary<string, RmmPin> Pins { get; private set; } = new();
 
         internal static List<string> AllPoolGroups { get; private set; }
@@ -27,7 +27,7 @@ namespace RandoMapMod.Pins
         internal static HashSet<string> VanillaLocationPoolGroups { get; private set; }
         internal static HashSet<string> VanillaItemPoolGroups { get; private set; }
 
-        internal static void MakePins(GameObject goMap)
+        internal static void Make(GameObject goMap)
         {
             Pins = new();
 
@@ -48,8 +48,8 @@ namespace RandoMapMod.Pins
             StaggerPins();
             InitializePoolGroups();
 
-            //VmmPinSelector pinSelector = Utils.MakeMonoBehaviour<VmmPinSelector>(null, "Pin Selector");
-            //pinSelector.Initialize(Pins);
+            RmmPinSelector pinSelector = Utils.MakeMonoBehaviour<RmmPinSelector>(null, "RandoMapMod Pin Selector");
+            pinSelector.Initialize(Pins.Values);
         }
 
         private static void MakeRandoPin(AbstractPlacement placement)

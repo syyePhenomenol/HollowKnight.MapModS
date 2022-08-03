@@ -32,6 +32,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="MapChanger\Resources\AdditionalMaps\**" />
     <Compile Remove="RandoMapMod\Data\**" />
     <Compile Remove="RandoMapMod\Defs\**" />
     <Compile Remove="RandoMapMod\Map\**" />
@@ -39,6 +40,7 @@
     <Compile Remove="RandoMapMod\Resources\Sprites\**" />
     <Compile Remove="RandoMapMod\Shop\**" />
     <Compile Remove="Unused\**" />
+    <EmbeddedResource Remove="MapChanger\Resources\AdditionalMaps\**" />
     <EmbeddedResource Remove="RandoMapMod\Data\**" />
     <EmbeddedResource Remove="RandoMapMod\Defs\**" />
     <EmbeddedResource Remove="RandoMapMod\Map\**" />
@@ -46,6 +48,7 @@
     <EmbeddedResource Remove="RandoMapMod\Resources\Sprites\**" />
     <EmbeddedResource Remove="RandoMapMod\Shop\**" />
     <EmbeddedResource Remove="Unused\**" />
+    <None Remove="MapChanger\Resources\AdditionalMaps\**" />
     <None Remove="RandoMapMod\Data\**" />
     <None Remove="RandoMapMod\Defs\**" />
     <None Remove="RandoMapMod\Map\**" />
@@ -64,19 +67,9 @@
     <Compile Remove="MapChanger\MonoBehaviours\Interfaces\ITextMeshPro.cs" />
     <Compile Remove="MapChanger\MonoBehaviours\MapObjectGroup.cs" />
     <Compile Remove="MapChanger\SpriteManagerOld.cs" />
-    <Compile Remove="RandoMapMod\BenchRandoInterop.cs" />
-    <Compile Remove="RandoMapMod\BenchwarpInterop.cs" />
-    <Compile Remove="RandoMapMod\Modes\TransitionAllRoomsMode.cs" />
-    <Compile Remove="RandoMapMod\Modes\TransitionMode.cs" />
-    <Compile Remove="RandoMapMod\Modes\TransitionNormalMode.cs" />
-    <Compile Remove="RandoMapMod\Modes\TransitionVisitedOnlyMode.cs" />
     <Compile Remove="RandoMapMod\Pins\RMMPinGroup.cs" />
     <Compile Remove="RandoMapMod\RandoPinData.cs" />
     <Compile Remove="RandoMapMod\RoomText.cs" />
-    <Compile Remove="RandoMapMod\Transition\Pathfinder.cs" />
-    <Compile Remove="RandoMapMod\Transition\PathfinderData.cs" />
-    <Compile Remove="RandoMapMod\Transition\TransitionData.cs" />
-    <Compile Remove="RandoMapMod\Transition\TransitionTracker.cs" />
     <Compile Remove="RandoMapMod\UI\Benchwarp.cs" />
     <Compile Remove="RandoMapMod\UI\ControlPanel.cs" />
     <Compile Remove="RandoMapMod\UI\DirectionalCompass.cs" />
@@ -96,10 +89,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="MapChanger\Resources\AdditionalMaps\locations.json" />
-    <None Remove="MapChanger\Resources\AdditionalMaps\locations1.json" />
-    <None Remove="MapChanger\Resources\AdditionalMaps\mappedScenes.json" />
-    <None Remove="MapChanger\Resources\AdditionalMaps\roomTexts.json" />
     <None Remove="MapChanger\Resources\locations.json" />
     <None Remove="MapChanger\Resources\locations1.json" />
     <None Remove="MapChanger\Resources\miscObjects.json" />
@@ -246,6 +235,22 @@
     <None Remove="MapChanger\Resources\Sprites\Pins\Unknown_TotemInv.png" />
     <None Remove="MapChanger\Resources\Sprites\Pins\Vessel.png" />
     <None Remove="RandoMapMod\Resources\locations.json" />
+    <None Remove="RandoMapMod\Resources\Pathfinder\Compass\doorObjectsByScene.json" />
+    <None Remove="RandoMapMod\Resources\Pathfinder\Compass\doorObjectsByTransition.json" />
+    <None Remove="RandoMapMod\Resources\Pathfinder\Data\adjacentScenes.json" />
+    <None Remove="RandoMapMod\Resources\Pathfinder\Data\adjacentTerms.json" />
+    <None Remove="RandoMapMod\Resources\Pathfinder\Data\conditionalTerms.json" />
+    <None Remove="RandoMapMod\Resources\Pathfinder\Data\scenesByTransition.json" />
+    <None Remove="RandoMapMod\Resources\Pathfinder\Data\transitionsByScene.json" />
+    <None Remove="RandoMapMod\Resources\Pathfinder\Logic\benchLogicEdits.json" />
+    <None Remove="RandoMapMod\Resources\Pathfinder\Logic\benchWaypoints.json" />
+    <None Remove="RandoMapMod\Resources\Pathfinder\Logic\godhomeLogicSubstitutions.json" />
+    <None Remove="RandoMapMod\Resources\Pathfinder\Logic\godhomeTransitions.json" />
+    <None Remove="RandoMapMod\Resources\Pathfinder\Logic\logicEdits.json" />
+    <None Remove="RandoMapMod\Resources\Pathfinder\Logic\logicSubstitutions.json" />
+    <None Remove="RandoMapMod\Resources\Pathfinder\Logic\macros.json" />
+    <None Remove="RandoMapMod\Resources\Pathfinder\Logic\transitions.json" />
+    <None Remove="RandoMapMod\Resources\Pathfinder\Logic\waypoints.json" />
     <None Remove="RandoMapMod\Resources\randoPins1.json" />
   </ItemGroup>
 
@@ -309,13 +314,29 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="MapChanger\Resources\AdditionalMaps\mappedScenes.json" />
-    <EmbeddedResource Include="MapChanger\Resources\AdditionalMaps\roomTexts.json" />
+    <EmbeddedResource Include="MapChanger\Resources\mappedScenesAM.json" />
+    <EmbeddedResource Include="RandoMapMod\Resources\Pathfinder\Compass\doorObjectsByScene.json" />
+    <EmbeddedResource Include="RandoMapMod\Resources\Pathfinder\Compass\doorObjectsByTransition.json" />
+    <EmbeddedResource Include="RandoMapMod\Resources\Pathfinder\Data\adjacentScenes.json" />
+    <EmbeddedResource Include="RandoMapMod\Resources\Pathfinder\Data\adjacentTerms.json" />
+    <EmbeddedResource Include="RandoMapMod\Resources\Pathfinder\Data\conditionalTerms.json" />
+    <EmbeddedResource Include="RandoMapMod\Resources\Pathfinder\Data\scenesByTransition.json" />
+    <EmbeddedResource Include="RandoMapMod\Resources\Pathfinder\Data\transitionsByScene.json" />
+    <EmbeddedResource Include="RandoMapMod\Resources\Pathfinder\Logic\benchLogicEdits.json" />
+    <EmbeddedResource Include="RandoMapMod\Resources\Pathfinder\Logic\benchWaypoints.json" />
+    <EmbeddedResource Include="RandoMapMod\Resources\Pathfinder\Logic\godhomeLogicSubstitutions.json" />
+    <EmbeddedResource Include="RandoMapMod\Resources\Pathfinder\Logic\godhomeTransitions.json" />
+    <EmbeddedResource Include="RandoMapMod\Resources\Pathfinder\Logic\logicEdits.json" />
+    <EmbeddedResource Include="RandoMapMod\Resources\Pathfinder\Logic\logicSubstitutions.json" />
+    <EmbeddedResource Include="RandoMapMod\Resources\Pathfinder\Logic\macros.json" />
+    <EmbeddedResource Include="RandoMapMod\Resources\Pathfinder\Logic\transitions.json" />
+    <EmbeddedResource Include="RandoMapMod\Resources\Pathfinder\Logic\waypoints.json" />
+    <EmbeddedResource Include="RandoMapMod\Resources\roomTextsAM.json" />
     <EmbeddedResource Include="MapChanger\Resources\locations.json" />
     <EmbeddedResource Include="MapChanger\Resources\miscObjects.json" />
     <EmbeddedResource Include="MapChanger\Resources\roomSprites.json" />
     <EmbeddedResource Include="MapChanger\Resources\mappedScenes.json" />
-    <EmbeddedResource Include="MapChanger\Resources\roomTexts.json" />
+    <EmbeddedResource Include="RandoMapMod\Resources\roomTexts.json" />
     <EmbeddedResource Include="MapChanger\Resources\Sprites\GUI\Arrow.png" />
     <EmbeddedResource Include="MapChanger\Resources\Sprites\GUI\PanelLeft.png" />
     <EmbeddedResource Include="MapChanger\Resources\Sprites\GUI\PanelRight.png" />
@@ -530,7 +551,6 @@
 
     <ItemGroup>
       <Folder Include="bin\" />
-      <Folder Include="RandoMapMod\Transition\" />
     </ItemGroup>
 
     <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>

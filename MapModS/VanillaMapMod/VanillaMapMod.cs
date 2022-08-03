@@ -87,6 +87,8 @@ namespace VanillaMapMod
         private static void OnEnterGame()
         {
             MapChanger.Settings.AddModes(modes);
+            MapChanger.Settings.SetModEnabled(LS.ModEnabled);
+            MapChanger.Settings.SetMode("VanillaMapMod", LS.Mode.ToString().Replace('_', ' '));
 
             Events.AfterSetGameMap += OnSetGameMap;
         }
@@ -100,7 +102,7 @@ namespace VanillaMapMod
         {
             try
             {
-                VmmPinMaster.MakePins(goMap);
+                VmmPins.MakePins(goMap);
 
                 LS.Initialize();
 
@@ -108,7 +110,7 @@ namespace VanillaMapMod
 
                 foreach (MainButton button in mainButtons)
                 {
-                    button.Make(PauseMenu.MainButtonsGrid);
+                    button.Make();
                 }
 
                 foreach (ExtraButtonPanel ebp in extraButtonPanels)
