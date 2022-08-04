@@ -4,6 +4,7 @@ using System.Linq;
 using ConnectionMetadataInjector.Util;
 using ItemChanger;
 using MapChanger;
+using MapChanger.Defs;
 using MapChanger.MonoBehaviours;
 using RandomizerCore;
 using RandomizerMod.IC;
@@ -27,6 +28,16 @@ namespace RandoMapMod.Pins
         internal static HashSet<string> VanillaLocationPoolGroups { get; private set; }
         internal static HashSet<string> VanillaItemPoolGroups { get; private set; }
 
+        public static void OnEnterGame()
+        {
+            TrackerUpdate.OnFinishedUpdate += UpdateRandoPins;
+        }
+
+        public static void OnQuitToMenu()
+        {
+            TrackerUpdate.OnFinishedUpdate -= UpdateRandoPins;
+        }
+
         internal static void Make(GameObject goMap)
         {
             Pins = new();
@@ -48,8 +59,10 @@ namespace RandoMapMod.Pins
             StaggerPins();
             InitializePoolGroups();
 
-            RmmPinSelector pinSelector = Utils.MakeMonoBehaviour<RmmPinSelector>(null, "RandoMapMod Pin Selector");
-            pinSelector.Initialize(Pins.Values);
+            UpdateRandoPins();
+
+            //RmmPinSelector pinSelector = Utils.MakeMonoBehaviour<RmmPinSelector>(null, "RandoMapMod Pin Selector");
+            //pinSelector.Initialize(Pins.Values);
         }
 
         private static void MakeRandoPin(AbstractPlacement placement)
@@ -96,6 +109,17 @@ namespace RandoMapMod.Pins
             foreach (RmmPin pin in Pins.Values)
             {
                 pin.UpdateActive();
+            }
+        }
+
+        internal static void UpdateRandoPins()
+        {
+            foreach (RmmPin pin in Pins.Values)
+            {
+                if (pin is RandomizedRmmPin randoPin)
+                {
+                    randoPin.UpdatePlacementState();
+                }
             }
         }
 
@@ -165,6 +189,19 @@ namespace RandoMapMod.Pins
             //{
             //    RandoMapMod.Instance.LogDebug($"Vanilla Pool Group: {poolGroup}");
             //}
+        }
+
+        public static void ImportDefs()
+        {
+            Dictionary<string, MapLocationDef> newDefs = JsonUtil.DeserializeFromExternalFile<Dictionary<string, MapLocationDef>>("locations.json");
+
+            foreach (MapLocationDef def in newDefs.Values)
+            {
+                if (Pins.TryGetValue(def.Name, out RmmPin pin))
+                {
+                    pin.UpdatePosition(def.MapLocations);
+                }
+            }
         }
     }
 }

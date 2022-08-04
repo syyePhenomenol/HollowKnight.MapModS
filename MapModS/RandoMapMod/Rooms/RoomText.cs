@@ -1,10 +1,11 @@
 ﻿using System;
 using MapChanger;
 using MapChanger.MonoBehaviours;
+using RandoMapMod.Transition;
 using TMPro;
 using UnityEngine;
 
-namespace RandoMapMod.Transition
+namespace RandoMapMod.Rooms
 {
     internal class RoomText : MapObject, ISelectable
     {
@@ -28,7 +29,7 @@ namespace RandoMapMod.Transition
             get => selected;
             set
             {
-                if (Selected != value)
+                if (selected != value)
                 {
                     selected = value;
                     UpdateColor();
@@ -93,7 +94,7 @@ namespace RandoMapMod.Transition
 
         private void UpdateColor()
         {
-            if (Selected)
+            if (selected)
             {
                 Color = RmmColors.GetColor(RmmColorSetting.Room_Selected);
             }

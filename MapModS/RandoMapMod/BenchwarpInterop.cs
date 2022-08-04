@@ -137,27 +137,6 @@ namespace RandoMapMod
             }
 
             mappedSceneName = Finder.GetMappedScene(sceneName);
-
-            //if (Dependencies.HasAdditionalMaps() && sceneName == "GG_Workshop")
-            //{
-            //    mappedSceneName = "GG_Atrium";
-            //    return;
-            //}
-
-            //if (!Finder.IsMappedScene(sceneName))
-            //{
-            //    mappedSceneName = 
-
-            //    MapRoomDef mrd = MainData.GetNonMappedRoomDef(sceneName);
-
-            //    if (!Dependencies.HasAdditionalMaps() || mrd.includeWithAdditionalMaps)
-            //    {
-            //        mappedSceneName = mrd.mappedScene;
-            //        return;
-            //    }
-            //}
-
-            //mappedSceneName = sceneName;
         }
 
         public readonly string sceneName;

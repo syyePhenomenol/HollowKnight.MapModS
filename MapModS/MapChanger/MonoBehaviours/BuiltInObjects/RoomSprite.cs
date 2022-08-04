@@ -25,7 +25,7 @@ namespace MapChanger.MonoBehaviours
             get => selected;
             set
             {
-                if (Selected != value)
+                if (selected != value)
                 {
                     selected = value;
                     UpdateColor();
@@ -82,7 +82,7 @@ namespace MapChanger.MonoBehaviours
 
         public (string, Vector2) GetKeyAndPosition()
         {
-            return (Rsd.SceneName, transform.localPosition);
+            return (Rsd.SceneName, transform.position);
         }
     }
 }

@@ -35,7 +35,7 @@ namespace RandoMapMod.Pins
             get => selected;
             set
             {
-                if (Selected != value)
+                if (selected != value)
                 {
                     selected = value;
                     UpdatePinSize();
@@ -59,6 +59,13 @@ namespace RandoMapMod.Pins
             Initialize();
         }
 
+        public void UpdatePosition(MapLocation[] mapLocations)
+        {
+            MapLocationPosition mlp = new(mapLocations);
+            MapPosition = mlp;
+            MapZone = mlp.MapZone;
+        }
+
         public override void Initialize()
         {
             base.Initialize();
@@ -69,6 +76,7 @@ namespace RandoMapMod.Pins
             (
                 new Func<bool>[]
                 {
+                    OnUpdateActive,
                     CorrectMapOpen,
                     ActiveByCurrentMode,
                     ActiveByPoolSetting,
@@ -90,12 +98,14 @@ namespace RandoMapMod.Pins
             return (name, transform.position);
         }
 
-        private protected virtual void OnEnable()
+        protected private virtual bool OnUpdateActive()
         {
             UpdatePinSprite();
             UpdatePinSize();
             UpdatePinColor();
             UpdateBorderColor();
+
+            return true;
         }
 
         protected private abstract void UpdatePinSprite();

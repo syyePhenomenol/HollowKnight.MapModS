@@ -22,6 +22,7 @@ namespace MapChanger.MonoBehaviours
         public virtual Vector2 TargetPosition { get; } = Vector2.zero;
         public virtual float UpdateWaitSeconds { get; } = 0.1f;
         public virtual float SelectionRadius { get; } = DEFAULT_SELECTION_RADIUS;
+        public virtual float SpriteSize { get; } = DEFAULT_SIZE;
 
         protected SpriteRenderer Sr { get; private set; }
 
@@ -120,7 +121,7 @@ namespace MapChanger.MonoBehaviours
             Sr.color = DEFAULT_COLOR;
             Sr.sortingLayerName = HUD;
 
-            transform.localScale = Vector3.one * DEFAULT_SIZE;
+            transform.localScale = Vector3.one * SpriteSize;
             transform.localPosition = new Vector3(0, 0, MAP_FRONT_Z);
 
             MapObjectUpdater.Add(this);

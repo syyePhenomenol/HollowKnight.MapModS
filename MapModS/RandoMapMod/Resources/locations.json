@@ -1478,6 +1478,17 @@
       }
     ]
   },
+  "Bench-Sanctuary_Vault": {
+    "Name": "Bench-Sanctuary_Vault",
+    "SceneName": "Fungus1_36",
+    "MapLocations": [
+      {
+        "MappedScene": "Fungus1_34",
+        "X": 1.3,
+        "Y": -0.1
+      }
+    ]
+  },
   "Bench-Joni's_Repose": {
     "Name": "Bench-Joni's_Repose",
     "SceneName": "Cliffs_05",
@@ -1519,6 +1530,17 @@
         "MappedScene": "Fungus1_28",
         "X": -0.4,
         "Y": -0.1
+      }
+    ]
+  },
+  "Bench-King's_Pass": {
+    "Name": "Bench-King's_Pass",
+    "SceneName": "Tutorial_01",
+    "MapLocations": [
+      {
+        "MappedScene": "Tutorial_01",
+        "X": -1.5,
+        "Y": 0.4
       }
     ]
   },
@@ -1585,6 +1607,28 @@
         "MappedScene": "Crossroads_11_alt",
         "X": 1.0,
         "Y": 0.0
+      }
+    ]
+  },
+  "Bench-Temple_Exterior": {
+    "Name": "Bench-Temple_Exterior",
+    "SceneName": "Crossroads_02",
+    "MapLocations": [
+      {
+        "MappedScene": "Crossroads_02",
+        "X": -0.5,
+        "Y": -0.1
+      }
+    ]
+  },
+  "Bench-Temple_Seal": {
+    "Name": "Bench-Temple_Seal",
+    "SceneName": "Crossroads_02",
+    "MapLocations": [
+      {
+        "MappedScene": "Crossroads_02",
+        "X": -0.1,
+        "Y": 0.2
       }
     ]
   },
@@ -1726,8 +1770,8 @@
     "MapLocations": [
       {
         "MappedScene": "Ruins1_24",
-        "X": 0.2,
-        "Y": 0.1
+        "X": 0.3,
+        "Y": 0.2
       }
     ]
   },
@@ -1737,8 +1781,8 @@
     "MapLocations": [
       {
         "MappedScene": "Ruins1_25",
-        "X": 0.3,
-        "Y": -0.6
+        "X": -0.1,
+        "Y": -0.8
       }
     ]
   },
@@ -1808,6 +1852,28 @@
       }
     ]
   },
+  "Bench-Ornate_Door": {
+    "Name": "Bench-Ornate_Door",
+    "SceneName": "Ruins1_31",
+    "MapLocations": [
+      {
+        "MappedScene": "Ruins1_31",
+        "X": 0.3,
+        "Y": 0.1
+      }
+    ]
+  },
+  "Bench-Padded_Door": {
+    "Name": "Bench-Padded_Door",
+    "SceneName": "Ruins2_11_b",
+    "MapLocations": [
+      {
+        "MappedScene": "Ruins2_11_b",
+        "X": 0.2,
+        "Y": -0.2
+      }
+    ]
+  },
   "Bench-Hive_Hideaway": {
     "Name": "Bench-Hive_Hideaway",
     "SceneName": "Hive_03_c",
@@ -1871,6 +1937,39 @@
         "MappedScene": "Deepnest_East_04",
         "X": -0.1,
         "Y": -0.3
+      }
+    ]
+  },
+  "Bench-Hive_Exterior": {
+    "Name": "Bench-Hive_Exterior",
+    "SceneName": "Deepnest_East_01",
+    "MapLocations": [
+      {
+        "MappedScene": "Deepnest_East_01",
+        "X": -0.2,
+        "Y": 0.1
+      }
+    ]
+  },
+  "Bench-Isolated_Cell": {
+    "Name": "Bench-Isolated_Cell",
+    "SceneName": "Hive_03",
+    "MapLocations": [
+      {
+        "MappedScene": "Hive_03",
+        "X": -0.6,
+        "Y": 0.5
+      }
+    ]
+  },
+  "Bench-Hornet's_Outpost": {
+    "Name": "Bench-Hornet's_Outpost",
+    "SceneName": "Deepnest_East_Hornet",
+    "MapLocations": [
+      {
+        "MappedScene": "Deepnest_East_Hornet",
+        "X": -0.4,
+        "Y": 0.5
       }
     ]
   },
@@ -1984,6 +2083,39 @@
       }
     ]
   },
+  "Bench-Zote's_Folly": {
+    "Name": "Bench-Zote's_Folly",
+    "SceneName": "Deepnest_33",
+    "MapLocations": [
+      {
+        "MappedScene": "Deepnest_33",
+        "X": 0.2,
+        "Y": -0.1
+      }
+    ]
+  },
+  "Bench-Galien's_Grave": {
+    "Name": "Bench-Galien's_Grave",
+    "SceneName": "Deepnest_40",
+    "MapLocations": [
+      {
+        "MappedScene": "Deepnest_40",
+        "X": -0.4,
+        "Y": 0.3
+      }
+    ]
+  },
+  "Bench-Ancient_Nest": {
+    "Name": "Bench-Ancient_Nest",
+    "SceneName": "Deepnest_44",
+    "MapLocations": [
+      {
+        "MappedScene": "Deepnest_44",
+        "X": -1.0,
+        "Y": -0.2
+      }
+    ]
+  },
   "Bench-Abyss_Workshop": {
     "Name": "Bench-Abyss_Workshop",
     "SceneName": "Abyss_09",
@@ -2025,6 +2157,17 @@
         "MappedScene": "Abyss_05",
         "X": -1.0,
         "Y": -0.5
+      }
+    ]
+  },
+  "Bench-King's_Door": {
+    "Name": "Bench-King's_Door",
+    "SceneName": "Abyss_06_Core",
+    "MapLocations": [
+      {
+        "MappedScene": "Abyss_06_Core",
+        "X": 0.0,
+        "Y": 1.8
       }
     ]
   },
@@ -2160,6 +2303,39 @@
       }
     ]
   },
+  "Bench-Crystal_Cavern": {
+    "Name": "Bench-Crystal_Cavern",
+    "SceneName": "Mines_23",
+    "MapLocations": [
+      {
+        "MappedScene": "Mines_23",
+        "X": 1.2,
+        "Y": -0.3
+      }
+    ]
+  },
+  "Bench-Mining_Golem": {
+    "Name": "Bench-Mining_Golem",
+    "SceneName": "Mines_31",
+    "MapLocations": [
+      {
+        "MappedScene": "Mines_31",
+        "X": 1.6,
+        "Y": -0.3
+      }
+    ]
+  },
+  "Bench-Mimic's_Secret": {
+    "Name": "Bench-Mimic's_Secret",
+    "SceneName": "Mines_16",
+    "MapLocations": [
+      {
+        "MappedScene": "Mines_16",
+        "X": 0.3,
+        "Y": -0.1
+      }
+    ]
+  },
   "Bench-Unn's_Chamber": {
     "Name": "Bench-Unn's_Chamber",
     "SceneName": "Fungus1_Slug",
@@ -2289,6 +2465,17 @@
         "MappedScene": "Waterways_08",
         "X": -0.3,
         "Y": 0.1
+      }
+    ]
+  },
+  "Bench-Remote_Acid_Sluice": {
+    "Name": "Bench-Remote_Acid_Sluice",
+    "SceneName": "Waterways_14",
+    "MapLocations": [
+      {
+        "MappedScene": "Waterways_14",
+        "X": -2.0,
+        "Y": -0.3
       }
     ]
   },

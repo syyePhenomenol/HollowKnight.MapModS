@@ -28,10 +28,10 @@ namespace MapChanger.UI
                     //BuiltInObjects.ExportDefs();
                     //RandoMapMod.RoomTexts.ExportDefs();
                 }, ModifierKeys.Ctrl);
-                //layout.ListenForHotkey(KeyCode.D, () =>
-                //{
-                //    BuiltInObjects.ImportDefs();
-                //}, ModifierKeys.Ctrl);
+                layout.ListenForHotkey(KeyCode.D, () =>
+                {
+                    RandoMapMod.Pins.RmmPins.ImportDefs();
+                }, ModifierKeys.Ctrl);
             }
         }
 

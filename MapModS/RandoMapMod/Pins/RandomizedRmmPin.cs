@@ -86,15 +86,23 @@ namespace RandoMapMod.Pins
                 && (placementState != RandoPlacementState.ClearedPersistent || RandoMapMod.GS.PersistentOn);
         }
 
-        protected private override void OnEnable()
+        protected private override bool OnUpdateActive()
         {
-            UpdatePlacementState();
-            UpdatePinSprite();
-            UpdateBorderColor();
+            itemIndex = -1;
 
+            if (RandoMapMod.GS.PersistentOn)
+            {
+                remainingItems = placement.Items.Where(item => !item.WasEverObtained() || item.IsPersistent());
+            }
+            else
+            {
+                remainingItems = placement.Items.Where(item => !item.WasEverObtained());
+            }
+
+            StopAllCoroutines();
             StartCoroutine(PeriodicUpdate());
 
-            base.OnEnable();
+            return base.OnUpdateActive();
         }
 
         protected private override void UpdatePinSprite()
@@ -175,7 +183,7 @@ namespace RandoMapMod.Pins
             }
         }
 
-        private void UpdatePlacementState()
+        internal void UpdatePlacementState()
         {
             if (RM.RS.TrackerData.clearedLocations.Contains(name))
             {
@@ -203,17 +211,6 @@ namespace RandoMapMod.Pins
             else
             {
                 placementState = RandoPlacementState.UncheckedUnreachable;
-            }
-
-            itemIndex = -1;
-
-            if (RandoMapMod.GS.PersistentOn)
-            {
-                remainingItems = placement.Items.Where(item => !item.WasEverObtained() || item.IsPersistent());
-            }
-            else
-            {
-                remainingItems = placement.Items.Where(item => !item.WasEverObtained());
             }
         }
 

@@ -6,6 +6,7 @@ using MapChanger.UI;
 using Modding;
 using RandoMapMod.Modes;
 using RandoMapMod.Pins;
+using RandoMapMod.Rooms;
 using RandoMapMod.Settings;
 using RandoMapMod.Transition;
 using RandoMapMod.UI;
@@ -104,8 +105,6 @@ namespace RandoMapMod
             }
 
             LogDebug($"Initialization complete.");
-            
-            //TODO: pathfinder, transition, etc.
         }
 
         private static void OnEnterGame()
@@ -121,9 +120,11 @@ namespace RandoMapMod
             Events.AfterSetGameMap += OnSetGameMap;
 
             RoomTexts.Load();
+            BenchwarpInterop.Load();
             TransitionData.SetTransitionLookup();
             PathfinderData.Load();
             Pathfinder.Initialize();
+            RmmPins.OnEnterGame();
             TransitionTracker.OnEnterGame();
         }
 
@@ -164,21 +165,7 @@ namespace RandoMapMod
             Events.AfterSetGameMap -= OnSetGameMap;
 
             TransitionTracker.OnQuitToMenu();
+            RmmPins.OnQuitToMenu();
         }
-
-        //private static bool SetTransitionRoomColors(RoomSprite roomSprite)
-        //{
-        //    roomSprite.gameObject.SetActive(true);
-
-        //    if (roomSprite.Selected)
-        //    {
-        //        roomSprite.Sr.color = Colors.GetColor(ColorSetting.Room_Selected);
-        //    }
-        //    else
-        //    {
-        //        roomSprite.Sr.color = Colors.GetColor(ColorSetting.Room_Normal);
-        //    }
-        //    return true;
-        //}
     }
 }

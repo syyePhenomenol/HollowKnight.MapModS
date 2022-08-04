@@ -22,6 +22,8 @@ namespace RandoMapMod.Transition
             {
                 localPm.Set(term, 0);
             }
+
+            UpdateProgression();
         }
 
         public static void UpdateProgression()
@@ -85,7 +87,7 @@ namespace RandoMapMod.Transition
         // The search space will be purely limited to rooms that have been visited + unreached reachable locations
         // A ProgressionManager is used to track logic while traversing through the search space
         // If reevaluating, start and final are transitions instead of scenes
-        public static List<string> ShortestRoute(string start, string final, List<List<string>> rejectedRoutes, bool allowBenchWarp, bool reevaluate)
+        public static List<string> ShortestRoute(string start, string final, List<List<string>> rejectedRoutes, bool reevaluate)
         {
             if (start == null || final == null) return new();
 
@@ -115,6 +117,7 @@ namespace RandoMapMod.Transition
                         if (node.route.First().IsBenchwarpTransition()
                             && rejectedRoutes.Any(r => r.Last().GetAdjacentTerm() == node.lastAdjacentTerm && r.First().IsBenchwarpTransition())) continue;
 
+                        node.PrintRoute();
                         return node.route;
                     }
                 }
@@ -123,6 +126,7 @@ namespace RandoMapMod.Transition
                     // If reevaluating, we just check if the final transition is correct
                     if (final != "" && node.lastAdjacentTerm == final)
                     {
+                        node.PrintRoute();
                         return node.route;
                     }
                 }
@@ -155,7 +159,7 @@ namespace RandoMapMod.Transition
             void InitializeNodeQueue()
             {
                 // Add initial bench warp transitions if setting is enabled
-                if (allowBenchWarp && Interop.HasBenchwarp())
+                if (RandoMapMod.GS.AllowBenchWarpSearch && Interop.HasBenchwarp())
                 {
                     foreach (string transition in BenchwarpInterop.GetVisitedBenchTransitions())
                     {
@@ -295,7 +299,7 @@ namespace RandoMapMod.Transition
                     text += " -> " + transition;
                 }
 
-                RandoMapMod.Instance.Log(text);
+                RandoMapMod.Instance.LogDebug(text);
             }
 
             public string scene;
@@ -399,6 +403,44 @@ namespace RandoMapMod.Transition
             }
 
             return continueUpdating;
+        }
+
+        /// <summary>
+        /// Logs which transitions are logically reachable from each starting transition (within the room).
+        /// </summary>
+        public static void GetFullNetwork()
+        {
+            RandoMapMod.Instance.LogDebug("Get Full Network");
+
+            foreach (Term term in localPm.lm.Terms)
+            {
+                RandoMapMod.Instance.LogDebug($"{term.Name}");
+                string scene = term.Name.GetScene();
+
+                if (scene is null) continue;
+
+                localPm.StartTemp();
+
+                localPm.Set(term, 1);
+
+                HashSet<string> candidateReachableTransitions = new(PD.GetTransitionsInScene(scene));
+
+                while (UpdateReachableTransitions(scene, candidateReachableTransitions)) { }
+
+                foreach (string transition in candidateReachableTransitions)
+                {
+                    if (localPm.Get(transition) > 0)
+                    {
+                        RandoMapMod.Instance.LogDebug($"---> {transition}");
+                    }
+                    else
+                    {
+                        RandoMapMod.Instance.LogDebug($"-x-> {transition}");
+                    }
+                }
+
+                localPm.RemoveTempItems();
+            }
         }
     }
 }

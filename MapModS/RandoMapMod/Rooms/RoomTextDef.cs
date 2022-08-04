@@ -2,7 +2,7 @@
 using MapChanger.Defs;
 using Newtonsoft.Json;
 
-namespace RandoMapMod.Transition
+namespace RandoMapMod.Rooms
 {
     internal record RoomTextDef : IMapPosition
     {

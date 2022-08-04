@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MapChanger;
 using RandoMapMod.Settings;
 using UnityEngine;
@@ -9,31 +10,35 @@ namespace RandoMapMod.Transition
     internal class TransitionTracker
     {
         internal static HashSet<string> InLogicScenes { get; private set; }
-        internal static HashSet<string> OutOfLogicScenes { get; private set; }
         internal static HashSet<string> VisitedAdjacentScenes { get; private set; }
         internal static HashSet<string> UncheckedReachableScenes { get; private set; }
 
         public static void OnEnterGame()
         {
-            RandomizerMod.IC.TrackerUpdate.OnFinishedUpdate += OnFinishedUpdate;
+            RandomizerMod.IC.TrackerUpdate.OnFinishedUpdate += Update;
 
             Update();
+
+            try
+            {
+                Pathfinder.GetFullNetwork();
+            }
+            catch (Exception e)
+            {
+                RandoMapMod.Instance.LogError(e);
+            }
         }
 
         public static void OnQuitToMenu()
         {
-            RandomizerMod.IC.TrackerUpdate.OnFinishedUpdate -= OnFinishedUpdate;
-        }
-
-        private static void OnFinishedUpdate()
-        {
-            Update();
+            RandomizerMod.IC.TrackerUpdate.OnFinishedUpdate -= Update;
         }
 
         internal static void Update()
         {
+            Pathfinder.UpdateProgression();
+
             InLogicScenes = new();
-            OutOfLogicScenes = new();
             VisitedAdjacentScenes = new();
             UncheckedReachableScenes = new();
 
@@ -47,10 +52,6 @@ namespace RandoMapMod.Transition
                 if (pm.Has(t.Value.term.Id))
                 {
                     InLogicScenes.Add(scene);
-                }
-                else
-                {
-                    OutOfLogicScenes.Add(scene);
                 }
             }
 
@@ -102,11 +103,11 @@ namespace RandoMapMod.Transition
 
         internal static Vector4 GetRoomColor(string scene)
         {
-            Vector4 color = RmmColors.GetColor(RmmColorSetting.Room_Normal);
+            Vector4 color = RmmColors.GetColor(RmmColorSetting.Room_Out_of_logic);
 
-            if (OutOfLogicScenes.Contains(scene))
+            if (InLogicScenes.Contains(scene))
             {
-                color = RmmColors.GetColor(RmmColorSetting.Room_Out_of_logic);
+                color = RmmColors.GetColor(RmmColorSetting.Room_Normal);
             }
 
             if (VisitedAdjacentScenes.Contains(scene))

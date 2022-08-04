@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using MapChanger;
+using MapChanger.Map;
 using MapChanger.MonoBehaviours;
 using TMPro;
 using UnityEngine;
 
-namespace RandoMapMod.Transition
+namespace RandoMapMod.Rooms
 {
     internal static class RoomTexts
     {
@@ -53,6 +54,9 @@ namespace RandoMapMod.Transition
             }
 
             MapObjectUpdater.Add(MoRoomTexts);
+
+            TransitionRoomSelector transitionRoomSelector = Utils.MakeMonoBehaviour<TransitionRoomSelector>(null, "RandoMapMod Transition Room Selector");
+            transitionRoomSelector.Initialize(BuiltInObjects.MappedRooms.Values.Concat(MoRoomTexts.GetChildren()));
         }
     }
 }

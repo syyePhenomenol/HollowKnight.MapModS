@@ -152,7 +152,7 @@
     "MapLocations": [
       {
         "MappedScene": "Mines_31",
-        "X": 1.8,
+        "X": 1.9,
         "Y": -0.3
       }
     ]
@@ -765,7 +765,7 @@
     "MapLocations": [
       {
         "MappedScene": "Fungus1_34",
-        "X": 0.7,
+        "X": 1.0,
         "Y": -0.1
       }
     ]
@@ -2002,7 +2002,7 @@
     "MapLocations": [
       {
         "MappedScene": "Fungus1_34",
-        "X": 1.0,
+        "X": 0.7,
         "Y": -0.1
       }
     ]
@@ -2301,8 +2301,8 @@
     "MapLocations": [
       {
         "MappedScene": "Hive_03",
-        "X": -0.8,
-        "Y": 0.5
+        "X": -0.9,
+        "Y": 0.4
       }
     ]
   },
@@ -2631,7 +2631,7 @@
     "MapLocations": [
       {
         "MappedScene": "Mines_16",
-        "X": 0.2,
+        "X": 0.0,
         "Y": -0.2
       }
     ]
@@ -4924,8 +4924,8 @@
     "MapLocations": [
       {
         "MappedScene": "Hive_03",
-        "X": -0.3,
-        "Y": 0.7
+        "X": -0.2,
+        "Y": 0.6
       }
     ]
   },
@@ -4935,8 +4935,8 @@
     "MapLocations": [
       {
         "MappedScene": "Hive_03",
-        "X": -0.3,
-        "Y": 0.4
+        "X": -0.2,
+        "Y": 0.3
       }
     ]
   },
@@ -5034,8 +5034,8 @@
     "MapLocations": [
       {
         "MappedScene": "Mines_16",
-        "X": 0.0,
-        "Y": 0.0
+        "X": -0.1,
+        "Y": 0.1
       }
     ]
   },
@@ -6513,7 +6513,7 @@
     "MapLocations": [
       {
         "MappedScene": "Abyss_06_Core",
-        "X": 0.2,
+        "X": 0.3,
         "Y": 1.8
       }
     ]
