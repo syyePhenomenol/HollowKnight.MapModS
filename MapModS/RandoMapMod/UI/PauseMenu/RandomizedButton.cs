@@ -9,16 +9,16 @@ namespace RandoMapMod.UI
 {
     internal class RandomizedButton : MainButton
     {
-        public RandomizedButton() : base("Randomized Pins", "RandoMapMod", 0, 1)
-        {
+        internal RandomizedButton Instance { get; init; }
 
+        internal RandomizedButton() : base("Randomized Pins", "RandoMapMod", 0, 1)
+        {
+            Instance = this;
         }
 
-        public override void OnClick(Button button)
+        protected override void OnClick()
         {
             RandoMapMod.LS.ToggleRandomized();
-
-            base.OnClick(button);
         }
 
         public override void Update()
@@ -53,17 +53,17 @@ namespace RandoMapMod.UI
         {
             if (RandoMapMod.LS.GroupBy == GroupBySetting.Item)
             {
-                if (!RmmPins.RandoItemPoolGroups.Any()) return false;
+                if (!RmmPinManager.RandoItemPoolGroups.Any()) return false;
 
-                return (!RandoMapMod.LS.RandomizedOn && RmmPins.RandoItemPoolGroups.Any(group => RandoMapMod.LS.GetPoolGroupSetting(group) == PoolState.On))
-                || (RandoMapMod.LS.RandomizedOn && RmmPins.RandoItemPoolGroups.Any(group => RandoMapMod.LS.GetPoolGroupSetting(group) == PoolState.Off));
+                return (!RandoMapMod.LS.RandomizedOn && RmmPinManager.RandoItemPoolGroups.Any(group => RandoMapMod.LS.GetPoolGroupSetting(group) == PoolState.On))
+                || (RandoMapMod.LS.RandomizedOn && RmmPinManager.RandoItemPoolGroups.Any(group => RandoMapMod.LS.GetPoolGroupSetting(group) == PoolState.Off));
             }
             else
             {
-                if (!RmmPins.RandoLocationPoolGroups.Any()) return false;
+                if (!RmmPinManager.RandoLocationPoolGroups.Any()) return false;
 
-                return (!RandoMapMod.LS.RandomizedOn && RmmPins.RandoLocationPoolGroups.Any(group => RandoMapMod.LS.GetPoolGroupSetting(group) == PoolState.On))
-                || (RandoMapMod.LS.RandomizedOn && RmmPins.RandoLocationPoolGroups.Any(group => RandoMapMod.LS.GetPoolGroupSetting(group) == PoolState.Off));
+                return (!RandoMapMod.LS.RandomizedOn && RmmPinManager.RandoLocationPoolGroups.Any(group => RandoMapMod.LS.GetPoolGroupSetting(group) == PoolState.On))
+                || (RandoMapMod.LS.RandomizedOn && RmmPinManager.RandoLocationPoolGroups.Any(group => RandoMapMod.LS.GetPoolGroupSetting(group) == PoolState.Off));
             }
         }
     }

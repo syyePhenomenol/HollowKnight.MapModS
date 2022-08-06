@@ -13,14 +13,14 @@ namespace MapChanger
         private static readonly List<MapObject> mapObjects = new();
         public static ReadOnlyCollection<MapObject> MapObjects => mapObjects.AsReadOnly();
 
-        internal override void OnEnterGame()
+        public override void OnEnterGame()
         {
             Events.BeforeOpenWorldMap += BeforeOpenWorldMap;
             Events.BeforeOpenQuickMap += BeforeOpenQuickMap;
             Events.BeforeCloseMap += BeforeCloseMap;
         }
 
-        internal override void OnQuitToMenu()
+        public override void OnQuitToMenu()
         {
             foreach (MapObject mapObject in mapObjects)
             {
@@ -48,7 +48,7 @@ namespace MapChanger
 
             foreach (MapObject mapObject in mapObjects)
             {
-                mapObject.UpdateActive();
+                mapObject.MainUpdate();
             }
         }
 
@@ -58,7 +58,7 @@ namespace MapChanger
 
             foreach (MapObject mapObject in mapObjects)
             {
-                mapObject.UpdateActive();
+                mapObject.MainUpdate();
             }
         }
 
@@ -68,7 +68,7 @@ namespace MapChanger
 
             foreach (MapObject mapObject in mapObjects)
             {
-                mapObject.UpdateActive();
+                mapObject.MainUpdate();
             }
         }
 

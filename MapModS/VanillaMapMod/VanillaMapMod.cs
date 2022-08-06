@@ -102,7 +102,7 @@ namespace VanillaMapMod
         {
             try
             {
-                VmmPins.MakePins(goMap);
+                VmmPinManager.MakePins(goMap);
 
                 LS.Initialize();
 

@@ -107,12 +107,6 @@ namespace RandoMapMod.Transition
                 }
             }
 
-            lm = new(lmb);
-
-            waypointScenes = lm.Waypoints.Where(w => Finder.IsScene(w.Name)).ToDictionary(w => w.Name, w => w);
-
-            //waypointScenes = lm.Waypoints.Where(w => RD.IsRoom(w.Name) || w.Name.IsSpecialRoom()).ToDictionary(w => w.Name, w => w);
-
             // Set Start Warp
             string[] startTerms = GetStartTerms();
             if (startTerms.Length > 0)
@@ -125,6 +119,10 @@ namespace RandoMapMod.Transition
                     lmb.DoLogicEdit(new(transition, "ORIG | Warp-Start"));
                 }
             }
+
+            lm = new(lmb);
+
+            waypointScenes = lm.Waypoints.Where(w => Finder.IsScene(w.Name)).ToDictionary(w => w.Name, w => w);
         }
 
         public static string[] GetStartTerms()

@@ -63,7 +63,7 @@ namespace MapChanger.Map
             .FindChildInHierarchy("Inventory")?.FindChildInHierarchy("Map")?
             .FindChildInHierarchy("World Map")?.FindChildInHierarchy("Map Marker Action");
 
-        internal override void OnEnterGame()
+        public override void OnEnterGame()
         {
             On.PlayMakerFSM.Start += ModifyFsms;
             On.RoughMapRoom.OnEnable += StoreRoughMapCopy;
@@ -82,7 +82,7 @@ namespace MapChanger.Map
             Events.AfterOpenWorldMap += IncreasePanningRange;
         }
 
-        internal override void OnQuitToMenu()
+        public override void OnQuitToMenu()
         {
             On.PlayMakerFSM.Start -= ModifyFsms;
             On.RoughMapRoom.OnEnable -= StoreRoughMapCopy;

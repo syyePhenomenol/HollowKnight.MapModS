@@ -16,7 +16,7 @@ namespace MapChanger.UI
 
         internal void Make()
         {
-            TitleText = new(PauseMenu.Instance.Root, $"{Mod} Title")
+            TitleText = new(PauseMenu.Root, $"{Mod} Title")
             {
                 TextAlignment = HorizontalAlignment.Left,
                 ContentColor = Color.white,

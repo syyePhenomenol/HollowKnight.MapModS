@@ -11,11 +11,9 @@ namespace VanillaMapMod
 
         }
 
-        public override void OnClick(Button button)
+        protected override void OnClick()
         {
             VanillaMapMod.LS.ToggleVanillaPins();
-
-            base.OnClick(button);
         }
 
         public override void Update()

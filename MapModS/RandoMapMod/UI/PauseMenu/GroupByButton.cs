@@ -14,11 +14,9 @@ namespace RandoMapMod.UI
 
         }
 
-        public override void OnClick(Button button)
+        protected override void OnClick()
         {
             RandoMapMod.LS.ToggleGroupBy();
-
-            base.OnClick(button);
         }
 
         public override void Update()

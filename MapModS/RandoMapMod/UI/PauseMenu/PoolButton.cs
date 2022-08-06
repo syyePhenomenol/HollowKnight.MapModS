@@ -14,11 +14,9 @@ namespace RandoMapMod.UI
             PoolGroup = poolGroup;
         }
 
-        public override void OnClick(Button button)
+        protected override void OnClick()
         {
             RandoMapMod.LS.TogglePoolGroupSetting(PoolGroup);
-
-            base.OnClick(button);
         }
 
         public override void Update()

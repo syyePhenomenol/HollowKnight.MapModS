@@ -14,7 +14,7 @@ using RM = RandomizerMod.RandomizerMod;
 
 namespace RandoMapMod.Pins
 {
-    internal static class RmmPins
+    internal static class RmmPinManager
     {
         private const float OFFSETZ_BASE = -1.4f;
         private const float OFFSETZ_RANGE = 0.4f;
@@ -77,7 +77,8 @@ namespace RandoMapMod.Pins
 
             RandomizedRmmPin randoPin = Utils.MakeMonoBehaviour<RandomizedRmmPin>(MoPins.gameObject, placement.Name);
             randoPin.Initialize(placement);
-            randoPin.Parent = MoPins;
+            //randoPin.Parent = MoPins;
+            MoPins.AddChild(randoPin);
             Pins[placement.Name] = randoPin;
         }
 
@@ -100,15 +101,16 @@ namespace RandoMapMod.Pins
 
             VanillaRmmPin vanillaPin = Utils.MakeMonoBehaviour<VanillaRmmPin>(MoPins.gameObject, placement.Location.Name);
             vanillaPin.Initialize(placement);
-            vanillaPin.Parent = MoPins;
+            MoPins.AddChild(vanillaPin);
+            //vanillaPin.Parent = MoPins;
             Pins[placement.Location.Name] = vanillaPin;
         }
 
-        internal static void UpdateActive()
+        internal static void Update()
         {
             foreach (RmmPin pin in Pins.Values)
             {
-                pin.UpdateActive();
+                pin.MainUpdate();
             }
         }
 

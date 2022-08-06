@@ -54,7 +54,8 @@ namespace VanillaMapMod
                 }
             );
 
-            Parent = parent;
+            parent.AddChild(this);
+            //Parent = parent;
             Mlp = new MapLocationPosition(mld.MapLocations);
             MapPosition = Mlp;
             Sprite = GetSpriteFromPoolGroup(parent.PoolGroup);

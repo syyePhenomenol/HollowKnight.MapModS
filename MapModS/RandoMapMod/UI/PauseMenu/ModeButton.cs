@@ -14,21 +14,14 @@ namespace RandoMapMod.UI
             Instance = this;
         }
 
-        public override void OnClick(Button button)
+        protected override void OnClick()
         {
             MapChanger.Settings.ToggleMode();
-
-            base.OnClick(button);
         }
 
         public override void Update()
         {
             base.Update();
-
-            if (MapChanger.Settings.CurrentMode().Mod is "RandoMapMod")
-            {
-                RandoMapMod.LS.SetMode(MapChanger.Settings.CurrentMode().ModeName);
-            }
 
             Button.BorderColor = RmmColors.GetColor(RmmColorSetting.UI_Borders);
 

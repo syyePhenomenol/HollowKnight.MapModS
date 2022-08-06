@@ -4,7 +4,7 @@ using UnityEngine;
 namespace RandoMapMod.Pins
 {
     /// <summary>
-    /// Uses MapChanger's SpriteManager to get an ISprite.
+    /// Uses MapChanger's SpriteManager to get a Sprite.
     /// </summary>
     public class EmbeddedSprite : ISprite
     {

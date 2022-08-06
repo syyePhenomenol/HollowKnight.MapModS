@@ -18,7 +18,7 @@ namespace MapChanger.UI
 
         internal override void Make()
         {
-            Button = new Button(PauseMenu.Instance.Root, Name)
+            Button = new Button(PauseMenu.Root, Name)
             {
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center,
@@ -30,7 +30,7 @@ namespace MapChanger.UI
                 Margin = 0f
             }.WithProp(GridLayout.Row, Row).WithProp(GridLayout.Column, Column);
 
-            Button.Click += OnClick;
+            Button.Click += OnClickInternal;
             PauseMenu.MainButtonsGrid.Children.Add(Button);
             PauseMenu.MainButtons.Add(this);
         }

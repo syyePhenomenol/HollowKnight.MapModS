@@ -28,7 +28,7 @@ namespace RandoMapMod.Settings
 
             if (InitializedPreviously) return;
 
-            PoolSettings = RmmPins.AllPoolGroups.ToDictionary(poolGroup => poolGroup, poolGroup => PoolState.On);
+            PoolSettings = RmmPinManager.AllPoolGroups.ToDictionary(poolGroup => poolGroup, poolGroup => PoolState.On);
 
             //if (RandoMapMod.GS.OverrideDefaultMode)
             //{
@@ -144,7 +144,7 @@ namespace RandoMapMod.Settings
         /// </summary>
         private void ResetPoolSettings()
         {
-            foreach (string poolGroup in RmmPins.AllPoolGroups)
+            foreach (string poolGroup in RmmPinManager.AllPoolGroups)
             {
                 SetPoolGroupSetting(poolGroup, GetResetPoolState(poolGroup));
             }
@@ -156,13 +156,13 @@ namespace RandoMapMod.Settings
 
                 if (GroupBy == GroupBySetting.Item)
                 {
-                    IsRando = RmmPins.RandoItemPoolGroups.Contains(poolGroup);
-                    IsVanilla = RmmPins.VanillaItemPoolGroups.Contains(poolGroup);
+                    IsRando = RmmPinManager.RandoItemPoolGroups.Contains(poolGroup);
+                    IsVanilla = RmmPinManager.VanillaItemPoolGroups.Contains(poolGroup);
                 }
                 else
                 {
-                    IsRando = RmmPins.RandoLocationPoolGroups.Contains(poolGroup);
-                    IsVanilla = RmmPins.VanillaLocationPoolGroups.Contains(poolGroup);
+                    IsRando = RmmPinManager.RandoLocationPoolGroups.Contains(poolGroup);
+                    IsVanilla = RmmPinManager.VanillaLocationPoolGroups.Contains(poolGroup);
                 }
 
                 if (IsRando && IsVanilla && RandoMapMod.LS.RandomizedOn != RandoMapMod.LS.VanillaOn)

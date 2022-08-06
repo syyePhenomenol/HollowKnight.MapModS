@@ -22,6 +22,9 @@ namespace RandoMapMod.Pins
         private Dictionary<AbstractItem, string> itemPoolGroups;
         internal override HashSet<string> ItemPoolGroups => new(itemPoolGroups.Values);
 
+        private ISprite locationSprite;
+        private Dictionary<AbstractItem, ISprite> itemSprites;
+
         public float UpdateWaitSeconds { get; } = 1f;
 
         public IEnumerator PeriodicUpdate()
@@ -40,16 +43,19 @@ namespace RandoMapMod.Pins
             SceneName = placement.RandoModLocation()?.LocationDef?.SceneName ?? ItemChanger.Finder.GetLocation(name)?.sceneName;
 
             LocationPoolGroup = SupplementalMetadata.OfPlacementAndLocations(placement).Get(InjectedProps.LocationPoolGroup);
+            locationSprite = SupplementalMetadata.OfPlacementAndLocations(placement).Get(InteropProperties.LocationPinSprite);
 
             itemPoolGroups = new();
+            itemSprites = new();
             foreach (AbstractItem item in placement.Items)
             {
                 itemPoolGroups[item] = SupplementalMetadata.Of(item).Get(InjectedProps.ItemPoolGroup);
+                itemSprites[item] = SupplementalMetadata.Of(item).Get(InteropProperties.ItemPinSprite);
             }
 
             if (SupplementalMetadata.Of(placement).Get(InteropProperties.HighlightScenes) is string[] highlightScenes)
             {
-                // Place over panel
+                // TODO: Place over panel
                 Initialize();
                 return;
             }
@@ -86,8 +92,10 @@ namespace RandoMapMod.Pins
                 && (placementState != RandoPlacementState.ClearedPersistent || RandoMapMod.GS.PersistentOn);
         }
 
-        protected private override bool OnUpdateActive()
+        public override void AfterMainUpdate()
         {
+            if (!gameObject.activeSelf) return;
+
             itemIndex = -1;
 
             if (RandoMapMod.GS.PersistentOn)
@@ -102,7 +110,7 @@ namespace RandoMapMod.Pins
             StopAllCoroutines();
             StartCoroutine(PeriodicUpdate());
 
-            return base.OnUpdateActive();
+            base.AfterMainUpdate();
         }
 
         protected private override void UpdatePinSprite()
@@ -126,13 +134,13 @@ namespace RandoMapMod.Pins
 
             Sprite GetLocationSprite()
             {
-                return SupplementalMetadata.OfPlacementAndLocations(placement).Get(InteropProperties.LocationPinSprite).Value;
+                return locationSprite.Value;
             }
 
             Sprite GetItemSprite()
             {
                 itemIndex = (itemIndex + 1) % remainingItems.Count();
-                return SupplementalMetadata.Of(remainingItems.ElementAt(itemIndex)).Get(InteropProperties.ItemPinSprite).Value;
+                return itemSprites[remainingItems.ElementAt(itemIndex)].Value;
             }
         }
 

@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace RandoMapMod.Rooms
 {
-    internal static class RoomTexts
+    internal static class RmmRoomManager
     {
         private static Dictionary<string, RoomTextDef> roomTextDefs;
 
@@ -48,15 +48,20 @@ namespace RandoMapMod.Rooms
             {
                 RoomText roomText = Utils.MakeMonoBehaviour<RoomText>(null, $"Room Text {rtd.Name}");
                 roomText.Initialize(rtd, tmpFont);
-                roomText.Parent = MoRoomTexts;
+                //roomText.Parent = MoRoomTexts;
+                MoRoomTexts.AddChild(roomText);
                 //RoomSelector.Objects[roomText.SceneName] = new() { roomText };
                 RandoMapMod.Instance.LogDebug($"Creating RoomText: {scene}");
             }
 
             MapObjectUpdater.Add(MoRoomTexts);
 
+            NormalRoomSelector benchwarpRoomSelector = Utils.MakeMonoBehaviour<NormalRoomSelector>(null, "RandoMapMod Normal Room Selector");
+            benchwarpRoomSelector.Initialize();
+
             TransitionRoomSelector transitionRoomSelector = Utils.MakeMonoBehaviour<TransitionRoomSelector>(null, "RandoMapMod Transition Room Selector");
-            transitionRoomSelector.Initialize(BuiltInObjects.MappedRooms.Values.Concat(MoRoomTexts.GetChildren()));
+            transitionRoomSelector.Initialize(BuiltInObjects.MappedRooms.Values.Concat(MoRoomTexts.Children));
+
         }
     }
 }

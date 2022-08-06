@@ -15,7 +15,7 @@ namespace VanillaMapMod.Settings
         internal void TogglePinSize()
         {
             PinSize = (PinSize)(((int)PinSize + 1) % Enum.GetNames(typeof(PinSize)).Length);
-            VmmPins.UpdatePinSize();
+            VmmPinManager.UpdatePinSize();
         }
     }
 }

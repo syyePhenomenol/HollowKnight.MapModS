@@ -88,7 +88,7 @@ namespace MapChanger
             }
         }
 
-        internal override void OnEnterGame()
+        public override void OnEnterGame()
         {
             ScenesVisited = new(PlayerData.instance.scenesVisited);
             GetPreviouslyObtainedItems();
@@ -100,7 +100,7 @@ namespace MapChanger
             UnityEngine.SceneManagement.SceneManager.activeSceneChanged += AddSceneVisited;
         }
 
-        internal override void OnQuitToMenu()
+        public override void OnQuitToMenu()
         {
             On.PlayMakerFSM.OnEnable -= AddItemTrackers;
             On.HealthManager.SendDeathEvent -= TrackBossGeo;
@@ -277,8 +277,6 @@ namespace MapChanger
 
         private static void AddSceneVisited(Scene from, Scene to)
         {
-            if (GameManager.instance.sceneName != to.name) return;
-
             ScenesVisited.Add(to.name);
         }
     }

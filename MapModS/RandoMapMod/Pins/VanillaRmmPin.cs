@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ConnectionMetadataInjector.Util;
+using ItemChanger;
 using MapChanger;
 using RandomizerCore;
 using UnityEngine;
@@ -15,6 +16,8 @@ namespace RandoMapMod.Pins
 
         internal override HashSet<string> ItemPoolGroups => new() { LocationPoolGroup };
 
+        private ISprite locationSprite;
+
         internal void Initialize(GeneralizedPlacement placement)
         {
             this.placement = placement;
@@ -22,6 +25,7 @@ namespace RandoMapMod.Pins
             SceneName = RandomizerMod.RandomizerData.Data.GetLocationDef(name)?.SceneName ?? ItemChanger.Finder.GetLocation(name)?.sceneName;
 
             LocationPoolGroup = SubcategoryFinder.GetLocationPoolGroup(placement.Location.Name).FriendlyName();
+            locationSprite = new PinLocationSprite(LocationPoolGroup);
 
             Initialize(InteropProperties.GetDefaultMapLocations(name));
         }
@@ -40,15 +44,7 @@ namespace RandoMapMod.Pins
 
         private protected override void UpdatePinSprite()
         {
-            if (RandoMapMod.LS.SpoilerOn)
-            {
-                Sprite = PinSprites.GetItemSprite(LocationPoolGroup).Value;
-            }
-            else
-            {
-                Sprite = PinSprites.GetLocationSprite(LocationPoolGroup).Value;
-            }
-            
+            Sprite = locationSprite.Value;
         }
 
         private protected override void UpdatePinSize()

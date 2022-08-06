@@ -76,7 +76,6 @@ namespace RandoMapMod.Pins
             (
                 new Func<bool>[]
                 {
-                    OnUpdateActive,
                     CorrectMapOpen,
                     ActiveByCurrentMode,
                     ActiveByPoolSetting,
@@ -98,14 +97,14 @@ namespace RandoMapMod.Pins
             return (name, transform.position);
         }
 
-        protected private virtual bool OnUpdateActive()
+        public override void AfterMainUpdate()
         {
+            if (!gameObject.activeSelf) return;
+
             UpdatePinSprite();
             UpdatePinSize();
             UpdatePinColor();
             UpdateBorderColor();
-
-            return true;
         }
 
         protected private abstract void UpdatePinSprite();

@@ -9,6 +9,7 @@ using UnityEngine;
 
 namespace RandoMapMod
 {
+    //TODO: Turn into HookModule
     internal class BenchwarpInterop
     {
         // Forward and reverse lookup
@@ -16,15 +17,12 @@ namespace RandoMapMod
 
         internal static Dictionary<string, (string, string)> benchKeys = new();
 
-        internal static Dictionary<string, List<WorldMapBenchDef>> benches;
+        internal static Dictionary<string, List<WorldMapBenchDef>> Benches { get; private set; }
         internal static string selectedBenchScene = "";
         internal static int benchPointer = 0;
 
         public static void Load()
         {
-            benchTransitions = new();
-            benchKeys = new();
-
             if (Interop.HasBenchRando() && BenchRandoInterop.IsBenchRandoEnabled())
             {
                 benchTransitions = BenchRandoInterop.GetBenchTransitions();
@@ -33,11 +31,11 @@ namespace RandoMapMod
             {
                 Dictionary<string, string> benchwarp = MapChanger.JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.benchwarp.json");
 
-                foreach(KeyValuePair<string, string> kvp in benchwarp)
+                foreach (KeyValuePair<string, string> kvp in benchwarp)
                 {
                     Bench bench = Bench.Benches.FirstOrDefault(b => b.sceneName == kvp.Key);
 
-                    if (bench == null) continue;
+                    if (bench is null) continue;
 
                     benchTransitions.Add((bench.sceneName, bench.respawnMarker), kvp.Value);
                 }
@@ -50,9 +48,31 @@ namespace RandoMapMod
             benchKeys = benchTransitions.ToDictionary(t => t.Value, t => t.Key);
         }
 
+        public static void OnEnterGame()
+        {
+            RandomizerMod.IC.TrackerUpdate.OnFinishedUpdate += UpdateVisitedBenches;
+            UnityEngine.SceneManagement.SceneManager.activeSceneChanged += OnSceneChanged;
+
+            UpdateVisitedBenches();
+        }
+
+        public static void OnQuitToMenu()
+        {
+            benchTransitions = new();
+            benchKeys = new();
+
+            RandomizerMod.IC.TrackerUpdate.OnFinishedUpdate -= UpdateVisitedBenches;
+            UnityEngine.SceneManagement.SceneManager.activeSceneChanged -= OnSceneChanged;
+        }
+
+        private static void OnSceneChanged(UnityEngine.SceneManagement.Scene arg0, UnityEngine.SceneManagement.Scene arg1)
+        {
+            UpdateVisitedBenches();
+        }
+
         public static void UpdateVisitedBenches()
         {
-            benches = Benchwarp.Benchwarp.LS.visitedBenchScenes
+            Benches = Benchwarp.Benchwarp.LS.visitedBenchScenes
                 .Select(b => new WorldMapBenchDef(b))
                 .GroupBy(b => b.mappedSceneName)
                 .ToDictionary(b => b.First().mappedSceneName, b => b.ToList());
@@ -60,13 +80,13 @@ namespace RandoMapMod
             BenchKey startKey = new(ItemChanger.Internal.Ref.Settings.Start.SceneName, "ITEMCHANGER_RESPAWN_MARKER");
             WorldMapBenchDef startDef = new(startKey);
 
-            if (benches.ContainsKey(startDef.mappedSceneName))
+            if (Benches.ContainsKey(startDef.mappedSceneName))
             {
-                benches[startDef.mappedSceneName].Insert(0, startDef);
+                Benches[startDef.mappedSceneName].Insert(0, startDef);
             }
             else
             {
-                benches[startDef.mappedSceneName] = new List<WorldMapBenchDef>() { startDef };
+                Benches[startDef.mappedSceneName] = new List<WorldMapBenchDef>() { startDef };
             }
         }
 
@@ -87,7 +107,7 @@ namespace RandoMapMod
 
         internal static IEnumerator DoBenchwarp(string mappedScene, int benchPointer)
         {
-            WorldMapBenchDef bench = benches[mappedScene][benchPointer];
+            WorldMapBenchDef bench = Benches[mappedScene][benchPointer];
 
             yield return DoBenchwarpInternal(bench.sceneName, bench.respawnMarker);
         }
@@ -118,7 +138,6 @@ namespace RandoMapMod
             }
         }
     }
-
 
     public class WorldMapBenchDef
     {

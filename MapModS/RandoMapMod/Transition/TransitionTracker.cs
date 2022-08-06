@@ -31,6 +31,8 @@ namespace RandoMapMod.Transition
 
         public static void OnQuitToMenu()
         {
+            RouteTracker.ResetRoute();
+
             RandomizerMod.IC.TrackerUpdate.OnFinishedUpdate -= Update;
         }
 

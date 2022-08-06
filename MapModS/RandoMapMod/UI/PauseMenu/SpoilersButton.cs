@@ -6,16 +6,16 @@ namespace RandoMapMod.UI
 {
     internal class SpoilersButton : MainButton
     {
-        public SpoilersButton() : base("Spoilers", "RandoMapMod", 0, 3)
-        {
+        internal static SpoilersButton Instance { get; private set; }
 
+        internal SpoilersButton() : base("Spoilers", "RandoMapMod", 0, 3)
+        {
+            Instance = this;
         }
 
-        public override void OnClick(Button button)
+        protected override void OnClick()
         {
             RandoMapMod.LS.ToggleSpoilers();
-
-            base.OnClick(button);
         }
 
         public override void Update()

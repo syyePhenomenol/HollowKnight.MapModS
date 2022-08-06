@@ -8,18 +8,16 @@ namespace RandoMapMod.UI
 {
     internal class PinStyleButton : MainButton
     {
-        public static PinStyleButton Instance { get; private set; }
+        internal static PinStyleButton Instance { get; private set; }
 
-        public PinStyleButton() : base("Pin Style", "RandoMapMod", 1, 1)
+        internal PinStyleButton() : base("Pin Style", "RandoMapMod", 1, 1)
         {
             Instance = this;
         }
 
-        public override void OnClick(Button button)
+        protected override void OnClick()
         {
             RandoMapMod.GS.TogglePinStyle();
-
-            base.OnClick(button);
         }
 
         public override void Update()

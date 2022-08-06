@@ -4,7 +4,7 @@ using MagicUI.Elements;
 
 namespace MapChanger.UI
 {
-    public abstract class BottomRowText : UILayer
+    public abstract class BottomRowText : MapUILayer
     {
         public virtual string[] TextNames { get; } = { };
         protected Dictionary<string, TextObject> MapTexts { get; private set; }

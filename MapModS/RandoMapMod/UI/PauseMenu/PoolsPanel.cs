@@ -14,7 +14,7 @@ namespace RandoMapMod.UI
 
         protected override void MakeButtons()
         {
-            foreach (string poolGroup in RmmPins.AllPoolGroups)
+            foreach (string poolGroup in RmmPinManager.AllPoolGroups)
             {
                 PoolButton poolButton = new(poolGroup);
                 poolButton.Make();

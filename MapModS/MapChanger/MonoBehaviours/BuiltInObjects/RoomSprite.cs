@@ -77,6 +77,12 @@ namespace MapChanger.MonoBehaviours
 
         public bool CanSelect()
         {
+            if (Settings.MapModEnabled && Settings.CurrentMode().RoomSpriteCanSelectOverride is not null)
+            {
+                try { return Settings.CurrentMode().RoomSpriteCanSelectOverride.Invoke(this); }
+                catch (Exception e) { MapChangerMod.Instance.LogError(e); }
+            }
+
             return gameObject.activeSelf;
         }
 

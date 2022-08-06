@@ -3,22 +3,21 @@ using GlobalEnums;
 
 namespace MapChanger.UI
 {
-    internal class UIMaster : HookModule
+    internal class MapUILayerManager : HookModule
     {
-        private static readonly List<UILayer> mapLayers = new();
+        private static readonly List<MapUILayer> mapLayers = new();
 
-        internal override void OnEnterGame()
+        public override void OnEnterGame()
         {
-            PauseMenu.OnEnterGame();
+            AddMapLayer(new GlobalHotkeys());
 
             Events.AfterOpenWorldMap += OnOpenWorldMap;
             Events.AfterOpenQuickMap += OnOpenQuickMap;
             Events.BeforeCloseMap += OnCloseMap;
         }
 
-        internal override void OnQuitToMenu()
+        public override void OnQuitToMenu()
         {
-            PauseMenu.OnQuitToMenu();
             Events.AfterOpenWorldMap += OnOpenWorldMap;
             Events.AfterOpenQuickMap += OnOpenQuickMap;
             Events.BeforeCloseMap += OnCloseMap;
@@ -26,7 +25,7 @@ namespace MapChanger.UI
             RemoveMapLayers();
         }
 
-        internal static void AddMapLayer(UILayer layer)
+        internal static void AddMapLayer(MapUILayer layer)
         {
             mapLayers.Add(layer);
             layer.Build();
@@ -34,7 +33,7 @@ namespace MapChanger.UI
 
         internal static void RemoveMapLayers()
         {
-            foreach (UILayer layer in mapLayers)
+            foreach (MapUILayer layer in mapLayers)
             {
                 layer.Destroy();
             }
@@ -44,22 +43,22 @@ namespace MapChanger.UI
 
         private static void OnOpenWorldMap(GameMap obj)
         {
-            UpdateMapLayers();
+            Update();
         }
 
         private static void OnOpenQuickMap(GameMap gameMap, MapZone mapZone)
         {
-            UpdateMapLayers();
+            Update();
         }
 
         private static void OnCloseMap(GameMap obj)
         {
-            UpdateMapLayers();
+            Update();
         }
 
-        public static void UpdateMapLayers()
+        public static void Update()
         {
-            foreach (UILayer layer in mapLayers)
+            foreach (MapUILayer layer in mapLayers)
             {
                 layer.Update();
             }

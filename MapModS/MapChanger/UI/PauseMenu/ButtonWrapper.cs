@@ -1,5 +1,4 @@
-﻿using MagicUI.Core;
-using MagicUI.Elements;
+﻿using MagicUI.Elements;
 
 namespace MapChanger.UI
 {
@@ -15,10 +14,13 @@ namespace MapChanger.UI
 
         internal abstract void Make();
 
-        public virtual void OnClick(Button button)
+        private protected virtual void OnClickInternal(Button button)
         {
-            PauseMenu.Instance.Update();
+            OnClick();
+            PauseMenu.Update();
         }
+
+        protected abstract void OnClick();
 
         public abstract void Update();
     }

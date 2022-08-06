@@ -20,41 +20,15 @@ namespace MapChanger.MonoBehaviours
         private protected const int UI_LAYER = 5;
         private protected const string HUD = "HUD";
 
-        private MapObject parent;
-        /// <summary>
-        /// When UpdateActive of the parent MapObject is called, it will call this MapObject's
-        /// UpdateActive.
-        /// </summary>
-        public MapObject Parent
+        private readonly List<MapObject> children = new();
+        public ReadOnlyCollection<MapObject> Children => children.AsReadOnly();
+
+        public void AddChild(MapObject child)
         {
-            get => parent;
-            set
-            {
-                if (parent != value && this != value)
-                {
-                    parent = value;
-                    gameObject.transform.parent = parent.transform;
-                }
-            }
-        }
+            if (children.Contains(child)) return;
 
-        /// <summary>
-        /// Returns a list of children MapObjects.
-        /// </summary>
-        /// <returns></returns>
-        public ReadOnlyCollection<MapObject> GetChildren()
-        {
-            List<MapObject> mapObjects = new();
-
-            foreach (Transform child in transform)
-            {
-                if (child.TryGetComponent(out MapObject mapObject))
-                {
-                    mapObjects.Add(mapObject);
-                }
-            }
-
-            return mapObjects.AsReadOnly();
+            children.Add(child);
+            child.transform.parent = transform;
         }
 
         public virtual void Initialize()
@@ -64,12 +38,10 @@ namespace MapChanger.MonoBehaviours
             ActiveModifiers.Add(() => { return Settings.MapModEnabled; });
         } 
 
-        /// <summary>
-        /// Sets the GameObject as active/inactive based on the conjunction of a list of conditions.
-        /// Also calls UpdateActive on its children.
-        /// </summary>
-        public void UpdateActive()
+        public void MainUpdate()
         {
+            BeforeMainUpdate();
+
             bool value = true;
 
             foreach (Func<bool> activeModifier in ActiveModifiers)
@@ -84,14 +56,20 @@ namespace MapChanger.MonoBehaviours
                 }
             }
 
-            MapChangerMod.Instance.LogDebug($"UpdateActive: {name}, {value}");
+            //MapChangerMod.Instance.LogDebug($"UpdateActive: {name}, {value}");
 
             gameObject.SetActive(value);
 
-            foreach (MapObject mapObject in GetChildren())
+            AfterMainUpdate();
+
+            foreach (MapObject mapObject in children)
             {
-                mapObject.UpdateActive();
+                mapObject.MainUpdate();
             }
         }
+
+        public virtual void BeforeMainUpdate() { }
+
+        public virtual void AfterMainUpdate() { }
     }
 }

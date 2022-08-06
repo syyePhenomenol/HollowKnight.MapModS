@@ -80,7 +80,7 @@ namespace MapChanger.Map
             fsmOverrideDefs = JsonUtil.Deserialize<Dictionary<string, FsmBoolOverrideDef>>("MapModS.MapChanger.Resources.fsmOverrides.json");
         }
 
-        internal override void OnEnterGame()
+        public override void OnEnterGame()
         {
             On.PlayMakerFSM.Start += ReplaceVariablesFSM;
 
@@ -91,7 +91,7 @@ namespace MapChanger.Map
             ModHooks.GetPlayerVariableHook += GetVariableOverride;
         }
 
-        internal override void OnQuitToMenu()
+        public override void OnQuitToMenu()
         {
             On.PlayMakerFSM.Start -= ReplaceVariablesFSM;
 

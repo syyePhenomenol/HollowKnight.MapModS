@@ -14,11 +14,9 @@ namespace VanillaMapMod
             Instance = this;
         }
 
-        public override void OnClick(Button button)
+        protected override void OnClick()
         {
             MapChanger.Settings.ToggleMode();
-
-            base.OnClick(button);
         }
 
         public override void Update()

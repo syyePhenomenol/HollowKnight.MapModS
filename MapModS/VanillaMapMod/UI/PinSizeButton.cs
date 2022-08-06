@@ -14,11 +14,9 @@ namespace VanillaMapMod
             Instance = this;
         }
 
-        public override void OnClick(Button button)
+        protected override void OnClick()
         {
             VanillaMapMod.GS.TogglePinSize();
-
-            base.OnClick(button);
         }
 
         public override void Update()

@@ -1,31 +1,29 @@
 ﻿using System.Collections.Generic;
 using MagicUI.Core;
 using MagicUI.Elements;
-using UnityEngine;
 
 namespace MapChanger.UI
 {
-    internal class PauseMenu : UILayer
+    internal class PauseMenu : HookModule
     {
-        internal static PauseMenu Instance { get; private set; } = new();
+        internal static LayoutRoot Root { get; private set; }
+        internal static GridLayout MainButtonsGrid { get; private set; }
 
         internal static List<Title> Titles { get; private set; } = new();
-        internal static GridLayout MainButtonsGrid { get; private set; }
         internal static List<MainButton> MainButtons { get; private set; } = new();
         internal static List<ExtraButtonPanel> ExtraButtonPanels { get; private set; } = new();
 
-        internal static void OnEnterGame()
+        public override void OnEnterGame()
         {
-            Instance.Build();
+            Build();
 
             On.HeroController.Pause += OnPause;
         }
 
-        internal static void OnQuitToMenu()
+        public override void OnQuitToMenu()
         {
-            Instance.Destroy();
-
-            Instance = new();
+            Root?.Destroy();
+            Root = null;
             Titles = new();
             MainButtons = new();
             ExtraButtonPanels = new();
@@ -33,13 +31,19 @@ namespace MapChanger.UI
             On.HeroController.Pause -= OnPause;
         }
 
-        public override bool Condition()
+        public bool Condition()
         {
             return GameManager.instance.IsGamePaused();
         }
 
-        public override void BuildLayout()
+        public void Build()
         {
+            if (Root == null)
+            {
+                Root = new(true, $"{GetType().Name} Root");
+                Root.VisibilityCondition = Condition;
+            }
+
             MainButtonsGrid = new(Root, "Main Buttons")
             {
                 RowDefinitions =
@@ -65,7 +69,7 @@ namespace MapChanger.UI
             Update();
         }
 
-        public override void Update()
+        public static void Update()
         {
             foreach (Title title in Titles)
             {
@@ -93,7 +97,7 @@ namespace MapChanger.UI
                 ebp.Hide();
             }
 
-            Instance.Update();
+            Update();
         }
 
         internal static void HideOtherPanels(ExtraButtonPanel visiblePanel)

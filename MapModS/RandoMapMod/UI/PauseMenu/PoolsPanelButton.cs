@@ -13,11 +13,9 @@ namespace RandoMapMod.UI
 
         }
 
-        public override void OnClick(Button button)
+        protected override void OnClick()
         {
             PoolsPanel.Instance.Toggle();
-
-            base.OnClick(button);
         }
 
         public override void Update()

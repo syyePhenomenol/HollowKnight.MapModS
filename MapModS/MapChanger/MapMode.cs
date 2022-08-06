@@ -33,6 +33,7 @@ namespace MapChanger
         public virtual bool DisableNextArea => false;
 
         public virtual Func<RoomSprite, bool> RoomSpriteActiveOverride => null;
+        public virtual Func<RoomSprite, bool> RoomSpriteCanSelectOverride => null;
         public virtual Action<RoomSprite> OnRoomUpdateColor => (roomSprite) => { roomSprite.ResetColor(); };
         public virtual Action<AreaName> OnAreaNameUpdateColor => (areaName) => { areaName.ResetColor(); };
         public virtual Action<NextArea> OnNextAreaUpdateColor => (nextArea) => { nextArea.ResetColor(); };

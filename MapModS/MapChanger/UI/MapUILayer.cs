@@ -2,7 +2,7 @@
 
 namespace MapChanger.UI
 {
-    public abstract class UILayer
+    public abstract class MapUILayer
     {
         public LayoutRoot Root { get; private set; }
 
@@ -27,6 +27,6 @@ namespace MapChanger.UI
 
         public abstract void BuildLayout();
 
-        public abstract void Update();
+        public virtual void Update() { }
     }
 }

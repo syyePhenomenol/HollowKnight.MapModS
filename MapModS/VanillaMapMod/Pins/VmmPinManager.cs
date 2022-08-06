@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace VanillaMapMod
 {
-    internal static class VmmPins
+    internal static class VmmPinManager
     {
         private const float OFFSETZ_BASE = -1.4f;
         private const float OFFSETZ_RANGE = 0.4f;
@@ -63,7 +63,7 @@ namespace VanillaMapMod
         {
             string text;
 
-            IReadOnlyCollection<MapObject> pins = PinGroups[poolGroup].GetChildren();
+            IReadOnlyCollection<MapObject> pins = PinGroups[poolGroup].Children;
 
             if (IsPersistent(poolGroup))
             {

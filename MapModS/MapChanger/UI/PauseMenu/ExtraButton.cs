@@ -14,7 +14,7 @@ namespace MapChanger.UI
 
         internal override void Make()
         {
-            Button = new(PauseMenu.Instance.Root, Name)
+            Button = new(PauseMenu.Root, Name)
             {
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center,
@@ -27,7 +27,7 @@ namespace MapChanger.UI
                 Margin = 0f
             };
 
-            Button.Click += OnClick;
+            Button.Click += OnClickInternal;
         }
     }
 }

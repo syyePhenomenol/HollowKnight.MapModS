@@ -36,12 +36,12 @@ namespace MapChanger.MonoBehaviours
                 {
                     if (selectedObjectKey is not NONE_SELECTED)
                     {
-                        Deselect(selectedObjectKey);
+                        DeselectInternal(selectedObjectKey);
                     }
 
                     if (value is not NONE_SELECTED)
                     {
-                        Select(value);
+                        SelectInternal(value);
                     }
 
                     selectedObjectKey = value;
@@ -49,7 +49,7 @@ namespace MapChanger.MonoBehaviours
             }
         }
 
-        private void Select(string objectKey)
+        private void SelectInternal(string objectKey)
         {
             if (Objects.ContainsKey(objectKey))
             {
@@ -60,7 +60,7 @@ namespace MapChanger.MonoBehaviours
             }
         }
 
-        private void Deselect(string objectKey)
+        private void DeselectInternal(string objectKey)
         {
             if (Objects.ContainsKey(objectKey))
             {

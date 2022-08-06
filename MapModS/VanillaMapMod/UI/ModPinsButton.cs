@@ -12,11 +12,9 @@ namespace VanillaMapMod
 
         }
 
-        public override void OnClick(Button button)
+        protected override void OnClick()
         {
             VanillaMapMod.LS.ToggleAllPools();
-
-            base.OnClick(button);
         }
 
         public override void Update()

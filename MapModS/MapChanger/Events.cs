@@ -47,8 +47,8 @@ namespace MapChanger
             new Tracker(),
             new VariableOverrides(),
             new BehaviourChanges(),
-            new Hotkeys(),
-            new UIMaster(),
+            new PauseMenu(),
+            new MapUILayerManager(),
             new MapObjectUpdater()
         };
 

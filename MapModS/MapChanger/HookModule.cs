@@ -5,7 +5,7 @@
     /// </summary>
     public abstract class HookModule
     {
-        internal abstract void OnEnterGame();
-        internal abstract void OnQuitToMenu();
+        public abstract void OnEnterGame();
+        public abstract void OnQuitToMenu();
     }
 }

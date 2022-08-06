@@ -13,12 +13,12 @@ namespace MapChanger
 
         private static int modeIndex = 0;
 
-        internal override void OnEnterGame()
+        public override void OnEnterGame()
         {
 
         }
 
-        internal override void OnQuitToMenu()
+        public override void OnQuitToMenu()
         {
             Modes = new();
         }
@@ -41,14 +41,17 @@ namespace MapChanger
         {
             MapModEnabled = !MapModEnabled;
 
+            UIManager.instance.checkpointSprite.Show();
+            UIManager.instance.checkpointSprite.Hide();
+
             SettingChanged();
         }
 
-        public static void SetModEnabled(bool enabled)
+        public static void SetModEnabled(bool value)
         {
-            if (MapModEnabled != enabled)
+            if (MapModEnabled != value)
             {
-                ToggleModEnabled();
+                MapModEnabled = value;
             }
         }
 

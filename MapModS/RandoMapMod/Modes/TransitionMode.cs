@@ -25,9 +25,26 @@ namespace RandoMapMod.Modes
                 roomSprite.Color = TransitionTracker.GetRoomColor(roomSprite.Rsd.SceneName);
             }
         };
-
         public override Action<AreaName> OnAreaNameUpdateColor => (areaName) => { areaName.ResetColor(); };
         public override Action<NextArea> OnNextAreaUpdateColor => (nextArea) => { nextArea.ResetColor(); };
         public override Action<QuickMapTitle, MapZone> OnQuickMapTitleUpdateColor => (qmt, mapZone) => { qmt.Color = RmmColors.GetColor(ColorSetting.UI_Neutral); };
+    }
+
+    internal class TransitionNormalMode : TransitionMode
+    {
+        public override string Mod => "RandoMapMod";
+        public override string ModeName => "Transition Normal";
+    }
+
+    internal class TransitionVisitedOnlyMode : TransitionMode
+    {
+        public override string Mod => "RandoMapMod";
+        public override string ModeName => "Transition Visited Only";
+    }
+
+    internal class TransitionAllRoomsMode : TransitionMode
+    {
+        public override string Mod => "RandoMapMod";
+        public override string ModeName => "Transition All Rooms";
     }
 }

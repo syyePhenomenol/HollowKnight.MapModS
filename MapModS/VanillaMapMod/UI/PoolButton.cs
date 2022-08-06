@@ -14,17 +14,15 @@ namespace VanillaMapMod
             PoolGroup = poolGroup;
         }
 
-        public override void OnClick(Button button)
+        protected override void OnClick()
         {
             VanillaMapMod.LS.TogglePoolGroupSetting(PoolGroup);
-
-            base.OnClick(button);
         }
 
         public override void Update()
         {
             Button.Content = PoolGroup.FriendlyName().Replace(" ", "\n")
-                + "\n" + VmmPins.GetPoolGroupCounter(PoolGroup);
+                + "\n" + VmmPinManager.GetPoolGroupCounter(PoolGroup);
 
             if (VanillaMapMod.LS.GetPoolGroupSetting(PoolGroup))
             {

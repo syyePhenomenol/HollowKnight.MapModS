@@ -11,14 +11,14 @@ namespace RandoMapMod.Pins
 
         private static ISprite GetDefaultLocationSprite(AbstractPlacement placement)
         {
-            return PinSprites.GetLocationSprite(SupplementalMetadata.OfPlacementAndLocations(placement).Get(InjectedProps.LocationPoolGroup));
+            return new PinLocationSprite(SupplementalMetadata.OfPlacementAndLocations(placement).Get(InjectedProps.LocationPoolGroup));
         }
 
         internal static readonly MetadataProperty<AbstractItem, ISprite> ItemPinSprite = new("PinSprite", GetDefaultItemSprite);
 
         private static ISprite GetDefaultItemSprite(AbstractItem item)
         {
-            return PinSprites.GetItemSprite(SupplementalMetadata.Of(item).Get(InjectedProps.ItemPoolGroup));
+            return new PinItemSprite(SupplementalMetadata.Of(item).Get(InjectedProps.ItemPoolGroup));
         }
 
         internal static readonly MetadataProperty<AbstractPlacement, string[]> HighlightScenes = new("HighlightScenes", (placement) => { return null; });

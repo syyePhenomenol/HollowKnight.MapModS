@@ -54,8 +54,9 @@ namespace RandoMapMod
             new PoolsPanel()
         };
 
-        private static readonly UILayer[] mapUILayers = new UILayer[]
+        private static readonly MapUILayer[] mapUILayers = new MapUILayer[]
         {
+            new Hotkeys(),
             new RmmBottomRowText()
         };
 
@@ -114,26 +115,40 @@ namespace RandoMapMod
             MapChanger.Settings.AddModes(modes);
             MapChanger.Settings.SetModEnabled(LS.ModEnabled);
             MapChanger.Settings.SetMode("RandoMapMod", LS.Mode.ToString().Replace('_', ' '));
+            MapChanger.Settings.OnSettingChanged += OnSettingChanged;
 
             RmmColors.LoadCustomColors();
-
             Events.AfterSetGameMap += OnSetGameMap;
 
-            RoomTexts.Load();
+            RmmRoomManager.Load();
             BenchwarpInterop.Load();
             TransitionData.SetTransitionLookup();
             PathfinderData.Load();
             Pathfinder.Initialize();
-            RmmPins.OnEnterGame();
+
+            RmmPinManager.OnEnterGame();
             TransitionTracker.OnEnterGame();
+            BenchwarpInterop.OnEnterGame();
+        }
+
+        private static void OnSettingChanged()
+        {
+            LS.ModEnabled = MapChanger.Settings.MapModEnabled;
+
+            if (MapChanger.Settings.CurrentMode().Mod is "RandoMapMod")
+            {
+                LS.SetMode(MapChanger.Settings.CurrentMode().ModeName);
+            }
+
+            RouteTracker.ResetRoute();
         }
 
         private static void OnSetGameMap(GameObject goMap)
         {
             try
             {
-                RoomTexts.Make(goMap);
-                RmmPins.Make(goMap);
+                Rooms.RmmRoomManager.Make(goMap);
+                RmmPinManager.Make(goMap);
 
                 LS.Initialize();
 
@@ -149,9 +164,9 @@ namespace RandoMapMod
                     ebp.Make();
                 }
 
-                foreach (UILayer uiLayer in mapUILayers)
+                foreach (MapUILayer uiLayer in mapUILayers)
                 {
-                    UIMaster.AddMapLayer(uiLayer);
+                    MapUILayerManager.AddMapLayer(uiLayer);
                 }
             }
             catch (Exception e)
@@ -162,10 +177,12 @@ namespace RandoMapMod
 
         private static void OnQuitToMenu()
         {
+            MapChanger.Settings.OnSettingChanged -= OnSettingChanged;
             Events.AfterSetGameMap -= OnSetGameMap;
 
             TransitionTracker.OnQuitToMenu();
-            RmmPins.OnQuitToMenu();
+            RmmPinManager.OnQuitToMenu();
+            BenchwarpInterop.OnQuitToMenu();
         }
     }
 }

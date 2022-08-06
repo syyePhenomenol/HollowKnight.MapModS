@@ -61,13 +61,8 @@
   <ItemGroup>
     <Compile Remove="MapChanger\Defs\MapObjectDef.cs" />
     <Compile Remove="MapChanger\MapMod.cs" />
-    <Compile Remove="MapChanger\MonoBehaviours\Interfaces\IBorder.cs" />
-    <Compile Remove="MapChanger\MonoBehaviours\Interfaces\IMapRoom.cs" />
-    <Compile Remove="MapChanger\MonoBehaviours\Interfaces\ISpriteRenderer.cs" />
-    <Compile Remove="MapChanger\MonoBehaviours\Interfaces\ITextMeshPro.cs" />
     <Compile Remove="MapChanger\MonoBehaviours\MapObjectGroup.cs" />
     <Compile Remove="MapChanger\SpriteManagerOld.cs" />
-    <Compile Remove="RandoMapMod\Pins\RMMPinGroup.cs" />
     <Compile Remove="RandoMapMod\RandoPinData.cs" />
     <Compile Remove="RandoMapMod\RoomText.cs" />
     <Compile Remove="RandoMapMod\UI\Benchwarp.cs" />

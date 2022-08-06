@@ -25,7 +25,7 @@ namespace MapChanger.UI
 
         internal void Make()
         {
-            ExtraButtonsGrid = new(PauseMenu.Instance.Root, $"{Mod} {Name}")
+            ExtraButtonsGrid = new(PauseMenu.Root, $"{Mod} {Name}")
             {
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Top,
