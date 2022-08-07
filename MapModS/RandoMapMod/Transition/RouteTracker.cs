@@ -1,30 +1,56 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using MapChanger;
 using RandoMapMod.Settings;
+using RandoMapMod.UI;
 
 namespace RandoMapMod.Transition
 {
-    internal static class RouteTracker
+    internal class RouteTracker : HookModule
     {
-        public static string lastStartScene = "";
-        public static string lastFinalScene = "";
-        public static string lastStartTransition = "";
-        public static string lastFinalTransition = "";
-        public static int transitionsCount = 0;
-        public static List<string> selectedRoute = new();
-        public static List<List<string>> rejectedRoutes = new();
+        private static List<string> selectedRoute = new();
+        internal static ReadOnlyCollection<string> SelectedRoute => selectedRoute?.AsReadOnly();
 
-        private static Thread GetRouteThread;
+        private static string lastStartScene = "";
+        private static string lastFinalScene = "";
+        private static string lastStartTransition = "";
+        private static string lastFinalTransition = "";
+        private static int transitionsCount = 0;
 
+        private static readonly List<List<string>> rejectedRoutes = new();
+
+        public override void OnEnterGame()
+        {
+            ItemChanger.Events.OnBeginSceneTransition += OnBeginSceneTransition;
+            MapChanger.Settings.OnSettingChanged += OnSettingChanged;
+        }
+
+        public override void OnQuitToMenu()
+        {
+            ItemChanger.Events.OnBeginSceneTransition -= OnBeginSceneTransition;
+            MapChanger.Settings.OnSettingChanged -= OnSettingChanged;
+        }
+
+        private static void OnBeginSceneTransition(ItemChanger.Transition obj)
+        {
+            UpdateRoute(obj);
+        }
+
+        private static void OnSettingChanged()
+        {
+            ResetRoute();
+        }
+
+        private static Thread SelectRouteThread;
         public static void SelectRoute(string scene)
         {
-            if (GetRouteThread is null || !GetRouteThread.IsAlive)
+            if (SelectRouteThread is null || !SelectRouteThread.IsAlive)
             {
-                GetRouteThread = new Thread(() => GetRoute(scene));
-                GetRouteThread.Start();
+                SelectRouteThread = new Thread(() => GetRoute(scene));
+                SelectRouteThread.Start();
                 //Benchwarp.attackHoldTimer.Reset();
             }
         }
@@ -100,10 +126,10 @@ namespace RandoMapMod.Transition
             //TransitionWorldMap.UpdateInstructions();
             //TransitionWorldMap.UpdateRouteSummary();
 
-            //RouteCompass.UpdateCompass();
+            RouteCompass.Update();
         }
 
-        public static void ResetRoute()
+        internal static void ResetRoute()
         {
             lastStartScene = "";
             lastFinalScene = "";
@@ -114,7 +140,7 @@ namespace RandoMapMod.Transition
             rejectedRoutes.Clear();
         }
 
-        public static void UpdateRoute(ItemChanger.Transition lastTransition)
+        internal static void UpdateRoute(ItemChanger.Transition lastTransition)
         {
             RandoMapMod.Instance.LogDebug("Last transition: " + lastTransition.ToString());
 
@@ -148,7 +174,7 @@ namespace RandoMapMod.Transition
                     ResetRoute();
                     //UpdateAll();
                     //TransitionWorldMap.UpdateAll();
-                    //RouteCompass.UpdateCompass();
+                    RouteCompass.Update();
                     break;
                 case OffRouteBehaviour.Reevaluate:
                     ReevaluateRoute(lastTransition);
@@ -168,6 +194,40 @@ namespace RandoMapMod.Transition
                 {
                     rejectedRoutes.Clear();
                 }
+            }
+        }
+
+        internal static string GetRouteText()
+        {
+            string text = "";
+
+            if (!selectedRoute.Any()) return text;
+
+            if (RandoMapMod.GS.RouteTextInGame is RouteTextInGame.NextTransitionOnly
+                && !States.QuickMapOpen && !States.WorldMapOpen)
+            {
+                return text + " -> " + selectedRoute.First().ToCleanName();
+            }
+
+            foreach (string transition in selectedRoute)
+            {
+                if (text.Length > 128)
+                {
+                    text += " -> ... -> " + selectedRoute.Last().ToCleanName();
+                    break;
+                }
+
+                text += " -> " + transition.ToCleanName();
+            }
+
+            return text;
+        }
+
+        internal static void TryBenchwarp()
+        {
+            if (selectedRoute.Any() && selectedRoute.First().IsBenchwarpTransition())
+            {
+                GameManager.instance.StartCoroutine(BenchwarpInterop.DoBenchwarp(selectedRoute.First()));
             }
         }
     }

@@ -26,7 +26,7 @@ namespace RandoMapMod.UI
         private Vector3 currentDir;
         private float currentAngle;
 
-        public List<GameObject> trackedObjects;
+        public List<GameObject> TrackedObjects;
 
         public static GameObject Create(string name, GameObject entity, Sprite sprite, Color color, float radius, float scale, Func<bool> condition, bool lerp, float lerpDuration)
         {
@@ -109,14 +109,14 @@ namespace RandoMapMod.UI
 
         private bool TryGetClosestObject(out GameObject o)
         {
-            if (trackedObjects == null || !trackedObjects.Any() || entity == null)
+            if (TrackedObjects == null || !TrackedObjects.Any() || entity == null)
             {
                 o = null;
 
                 return false;
             }
 
-            o =  trackedObjects.Aggregate((i1, i2) => SqrDistanceFromEntity(i1) < SqrDistanceFromEntity(i2) ? i1 : i2);
+            o = TrackedObjects.Aggregate((i1, i2) => SqrDistanceFromEntity(i1) < SqrDistanceFromEntity(i2) ? i1 : i2);
             
             return o != null;
         }

@@ -107,90 +107,6 @@ namespace RandoMapMod.UI
             //Benchwarp.UpdateAll();
         }
 
-        private static void GameMap_QuickMapAncientBasin(On.GameMap.orig_QuickMapAncientBasin orig, GameMap self)
-        {
-            orig(self);
-            OnOpenQuickMap();
-        }
-
-        private static void GameMap_QuickMapCity(On.GameMap.orig_QuickMapCity orig, GameMap self)
-        {
-            orig(self);
-            OnOpenQuickMap();
-        }
-
-        private static void GameMap_QuickMapCliffs(On.GameMap.orig_QuickMapCliffs orig, GameMap self)
-        {
-            orig(self);
-            OnOpenQuickMap();
-        }
-
-        private static void GameMap_QuickMapCrossroads(On.GameMap.orig_QuickMapCrossroads orig, GameMap self)
-        {
-            orig(self);
-            OnOpenQuickMap();
-        }
-
-        private static void GameMap_QuickMapCrystalPeak(On.GameMap.orig_QuickMapCrystalPeak orig, GameMap self)
-        {
-            orig(self);
-            OnOpenQuickMap();
-        }
-
-        private static void GameMap_QuickMapDeepnest(On.GameMap.orig_QuickMapDeepnest orig, GameMap self)
-        {
-            orig(self);
-            OnOpenQuickMap();
-        }
-
-        private static void GameMap_QuickMapDirtmouth(On.GameMap.orig_QuickMapDirtmouth orig, GameMap self)
-        {
-            orig(self);
-            OnOpenQuickMap();
-        }
-
-        private static void GameMap_QuickMapFogCanyon(On.GameMap.orig_QuickMapFogCanyon orig, GameMap self)
-        {
-            orig(self);
-            OnOpenQuickMap();
-        }
-
-        private static void GameMap_QuickMapFungalWastes(On.GameMap.orig_QuickMapFungalWastes orig, GameMap self)
-        {
-            orig(self);
-            OnOpenQuickMap();
-        }
-
-        private static void GameMap_QuickMapGreenpath(On.GameMap.orig_QuickMapGreenpath orig, GameMap self)
-        {
-            orig(self);
-            OnOpenQuickMap();
-        }
-
-        private static void GameMap_QuickMapKingdomsEdge(On.GameMap.orig_QuickMapKingdomsEdge orig, GameMap self)
-        {
-            orig(self);
-            OnOpenQuickMap();
-        }
-
-        private static void GameMap_QuickMapQueensGardens(On.GameMap.orig_QuickMapQueensGardens orig, GameMap self)
-        {
-            orig(self);
-            OnOpenQuickMap();
-        }
-
-        private static void GameMap_QuickMapRestingGrounds(On.GameMap.orig_QuickMapRestingGrounds orig, GameMap self)
-        {
-            orig(self);
-            OnOpenQuickMap();
-        }
-
-        private static void GameMap_QuickMapWaterways(On.GameMap.orig_QuickMapWaterways orig, GameMap self)
-        {
-            orig(self);
-            OnOpenQuickMap();
-        }
-
         public static void OnOpenQuickMap()
         {
             worldMapOpen = false;
@@ -209,27 +125,6 @@ namespace RandoMapMod.UI
             //MapText.UpdateAll();
             //TransitionPersistent.UpdateAll();
             //Benchwarp.attackHoldTimer.Reset();
-        }
-
-        private static void HeroController_UnPause(On.HeroController.orig_UnPause orig, HeroController self)
-        {
-            orig(self);
-            //PauseMenu.CollapsePanel();
-        }
-
-        private static void HandleSceneChanges(Scene from, Scene to)
-        {
-            if (GameManager.instance.sceneName != to.name) return;
-
-            //RouteCompass.CreateRouteCompass();
-            //RouteCompass.UpdateCompass();
-        }
-
-        private static void Events_OnBeginSceneTransition(ItemChanger.Transition obj)
-        {
-            //TransitionPersistent.UpdateRoute(obj);
-
-            //MapModS.Instance.Log(obj.ToString());
         }
     }
 }

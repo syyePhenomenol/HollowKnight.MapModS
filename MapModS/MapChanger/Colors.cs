@@ -46,7 +46,7 @@ namespace MapChanger
     public static class Colors
     {
         /// <summary>
-        /// For the default colors of the map rooms, use RoomSprite.OrigColor instead.
+        /// For the default colors of the map rooms, use RoomSprite.OrigColor.
         /// </summary>
         private static readonly Dictionary<ColorSetting, Vector4> defaultColors = new()
         {

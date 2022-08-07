@@ -1,7 +1,7 @@
 ﻿using ItemChanger;
 using UnityEngine;
 
-namespace RandoMapMod.Pins
+namespace RandoMapMod
 {
     /// <summary>
     /// Uses MapChanger's SpriteManager to get a Sprite.

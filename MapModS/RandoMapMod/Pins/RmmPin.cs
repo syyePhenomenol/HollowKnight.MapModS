@@ -7,7 +7,9 @@ using MapChanger.MonoBehaviours;
 using RandoMapMod.Modes;
 using RandoMapMod.Settings;
 using RandoMapMod.Transition;
+using RandomizerCore.Logic;
 using UnityEngine;
+using L = RandomizerMod.Localization;
 
 namespace RandoMapMod.Pins
 {
@@ -20,7 +22,7 @@ namespace RandoMapMod.Pins
         private protected const float UNREACHABLE_SIZE_MULTIPLIER = 0.7f;
         private protected const float UNREACHABLE_COLOR_MULTIPLIER = 0.5f;
 
-        private protected const float SELECTED_MULTIPLIER = 1.5f;
+        private protected const float SELECTED_MULTIPLIER = 1.3f;
 
         private protected static readonly Dictionary<PinSize, float> pinSizes = new()
         {
@@ -49,6 +51,7 @@ namespace RandoMapMod.Pins
         internal abstract HashSet<string> ItemPoolGroups { get; }
         internal string SceneName { get; protected private set; }
         internal MapZone MapZone { get; private set; } = MapZone.NONE;
+        internal string Logic { get; private set; }
 
         public void Initialize((string, float, float)[] mapLocations)
         {
@@ -82,6 +85,11 @@ namespace RandoMapMod.Pins
                     LocationNotCleared
                 }
             );
+
+            if (RandomizerMod.RandomizerMod.RS.TrackerData.lm.LogicLookup.TryGetValue(name, out OptimizedLogicDef logic))
+            {
+                Logic = logic.ToInfix();
+            }
 
             BorderSprite = new EmbeddedSprite("Pins.Border").Value;
             BorderPlacement = BorderPlacement.InFront;
@@ -132,6 +140,13 @@ namespace RandoMapMod.Pins
 
         protected private abstract bool LocationNotCleared();
 
-        internal abstract void GetLookupText();
+        internal virtual string GetLookupText()
+        {;
+            string text = $"{name}";
+            text += $"\n\n{L.Localize("Room")}: {SceneName?? "none"}";
+            text += $"\n\n{L.Localize("Status")}:";
+
+            return text;
+        }
     }
 }

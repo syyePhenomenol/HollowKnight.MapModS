@@ -8,6 +8,8 @@ using MapChanger.MonoBehaviours;
 using RandoMapMod.Defs;
 using UnityEngine;
 using RM = RandomizerMod.RandomizerMod;
+using L = RandomizerMod.Localization;
+using MapChanger;
 
 namespace RandoMapMod.Pins
 {
@@ -162,7 +164,7 @@ namespace RandoMapMod.Pins
         {
             Vector4 color = UnityEngine.Color.white;
 
-            if (placementState == RandoPlacementState.UncheckedUnreachable && !Selected)
+            if (placementState == RandoPlacementState.UncheckedUnreachable)
             {
                 Color = new Vector4(color.x * UNREACHABLE_COLOR_MULTIPLIER, color.y * UNREACHABLE_COLOR_MULTIPLIER, color.z * UNREACHABLE_COLOR_MULTIPLIER, color.w);
                 return;
@@ -181,7 +183,7 @@ namespace RandoMapMod.Pins
                 _ => RmmColors.GetColor(RmmColorSetting.Pin_Normal),
             };
 
-            if (placementState == RandoPlacementState.UncheckedUnreachable && !Selected)
+            if (placementState == RandoPlacementState.UncheckedUnreachable)
             {
                 BorderColor = new Vector4(color.x * UNREACHABLE_COLOR_MULTIPLIER, color.y * UNREACHABLE_COLOR_MULTIPLIER, color.z * UNREACHABLE_COLOR_MULTIPLIER, color.w);
             }
@@ -222,9 +224,57 @@ namespace RandoMapMod.Pins
             }
         }
 
-        internal override void GetLookupText()
+        internal override string GetLookupText()
         {
-            throw new NotImplementedException();
+            string text = base.GetLookupText();
+
+            text += placementState switch
+            {
+                RandoPlacementState.UncheckedUnreachable => $" {L.Localize("Randomized, unchecked, unreachable")}",
+                RandoPlacementState.UncheckedReachable => $" {L.Localize("Randomized, unchecked, reachable")}",
+                RandoPlacementState.OutOfLogicReachable => $" {L.Localize("Randomized, unchecked, reachable through sequence break")}",
+                RandoPlacementState.Previewed => $" {L.Localize("Randomized, previewed")}",
+                RandoPlacementState.Cleared => $" {L.Localize("Cleared")}",
+                RandoPlacementState.ClearedPersistent => $" {L.Localize("Randomized, cleared, persistent")}",
+                _ => ""
+            };
+
+            text += $"\n\n{L.Localize("Logic")}: {Logic?? "not found"}";
+
+            if (RM.RS.TrackerData.previewedLocations.Contains(name) && placement.TryGetPreviewText(out string[] previewText))
+            {
+                text += $"\n\n{L.Localize("Previewed item(s)")}:";
+
+                foreach (string textPiece in previewText)
+                {
+                    text += $" {ToCleanPreviewText(textPiece)},";
+                }
+
+                text = text.Substring(0, text.Length - 1);
+            }
+
+            if (RandoMapMod.LS.SpoilerOn
+                && !(RM.RS.TrackerData.previewedLocations.Contains(name) && placement.CanPreview()))
+            {
+                text += $"\n\n{L.Localize("Spoiler item(s)")}:";
+
+                foreach (AbstractItem item in placement.Items)
+                {
+                    text += $" {Utils.ToCleanName(item.name)},";
+                }
+
+                text = text.Substring(0, text.Length - 1);
+            }
+
+            return text;
+
+            static string ToCleanPreviewText(string text)
+            {
+                return text.Replace("Pay ", "")
+                    .Replace("Once you own ", "")
+                    .Replace(", I'll gladly sell it to you.", "")
+                    .Replace("Requires ", "");
+            }
         }
     }
 }

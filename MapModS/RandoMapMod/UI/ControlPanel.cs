@@ -1,19 +1,16 @@
 ﻿using MagicUI.Core;
 using MagicUI.Elements;
 using MagicUI.Graphics;
-//using RandoMapMod.Data;
-//using MapModS.Map;
 using MapChanger;
+using MapChanger.UI;
+using RandoMapMod.Modes;
 using RandoMapMod.Settings;
-using UnityEngine;
 using L = RandomizerMod.Localization;
 
 namespace RandoMapMod.UI
 {
-    internal class ControlPanel
+    internal class ControlPanel : WorldMapStack
     {
-        private static LayoutRoot layout;
-
         private static Panel panel;
         private static StackLayout panelContents;
         private static TextObject control;
@@ -32,174 +29,75 @@ namespace RandoMapMod.UI
         private static TextObject whenOffRoute;
         private static TextObject compass;
 
-        public static bool Condition()
-        {
-            return RandoMapMod.LS.ModEnabled
-                && GUI.worldMapOpen
-                && !GUI.lockToggleEnable;
-        }
+        protected override HorizontalAlignment StackHorizontalAlignment => HorizontalAlignment.Left;
+        protected override VerticalAlignment StackVerticalAlignment => VerticalAlignment.Bottom;
 
-        public static void Build()
+        protected override void BuildStack()
         {
-            if (layout == null)
+            panel = new(Root, SpriteManager.Instance.GetTexture("GUI.PanelLeft").ToSlicedSprite(200f, 50f, 100f, 50f), "Panel")
             {
-                layout = new(true, "Control Panel");
-                layout.VisibilityCondition = Condition;
+                MinWidth = 0f,
+                MinHeight = 0f,
+                Borders = new(10f, 20f, 30f, 20f),
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Bottom
+            };
 
-                panel = new(layout, GUIController.Instance.Images["panelLeft"].ToSlicedSprite(200f, 50f, 100f, 50f), "Panel")
-                {
-                    MinWidth = 0f,
-                    MinHeight = 0f,
-                    Borders = new(10f, 20f, 30f, 20f),
-                    HorizontalAlignment = HorizontalAlignment.Left,
-                    VerticalAlignment = VerticalAlignment.Bottom,
-                    Padding = new(160f, 0f, 0f, 150f)
-                };
+            Stack.Children.Add(panel);
 
-                ((Image)layout.GetElement("Panel Background")).Tint = Colors.GetColor(ColorSetting.UI_Borders);
+            ((Image)Root.GetElement("Panel Background")).Tint = RmmColors.GetColor(RmmColorSetting.UI_Borders);
 
-                panelContents = new(layout, "Panel Contents")
-                {
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    VerticalAlignment = VerticalAlignment.Center,
-                    Orientation = Orientation.Vertical
-                };
+            panelContents = new(Root, "Panel Contents")
+            {
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
+                Orientation = Orientation.Vertical
+            };
 
-                panel.Child = panelContents;
+            panel.Child = panelContents;
 
-                control = UIExtensions.PanelText(layout, "Collapsed");
-                panelContents.Children.Add(control);
+            control = UIExtensions.PanelText(Root, "Collapsed");
+            panelContents.Children.Add(control);
 
-                modEnabled = UIExtensions.PanelText(layout, "Mod Enabled");
-                panelContents.Children.Add(modEnabled);
-                modEnabled.Text = $"Ctrl-M: {L.Localize("Disable mod")}";
+            modEnabled = UIExtensions.PanelText(Root, "Mod Enabled");
+            panelContents.Children.Add(modEnabled);
+            modEnabled.Text = $"Ctrl-M: {L.Localize("Disable mod")}";
 
-                shiftPan = UIExtensions.PanelText(layout, "Shift Pan");
-                panelContents.Children.Add(shiftPan);
-                shiftPan.Text = $"{L.Localize("Hold Shift")}: {L.Localize("Pan faster")}";
+            shiftPan = UIExtensions.PanelText(Root, "Shift Pan");
+            panelContents.Children.Add(shiftPan);
+            shiftPan.Text = $"{L.Localize("Hold Shift")}: {L.Localize("Pan faster")}";
 
-                mapKey = UIExtensions.PanelText(layout, "Map Key");
-                panelContents.Children.Add(mapKey);
+            mapKey = UIExtensions.PanelText(Root, "Map Key");
+            panelContents.Children.Add(mapKey);
 
-                lookup = UIExtensions.PanelText(layout, "Lookup");
-                panelContents.Children.Add(lookup);
+            lookup = UIExtensions.PanelText(Root, "Lookup");
+            panelContents.Children.Add(lookup);
 
-                benchwarpWorldMap = UIExtensions.PanelText(layout, "Benchwarp World Map");
-                panelContents.Children.Add(benchwarpWorldMap);
+            benchwarpWorldMap = UIExtensions.PanelText(Root, "Benchwarp World Map");
+            panelContents.Children.Add(benchwarpWorldMap);
 
-                benchwarpSearch = UIExtensions.PanelText(layout, "Benchwarp Search");
-                panelContents.Children.Add(benchwarpSearch);
+            benchwarpSearch = UIExtensions.PanelText(Root, "Benchwarp Search");
+            panelContents.Children.Add(benchwarpSearch);
 
-                uncheckedVisited = UIExtensions.PanelText(layout, "Unchecked");
-                panelContents.Children.Add(uncheckedVisited);
+            uncheckedVisited = UIExtensions.PanelText(Root, "Unchecked");
+            panelContents.Children.Add(uncheckedVisited);
 
-                routeInGame = UIExtensions.PanelText(layout, "Route In Game");
-                panelContents.Children.Add(routeInGame);
+            routeInGame = UIExtensions.PanelText(Root, "Route In Game");
+            panelContents.Children.Add(routeInGame);
 
-                whenOffRoute = UIExtensions.PanelText(layout, "Off-route");
-                panelContents.Children.Add(whenOffRoute);
+            whenOffRoute = UIExtensions.PanelText(Root, "Off-route");
+            panelContents.Children.Add(whenOffRoute);
 
-                compass = UIExtensions.PanelText(layout, "Compass");
-                panelContents.Children.Add(compass);
-
-                layout.ListenForHotkey(KeyCode.H, () =>
-                {
-                    RandoMapMod.GS.ToggleControlPanel();
-                    UpdateAll();
-                }, ModifierKeys.Ctrl, () => RandoMapMod.LS.ModEnabled);
-
-                layout.ListenForHotkey(KeyCode.K, () =>
-                {
-                    RandoMapMod.GS.ToggleMapKey();
-                    UpdateAll();
-                    //MapKey.UpdateAll();
-                }, ModifierKeys.Ctrl, () => RandoMapMod.LS.ModEnabled);
-
-                layout.ListenForHotkey(KeyCode.L, () =>
-                {
-                    RandoMapMod.GS.ToggleLookup();
-
-                    //if (MapModS.GS.lookupOn)
-                    //{
-                    //    InfoPanels.UpdateSelectedPin();
-                    //}
-                    //else
-                    //{
-                    //    WorldMap.CustomPins.ResizePins("None selected");
-                    //}
-
-                    UpdateAll();
-                    //InfoPanels.UpdateAll();
-                }, ModifierKeys.Ctrl, () => RandoMapMod.LS.ModEnabled);
-                
-                if (Interop.HasBenchwarp())
-                {
-                    layout.ListenForHotkey(KeyCode.W, () =>
-                    {
-                        RandoMapMod.GS.ToggleBenchwarpWorldMap();
-                        UpdateAll();
-                        //Benchwarp.UpdateAll();
-                    }, ModifierKeys.Ctrl, () => RandoMapMod.LS.ModEnabled);
-
-                    layout.ListenForHotkey(KeyCode.B, () =>
-                    {
-                        RandoMapMod.GS.ToggleAllowBenchWarp();
-                        //TransitionPersistent.ResetRoute();
-                        //RouteCompass.UpdateCompass();
-                        //UpdateAll();
-                        //TransitionPersistent.UpdateAll();
-                        //TransitionWorldMap.UpdateAll();
-                    }, ModifierKeys.Ctrl, () => RandoMapMod.LS.ModEnabled);
-                }
-
-                layout.ListenForHotkey(KeyCode.U, () =>
-                {
-                    RandoMapMod.GS.ToggleUncheckedPanel();
-                    UpdateAll();
-                    //TransitionWorldMap.UpdateAll();
-                    //InfoPanels.UpdateAll();
-                }, ModifierKeys.Ctrl, () => RandoMapMod.LS.ModEnabled);
-
-                layout.ListenForHotkey(KeyCode.R, () =>
-                {
-                    RandoMapMod.GS.ToggleRouteTextInGame();
-                    UpdateAll();
-                    //TransitionPersistent.UpdateAll();
-                    //TransitionWorldMap.UpdateAll();
-                }, ModifierKeys.Ctrl, () => RandoMapMod.LS.ModEnabled);
-
-                layout.ListenForHotkey(KeyCode.E, () =>
-                {
-                    RandoMapMod.GS.ToggleWhenOffRoute();
-                    UpdateAll();
-                }, ModifierKeys.Ctrl, () => RandoMapMod.LS.ModEnabled);
-
-                layout.ListenForHotkey(KeyCode.C, () =>
-                {
-                    RandoMapMod.GS.ToggleRouteCompassEnabled();
-                    UpdateAll();
-                    //TransitionWorldMap.UpdateAll();
-                }, ModifierKeys.Ctrl, () => RandoMapMod.LS.ModEnabled);
-
-#if DEBUG
-                layout.ListenForHotkey(KeyCode.Alpha6, () =>
-                {
-                    //MapChanger.Finder.ReloadLocations();
-                    //WorldMap.CustomPins.ReadjustPinPostiions();
-                    //MapRooms.ReadjustRoomPostiions();
-                }, ModifierKeys.Ctrl);
-#endif
-                UpdateAll();
-            }
+            compass = UIExtensions.PanelText(Root, "Compass");
+            panelContents.Children.Add(compass);
         }
 
-        public static void Destroy()
+        protected override bool Condition()
         {
-            layout?.Destroy();
-            layout = null;
+            return base.Condition() && Conditions.RandoMapModEnabled();
         }
 
-        public static void UpdateAll()
+        public override void Update()
         {
             UpdateControl();
             UpdateMapKey();
@@ -218,25 +116,24 @@ namespace RandoMapMod.UI
                 mapKey.Visibility = Visibility.Visible;
                 lookup.Visibility = Visibility.Visible;
 
-                //if (MapModS.LS.Mode == MapMode.Transition
-                //    || MapModS.LS.Mode == MapMode.TransitionVisitedOnly)
-                //{
-                //    benchwarpWorldMap.Visibility = Visibility.Collapsed;
-                //    benchwarpSearch.Visibility = Visibility.Visible;
-                //    uncheckedVisited.Visibility = Visibility.Visible;
-                //    routeInGame.Visibility = Visibility.Visible;
-                //    whenOffRoute.Visibility = Visibility.Visible;
-                //    compass.Visibility = Visibility.Visible;
-                //}
-                //else
-                //{
-                //    benchwarpWorldMap.Visibility = Visibility.Visible;
-                //    benchwarpSearch.Visibility = Visibility.Collapsed;
-                //    uncheckedVisited.Visibility = Visibility.Collapsed;
-                //    routeInGame.Visibility = Visibility.Collapsed;
-                //    whenOffRoute.Visibility = Visibility.Collapsed;
-                //    compass.Visibility = Visibility.Collapsed;
-                //}
+                if (MapChanger.Settings.CurrentMode().GetType().IsSubclassOf(typeof(TransitionMode)))
+                {
+                    benchwarpWorldMap.Visibility = Visibility.Collapsed;
+                    benchwarpSearch.Visibility = Visibility.Visible;
+                    uncheckedVisited.Visibility = Visibility.Visible;
+                    routeInGame.Visibility = Visibility.Visible;
+                    whenOffRoute.Visibility = Visibility.Visible;
+                    compass.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    benchwarpWorldMap.Visibility = Visibility.Visible;
+                    benchwarpSearch.Visibility = Visibility.Collapsed;
+                    uncheckedVisited.Visibility = Visibility.Collapsed;
+                    routeInGame.Visibility = Visibility.Collapsed;
+                    whenOffRoute.Visibility = Visibility.Collapsed;
+                    compass.Visibility = Visibility.Collapsed;
+                }
             }
             else
             {
@@ -253,7 +150,7 @@ namespace RandoMapMod.UI
             }
         }
 
-        public static void UpdateControl()
+        private static void UpdateControl()
         {
             if (RandoMapMod.GS.ControlPanelOn)
             {
@@ -265,7 +162,7 @@ namespace RandoMapMod.UI
             }
         }
 
-        public static void UpdateMapKey()
+        private static void UpdateMapKey()
         {
             UIExtensions.SetToggleText
                 (
@@ -275,7 +172,7 @@ namespace RandoMapMod.UI
                 );
         }
 
-        public static void UpdateLookup()
+        private static void UpdateLookup()
         {
             UIExtensions.SetToggleText
                 (
@@ -285,7 +182,7 @@ namespace RandoMapMod.UI
                 );
         }
 
-        public static void UpdateBenchwarpWorldMap()
+        private static void UpdateBenchwarpWorldMap()
         {
             if (Interop.HasBenchwarp())
             {
@@ -302,7 +199,7 @@ namespace RandoMapMod.UI
             }
         }
 
-        public static void UpdateBenchwarpSearch()
+        private static void UpdateBenchwarpSearch()
         {
             if (Interop.HasBenchwarp())
             {
@@ -319,7 +216,7 @@ namespace RandoMapMod.UI
             }
         }
 
-        public static void UpdateUnchecked()
+        private static void UpdateUnchecked()
         {
             UIExtensions.SetToggleText
                 (
@@ -329,7 +226,7 @@ namespace RandoMapMod.UI
                 );
         }
 
-        public static void UpdateRouteInGame()
+        private static void UpdateRouteInGame()
         {
             string text = $"{L.Localize("Show route in-game")} (Ctrl-R): ";
 
@@ -352,7 +249,7 @@ namespace RandoMapMod.UI
             routeInGame.Text = text;
         }
 
-        public static void UpdateOffRoute()
+        private static void UpdateOffRoute()
         {
             string text = $"{L.Localize("When off-route")} (Ctrl-E): ";
 
@@ -375,7 +272,7 @@ namespace RandoMapMod.UI
             whenOffRoute.Text = text;
         }
 
-        public static void UpdateCompass()
+        private static void UpdateCompass()
         {
             UIExtensions.SetToggleText
                 (

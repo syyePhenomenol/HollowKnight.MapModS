@@ -9,6 +9,7 @@ namespace MapChanger
     /// <summary>
     /// Code copied from ItemChanger, originally written by Homothety.
     /// The main difference is that mipmapping is enabled, making smaller scaled sprites look a bit better.
+    /// I have also added a method for getting the Texture2D.
     /// https://github.com/homothetyhk/HollowKnight.ItemChanger/blob/master/ItemChanger/Internal/SpriteManager.cs
     /// </summary>
     public class SpriteManager
@@ -16,6 +17,7 @@ namespace MapChanger
         private readonly Assembly _assembly;
         private readonly Dictionary<string, string> _resourcePaths;
         private readonly Dictionary<string, Sprite> _cachedSprites = new();
+        private readonly Dictionary<string, Texture2D> _cachedTextures = new();
         private readonly Info _info;
 
         public class Info
@@ -87,6 +89,25 @@ namespace MapChanger
             {
                 MapChangerMod.Instance.LogError($"{name} did not correspond to an embedded image file.");
                 return Modding.CanvasUtil.NullSprite();
+            }
+        }
+
+        public Texture2D GetTexture(string name)
+        {
+            if (_cachedTextures.TryGetValue(name, out Texture2D tex)) return tex;
+            else if (_resourcePaths.TryGetValue(name, out string path))
+            {
+                byte[] data = ToArray(_assembly.GetManifestResourceStream(path));
+                tex = new(1, 1, TextureFormat.RGBA32, true);
+                tex.LoadImage(data, markNonReadable: true);
+                tex.filterMode = _info.GetFilterMode(name);
+
+                return _cachedTextures[name] = tex;
+            }
+            else
+            {
+                MapChangerMod.Instance.LogError($"{name} did not correspond to an embedded image file.");
+                return null;
             }
         }
 

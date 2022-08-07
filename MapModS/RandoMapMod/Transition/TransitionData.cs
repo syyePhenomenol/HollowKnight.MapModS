@@ -11,7 +11,7 @@ using TM = RandomizerMod.Settings.TransitionSettings.TransitionMode;
 
 namespace RandoMapMod.Transition
 {
-    public static class TransitionData
+    internal static class TransitionData
     {
         private static RandoModContext Ctx => RM.RS?.Context;
         private static LogicManager Lm => Ctx?.LM;
@@ -20,29 +20,29 @@ namespace RandoMapMod.Transition
         private static Dictionary<string, TransitionPlacement> _transitionLookup = new();
         private static Dictionary<string, HashSet<string>> _transitionsByScene = new();
 
-        public static bool IsTransitionRando()
+        internal static bool IsTransitionRando()
         {
             return RM.RS.GenerationSettings.TransitionSettings.Mode != TM.None
                 || (RM.RS.Context.transitionPlacements != null && RM.RS.Context.transitionPlacements.Any());
         }
 
-        public static bool TransitionModeActive()
+        internal static bool TransitionModeActive()
         {
             return MapChanger.Settings.MapModEnabled
                 && MapChanger.Settings.CurrentMode() is TransitionNormalMode or TransitionVisitedOnlyMode or TransitionAllRoomsMode;
         }
 
-        public static bool IsRandomizedTransition(string source)
+        internal static bool IsRandomizedTransition(string source)
         {
             return _randomizedTransitions.Contains(source);
         }
 
-        public static bool IsInTransitionLookup(string source)
+        internal static bool IsInTransitionLookup(string source)
         {
             return _transitionLookup.ContainsKey(source);
         }
 
-        public static bool IsSpecialRoom(this string room)
+        internal static bool IsSpecialRoom(this string room)
         {
             // Rooms that we care about that aren't randomized
             return room == "Room_Tram_RG"
@@ -52,7 +52,7 @@ namespace RandoMapMod.Transition
              || room == "GG_Atrium_Roof";
         }
 
-        public static string GetScene(string source)
+        internal static string GetScene(string source)
         {
             if (_transitionLookup.TryGetValue(source, out TransitionPlacement placement))
             {
@@ -64,7 +64,7 @@ namespace RandoMapMod.Transition
             return null;
         }
 
-        public static string GetTransitionDoor(string source)
+        internal static string GetTransitionDoor(string source)
         {
             if (_transitionLookup.TryGetValue(source, out TransitionPlacement placement))
             {
@@ -76,7 +76,7 @@ namespace RandoMapMod.Transition
             return null;
         }
 
-        public static string GetAdjacentTransition(string source)
+        internal static string GetAdjacentTransition(string source)
         {
             if (source == "Fungus2_14[bot1]")
             {
@@ -99,7 +99,7 @@ namespace RandoMapMod.Transition
             return null;
         }
 
-        public static string GetAdjacentScene(string source)
+        internal static string GetAdjacentScene(string source)
         {
             if (_transitionLookup.TryGetValue(source, out TransitionPlacement placement)
                 && placement.Target != null && placement.Target.TransitionDef != null)
@@ -112,7 +112,7 @@ namespace RandoMapMod.Transition
             return null;
         }
 
-        public static HashSet<string> GetTransitionsByScene(string scene)
+        internal static HashSet<string> GetTransitionsByScene(string scene)
         {
             if (scene != null && _transitionsByScene.ContainsKey(scene))
             {
@@ -124,7 +124,7 @@ namespace RandoMapMod.Transition
             return new();
         }
 
-        public static string GetUncheckedVisited(string scene)
+        internal static string GetUncheckedVisited(string scene)
         {
             string text = "";
 
@@ -185,7 +185,7 @@ namespace RandoMapMod.Transition
             return text;
         }
 
-        public static string BuildTransitionStringList(Dictionary<string, string> transitions, string subtitle, bool to, bool addNewLines)
+        internal static string BuildTransitionStringList(Dictionary<string, string> transitions, string subtitle, bool to, bool addNewLines)
         {
             string text = "";
 
@@ -221,7 +221,7 @@ namespace RandoMapMod.Transition
             return text;
         }
 
-        public static void SetTransitionLookup()
+        internal static void Load()
         {
             _randomizedTransitions = new();
             _transitionLookup = new();

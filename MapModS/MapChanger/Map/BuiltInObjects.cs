@@ -54,7 +54,7 @@ namespace MapChanger.Map
                 Transform child = goMap.transform.FindChildInHierarchy(pathName);
                 if (child is null)
                 {
-                    MapChangerMod.Instance.LogDebug($"Transform not found: {pathName}");
+                    //MapChangerMod.Instance.LogDebug($"Transform not found: {pathName}");
                     continue;
                 }
 
@@ -64,7 +64,7 @@ namespace MapChanger.Map
 
                 MappedRooms[roomSprite.name] = roomSprite;
 
-                MapChangerMod.Instance.LogDebug($"Attaching: {pathName}");
+                //MapChangerMod.Instance.LogDebug($"Attaching: {pathName}");
             }
 
             // Disable extra map arrow
@@ -101,7 +101,7 @@ namespace MapChanger.Map
                     areaName.Initialize(mod);
                 }
 
-                MapChangerMod.Instance.LogDebug($"Attaching: {pathName}");
+                //MapChangerMod.Instance.LogDebug($"Attaching: {pathName}");
             }
 
             GameObject goQmt = GameCameras.instance.hudCamera.transform.FindChildInHierarchy("Quick Map/Area Name").gameObject;
@@ -125,7 +125,7 @@ namespace MapChanger.Map
                 return true;
             }
 
-            MapChangerMod.Instance.LogDebug($"Map room not recognized: {scene}");
+            //MapChangerMod.Instance.LogDebug($"Map room not recognized: {scene}");
             return false;
         }
     }

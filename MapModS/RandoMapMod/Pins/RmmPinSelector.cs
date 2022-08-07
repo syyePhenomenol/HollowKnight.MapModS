@@ -1,16 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MapChanger.MonoBehaviours;
+using RandoMapMod.UI;
 
 namespace RandoMapMod.Pins
 {
 
     internal class RmmPinSelector : Selector
     {
+        internal static RmmPinSelector Instance { get; private set; }
+
         internal void Initialize(IEnumerable<RmmPin> pins)
         {
+            Instance = this;
+
             base.Initialize();
 
-            ActiveModifiers.Add(ActiveByCurrentMode);
+            ActiveModifiers.AddRange
+            (
+                new Func<bool>[]
+                { 
+                    ActiveByCurrentMode,
+                    ActiveByToggle
+                }
+            );
 
             foreach (RmmPin pin in pins)
             {
@@ -43,9 +56,29 @@ namespace RandoMapMod.Pins
             }
         }
 
+        protected override void OnSelectionChanged()
+        {
+            InfoPanels.UpdateLookupPanel();
+        }
+
         private bool ActiveByCurrentMode()
         {
             return MapChanger.Settings.CurrentMode().Mod is "RandoMapMod";
+        }
+
+        private bool ActiveByToggle()
+        {
+            return RandoMapMod.GS.LookupOn;
+        }
+
+        internal static string GetLookupText()
+        {
+            if (RmmPinManager.Pins.TryGetValue(Instance.SelectedObjectKey, out RmmPin pin))
+            {
+                return pin.GetLookupText();
+            }
+
+            return "";
         }
     }
 }

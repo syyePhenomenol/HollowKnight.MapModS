@@ -66,19 +66,16 @@
     <Compile Remove="RandoMapMod\RandoPinData.cs" />
     <Compile Remove="RandoMapMod\RoomText.cs" />
     <Compile Remove="RandoMapMod\UI\Benchwarp.cs" />
-    <Compile Remove="RandoMapMod\UI\ControlPanel.cs" />
+    <Compile Remove="RandoMapMod\UI\ControlPanelOld.cs" />
     <Compile Remove="RandoMapMod\UI\DirectionalCompass.cs" />
     <Compile Remove="RandoMapMod\UI\GUI.cs" />
     <Compile Remove="RandoMapMod\UI\GUIController.cs" />
-    <Compile Remove="RandoMapMod\UI\InfoPanels.cs" />
     <Compile Remove="RandoMapMod\UI\MapKey.cs" />
     <Compile Remove="RandoMapMod\UI\MapText.cs" />
     <Compile Remove="RandoMapMod\UI\PauseMenu.cs" />
-    <Compile Remove="RandoMapMod\UI\RouteCompass.cs" />
     <Compile Remove="RandoMapMod\UI\TransitionPersistent.cs" />
     <Compile Remove="RandoMapMod\UI\TransitionQuickMap.cs" />
     <Compile Remove="RandoMapMod\UI\TransitionWorldMap.cs" />
-    <Compile Remove="RandoMapMod\UI\UIExtensions.cs" />
     <Compile Remove="VanillaMapMod\Pins\VmmPinSelector.cs" />
     <Compile Remove="VanillaMapMod\UI\MapToggleText.cs" />
   </ItemGroup>

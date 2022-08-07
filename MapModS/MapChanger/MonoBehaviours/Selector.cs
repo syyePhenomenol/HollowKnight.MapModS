@@ -45,6 +45,7 @@ namespace MapChanger.MonoBehaviours
                     }
 
                     selectedObjectKey = value;
+                    OnSelectionChanged();
                 }
             }
         }
@@ -145,5 +146,7 @@ namespace MapChanger.MonoBehaviours
         protected abstract void Select(ISelectable selectable);
 
         protected abstract void Deselect(ISelectable selectable);
+
+        protected virtual void OnSelectionChanged() { }
     }
 }

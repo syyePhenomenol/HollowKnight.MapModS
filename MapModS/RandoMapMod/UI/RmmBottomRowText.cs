@@ -17,7 +17,7 @@ namespace RandoMapMod.UI
             "Size"
         };
 
-        public override bool Condition()
+        protected override bool Condition()
         {
             return base.Condition() && MapChanger.Settings.CurrentMode().Mod is "RandoMapMod";
         }

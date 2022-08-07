@@ -45,7 +45,7 @@ namespace RandoMapMod.Settings
             BenchwarpWorldMap = !BenchwarpWorldMap;
         }
 
-        internal void ToggleAllowBenchWarp()
+        internal void ToggleAllowBenchWarpSearch()
         {
             AllowBenchWarpSearch = !AllowBenchWarpSearch;
         }

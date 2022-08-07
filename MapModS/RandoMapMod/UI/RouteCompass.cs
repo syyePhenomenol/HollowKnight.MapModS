@@ -1,39 +1,50 @@
 ﻿using System.Linq;
-using MapModS.Data;
-using MapModS.Pathfinding;
-using MapModS.Settings;
+using MapChanger;
 using Modding.Utils;
+using RandoMapMod.Modes;
+using RandoMapMod.Transition;
 using UnityEngine;
-using PD = MapModS.Pathfinding.PathfinderData;
+using PD = RandoMapMod.Transition.PathfinderData;
 using SM = UnityEngine.SceneManagement.SceneManager;
-using TP = MapModS.UI.TransitionPersistent;
 
-namespace MapModS.UI
+namespace RandoMapMod.UI
 {
-    internal class RouteCompass
+    internal class RouteCompass : HookModule
     {
         private static GameObject compass;
         private static DirectionalCompass CompassC => compass.GetComponent<DirectionalCompass>();
         private static GameObject Knight => HeroController.instance?.gameObject;
 
-        public static void CreateRouteCompass()
+        public override void OnEnterGame()
+        {
+            SM.activeSceneChanged += ActiveSceneChanged;
+        }
+
+        public override void OnQuitToMenu()
+        {
+            SM.activeSceneChanged -= ActiveSceneChanged;
+        }
+
+        private void ActiveSceneChanged(UnityEngine.SceneManagement.Scene arg0, UnityEngine.SceneManagement.Scene arg1)
+        {
+            CreateRouteCompass();
+            Update();
+        }
+
+        private static void CreateRouteCompass()
         {
             if (compass != null && CompassC != null) CompassC.Destroy();
 
-            if (Knight == null
-                || GUIController.Instance == null
-                || GameManager.instance.IsNonGameplayScene()) return;
+            if (Knight == null || GameManager.instance.IsNonGameplayScene()) return;
 
-            Texture2D tex = GUIController.Instance.Images["arrow"];
-
-            Sprite arrow = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
+            Sprite arrow = new EmbeddedSprite("GUI.Arrow").Value;
 
             compass = DirectionalCompass.Create
             (
                 "Route Compass", // name
                 Knight, // parent entity
                 arrow, // sprite
-                Colors.GetColor(ColorSetting.UI_Compass), // color
+                RmmColors.GetColor(RmmColorSetting.UI_Compass), // color
                 1.5f, // radius
                 2.0f, // scale
                 IsCompassEnabled, // bool condition
@@ -44,13 +55,13 @@ namespace MapModS.UI
             compass.SetActive(false);
         }
 
-        public static void UpdateCompass()
+        public static void Update()
         {
             if (compass == null) return;
 
-            if (CompassC != null && TP.selectedRoute.Any())
+            if (CompassC != null && RouteTracker.SelectedRoute.Any())
             {
-                string transition = TP.selectedRoute.First();
+                string transition = RouteTracker.SelectedRoute.First();
                 string scene = PD.GetScene(transition);
                 string gate = "";
 
@@ -85,7 +96,7 @@ namespace MapModS.UI
 
                 if (gateObject != null)
                 {
-                    CompassC.trackedObjects = new() { gateObject };
+                    CompassC.TrackedObjects = new() { gateObject };
                     compass.SetActive(true);
                     return;
                 }
@@ -94,7 +105,7 @@ namespace MapModS.UI
 
                 if (gateObject2 != null)
                 {
-                    CompassC.trackedObjects = new() { gateObject2 };
+                    CompassC.TrackedObjects = new() { gateObject2 };
                     compass.SetActive(true);
                 }
             }
@@ -104,12 +115,11 @@ namespace MapModS.UI
             }
         }
 
-        public static bool IsCompassEnabled()
+        private static bool IsCompassEnabled()
         {
-            return (MapModS.LS.ModEnabled
-                && (MapModS.LS.Mode == MapMode.Transition
-                    || MapModS.LS.Mode == MapMode.TransitionVisitedOnly)
-                && MapModS.GS.ShowRouteCompass);
+            return MapChanger.Settings.MapModEnabled
+                && MapChanger.Settings.CurrentMode().GetType().IsSubclassOf(typeof(TransitionMode))
+                && RandoMapMod.GS.ShowRouteCompass;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MapChanger.UI;
 
 namespace MapChanger
 {
@@ -99,6 +100,8 @@ namespace MapChanger
 
         private static void SettingChanged()
         {
+            MapUILayerManager.Update();
+
             try { OnSettingChanged?.Invoke(); }
             catch (Exception e) { MapChangerMod.Instance.LogError(e); }
         }

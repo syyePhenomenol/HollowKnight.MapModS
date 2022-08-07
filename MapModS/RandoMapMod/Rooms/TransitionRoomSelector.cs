@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using MapChanger.MonoBehaviours;
 using RandoMapMod.Modes;
 using RandoMapMod.Transition;
+using RandoMapMod.UI;
 
 namespace RandoMapMod.Rooms
 {
@@ -16,18 +18,52 @@ namespace RandoMapMod.Rooms
             base.Initialize(rooms);
         }
 
+        private static Stopwatch attackHoldTimer = new();
+
         private void Update()
         {
             if (InputHandler.Instance.inputActions.menuSubmit.WasPressed
                 && SelectedObjectKey is not NONE_SELECTED)
             {
+                attackHoldTimer.Reset();
                 RouteTracker.SelectRoute(SelectedObjectKey);
             }
+
+            if (InputHandler.Instance.inputActions.attack.WasPressed)
+            {
+                attackHoldTimer.Restart();
+            }
+
+            if (InputHandler.Instance.inputActions.attack.WasReleased)
+            {
+                attackHoldTimer.Reset();
+            }
+
+            if (attackHoldTimer.ElapsedMilliseconds >= 500 && SelectedObjectKey is not NONE_SELECTED)
+            {
+                attackHoldTimer.Reset();
+                RouteTracker.TryBenchwarp();
+            }
+        }
+
+        public override void AfterMainUpdate()
+        {
+            attackHoldTimer.Reset();
         }
 
         protected private override bool ActiveByCurrentMode()
         {
-            return MapChanger.Settings.CurrentMode().GetType().IsSubclassOf(typeof(TransitionMode));
+            return Conditions.TransitionModeEnabled();
+        }
+
+        protected override void OnSelectionChanged()
+        {
+            InfoPanels.UpdateUncheckedPanel();
+        }
+
+        internal static string GetUncheckedPanelText()
+        {
+            return $"{Instance.SelectedObjectKey}\n\n{TransitionData.GetUncheckedVisited(Instance.SelectedObjectKey)}";
         }
     }
 }

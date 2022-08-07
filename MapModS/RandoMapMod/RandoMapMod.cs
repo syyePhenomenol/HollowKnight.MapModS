@@ -57,7 +57,18 @@ namespace RandoMapMod
         private static readonly MapUILayer[] mapUILayers = new MapUILayer[]
         {
             new Hotkeys(),
+            new ControlPanel(),
+            new InfoPanels(),
             new RmmBottomRowText()
+        };
+
+        private static readonly HookModule[] hookModules = new HookModule[]
+        {
+            new RmmPinManager(),
+            new BenchwarpInterop(),
+            new TransitionTracker(),
+            new RouteTracker(),
+            new RouteCompass()
         };
 
         internal static RandoMapMod Instance;
@@ -92,18 +103,11 @@ namespace RandoMapMod
                 }
             }
 
-            try
-            {
-                Interop.FindInteropMods();
-                Finder.InjectLocations(JsonUtil.Deserialize<Dictionary<string, MapLocationDef>>("MapModS.RandoMapMod.Resources.locations.json"));
+            Interop.FindInteropMods();
+            Finder.InjectLocations(JsonUtil.Deserialize<Dictionary<string, MapLocationDef>>("MapModS.RandoMapMod.Resources.locations.json"));
 
-                Events.AfterEnterGame += OnEnterGame;
-                Events.BeforeQuitToMenu += OnQuitToMenu;
-            }
-            catch (Exception e)
-            {
-                LogError(e);
-            }
+            Events.AfterEnterGame += OnEnterGame;
+            Events.BeforeQuitToMenu += OnQuitToMenu;
 
             LogDebug($"Initialization complete.");
         }
@@ -113,25 +117,31 @@ namespace RandoMapMod
             if (RandomizerMod.RandomizerMod.RS.GenerationSettings is null) return;
 
             MapChanger.Settings.AddModes(modes);
-            MapChanger.Settings.SetModEnabled(LS.ModEnabled);
-            MapChanger.Settings.SetMode("RandoMapMod", LS.Mode.ToString().Replace('_', ' '));
-            MapChanger.Settings.OnSettingChanged += OnSettingChanged;
 
-            RmmColors.LoadCustomColors();
+            ExportSettings();
+
+            MapChanger.Settings.OnSettingChanged += ImportSettings;
             Events.AfterSetGameMap += OnSetGameMap;
 
+            RmmColors.Load();
             RmmRoomManager.Load();
             BenchwarpInterop.Load();
-            TransitionData.SetTransitionLookup();
+            TransitionData.Load();
             PathfinderData.Load();
-            Pathfinder.Initialize();
 
-            RmmPinManager.OnEnterGame();
-            TransitionTracker.OnEnterGame();
-            BenchwarpInterop.OnEnterGame();
+            foreach (HookModule hookModule in hookModules)
+            {
+                hookModule.OnEnterGame();
+            }
         }
 
-        private static void OnSettingChanged()
+        private static void ExportSettings()
+        {
+            MapChanger.Settings.SetModEnabled(LS.ModEnabled);
+            MapChanger.Settings.SetMode("RandoMapMod", LS.Mode.ToString().Replace('_', ' '));
+        }
+
+        private static void ImportSettings()
         {
             LS.ModEnabled = MapChanger.Settings.MapModEnabled;
 
@@ -139,19 +149,19 @@ namespace RandoMapMod
             {
                 LS.SetMode(MapChanger.Settings.CurrentMode().ModeName);
             }
-
-            RouteTracker.ResetRoute();
         }
 
         private static void OnSetGameMap(GameObject goMap)
         {
             try
             {
-                Rooms.RmmRoomManager.Make(goMap);
+                // Make rooms and pins
+                RmmRoomManager.Make(goMap);
                 RmmPinManager.Make(goMap);
 
                 LS.Initialize();
 
+                // Construct pause menu
                 title.Make();
 
                 foreach (MainButton button in mainButtons)
@@ -164,6 +174,7 @@ namespace RandoMapMod
                     ebp.Make();
                 }
 
+                // Construct map UI
                 foreach (MapUILayer uiLayer in mapUILayers)
                 {
                     MapUILayerManager.AddMapLayer(uiLayer);
@@ -177,12 +188,13 @@ namespace RandoMapMod
 
         private static void OnQuitToMenu()
         {
-            MapChanger.Settings.OnSettingChanged -= OnSettingChanged;
+            MapChanger.Settings.OnSettingChanged -= ImportSettings;
             Events.AfterSetGameMap -= OnSetGameMap;
 
-            TransitionTracker.OnQuitToMenu();
-            RmmPinManager.OnQuitToMenu();
-            BenchwarpInterop.OnQuitToMenu();
+            foreach (HookModule hookModule in hookModules)
+            {
+                hookModule.OnQuitToMenu();
+            }
         }
     }
 }

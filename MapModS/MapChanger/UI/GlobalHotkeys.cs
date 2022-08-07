@@ -5,7 +5,7 @@ namespace MapChanger.UI
 {
     internal class GlobalHotkeys : MapUILayer
     {
-        public override bool Condition()
+        protected override bool Condition()
         {
             return true;
         }

@@ -9,8 +9,7 @@ using UnityEngine;
 
 namespace RandoMapMod
 {
-    //TODO: Turn into HookModule
-    internal class BenchwarpInterop
+    internal class BenchwarpInterop : HookModule
     {
         // Forward and reverse lookup
         internal static Dictionary<(string, string), string> benchTransitions = new();
@@ -48,7 +47,7 @@ namespace RandoMapMod
             benchKeys = benchTransitions.ToDictionary(t => t.Value, t => t.Key);
         }
 
-        public static void OnEnterGame()
+        public override void OnEnterGame()
         {
             RandomizerMod.IC.TrackerUpdate.OnFinishedUpdate += UpdateVisitedBenches;
             UnityEngine.SceneManagement.SceneManager.activeSceneChanged += OnSceneChanged;
@@ -56,7 +55,7 @@ namespace RandoMapMod
             UpdateVisitedBenches();
         }
 
-        public static void OnQuitToMenu()
+        public override void OnQuitToMenu()
         {
             benchTransitions = new();
             benchKeys = new();

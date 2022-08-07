@@ -23,7 +23,7 @@ namespace MapChanger.UI
             Root = null;
         }
 
-        public abstract bool Condition();
+        protected abstract bool Condition();
 
         public abstract void BuildLayout();
 

@@ -101,19 +101,22 @@ namespace RandoMapMod.Pins
             return !placement.HasTag<ItemChanger.Tags.DisableItemPreviewTag>();
         }
 
-        internal static string[] PreviewText(this AbstractPlacement placement)
+        internal static bool TryGetPreviewText(this AbstractPlacement placement, out string[] text)
         {
             if (placement.GetTag(out ItemChanger.Tags.MultiPreviewRecordTag multiTag))
             {
-                return multiTag.previewTexts;
+                text = multiTag.previewTexts;
+                return true;
             }
 
             if (placement.GetTag(out ItemChanger.Tags.PreviewRecordTag tag))
             {
-                return new[] { tag.previewText };
+                text = new[] { tag.previewText };
+                return true;
             }
 
-            return default;
+            text = null;
+            return false;
         }
 
         //internal static string[] PreviewText(this string name)

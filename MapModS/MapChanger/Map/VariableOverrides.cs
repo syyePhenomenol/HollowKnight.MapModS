@@ -167,7 +167,7 @@ namespace MapChanger.Map
                     {
                         return name;
                     }
-                    MapChangerMod.Instance.LogDebug($"Replacement of {name} is successful");
+                    //MapChangerMod.Instance.LogDebug($"Replacement of {name} is successful");
                     return type switch
                     {
                         OverrideType.Map => MAP_PREFIX + name,

@@ -7,13 +7,13 @@ using RM = RandomizerMod.RandomizerMod;
 
 namespace RandoMapMod.Transition
 {
-    internal class TransitionTracker
+    internal class TransitionTracker : HookModule
     {
         internal static HashSet<string> InLogicScenes { get; private set; }
         internal static HashSet<string> VisitedAdjacentScenes { get; private set; }
         internal static HashSet<string> UncheckedReachableScenes { get; private set; }
 
-        public static void OnEnterGame()
+        public override void OnEnterGame()
         {
             RandomizerMod.IC.TrackerUpdate.OnFinishedUpdate += Update;
 
@@ -29,7 +29,7 @@ namespace RandoMapMod.Transition
             }
         }
 
-        public static void OnQuitToMenu()
+        public override void OnQuitToMenu()
         {
             RouteTracker.ResetRoute();
 

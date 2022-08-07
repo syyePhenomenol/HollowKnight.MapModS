@@ -123,6 +123,8 @@ namespace RandoMapMod.Transition
             lm = new(lmb);
 
             waypointScenes = lm.Waypoints.Where(w => Finder.IsScene(w.Name)).ToDictionary(w => w.Name, w => w);
+
+            Pathfinder.Initialize();
         }
 
         public static string[] GetStartTerms()

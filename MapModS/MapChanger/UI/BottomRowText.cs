@@ -9,7 +9,7 @@ namespace MapChanger.UI
         public virtual string[] TextNames { get; } = { };
         protected Dictionary<string, TextObject> MapTexts { get; private set; }
 
-        public override bool Condition()
+        protected override bool Condition()
         {
             return Settings.MapModEnabled && (States.WorldMapOpen || States.QuickMapOpen);
         }

@@ -14,7 +14,7 @@ using RM = RandomizerMod.RandomizerMod;
 
 namespace RandoMapMod.Pins
 {
-    internal static class RmmPinManager
+    internal class RmmPinManager : HookModule
     {
         private const float OFFSETZ_BASE = -1.4f;
         private const float OFFSETZ_RANGE = 0.4f;
@@ -28,12 +28,12 @@ namespace RandoMapMod.Pins
         internal static HashSet<string> VanillaLocationPoolGroups { get; private set; }
         internal static HashSet<string> VanillaItemPoolGroups { get; private set; }
 
-        public static void OnEnterGame()
+        public override void OnEnterGame()
         {
             TrackerUpdate.OnFinishedUpdate += UpdateRandoPins;
         }
 
-        public static void OnQuitToMenu()
+        public override void OnQuitToMenu()
         {
             TrackerUpdate.OnFinishedUpdate -= UpdateRandoPins;
         }
@@ -61,30 +61,29 @@ namespace RandoMapMod.Pins
 
             UpdateRandoPins();
 
-            //RmmPinSelector pinSelector = Utils.MakeMonoBehaviour<RmmPinSelector>(null, "RandoMapMod Pin Selector");
-            //pinSelector.Initialize(Pins.Values);
+            RmmPinSelector pinSelector = Utils.MakeMonoBehaviour<RmmPinSelector>(null, "RandoMapMod Pin Selector");
+            pinSelector.Initialize(Pins.Values);
         }
 
         private static void MakeRandoPin(AbstractPlacement placement)
         {
-            placement.LogDebug();
+            //placement.LogDebug();
 
-            if (placement.Name == "Start")
+            if (placement.Name is "Start" or "Remote")
             {
-                RandoMapMod.Instance.LogDebug($"Start placement detected - not including as a pin");
+                RandoMapMod.Instance.LogDebug($"{placement.Name} detected - not including as a pin");
                 return;
             }
 
             RandomizedRmmPin randoPin = Utils.MakeMonoBehaviour<RandomizedRmmPin>(MoPins.gameObject, placement.Name);
             randoPin.Initialize(placement);
-            //randoPin.Parent = MoPins;
             MoPins.AddChild(randoPin);
             Pins[placement.Name] = randoPin;
         }
 
         private static void MakeVanillaPin(GeneralizedPlacement placement)
         {
-            placement.LogDebug();
+            //placement.LogDebug();
 
             string name = placement.Location.Name;
             if (Pins.ContainsKey(name))
@@ -102,7 +101,6 @@ namespace RandoMapMod.Pins
             VanillaRmmPin vanillaPin = Utils.MakeMonoBehaviour<VanillaRmmPin>(MoPins.gameObject, placement.Location.Name);
             vanillaPin.Initialize(placement);
             MoPins.AddChild(vanillaPin);
-            //vanillaPin.Parent = MoPins;
             Pins[placement.Location.Name] = vanillaPin;
         }
 

@@ -117,7 +117,7 @@ namespace RandoMapMod
             { RmmColorSetting.UI_Compass, new(1f, 1f, 1f, 0.83f) }
         };
 
-        public static void LoadCustomColors()
+        public static void Load()
         {
             Dictionary<string, float[]> customColorsRaw;
 
@@ -189,21 +189,6 @@ namespace RandoMapMod
             return Vector4.negativeInfinity;
         }
 
-        //public static bool TryGetCustomColor(ColorSetting colorSetting, out Vector4 color)
-        //{
-        //    color = Vector4.negativeInfinity;
-
-        //    if (customColors is not null && customColors.TryGetValue(colorSetting, out color))
-        //    {
-        //        return true;
-        //    }
-        //    if (defaultColors.ContainsKey(colorSetting))
-        //    {
-        //        color =  defaultColors[colorSetting];
-        //    }
-        //    return false;
-        //}
-
         public static Vector4 GetColorFromMapZone(MapZone mapZone)
         {
             return mapZone switch
@@ -227,14 +212,5 @@ namespace RandoMapMod
                 _ => Color.white
             };
         }
-
-        //public static Vector4 GetColorFromMapZone(string mapZoneString)
-        //{
-        //    if (Enum.TryParse(mapZoneString, out MapZone mapZone))
-        //    {
-        //        return GetColorFromMapZone(mapZone);
-        //    }
-        //    return Color.white;
-        //}
     }
 }

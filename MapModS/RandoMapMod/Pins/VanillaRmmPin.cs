@@ -5,6 +5,7 @@ using ItemChanger;
 using MapChanger;
 using RandomizerCore;
 using UnityEngine;
+using L = RandomizerMod.Localization;
 
 namespace RandoMapMod.Pins
 {
@@ -71,9 +72,29 @@ namespace RandoMapMod.Pins
             BorderColor = vanillaColor;
         }
 
-        internal override void GetLookupText()
+        internal override string GetLookupText()
         {
-            throw new NotImplementedException();
+            string text = base.GetLookupText();
+
+            if (IsPersistent())
+            {
+                text += $" {L.Localize("Not randomized, persistent")}";
+            }
+            else
+            {
+                text += $" {L.Localize("Not randomized, unchecked")}";
+            }
+
+            text += $"\n\n{L.Localize("Logic")}: {Logic ?? "not found"}";
+
+            return text; 
+        }
+
+        private bool IsPersistent()
+        {
+            return LocationPoolGroup == PoolGroup.LifebloodCocoons.FriendlyName() 
+                || LocationPoolGroup == PoolGroup.SoulTotems.FriendlyName()
+                || LocationPoolGroup == PoolGroup.LoreTablets.FriendlyName();
         }
     }
 }

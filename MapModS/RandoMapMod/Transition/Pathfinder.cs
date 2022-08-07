@@ -13,7 +13,7 @@ namespace RandoMapMod.Transition
 
         internal static ProgressionManager localPm;
 
-        public static void Initialize()
+        internal static void Initialize()
         {
             localPm = new(PD.lm, RM.RS.Context);
 

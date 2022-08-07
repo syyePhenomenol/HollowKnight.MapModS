@@ -25,9 +25,11 @@ namespace RandoMapMod.Rooms
             IEnumerable<RoomSprite> rooms = BuiltInObjects.MappedRooms.Values.Where(roomSprite => benchMappedScenes.Contains(roomSprite.Rsd.SceneName));
 
             base.Initialize(rooms);
+
+            ActiveModifiers.Add(ActiveByToggle);
         }
 
-        public static Stopwatch attackHoldTimer = new();
+        private static Stopwatch attackHoldTimer = new();
 
         private void Update()
         {
@@ -52,7 +54,6 @@ namespace RandoMapMod.Rooms
             {
                 attackHoldTimer.Reset();
                 GameManager.instance.StartCoroutine(BenchwarpInterop.DoBenchwarp(SelectedObjectKey, benchPointer));
-                return;
             }
         }
 
@@ -81,9 +82,19 @@ namespace RandoMapMod.Rooms
             return BenchwarpInterop.Benches[SelectedObjectKey][benchPointer];
         }
 
+        public override void AfterMainUpdate()
+        {
+            attackHoldTimer.Reset();
+        }
+
         protected private override bool ActiveByCurrentMode()
         {
             return MapChanger.Settings.CurrentMode().GetType().IsSubclassOf(typeof(NormalMode));
+        }
+
+        private bool ActiveByToggle()
+        {
+            return RandoMapMod.GS.BenchwarpWorldMap;
         }
 
         protected override void Deselect(ISelectable selectable)
