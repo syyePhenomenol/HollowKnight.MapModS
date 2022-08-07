@@ -103,7 +103,7 @@ namespace RandoMapMod.Transition
             {
                 foreach ((LogicManagerBuilder.JsonType type, string fileName) in benchFiles)
                 {
-                    lmb.DeserializeJson(type, Assembly.GetExecutingAssembly().GetManifestResourceStream($"MapModS.Resources.Pathfinder.Logic.{fileName}.json"));
+                    lmb.DeserializeJson(type, Assembly.GetExecutingAssembly().GetManifestResourceStream($"MapModS.RandoMapMod.Resources.Pathfinder.Logic.{fileName}.json"));
                 }
             }
 

@@ -15,13 +15,13 @@ namespace RandoMapMod.UI
             Root.ListenForHotkey(KeyCode.H, () =>
             {
                 RandoMapMod.GS.ToggleControlPanel();
-                MapUILayerManager.Update();
+                MapUILayerUpdater.Update();
             }, ModifierKeys.Ctrl);
 
             Root.ListenForHotkey(KeyCode.K, () =>
             {
                 RandoMapMod.GS.ToggleMapKey();
-                MapUILayerManager.Update();
+                MapUILayerUpdater.Update();
             }, ModifierKeys.Ctrl);
 
             if (Interop.HasBenchwarp())
@@ -30,14 +30,14 @@ namespace RandoMapMod.UI
                 {
                     RandoMapMod.GS.ToggleBenchwarpWorldMap();
                     NormalRoomSelector.Instance.MainUpdate();
-                    MapUILayerManager.Update();
+                    MapUILayerUpdater.Update();
                 }, ModifierKeys.Ctrl, () => Conditions.NormalModeEnabled());
 
                 Root.ListenForHotkey(KeyCode.B, () =>
                 {
                     RandoMapMod.GS.ToggleAllowBenchWarpSearch();
                     RouteTracker.ResetRoute();
-                    MapUILayerManager.Update();
+                    MapUILayerUpdater.Update();
                     RouteCompass.Update();
                 }, ModifierKeys.Ctrl, () => Conditions.TransitionModeEnabled());
             }
@@ -45,33 +45,32 @@ namespace RandoMapMod.UI
             Root.ListenForHotkey(KeyCode.U, () =>
             {
                 RandoMapMod.GS.ToggleUncheckedPanel();
-                MapUILayerManager.Update();
+                MapUILayerUpdater.Update();
             }, ModifierKeys.Ctrl, () => RandoMapMod.LS.ModEnabled);
 
             Root.ListenForHotkey(KeyCode.R, () =>
             {
                 RandoMapMod.GS.ToggleRouteTextInGame();
-                MapUILayerManager.Update();
-                //TransitionPersistent.UpdateAll();
+                MapUILayerUpdater.Update();
             }, ModifierKeys.Ctrl, () => RandoMapMod.LS.ModEnabled);
 
             Root.ListenForHotkey(KeyCode.E, () =>
             {
                 RandoMapMod.GS.ToggleWhenOffRoute();
-                MapUILayerManager.Update();
+                MapUILayerUpdater.Update();
             }, ModifierKeys.Ctrl, () => RandoMapMod.LS.ModEnabled);
 
             Root.ListenForHotkey(KeyCode.C, () =>
             {
                 RandoMapMod.GS.ToggleRouteCompassEnabled();
-                MapUILayerManager.Update();
+                MapUILayerUpdater.Update();
             }, ModifierKeys.Ctrl, () => Conditions.TransitionModeEnabled());
 
             Root.ListenForHotkey(KeyCode.L, () =>
             {
                 RandoMapMod.GS.ToggleLookup();
                 RmmPinSelector.Instance.MainUpdate();
-                MapUILayerManager.Update();
+                MapUILayerUpdater.Update();
             }, ModifierKeys.Ctrl);
 
             Root.ListenForHotkey(KeyCode.Alpha1, () =>
@@ -114,7 +113,7 @@ namespace RandoMapMod.UI
         {
             PauseMenu.Update();
             RmmPinManager.Update();
-            MapUILayerManager.Update();
+            MapUILayerUpdater.Update();
         }
     }
 }

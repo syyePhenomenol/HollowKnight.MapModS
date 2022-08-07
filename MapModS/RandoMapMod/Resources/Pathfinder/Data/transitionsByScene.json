@@ -120,19 +120,6 @@
     "Stag-Resting_Grounds",
     "Stag-Stag_Nest"
   ],
-  // TODO: REMOVE, THERE IS NO BELL HERE
-  "Cliffs_03": [
-    "Stag-Crossroads",
-    "Stag-Dirtmouth",
-    "Stag-Greenpath",
-    "Stag-Queen's_Station",
-    "Stag-Distant_Village",
-    "Stag-Hidden_Station",
-    "Stag-City_Storerooms",
-    "Stag-King's_Station",
-    "Stag-Resting_Grounds",
-    "Stag-Queen's_Gardens"
-  ],
   "Crossroads_49b": [
     "Left_Elevator-Up"
   ],

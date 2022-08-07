@@ -26,7 +26,7 @@ namespace RandoMapMod.Rooms
                     if (!roomTextDefs.ContainsKey(scene)) continue;
                     if (rtd is null)
                     {
-                        RandoMapMod.Instance.LogDebug($"Null: {scene}");
+                        //RandoMapMod.Instance.LogDebug($"Null: {scene}");
                         roomTextDefs.Remove(scene);
                     }
                     else
@@ -48,10 +48,8 @@ namespace RandoMapMod.Rooms
             {
                 RoomText roomText = Utils.MakeMonoBehaviour<RoomText>(null, $"Room Text {rtd.Name}");
                 roomText.Initialize(rtd, tmpFont);
-                //roomText.Parent = MoRoomTexts;
                 MoRoomTexts.AddChild(roomText);
-                //RoomSelector.Objects[roomText.SceneName] = new() { roomText };
-                RandoMapMod.Instance.LogDebug($"Creating RoomText: {scene}");
+                //RandoMapMod.Instance.LogDebug($"Creating RoomText: {scene}");
             }
 
             MapObjectUpdater.Add(MoRoomTexts);

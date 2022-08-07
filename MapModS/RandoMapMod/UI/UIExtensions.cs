@@ -4,39 +4,35 @@ using L = RandomizerMod.Localization;
 
 namespace RandoMapMod.UI
 {
-    internal class UIExtensions
+    internal static class UIExtensions
     {
-        public static TextObject TextFromEdge(LayoutRoot onLayout, string name, bool onRight)
+        internal static TextObject TextFromEdge(LayoutRoot onLayout, string name, bool onRight)
         {
+            TextObject text = BaseText(onLayout, name);
+
             if (onRight)
             {
-                return new(onLayout, name)
-                {
-                    ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Neutral),
-                    HorizontalAlignment = HorizontalAlignment.Right,
-                    VerticalAlignment = VerticalAlignment.Top,
-                    TextAlignment = HorizontalAlignment.Right,
-                    Font = MagicUI.Core.UI.TrajanNormal,
-                    FontSize = 14,
-                    Padding = new(0f, 20f, 20f, 0f)
-                };
+                text.HorizontalAlignment = HorizontalAlignment.Right;
+                text.TextAlignment = HorizontalAlignment.Right;
+                text.Padding = new(0f, 20f, 20f, 0f);
             }
             else
             {
-                return new(onLayout, name)
-                {
-                    ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Neutral),
-                    HorizontalAlignment = HorizontalAlignment.Left,
-                    VerticalAlignment = VerticalAlignment.Top,
-                    TextAlignment = HorizontalAlignment.Left,
-                    Font = MagicUI.Core.UI.TrajanNormal,
-                    FontSize = 14,
-                    Padding = new(20f, 20f, 0f, 0f)
-                };
+                text.Padding = new(20f, 20f, 0f, 0f);
             }
+
+            return text;
         }
 
-        public static TextObject PanelText(LayoutRoot onLayout, string name)
+        internal static TextObject PanelText(LayoutRoot onLayout, string name)
+        {
+            TextObject text = BaseText(onLayout, name);
+            text.VerticalAlignment = VerticalAlignment.Center;
+            text.Padding = new(0f, 2f, 0f, 2f);
+            return text;
+        }
+
+        private static TextObject BaseText(LayoutRoot onLayout, string name)
         {
             return new(onLayout, name)
             {
@@ -45,12 +41,11 @@ namespace RandoMapMod.UI
                 VerticalAlignment = VerticalAlignment.Top,
                 TextAlignment = HorizontalAlignment.Left,
                 Font = MagicUI.Core.UI.TrajanNormal,
-                FontSize = 14,
-                Padding = new(0f, 2f, 0f, 2f)
+                FontSize = 14
             };
         }
 
-        public static void SetToggleText(TextObject textObj, string baseText, bool value)
+        internal static void SetToggleText(TextObject textObj, string baseText, bool value)
         {
             string text = baseText;
 

@@ -96,9 +96,9 @@ namespace RandoMapMod.Transition
         {
             return RandoMapMod.LS.Mode switch
             {
-                RMMMode.Transition_Normal => Tracker.HasVisitedScene(scene) || InLogicScenes.Contains(scene),
-                RMMMode.Transition_Visited_Only => Tracker.HasVisitedScene(scene),
-                RMMMode.Transition_All_Rooms => true,
+                RmmMode.Transition_Normal => Tracker.HasVisitedScene(scene) || InLogicScenes.Contains(scene),
+                RmmMode.Transition_Visited_Only => Tracker.HasVisitedScene(scene),
+                RmmMode.Transition_All_Rooms => true,
                 _ => true,
             };
         }

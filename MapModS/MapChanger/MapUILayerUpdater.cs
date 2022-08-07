@@ -3,13 +3,16 @@ using GlobalEnums;
 
 namespace MapChanger.UI
 {
-    internal class MapUILayerManager : HookModule
+    /// <summary>
+    /// Updates MapUILayers when a map is opened or closed.
+    /// </summary>
+    public class MapUILayerUpdater : HookModule
     {
         private static readonly List<MapUILayer> mapLayers = new();
 
         public override void OnEnterGame()
         {
-            AddMapLayer(new GlobalHotkeys());
+            Add(new GlobalHotkeys());
 
             Events.AfterOpenWorldMap += OnOpenWorldMap;
             Events.AfterOpenQuickMap += OnOpenQuickMap;
@@ -25,7 +28,7 @@ namespace MapChanger.UI
             RemoveMapLayers();
         }
 
-        internal static void AddMapLayer(MapUILayer layer)
+        public static void Add(MapUILayer layer)
         {
             mapLayers.Add(layer);
             layer.Build();

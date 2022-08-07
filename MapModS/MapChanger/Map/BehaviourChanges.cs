@@ -52,10 +52,6 @@ namespace MapChanger.Map
         }
 
         private const string MAP_MARKERS = "Map Markers";
-        //private const string PLACED_MARKERS_B = "placedMarkers_b";
-        //private const string PLACED_MARKERS_R = "placedMarkers_r";
-        //private const string PLACED_MARKERS_Y = "placedMarkers_y";
-        //private const string PLACED_MARKERS_W = "placedMarkers_w";
 
         internal static Transform MapKey => GameCameras.instance.hudCamera.transform
             .FindChildInHierarchy("Inventory")?.FindChildInHierarchy("Map Key");

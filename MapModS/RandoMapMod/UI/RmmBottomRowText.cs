@@ -1,5 +1,4 @@
-﻿using MagicUI.Core;
-using MagicUI.Elements;
+﻿using MagicUI.Elements;
 using MapChanger.UI;
 using RandoMapMod.Settings;
 using L = RandomizerMod.Localization;
@@ -8,7 +7,8 @@ namespace RandoMapMod.UI
 {
     internal sealed class RmmBottomRowText : BottomRowText
     {
-        public override string[] TextNames =>  new string[]
+        protected override float MinSpacing => 250f;
+        protected override string[] TextNames =>  new string[]
         {
             "Spoilers",
             "Randomized",

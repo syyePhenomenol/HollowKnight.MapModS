@@ -22,8 +22,8 @@ namespace RandoMapMod.Settings
         /// least one randomized transition). Use the below settings to override them.
         /// </summary>
         public bool OverrideDefaultMode = false;
-        public RMMMode ItemRandoModeOverride = RMMMode.Full_Map;
-        public RMMMode TransitionRandoModeOverride = RMMMode.Transition_Normal;
+        public RmmMode ItemRandoModeOverride = RmmMode.Full_Map;
+        public RmmMode TransitionRandoModeOverride = RmmMode.Transition_Normal;
 
         internal void ToggleControlPanel()
         {

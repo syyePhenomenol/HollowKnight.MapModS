@@ -33,8 +33,7 @@ namespace RandoMapMod.UI
                 MinWidth = 400f,
                 MinHeight = 100f,
                 HorizontalAlignment = HorizontalAlignment.Right,
-                VerticalAlignment = VerticalAlignment.Top,
-                //Padding = new(10f, 170f, 160f, 10f)
+                VerticalAlignment = VerticalAlignment.Center
             };
 
             ((Image)Root.GetElement("Lookup Panel Background")).Tint = RmmColors.GetColor(RmmColorSetting.UI_Borders);
@@ -60,8 +59,7 @@ namespace RandoMapMod.UI
                 MinWidth = 200f,
                 MinHeight = 100f,
                 HorizontalAlignment = HorizontalAlignment.Right,
-                VerticalAlignment = VerticalAlignment.Top,
-                //Padding = new(10f, 170f, 160f, 10f)
+                VerticalAlignment = VerticalAlignment.Center
             };
 
             ((Image)Root.GetElement("Unchecked Panel Background")).Tint = RmmColors.GetColor(RmmColorSetting.UI_Borders);

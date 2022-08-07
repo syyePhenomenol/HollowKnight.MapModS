@@ -29,32 +29,32 @@ namespace RandoMapMod.UI
 
             switch (RandoMapMod.LS.Mode)
             {
-                case RMMMode.Full_Map:
+                case RmmMode.Full_Map:
                     Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_On);
                     text += L.Localize("Full Map");
                     break;
 
-                case RMMMode.All_Pins:
+                case RmmMode.All_Pins:
                     Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Neutral);
                     text += L.Localize("All Pins");
                     break;
 
-                case RMMMode.Pins_Over_Map:
+                case RmmMode.Pins_Over_Map:
                     Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Neutral);
                     text += L.Localize("Pins Over Map");
                     break;
 
-                case RMMMode.Transition_Normal:
+                case RmmMode.Transition_Normal:
                     Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Special);
                     text += L.Localize("Transition") + " 1";
                     break;
 
-                case RMMMode.Transition_Visited_Only:
+                case RmmMode.Transition_Visited_Only:
                     Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Special);
                     text += L.Localize("Transition") + " 2";
                     break;
 
-                case RMMMode.Transition_All_Rooms:
+                case RmmMode.Transition_All_Rooms:
                     Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Special);
                     text += L.Localize("Transition") + " 3";
                     break;

@@ -46,7 +46,6 @@ namespace RandoMapMod.Rooms
                 if (attackHoldTimer.ElapsedMilliseconds < 500)
                 {
                     ToggleBench();
-                    //UpdateBenchwarpText();
                 }
 
                 attackHoldTimer.Reset();
@@ -93,18 +92,18 @@ namespace RandoMapMod.Rooms
 
         protected override void OnSelectionChanged()
         {
-            BenchwarpText.Instance.Update(GetBenchwarpText());
+            BenchwarpText.Instance.Update();
         }
 
-        private string GetBenchwarpText()
+        internal static string GetBenchwarpText()
         {
             string text = "";
 
-            if (SelectedObjectKey is NONE_SELECTED) return text;
+            if (Instance.SelectedObjectKey is NONE_SELECTED) return text;
 
             List<InControl.BindingSource> bindings = new(InputHandler.Instance.inputActions.attack.Bindings);
 
-            if (BenchwarpInterop.Benches.TryGetValue(SelectedObjectKey, out List<WorldMapBenchDef> defs))
+            if (BenchwarpInterop.Benches.TryGetValue(Instance.SelectedObjectKey, out List<WorldMapBenchDef> defs))
             {
                 text += $"{L.Localize("Hold")} {Utils.GetBindingsText(bindings)} {L.Localize("to warp to")} {defs[benchPointer].benchName.Replace("Warp ", "").Replace("Bench ", "")}.";
 

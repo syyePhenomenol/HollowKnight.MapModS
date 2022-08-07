@@ -7,11 +7,16 @@ namespace RandoMapMod.UI
 {
     internal class GroupByButton : MainButton
     {
-        internal static GroupByButton Instance { get; private set; }
-
         public GroupByButton() : base("Group By Button", "RandoMapMod", 2, 3)
         {
 
+        }
+
+        internal override void Make()
+        {
+            base.Make();
+
+            Button.Borderless = true;
         }
 
         protected override void OnClick()
@@ -22,6 +27,8 @@ namespace RandoMapMod.UI
         public override void Update()
         {
             base.Update();
+
+            Button.Visibility = PoolsPanel.Instance.ExtraButtonsGrid.Visibility;
 
             Button.BorderColor = RmmColors.GetColor(RmmColorSetting.UI_Borders);
 

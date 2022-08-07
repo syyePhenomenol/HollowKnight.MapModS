@@ -45,27 +45,23 @@ namespace MapChanger
         private void BeforeOpenWorldMap(GameMap obj)
         {
             ClearNullMapObjects();
-
-            foreach (MapObject mapObject in mapObjects)
-            {
-                mapObject.MainUpdate();
-            }
+            Update();
         }
 
         private void BeforeOpenQuickMap(GameMap arg1, MapZone arg2)
         {
             ClearNullMapObjects();
-
-            foreach (MapObject mapObject in mapObjects)
-            {
-                mapObject.MainUpdate();
-            }
+            Update();
         }
 
         private void BeforeCloseMap(GameMap obj)
         {
             ClearNullMapObjects();
+            Update();
+        }
 
+        internal static void Update()
+        {
             foreach (MapObject mapObject in mapObjects)
             {
                 mapObject.MainUpdate();

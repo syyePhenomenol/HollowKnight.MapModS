@@ -35,7 +35,6 @@
     "MappedScene": "White_Palace_09",
     "MapZone": "WHITE_PALACE"
   },
-  //TODO: fix
   "White_Palace_11": {
     "MappedScene": "White_Palace_01",
     "MapZone": "WHITE_PALACE"

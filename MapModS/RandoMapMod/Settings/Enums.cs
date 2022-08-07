@@ -29,7 +29,7 @@
         Reevaluate
     }
 
-    public enum RMMMode
+    public enum RmmMode
     {
         Full_Map,
         All_Pins,

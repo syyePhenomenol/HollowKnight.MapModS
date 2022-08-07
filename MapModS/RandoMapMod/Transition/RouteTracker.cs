@@ -4,8 +4,11 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using MapChanger;
+using MapChanger.MonoBehaviours;
+using RandoMapMod.Rooms;
 using RandoMapMod.Settings;
 using RandoMapMod.UI;
+using L = RandomizerMod.Localization;
 
 namespace RandoMapMod.Transition
 {
@@ -45,17 +48,16 @@ namespace RandoMapMod.Transition
         }
 
         private static Thread SelectRouteThread;
-        public static void SelectRoute(string scene)
+        internal static void SelectRoute(string scene)
         {
             if (SelectRouteThread is null || !SelectRouteThread.IsAlive)
             {
                 SelectRouteThread = new Thread(() => GetRoute(scene));
                 SelectRouteThread.Start();
-                //Benchwarp.attackHoldTimer.Reset();
             }
         }
 
-        public static void GetRoute(string scene)
+        internal static void GetRoute(string scene)
         {
             if (Pathfinder.localPm == null) return;
 
@@ -76,7 +78,7 @@ namespace RandoMapMod.Transition
             AfterGetRoute();
         }
 
-        public static void ReevaluateRoute(ItemChanger.Transition lastTransition)
+        internal static void ReevaluateRoute(ItemChanger.Transition lastTransition)
         {
             if (Pathfinder.localPm == null) return;
 
@@ -105,7 +107,7 @@ namespace RandoMapMod.Transition
             AfterGetRoute();
         }
 
-        public static void AfterGetRoute()
+        private static void AfterGetRoute()
         {
             if (!selectedRoute.Any())
             {
@@ -122,11 +124,7 @@ namespace RandoMapMod.Transition
                 rejectedRoutes.Add(selectedRoute);
             }
 
-            //UpdateAll();
-            //TransitionWorldMap.UpdateInstructions();
-            //TransitionWorldMap.UpdateRouteSummary();
-
-            RouteCompass.Update();
+            UpdateRouteUI();
         }
 
         internal static void ResetRoute()
@@ -172,9 +170,7 @@ namespace RandoMapMod.Transition
             {
                 case OffRouteBehaviour.Cancel:
                     ResetRoute();
-                    //UpdateAll();
-                    //TransitionWorldMap.UpdateAll();
-                    RouteCompass.Update();
+                    UpdateRouteUI();
                     break;
                 case OffRouteBehaviour.Reevaluate:
                     ReevaluateRoute(lastTransition);
@@ -186,15 +182,21 @@ namespace RandoMapMod.Transition
             void UpdateRoute()
             {
                 selectedRoute.Remove(transition);
-                //UpdateAll();
-                //TransitionWorldMap.UpdateInstructions();
-                //TransitionWorldMap.UpdateRouteSummary();
 
                 if (!selectedRoute.Any())
                 {
-                    rejectedRoutes.Clear();
+                    ResetRoute();
                 }
+
+                UpdateRouteUI();
             }
+        }
+
+        private static void UpdateRouteUI()
+        {
+            RouteText.Instance.Update();
+            WorldMapRouteText.Instance.Update();
+            RouteCompass.Update();
         }
 
         internal static string GetRouteText()
@@ -218,6 +220,79 @@ namespace RandoMapMod.Transition
                 }
 
                 text += " -> " + transition.ToCleanName();
+            }
+
+            return text;
+        }
+
+        internal static string GetInstructionText()
+        {
+            string selectedScene = TransitionRoomSelector.Instance.SelectedObjectKey;
+            string text = "";
+
+            if (!RandoMapMod.GS.ShowUncheckedPanel && selectedScene is not Selector.NONE_SELECTED)
+            {
+                text += $"{L.Localize("Selected room")}: {selectedScene}.";
+            }
+
+            List<InControl.BindingSource> bindings = new(InputHandler.Instance.inputActions.menuSubmit.Bindings);
+
+            if (selectedScene == Utils.CurrentScene())
+            {
+                text += $" {L.Localize("You are here")}.";
+            }
+
+            text += $" {L.Localize("Press")} {Utils.GetBindingsText(bindings)}";
+
+            if (selectedRoute.Any()
+                && selectedScene == lastFinalScene
+                && selectedRoute.Count() == transitionsCount)
+            {
+                text += $" {L.Localize("to change starting / final transitions of current route")}.";
+            }
+            else
+            {
+                text += $" {L.Localize("to find a new route")}.";
+            }
+
+            if (selectedRoute.Any() && selectedRoute.First().IsBenchwarpTransition() && Interop.HasBenchwarp())
+            {
+                bindings = new(InputHandler.Instance.inputActions.attack.Bindings);
+
+                text += $" {L.Localize("Hold")} {Utils.GetBindingsText(bindings)} {L.Localize("to benchwarp")}.";
+            }
+
+            return text;
+        }
+
+        internal static string GetSummaryText()
+        {
+            string text = $"{L.Localize("Current route")}: ";
+
+            if (lastStartTransition != ""
+                && lastFinalTransition != ""
+                && transitionsCount > 0
+                && selectedRoute.Any())
+            {
+                if (lastFinalTransition.IsSpecialTransition())
+                {
+                    text += $"{lastStartTransition.ToCleanName()}";
+
+                    if (transitionsCount >= 1)
+                    {
+                        text += $" ->...-> {lastFinalTransition.ToCleanName()}";
+                    }
+                }
+                else
+                {
+                    text += $"{lastStartTransition.ToCleanName()} ->...-> {lastFinalTransition.GetAdjacentTerm().ToCleanName()}";
+                }
+
+                text += $"\n\n{L.Localize("Transitions")}: {transitionsCount}";
+            }
+            else
+            {
+                text += L.Localize("None");
             }
 
             return text;

@@ -23,7 +23,7 @@ namespace VanillaMapMod.Settings
         internal void Initialize()
         {
             MapChanger.Settings.SetModEnabled(ModEnabled);
-            MapChanger.Settings.SetMode("VanillaMapMod", Mode.ToString().Replace('_', ' '));
+            MapChanger.Settings.InitializeMode("VanillaMapMod", Mode.ToString().Replace('_', ' '));
 
             if (InitializedPreviously) return;
 

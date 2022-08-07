@@ -61,7 +61,7 @@ namespace VanillaMapMod
             Sprite = GetSpriteFromPoolGroup(parent.PoolGroup);
         }
 
-        private void OnEnable()
+        public override void AfterMainUpdate()
         {
             UpdatePinSize();
         }

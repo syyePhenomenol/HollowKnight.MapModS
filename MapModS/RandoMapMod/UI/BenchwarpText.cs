@@ -27,11 +27,11 @@ namespace RandoMapMod.UI
             benchwarpText = UIExtensions.TextFromEdge(Root, "Benchwarp Text", false);
         }
 
-        internal void Update(string text)
+        public override void Update()
         {
             if (!Interop.HasBenchwarp()) return;
 
-            benchwarpText.Text = text;
+            benchwarpText.Text = NormalRoomSelector.GetBenchwarpText();
         }
     }
 }

@@ -6,7 +6,8 @@ namespace MapChanger.UI
 {
     public abstract class BottomRowText : MapUILayer
     {
-        public virtual string[] TextNames { get; } = { };
+        protected virtual float MinSpacing { get; } = 200f;
+        protected virtual string[] TextNames { get; } = { };
         protected Dictionary<string, TextObject> MapTexts { get; private set; }
 
         protected override bool Condition()
@@ -41,7 +42,7 @@ namespace MapChanger.UI
 
             foreach (TextObject text in MapTexts.Values)
             {
-                grid.ColumnDefinitions.Add(new GridDimension(200f, GridUnit.AbsoluteMin));
+                grid.ColumnDefinitions.Add(new GridDimension(MinSpacing, GridUnit.AbsoluteMin));
                 grid.Children.Add(text);
             }
         }

@@ -8,11 +8,16 @@ namespace RandoMapMod.UI
 {
     internal class PersistentButton : MainButton
     {
-        internal static PersistentButton Instance { get; private set; }
-
         public PersistentButton() : base("Persistent Button", "RandoMapMod", 2, 2)
         {
 
+        }
+
+        internal override void Make()
+        {
+            base.Make();
+
+            Button.Borderless = true;
         }
 
         protected override void OnClick()
@@ -23,6 +28,8 @@ namespace RandoMapMod.UI
         public override void Update()
         {
             base.Update();
+
+            Button.Visibility = PoolsPanel.Instance.ExtraButtonsGrid.Visibility;
 
             Button.BorderColor = RmmColors.GetColor(RmmColorSetting.UI_Borders);
 

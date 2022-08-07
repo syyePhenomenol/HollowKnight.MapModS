@@ -113,7 +113,7 @@ namespace RandoMapMod
 
         private static IEnumerator DoBenchwarpInternal(string scene, string respawnMarker)
         {
-            InputHandler.Instance.inputActions.openInventory.CommitWithState(true, ReflectionHelper.GetField<OneAxisInputControl, ulong>(InputHandler.Instance.inputActions.openInventory, "pendingTick") + 1, 0);
+            SetInventoryButton(true);
             yield return new WaitWhile(() => GameManager.instance.inventoryFSM.ActiveStateName != "Closed");
             yield return new WaitForSeconds(0.15f);
             UIManager.instance.TogglePauseGame();
@@ -135,6 +135,11 @@ namespace RandoMapMod
 
                 ChangeScene.WarpToRespawn();
             }
+        }
+
+        private static void SetInventoryButton(bool value)
+        {
+            InputHandler.Instance.inputActions.openInventory.CommitWithState(value, ReflectionHelper.GetField<OneAxisInputControl, ulong>(InputHandler.Instance.inputActions.openInventory, "pendingTick") + 1, 0);
         }
     }
 

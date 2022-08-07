@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MapChanger;
 using RandoMapMod.Pins;
+using RandoMapMod.Transition;
 
 namespace RandoMapMod.Settings
 {
@@ -9,11 +11,8 @@ namespace RandoMapMod.Settings
     {
         public bool InitializedPreviously = false;
 
-        //// Vanilla only
-        //public int geoRockCounter = 0;
-
         public bool ModEnabled = false;
-        public RMMMode Mode = RMMMode.Full_Map;
+        public RmmMode Mode = RmmMode.Full_Map;
         public bool ShowBenchPins = false;
         public bool SpoilerOn = false;
         public bool RandomizedOn = true;
@@ -23,60 +22,34 @@ namespace RandoMapMod.Settings
 
         public void Initialize()
         {
-            MapChanger.Settings.SetModEnabled(ModEnabled);
-            MapChanger.Settings.SetMode("RandoMapMod", Mode.ToString().Replace('_', ' '));
-
-            if (InitializedPreviously) return;
-
             PoolSettings = RmmPinManager.AllPoolGroups.ToDictionary(poolGroup => poolGroup, poolGroup => PoolState.On);
-
-            //if (RandoMapMod.GS.OverrideDefaultMode)
-            //{
-            //    // Replace with condition that at least one randomized transition exists
-            //    if (true)
-            //    {
-            //        SetMode(RandoMapMod.GS.TransitionRandoModeOverride);
-            //    }
-            //    else
-            //    {
-            //        SetMode(RandoMapMod.GS.ItemRandoModeOverride);
-            //    }
-            //}
-            //else
-            //{
-            //    // Replace with condition that at least one randomized transition exists
-            //    if (true)
-            //    {
-            //        SetMode(RMMMode.Full_Map);
-            //    }
-            //    else
-            //    {
-            //        SetMode(RMMMode.Transition_1);
-            //    }
-            //}
-
             ResetPoolSettings();
+
+            if (RandoMapMod.GS.OverrideDefaultMode)
+            {
+                InitializeMode(TransitionData.IsTransitionRando() ? RandoMapMod.GS.TransitionRandoModeOverride : RandoMapMod.GS.ItemRandoModeOverride);
+            }
+            else
+            {
+                InitializeMode(TransitionData.IsTransitionRando() ? RmmMode.Transition_Normal : RmmMode.Full_Map);
+            }
 
             InitializedPreviously = true;
         }
 
-        //internal void ToggleModEnabled()
-        //{
-        //    ModEnabled = !ModEnabled;
-        //}
-
-        internal void SetMode(string mode)
+        private void InitializeMode(RmmMode mode)
         {
-            if (Enum.TryParse(mode.Replace(' ', '_'), out RMMMode rmmMode))
+            Mode = mode;
+            MapChanger.Settings.InitializeMode("RandoMapMod", mode.ToString().ToCleanName());
+        }
+
+        internal void ImportMode(string mode)
+        {
+            if (Enum.TryParse(mode.Replace(' ', '_'), out RmmMode rmmMode))
             {
                 Mode = rmmMode;
             }
         }
-
-        //internal void ToggleMode()
-        //{
-        //    Mode = (RMMMode)(((int)Mode + 1) % Enum.GetNames(typeof(RMMMode)).Length);
-        //}
 
         internal void ToggleGroupBy()
         {

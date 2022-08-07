@@ -73,7 +73,7 @@ namespace RandoMapMod.Pins
         {
             base.Initialize();
 
-            RandoMapMod.Instance.LogDebug($"{name}: {SceneName}");
+            //RandoMapMod.Instance.LogDebug($"{name}: {SceneName}");
 
             ActiveModifiers.AddRange
             (
@@ -142,7 +142,7 @@ namespace RandoMapMod.Pins
 
         internal virtual string GetLookupText()
         {;
-            string text = $"{name}";
+            string text = $"{name.ToCleanName()}";
             text += $"\n\n{L.Localize("Room")}: {SceneName?? "none"}";
             text += $"\n\n{L.Localize("Status")}:";
 

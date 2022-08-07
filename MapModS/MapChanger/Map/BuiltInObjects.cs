@@ -84,7 +84,7 @@ namespace MapChanger.Map
 
                 if (child is null)
                 {
-                    MapChangerMod.Instance.LogWarn($"Transform not found: {pathName}");
+                    MapChangerMod.Instance.LogDebug($"Transform not found: {pathName}");
                     continue;
                 }
 

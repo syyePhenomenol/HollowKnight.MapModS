@@ -48,7 +48,7 @@ namespace MapChanger
             new VariableOverrides(),
             new BehaviourChanges(),
             new PauseMenu(),
-            new MapUILayerManager(),
+            new MapUILayerUpdater(),
             new MapObjectUpdater()
         };
 

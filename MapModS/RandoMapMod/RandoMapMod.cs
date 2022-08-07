@@ -61,13 +61,15 @@ namespace RandoMapMod
             new MapKey(),
             new InfoPanels(),
             new RmmBottomRowText(),
-            new BenchwarpText()
+            new BenchwarpText(),
+            new WorldMapRouteText(),
+            new RouteText(),
+            new QuickMapTransitions()
         };
 
-        private static readonly HookModule[] hookModules = new HookModule[]
+        private static readonly List<HookModule> hookModules = new()
         {
             new RmmPinManager(),
-            new BenchwarpInterop(),
             new TransitionTracker(),
             new RouteTracker(),
             new RouteCompass()
@@ -127,7 +129,11 @@ namespace RandoMapMod
 
             RmmColors.Load();
             RmmRoomManager.Load();
-            BenchwarpInterop.Load();
+            if (Interop.HasBenchwarp())
+            {
+                BenchwarpInterop.Load();
+                hookModules.Add(new BenchwarpInterop());
+            }
             TransitionData.Load();
             PathfinderData.Load();
 
@@ -140,7 +146,7 @@ namespace RandoMapMod
         private static void ExportSettings()
         {
             MapChanger.Settings.SetModEnabled(LS.ModEnabled);
-            MapChanger.Settings.SetMode("RandoMapMod", LS.Mode.ToString().Replace('_', ' '));
+            MapChanger.Settings.InitializeMode("RandoMapMod", LS.Mode.ToString().Replace('_', ' '));
         }
 
         private static void ImportSettings()
@@ -149,7 +155,7 @@ namespace RandoMapMod
 
             if (MapChanger.Settings.CurrentMode().Mod is "RandoMapMod")
             {
-                LS.SetMode(MapChanger.Settings.CurrentMode().ModeName);
+                LS.ImportMode(MapChanger.Settings.CurrentMode().ModeName);
             }
         }
 
@@ -179,7 +185,7 @@ namespace RandoMapMod
                 // Construct map UI
                 foreach (MapUILayer uiLayer in mapUILayers)
                 {
-                    MapUILayerManager.AddMapLayer(uiLayer);
+                    MapUILayerUpdater.Add(uiLayer);
                 }
             }
             catch (Exception e)

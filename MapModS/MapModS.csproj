@@ -63,6 +63,7 @@
     <Compile Remove="MapChanger\MapMod.cs" />
     <Compile Remove="MapChanger\MonoBehaviours\MapObjectGroup.cs" />
     <Compile Remove="MapChanger\SpriteManagerOld.cs" />
+    <Compile Remove="MapChanger\UI\SettingChangedText.cs" />
     <Compile Remove="RandoMapMod\RandoPinData.cs" />
     <Compile Remove="RandoMapMod\RoomText.cs" />
     <Compile Remove="RandoMapMod\UI\Benchwarp.cs" />

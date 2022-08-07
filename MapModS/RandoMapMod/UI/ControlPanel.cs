@@ -74,6 +74,7 @@ namespace RandoMapMod.UI
             panelContents.Children.Add(lookup);
 
             // TODO: Add lock lookup selection
+            // TODO: Add reticle toggle
 
             benchwarpWorldMap = UIExtensions.PanelText(Root, "Benchwarp World Map");
             panelContents.Children.Add(benchwarpWorldMap);

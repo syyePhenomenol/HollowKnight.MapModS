@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using InControl;
 using MapChanger.UI;
+using Modding;
+using UnityEngine;
 
 namespace MapChanger
 {
@@ -56,21 +60,8 @@ namespace MapChanger
             }
         }
 
-        public static void ToggleMode()
+        public static void InitializeMode(string mod, string modeName)
         {
-            if (!MapModEnabled) return;
-
-            modeIndex = (modeIndex + 1) % Modes.Count;
-
-            SettingChanged();
-
-            MapChangerMod.Instance.LogDebug($"Mode set to {CurrentMode().ModeKey}");
-        }
-
-        public static void SetMode(string mod, string modeName)
-        {
-            if (!MapModEnabled) return;
-
             for (int i = 0; i < Modes.Count; i++)
             {
                 if (Modes[i].ModeKey == (mod, modeName))
@@ -78,6 +69,15 @@ namespace MapChanger
                     modeIndex = i;
                 }
             }
+
+            MapChangerMod.Instance.LogDebug($"Mode initialized to {CurrentMode().ModeKey}");
+        }
+
+        public static void ToggleMode()
+        {
+            if (!MapModEnabled) return;
+
+            modeIndex = (modeIndex + 1) % Modes.Count;
 
             SettingChanged();
 
@@ -100,10 +100,33 @@ namespace MapChanger
 
         private static void SettingChanged()
         {
-            MapUILayerManager.Update();
+            MapUILayerUpdater.Update();
+            MapObjectUpdater.Update();
+
+            if (States.WorldMapOpen)
+            {
+                GameManager.instance.StartCoroutine(CloseAndOpenWorldMap());
+            }
+
+            if (States.QuickMapOpen)
+            {
+                SetQuickMapButton(false);
+            }
 
             try { OnSettingChanged?.Invoke(); }
             catch (Exception e) { MapChangerMod.Instance.LogError(e); }
+        }
+
+        private static IEnumerator CloseAndOpenWorldMap()
+        {
+            SetQuickMapButton(true);
+            yield return new WaitForSeconds(0.3f);
+            GameManager.instance.inventoryFSM.SendEvent("OPEN INVENTORY MAP");
+        }
+
+        private static void SetQuickMapButton(bool value)
+        {
+            InputHandler.Instance.inputActions.quickMap.CommitWithState(value, ReflectionHelper.GetField<OneAxisInputControl, ulong>(InputHandler.Instance.inputActions.quickMap, "pendingTick") + 1, 0);
         }
     }
 }
