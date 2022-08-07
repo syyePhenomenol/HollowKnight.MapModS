@@ -35,23 +35,26 @@ namespace MapChanger.MonoBehaviours
             }
 
             OrigColor = tmp.color;
+
+            MapObjectUpdater.Add(this);
         }
 
         private bool AreaNamesEnabled()
         {
-            return !Settings.CurrentMode().DisableAreaNames;
+            return !(Settings.MapModEnabled && Settings.CurrentMode().DisableAreaNames);
         }
 
         public override void UpdateColor()
         {
-            if (!Settings.MapModEnabled)
+            if (Settings.MapModEnabled)
+            {
+                try { Color = Settings.CurrentMode().AreaNameColorOverride(this) ?? OrigColor; }
+                catch (Exception e) { MapChangerMod.Instance.LogError(e); }
+            }
+            else
             {
                 ResetColor();
-                return;
             }
-
-            try { Settings.CurrentMode().OnAreaNameUpdateColor?.Invoke(this); }
-            catch (Exception e) { MapChangerMod.Instance.LogError(e); }
         }
     }
 }

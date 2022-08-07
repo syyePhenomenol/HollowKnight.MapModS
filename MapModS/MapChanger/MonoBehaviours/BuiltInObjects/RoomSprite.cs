@@ -52,34 +52,40 @@ namespace MapChanger.MonoBehaviours
 
         private bool IsActive()
         {
-            if (Settings.MapModEnabled && Settings.CurrentMode().RoomSpriteActiveOverride is not null)
+            if (Settings.MapModEnabled)
             {
-                try { return Settings.CurrentMode().RoomSpriteActiveOverride.Invoke(this); }
+                try { return Settings.CurrentMode().RoomActiveOverride(this) ?? DefaultActive(); }
                 catch (Exception e) { MapChangerMod.Instance.LogError(e); }
             }
 
-            return Settings.CurrentMode().FullMap
+            return DefaultActive();
+
+            bool DefaultActive()
+            {
+                return Settings.CurrentMode().FullMap
                 || PlayerData.instance.GetVariable<List<string>>("scenesMapped").Contains(Rsd.SceneName)
                 || Finder.IsMinimalMapScene(transform.name);
+            }
         }
 
         public override void UpdateColor()
         {
-            if (!Settings.MapModEnabled)
+            if (Settings.MapModEnabled)
+            {
+                try { Color = Settings.CurrentMode().RoomColorOverride(this) ?? OrigColor; }
+                catch (Exception e) { MapChangerMod.Instance.LogError(e); }
+            }
+            else
             {
                 ResetColor();
-                return;
             }
-
-            try { Settings.CurrentMode().OnRoomUpdateColor?.Invoke(this); }
-            catch (Exception e) { MapChangerMod.Instance.LogError(e); }
         }
 
         public bool CanSelect()
         {
-            if (Settings.MapModEnabled && Settings.CurrentMode().RoomSpriteCanSelectOverride is not null)
+            if (Settings.MapModEnabled)
             {
-                try { return Settings.CurrentMode().RoomSpriteCanSelectOverride.Invoke(this); }
+                try { return Settings.CurrentMode().RoomCanSelectOverride(this) ?? gameObject.activeSelf; }
                 catch (Exception e) { MapChangerMod.Instance.LogError(e); }
             }
 

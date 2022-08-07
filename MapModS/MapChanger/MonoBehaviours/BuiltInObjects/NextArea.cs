@@ -40,25 +40,28 @@ namespace MapChanger.MonoBehaviours
             }
 
             OrigColor = tmp.color;
+
+            MapObjectUpdater.Add(this);
         }
 
         private bool IsActive()
         {
             return States.QuickMapOpen
-                && !Settings.CurrentMode().DisableNextArea
+                && !(Settings.MapModEnabled && Settings.CurrentMode().DisableNextArea)
                 && (Mnad.visitedString is "" || PlayerData.instance.GetBool(Mnad.visitedString));
         }
 
         public override void UpdateColor()
         {
-            if (!Settings.MapModEnabled)
+            if (Settings.MapModEnabled)
+            {
+                try { Color = Settings.CurrentMode().NextAreaColorOverride(this) ?? OrigColor; }
+                catch (Exception e) { MapChangerMod.Instance.LogError(e); }
+            }
+            else
             {
                 ResetColor();
-                return;
             }
-
-            try { Settings.CurrentMode().OnNextAreaUpdateColor?.Invoke(this); }
-            catch (Exception e) { MapChangerMod.Instance.LogError(e); }
         }
     }
 }

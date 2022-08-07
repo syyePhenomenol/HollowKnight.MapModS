@@ -1,8 +1,7 @@
-﻿using System;
-using GlobalEnums;
-using MapChanger;
+﻿using MapChanger;
 using MapChanger.MonoBehaviours;
 using RandoMapMod.Transition;
+using UnityEngine;
 
 namespace RandoMapMod.Modes
 {
@@ -10,24 +9,21 @@ namespace RandoMapMod.Modes
     {
         public override bool DisableAreaNames => true;
         public override bool DisableNextArea => true;
-        public override Func<RoomSprite, bool> RoomSpriteActiveOverride => (roomSprite) =>
+
+        public override bool? RoomActiveOverride(RoomSprite roomSprite)
         {
             return TransitionTracker.GetRoomActive(roomSprite.Rsd.SceneName);
-        };
-        public override Action<RoomSprite> OnRoomUpdateColor => (roomSprite) => 
+        }
+
+        public override Vector4? RoomColorOverride(RoomSprite roomSprite)
         {
-            if (roomSprite.Selected)
-            {
-                roomSprite.Color = RmmColors.GetColor(RmmColorSetting.Room_Selected);
-            }
-            else
-            {
-                roomSprite.Color = TransitionTracker.GetRoomColor(roomSprite.Rsd.SceneName);
-            }
-        };
-        public override Action<AreaName> OnAreaNameUpdateColor => (areaName) => { areaName.ResetColor(); };
-        public override Action<NextArea> OnNextAreaUpdateColor => (nextArea) => { nextArea.ResetColor(); };
-        public override Action<QuickMapTitle, MapZone> OnQuickMapTitleUpdateColor => (qmt, mapZone) => { qmt.Color = RmmColors.GetColor(ColorSetting.UI_Neutral); };
+            return roomSprite.Selected ? RmmColors.GetColor(RmmColorSetting.Room_Selected) : TransitionTracker.GetRoomColor(roomSprite.Rsd.SceneName);
+        }
+
+        public override Vector4? QuickMapTitleColorOverride(QuickMapTitle qmt)
+        {
+            return RmmColors.GetColor(ColorSetting.UI_Neutral);
+        }
     }
 
     internal class TransitionNormalMode : TransitionMode

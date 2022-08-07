@@ -21,36 +21,27 @@ namespace MapChanger.MonoBehaviours
 
         public override void Initialize()
         {
+            Instance = this;
+
             tmp = GetComponent<TextMeshPro>();
             OrigColor = tmp.color;
 
             gameObject.SetActive(true);
 
-            Instance = this;
-
-            Events.BeforeOpenQuickMap += OnOpenQuickMap;
+            MapObjectUpdater.Add(this);
         }
 
-        private void OnOpenQuickMap(GameMap gameMap, MapZone mapZone)
+        public override void UpdateColor()
         {
-            UpdateColor(mapZone);
-        }
-
-        public void UpdateColor(MapZone mapZone)
-        {
-            if (!Settings.MapModEnabled)
+            if (Settings.MapModEnabled)
+            {
+                try { Color = Settings.CurrentMode().QuickMapTitleColorOverride(this) ?? OrigColor; }
+                catch (Exception e) { MapChangerMod.Instance.LogError(e); }
+            }
+            else
             {
                 ResetColor();
-                return;
             }
-
-            try { Settings.CurrentMode().OnQuickMapTitleUpdateColor?.Invoke(this, mapZone); }
-            catch (Exception e) { MapChangerMod.Instance.LogError(e); }
-        }
-
-        public void OnDestroy()
-        {
-            Events.BeforeOpenQuickMap -= OnOpenQuickMap;
         }
     }
 }

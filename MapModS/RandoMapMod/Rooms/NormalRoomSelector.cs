@@ -31,8 +31,7 @@ namespace RandoMapMod.Rooms
             ActiveModifiers.Add(ActiveByToggle);
         }
 
-        private static Stopwatch attackHoldTimer = new();
-
+        private static readonly Stopwatch attackHoldTimer = new();
         private void Update()
         {
             // Hold attack to benchwarp

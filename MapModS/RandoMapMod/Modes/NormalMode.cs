@@ -8,25 +8,30 @@ namespace RandoMapMod.Modes
 {
     internal class NormalMode : RmmMapMode
     {
-        public override Action<RoomSprite> OnRoomUpdateColor => (roomSprite) =>
+        public override Vector4? RoomColorOverride(RoomSprite roomSprite)
         {
-            if (roomSprite.Selected)
-            {
-                roomSprite.Color = RmmColors.GetColor(RmmColorSetting.Room_Benchwarp_Selected);
-            }
-            else
-            {
-                roomSprite.Color = RmmColors.GetColor(roomSprite.Rsd.ColorSetting);
-            }
-        };
-        public override Func<RoomSprite, bool> RoomSpriteCanSelectOverride => (roomSprite) =>
+            return roomSprite.Selected ? RmmColors.GetColor(RmmColorSetting.Room_Benchwarp_Selected) : RmmColors.GetColor(roomSprite.Rsd.ColorSetting);
+        }
+
+        public override bool? RoomCanSelectOverride(RoomSprite roomSprite)
         {
             return roomSprite.gameObject.activeSelf && BenchwarpInterop.Benches.ContainsKey(roomSprite.Rsd.SceneName);
-        };
-        public override Action<AreaName> OnAreaNameUpdateColor => (areaName) => { areaName.Color = RmmColors.GetColor(areaName.MiscObjectDef.ColorSetting).ToOpaque(); };
-        public override Action<NextArea> OnNextAreaUpdateColor => (nextArea) => { nextArea.Color = RmmColors.GetColor(nextArea.MiscObjectDef.ColorSetting).ToOpaque(); };
-        public override Action<QuickMapTitle, MapZone> OnQuickMapTitleUpdateColor => (qmt, mapZone) => { qmt.Color = RmmColors.GetColorFromMapZone(mapZone).ToOpaque(); };
-        
+        }
+
+        public override Vector4? AreaNameColorOverride(AreaName areaName)
+        {
+            return RmmColors.GetColor(areaName.MiscObjectDef.ColorSetting).ToOpaque();
+        }
+
+        public override Vector4? NextAreaColorOverride(NextArea nextArea)
+        {
+            return RmmColors.GetColor(nextArea.MiscObjectDef.ColorSetting).ToOpaque();
+        }
+
+        public override Vector4? QuickMapTitleColorOverride(QuickMapTitle qmt)
+        {
+            return RmmColors.GetColorFromMapZone(Finder.GetCurrentMapZone()).ToOpaque();
+        }
     }
 
     internal class FullMapMode : NormalMode
