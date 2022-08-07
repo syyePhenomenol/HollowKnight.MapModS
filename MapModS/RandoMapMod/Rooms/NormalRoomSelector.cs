@@ -5,6 +5,8 @@ using MapChanger;
 using MapChanger.Map;
 using MapChanger.MonoBehaviours;
 using RandoMapMod.Modes;
+using RandoMapMod.UI;
+using L = RandomizerMod.Localization;
 
 namespace RandoMapMod.Rooms
 {
@@ -59,27 +61,12 @@ namespace RandoMapMod.Rooms
 
         private void ToggleBench()
         {
-            if (!BenchwarpInterop.Benches.ContainsKey(SelectedObjectKey)
-                || benchPointer > BenchwarpInterop.Benches[SelectedObjectKey].Count - 1)
+            if (BenchwarpInterop.Benches.TryGetValue(SelectedObjectKey, out List<WorldMapBenchDef> defs) && defs.Count > 1)
             {
-                RandoMapMod.Instance.LogWarn("Invalid bench toggle");
-                return;
+                benchPointer = (benchPointer + 1) % defs.Count;
+                RandoMapMod.Instance.LogDebug($"Toggled bench to {defs[benchPointer]}");
+                OnSelectionChanged();
             }
-
-            benchPointer = (benchPointer + 1) % BenchwarpInterop.Benches[SelectedObjectKey].Count;
-            RandoMapMod.Instance.LogDebug($"Toggled bench to {GetSelectedBench().benchName}");
-        }
-
-        private WorldMapBenchDef GetSelectedBench()
-        {
-            if (!BenchwarpInterop.Benches.ContainsKey(SelectedObjectKey)
-                || benchPointer > BenchwarpInterop.Benches[SelectedObjectKey].Count - 1)
-            {
-                RandoMapMod.Instance.LogWarn("Invalid bench selection");
-                return BenchwarpInterop.Benches.First().Value.First();
-            }
-
-            return BenchwarpInterop.Benches[SelectedObjectKey][benchPointer];
         }
 
         public override void AfterMainUpdate()
@@ -102,6 +89,32 @@ namespace RandoMapMod.Rooms
             benchPointer = 0;
 
             base.Deselect(selectable);
+        }
+
+        protected override void OnSelectionChanged()
+        {
+            BenchwarpText.Instance.Update(GetBenchwarpText());
+        }
+
+        private string GetBenchwarpText()
+        {
+            string text = "";
+
+            if (SelectedObjectKey is NONE_SELECTED) return text;
+
+            List<InControl.BindingSource> bindings = new(InputHandler.Instance.inputActions.attack.Bindings);
+
+            if (BenchwarpInterop.Benches.TryGetValue(SelectedObjectKey, out List<WorldMapBenchDef> defs))
+            {
+                text += $"{L.Localize("Hold")} {Utils.GetBindingsText(bindings)} {L.Localize("to warp to")} {defs[benchPointer].benchName.Replace("Warp ", "").Replace("Bench ", "")}.";
+
+                if (defs.Count > 1)
+                {
+                    text += $"\n{L.Localize("Tap")} {Utils.GetBindingsText(bindings)} {L.Localize("to toggle to another bench here")}.";
+                }
+            }
+
+            return text;
         }
     }
 }

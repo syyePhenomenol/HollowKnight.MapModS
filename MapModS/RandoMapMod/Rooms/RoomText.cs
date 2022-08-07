@@ -1,6 +1,7 @@
 ﻿using System;
 using MapChanger;
 using MapChanger.MonoBehaviours;
+using RandoMapMod.Modes;
 using RandoMapMod.Transition;
 using TMPro;
 using UnityEngine;
@@ -58,7 +59,7 @@ namespace RandoMapMod.Rooms
             (
                 new Func<bool>[]
                 {
-                    TransitionData.TransitionModeActive,
+                    Conditions.TransitionModeEnabled,
                     ActiveByMap,
                     GetRoomActive
                 }

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace RandoMapMod
 {
-    public enum RmmColorSetting
+    internal enum RmmColorSetting
     {
         None,
 
@@ -58,11 +58,28 @@ namespace RandoMapMod
         Room_Debug
     }
 
-    public static class RmmColors
+    internal static class RmmColors
     {
-        public static bool HasCustomColors { get; private set; } = false;
+        internal static bool HasCustomColors { get; private set; } = false;
 
-        public static readonly Dictionary<string, RmmColorSetting> mapColors = new()
+        internal static readonly RmmColorSetting[] PinColors =
+        {
+            RmmColorSetting.Pin_Normal,
+            RmmColorSetting.Pin_Previewed,
+            RmmColorSetting.Pin_Out_of_logic,
+            RmmColorSetting.Pin_Persistent
+        };
+
+        internal static readonly RmmColorSetting[] RoomColors =
+        {
+            RmmColorSetting.Room_Normal,
+            RmmColorSetting.Room_Current,
+            RmmColorSetting.Room_Adjacent,
+            RmmColorSetting.Room_Out_of_logic,
+            RmmColorSetting.Room_Selected
+        };
+
+        private static readonly Dictionary<string, RmmColorSetting> mapColors = new()
         {
             { "Ancient Basin", RmmColorSetting.Map_Ancient_Basin },
             { "City of Tears", RmmColorSetting.Map_City_of_Tears },
@@ -80,23 +97,6 @@ namespace RandoMapMod
             { "Resting_Grounds", RmmColorSetting.Map_Resting_Grounds },
             { "Waterways", RmmColorSetting.Map_Royal_Waterways },
             { "WHITE_PALACE", RmmColorSetting.Map_White_Palace },
-        };
-
-        public static readonly List<RmmColorSetting> pinColors = new()
-        {
-            RmmColorSetting.Pin_Normal,
-            RmmColorSetting.Pin_Previewed,
-            RmmColorSetting.Pin_Out_of_logic,
-            RmmColorSetting.Pin_Persistent
-        };
-
-        public static readonly List<RmmColorSetting> roomColors = new()
-        {
-            RmmColorSetting.Room_Normal,
-            RmmColorSetting.Room_Current,
-            RmmColorSetting.Room_Adjacent,
-            RmmColorSetting.Room_Out_of_logic,
-            RmmColorSetting.Room_Selected
         };
 
         private static Dictionary<RmmColorSetting, Vector4> customColors = new();
@@ -117,7 +117,7 @@ namespace RandoMapMod
             { RmmColorSetting.UI_Compass, new(1f, 1f, 1f, 0.83f) }
         };
 
-        public static void Load()
+        internal static void Load()
         {
             Dictionary<string, float[]> customColorsRaw;
 
@@ -159,7 +159,7 @@ namespace RandoMapMod
             }
         }
 
-        public static Vector4 GetColor(RmmColorSetting rmmColor)
+        internal static Vector4 GetColor(RmmColorSetting rmmColor)
         {
             if (customColors != null && customColors.ContainsKey(rmmColor))
             {
@@ -179,7 +179,7 @@ namespace RandoMapMod
             return Vector4.negativeInfinity;
         }
 
-        public static Vector4 GetColor(ColorSetting mcColor)
+        internal static Vector4 GetColor(ColorSetting mcColor)
         {
             if (Enum.TryParse(mcColor.ToString(), out RmmColorSetting rmmColor))
             {
@@ -189,7 +189,7 @@ namespace RandoMapMod
             return Vector4.negativeInfinity;
         }
 
-        public static Vector4 GetColorFromMapZone(MapZone mapZone)
+        internal static Vector4 GetColorFromMapZone(MapZone mapZone)
         {
             return mapZone switch
             {

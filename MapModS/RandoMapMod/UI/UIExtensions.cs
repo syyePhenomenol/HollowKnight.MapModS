@@ -1,7 +1,5 @@
 ﻿using MagicUI.Core;
 using MagicUI.Elements;
-using MapChanger;
-//using RandoMapMod.Data;
 using L = RandomizerMod.Localization;
 
 namespace RandoMapMod.UI
@@ -14,7 +12,7 @@ namespace RandoMapMod.UI
             {
                 return new(onLayout, name)
                 {
-                    ContentColor = Colors.GetColor(ColorSetting.UI_Neutral),
+                    ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Neutral),
                     HorizontalAlignment = HorizontalAlignment.Right,
                     VerticalAlignment = VerticalAlignment.Top,
                     TextAlignment = HorizontalAlignment.Right,
@@ -27,7 +25,7 @@ namespace RandoMapMod.UI
             {
                 return new(onLayout, name)
                 {
-                    ContentColor = Colors.GetColor(ColorSetting.UI_Neutral),
+                    ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Neutral),
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Top,
                     TextAlignment = HorizontalAlignment.Left,
@@ -42,7 +40,7 @@ namespace RandoMapMod.UI
         {
             return new(onLayout, name)
             {
-                ContentColor = Colors.GetColor(ColorSetting.UI_Neutral),
+                ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Neutral),
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Top,
                 TextAlignment = HorizontalAlignment.Left,
@@ -58,12 +56,12 @@ namespace RandoMapMod.UI
 
             if (value)
             {
-                textObj.ContentColor = Colors.GetColor(ColorSetting.UI_On);
+                textObj.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_On);
                 text += L.Localize("On");
             }
             else
             {
-                textObj.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
+                textObj.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Neutral);
                 text += L.Localize("Off");
             }
 

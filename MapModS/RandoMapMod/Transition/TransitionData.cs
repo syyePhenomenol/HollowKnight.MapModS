@@ -1,10 +1,9 @@
-﻿using RandoMapMod.Modes;
+﻿using System.Collections.Generic;
+using System.Linq;
 using RandomizerCore;
 using RandomizerCore.Logic;
 using RandomizerMod;
 using RandomizerMod.RC;
-using System.Collections.Generic;
-using System.Linq;
 using RD = RandomizerMod.RandomizerData.Data;
 using RM = RandomizerMod.RandomizerMod;
 using TM = RandomizerMod.Settings.TransitionSettings.TransitionMode;
@@ -24,12 +23,6 @@ namespace RandoMapMod.Transition
         {
             return RM.RS.GenerationSettings.TransitionSettings.Mode != TM.None
                 || (RM.RS.Context.transitionPlacements != null && RM.RS.Context.transitionPlacements.Any());
-        }
-
-        internal static bool TransitionModeActive()
-        {
-            return MapChanger.Settings.MapModEnabled
-                && MapChanger.Settings.CurrentMode() is TransitionNormalMode or TransitionVisitedOnlyMode or TransitionAllRoomsMode;
         }
 
         internal static bool IsRandomizedTransition(string source)

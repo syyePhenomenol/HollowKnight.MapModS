@@ -1,218 +1,193 @@
 ﻿using MagicUI.Core;
 using MagicUI.Elements;
 using MagicUI.Graphics;
-using MapModS.Data;
-using MapModS.Map;
-using MapModS.Settings;
+using MapChanger;
+using MapChanger.UI;
+using RandoMapMod.Modes;
 using UnityEngine;
 using L = RandomizerMod.Localization;
 
-namespace MapModS.UI
+namespace RandoMapMod.UI
 {
-    internal class MapKey
+    internal class MapKey : WorldMapStack
     {
-        private static LayoutRoot layout;
-
         private static Panel panel;
         private static StackLayout panelContents;
         private static GridLayout pinKey;
         private static GridLayout roomKey;
 
-        public static bool Condition()
+        protected override void BuildStack()
         {
-            return GUI.worldMapOpen
-                && MapModS.LS.ModEnabled
-                && !GUI.lockToggleEnable;
-        }
-
-        public static void Build()
-        {
-            if (layout == null)
+            panel = new(Root, SpriteManager.Instance.GetTexture("GUI.PanelLeft").ToSlicedSprite(200f, 50f, 100f, 50f), "Panel")
             {
-                layout = new(true, "Map Key");
-                layout.VisibilityCondition = Condition;
+                MinHeight = 0f,
+                MinWidth = 0f,
+                Borders = new(0f, 20f, 20f, 20f),
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Top
+            };
 
-                panel = new(layout, GUIController.Instance.Images["panelLeft"].ToSlicedSprite(200f, 50f, 100f, 50f), "Panel")
-                {
-                    MinHeight = 0f,
-                    MinWidth = 0f,
-                    Borders = new(0f, 20f, 20f, 20f),
-                    HorizontalAlignment = HorizontalAlignment.Left,
-                    VerticalAlignment = VerticalAlignment.Top,
-                    Padding = new(160f, 170f, 10f, 10f)
-                };
+            ((Image)Root.GetElement("Panel Background")).Tint = RmmColors.GetColor(RmmColorSetting.UI_Borders);
 
-                ((Image)layout.GetElement("Panel Background")).Tint = Colors.GetColor(ColorSetting.UI_Borders);
+            Stack.Children.Add(panel);
 
-                panelContents = new(layout, "Panel Contents")
-                {
-                    HorizontalAlignment = HorizontalAlignment.Left,
-                    VerticalAlignment = VerticalAlignment.Top,
-                    Orientation = Orientation.Vertical,
-                    Padding = Padding.Zero,
-                    Spacing = 5f
-                };
+            panelContents = new(Root, "Panel Contents")
+            {
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Top,
+                Orientation = Orientation.Horizontal,
+                Spacing = 5f
+            };
 
-                panel.Child = panelContents;
+            panel.Child = panelContents;
 
-                pinKey = new(layout, "Pin Key")
-                {
-                    MinWidth = 200f,
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    VerticalAlignment = VerticalAlignment.Center,
-                    RowDefinitions =
+            pinKey = new(Root, "Pin Key")
+            {
+                MinWidth = 200f,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Top,
+                RowDefinitions =
                     {
                         new GridDimension(1, GridUnit.Proportional),
                         new GridDimension(1, GridUnit.Proportional),
                         new GridDimension(1, GridUnit.Proportional),
                         new GridDimension(1, GridUnit.Proportional)
                     },
-                    ColumnDefinitions =
+                ColumnDefinitions =
                     {
                         new GridDimension(1, GridUnit.Proportional),
                         new GridDimension(1.6f, GridUnit.Proportional)
                     },
-                };
+            };
 
-                panelContents.Children.Add(pinKey);
+            panelContents.Children.Add(pinKey);
 
-                int counter = 0;
+            int counter = 0;
 
-                foreach(ColorSetting colorSetting in Colors.pinColors)
+            foreach (RmmColorSetting colorSetting in RmmColors.PinColors)
+            {
+                Panel pinPanel = new Panel(Root, SpriteManager.Instance.GetSprite("Pins.Blank"), colorSetting.ToString() + "Panel")
                 {
-                    Panel pinPanel = new Panel(layout, SpriteManager.GetSprite("pinBlank"), colorSetting.ToString() + "Panel")
-                    {
-                        MinHeight = 50f,
-                        MinWidth = 50f,
-                        Borders = new(0f, 0f, 0f, 0f),
-                        HorizontalAlignment = HorizontalAlignment.Center,
-                        VerticalAlignment = VerticalAlignment.Center,
-                        Padding = new(0f, 0f, 0f, 0f)
-                    }.WithProp(GridLayout.Column, 0).WithProp(GridLayout.Row, counter);
-
-                    Image pin = new Image(layout, SpriteManager.GetSprite("pinBorder"), colorSetting.ToString() + " Pin")
-                    {
-                        Width = 50f,
-                        Height = 50f,
-                        HorizontalAlignment = HorizontalAlignment.Center,
-                        VerticalAlignment = VerticalAlignment.Center
-                    }.WithProp(GridLayout.Column, 0).WithProp(GridLayout.Row, counter);
-
-                    ((Image)layout.GetElement(colorSetting.ToString() + " Pin")).Tint = Colors.GetColor(colorSetting);
-
-                    pinPanel.Child = pin;
-
-                    TextObject text = new TextObject(layout, colorSetting.ToString() + " Text")
-                    {
-                        Text = L.Localize(Utils.ToCleanName(colorSetting.ToString().Replace("Pin_", ""))),
-                        Padding = new(10f, 0f, 0f, 0f),
-                        HorizontalAlignment = HorizontalAlignment.Left,
-                        VerticalAlignment = VerticalAlignment.Center
-                    }.WithProp(GridLayout.Column, 1).WithProp(GridLayout.Row, counter);
-
-                    pinKey.Children.Add(pinPanel);
-                    pinKey.Children.Add(text);
-
-                    counter++;
-                }
-
-                roomKey = new(layout, "Room Key")
-                {
-                    MinWidth = 200f,
+                    MinHeight = 50f,
+                    MinWidth = 50f,
                     HorizontalAlignment = HorizontalAlignment.Center,
-                    VerticalAlignment = VerticalAlignment.Center,
-                    RowDefinitions =
-                    {
-                        new GridDimension(1, GridUnit.Proportional),
-                        new GridDimension(1, GridUnit.Proportional),
-                        new GridDimension(1, GridUnit.Proportional),
-                        new GridDimension(1, GridUnit.Proportional),
-                        new GridDimension(1, GridUnit.Proportional),
-                        new GridDimension(1, GridUnit.Proportional)
-                    },
-                    ColumnDefinitions =
-                    {
-                        new GridDimension(1, GridUnit.Proportional),
-                        new GridDimension(1.6f, GridUnit.Proportional)
-                    },
-                };
-
-                panelContents.Children.Add(roomKey);
-
-                Sprite roomCopy = GameManager.instance.gameMap.transform.GetChild(12).transform.GetChild(26).GetComponent<SpriteRenderer>().sprite;
-
-                counter = 0;
-
-                foreach (ColorSetting color in Colors.roomColors)
-                {
-                    string cleanRoomColor = Utils.ToCleanName(color.ToString().Replace("Room_", ""));
-
-                    Image room = new Image(layout, roomCopy, cleanRoomColor + " Room")
-                    {
-                        Width = 40f,
-                        Height = 40f,
-                        Tint = Colors.GetColor(color),
-                        HorizontalAlignment = HorizontalAlignment.Right,
-                        VerticalAlignment = VerticalAlignment.Center,
-                        Padding = new(0f, 5f, 17f, 5f),
-                    }.WithProp(GridLayout.Column, 0).WithProp(GridLayout.Row, counter);
-
-                    TextObject text = new TextObject(layout, cleanRoomColor + " Text")
-                    {
-                        Text = L.Localize(cleanRoomColor),
-                        Padding = new(10f, 0f, 0f, 0f),
-                        HorizontalAlignment = HorizontalAlignment.Left,
-                        VerticalAlignment = VerticalAlignment.Center
-                    }.WithProp(GridLayout.Column, 1).WithProp(GridLayout.Row, counter);
-
-                    roomKey.Children.Add(room);
-                    roomKey.Children.Add(text);
-
-                    counter++;
-                }
-
-                Vector4 highlighted = Colors.GetColor(ColorSetting.Room_Normal);
-                highlighted.w = 1f;
-
-                Image roomHighlight = new Image(layout, roomCopy, "Highlighted Room")
-                {
-                    Width = 40f,
-                    Height = 40f,
-                    Tint = highlighted,
-                    HorizontalAlignment = HorizontalAlignment.Right,
-                    VerticalAlignment = VerticalAlignment.Center,
-                    Padding = new(0f, 5f, 17f, 5f),
+                    VerticalAlignment = VerticalAlignment.Center
                 }.WithProp(GridLayout.Column, 0).WithProp(GridLayout.Row, counter);
 
-                TextObject textHighlight = new TextObject(layout, "Highlighted Text")
+                Image pin = new Image(Root, SpriteManager.Instance.GetSprite("Pins.Border"), colorSetting.ToString() + " Pin")
                 {
-                    Text = L.Localize("Contains\nunchecked\ntransitions"),
+                    Width = 50f,
+                    Height = 50f,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center
+                }.WithProp(GridLayout.Column, 0).WithProp(GridLayout.Row, counter);
+
+                ((Image)Root.GetElement(colorSetting.ToString() + " Pin")).Tint = RmmColors.GetColor(colorSetting);
+
+                pinPanel.Child = pin;
+
+                TextObject text = new TextObject(Root, colorSetting.ToString() + " Text")
+                {
+                    Text = L.Localize(Utils.ToCleanName(colorSetting.ToString().Replace("Pin_", ""))),
                     Padding = new(10f, 0f, 0f, 0f),
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Center
                 }.WithProp(GridLayout.Column, 1).WithProp(GridLayout.Row, counter);
 
-                roomKey.Children.Add(roomHighlight);
-                roomKey.Children.Add(textHighlight);
+                pinKey.Children.Add(pinPanel);
+                pinKey.Children.Add(text);
 
-                UpdateAll();
+                counter++;
             }
+
+            roomKey = new(Root, "Room Key")
+            {
+                MinWidth = 200f,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
+                RowDefinitions =
+                    {
+                        new GridDimension(1, GridUnit.Proportional),
+                        new GridDimension(1, GridUnit.Proportional),
+                        new GridDimension(1, GridUnit.Proportional),
+                        new GridDimension(1, GridUnit.Proportional),
+                        new GridDimension(1, GridUnit.Proportional),
+                        new GridDimension(1, GridUnit.Proportional)
+                    },
+                ColumnDefinitions =
+                    {
+                        new GridDimension(1, GridUnit.Proportional),
+                        new GridDimension(1.6f, GridUnit.Proportional)
+                    },
+            };
+
+            panelContents.Children.Add(roomKey);
+
+            Sprite roomCopy = GameManager.instance.gameMap.transform.GetChild(12).transform.GetChild(26).GetComponent<SpriteRenderer>().sprite;
+
+            counter = 0;
+
+            foreach (RmmColorSetting color in RmmColors.RoomColors)
+            {
+                string cleanRoomColor = Utils.ToCleanName(color.ToString().Replace("Room_", ""));
+
+                Image room = new Image(Root, roomCopy, cleanRoomColor + " Room")
+                {
+                    Width = 40f,
+                    Height = 40f,
+                    Tint = RmmColors.GetColor(color),
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Padding = new(0f, 5f, 17f, 5f),
+                }.WithProp(GridLayout.Column, 0).WithProp(GridLayout.Row, counter);
+
+                TextObject text = new TextObject(Root, cleanRoomColor + " Text")
+                {
+                    Text = L.Localize(cleanRoomColor),
+                    Padding = new(10f, 0f, 0f, 0f),
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Center
+                }.WithProp(GridLayout.Column, 1).WithProp(GridLayout.Row, counter);
+
+                roomKey.Children.Add(room);
+                roomKey.Children.Add(text);
+
+                counter++;
+            }
+
+            Vector4 highlighted = RmmColors.GetColor(RmmColorSetting.Room_Normal);
+            highlighted.w = 1f;
+
+            Image roomHighlight = new Image(Root, roomCopy, "Highlighted Room")
+            {
+                Width = 40f,
+                Height = 40f,
+                Tint = highlighted,
+                HorizontalAlignment = HorizontalAlignment.Right,
+                VerticalAlignment = VerticalAlignment.Center,
+                Padding = new(0f, 5f, 17f, 5f),
+            }.WithProp(GridLayout.Column, 0).WithProp(GridLayout.Row, counter);
+
+            TextObject textHighlight = new TextObject(Root, "Highlighted Text")
+            {
+                Text = L.Localize("Contains\nunchecked\ntransitions"),
+                Padding = new(10f, 0f, 0f, 0f),
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Center
+            }.WithProp(GridLayout.Column, 1).WithProp(GridLayout.Row, counter);
+
+            roomKey.Children.Add(roomHighlight);
+            roomKey.Children.Add(textHighlight);
         }
 
-        public static void Destroy()
+        protected override bool Condition()
         {
-            layout?.Destroy();
-            layout = null;
+            return base.Condition() && Conditions.RandoMapModEnabled();
         }
 
-        public static void UpdateAll()
+        public override void Update()
         {
-            UpdatePanel();
-        }
-
-        public static void UpdatePanel()
-        {
-            if (MapModS.GS.MapKeyOn)
+            if (RandoMapMod.GS.MapKeyOn)
             {
                 panel.Visibility = Visibility.Visible;
             }
@@ -221,8 +196,7 @@ namespace MapModS.UI
                 panel.Visibility = Visibility.Hidden;
             }
 
-            if (MapModS.LS.Mode == MapMode.Transition
-                || MapModS.LS.Mode == MapMode.TransitionVisitedOnly)
+            if (Conditions.TransitionModeEnabled())
             {
                 roomKey.Visibility = Visibility.Visible;
             }

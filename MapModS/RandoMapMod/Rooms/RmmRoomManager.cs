@@ -56,8 +56,11 @@ namespace RandoMapMod.Rooms
 
             MapObjectUpdater.Add(MoRoomTexts);
 
-            NormalRoomSelector benchwarpRoomSelector = Utils.MakeMonoBehaviour<NormalRoomSelector>(null, "RandoMapMod Normal Room Selector");
-            benchwarpRoomSelector.Initialize();
+            if (Interop.HasBenchwarp())
+            {
+                NormalRoomSelector benchwarpRoomSelector = Utils.MakeMonoBehaviour<NormalRoomSelector>(null, "RandoMapMod Normal Room Selector");
+                benchwarpRoomSelector.Initialize();
+            }
 
             TransitionRoomSelector transitionRoomSelector = Utils.MakeMonoBehaviour<TransitionRoomSelector>(null, "RandoMapMod Transition Room Selector");
             transitionRoomSelector.Initialize(BuiltInObjects.MappedRooms.Values.Concat(MoRoomTexts.Children));

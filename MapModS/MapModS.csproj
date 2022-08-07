@@ -70,7 +70,7 @@
     <Compile Remove="RandoMapMod\UI\DirectionalCompass.cs" />
     <Compile Remove="RandoMapMod\UI\GUI.cs" />
     <Compile Remove="RandoMapMod\UI\GUIController.cs" />
-    <Compile Remove="RandoMapMod\UI\MapKey.cs" />
+    <Compile Remove="RandoMapMod\UI\MapKeyOld.cs" />
     <Compile Remove="RandoMapMod\UI\MapText.cs" />
     <Compile Remove="RandoMapMod\UI\PauseMenu.cs" />
     <Compile Remove="RandoMapMod\UI\TransitionPersistent.cs" />

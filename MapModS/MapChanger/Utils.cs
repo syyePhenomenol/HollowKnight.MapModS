@@ -140,20 +140,18 @@ namespace MapChanger
             return GameManager.GetBaseSceneName(GameManager.instance.sceneName);
         }
 
-        //public static string GetBindingsText(List<InControl.BindingSource> bindings)
-        //{
-        //    string text = "";
+        public static string GetBindingsText(List<InControl.BindingSource> bindings)
+        {
+            string text = "";
 
-        //    text += $"[{bindings.First().Name}]";
+            text += $"[{bindings.First().Name}]";
 
-        //    if (bindings.Count > 1 && bindings[1].BindingSourceType == InControl.BindingSourceType.DeviceBindingSource)
-        //    {
-        //        text += $" {L.Localize("or")} ";
+            if (bindings.Count > 1 && bindings[1].BindingSourceType == InControl.BindingSourceType.DeviceBindingSource)
+            {
+                text += $" or ({bindings[1].Name})";
+            }
 
-        //        text += $"({bindings[1].Name})";
-        //    }
-
-        //    return text;
-        //}
+            return text;
+        }
     }
 }

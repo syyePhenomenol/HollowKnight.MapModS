@@ -58,8 +58,10 @@ namespace RandoMapMod
         {
             new Hotkeys(),
             new ControlPanel(),
+            new MapKey(),
             new InfoPanels(),
-            new RmmBottomRowText()
+            new RmmBottomRowText(),
+            new BenchwarpText()
         };
 
         private static readonly HookModule[] hookModules = new HookModule[]

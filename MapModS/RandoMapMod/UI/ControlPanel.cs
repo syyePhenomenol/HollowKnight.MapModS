@@ -73,6 +73,8 @@ namespace RandoMapMod.UI
             lookup = UIExtensions.PanelText(Root, "Lookup");
             panelContents.Children.Add(lookup);
 
+            // TODO: Add lock lookup selection
+
             benchwarpWorldMap = UIExtensions.PanelText(Root, "Benchwarp World Map");
             panelContents.Children.Add(benchwarpWorldMap);
 
@@ -116,7 +118,7 @@ namespace RandoMapMod.UI
                 mapKey.Visibility = Visibility.Visible;
                 lookup.Visibility = Visibility.Visible;
 
-                if (MapChanger.Settings.CurrentMode().GetType().IsSubclassOf(typeof(TransitionMode)))
+                if (Conditions.TransitionModeEnabled())
                 {
                     benchwarpWorldMap.Visibility = Visibility.Collapsed;
                     benchwarpSearch.Visibility = Visibility.Visible;
@@ -233,15 +235,15 @@ namespace RandoMapMod.UI
             switch (RandoMapMod.GS.RouteTextInGame)
             {
                 case RouteTextInGame.Hide:
-                    routeInGame.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
+                    routeInGame.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Neutral);
                     text += L.Localize("Off");
                     break;
                 case RouteTextInGame.Show:
-                    routeInGame.ContentColor = Colors.GetColor(ColorSetting.UI_On);
+                    routeInGame.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_On);
                     text += L.Localize("Full");
                     break;
                 case RouteTextInGame.NextTransitionOnly:
-                    routeInGame.ContentColor = Colors.GetColor(ColorSetting.UI_On);
+                    routeInGame.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_On);
                     text += L.Localize("Next transition only");
                     break;
             }
@@ -256,15 +258,15 @@ namespace RandoMapMod.UI
             switch (RandoMapMod.GS.WhenOffRoute)
             {
                 case OffRouteBehaviour.Keep:
-                    whenOffRoute.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
+                    whenOffRoute.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Neutral);
                     text += L.Localize("Keep route");
                     break;
                 case OffRouteBehaviour.Cancel:
-                    whenOffRoute.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
+                    whenOffRoute.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Neutral);
                     text += L.Localize("Cancel route");
                     break;
                 case OffRouteBehaviour.Reevaluate:
-                    whenOffRoute.ContentColor = Colors.GetColor(ColorSetting.UI_On);
+                    whenOffRoute.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_On);
                     text += L.Localize("Reevaluate route");
                     break;
             }
