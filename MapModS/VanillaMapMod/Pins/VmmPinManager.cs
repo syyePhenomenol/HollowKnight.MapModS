@@ -47,9 +47,6 @@ namespace VanillaMapMod
                 Transform transform = PinsSorted.ElementAt(i).transform;
                 transform.localPosition = new(transform.localPosition.x, transform.localPosition.y, OFFSETZ_BASE + (float)i / Pins.Count() * OFFSETZ_RANGE);
             }
-
-            //VmmPinSelector pinSelector = Utils.MakeMonoBehaviour<VmmPinSelector>(null, "Pin Selector");
-            //pinSelector.Initialize(Pins.Values);
         }
 
         internal static void UpdatePinSize()

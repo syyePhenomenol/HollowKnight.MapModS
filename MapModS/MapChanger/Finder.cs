@@ -11,15 +11,17 @@ namespace MapChanger
     public static class Finder
     {
         private static Dictionary<string, MappedSceneDef> mappedScenes;
-        private static Dictionary<string, MapLocationDef> locations;
+        private static Dictionary<string, TileMapDef> tileMaps;
         private static HashSet<string> minimalMapScenes;
+        private static Dictionary<string, MapLocationDef> locations;
         private static readonly Dictionary<string, MapLocationDef> injectedLocations = new();
 
         internal static void Load()
         {
             mappedScenes = JsonUtil.Deserialize<Dictionary<string, MappedSceneDef>>("MapModS.MapChanger.Resources.mappedScenes.json");
-            locations = JsonUtil.Deserialize<Dictionary<string, MapLocationDef>>("MapModS.MapChanger.Resources.locations.json");
+            tileMaps = JsonUtil.Deserialize<Dictionary<string, TileMapDef>>("MapModS.MapChanger.Resources.tileMaps.json");
             minimalMapScenes = JsonUtil.Deserialize<HashSet<string>>("MapModS.MapChanger.Resources.minimalMap.json");
+            locations = JsonUtil.Deserialize<Dictionary<string, MapLocationDef>>("MapModS.MapChanger.Resources.locations.json");
 
             if (Dependencies.HasAdditionalMaps())
             {
@@ -114,6 +116,17 @@ namespace MapChanger
         public static MapZone GetCurrentMapZone()
         {
             return GetMapZone(Utils.CurrentScene());
+        }
+
+        public static bool TryGetTileMapDef(string scene, out TileMapDef tmd)
+        {
+            tmd = null;
+            if (scene is null) return false;
+            if (tileMaps.TryGetValue(scene, out tmd))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

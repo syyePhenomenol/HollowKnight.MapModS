@@ -20,21 +20,6 @@ namespace VanillaMapMod.Settings
 
         public bool VanillaPinsOn = false;
 
-        internal void Initialize()
-        {
-            MapChanger.Settings.SetModEnabled(ModEnabled);
-            MapChanger.Settings.InitializeMode("VanillaMapMod", Mode.ToString().Replace('_', ' '));
-
-            if (InitializedPreviously) return;
-
-            InitializedPreviously = true;
-        }
-
-        //internal void ToggleModEnabled()
-        //{
-        //    ModEnabled = !ModEnabled;
-        //}
-
         internal void SetMode(string mode)
         {
             if (Enum.TryParse(mode.Replace(' ', '_'), out VMMMode vmmMode))
@@ -42,11 +27,6 @@ namespace VanillaMapMod.Settings
                 Mode = vmmMode;
             }
         }
-
-        //internal void ToggleMode()
-        //{
-        //    Mode = (VMMMode)(((int)Mode + 1) % Enum.GetNames(typeof(VMMMode)).Length);
-        //}
 
         internal bool GetPoolGroupSetting(PoolGroup poolGroup)
         {

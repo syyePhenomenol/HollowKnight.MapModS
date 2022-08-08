@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace MapChanger.Map
 {
+    //TODO: turn into hookmodule
     public static class BuiltInObjects
     {
         private static Dictionary<string, RoomSpriteDef> roomSpriteDefs;

@@ -104,8 +104,6 @@ namespace VanillaMapMod
             {
                 VmmPinManager.MakePins(goMap);
 
-                LS.Initialize();
-
                 title.Make();
 
                 foreach (MainButton button in mainButtons)

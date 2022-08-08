@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using SM = UnityEngine.SceneManagement.SceneManager;
 
 namespace MapChanger
@@ -77,12 +78,34 @@ namespace MapChanger
         }
 
         private static readonly List<GameObject> rootObjects = new(500);
+
         /// <summary>
-        /// Copied from ItemChanger by homothety.
-        /// Finds a GameObject in the current scene by its full path.
+        /// Finds a GameObject in the given scene by its full path.
         /// </summary>
+        /// <param name="s"></param>
         /// <param name="path">The full path to the GameObject, with forward slash ('/') separators.</param>
         /// <returns></returns>
+        public static GameObject FindGameObject(this Scene s, string path)
+        {
+            s.GetRootGameObjects(rootObjects); // clears list
+
+            int index = path.IndexOf('/');
+            GameObject result = null;
+            if (index >= 0)
+            {
+                string rootName = path.Substring(0, index);
+                GameObject root = rootObjects.FirstOrDefault(g => g.name == rootName);
+                if (root != null) result = root.transform.Find(path.Substring(index + 1)).gameObject;
+            }
+            else
+            {
+                result = rootObjects.FirstOrDefault(g => g.name == path);
+            }
+
+            rootObjects.Clear();
+            return result;
+        }
+
         public static GameObject FindGameObjectInCurrentScene(string path)
         {
             SM.GetActiveScene().GetRootGameObjects(rootObjects); // clears list

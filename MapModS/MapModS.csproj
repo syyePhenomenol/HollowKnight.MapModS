@@ -227,6 +227,7 @@
     <None Remove="MapChanger\Resources\Sprites\Pins\Unknown_Totem.png" />
     <None Remove="MapChanger\Resources\Sprites\Pins\Unknown_TotemInv.png" />
     <None Remove="MapChanger\Resources\Sprites\Pins\Vessel.png" />
+    <None Remove="MapChanger\Resources\tileMaps.json" />
     <None Remove="RandoMapMod\Resources\locations.json" />
     <None Remove="RandoMapMod\Resources\Pathfinder\Compass\doorObjectsByScene.json" />
     <None Remove="RandoMapMod\Resources\Pathfinder\Compass\doorObjectsByTransition.json" />
@@ -308,6 +309,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="MapChanger\Resources\mappedScenesAM.json" />
+    <EmbeddedResource Include="MapChanger\Resources\tileMaps.json" />
     <EmbeddedResource Include="RandoMapMod\Resources\Pathfinder\Compass\doorObjectsByScene.json" />
     <EmbeddedResource Include="RandoMapMod\Resources\Pathfinder\Compass\doorObjectsByTransition.json" />
     <EmbeddedResource Include="RandoMapMod\Resources\Pathfinder\Data\adjacentScenes.json" />

@@ -55,7 +55,7 @@ namespace RandoMapMod.Pins
 
         public void Initialize((string, float, float)[] mapLocations)
         {
-            MapLocationPosition mlp = new(mapLocations);
+            MapPosition mlp = new(mapLocations);
             MapPosition = mlp;
             MapZone = mlp.MapZone;
 
@@ -64,7 +64,7 @@ namespace RandoMapMod.Pins
 
         public void UpdatePosition(MapLocation[] mapLocations)
         {
-            MapLocationPosition mlp = new(mapLocations);
+            MapPosition mlp = new(mapLocations);
             MapPosition = mlp;
             MapZone = mlp.MapZone;
         }
@@ -132,8 +132,7 @@ namespace RandoMapMod.Pins
         {
             return MapChanger.Settings.CurrentMode() is FullMapMode or AllPinsMode
                 || (MapChanger.Settings.CurrentMode() is PinsOverMapMode && Utils.HasMapSetting(MapZone))
-                || (MapChanger.Settings.CurrentMode().GetType().IsSubclassOf(typeof(TransitionMode))
-                    && (SceneName is null || TransitionTracker.GetRoomActive(SceneName)));
+                || (Conditions.TransitionModeEnabled() && (SceneName is null || TransitionTracker.GetRoomActive(SceneName)));
         }
 
         protected private abstract bool ActiveByPoolSetting();

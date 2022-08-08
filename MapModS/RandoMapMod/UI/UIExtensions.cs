@@ -6,6 +6,7 @@ namespace RandoMapMod.UI
 {
     internal static class UIExtensions
     {
+        //TODO: move some of these into MapChanger
         internal static TextObject TextFromEdge(LayoutRoot onLayout, string name, bool onRight)
         {
             TextObject text = BaseText(onLayout, name);

@@ -38,7 +38,7 @@ namespace VanillaMapMod
             }
         }
 
-        internal MapLocationPosition Mlp { get; private set; }
+        internal MapPosition Mlp { get; private set; }
 
         internal void Initialize(MapLocationDef mld, VmmPinGroup parent)
         {
@@ -56,7 +56,7 @@ namespace VanillaMapMod
 
             parent.AddChild(this);
             //Parent = parent;
-            Mlp = new MapLocationPosition(mld.MapLocations);
+            Mlp = new MapPosition(mld.MapLocations);
             MapPosition = Mlp;
             Sprite = GetSpriteFromPoolGroup(parent.PoolGroup);
         }
