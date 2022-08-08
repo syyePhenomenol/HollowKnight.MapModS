@@ -9,24 +9,12 @@ namespace VanillaMapMod.Settings
     {
         public bool InitializedPreviously = false;
 
-        public bool ModEnabled = false;
-
-        public VMMMode Mode = VMMMode.Full_Map;
-
         public Dictionary<PoolGroup, bool> PoolSettings = Enum.GetValues(typeof(PoolGroup))
                .Cast<PoolGroup>()
                .Where(poolGroup => poolGroup is not PoolGroup.Other)
                .ToDictionary(t => t, t => true);
 
         public bool VanillaPinsOn = false;
-
-        internal void SetMode(string mode)
-        {
-            if (Enum.TryParse(mode.Replace(' ', '_'), out VMMMode vmmMode))
-            {
-                Mode = vmmMode;
-            }
-        }
 
         internal bool GetPoolGroupSetting(PoolGroup poolGroup)
         {

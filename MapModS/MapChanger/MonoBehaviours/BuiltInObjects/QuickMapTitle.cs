@@ -33,7 +33,7 @@ namespace MapChanger.MonoBehaviours
 
         public override void UpdateColor()
         {
-            if (Settings.MapModEnabled)
+            if (Settings.MapModEnabled())
             {
                 try { Color = Settings.CurrentMode().QuickMapTitleColorOverride(this) ?? OrigColor; }
                 catch (Exception e) { MapChangerMod.Instance.LogError(e); }

@@ -1,5 +1,6 @@
 ﻿using MagicUI.Elements;
 using MapChanger.UI;
+using RandoMapMod.Modes;
 using RandoMapMod.Settings;
 using L = RandomizerMod.Localization;
 
@@ -19,7 +20,7 @@ namespace RandoMapMod.UI
 
         protected override bool Condition()
         {
-            return base.Condition() && MapChanger.Settings.CurrentMode().Mod is "RandoMapMod";
+            return base.Condition() && Conditions.RandoMapModEnabled();
         }
 
         public override void Update()

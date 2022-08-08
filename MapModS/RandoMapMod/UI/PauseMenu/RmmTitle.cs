@@ -4,7 +4,7 @@ namespace RandoMapMod.UI
 {
     internal class RmmTitle : Title
     {
-        public RmmTitle() : base("RandoMapMod")
+        public RmmTitle() : base(RandoMapMod.MOD)
         {
         }
 

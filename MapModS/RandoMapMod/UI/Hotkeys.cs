@@ -46,19 +46,19 @@ namespace RandoMapMod.UI
             {
                 RandoMapMod.GS.ToggleUncheckedPanel();
                 MapUILayerUpdater.Update();
-            }, ModifierKeys.Ctrl, () => RandoMapMod.LS.ModEnabled);
+            }, ModifierKeys.Ctrl, () => MapChanger.Settings.MapModEnabled());
 
             Root.ListenForHotkey(KeyCode.R, () =>
             {
                 RandoMapMod.GS.ToggleRouteTextInGame();
                 MapUILayerUpdater.Update();
-            }, ModifierKeys.Ctrl, () => RandoMapMod.LS.ModEnabled);
+            }, ModifierKeys.Ctrl, () => MapChanger.Settings.MapModEnabled());
 
             Root.ListenForHotkey(KeyCode.E, () =>
             {
                 RandoMapMod.GS.ToggleWhenOffRoute();
                 MapUILayerUpdater.Update();
-            }, ModifierKeys.Ctrl, () => RandoMapMod.LS.ModEnabled);
+            }, ModifierKeys.Ctrl, () => MapChanger.Settings.MapModEnabled());
 
             Root.ListenForHotkey(KeyCode.C, () =>
             {
@@ -102,6 +102,11 @@ namespace RandoMapMod.UI
                 RandoMapMod.GS.TogglePinSize();
                 UpdatePins();
             }, ModifierKeys.Ctrl);
+
+            Root.ListenForHotkey(KeyCode.D, () =>
+            {
+                Debugger.LogMapPosition();
+            });
         }
 
         protected override bool Condition()

@@ -43,7 +43,6 @@ namespace MapChanger
 
         internal static readonly List<HookModule> HookModules = new()
         {
-            new Settings(),
             new Tracker(),
             new VariableOverrides(),
             new BehaviourChanges(),
@@ -111,6 +110,9 @@ namespace MapChanger
 
             try { AfterEnterGame?.Invoke(); }
             catch (Exception e) { MapChangerMod.Instance.LogError(e); }
+
+            // Allow map mods to inject map modes before this
+            Settings.Initialize();
         }
 
         private static IEnumerator QuitToMenuEvent(On.QuitToMenu.orig_Start orig, QuitToMenu self)
@@ -122,6 +124,8 @@ namespace MapChanger
 
             try { BeforeQuitToMenu?.Invoke(); }
             catch (Exception e) { MapChangerMod.Instance.LogError(e); }
+
+            Settings.Unload();
 
             return orig(self);
         }

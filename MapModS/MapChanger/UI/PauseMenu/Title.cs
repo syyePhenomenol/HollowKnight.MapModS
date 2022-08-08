@@ -31,7 +31,7 @@ namespace MapChanger.UI
 
         public virtual void Update()
         {
-            if (Settings.MapModEnabled && Settings.CurrentMode().Mod == Mod)
+            if (Settings.MapModEnabled() && Settings.CurrentMode().Mod == Mod)
             {
                 TitleText.Visibility = Visibility.Visible;
             }

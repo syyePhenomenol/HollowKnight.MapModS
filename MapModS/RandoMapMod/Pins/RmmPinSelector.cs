@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MapChanger.MonoBehaviours;
+using RandoMapMod.Modes;
 using RandoMapMod.UI;
 
 namespace RandoMapMod.Pins
@@ -63,7 +64,7 @@ namespace RandoMapMod.Pins
 
         private bool ActiveByCurrentMode()
         {
-            return MapChanger.Settings.CurrentMode().Mod is "RandoMapMod";
+            return Conditions.RandoMapModEnabled();
         }
 
         private bool ActiveByToggle()

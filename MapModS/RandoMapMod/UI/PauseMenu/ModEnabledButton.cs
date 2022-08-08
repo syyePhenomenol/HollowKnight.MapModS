@@ -9,7 +9,7 @@ namespace RandoMapMod.UI
     {
         public static ModEnabledButton Instance { get; private set; }
 
-        public ModEnabledButton() : base("Mod Enabled", "RandoMapMod", 0, 0)
+        public ModEnabledButton() : base("Mod Enabled", RandoMapMod.MOD, 0, 0)
         {
             Instance = this;
         }
@@ -23,7 +23,7 @@ namespace RandoMapMod.UI
         {
             Button.BorderColor = RmmColors.GetColor(RmmColorSetting.UI_Borders);
 
-            if (MapChanger.Settings.CurrentMode().Mod is "RandoMapMod")
+            if (MapChanger.Settings.CurrentMode().Mod is RandoMapMod.MOD)
             {
                 Button.Visibility = Visibility.Visible;
             }
@@ -32,7 +32,7 @@ namespace RandoMapMod.UI
                 Button.Visibility = Visibility.Hidden;
             }
 
-            if (RandoMapMod.LS.ModEnabled)
+            if (MapChanger.Settings.MapModEnabled())
             {
                 Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_On);
                 Button.Content = $"{L.Localize("Map Mod")}\n{L.Localize("Enabled")}";

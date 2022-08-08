@@ -74,7 +74,7 @@ namespace RandoMapMod.Rooms
 
         protected private override bool ActiveByCurrentMode()
         {
-            return MapChanger.Settings.CurrentMode().GetType().IsSubclassOf(typeof(NormalMode));
+            return MapChanger.Settings.CurrentMode().GetType().IsSubclassOf(typeof(ItemRandoMode));
         }
 
         private bool ActiveByToggle()

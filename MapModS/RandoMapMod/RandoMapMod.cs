@@ -16,6 +16,8 @@ namespace RandoMapMod
 {
     public class RandoMapMod : Mod, ILocalSettings<LocalSettings>, IGlobalSettings<GlobalSettings>
     {
+        internal const string MOD = "RandoMapMod";
+
         private static readonly string[] dependencies = new string[]
         {
             "MapChangerMod",
@@ -121,10 +123,6 @@ namespace RandoMapMod
             if (RandomizerMod.RandomizerMod.RS.GenerationSettings is null) return;
 
             MapChanger.Settings.AddModes(modes);
-
-            ExportSettings();
-
-            MapChanger.Settings.OnSettingChanged += ImportSettings;
             Events.AfterSetGameMap += OnSetGameMap;
 
             RmmColors.Load();
@@ -140,22 +138,6 @@ namespace RandoMapMod
             foreach (HookModule hookModule in hookModules)
             {
                 hookModule.OnEnterGame();
-            }
-        }
-
-        private static void ExportSettings()
-        {
-            MapChanger.Settings.SetModEnabled(LS.ModEnabled);
-            MapChanger.Settings.InitializeMode("RandoMapMod", LS.Mode.ToString().Replace('_', ' '));
-        }
-
-        private static void ImportSettings()
-        {
-            LS.ModEnabled = MapChanger.Settings.MapModEnabled;
-
-            if (MapChanger.Settings.CurrentMode().Mod is "RandoMapMod")
-            {
-                LS.ImportMode(MapChanger.Settings.CurrentMode().ModeName);
             }
         }
 
@@ -196,7 +178,6 @@ namespace RandoMapMod
 
         private static void OnQuitToMenu()
         {
-            MapChanger.Settings.OnSettingChanged -= ImportSettings;
             Events.AfterSetGameMap -= OnSetGameMap;
 
             foreach (HookModule hookModule in hookModules)

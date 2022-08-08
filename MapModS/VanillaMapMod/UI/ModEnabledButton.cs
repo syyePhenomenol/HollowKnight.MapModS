@@ -21,8 +21,6 @@ namespace VanillaMapMod
 
         public override void Update()
         {
-            VanillaMapMod.LS.ModEnabled = MapChanger.Settings.MapModEnabled;
-
             if (MapChanger.Settings.CurrentMode().Mod is "VanillaMapMod")
             {
                 Button.Visibility = Visibility.Visible;
@@ -32,7 +30,7 @@ namespace VanillaMapMod
                 Button.Visibility = Visibility.Hidden;
             }
 
-            if (VanillaMapMod.LS.ModEnabled)
+            if (MapChanger.Settings.MapModEnabled())
             {
                 Button.ContentColor = Colors.GetColor(ColorSetting.UI_On);
                 Button.Content = "Map Mod\nEnabled";

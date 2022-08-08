@@ -1,6 +1,7 @@
 ﻿using MagicUI.Elements;
+using MapChanger;
 using MapChanger.UI;
-using RandoMapMod.Settings;
+using RandoMapMod.Modes;
 using L = RandomizerMod.Localization;
 
 namespace RandoMapMod.UI
@@ -9,7 +10,7 @@ namespace RandoMapMod.UI
     {
         public static ModeButton Instance { get; private set; }
 
-        public ModeButton() : base("Mode", "RandoMapMod", 1, 0)
+        public ModeButton() : base("Mode", RandoMapMod.MOD, 1, 0)
         {
             Instance = this;
         }
@@ -27,37 +28,42 @@ namespace RandoMapMod.UI
 
             string text = $"{L.Localize("Mode")}:\n";
 
-            switch (RandoMapMod.LS.Mode)
+            MapMode mode = MapChanger.Settings.CurrentMode();
+
+            if (mode is FullMapMode)
             {
-                case RmmMode.Full_Map:
-                    Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_On);
-                    text += L.Localize("Full Map");
-                    break;
+                Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_On);
+                text += L.Localize("Full Map");
+            }
 
-                case RmmMode.All_Pins:
-                    Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Neutral);
-                    text += L.Localize("All Pins");
-                    break;
+            if (mode is AllPinsMode)
+            {
+                Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Neutral);
+                text += L.Localize("All Pins");
+            }
 
-                case RmmMode.Pins_Over_Map:
-                    Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Neutral);
-                    text += L.Localize("Pins Over Map");
-                    break;
+            if (mode is PinsOverMapMode)
+            {
+                Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Neutral);
+                text += L.Localize("Pins Over Map");
+            }
 
-                case RmmMode.Transition_Normal:
-                    Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Special);
-                    text += L.Localize("Transition") + " 1";
-                    break;
+            if (mode is TransitionNormalMode)
+            {
+                Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Special);
+                text += L.Localize("Transition") + " 1";
+            }
 
-                case RmmMode.Transition_Visited_Only:
-                    Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Special);
-                    text += L.Localize("Transition") + " 2";
-                    break;
+            if (mode is TransitionVisitedOnlyMode)
+            {
+                Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Special);
+                text += L.Localize("Transition") + " 2";
+            }
 
-                case RmmMode.Transition_All_Rooms:
-                    Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Special);
-                    text += L.Localize("Transition") + " 3";
-                    break;
+            if (mode is TransitionAllRoomsMode)
+            {
+                Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Special);
+                text += L.Localize("Transition") + " 3";
             }
 
             Button.Content = text;

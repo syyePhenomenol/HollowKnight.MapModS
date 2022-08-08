@@ -6,9 +6,10 @@ using UnityEngine;
 namespace MapChanger.MonoBehaviours
 {
     /// <summary>
-    /// Base class for all map objects in MapChanger. If your derived object is a root object,
-    /// you probably want to initialize with DontDestroyOnLoad(), and to manually destroy it
-    /// at some point.
+    /// Base class for all objects that appear directly on the map. If your derived object
+    /// is a root object, you probably want to initialize with DontDestroyOnLoad(), and to
+    /// manually destroy it at some point.
+    /// For UI elements that appear over the map, use MapUILayer instead.
     /// </summary>
     public class MapObject : MonoBehaviour
     {
@@ -21,6 +22,10 @@ namespace MapChanger.MonoBehaviours
         private protected const string HUD = "HUD";
 
         private readonly List<MapObject> children = new();
+        /// <summary>
+        /// When MainUpdate is called on this MapObject, MainUpdate is also called on its children.
+        /// Children will also be transform children on the parent MapObject.
+        /// </summary>
         public ReadOnlyCollection<MapObject> Children => children.AsReadOnly();
 
         public void AddChild(MapObject child)
@@ -31,13 +36,23 @@ namespace MapChanger.MonoBehaviours
             child.transform.parent = transform;
         }
 
+        /// <summary>
+        /// Use this method to do things right after the MapObject component is added to the GameObject.
+        /// </summary>
         public virtual void Initialize()
         {
             gameObject.layer = UI_LAYER;
 
-            ActiveModifiers.Add(() => { return Settings.MapModEnabled; });
+            ActiveModifiers.Add(() => { return Settings.MapModEnabled(); });
         } 
 
+        /// <summary>
+        /// The main method for updating the state of the MapObject. Also calls MainUpdate
+        /// on its children.
+        /// To have MainUpdate be called when the map opens or closes, add the MapObject to the
+        /// MapObjectUpdater. If you want to update the MapObject at some other time (i.e. while
+        /// the map is open), you need to handle this yourself.
+        /// </summary>
         public void MainUpdate()
         {
             BeforeMainUpdate();
@@ -68,8 +83,14 @@ namespace MapChanger.MonoBehaviours
             }
         }
 
+        /// <summary>
+        /// User-defined behaviour before MainUpdate sets the active state of the MapObject.
+        /// </summary>
         public virtual void BeforeMainUpdate() { }
 
+        /// <summary>
+        /// User-defined behaviour after MainUpdate sets the active state of the MapObject.
+        /// </summary>
         public virtual void AfterMainUpdate() { }
     }
 }

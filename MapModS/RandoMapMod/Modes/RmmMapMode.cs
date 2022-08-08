@@ -1,13 +1,10 @@
-﻿using System;
-using GlobalEnums;
-using MapChanger;
-using MapChanger.MonoBehaviours;
-using UnityEngine;
+﻿using MapChanger;
 
 namespace RandoMapMod.Modes
 {
     internal class RmmMapMode : MapMode
     {
+        public override float Priority => 0f;
         public override bool ForceHasMap => true;
         public override bool ForceHasQuill => true;
         public override OverrideType VanillaPins => OverrideType.ForceOff;

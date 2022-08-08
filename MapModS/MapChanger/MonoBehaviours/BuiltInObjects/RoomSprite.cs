@@ -52,7 +52,7 @@ namespace MapChanger.MonoBehaviours
 
         private bool IsActive()
         {
-            if (Settings.MapModEnabled)
+            if (Settings.MapModEnabled())
             {
                 try { return Settings.CurrentMode().RoomActiveOverride(this) ?? DefaultActive(); }
                 catch (Exception e) { MapChangerMod.Instance.LogError(e); }
@@ -70,7 +70,7 @@ namespace MapChanger.MonoBehaviours
 
         public override void UpdateColor()
         {
-            if (Settings.MapModEnabled)
+            if (Settings.MapModEnabled())
             {
                 try { Color = Settings.CurrentMode().RoomColorOverride(this) ?? OrigColor; }
                 catch (Exception e) { MapChangerMod.Instance.LogError(e); }
@@ -83,7 +83,7 @@ namespace MapChanger.MonoBehaviours
 
         public bool CanSelect()
         {
-            if (Settings.MapModEnabled)
+            if (Settings.MapModEnabled())
             {
                 try { return Settings.CurrentMode().RoomCanSelectOverride(this) ?? gameObject.activeSelf; }
                 catch (Exception e) { MapChangerMod.Instance.LogError(e); }

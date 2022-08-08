@@ -1,13 +1,26 @@
-﻿using System;
-using GlobalEnums;
-using MapChanger;
+﻿using MapChanger;
 using MapChanger.MonoBehaviours;
+using RandoMapMod.Transition;
 using UnityEngine;
 
 namespace RandoMapMod.Modes
 {
-    internal class NormalMode : RmmMapMode
+    internal class ItemRandoMode : RmmMapMode
     {
+        public override bool InitializeToThis()
+        {
+            if (TransitionData.IsTransitionRando()) return false;
+
+            if (RandoMapMod.GS.OverrideDefaultMode)
+            {
+                return ModeName == RandoMapMod.GS.ItemRandoModeOverride.ToString().ToCleanName();
+            }
+            else
+            {
+                return ModeName == Settings.RmmMode.Full_Map.ToString().ToCleanName();
+            }
+        }
+
         public override Vector4? RoomColorOverride(RoomSprite roomSprite)
         {
             return roomSprite.Selected ? RmmColors.GetColor(RmmColorSetting.Room_Benchwarp_Selected) : RmmColors.GetColor(roomSprite.Rsd.ColorSetting);
@@ -34,23 +47,23 @@ namespace RandoMapMod.Modes
         }
     }
 
-    internal class FullMapMode : NormalMode
+    internal class FullMapMode : ItemRandoMode
     {
-        public override string Mod => "RandoMapMod";
-        public override string ModeName => "Full Map";
+        public override string Mod => RandoMapMod.MOD;
+        public override string ModeName => Settings.RmmMode.Full_Map.ToString().ToCleanName();
     }
 
-    internal class AllPinsMode : NormalMode
+    internal class AllPinsMode : ItemRandoMode
     {
-        public override string Mod => "RandoMapMod";
-        public override string ModeName => "All Pins";
+        public override string Mod => RandoMapMod.MOD;
+        public override string ModeName => Settings.RmmMode.All_Pins.ToString().ToCleanName();
         public override bool FullMap => false;
     }
 
-    internal class PinsOverMapMode : NormalMode
+    internal class PinsOverMapMode : ItemRandoMode
     {
-        public override string Mod => "RandoMapMod";
-        public override string ModeName => "Pins Over Map";
+        public override string Mod => RandoMapMod.MOD;
+        public override string ModeName => Settings.RmmMode.Pins_Over_Map.ToString().ToCleanName();
         public override bool FullMap => false;
     }
 }

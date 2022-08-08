@@ -87,9 +87,6 @@ namespace VanillaMapMod
         private static void OnEnterGame()
         {
             MapChanger.Settings.AddModes(modes);
-            MapChanger.Settings.SetModEnabled(LS.ModEnabled);
-            MapChanger.Settings.InitializeMode("VanillaMapMod", LS.Mode.ToString().Replace('_', ' '));
-
             Events.AfterSetGameMap += OnSetGameMap;
         }
 

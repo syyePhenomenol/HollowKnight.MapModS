@@ -117,8 +117,8 @@ namespace RandoMapMod.UI
 
         private static bool IsCompassEnabled()
         {
-            return MapChanger.Settings.MapModEnabled
-                && MapChanger.Settings.CurrentMode().GetType().IsSubclassOf(typeof(TransitionMode))
+            return MapChanger.Settings.MapModEnabled()
+                && MapChanger.Settings.CurrentMode().GetType().IsSubclassOf(typeof(TransitionRandoMode))
                 && RandoMapMod.GS.ShowRouteCompass;
         }
     }

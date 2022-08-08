@@ -10,7 +10,7 @@ namespace RandoMapMod.UI
     {
         internal static PinStyleButton Instance { get; private set; }
 
-        internal PinStyleButton() : base("Pin Style", "RandoMapMod", 1, 1)
+        internal PinStyleButton() : base("Pin Style", RandoMapMod.MOD, 1, 1)
         {
             Instance = this;
         }

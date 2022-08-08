@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MapChanger;
+using RandoMapMod.Modes;
 using RandoMapMod.Settings;
 using UnityEngine;
 using RM = RandomizerMod.RandomizerMod;
@@ -94,13 +95,17 @@ namespace RandoMapMod.Transition
 
         internal static bool GetRoomActive(string scene)
         {
-            return RandoMapMod.LS.Mode switch
+            if (MapChanger.Settings.CurrentMode() is TransitionNormalMode)
             {
-                RmmMode.Transition_Normal => Tracker.HasVisitedScene(scene) || InLogicScenes.Contains(scene),
-                RmmMode.Transition_Visited_Only => Tracker.HasVisitedScene(scene),
-                RmmMode.Transition_All_Rooms => true,
-                _ => true,
-            };
+                return Tracker.HasVisitedScene(scene) || InLogicScenes.Contains(scene);
+            }
+
+            if (MapChanger.Settings.CurrentMode() is TransitionVisitedOnlyMode)
+            {
+                return Tracker.HasVisitedScene(scene);
+            }
+
+            return true;
         }
 
         internal static Vector4 GetRoomColor(string scene)

@@ -192,7 +192,7 @@ namespace MapChanger.Map
         private static bool GetBoolOverride(string name, bool orig)
         {
             if (name is GOT_WHITE_PALACE_MAP or GOT_GODHOME_MAP
-                && Settings.MapModEnabled && Settings.CurrentMode().FullMap)
+                && Settings.MapModEnabled() && Settings.CurrentMode().FullMap)
             {
                 return true;
             }
@@ -212,7 +212,7 @@ namespace MapChanger.Map
             {
                 return orig;
             }
-            if (!Settings.MapModEnabled)
+            if (!Settings.MapModEnabled())
             {
                 return GetOriginalBool(name);
             }
@@ -255,7 +255,7 @@ namespace MapChanger.Map
         private static object GetVariableOverride(Type type, string name, object value)
         {
             if (name is "scenesMapped"
-                && Settings.MapModEnabled
+                && Settings.MapModEnabled()
                 && Settings.CurrentMode().ImmediateMapUpdate
                 && (PlayerData.instance.GetBool("hasQuill") || Settings.CurrentMode().ForceHasQuill))
             {
@@ -265,7 +265,7 @@ namespace MapChanger.Map
             {
                 return value;
             }
-            if (!Settings.MapModEnabled)
+            if (!Settings.MapModEnabled())
             {
                 return GetOriginalVariable<List<string>>(name);
             }

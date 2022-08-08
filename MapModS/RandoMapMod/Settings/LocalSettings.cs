@@ -11,8 +11,8 @@ namespace RandoMapMod.Settings
     {
         public bool InitializedPreviously = false;
 
-        public bool ModEnabled = false;
-        public RmmMode Mode = RmmMode.Full_Map;
+        //public bool ModEnabled = false;
+        //public RmmMode Mode = RmmMode.Full_Map;
         public bool ShowBenchPins = false;
         public bool SpoilerOn = false;
         public bool RandomizedOn = true;
@@ -22,33 +22,12 @@ namespace RandoMapMod.Settings
 
         public void Initialize()
         {
+            if (InitializedPreviously) return;
+
             PoolSettings = RmmPinManager.AllPoolGroups.ToDictionary(poolGroup => poolGroup, poolGroup => PoolState.On);
             ResetPoolSettings();
 
-            if (RandoMapMod.GS.OverrideDefaultMode)
-            {
-                InitializeMode(TransitionData.IsTransitionRando() ? RandoMapMod.GS.TransitionRandoModeOverride : RandoMapMod.GS.ItemRandoModeOverride);
-            }
-            else
-            {
-                InitializeMode(TransitionData.IsTransitionRando() ? RmmMode.Transition_Normal : RmmMode.Full_Map);
-            }
-
             InitializedPreviously = true;
-        }
-
-        private void InitializeMode(RmmMode mode)
-        {
-            Mode = mode;
-            MapChanger.Settings.InitializeMode("RandoMapMod", mode.ToString().ToCleanName());
-        }
-
-        internal void ImportMode(string mode)
-        {
-            if (Enum.TryParse(mode.Replace(' ', '_'), out RmmMode rmmMode))
-            {
-                Mode = rmmMode;
-            }
         }
 
         internal void ToggleGroupBy()

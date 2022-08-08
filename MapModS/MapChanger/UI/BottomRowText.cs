@@ -12,7 +12,7 @@ namespace MapChanger.UI
 
         protected override bool Condition()
         {
-            return Settings.MapModEnabled && (States.WorldMapOpen || States.QuickMapOpen);
+            return Settings.MapModEnabled() && (States.WorldMapOpen || States.QuickMapOpen);
         }
 
         public override void BuildLayout()

@@ -11,7 +11,7 @@ namespace RandoMapMod.UI
     {
         internal static VanillaButton Instance { get; private set; }
 
-        internal VanillaButton() : base("Vanilla Pins", "RandoMapMod", 0, 2)
+        internal VanillaButton() : base("Vanilla Pins", RandoMapMod.MOD, 0, 2)
         {
             Instance = this;
         }

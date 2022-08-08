@@ -8,7 +8,7 @@ namespace RandoMapMod.UI
     {
         internal static SpoilersButton Instance { get; private set; }
 
-        internal SpoilersButton() : base("Spoilers", "RandoMapMod", 0, 3)
+        internal SpoilersButton() : base("Spoilers", RandoMapMod.MOD, 0, 3)
         {
             Instance = this;
         }

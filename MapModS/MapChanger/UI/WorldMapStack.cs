@@ -50,7 +50,7 @@ namespace MapChanger.UI
 
         protected override bool Condition()
         {
-            return States.WorldMapOpen && Settings.MapModEnabled;
+            return States.WorldMapOpen && Settings.MapModEnabled();
         }
     }
 }

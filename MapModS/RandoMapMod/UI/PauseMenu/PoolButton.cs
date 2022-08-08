@@ -9,7 +9,7 @@ namespace RandoMapMod.UI
     {
         internal string PoolGroup { get; init; }
 
-        public PoolButton(string poolGroup) : base(poolGroup, "RandoMapMod")
+        public PoolButton(string poolGroup) : base(poolGroup, RandoMapMod.MOD)
         {
             PoolGroup = poolGroup;
         }

@@ -37,7 +37,7 @@ namespace MapChanger.UI
 
         public override void Update()
         {
-            if (Settings.MapModEnabled && Settings.CurrentMode().Mod == Mod)
+            if (Settings.MapModEnabled() && Settings.CurrentMode().Mod == Mod)
             {
                 Button.Visibility = Visibility.Visible;
             }

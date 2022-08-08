@@ -41,12 +41,12 @@ namespace MapChanger.MonoBehaviours
 
         private bool AreaNamesEnabled()
         {
-            return !(Settings.MapModEnabled && Settings.CurrentMode().DisableAreaNames);
+            return !(Settings.MapModEnabled() && Settings.CurrentMode().DisableAreaNames);
         }
 
         public override void UpdateColor()
         {
-            if (Settings.MapModEnabled)
+            if (Settings.MapModEnabled())
             {
                 try { Color = Settings.CurrentMode().AreaNameColorOverride(this) ?? OrigColor; }
                 catch (Exception e) { MapChangerMod.Instance.LogError(e); }

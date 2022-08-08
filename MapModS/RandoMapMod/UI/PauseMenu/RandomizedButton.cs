@@ -11,7 +11,7 @@ namespace RandoMapMod.UI
     {
         internal RandomizedButton Instance { get; init; }
 
-        internal RandomizedButton() : base("Randomized Pins", "RandoMapMod", 0, 1)
+        internal RandomizedButton() : base("Randomized Pins", RandoMapMod.MOD, 0, 1)
         {
             Instance = this;
         }

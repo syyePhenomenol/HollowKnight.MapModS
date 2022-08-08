@@ -1,6 +1,4 @@
-﻿using System;
-using GlobalEnums;
-using MapChanger.MonoBehaviours;
+﻿using MapChanger.MonoBehaviours;
 using UnityEngine;
 
 namespace MapChanger
@@ -15,9 +13,14 @@ namespace MapChanger
     public class MapMode
     {
         public (string, string) ModeKey => (Mod, ModeName);
-
         public virtual string Mod => "MapChangerMod";
         public virtual string ModeName => "Disabled";
+        /// <summary>
+        /// If an instance of Settings is new, it will be initialized to a mode that
+        /// has this value true. Ties are broken by Priority.
+        /// </summary>
+        public virtual bool InitializeToThis() => false;
+        public virtual float Priority => float.PositiveInfinity;
         public virtual bool ForceHasMap => false;
         public virtual bool ForceHasQuill => false;
         public virtual OverrideType VanillaPins => OverrideType.Neutral;
@@ -32,7 +35,6 @@ namespace MapChanger
         public virtual bool FullMap => false;
         public virtual bool DisableAreaNames => false;
         public virtual bool DisableNextArea => false;
-
         public virtual bool? RoomActiveOverride(RoomSprite roomSprite) => null;
         public virtual bool? RoomCanSelectOverride(RoomSprite roomSprite) => null;
         public virtual Vector4? RoomColorOverride(RoomSprite roomSprite) => null;

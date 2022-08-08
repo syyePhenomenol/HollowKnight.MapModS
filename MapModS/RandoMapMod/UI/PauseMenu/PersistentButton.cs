@@ -8,7 +8,7 @@ namespace RandoMapMod.UI
 {
     internal class PersistentButton : MainButton
     {
-        public PersistentButton() : base("Persistent Button", "RandoMapMod", 2, 2)
+        public PersistentButton() : base("Persistent Button", RandoMapMod.MOD, 2, 2)
         {
 
         }

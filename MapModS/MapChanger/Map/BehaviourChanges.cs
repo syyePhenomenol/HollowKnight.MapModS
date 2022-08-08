@@ -16,7 +16,7 @@ namespace MapChanger.Map
         {
             public override void OnEnter()
             {
-                if (!Settings.MapModEnabled || Settings.CurrentMode().VanillaPins != OverrideType.ForceOff)
+                if (!Settings.MapModEnabled() || Settings.CurrentMode().VanillaPins != OverrideType.ForceOff)
                 {
                     PlayMakerFSM.BroadcastEvent("NEW MAP KEY ADDED");
                     MapKey?.gameObject.LocateMyFSM("Control")?.SendEvent("MAP KEY UP");
@@ -36,7 +36,7 @@ namespace MapChanger.Map
 
             public override void OnEnter()
             {
-                gameObject?.SetActive(!Settings.MapModEnabled || Settings.CurrentMode().VanillaPins != OverrideType.ForceOff);
+                gameObject?.SetActive(!Settings.MapModEnabled() || Settings.CurrentMode().VanillaPins != OverrideType.ForceOff);
                 Finish();
             }
         }
@@ -165,7 +165,7 @@ namespace MapChanger.Map
         // The following fixes loading the Quick Map for some of the special areas (like Ancestral Mound)
         private static string DoorMapZoneOverride(On.GameMap.orig_GetDoorMapZone orig, GameMap self)
         {
-            if (!Settings.MapModEnabled) return orig(self);
+            if (!Settings.MapModEnabled()) return orig(self);
 
             MapZone mapZone = Finder.GetCurrentMapZone();
             if (mapZone != MapZone.NONE)
@@ -177,7 +177,7 @@ namespace MapChanger.Map
 
         private static string CurrentMapZoneOverride(On.GameManager.orig_GetCurrentMapZone orig, GameManager self)
         {
-            if (!Settings.MapModEnabled) return orig(self);
+            if (!Settings.MapModEnabled()) return orig(self);
 
             MapZone mapZone = Finder.GetCurrentMapZone();
             if (mapZone != MapZone.NONE)
@@ -189,7 +189,7 @@ namespace MapChanger.Map
 
         private static void ZoomFasterOnKeyboard(On.GameMap.orig_Update orig, GameMap self)
         {
-            if (Settings.MapModEnabled
+            if (Settings.MapModEnabled()
                 && self.canPan
                 && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
             {
@@ -216,7 +216,7 @@ namespace MapChanger.Map
 
         private static bool DisableUpdatedMapPrompt(On.GameManager.orig_UpdateGameMap orig, GameManager self)
         {
-            if (Settings.MapModEnabled)
+            if (Settings.MapModEnabled())
             {
                 return false;
             }

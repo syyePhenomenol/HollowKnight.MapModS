@@ -17,7 +17,7 @@ namespace MapChanger.MonoBehaviours
 
         private bool VanillaPinsEnabled()
         {
-            return !Settings.MapModEnabled || Settings.CurrentMode().VanillaPins != OverrideType.ForceOff;
+            return !Settings.MapModEnabled() || Settings.CurrentMode().VanillaPins != OverrideType.ForceOff;
         }
 
         private bool HasEncounteredLocation()

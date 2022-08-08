@@ -23,24 +23,18 @@ namespace VanillaMapMod
         {
             base.Update();
 
-            if (MapChanger.Settings.CurrentMode().Mod is "VanillaMapMod")
-            {
-                VanillaMapMod.LS.SetMode(MapChanger.Settings.CurrentMode().ModeName);
-            }
-
             string text = "Mode\n";
 
-            switch (VanillaMapMod.LS.Mode)
+            if (MapChanger.Settings.CurrentMode() is NormalMode)
             {
-                case Settings.VMMMode.Normal:
-                    Button.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
-                    text += "Normal";
-                    break;
+                Button.ContentColor = Colors.GetColor(ColorSetting.UI_Neutral);
+                text += "Normal";
+            }
 
-                case Settings.VMMMode.Full_Map:
-                    Button.ContentColor = Colors.GetColor(ColorSetting.UI_On);
-                    text += "Full Map";
-                    break;
+            if (MapChanger.Settings.CurrentMode() is FullMapMode)
+            {
+                Button.ContentColor = Colors.GetColor(ColorSetting.UI_On);
+                text += "Full Map";
             }
 
             Button.Content = text;

@@ -70,7 +70,7 @@ namespace MapChanger.UI
 
         public void Update()
         {
-            if (!Settings.MapModEnabled || Settings.CurrentMode().Mod != Mod)
+            if (!Settings.MapModEnabled() || Settings.CurrentMode().Mod != Mod)
             {
                 Hide();
             }
