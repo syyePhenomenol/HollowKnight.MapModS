@@ -23,7 +23,12 @@ namespace RandoMapMod.Modes
 
         public override Vector4? RoomColorOverride(RoomSprite roomSprite)
         {
-            return roomSprite.Selected ? RmmColors.GetColor(RmmColorSetting.Room_Benchwarp_Selected) : RmmColors.GetColor(roomSprite.Rsd.ColorSetting);
+            if (roomSprite.Selected)
+            {
+                return RmmColors.GetColor(RmmColorSetting.Room_Benchwarp_Selected);
+            }
+
+            return GetCustomColor(roomSprite.Rsd.ColorSetting);
         }
 
         public override bool? RoomCanSelectOverride(RoomSprite roomSprite)
@@ -31,19 +36,33 @@ namespace RandoMapMod.Modes
             return roomSprite.gameObject.activeInHierarchy && BenchwarpInterop.Benches.ContainsKey(roomSprite.Rsd.SceneName);
         }
 
-        public override Vector4? AreaNameColorOverride(AreaName areaName)
+        public override Vector4? AreaNameColorOverride(AreaName areaName) { return GetCustomColor(areaName.MiscObjectDef.ColorSetting); }
+
+        public override Vector4? NextAreaColorOverride(NextArea nextArea) { return GetCustomColor(nextArea.MiscObjectDef.ColorSetting); }
+
+
+        private Vector4? GetCustomColor(ColorSetting colorSetting)
         {
-            return RmmColors.GetColor(areaName.MiscObjectDef.ColorSetting).ToOpaque();
+            Vector4 customColor = RmmColors.GetColor(colorSetting);
+
+            if (!customColor.Equals(Vector4.negativeInfinity))
+            {
+                return customColor.ToOpaque();
+            }
+
+            return null;
         }
 
-        public override Vector4? NextAreaColorOverride(NextArea nextArea)
+        public override Vector4? QuickMapTitleColorOverride(QuickMapTitle qmt) 
         {
-            return RmmColors.GetColor(nextArea.MiscObjectDef.ColorSetting).ToOpaque();
-        }
+            Vector4 customColor = RmmColors.GetColorFromMapZone(Finder.GetCurrentMapZone());
 
-        public override Vector4? QuickMapTitleColorOverride(QuickMapTitle qmt)
-        {
-            return RmmColors.GetColorFromMapZone(Finder.GetCurrentMapZone()).ToOpaque();
+            if (!customColor.Equals(Vector4.negativeInfinity))
+            {
+                return customColor.ToOpaque();
+            }
+
+            return null;
         }
     }
 

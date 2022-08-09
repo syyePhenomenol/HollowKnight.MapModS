@@ -8,7 +8,7 @@ namespace MapChanger
     public class MapChangerMod : Mod, ILocalSettings<Settings>
     {
         internal static MapChangerMod Instance;
-        public override string GetVersion() => "0.0.1";
+        public override string GetVersion() => "MC PRERELEASE 1";
         public void OnLoadLocal(Settings ls) => Settings.Instance = ls;
         public Settings OnSaveLocal() => Settings.Instance;
 
