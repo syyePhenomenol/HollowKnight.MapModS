@@ -2,6 +2,9 @@
 
 namespace MapChanger.Defs
 {
+    /// <summary>
+    /// The real-world width and height of a mapped scene.
+    /// </summary>
     public record TileMapDef
     {
         [JsonProperty]

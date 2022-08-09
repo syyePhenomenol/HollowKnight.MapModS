@@ -15,7 +15,7 @@ namespace RandoMapMod.UI
 
         protected override bool Condition()
         {
-            return Conditions.TransitionModeEnabled()
+            return Conditions.TransitionRandoModeEnabled()
                 && (States.WorldMapOpen || States.QuickMapOpen
                     || (!GameManager.instance.IsGamePaused() && RandoMapMod.GS.RouteTextInGame is RouteTextInGame.NextTransitionOnly or RouteTextInGame.Show));
         }

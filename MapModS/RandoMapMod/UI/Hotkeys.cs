@@ -12,6 +12,8 @@ namespace RandoMapMod.UI
     {
         public override void BuildLayout()
         {
+            //TODO: mode toggle, lock selection
+
             Root.ListenForHotkey(KeyCode.H, () =>
             {
                 RandoMapMod.GS.ToggleControlPanel();
@@ -24,31 +26,53 @@ namespace RandoMapMod.UI
                 MapUILayerUpdater.Update();
             }, ModifierKeys.Ctrl);
 
+            Root.ListenForHotkey(KeyCode.P, () =>
+            {
+                RandoMapMod.GS.TogglePinSelection();
+                UpdateSelectors();
+            }, ModifierKeys.Ctrl);
+
             if (Interop.HasBenchwarp())
             {
                 Root.ListenForHotkey(KeyCode.W, () =>
                 {
-                    RandoMapMod.GS.ToggleBenchwarpWorldMap();
-                    NormalRoomSelector.Instance.MainUpdate();
-                    MapUILayerUpdater.Update();
-                }, ModifierKeys.Ctrl, () => Conditions.NormalModeEnabled());
+                    RandoMapMod.GS.ToggleBenchwarpSelection();
+                    UpdateSelectors();
+                }, ModifierKeys.Ctrl, () => Conditions.ItemRandoModeEnabled());
+            }
 
+            Root.ListenForHotkey(KeyCode.R, () =>
+            {
+                RandoMapMod.GS.ToggleRoomSelection();
+                UpdateSelectors();
+            }, ModifierKeys.Ctrl, () => MapChanger.Settings.MapModEnabled());
+
+            Root.ListenForHotkey(KeyCode.S, () =>
+            {
+                RandoMapMod.GS.ToggleShowReticle();
+                UpdateSelectors();
+            }, ModifierKeys.Ctrl, () => MapChanger.Settings.MapModEnabled());
+
+            Root.ListenForHotkey(KeyCode.L, () =>
+            {
+                RmmPinSelector.Instance.ToggleLockSelection();
+                BenchwarpRoomSelector.Instance.ToggleLockSelection();
+                TransitionRoomSelector.Instance.ToggleLockSelection();
+                MapUILayerUpdater.Update();
+            }, ModifierKeys.Ctrl, () => MapChanger.Settings.MapModEnabled());
+
+            if (Interop.HasBenchwarp())
+            {
                 Root.ListenForHotkey(KeyCode.B, () =>
                 {
                     RandoMapMod.GS.ToggleAllowBenchWarpSearch();
                     RouteTracker.ResetRoute();
                     MapUILayerUpdater.Update();
                     RouteCompass.Update();
-                }, ModifierKeys.Ctrl, () => Conditions.TransitionModeEnabled());
+                }, ModifierKeys.Ctrl, () => Conditions.TransitionRandoModeEnabled());
             }
 
-            Root.ListenForHotkey(KeyCode.U, () =>
-            {
-                RandoMapMod.GS.ToggleUncheckedPanel();
-                MapUILayerUpdater.Update();
-            }, ModifierKeys.Ctrl, () => MapChanger.Settings.MapModEnabled());
-
-            Root.ListenForHotkey(KeyCode.R, () =>
+            Root.ListenForHotkey(KeyCode.G, () =>
             {
                 RandoMapMod.GS.ToggleRouteTextInGame();
                 MapUILayerUpdater.Update();
@@ -64,14 +88,7 @@ namespace RandoMapMod.UI
             {
                 RandoMapMod.GS.ToggleRouteCompassEnabled();
                 MapUILayerUpdater.Update();
-            }, ModifierKeys.Ctrl, () => Conditions.TransitionModeEnabled());
-
-            Root.ListenForHotkey(KeyCode.L, () =>
-            {
-                RandoMapMod.GS.ToggleLookup();
-                RmmPinSelector.Instance.MainUpdate();
-                MapUILayerUpdater.Update();
-            }, ModifierKeys.Ctrl);
+            }, ModifierKeys.Ctrl, () => Conditions.TransitionRandoModeEnabled());
 
             Root.ListenForHotkey(KeyCode.Alpha1, () =>
             {
@@ -112,6 +129,14 @@ namespace RandoMapMod.UI
         protected override bool Condition()
         {
             return Conditions.RandoMapModEnabled();
+        }
+
+        private void UpdateSelectors()
+        {
+            RmmPinSelector.Instance.MainUpdate();
+            BenchwarpRoomSelector.Instance.MainUpdate();
+            TransitionRoomSelector.Instance.MainUpdate();
+            MapUILayerUpdater.Update();
         }
 
         private void UpdatePins()

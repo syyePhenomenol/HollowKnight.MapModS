@@ -1,6 +1,7 @@
 ﻿using System;
 using GlobalEnums;
 using HutongGames.PlayMaker;
+using Modding;
 using UnityEngine;
 using Vasi;
 
@@ -68,7 +69,7 @@ namespace MapChanger.Map
             On.GameMap.SetupMapMarkers += SetupMarkersOverride;
             On.GameMap.DisableMarkers += DisableMarkersOverride;
 
-            On.GameMap.PositionCompass += SetDoorMapZoneEarly;
+            On.GameMap.PositionCompass += HideCompassInNonMappedScene;
             On.GameMap.GetDoorMapZone += DoorMapZoneOverride;
             On.GameManager.GetCurrentMapZone += CurrentMapZoneOverride;
 
@@ -87,7 +88,7 @@ namespace MapChanger.Map
             On.GameMap.SetupMapMarkers -= SetupMarkersOverride;
             On.GameMap.DisableMarkers -= DisableMarkersOverride;
 
-            On.GameMap.PositionCompass -= SetDoorMapZoneEarly;
+            On.GameMap.PositionCompass -= HideCompassInNonMappedScene;
             On.GameMap.GetDoorMapZone -= DoorMapZoneOverride;
             On.GameManager.GetCurrentMapZone -= CurrentMapZoneOverride;
 
@@ -155,11 +156,18 @@ namespace MapChanger.Map
             self.gameObject.Child(MAP_MARKERS).SetActive(false);
         }
 
-        // Fixes some null referencing
-        private static void SetDoorMapZoneEarly(On.GameMap.orig_PositionCompass orig, GameMap self, bool posShade)
+        private static void HideCompassInNonMappedScene(On.GameMap.orig_PositionCompass orig, GameMap self, bool posShade)
         {
+            // Not sure if necessary, but it might fix some NREs
             self.doorMapZone = self.GetDoorMapZone();
+
             orig(self, posShade);
+
+            if (!Finder.IsMappedScene(Utils.CurrentScene()))
+            {
+                self.compassIcon.SetActive(false);
+                ReflectionHelper.SetField(self, "displayingCompass", false);
+            }
         }
 
         // The following fixes loading the Quick Map for some of the special areas (like Ancestral Mound)

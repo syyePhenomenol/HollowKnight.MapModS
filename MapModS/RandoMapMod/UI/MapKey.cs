@@ -196,7 +196,7 @@ namespace RandoMapMod.UI
                 panel.Visibility = Visibility.Hidden;
             }
 
-            if (Conditions.TransitionModeEnabled())
+            if (Conditions.TransitionRandoModeEnabled())
             {
                 roomKey.Visibility = Visibility.Visible;
             }

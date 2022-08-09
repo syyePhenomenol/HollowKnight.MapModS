@@ -12,7 +12,7 @@ namespace RandoMapMod.UI
 
         protected override bool Condition()
         {
-            return Conditions.TransitionModeEnabled() && States.QuickMapOpen;
+            return Conditions.TransitionRandoModeEnabled() && States.QuickMapOpen;
         }
 
         public override void BuildLayout()

@@ -17,7 +17,7 @@ namespace MapChanger
         public virtual string ModeName => "Disabled";
         /// <summary>
         /// If an instance of Settings is new, it will be initialized to a mode that
-        /// has this value true. Ties are broken by Priority.
+        /// has this return true. Ties are broken by Priority.
         /// </summary>
         public virtual bool InitializeToThis() => false;
         public virtual float Priority => float.PositiveInfinity;
@@ -33,7 +33,13 @@ namespace MapChanger
         /// Forces all map areas/rooms to be visible and filled in.
         /// </summary>
         public virtual bool FullMap => false;
+        /// <summary>
+        /// Whether or not to display area names on the World Map or Quick Map.
+        /// </summary>
         public virtual bool DisableAreaNames => false;
+        /// <summary>
+        /// Whether or not to display adjacent area names and arrows on the Quick Map.
+        /// </summary>
         public virtual bool DisableNextArea => false;
         public virtual bool? RoomActiveOverride(RoomSprite roomSprite) => null;
         public virtual bool? RoomCanSelectOverride(RoomSprite roomSprite) => null;

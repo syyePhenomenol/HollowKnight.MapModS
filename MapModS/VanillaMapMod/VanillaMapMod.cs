@@ -9,6 +9,8 @@ namespace VanillaMapMod
 {
     public sealed class VanillaMapMod : Mod, ILocalSettings<LocalSettings>, IGlobalSettings<GlobalSettings>
     {
+        internal const string MOD = "VanillaMapMod";
+
         private static readonly string[] dependencies = new string[] 
         { 
             "MapChangerMod", 

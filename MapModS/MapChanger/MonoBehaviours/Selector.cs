@@ -24,6 +24,7 @@ namespace MapChanger.MonoBehaviours
         public virtual float SelectionRadius { get; } = DEFAULT_SELECTION_RADIUS;
         public virtual float SpriteSize { get; } = DEFAULT_SIZE;
 
+        protected GameObject SpriteObject { get; private set; }
         protected SpriteRenderer Sr { get; private set; }
 
         private string selectedObjectKey = NONE_SELECTED;
@@ -48,6 +49,21 @@ namespace MapChanger.MonoBehaviours
                     OnSelectionChanged();
                 }
             }
+        }
+
+        /// <summary>
+        /// If LockSelection is on, the player can pan away from the selected object but maintain
+        /// its selection. Resets on MainUpdate.
+        /// </summary>
+        public bool LockSelection { get; private set; } = false;
+        public void ToggleLockSelection()
+        {
+            if (!gameObject.activeSelf) return;
+            LockSelection = !LockSelection;
+            StopAllCoroutines();
+
+            if (LockSelection) return;
+            StartCoroutine(PeriodicUpdate());
         }
 
         private void SelectInternal(string objectKey)
@@ -117,7 +133,12 @@ namespace MapChanger.MonoBehaviours
 
             ActiveModifiers.Add(WorldMapOpen);
 
-            Sr = gameObject.AddComponent<SpriteRenderer>();
+            SpriteObject = new("Selector Sprite");
+            SpriteObject.transform.SetParent(transform);
+            SpriteObject.transform.localScale = Vector3.one;
+            SpriteObject.layer = UI_LAYER;
+
+            Sr = SpriteObject.AddComponent<SpriteRenderer>();
             Sr.sprite = SpriteManager.Instance.GetSprite(SELECTOR_SPRITE);
             Sr.color = DEFAULT_COLOR;
             Sr.sortingLayerName = HUD;
@@ -133,8 +154,12 @@ namespace MapChanger.MonoBehaviours
             return States.WorldMapOpen;
         }
 
-        public void OnEnable()
+        public override void AfterMainUpdate()
         {
+            LockSelection = false;
+
+            if (!gameObject.activeSelf) return;
+
             StartCoroutine(PeriodicUpdate());
         }
 

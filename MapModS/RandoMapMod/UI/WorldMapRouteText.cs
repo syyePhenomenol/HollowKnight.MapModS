@@ -14,7 +14,7 @@ namespace RandoMapMod.UI
 
         protected override bool Condition()
         {
-            return Conditions.TransitionModeEnabled()
+            return Conditions.TransitionRandoModeEnabled()
                 && MapChanger.States.WorldMapOpen;
         }
 
@@ -34,6 +34,8 @@ namespace RandoMapMod.UI
 
         internal static void UpdateInstructions()
         {
+            instruction.Visibility = RandoMapMod.GS.RoomSelectionOn ? MagicUI.Core.Visibility.Visible : MagicUI.Core.Visibility.Hidden;
+            
             instruction.Text = RouteTracker.GetInstructionText();
         }
 

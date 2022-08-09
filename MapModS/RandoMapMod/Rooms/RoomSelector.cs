@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using MapChanger.MonoBehaviours;
 
 namespace RandoMapMod.Rooms
@@ -9,11 +11,17 @@ namespace RandoMapMod.Rooms
 
         public override float SpriteSize { get; } = 0.6f;
 
+        protected private Stopwatch attackHoldTimer = new();
+
         internal virtual void Initialize(IEnumerable<MapObject> rooms)
         {
             base.Initialize();
 
-            ActiveModifiers.Add(ActiveByCurrentMode);
+            ActiveModifiers.AddRange(new Func<bool>[]
+            {
+                ActiveByCurrentMode,
+                ActiveByToggle
+            });
 
             foreach (MapObject room in rooms)
             {
@@ -36,6 +44,17 @@ namespace RandoMapMod.Rooms
                     Objects[sceneName] = new() { (ISelectable)room };
                 }
             }
+        }
+
+        protected private abstract bool ActiveByCurrentMode();
+        protected private abstract bool ActiveByToggle();
+
+        public override void AfterMainUpdate()
+        {
+            base.AfterMainUpdate();
+
+            SpriteObject.SetActive(RandoMapMod.GS.ShowReticle);
+            attackHoldTimer.Reset();
         }
 
         protected override void Select(ISelectable selectable)
@@ -67,7 +86,5 @@ namespace RandoMapMod.Rooms
                 RandoMapMod.Instance.LogDebug($"Deselected {roomText.Rtd.Name}");
             }
         }
-
-        protected private abstract bool ActiveByCurrentMode();
     }
 }

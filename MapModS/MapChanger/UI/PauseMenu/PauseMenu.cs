@@ -90,7 +90,6 @@ namespace MapChanger.UI
         private static void OnPause(On.HeroController.orig_Pause orig, HeroController self)
         {
             orig(self);
-            MapChangerMod.Instance.LogDebug("Pause Game");
 
             foreach (ExtraButtonPanel ebp in ExtraButtonPanels)
             {

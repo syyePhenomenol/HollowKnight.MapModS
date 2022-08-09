@@ -18,8 +18,6 @@ namespace RandoMapMod.Rooms
             base.Initialize(rooms);
         }
 
-        private readonly static Stopwatch attackHoldTimer = new();
-
         private void Update()
         {
             if (InputHandler.Instance.inputActions.menuSubmit.WasPressed
@@ -46,30 +44,29 @@ namespace RandoMapMod.Rooms
             }
         }
 
-        public override void AfterMainUpdate()
-        {
-            attackHoldTimer.Reset();
-        }
-
         protected private override bool ActiveByCurrentMode()
         {
-            return Conditions.TransitionModeEnabled();
+            return Conditions.TransitionRandoModeEnabled();
+        }
+
+        protected private override bool ActiveByToggle()
+        {
+            return RandoMapMod.GS.RoomSelectionOn;
         }
 
         protected override void OnSelectionChanged()
         {
-            InfoPanels.UpdateUncheckedPanel();
+            SelectionPanels.UpdateRoomPanel();
             WorldMapRouteText.UpdateInstructions();
         }
 
-        internal static string GetUncheckedPanelText()
+        internal string GetText()
         {
-            string sceneName = Instance.SelectedObjectKey;
-            string text = TransitionData.GetUncheckedVisited(Instance.SelectedObjectKey);
+            string text = TransitionData.GetUncheckedVisited(SelectedObjectKey);
 
-            if (text is "") return sceneName;
+            if (text is "") return SelectedObjectKey;
 
-            return $"{sceneName}\n\n{text}";
+            return $"{SelectedObjectKey}\n\n{text}";
         }
     }
 }

@@ -39,6 +39,13 @@ namespace RandoMapMod.Pins
             }
         }
 
+        public override void AfterMainUpdate()
+        {
+            base.AfterMainUpdate();
+
+            SpriteObject.SetActive(RandoMapMod.GS.ShowReticle);
+        }
+
         protected override void Select(ISelectable selectable)
         {
             if (selectable is RmmPin pin)
@@ -59,7 +66,7 @@ namespace RandoMapMod.Pins
 
         protected override void OnSelectionChanged()
         {
-            InfoPanels.UpdateLookupPanel();
+            SelectionPanels.UpdateLookupPanel();
         }
 
         private bool ActiveByCurrentMode()
@@ -69,12 +76,12 @@ namespace RandoMapMod.Pins
 
         private bool ActiveByToggle()
         {
-            return RandoMapMod.GS.LookupOn;
+            return RandoMapMod.GS.PinSelectionOn;
         }
 
-        internal static string GetLookupText()
+        internal string GetText()
         {
-            if (RmmPinManager.Pins.TryGetValue(Instance.SelectedObjectKey, out RmmPin pin))
+            if (RmmPinManager.Pins.TryGetValue(SelectedObjectKey, out RmmPin pin))
             {
                 return pin.GetLookupText();
             }

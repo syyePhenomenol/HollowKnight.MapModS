@@ -4,6 +4,8 @@ using MagicUI.Graphics;
 using MapChanger;
 using MapChanger.UI;
 using RandoMapMod.Modes;
+using RandoMapMod.Pins;
+using RandoMapMod.Rooms;
 using RandoMapMod.Settings;
 using L = RandomizerMod.Localization;
 
@@ -19,12 +21,14 @@ namespace RandoMapMod.UI
         private static TextObject shiftPan;
 
         private static TextObject mapKey;
-        private static TextObject lookup;
+        private static TextObject pinSelection;
+        private static TextObject showReticle;
+        private static TextObject lockSelection;
 
-        private static TextObject benchwarpWorldMap;
+        private static TextObject benchwarpSelection;
 
         private static TextObject benchwarpSearch;
-        private static TextObject uncheckedVisited;
+        private static TextObject roomSelection;
         private static TextObject routeInGame;
         private static TextObject whenOffRoute;
         private static TextObject compass;
@@ -70,20 +74,23 @@ namespace RandoMapMod.UI
             mapKey = UIExtensions.PanelText(Root, "Map Key");
             panelContents.Children.Add(mapKey);
 
-            lookup = UIExtensions.PanelText(Root, "Lookup");
-            panelContents.Children.Add(lookup);
+            pinSelection = UIExtensions.PanelText(Root, "Pin Selection");
+            panelContents.Children.Add(pinSelection);
 
-            // TODO: Add lock lookup selection
-            // TODO: Add reticle toggle
+            benchwarpSelection = UIExtensions.PanelText(Root, "Benchwarp Selection");
+            panelContents.Children.Add(benchwarpSelection);
 
-            benchwarpWorldMap = UIExtensions.PanelText(Root, "Benchwarp World Map");
-            panelContents.Children.Add(benchwarpWorldMap);
+            roomSelection = UIExtensions.PanelText(Root, "Room Selection");
+            panelContents.Children.Add(roomSelection);
+
+            showReticle = UIExtensions.PanelText(Root, "Show Reticle");
+            panelContents.Children.Add(showReticle);
+
+            lockSelection = UIExtensions.PanelText(Root, "Lock Selection");
+            panelContents.Children.Add(lockSelection);
 
             benchwarpSearch = UIExtensions.PanelText(Root, "Benchwarp Search");
             panelContents.Children.Add(benchwarpSearch);
-
-            uncheckedVisited = UIExtensions.PanelText(Root, "Unchecked");
-            panelContents.Children.Add(uncheckedVisited);
 
             routeInGame = UIExtensions.PanelText(Root, "Route In Game");
             panelContents.Children.Add(routeInGame);
@@ -104,10 +111,12 @@ namespace RandoMapMod.UI
         {
             UpdateControl();
             UpdateMapKey();
-            UpdateLookup();
-            UpdateBenchwarpWorldMap();
+            UpdatePinSelection();
+            UpdateBenchwarpSelection();
+            UpdateRoomSelection();
+            UpdateShowReticle();
+            UpdateLockSelection();
             UpdateBenchwarpSearch();
-            UpdateUnchecked();
             UpdateRouteInGame();
             UpdateOffRoute();
             UpdateCompass();
@@ -117,22 +126,24 @@ namespace RandoMapMod.UI
                 modEnabled.Visibility = Visibility.Visible;
                 shiftPan.Visibility = Visibility.Visible;
                 mapKey.Visibility = Visibility.Visible;
-                lookup.Visibility = Visibility.Visible;
+                pinSelection.Visibility = Visibility.Visible;
+                showReticle.Visibility = Visibility.Visible;
+                lockSelection.Visibility = Visibility.Visible;
 
-                if (Conditions.TransitionModeEnabled())
+                if (Conditions.TransitionRandoModeEnabled())
                 {
-                    benchwarpWorldMap.Visibility = Visibility.Collapsed;
+                    benchwarpSelection.Visibility = Visibility.Collapsed;
+                    roomSelection.Visibility = Visibility.Visible;
                     benchwarpSearch.Visibility = Visibility.Visible;
-                    uncheckedVisited.Visibility = Visibility.Visible;
                     routeInGame.Visibility = Visibility.Visible;
                     whenOffRoute.Visibility = Visibility.Visible;
                     compass.Visibility = Visibility.Visible;
                 }
                 else
                 {
-                    benchwarpWorldMap.Visibility = Visibility.Visible;
+                    benchwarpSelection.Visibility = Visibility.Visible;
+                    roomSelection.Visibility = Visibility.Collapsed;
                     benchwarpSearch.Visibility = Visibility.Collapsed;
-                    uncheckedVisited.Visibility = Visibility.Collapsed;
                     routeInGame.Visibility = Visibility.Collapsed;
                     whenOffRoute.Visibility = Visibility.Collapsed;
                     compass.Visibility = Visibility.Collapsed;
@@ -143,10 +154,12 @@ namespace RandoMapMod.UI
                 modEnabled.Visibility = Visibility.Collapsed;
                 shiftPan.Visibility = Visibility.Collapsed;
                 mapKey.Visibility = Visibility.Collapsed;
-                lookup.Visibility = Visibility.Collapsed;
-                benchwarpWorldMap.Visibility = Visibility.Collapsed;
+                pinSelection.Visibility = Visibility.Collapsed;
+                benchwarpSelection.Visibility = Visibility.Collapsed;
+                roomSelection.Visibility = Visibility.Collapsed;
+                showReticle.Visibility = Visibility.Collapsed;
+                lockSelection.Visibility = Visibility.Collapsed;
                 benchwarpSearch.Visibility = Visibility.Collapsed;
-                uncheckedVisited.Visibility = Visibility.Collapsed;
                 routeInGame.Visibility = Visibility.Collapsed;
                 whenOffRoute.Visibility = Visibility.Collapsed;
                 compass.Visibility = Visibility.Collapsed;
@@ -175,31 +188,63 @@ namespace RandoMapMod.UI
                 );
         }
 
-        private static void UpdateLookup()
+        private static void UpdatePinSelection()
         {
             UIExtensions.SetToggleText
                 (
-                    lookup,
-                    $"{L.Localize("Toggle lookup")} (Ctrl-L): ",
-                    RandoMapMod.GS.LookupOn
+                    pinSelection,
+                    $"{L.Localize("Toggle pin selection")} (Ctrl-P): ",
+                    RandoMapMod.GS.PinSelectionOn
                 );
         }
 
-        private static void UpdateBenchwarpWorldMap()
+        private static void UpdateBenchwarpSelection()
         {
             if (Interop.HasBenchwarp())
             {
                 UIExtensions.SetToggleText
                     (
-                        benchwarpWorldMap,
+                        benchwarpSelection,
                         $"{L.Localize("Benchwarp selection")} (Ctrl-W): ",
-                        RandoMapMod.GS.BenchwarpWorldMap
+                        RandoMapMod.GS.BenchwarpSelectionOn
                     );
             }
             else
             {
-                benchwarpWorldMap.Text = "Benchwarp is not installed or outdated";
+                benchwarpSelection.Text = "Benchwarp is not installed or outdated";
             }
+        }
+
+        private static void UpdateRoomSelection()
+        {
+            UIExtensions.SetToggleText
+                (
+                    roomSelection,
+                    $"{L.Localize("Toogle room selection")} (Ctrl-R): ",
+                    RandoMapMod.GS.RoomSelectionOn
+                );
+        }
+
+        private static void UpdateShowReticle()
+        {
+            UIExtensions.SetToggleText
+                (
+                    showReticle,
+                    $"{L.Localize("Show reticles")} (Ctrl-S): ",
+                    RandoMapMod.GS.ShowReticle
+                );
+        }
+
+        private static void UpdateLockSelection()
+        {
+            UIExtensions.SetToggleText
+                (
+                    lockSelection,
+                    $"{L.Localize("Lock selections")} (Ctrl-L): ",
+                    RmmPinSelector.Instance.LockSelection
+                        || BenchwarpRoomSelector.Instance.LockSelection
+                        || TransitionRoomSelector.Instance.LockSelection
+                );
         }
 
         private static void UpdateBenchwarpSearch()
@@ -209,7 +254,7 @@ namespace RandoMapMod.UI
                 UIExtensions.SetToggleText
                     (
                         benchwarpSearch,
-                        $"{L.Localize("Include benchwarp")} (Ctrl-B): ",
+                        $"{L.Localize("Pathfinder benchwarp")} (Ctrl-B): ",
                         RandoMapMod.GS.AllowBenchWarpSearch
                     );
             }
@@ -219,19 +264,9 @@ namespace RandoMapMod.UI
             }
         }
 
-        private static void UpdateUnchecked()
-        {
-            UIExtensions.SetToggleText
-                (
-                    uncheckedVisited,
-                    $"{L.Localize("Show unchecked/visited")} (Ctrl-U): ",
-                    RandoMapMod.GS.ShowUncheckedPanel
-                );
-        }
-
         private static void UpdateRouteInGame()
         {
-            string text = $"{L.Localize("Show route in-game")} (Ctrl-R): ";
+            string text = $"{L.Localize("Show route in-game")} (Ctrl-G): ";
 
             switch (RandoMapMod.GS.RouteTextInGame)
             {

@@ -13,8 +13,8 @@ namespace RandoMapMod.UI
 
         protected override bool Condition()
         {
-            return Conditions.NormalModeEnabled()
-                && RandoMapMod.GS.BenchwarpWorldMap
+            return Conditions.ItemRandoModeEnabled()
+                && RandoMapMod.GS.BenchwarpSelectionOn
                 && MapChanger.States.WorldMapOpen;
         }
 
@@ -31,7 +31,7 @@ namespace RandoMapMod.UI
         {
             if (!Interop.HasBenchwarp()) return;
 
-            benchwarpText.Text = NormalRoomSelector.GetBenchwarpText();
+            benchwarpText.Text = BenchwarpRoomSelector.Instance.GetInstructionText();
         }
     }
 }

@@ -61,7 +61,7 @@ namespace RandoMapMod
             new Hotkeys(),
             new ControlPanel(),
             new MapKey(),
-            new InfoPanels(),
+            new SelectionPanels(),
             new RmmBottomRowText(),
             new BenchwarpText(),
             new WorldMapRouteText(),

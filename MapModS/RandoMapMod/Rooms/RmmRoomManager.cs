@@ -56,7 +56,7 @@ namespace RandoMapMod.Rooms
 
             if (Interop.HasBenchwarp())
             {
-                NormalRoomSelector benchwarpRoomSelector = Utils.MakeMonoBehaviour<NormalRoomSelector>(null, "RandoMapMod Normal Room Selector");
+                BenchwarpRoomSelector benchwarpRoomSelector = Utils.MakeMonoBehaviour<BenchwarpRoomSelector>(null, "RandoMapMod Normal Room Selector");
                 benchwarpRoomSelector.Initialize();
             }
 

@@ -4,7 +4,7 @@ namespace VanillaMapMod
 {
     internal class FullMapMode : MapMode
     {
-        public override string Mod => "VanillaMapMod";
+        public override string Mod => VanillaMapMod.MOD;
         public override string ModeName => "Full Map";
         public override bool ForceHasMap => true;
         public override bool ForceHasQuill => true;

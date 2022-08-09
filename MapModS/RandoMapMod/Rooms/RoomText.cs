@@ -59,7 +59,7 @@ namespace RandoMapMod.Rooms
             (
                 new Func<bool>[]
                 {
-                    Conditions.TransitionModeEnabled,
+                    Conditions.TransitionRandoModeEnabled,
                     ActiveByMap,
                     GetRoomActive
                 }

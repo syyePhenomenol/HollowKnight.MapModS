@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace RandoMapMod.UI
 {
+    /// <summary>
+    /// Points from some entity to the nearest of a group of objects, during gameplay.
+    /// </summary>
     internal class DirectionalCompass : MonoBehaviour
     {
         private GameObject entity;
@@ -64,7 +67,7 @@ namespace RandoMapMod.UI
 
         public void Update()
         {
-            if (entity != null && Condition() && TryGetClosestObject(out GameObject o))
+            if (entity is not null && Condition() && TryGetClosestObject(out GameObject o))
             {
                 Vector2 dir = o.transform.position - entity.transform.position;
 
@@ -78,7 +81,7 @@ namespace RandoMapMod.UI
                 // Do lerp stuff
                 if (lerp)
                 {
-                    if (currentTarget == null || currentTarget != o)
+                    if (currentTarget is null || currentTarget != o)
                     {
                         currentTarget = o;
                         lerpStartTime = Time.time;
@@ -109,7 +112,7 @@ namespace RandoMapMod.UI
 
         private bool TryGetClosestObject(out GameObject o)
         {
-            if (TrackedObjects == null || !TrackedObjects.Any() || entity == null)
+            if (TrackedObjects is null || !TrackedObjects.Any() || entity is null)
             {
                 o = null;
 
@@ -123,7 +126,7 @@ namespace RandoMapMod.UI
 
         private float SqrDistanceFromEntity(GameObject o)
         {
-            if (o == null || entity == null) return 9999f;
+            if (o is null || entity is null) return float.PositiveInfinity;
 
             return ((Vector2)(o.transform.position - entity.transform.position)).sqrMagnitude;
         }

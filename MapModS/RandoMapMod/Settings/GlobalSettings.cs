@@ -6,10 +6,11 @@ namespace RandoMapMod.Settings
     {
         public bool ControlPanelOn = true;
         public bool MapKeyOn = false;
-        public bool LookupOn = false;
-        public bool BenchwarpWorldMap = true;
+        public bool PinSelectionOn = false;
+        public bool BenchwarpSelectionOn = true;
+        public bool RoomSelectionOn = true;
+        public bool ShowReticle = true;
         public bool AllowBenchWarpSearch = true;
-        public bool ShowUncheckedPanel = true;
         public RouteTextInGame RouteTextInGame = RouteTextInGame.NextTransitionOnly;
         public OffRouteBehaviour WhenOffRoute = OffRouteBehaviour.Reevaluate;
         public bool ShowRouteCompass = true;
@@ -35,24 +36,29 @@ namespace RandoMapMod.Settings
             MapKeyOn = !MapKeyOn;
         }
 
-        internal void ToggleLookup()
+        internal void TogglePinSelection()
         {
-            LookupOn = !LookupOn;
+            PinSelectionOn = !PinSelectionOn;
         }
 
-        internal void ToggleBenchwarpWorldMap()
+        internal void ToggleBenchwarpSelection()
         {
-            BenchwarpWorldMap = !BenchwarpWorldMap;
+            BenchwarpSelectionOn = !BenchwarpSelectionOn;
+        }
+
+        internal void ToggleRoomSelection()
+        {
+            RoomSelectionOn = !RoomSelectionOn;
+        }
+
+        internal void ToggleShowReticle()
+        {
+            ShowReticle = !ShowReticle;
         }
 
         internal void ToggleAllowBenchWarpSearch()
         {
             AllowBenchWarpSearch = !AllowBenchWarpSearch;
-        }
-
-        internal void ToggleUncheckedPanel()
-        {
-            ShowUncheckedPanel = !ShowUncheckedPanel;
         }
 
         internal void ToggleRouteTextInGame()

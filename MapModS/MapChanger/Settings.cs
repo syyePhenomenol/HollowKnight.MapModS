@@ -81,6 +81,8 @@ namespace MapChanger
 
         public static void ToggleModEnabled()
         {
+            if (!modes.Any()) return;
+
             Instance.mapModEnabled = !Instance.mapModEnabled;
 
             UIManager.instance.checkpointSprite.Show();
@@ -89,31 +91,9 @@ namespace MapChanger
             SettingChanged();
         }
 
-        public static void SetModEnabled(bool value)
-        {
-            if (Instance.mapModEnabled != value)
-            {
-                Instance.mapModEnabled = value;
-            }
-        }
-
-        //public static void SetMode(string mod, string modeName)
-        //{
-        //    for (int i = 0; i < modes.Count; i++)
-        //    {
-        //        if (modes[i].ModeKey == (mod, modeName))
-        //        {
-        //            modeIndex = i;
-        //            MapChangerMod.Instance.LogDebug($"Mode set to {CurrentMode().ModeKey}");
-        //            SettingChanged();
-        //            return;
-        //        }
-        //    }
-        //}
-
         public static void ToggleMode()
         {
-            if (!Instance.mapModEnabled) return;
+            if (!modes.Any() || !Instance.mapModEnabled) return;
 
             modeIndex = (modeIndex + 1) % modes.Count;
             MapChangerMod.Instance.LogDebug($"Mode set to {CurrentMode().ModeKey}");

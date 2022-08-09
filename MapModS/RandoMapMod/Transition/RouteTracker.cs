@@ -230,17 +230,17 @@ namespace RandoMapMod.Transition
             string selectedScene = TransitionRoomSelector.Instance.SelectedObjectKey;
             string text = "";
 
-            if (!RandoMapMod.GS.ShowUncheckedPanel && selectedScene is not Selector.NONE_SELECTED)
-            {
-                text += $"{L.Localize("Selected room")}: {selectedScene}.";
-            }
+            //if (!RandoMapMod.GS.RoomSelectionOn && selectedScene is not Selector.NONE_SELECTED)
+            //{
+            //    text += $"{L.Localize("Selected room")}: {selectedScene}.";
+            //}
 
             List<InControl.BindingSource> bindings = new(InputHandler.Instance.inputActions.menuSubmit.Bindings);
 
-            if (selectedScene == Utils.CurrentScene())
-            {
-                text += $" {L.Localize("You are here")}.";
-            }
+            //if (selectedScene == Utils.CurrentScene())
+            //{
+            //    text += $" {L.Localize("You are here")}.";
+            //}
 
             text += $" {L.Localize("Press")} {Utils.GetBindingsText(bindings)}";
 

@@ -132,7 +132,7 @@ namespace RandoMapMod.Pins
         {
             return MapChanger.Settings.CurrentMode() is FullMapMode or AllPinsMode
                 || (MapChanger.Settings.CurrentMode() is PinsOverMapMode && Utils.HasMapSetting(MapZone))
-                || (Conditions.TransitionModeEnabled() && (SceneName is null || TransitionTracker.GetRoomActive(SceneName)));
+                || (Conditions.TransitionRandoModeEnabled() && (SceneName is null || TransitionTracker.GetRoomActive(SceneName)));
         }
 
         protected private abstract bool ActiveByPoolSetting();

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using MapChanger.Defs;
 using MapChanger.MonoBehaviours;
-using TMPro;
 using UnityEngine;
 
 namespace MapChanger.Map

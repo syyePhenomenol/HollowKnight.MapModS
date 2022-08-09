@@ -7,12 +7,12 @@
             return MapChanger.Settings.MapModEnabled() && MapChanger.Settings.CurrentMode().GetType().IsSubclassOf(typeof(RmmMapMode));
         }
 
-        internal static bool NormalModeEnabled()
+        internal static bool ItemRandoModeEnabled()
         {
             return MapChanger.Settings.MapModEnabled() && MapChanger.Settings.CurrentMode().GetType().IsSubclassOf(typeof(ItemRandoMode));
         }
 
-        internal static bool TransitionModeEnabled()
+        internal static bool TransitionRandoModeEnabled()
         {
             return MapChanger.Settings.MapModEnabled() && MapChanger.Settings.CurrentMode().GetType().IsSubclassOf(typeof(TransitionRandoMode));
         }
