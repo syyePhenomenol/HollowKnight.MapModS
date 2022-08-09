@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ConnectionMetadataInjector;
 using ConnectionMetadataInjector.Util;
 using ItemChanger;
 using MapChanger;
@@ -40,6 +41,8 @@ namespace RandoMapMod.Pins
 
         internal static void Make(GameObject goMap)
         {
+            RmmPin.MiscPinsCount = 0;
+
             Pins = new();
 
             MoPins = Utils.MakeMonoBehaviour<MapObject>(goMap, "RandoMapMod Pins");
@@ -49,6 +52,7 @@ namespace RandoMapMod.Pins
 
             foreach (AbstractPlacement placement in ItemChanger.Internal.Ref.Settings.Placements.Values.Where(placement => placement.HasTag<RandoPlacementTag>()))
             {
+                if (SupplementalMetadata.OfPlacementAndLocations(placement).Get(InteropProperties.DoNotMakePin)) continue;
                 MakeRandoPin(placement);
             }
             foreach (GeneralizedPlacement placement in RM.RS.Context.Vanilla.Where(placement => RD.Data.IsLocation(placement.Location.Name) && !Pins.ContainsKey(placement.Location.Name)))
@@ -191,17 +195,17 @@ namespace RandoMapMod.Pins
             //}
         }
 
-        public static void ImportDefs()
-        {
-            Dictionary<string, MapLocationDef> newDefs = JsonUtil.DeserializeFromExternalFile<Dictionary<string, MapLocationDef>>("locations.json");
+        //public static void ImportDefs()
+        //{
+        //    Dictionary<string, MapLocationDef> newDefs = JsonUtil.DeserializeFromExternalFile<Dictionary<string, MapLocationDef>>("locations.json");
 
-            foreach (MapLocationDef def in newDefs.Values)
-            {
-                if (Pins.TryGetValue(def.Name, out RmmPin pin))
-                {
-                    pin.UpdatePosition(def.MapLocations);
-                }
-            }
-        }
+        //    foreach (MapLocationDef def in newDefs.Values)
+        //    {
+        //        if (Pins.TryGetValue(def.Name, out RmmPin pin))
+        //        {
+        //            pin.UpdatePosition(def.MapLocations);
+        //        }
+        //    }
+        //}
     }
 }

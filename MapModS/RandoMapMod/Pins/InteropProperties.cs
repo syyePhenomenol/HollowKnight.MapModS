@@ -7,6 +7,8 @@ namespace RandoMapMod.Pins
 {
     internal static class InteropProperties
     {
+        internal static readonly MetadataProperty<AbstractPlacement, bool> DoNotMakePin = new("DoNotMakePin", (placement) => { return false; });
+
         internal static readonly MetadataProperty<AbstractPlacement, ISprite> LocationPinSprite = new("PinSprite", GetDefaultLocationSprite);
 
         private static ISprite GetDefaultLocationSprite(AbstractPlacement placement)
@@ -25,6 +27,8 @@ namespace RandoMapMod.Pins
 
         internal static readonly MetadataProperty<AbstractPlacement, (string, float, float)[]> MapLocations = new("MapLocations", (placement) => { return GetDefaultMapLocations(placement.Name); });
 
+        internal static readonly MetadataProperty<AbstractPlacement, (string, float, float)[]> WorldMapLocations = new("WorldMapLocations", (placement) => { return null; });
+
         internal static (string, float, float)[] GetDefaultMapLocations(string name)
         {
             if (MapChanger.Finder.TryGetLocation(name, out MapLocationDef mld))
@@ -41,7 +45,7 @@ namespace RandoMapMod.Pins
 
             RandoMapMod.Instance.LogWarn($"No MapLocation found for {name}!");
 
-            return new (string, float, float)[] { new MapLocation() { } };
+            return null;
         }
     }
 }

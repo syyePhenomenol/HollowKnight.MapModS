@@ -79,25 +79,25 @@ namespace RandoMapMod
             RmmColorSetting.Room_Selected
         };
 
-        private static readonly Dictionary<string, RmmColorSetting> mapColors = new()
-        {
-            { "Ancient Basin", RmmColorSetting.Map_Ancient_Basin },
-            { "City of Tears", RmmColorSetting.Map_City_of_Tears },
-            { "Crystal Peak", RmmColorSetting.Map_Crystal_Peak },
-            { "Deepnest", RmmColorSetting.Map_Deepnest },
-            { "Town_Tutorial", RmmColorSetting.Map_Dirtmouth },
-            { "Crossroads", RmmColorSetting.Map_Forgotten_Crossroads },
-            { "Fog_Canyon", RmmColorSetting.Map_Fog_Canyon },
-            { "Fungal Wastes", RmmColorSetting.Map_Fungal_Wastes },
-            { "GODS_GLORY", RmmColorSetting.Map_Godhome },
-            { "Green_Path", RmmColorSetting.Map_Greenpath },
-            { "Cliffs", RmmColorSetting.Map_Howling_Cliffs },
-            { "Kingdoms_Edge", RmmColorSetting.Map_Kingdoms_Edge },
-            { "Queens_Gardens", RmmColorSetting.Map_Queens_Gardens },
-            { "Resting_Grounds", RmmColorSetting.Map_Resting_Grounds },
-            { "Waterways", RmmColorSetting.Map_Royal_Waterways },
-            { "WHITE_PALACE", RmmColorSetting.Map_White_Palace },
-        };
+        //private static readonly Dictionary<string, RmmColorSetting> mapColors = new()
+        //{
+        //    { "Ancient Basin", RmmColorSetting.Map_Ancient_Basin },
+        //    { "City of Tears", RmmColorSetting.Map_City_of_Tears },
+        //    { "Crystal Peak", RmmColorSetting.Map_Crystal_Peak },
+        //    { "Deepnest", RmmColorSetting.Map_Deepnest },
+        //    { "Town_Tutorial", RmmColorSetting.Map_Dirtmouth },
+        //    { "Crossroads", RmmColorSetting.Map_Forgotten_Crossroads },
+        //    { "Fog_Canyon", RmmColorSetting.Map_Fog_Canyon },
+        //    { "Fungal Wastes", RmmColorSetting.Map_Fungal_Wastes },
+        //    { "GODS_GLORY", RmmColorSetting.Map_Godhome },
+        //    { "Green_Path", RmmColorSetting.Map_Greenpath },
+        //    { "Cliffs", RmmColorSetting.Map_Howling_Cliffs },
+        //    { "Kingdoms_Edge", RmmColorSetting.Map_Kingdoms_Edge },
+        //    { "Queens_Gardens", RmmColorSetting.Map_Queens_Gardens },
+        //    { "Resting_Grounds", RmmColorSetting.Map_Resting_Grounds },
+        //    { "Waterways", RmmColorSetting.Map_Royal_Waterways },
+        //    { "WHITE_PALACE", RmmColorSetting.Map_White_Palace },
+        //};
 
         private static Dictionary<RmmColorSetting, Vector4> customColors = new();
 

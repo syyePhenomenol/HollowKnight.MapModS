@@ -76,6 +76,8 @@ namespace RandoMapMod.Pins
         {
             string text = base.GetLookupText();
 
+            text += $"\n\n{L.Localize("Status")}:";
+
             if (IsPersistent())
             {
                 text += $" {L.Localize("Not randomized, persistent")}";

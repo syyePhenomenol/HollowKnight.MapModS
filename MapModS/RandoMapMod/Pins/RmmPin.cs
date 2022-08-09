@@ -15,6 +15,17 @@ namespace RandoMapMod.Pins
 {
     internal abstract class RmmPin : BorderedPin, ISelectable
     {
+        /// <summary>
+        /// The number of pins that don't belong anywhere on the map, and will get placed
+        /// into an arbitrary grid
+        /// </summary>
+        internal static int MiscPinsCount { get; set; } = 0;
+
+        private const float MISC_BASE_OFFSET_X = -11.5f;
+        private const float MISC_BASE_OFFSET_Y = -11f;
+        private const float MISC_SPACING = 0.5f;
+        private const int MISC_ROW_COUNT = 25;
+
         private const float SMALL_SCALE = 0.56f;
         private const float MEDIUM_SCALE = 0.67f;
         private const float LARGE_SCALE = 0.8f;
@@ -32,7 +43,7 @@ namespace RandoMapMod.Pins
         };
 
         private bool selected = false;
-        public bool Selected
+        public virtual bool Selected
         {
             get => selected;
             set
@@ -55,19 +66,29 @@ namespace RandoMapMod.Pins
 
         public void Initialize((string, float, float)[] mapLocations)
         {
-            MapPosition mlp = new(mapLocations);
-            MapPosition = mlp;
-            MapZone = mlp.MapZone;
+            if (mapLocations is not null && MiscPinsCount > 300)
+            {
+                MapPosition mlp = new(mapLocations);
+                MapPosition = mlp;
+                MapZone = mlp.MapZone;
+            }
+            else
+            {
+                AbsMapPosition amp = new((MISC_BASE_OFFSET_X + MiscPinsCount % MISC_ROW_COUNT * MISC_SPACING,
+                    MISC_BASE_OFFSET_Y - MiscPinsCount / MISC_ROW_COUNT * MISC_SPACING));
+                MapPosition = amp;
+                MiscPinsCount++;
+            }
 
             Initialize();
         }
 
-        public void UpdatePosition(MapLocation[] mapLocations)
-        {
-            MapPosition mlp = new(mapLocations);
-            MapPosition = mlp;
-            MapZone = mlp.MapZone;
-        }
+        //public void UpdatePosition(MapLocation[] mapLocations)
+        //{
+        //    MapPosition mlp = new(mapLocations);
+        //    MapPosition = mlp;
+        //    MapZone = mlp.MapZone;
+        //}
 
         public override void Initialize()
         {
@@ -142,8 +163,11 @@ namespace RandoMapMod.Pins
         internal virtual string GetLookupText()
         {;
             string text = $"{name.ToCleanName()}";
-            text += $"\n\n{L.Localize("Room")}: {SceneName?? "none"}";
-            text += $"\n\n{L.Localize("Status")}:";
+
+            if (SceneName is not null)
+            {
+                text += $"\n\n{L.Localize("Room")}: {SceneName}";
+            }
 
             return text;
         }

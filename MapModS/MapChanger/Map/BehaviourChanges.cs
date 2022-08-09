@@ -237,7 +237,7 @@ namespace MapChanger.Map
             gameMap.panMinX = -29f;
             gameMap.panMaxX = 26f;
             gameMap.panMinY = -25f;
-            gameMap.panMaxY = 20f;
+            gameMap.panMaxY = 24f;
         }
     }
 }

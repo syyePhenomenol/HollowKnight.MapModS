@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using ConnectionMetadataInjector;
 using ItemChanger;
+using MapChanger;
 using MapChanger.MonoBehaviours;
 using RandoMapMod.Defs;
+using RandoMapMod.Rooms;
 using UnityEngine;
-using RM = RandomizerMod.RandomizerMod;
 using L = RandomizerMod.Localization;
-using MapChanger;
+using RM = RandomizerMod.RandomizerMod;
 
 namespace RandoMapMod.Pins
 {
@@ -27,7 +27,50 @@ namespace RandoMapMod.Pins
         private ISprite locationSprite;
         private Dictionary<AbstractItem, ISprite> itemSprites;
 
+        internal string[] HighlightScenes { get; private set; }
+
         public float UpdateWaitSeconds { get; } = 1f;
+
+        private List<ISelectable> highlightedRooms = new();
+        public override bool Selected 
+        { 
+            get => base.Selected;
+            set
+            {
+                if (HighlightScenes is not null)
+                {
+                    UpdateHighlightedRooms(value);
+                }
+
+                base.Selected = value;
+            }
+        }
+
+        private void UpdateHighlightedRooms(bool active)
+        {
+            if (active)
+            {
+                foreach (string scene in HighlightScenes)
+                {
+                    if (!TransitionRoomSelector.Instance.Objects.TryGetValue(scene, out List<ISelectable> rooms)) continue;
+
+                    foreach (ISelectable room in rooms)
+                    {
+                        highlightedRooms.Add(room);
+                        room.Selected = true;
+                    }
+                }
+            }
+            else
+            {
+                foreach (ISelectable room in highlightedRooms)
+                {
+                    room.Selected = false;
+                }
+
+                highlightedRooms.Clear();
+            }
+        }
 
         public IEnumerator PeriodicUpdate()
         {
@@ -55,12 +98,9 @@ namespace RandoMapMod.Pins
                 itemSprites[item] = SupplementalMetadata.Of(item).Get(InteropProperties.ItemPinSprite);
             }
 
-            if (SupplementalMetadata.Of(placement).Get(InteropProperties.HighlightScenes) is string[] highlightScenes)
-            {
-                // TODO: Place over panel
-                Initialize();
-                return;
-            }
+            HighlightScenes = SupplementalMetadata.Of(placement).Get(InteropProperties.HighlightScenes);
+
+            //HighlightScenes = new string[] { "Town", "White_Palace_01", "Fungus1_35", "Ruins2_04" };
 
             Initialize(SupplementalMetadata.Of(placement).Get(InteropProperties.MapLocations));
         }
@@ -228,6 +268,20 @@ namespace RandoMapMod.Pins
         {
             string text = base.GetLookupText();
 
+            if (HighlightScenes is not null)
+            {
+                text += $"\n\n{L.Localize("Rooms")}:";
+
+                foreach (string scene in HighlightScenes)
+                {
+                    text += $" {scene},";
+                }
+
+                text = text.Substring(0, text.Length - 1);
+            }
+
+            text += $"\n\n{L.Localize("Status")}:";
+
             text += placementState switch
             {
                 RandoPlacementState.UncheckedUnreachable => $" {L.Localize("Randomized, unchecked, unreachable")}",
@@ -245,9 +299,9 @@ namespace RandoMapMod.Pins
             {
                 text += $"\n\n{L.Localize("Previewed item(s)")}:";
 
-                foreach (string textPiece in previewText)
+                foreach (string preview in previewText)
                 {
-                    text += $" {ToCleanPreviewText(textPiece)},";
+                    text += $" {ToCleanPreviewText(preview)},";
                 }
 
                 text = text.Substring(0, text.Length - 1);
