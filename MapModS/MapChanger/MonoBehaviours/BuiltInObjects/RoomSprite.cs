@@ -85,11 +85,11 @@ namespace MapChanger.MonoBehaviours
         {
             if (Settings.MapModEnabled())
             {
-                try { return Settings.CurrentMode().RoomCanSelectOverride(this) ?? gameObject.activeSelf; }
+                try { return Settings.CurrentMode().RoomCanSelectOverride(this) ?? gameObject.activeInHierarchy; }
                 catch (Exception e) { MapChangerMod.Instance.LogError(e); }
             }
 
-            return gameObject.activeSelf;
+            return gameObject.activeInHierarchy;
         }
 
         public (string, Vector2) GetKeyAndPosition()

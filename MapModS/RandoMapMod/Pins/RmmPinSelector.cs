@@ -39,9 +39,9 @@ namespace RandoMapMod.Pins
             }
         }
 
-        public override void AfterMainUpdate()
+        public override void OnMainUpdate(bool active)
         {
-            base.AfterMainUpdate();
+            base.OnMainUpdate(active);
 
             SpriteObject.SetActive(RandoMapMod.GS.ShowReticle);
         }

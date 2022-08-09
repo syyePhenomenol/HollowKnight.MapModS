@@ -112,8 +112,8 @@ namespace RandoMapMod
             Interop.FindInteropMods();
             Finder.InjectLocations(JsonUtil.Deserialize<Dictionary<string, MapLocationDef>>("MapModS.RandoMapMod.Resources.locations.json"));
 
-            Events.AfterEnterGame += OnEnterGame;
-            Events.BeforeQuitToMenu += OnQuitToMenu;
+            Events.OnEnterGame += OnEnterGame;
+            Events.OnQuitToMenu += OnQuitToMenu;
 
             LogDebug($"Initialization complete.");
         }
@@ -123,7 +123,7 @@ namespace RandoMapMod
             if (RandomizerMod.RandomizerMod.RS.GenerationSettings is null) return;
 
             MapChanger.Settings.AddModes(modes);
-            Events.AfterSetGameMap += OnSetGameMap;
+            Events.OnSetGameMap += OnSetGameMap;
 
             RmmColors.Load();
             RmmRoomManager.Load();
@@ -178,7 +178,7 @@ namespace RandoMapMod
 
         private static void OnQuitToMenu()
         {
-            Events.AfterSetGameMap -= OnSetGameMap;
+            Events.OnSetGameMap -= OnSetGameMap;
 
             foreach (HookModule hookModule in hookModules)
             {

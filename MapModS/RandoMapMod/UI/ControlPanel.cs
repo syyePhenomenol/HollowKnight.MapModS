@@ -18,6 +18,7 @@ namespace RandoMapMod.UI
         private static TextObject control;
 
         private static TextObject modEnabled;
+        private static TextObject mode;
         private static TextObject shiftPan;
 
         private static TextObject mapKey;
@@ -67,6 +68,9 @@ namespace RandoMapMod.UI
             panelContents.Children.Add(modEnabled);
             modEnabled.Text = $"Ctrl-M: {L.Localize("Disable mod")}";
 
+            mode = UIExtensions.PanelText(Root, "Mode");
+            panelContents.Children.Add(mode);
+
             shiftPan = UIExtensions.PanelText(Root, "Shift Pan");
             panelContents.Children.Add(shiftPan);
             shiftPan.Text = $"{L.Localize("Hold Shift")}: {L.Localize("Pan faster")}";
@@ -109,6 +113,7 @@ namespace RandoMapMod.UI
 
         public override void Update()
         {
+            UpdateMode();
             UpdateControl();
             UpdateMapKey();
             UpdatePinSelection();
@@ -124,6 +129,7 @@ namespace RandoMapMod.UI
             if (RandoMapMod.GS.ControlPanelOn)
             {
                 modEnabled.Visibility = Visibility.Visible;
+                mode.Visibility = Visibility.Visible;
                 shiftPan.Visibility = Visibility.Visible;
                 mapKey.Visibility = Visibility.Visible;
                 pinSelection.Visibility = Visibility.Visible;
@@ -152,6 +158,7 @@ namespace RandoMapMod.UI
             else
             {
                 modEnabled.Visibility = Visibility.Collapsed;
+                mode.Visibility = Visibility.Collapsed;
                 shiftPan.Visibility = Visibility.Collapsed;
                 mapKey.Visibility = Visibility.Collapsed;
                 pinSelection.Visibility = Visibility.Collapsed;
@@ -163,6 +170,24 @@ namespace RandoMapMod.UI
                 routeInGame.Visibility = Visibility.Collapsed;
                 whenOffRoute.Visibility = Visibility.Collapsed;
                 compass.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private static void UpdateMode()
+        {
+            mode.Text = $"{L.Localize("Mode")} (Ctrl-T): {MapChanger.Settings.CurrentMode().ModeName}";
+
+            if (MapChanger.Settings.CurrentMode() is FullMapMode)
+            {
+                mode.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_On);
+            }
+            else if (Conditions.TransitionRandoModeEnabled())
+            {
+                mode.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Special);
+            }
+            else
+            {
+                mode.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Neutral);
             }
         }
 

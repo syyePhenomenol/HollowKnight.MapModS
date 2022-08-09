@@ -14,16 +14,16 @@ namespace MapChanger.UI
         {
             Add(new GlobalHotkeys());
 
-            Events.AfterOpenWorldMap += OnOpenWorldMap;
-            Events.AfterOpenQuickMap += OnOpenQuickMap;
-            Events.BeforeCloseMap += OnCloseMap;
+            Events.OnWorldMap += OnOpenWorldMap;
+            Events.OnQuickMap += OnOpenQuickMap;
+            Events.OnCloseMap += OnCloseMap;
         }
 
         public override void OnQuitToMenu()
         {
-            Events.AfterOpenWorldMap += OnOpenWorldMap;
-            Events.AfterOpenQuickMap += OnOpenQuickMap;
-            Events.BeforeCloseMap += OnCloseMap;
+            Events.OnWorldMap += OnOpenWorldMap;
+            Events.OnQuickMap += OnOpenQuickMap;
+            Events.OnCloseMap += OnCloseMap;
 
             RemoveMapLayers();
         }

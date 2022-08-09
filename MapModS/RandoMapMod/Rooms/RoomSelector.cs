@@ -49,9 +49,9 @@ namespace RandoMapMod.Rooms
         protected private abstract bool ActiveByCurrentMode();
         protected private abstract bool ActiveByToggle();
 
-        public override void AfterMainUpdate()
+        public override void OnMainUpdate(bool active)
         {
-            base.AfterMainUpdate();
+            base.OnMainUpdate(active);
 
             SpriteObject.SetActive(RandoMapMod.GS.ShowReticle);
             attackHoldTimer.Reset();

@@ -105,9 +105,9 @@ namespace RandoMapMod.Pins
             return (name, transform.position);
         }
 
-        public override void AfterMainUpdate()
+        public override void OnMainUpdate(bool active)
         {
-            if (!gameObject.activeSelf) return;
+            if (!active) return;
 
             UpdatePinSprite();
             UpdatePinSize();

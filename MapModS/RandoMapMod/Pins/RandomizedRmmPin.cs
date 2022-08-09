@@ -94,9 +94,9 @@ namespace RandoMapMod.Pins
                 && (placementState != RandoPlacementState.ClearedPersistent || RandoMapMod.GS.PersistentOn);
         }
 
-        public override void AfterMainUpdate()
+        public override void OnMainUpdate(bool active)
         {
-            if (!gameObject.activeSelf) return;
+            if (!active) return;
 
             itemIndex = -1;
 
@@ -112,7 +112,7 @@ namespace RandoMapMod.Pins
             StopAllCoroutines();
             StartCoroutine(PeriodicUpdate());
 
-            base.AfterMainUpdate();
+            base.OnMainUpdate(active);
         }
 
         protected private override void UpdatePinSprite()

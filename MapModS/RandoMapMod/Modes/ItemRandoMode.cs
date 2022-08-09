@@ -28,7 +28,7 @@ namespace RandoMapMod.Modes
 
         public override bool? RoomCanSelectOverride(RoomSprite roomSprite)
         {
-            return roomSprite.gameObject.activeSelf && BenchwarpInterop.Benches.ContainsKey(roomSprite.Rsd.SceneName);
+            return roomSprite.gameObject.activeInHierarchy && BenchwarpInterop.Benches.ContainsKey(roomSprite.Rsd.SceneName);
         }
 
         public override Vector4? AreaNameColorOverride(AreaName areaName)

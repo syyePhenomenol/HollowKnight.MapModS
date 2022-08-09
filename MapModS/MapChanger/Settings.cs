@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace MapChanger
 {
-    public class Settings
+    public class Settings : HookModule
     {
         [JsonProperty]
         private bool mapModEnabled = false;
@@ -27,7 +27,7 @@ namespace MapChanger
 
         private static int modeIndex = 0;
 
-        public static void Initialize()
+        public override void OnEnterGame()
         {
             // Check if the mode can be loaded from a previously saved Settings
             for (int i = 0; i < modes.Count; i++)
@@ -55,18 +55,23 @@ namespace MapChanger
             MapChangerMod.Instance.LogDebug($"Mode initialized to {CurrentMode().ModeKey}");
         }
 
-        public static void Unload()
+        public override void OnQuitToMenu()
         {
             modes = new();
         }
 
-        internal static void AddModes(MapMode[] modes)
+        public static bool HasModes()
+        {
+            return modes.Any();
+        }
+
+        public static void AddModes(MapMode[] modes)
         {
             foreach (MapMode mode in modes)
             {
                 if (Settings.modes.Any(existingMode => existingMode.ModeKey == mode.ModeKey))
                 {
-                    MapChangerMod.Instance.LogDebug($"A mode with the same key has already been added! {mode.ModeKey}");
+                    MapChangerMod.Instance.LogWarn($"A mode with the same key has already been added! {mode.ModeKey}");
                     continue;
                 }
 
@@ -91,6 +96,19 @@ namespace MapChanger
             SettingChanged();
         }
 
+        public static MapMode CurrentMode()
+        {
+            if (!modes.Any())
+            {
+                return new();
+            }
+            if (modeIndex >= modes.Count)
+            {
+                MapChangerMod.Instance.LogWarn("Mode index overflow");
+                modeIndex = 0;
+            }
+            return modes[modeIndex];
+        }
         public static void ToggleMode()
         {
             if (!modes.Any() || !Instance.mapModEnabled) return;
@@ -98,20 +116,6 @@ namespace MapChanger
             modeIndex = (modeIndex + 1) % modes.Count;
             MapChangerMod.Instance.LogDebug($"Mode set to {CurrentMode().ModeKey}");
             SettingChanged();
-        }
-
-        public static MapMode CurrentMode()
-        {
-            if (!modes.Any())
-            {
-                return new();
-            }
-            if (modeIndex > modes.Count)
-            {
-                MapChangerMod.Instance.LogWarn("Mode index overflow");
-                modeIndex = 0;
-            }
-            return modes[modeIndex];
         }
 
         private static void SettingChanged()

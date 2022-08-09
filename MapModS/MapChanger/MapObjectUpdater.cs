@@ -15,9 +15,9 @@ namespace MapChanger
 
         public override void OnEnterGame()
         {
-            Events.BeforeOpenWorldMap += BeforeOpenWorldMap;
-            Events.BeforeOpenQuickMap += BeforeOpenQuickMap;
-            Events.BeforeCloseMap += BeforeCloseMap;
+            Events.OnWorldMap += BeforeOpenWorldMap;
+            Events.OnQuickMap += BeforeOpenQuickMap;
+            Events.OnCloseMap += BeforeCloseMap;
         }
 
         public override void OnQuitToMenu()
@@ -32,9 +32,9 @@ namespace MapChanger
 
             mapObjects.Clear();
 
-            Events.BeforeOpenWorldMap -= BeforeOpenWorldMap;
-            Events.BeforeOpenQuickMap -= BeforeOpenQuickMap;
-            Events.BeforeCloseMap -= BeforeCloseMap;
+            Events.OnWorldMap -= BeforeOpenWorldMap;
+            Events.OnQuickMap -= BeforeOpenQuickMap;
+            Events.OnCloseMap -= BeforeCloseMap;
         }
 
         public static void Add(MapObject mapObject)

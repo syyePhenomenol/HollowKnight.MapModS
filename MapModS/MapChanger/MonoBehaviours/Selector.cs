@@ -154,18 +154,18 @@ namespace MapChanger.MonoBehaviours
             return States.WorldMapOpen;
         }
 
-        public override void AfterMainUpdate()
+        public override void OnMainUpdate(bool active)
         {
             LockSelection = false;
 
-            if (!gameObject.activeSelf) return;
-
-            StartCoroutine(PeriodicUpdate());
-        }
-
-        public void OnDisable()
-        {
-            SelectedObjectKey = NONE_SELECTED;
+            if (active)
+            {
+                StartCoroutine(PeriodicUpdate());
+            }
+            else
+            {
+                SelectedObjectKey = NONE_SELECTED;
+            }
         }
 
         protected abstract void Select(ISelectable selectable);

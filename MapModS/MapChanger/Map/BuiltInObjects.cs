@@ -6,8 +6,7 @@ using UnityEngine;
 
 namespace MapChanger.Map
 {
-    //TODO: turn into hookmodule
-    public static class BuiltInObjects
+    public class BuiltInObjects : HookModule
     {
         private static Dictionary<string, RoomSpriteDef> roomSpriteDefs;
         private static Dictionary<string, MiscObjectDef> miscObjectDefs;
@@ -17,7 +16,16 @@ namespace MapChanger.Map
         {
             roomSpriteDefs = JsonUtil.Deserialize<Dictionary<string, RoomSpriteDef>>("MapModS.MapChanger.Resources.roomSprites.json");
             miscObjectDefs = JsonUtil.Deserialize<Dictionary<string, MiscObjectDef>>("MapModS.MapChanger.Resources.miscObjects.json");
-            Events.AfterSetGameMap += Make;
+        }
+
+        public override void OnEnterGame()
+        {
+            Events.OnSetGameMapInternal += Make;
+        }
+
+        public override void OnQuitToMenu()
+        {
+            Events.OnSetGameMapInternal -= Make;
         }
 
         private static void Make(GameObject goMap)

@@ -40,7 +40,7 @@ namespace RandoMapMod.Rooms
 
         public bool CanSelect()
         {
-            return gameObject.activeSelf;
+            return gameObject.activeInHierarchy;
         }
 
         public (string, Vector2) GetKeyAndPosition()
@@ -88,7 +88,7 @@ namespace RandoMapMod.Rooms
             return TransitionTracker.GetRoomActive(Rtd.Name);
         }
 
-        private void OnEnable()
+        public override void OnMainUpdate(bool active)
         {
             UpdateColor();
         }

@@ -75,8 +75,8 @@ namespace VanillaMapMod
 
             try
             {
-                Events.AfterEnterGame += OnEnterGame;
-                Events.BeforeQuitToMenu += OnQuitToMenu;
+                Events.OnEnterGame += OnEnterGame;
+                Events.OnQuitToMenu += OnQuitToMenu;
             }
             catch (Exception e)
             {
@@ -89,12 +89,12 @@ namespace VanillaMapMod
         private static void OnEnterGame()
         {
             MapChanger.Settings.AddModes(modes);
-            Events.AfterSetGameMap += OnSetGameMap;
+            Events.OnSetGameMap += OnSetGameMap;
         }
 
         private static void OnQuitToMenu()
         {
-            Events.AfterSetGameMap -= OnSetGameMap;
+            Events.OnSetGameMap -= OnSetGameMap;
         }
 
         private static void OnSetGameMap(GameObject goMap)

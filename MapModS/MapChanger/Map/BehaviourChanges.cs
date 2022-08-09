@@ -76,7 +76,7 @@ namespace MapChanger.Map
             On.GameMap.Update += ZoomFasterOnKeyboard;
             On.GameManager.UpdateGameMap += DisableUpdatedMapPrompt;
 
-            Events.AfterOpenWorldMap += IncreasePanningRange;
+            Events.OnWorldMapInternal += IncreasePanningRange;
         }
 
         public override void OnQuitToMenu()
@@ -95,7 +95,7 @@ namespace MapChanger.Map
             On.GameMap.Update -= ZoomFasterOnKeyboard;
             On.GameManager.UpdateGameMap -= DisableUpdatedMapPrompt;
 
-            Events.AfterOpenWorldMap -= IncreasePanningRange;
+            Events.OnWorldMapInternal -= IncreasePanningRange;
         }
 
         private void ModifyFsms(On.PlayMakerFSM.orig_Start orig, PlayMakerFSM self)

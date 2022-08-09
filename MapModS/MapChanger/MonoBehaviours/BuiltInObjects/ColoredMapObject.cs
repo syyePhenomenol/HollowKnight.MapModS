@@ -7,7 +7,7 @@ namespace MapChanger.MonoBehaviours
         public Vector4 OrigColor { get; protected private set; }
         public abstract Vector4 Color { get; set; }
 
-        public override void AfterMainUpdate()
+        public override void OnMainUpdate(bool active)
         {
             UpdateColor();
         }

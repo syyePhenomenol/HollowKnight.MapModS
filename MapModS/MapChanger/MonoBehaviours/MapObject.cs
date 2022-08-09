@@ -24,7 +24,7 @@ namespace MapChanger.MonoBehaviours
         private readonly List<MapObject> children = new();
         /// <summary>
         /// When MainUpdate is called on this MapObject, MainUpdate is also called on its children.
-        /// Children will also be transform children on the parent MapObject.
+        /// Children are necessarily transform children on the parent MapObject.
         /// </summary>
         public ReadOnlyCollection<MapObject> Children => children.AsReadOnly();
 
@@ -55,8 +55,6 @@ namespace MapChanger.MonoBehaviours
         /// </summary>
         public void MainUpdate()
         {
-            BeforeMainUpdate();
-
             bool value = true;
 
             foreach (Func<bool> activeModifier in ActiveModifiers)
@@ -75,7 +73,7 @@ namespace MapChanger.MonoBehaviours
 
             gameObject.SetActive(value);
 
-            AfterMainUpdate();
+            OnMainUpdate(value);
 
             foreach (MapObject mapObject in children)
             {
@@ -84,13 +82,8 @@ namespace MapChanger.MonoBehaviours
         }
 
         /// <summary>
-        /// User-defined behaviour before MainUpdate sets the active state of the MapObject.
-        /// </summary>
-        public virtual void BeforeMainUpdate() { }
-
-        /// <summary>
         /// User-defined behaviour after MainUpdate sets the active state of the MapObject.
         /// </summary>
-        public virtual void AfterMainUpdate() { }
+        public virtual void OnMainUpdate(bool active) { }
     }
 }
