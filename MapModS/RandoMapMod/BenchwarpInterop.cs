@@ -28,7 +28,7 @@ namespace RandoMapMod
             }
             else
             {
-                Dictionary<string, string> benchwarp = MapChanger.JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.Resources.benchwarp.json");
+                Dictionary<string, string> benchwarp = MapChanger.JsonUtil.Deserialize<Dictionary<string, string>>("MapModS.RandoMapMod.Resources.benchwarp.json");
 
                 foreach (KeyValuePair<string, string> kvp in benchwarp)
                 {

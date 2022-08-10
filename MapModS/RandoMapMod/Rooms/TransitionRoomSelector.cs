@@ -57,16 +57,16 @@ namespace RandoMapMod.Rooms
         protected override void OnSelectionChanged()
         {
             SelectionPanels.UpdateRoomPanel();
-            WorldMapRouteText.UpdateInstructions();
         }
 
         internal string GetText()
         {
-            string text = TransitionData.GetUncheckedVisited(SelectedObjectKey);
+            string instructions = RouteTracker.GetInstructionText();
+            string transitions = TransitionData.GetUncheckedVisited(SelectedObjectKey);
 
-            if (text is "") return SelectedObjectKey;
+            if (transitions is "") return instructions;
 
-            return $"{SelectedObjectKey}\n\n{text}";
+            return $"{instructions}\n\n{transitions}";
         }
     }
 }

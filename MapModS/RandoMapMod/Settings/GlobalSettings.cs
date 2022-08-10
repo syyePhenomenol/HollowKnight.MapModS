@@ -10,7 +10,7 @@ namespace RandoMapMod.Settings
         public bool BenchwarpSelectionOn = true;
         public bool RoomSelectionOn = true;
         public bool ShowReticle = true;
-        public bool AllowBenchWarpSearch = true;
+        public bool PathfinderBenchwarp = true;
         public RouteTextInGame RouteTextInGame = RouteTextInGame.NextTransitionOnly;
         public OffRouteBehaviour WhenOffRoute = OffRouteBehaviour.Reevaluate;
         public bool ShowRouteCompass = true;
@@ -58,7 +58,7 @@ namespace RandoMapMod.Settings
 
         internal void ToggleAllowBenchWarpSearch()
         {
-            AllowBenchWarpSearch = !AllowBenchWarpSearch;
+            PathfinderBenchwarp = !PathfinderBenchwarp;
         }
 
         internal void ToggleRouteTextInGame()

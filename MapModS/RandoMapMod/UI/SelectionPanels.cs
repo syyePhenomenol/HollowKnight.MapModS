@@ -13,10 +13,11 @@ namespace RandoMapMod.UI
 {
     internal class SelectionPanels : WorldMapStack
     {
+        // TODO: where to indicate lock selections?
         protected override HorizontalAlignment StackHorizontalAlignment => HorizontalAlignment.Right;
 
         private static Panel lookupPanel;
-        private static TextObject lookupPanelText;
+        private static TextObject pinPanelText;
 
         private static Panel roomPanel;
         private static TextObject roomPanelText;
@@ -34,7 +35,7 @@ namespace RandoMapMod.UI
             lookupPanel = new(Root, SpriteManager.Instance.GetTexture("GUI.PanelRight").ToSlicedSprite(100f, 50f, 200f, 50f), "Lookup Panel")
             {
                 Borders = new(30f, 30f, 30f, 30f),
-                MinWidth = 400f,
+                MinWidth = 200f,
                 MinHeight = 100f,
                 HorizontalAlignment = HorizontalAlignment.Right,
                 VerticalAlignment = VerticalAlignment.Center
@@ -42,18 +43,17 @@ namespace RandoMapMod.UI
 
             ((Image)Root.GetElement("Lookup Panel Background")).Tint = RmmColors.GetColor(RmmColorSetting.UI_Borders);
 
-            lookupPanelText = new(Root, "Lookup Panel Text")
+            pinPanelText = new(Root, "Pin Panel Text")
             {
                 ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Neutral),
                 HorizontalAlignment = HorizontalAlignment.Left,
-                VerticalAlignment = VerticalAlignment.Top,
-                TextAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Center,
                 Font = MagicUI.Core.UI.Perpetua,
                 FontSize = 20,
                 MaxWidth = 450f
             };
 
-            lookupPanel.Child = lookupPanelText;
+            lookupPanel.Child = pinPanelText;
 
             Stack.Children.Add(lookupPanel);
 
@@ -74,7 +74,8 @@ namespace RandoMapMod.UI
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Center,
                 Font = MagicUI.Core.UI.TrajanNormal,
-                FontSize = 14
+                FontSize = 14,
+                MaxWidth = 450f
             };
 
             benchwarpPanel.Child = benchwarpPanelText;
@@ -98,7 +99,8 @@ namespace RandoMapMod.UI
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Center,
                 Font = MagicUI.Core.UI.TrajanNormal,
-                FontSize = 14
+                FontSize = 14,
+                MaxWidth = 450f
             };
 
             roomPanel.Child = roomPanelText;
@@ -108,16 +110,16 @@ namespace RandoMapMod.UI
 
         public override void Update()
         {
-            UpdateLookupPanel();
+            UpdatePinPanel();
             UpdateBenchwarpPanel();
             UpdateRoomPanel();
         }
 
-        internal static void UpdateLookupPanel()
+        internal static void UpdatePinPanel()
         {
             if (RandoMapMod.GS.PinSelectionOn && RmmPinSelector.Instance.SelectedObjectKey is not Selector.NONE_SELECTED)
             {
-                lookupPanelText.Text = RmmPinSelector.Instance.GetText();
+                pinPanelText.Text = RmmPinSelector.Instance.GetText();
                 lookupPanel.Visibility = Visibility.Visible;
             }
             else
@@ -132,7 +134,7 @@ namespace RandoMapMod.UI
                 && RandoMapMod.GS.BenchwarpSelectionOn
                 && BenchwarpRoomSelector.Instance.SelectedObjectKey is not Selector.NONE_SELECTED)
             {
-                benchwarpPanelText.Text = BenchwarpRoomSelector.Instance.GetPanelText();
+                benchwarpPanelText.Text = BenchwarpRoomSelector.Instance.GetText();
                 benchwarpPanel.Visibility = Visibility.Visible;
             }
             else
@@ -147,14 +149,7 @@ namespace RandoMapMod.UI
                 && RandoMapMod.GS.RoomSelectionOn
                 && TransitionRoomSelector.Instance.SelectedObjectKey is not Selector.NONE_SELECTED)
             {
-                string text = "";
-
-                if (TransitionRoomSelector.Instance.SelectedObjectKey == Utils.CurrentScene())
-                {
-                    text += $"{L.Localize("You are here")}.\n\n";
-                }
-
-                roomPanelText.Text = text + TransitionRoomSelector.Instance.GetText();
+                roomPanelText.Text = TransitionRoomSelector.Instance.GetText();
                 roomPanel.Visibility = Visibility.Visible;
             }
             else

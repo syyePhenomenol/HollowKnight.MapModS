@@ -29,6 +29,8 @@ namespace RandoMapMod.Pins
 
         internal static readonly MetadataProperty<AbstractPlacement, (string, float, float)[]> WorldMapLocations = new("WorldMapLocations", (placement) => { return null; });
 
+        internal static readonly MetadataProperty<AbstractPlacement, (float, float)?> AbsMapLocations = new("AbsMapLocation", (placement) => { return null; });
+
         internal static (string, float, float)[] GetDefaultMapLocations(string name)
         {
             if (MapChanger.Finder.TryGetLocation(name, out MapLocationDef mld))

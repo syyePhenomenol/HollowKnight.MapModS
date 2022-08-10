@@ -159,7 +159,7 @@ namespace RandoMapMod.Transition
             void InitializeNodeQueue()
             {
                 // Add initial bench warp transitions if setting is enabled
-                if (RandoMapMod.GS.AllowBenchWarpSearch && Interop.HasBenchwarp())
+                if (RandoMapMod.GS.PathfinderBenchwarp && Interop.HasBenchwarp())
                 {
                     foreach (string transition in BenchwarpInterop.GetVisitedBenchTransitions())
                     {

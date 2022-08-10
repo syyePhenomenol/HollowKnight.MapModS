@@ -63,8 +63,8 @@ namespace RandoMapMod
             new MapKey(),
             new SelectionPanels(),
             new RmmBottomRowText(),
-            new BenchwarpText(),
-            new WorldMapRouteText(),
+            new InstructionText(),
+            new RouteSummaryText(),
             new RouteText(),
             new QuickMapTransitions()
         };
@@ -84,7 +84,7 @@ namespace RandoMapMod
             Instance = this;
         }
 
-        public override string GetVersion() => "MC PRERELEASE 1";
+        public override string GetVersion() => "MC PRERELEASE 3";
 
         public override int LoadPriority() => 10;
 

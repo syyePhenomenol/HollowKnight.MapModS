@@ -29,14 +29,7 @@ namespace RandoMapMod.UI
 
         public override void Update()
         {
-            string text = "\n";
-
-            if (States.WorldMapOpen)
-            {
-                text += "\n";
-            }
-
-            route.Text = text + RouteTracker.GetRouteText();
+            route.Text = RouteTracker.GetRouteText();
         }
     }
 }

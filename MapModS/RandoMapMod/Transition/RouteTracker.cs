@@ -195,7 +195,8 @@ namespace RandoMapMod.Transition
         private static void UpdateRouteUI()
         {
             RouteText.Instance.Update();
-            WorldMapRouteText.Instance.Update();
+            RouteSummaryText.Instance.Update();
+            SelectionPanels.UpdateRoomPanel();
             RouteCompass.Update();
         }
 
@@ -213,7 +214,7 @@ namespace RandoMapMod.Transition
 
             foreach (string transition in selectedRoute)
             {
-                if (text.Length > 128)
+                if (text.Length > 100)
                 {
                     text += " -> ... -> " + selectedRoute.Last().ToCleanName();
                     break;
@@ -230,19 +231,16 @@ namespace RandoMapMod.Transition
             string selectedScene = TransitionRoomSelector.Instance.SelectedObjectKey;
             string text = "";
 
-            //if (!RandoMapMod.GS.RoomSelectionOn && selectedScene is not Selector.NONE_SELECTED)
-            //{
-            //    text += $"{L.Localize("Selected room")}: {selectedScene}.";
-            //}
+            text += $"{L.Localize("Selected room")}: {selectedScene}.";
 
             List<InControl.BindingSource> bindings = new(InputHandler.Instance.inputActions.menuSubmit.Bindings);
 
-            //if (selectedScene == Utils.CurrentScene())
-            //{
-            //    text += $" {L.Localize("You are here")}.";
-            //}
+            if (selectedScene == Utils.CurrentScene())
+            {
+                text += $" {L.Localize("You are here")}.";
+            }
 
-            text += $" {L.Localize("Press")} {Utils.GetBindingsText(bindings)}";
+            text += $"\n\n{L.Localize("Press")} {Utils.GetBindingsText(bindings)}";
 
             if (selectedRoute.Any()
                 && selectedScene == lastFinalScene

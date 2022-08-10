@@ -12,8 +12,6 @@ namespace RandoMapMod.UI
     {
         public override void BuildLayout()
         {
-            //TODO: mode toggle, lock selection
-
             Root.ListenForHotkey(KeyCode.H, () =>
             {
                 RandoMapMod.GS.ToggleControlPanel();

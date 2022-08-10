@@ -31,47 +31,6 @@ namespace RandoMapMod.Pins
 
         public float UpdateWaitSeconds { get; } = 1f;
 
-        private List<ISelectable> highlightedRooms = new();
-        public override bool Selected 
-        { 
-            get => base.Selected;
-            set
-            {
-                if (HighlightScenes is not null)
-                {
-                    UpdateHighlightedRooms(value);
-                }
-
-                base.Selected = value;
-            }
-        }
-
-        private void UpdateHighlightedRooms(bool active)
-        {
-            if (active)
-            {
-                foreach (string scene in HighlightScenes)
-                {
-                    if (!TransitionRoomSelector.Instance.Objects.TryGetValue(scene, out List<ISelectable> rooms)) continue;
-
-                    foreach (ISelectable room in rooms)
-                    {
-                        highlightedRooms.Add(room);
-                        room.Selected = true;
-                    }
-                }
-            }
-            else
-            {
-                foreach (ISelectable room in highlightedRooms)
-                {
-                    room.Selected = false;
-                }
-
-                highlightedRooms.Clear();
-            }
-        }
-
         public IEnumerator PeriodicUpdate()
         {
             while (true)
@@ -98,11 +57,13 @@ namespace RandoMapMod.Pins
                 itemSprites[item] = SupplementalMetadata.Of(item).Get(InteropProperties.ItemPinSprite);
             }
 
-            HighlightScenes = SupplementalMetadata.Of(placement).Get(InteropProperties.HighlightScenes);
+            HighlightScenes = SupplementalMetadata.OfPlacementAndLocations(placement).Get(InteropProperties.HighlightScenes);
 
             //HighlightScenes = new string[] { "Town", "White_Palace_01", "Fungus1_35", "Ruins2_04" };
 
-            Initialize(SupplementalMetadata.Of(placement).Get(InteropProperties.MapLocations));
+            //if (SupplementalMetadata.Of(placement).Get(InteropProperties.WorldMapLocations))
+
+            Initialize(SupplementalMetadata.OfPlacementAndLocations(placement).Get(InteropProperties.MapLocations));
         }
 
         protected private override bool ActiveByPoolSetting()

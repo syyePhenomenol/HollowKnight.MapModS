@@ -10,6 +10,7 @@ namespace MapChanger.UI
         internal static GridLayout MainButtonsGrid { get; private set; }
 
         internal static List<Title> Titles { get; private set; } = new();
+
         internal static List<MainButton> MainButtons { get; private set; } = new();
         internal static List<ExtraButtonPanel> ExtraButtonPanels { get; private set; } = new();
 
@@ -65,6 +66,9 @@ namespace MapChanger.UI
                 VerticalAlignment = VerticalAlignment.Top,
                 Padding = new(10f, 865f, 10f, 10f)
             };
+
+            ModToggleText mapToggleText = new();
+            mapToggleText.Make();
 
             Update();
         }

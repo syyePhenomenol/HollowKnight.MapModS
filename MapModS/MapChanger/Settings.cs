@@ -27,6 +27,8 @@ namespace MapChanger
 
         private static int modeIndex = 0;
 
+        public static bool MapModWasEnabled { get; private set; } = false;
+
         public override void OnEnterGame()
         {
             // Check if the mode can be loaded from a previously saved Settings
@@ -36,6 +38,7 @@ namespace MapChanger
                 {
                     modeIndex = i;
                     MapChangerMod.Instance.LogDebug($"Mode set to {CurrentMode().ModeKey} from loaded Settings");
+                    MapModWasEnabled = true;
                     return;
                 }
             }
@@ -58,6 +61,7 @@ namespace MapChanger
         public override void OnQuitToMenu()
         {
             modes = new();
+            MapModWasEnabled = false;
         }
 
         public static bool HasModes()
@@ -109,6 +113,7 @@ namespace MapChanger
             }
             return modes[modeIndex];
         }
+
         public static void ToggleMode()
         {
             if (!modes.Any() || !Instance.mapModEnabled) return;
@@ -120,9 +125,12 @@ namespace MapChanger
 
         private static void SettingChanged()
         {
+            MapModWasEnabled = true;
+
             Instance.currentMod = CurrentMode().Mod;
             Instance.currentModeName = CurrentMode().ModeName;
 
+            PauseMenu.Update();
             MapUILayerUpdater.Update();
             MapObjectUpdater.Update();
 

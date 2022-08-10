@@ -47,7 +47,7 @@ namespace VanillaMapMod
             Instance = this;
         }
 
-        public override string GetVersion() => "MC PRERELEASE 1";
+        public override string GetVersion() => "MC PRERELEASE 3";
         public override int LoadPriority() => 10;
 
         internal static LocalSettings LS = new();

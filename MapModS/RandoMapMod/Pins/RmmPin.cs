@@ -66,7 +66,7 @@ namespace RandoMapMod.Pins
 
         public void Initialize((string, float, float)[] mapLocations)
         {
-            if (mapLocations is not null && MiscPinsCount > 300)
+            if (mapLocations is not null)
             {
                 MapPosition mlp = new(mapLocations);
                 MapPosition = mlp;
@@ -82,13 +82,6 @@ namespace RandoMapMod.Pins
 
             Initialize();
         }
-
-        //public void UpdatePosition(MapLocation[] mapLocations)
-        //{
-        //    MapPosition mlp = new(mapLocations);
-        //    MapPosition = mlp;
-        //    MapZone = mlp.MapZone;
-        //}
 
         public override void Initialize()
         {

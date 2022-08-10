@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using MapChanger;
 using MapChanger.MonoBehaviours;
 using RandoMapMod.Modes;
+using RandoMapMod.Rooms;
 using RandoMapMod.UI;
+using L = RandomizerMod.Localization;
 
 namespace RandoMapMod.Pins
 {
@@ -10,6 +13,8 @@ namespace RandoMapMod.Pins
     internal class RmmPinSelector : Selector
     {
         internal static RmmPinSelector Instance { get; private set; }
+
+        internal static HashSet<ISelectable> HighlightedRooms { get; private set; } = new();
 
         internal void Initialize(IEnumerable<RmmPin> pins)
         {
@@ -39,6 +44,16 @@ namespace RandoMapMod.Pins
             }
         }
 
+        private void Update()
+        {
+            // Press dream nail to toggle lock selection
+            if (InputHandler.Instance.inputActions.dreamNail.WasPressed)
+            {
+                ToggleLockSelection();
+                SelectionPanels.UpdatePinPanel();
+            }
+        }
+
         public override void OnMainUpdate(bool active)
         {
             base.OnMainUpdate(active);
@@ -52,6 +67,11 @@ namespace RandoMapMod.Pins
             {
                 RandoMapMod.Instance.LogDebug($"Selected {pin.name}");
                 pin.Selected = true;
+
+                if (pin is RandomizedRmmPin rmmPin && rmmPin.HighlightScenes is string[] scenes)
+                {
+                    HighlightRooms(scenes);
+                }
             }
         }
 
@@ -62,11 +82,37 @@ namespace RandoMapMod.Pins
                 RandoMapMod.Instance.LogDebug($"Deselected {pin.name}");
                 pin.Selected = false;
             }
+
+            UnhighlightRooms();
+        }
+
+        private void HighlightRooms(string[] scenes)
+        {
+            foreach (string scene in scenes)
+            {
+                if (!TransitionRoomSelector.Instance.Objects.TryGetValue(scene, out List<ISelectable> rooms)) continue;
+
+                foreach (ISelectable room in rooms)
+                {
+                    HighlightedRooms.Add(room);
+                    room.Selected = true;
+                }
+            }
+        }
+
+        private void UnhighlightRooms()
+        {
+            foreach (ISelectable room in HighlightedRooms)
+            {
+                room.Selected = false;
+            }
+
+            HighlightedRooms.Clear();
         }
 
         protected override void OnSelectionChanged()
         {
-            SelectionPanels.UpdateLookupPanel();
+            SelectionPanels.UpdatePinPanel();
         }
 
         private bool ActiveByCurrentMode()
@@ -83,7 +129,20 @@ namespace RandoMapMod.Pins
         {
             if (RmmPinManager.Pins.TryGetValue(SelectedObjectKey, out RmmPin pin))
             {
-                return pin.GetLookupText();
+                string text = pin.GetLookupText();
+
+                List<InControl.BindingSource> bindings = new(InputHandler.Instance.inputActions.dreamNail.Bindings);
+
+                if (LockSelection)
+                {
+                    text += $"\n\n{L.Localize("Press")} {Utils.GetBindingsText(bindings)} {L.Localize("to unlock pin selection")}.";
+                }
+                else
+                {
+                    text += $"\n\n{L.Localize("Press")} {Utils.GetBindingsText(bindings)} {L.Localize("to lock pin selection")}.";
+                }
+
+                return text;
             }
 
             return "";
