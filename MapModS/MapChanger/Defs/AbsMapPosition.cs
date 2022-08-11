@@ -1,4 +1,6 @@
-﻿namespace MapChanger.Defs
+﻿using UnityEngine;
+
+namespace MapChanger.Defs
 {
     /// <summary>
     /// Interprets the x and y values of the input tuple
@@ -9,7 +11,7 @@
         public float X { get; init; }
         public float Y { get; init; }
 
-        public AbsMapPosition((float x, float y) offset)
+        public AbsMapPosition(Vector2 offset)
         {
             X = offset.x;
             Y = offset.y;

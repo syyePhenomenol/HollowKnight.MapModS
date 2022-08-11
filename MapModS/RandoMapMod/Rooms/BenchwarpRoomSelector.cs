@@ -16,7 +16,7 @@ namespace RandoMapMod.Rooms
     {
         internal static BenchwarpRoomSelector Instance;
 
-        public override float SelectionRadius { get; } = 20.0f;
+        public override float SelectionRadius { get; } = 5.0f;
 
         private int benchPointer = 0;
 

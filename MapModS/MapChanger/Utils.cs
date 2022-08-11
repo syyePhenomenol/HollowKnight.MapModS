@@ -142,17 +142,35 @@ namespace MapChanger
             return transform;
         }
 
+        /// <summary>
+        /// Calculates the average of both components in a Vector2Int.
+        /// </summary>
+        public static float Average(this Vector2Int vec)
+        {
+            return (vec.x + vec.y) / 2;
+        }
+
+        /// <summary>
+        /// Snaps the value to the nearest 0.1.
+        /// </summary>
         public static float Snap(this float offset)
         {
             // Snap to nearest 0.1
             return (float)Math.Round(offset * 10f, MidpointRounding.AwayFromZero) / 10f;
         }
 
+        /// <summary>
+        /// Snaps the vector2 to a (0.1, 0.1) grid.
+        /// </summary>
         public static Vector2 Snap(this Vector2 vec)
         {
             return new(vec.x.Snap(), vec.y.Snap());
         }
 
+        /// <summary>
+        /// Sets the w component of a Vector4 to one.
+        /// If the Vector4 is interpreted as a color, it will be opaque.
+        /// </summary>
         public static Vector4 ToOpaque(this Vector4 color)
         {
             return new(color.x, color.y, color.z, 1f);

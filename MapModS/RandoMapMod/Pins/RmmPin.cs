@@ -61,27 +61,8 @@ namespace RandoMapMod.Pins
         internal string LocationPoolGroup { get; protected private set; }
         internal abstract HashSet<string> ItemPoolGroups { get; }
         internal string SceneName { get; protected private set; }
-        internal MapZone MapZone { get; private set; } = MapZone.NONE;
+        internal MapZone MapZone { get; protected private set; } = MapZone.NONE;
         internal string Logic { get; private set; }
-
-        public void Initialize((string, float, float)[] mapLocations)
-        {
-            if (mapLocations is not null)
-            {
-                MapPosition mlp = new(mapLocations);
-                MapPosition = mlp;
-                MapZone = mlp.MapZone;
-            }
-            else
-            {
-                AbsMapPosition amp = new((MISC_BASE_OFFSET_X + MiscPinsCount % MISC_ROW_COUNT * MISC_SPACING,
-                    MISC_BASE_OFFSET_Y - MiscPinsCount / MISC_ROW_COUNT * MISC_SPACING));
-                MapPosition = amp;
-                MiscPinsCount++;
-            }
-
-            Initialize();
-        }
 
         public override void Initialize()
         {
@@ -107,6 +88,14 @@ namespace RandoMapMod.Pins
 
             BorderSprite = new EmbeddedSprite("Pins.Border").Value;
             BorderPlacement = BorderPlacement.InFront;
+        }
+
+        private protected void PlaceToMiscGrid()
+        {
+            AbsMapPosition amp = new(new Vector2(MISC_BASE_OFFSET_X + MiscPinsCount % MISC_ROW_COUNT * MISC_SPACING,
+                    MISC_BASE_OFFSET_Y - MiscPinsCount / MISC_ROW_COUNT * MISC_SPACING));
+            MapPosition = amp;
+            MiscPinsCount++;
         }
 
         public bool CanSelect()

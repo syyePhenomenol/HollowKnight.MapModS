@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using InControl;
+using MapChanger.Map;
 using MapChanger.UI;
 using Modding;
 using Newtonsoft.Json;
@@ -134,6 +135,9 @@ namespace MapChanger
             MapUILayerUpdater.Update();
             MapObjectUpdater.Update();
 
+            try { OnSettingChanged?.Invoke(); }
+            catch (Exception e) { MapChangerMod.Instance.LogError(e); }
+
             if (States.WorldMapOpen)
             {
                 GameManager.instance.StartCoroutine(CloseAndOpenWorldMap());
@@ -143,16 +147,18 @@ namespace MapChanger
             {
                 SetQuickMapButton(false);
             }
-
-            try { OnSettingChanged?.Invoke(); }
-            catch (Exception e) { MapChangerMod.Instance.LogError(e); }
         }
 
         private static IEnumerator CloseAndOpenWorldMap()
         {
             SetQuickMapButton(true);
+            
             yield return new WaitForSeconds(0.3f);
-            GameManager.instance.inventoryFSM.SendEvent("OPEN INVENTORY MAP");
+
+            if (PlayerData.instance.GetBool(VariableOverrides.MAP_PREFIX + VariableOverrides.HAS_MAP))
+            {
+                GameManager.instance.inventoryFSM.SendEvent("OPEN INVENTORY MAP");
+            }
         }
 
         private static void SetQuickMapButton(bool value)

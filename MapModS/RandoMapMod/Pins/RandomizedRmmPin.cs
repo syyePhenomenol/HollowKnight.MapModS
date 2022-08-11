@@ -4,12 +4,13 @@ using System.Linq;
 using ConnectionMetadataInjector;
 using ItemChanger;
 using MapChanger;
+using MapChanger.Defs;
 using MapChanger.MonoBehaviours;
 using RandoMapMod.Defs;
-using RandoMapMod.Rooms;
 using UnityEngine;
 using L = RandomizerMod.Localization;
 using RM = RandomizerMod.RandomizerMod;
+using SD = ConnectionMetadataInjector.SupplementalMetadata;
 
 namespace RandoMapMod.Pins
 {
@@ -25,7 +26,11 @@ namespace RandoMapMod.Pins
         internal override HashSet<string> ItemPoolGroups => new(itemPoolGroups.Values);
 
         private ISprite locationSprite;
+        private float locationSpriteScale = 1f;
         private Dictionary<AbstractItem, ISprite> itemSprites;
+        private Dictionary<AbstractItem, float> itemSpriteScales;
+
+        private bool showItemSprite = false;
 
         internal string[] HighlightScenes { get; private set; }
 
@@ -36,7 +41,10 @@ namespace RandoMapMod.Pins
             while (true)
             {
                 yield return new WaitForSecondsRealtime(UpdateWaitSeconds);
+
+                itemIndex = (itemIndex + 1) % remainingItems.Count();
                 UpdatePinSprite();
+                UpdatePinSize();
             }
         }
 
@@ -46,24 +54,58 @@ namespace RandoMapMod.Pins
 
             SceneName = placement.RandoModLocation()?.LocationDef?.SceneName ?? ItemChanger.Finder.GetLocation(name)?.sceneName;
 
-            LocationPoolGroup = SupplementalMetadata.OfPlacementAndLocations(placement).Get(InjectedProps.LocationPoolGroup);
-            locationSprite = SupplementalMetadata.OfPlacementAndLocations(placement).Get(InteropProperties.LocationPinSprite);
+            LocationPoolGroup = SD.OfPlacementAndLocations(placement).Get(InjectedProps.LocationPoolGroup);
+            locationSprite = SD.OfPlacementAndLocations(placement).Get(InteropProperties.LocationPinSprite);
+            
+            if (SD.OfPlacementAndLocations(placement).Get(InteropProperties.LocationPinSpriteSize) is Vector2Int locationSize)
+            {
+                locationSpriteScale = SpriteManager.DEFAULT_PIN_SPRITE_SIZE / locationSize.Average();
+            }
 
             itemPoolGroups = new();
             itemSprites = new();
+            itemSpriteScales = new();
             foreach (AbstractItem item in placement.Items)
             {
-                itemPoolGroups[item] = SupplementalMetadata.Of(item).Get(InjectedProps.ItemPoolGroup);
-                itemSprites[item] = SupplementalMetadata.Of(item).Get(InteropProperties.ItemPinSprite);
+                itemPoolGroups[item] = SD.Of(item).Get(InjectedProps.ItemPoolGroup);
+                itemSprites[item] = SD.Of(item).Get(InteropProperties.ItemPinSprite);
+
+                if (SD.Of(item).Get(InteropProperties.ItemPinSpriteSize) is Vector2Int itemSize)
+                {
+                    itemSpriteScales[item] = SpriteManager.DEFAULT_PIN_SPRITE_SIZE / itemSize.Average();
+                }
+                else
+                {
+                    itemSpriteScales[item] = 1f;
+                }
             }
 
-            HighlightScenes = SupplementalMetadata.OfPlacementAndLocations(placement).Get(InteropProperties.HighlightScenes);
+            HighlightScenes = SD.OfPlacementAndLocations(placement).Get(InteropProperties.HighlightScenes);
 
             //HighlightScenes = new string[] { "Town", "White_Palace_01", "Fungus1_35", "Ruins2_04" };
 
-            //if (SupplementalMetadata.Of(placement).Get(InteropProperties.WorldMapLocations))
+            if (SD.OfPlacementAndLocations(placement).Get(InteropProperties.WorldMapLocations) is (string, float, float)[] worldMapLocations)
+            {
+                WorldMapPosition wmp = new(worldMapLocations);
+                MapPosition = wmp;
+                MapZone = wmp.MapZone;
+            }
+            else if (SD.OfPlacementAndLocations(placement).Get(InteropProperties.AbsMapLocation) is Vector2 absMapLocation)
+            {
+                MapPosition = new AbsMapPosition(absMapLocation);
+            }
+            else if (SD.OfPlacementAndLocations(placement).Get(InteropProperties.MapLocations) is (string, float, float)[] mapLocations)
+            {
+                MapPosition mlp = new(mapLocations);
+                MapPosition = mlp;
+                MapZone = mlp.MapZone;
+            }
+            else
+            {
+                PlaceToMiscGrid();
+            }
 
-            Initialize(SupplementalMetadata.OfPlacementAndLocations(placement).Get(InteropProperties.MapLocations));
+            Initialize();
         }
 
         protected private override bool ActiveByPoolSetting()
@@ -99,7 +141,7 @@ namespace RandoMapMod.Pins
         {
             if (!active) return;
 
-            itemIndex = -1;
+            itemIndex = 0;
 
             if (RandoMapMod.GS.PersistentOn)
             {
@@ -110,55 +152,68 @@ namespace RandoMapMod.Pins
                 remainingItems = placement.Items.Where(item => !item.WasEverObtained());
             }
 
+            if (RandoMapMod.LS.SpoilerOn)
+            {
+                showItemSprite = true;
+            }
+            else
+            {
+                showItemSprite = placementState switch
+                {
+                    RandoPlacementState.UncheckedUnreachable
+                    or RandoPlacementState.UncheckedReachable
+                    or RandoPlacementState.OutOfLogicReachable => false,
+                    RandoPlacementState.Previewed
+                    or RandoPlacementState.ClearedPersistent => true,
+                    _ => false,
+                };
+            }
+
             StopAllCoroutines();
-            StartCoroutine(PeriodicUpdate());
+
+            if (showItemSprite)
+            {
+                StartCoroutine(PeriodicUpdate());
+            }
 
             base.OnMainUpdate(active);
         }
 
         protected private override void UpdatePinSprite()
         {
-            if (RandoMapMod.LS.SpoilerOn)
+            if (showItemSprite)
             {
-                Sprite = GetItemSprite();
+                Sprite = itemSprites[remainingItems.ElementAt(itemIndex)].Value;
             }
             else
             {
-                Sprite = placementState switch
-                {
-                    RandoPlacementState.UncheckedUnreachable
-                    or RandoPlacementState.UncheckedReachable
-                    or RandoPlacementState.OutOfLogicReachable => GetLocationSprite(),
-                    RandoPlacementState.Previewed
-                    or RandoPlacementState.ClearedPersistent => GetItemSprite(),
-                    _ => GetLocationSprite(),
-                };
-            }
-
-            Sprite GetLocationSprite()
-            {
-                return locationSprite.Value;
-            }
-
-            Sprite GetItemSprite()
-            {
-                itemIndex = (itemIndex + 1) % remainingItems.Count();
-                return itemSprites[remainingItems.ElementAt(itemIndex)].Value;
+                Sprite = locationSprite.Value;
             }
         }
 
         protected private override void UpdatePinSize()
         {
-            Size = pinSizes[RandoMapMod.GS.PinSize];
+            float size = pinSizes[RandoMapMod.GS.PinSize];
+
+            if (showItemSprite)
+            {
+                size *= itemSpriteScales[remainingItems.ElementAt(itemIndex)];
+            }
+            else
+            {
+                size *= locationSpriteScale;
+            }
 
             if (Selected)
             {
-                Size *= SELECTED_MULTIPLIER;
+                size *= SELECTED_MULTIPLIER;
             }
             else if (placementState is RandoPlacementState.UncheckedUnreachable)
             {
-                Size *= UNREACHABLE_SIZE_MULTIPLIER;
+                size *= UNREACHABLE_SIZE_MULTIPLIER;
             }
+
+            Size = size;
         }
 
         protected private override void UpdatePinColor()

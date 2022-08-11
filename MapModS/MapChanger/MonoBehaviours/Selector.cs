@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 namespace MapChanger.MonoBehaviours
@@ -20,7 +21,7 @@ namespace MapChanger.MonoBehaviours
 
         public Dictionary<string, List<ISelectable>> Objects { get; } = new();
         public virtual Vector2 TargetPosition { get; } = Vector2.zero;
-        public virtual float UpdateWaitSeconds { get; } = 0.1f;
+        public virtual float UpdateWaitSeconds { get; } = 0.02f;
         public virtual float SelectionRadius { get; } = DEFAULT_SELECTION_RADIUS;
         public virtual float SpriteSize { get; } = DEFAULT_SIZE;
 
@@ -88,6 +89,10 @@ namespace MapChanger.MonoBehaviours
             }
         }
 
+        private static int noOfCalculations = 0;
+        private static double totalTime = 0;
+        private static readonly Stopwatch stopwatch = new();
+
         // Coroutines stop when the GameObject is set inactive!
         public IEnumerator PeriodicUpdate()
         {
@@ -112,7 +117,8 @@ namespace MapChanger.MonoBehaviours
                         double distanceY = Math.Abs(position.y - TargetPosition.y);
                         if (distanceY > minDistance) continue;
 
-                        double euclidDistance = Math.Pow(distanceX, 2) + Math.Pow(distanceY, 2);
+                        double euclidDistance = Math.Pow(Math.Pow(distanceX, 2) + Math.Pow(distanceY, 2), 0.5f);
+
                         if (euclidDistance < minDistance)
                         {
                             newKey = key;
@@ -157,6 +163,9 @@ namespace MapChanger.MonoBehaviours
         public override void OnMainUpdate(bool active)
         {
             LockSelection = false;
+
+            noOfCalculations = 0;
+            totalTime = 0;
 
             if (active)
             {

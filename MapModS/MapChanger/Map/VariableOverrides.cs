@@ -46,11 +46,11 @@ namespace MapChanger.Map
             internal OverrideType Type { get; init; }
         }
 
-        private const string MAP_PREFIX = "MCO0";
-        private const string PINS_PREFIX = "MCO1";
-        private const string HAS_MAP = "hasMap";
-        private const string GOT_WHITE_PALACE_MAP = "AdditionalMapsGotWpMap";
-        private const string GOT_GODHOME_MAP = "AdditionalMapsGotGhMap";
+        internal const string MAP_PREFIX = "MCO0";
+        internal const string PINS_PREFIX = "MCO1";
+        internal const string HAS_MAP = "hasMap";
+        internal const string GOT_WHITE_PALACE_MAP = "AdditionalMapsGotWpMap";
+        internal const string GOT_GODHOME_MAP = "AdditionalMapsGotGhMap";
 
         private static readonly Dictionary<string, string> ilVariables = new()
         {

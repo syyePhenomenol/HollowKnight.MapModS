@@ -2,6 +2,7 @@
 using ConnectionMetadataInjector;
 using ItemChanger;
 using MapChanger.Defs;
+using UnityEngine;
 
 namespace RandoMapMod.Pins
 {
@@ -10,6 +11,13 @@ namespace RandoMapMod.Pins
         internal static readonly MetadataProperty<AbstractPlacement, bool> DoNotMakePin = new("DoNotMakePin", (placement) => { return false; });
 
         internal static readonly MetadataProperty<AbstractPlacement, ISprite> LocationPinSprite = new("PinSprite", GetDefaultLocationSprite);
+        
+        //TODO: move docstring into... documentation
+        /// <summary>
+        /// The effective length and height of the pin sprite, not including transparent pixels
+        /// that may be in the texture.
+        /// </summary>
+        internal static readonly MetadataProperty<AbstractPlacement, Vector2Int?> LocationPinSpriteSize = new("PinSpriteSize", (placement) => { return null; });
 
         private static ISprite GetDefaultLocationSprite(AbstractPlacement placement)
         {
@@ -17,6 +25,8 @@ namespace RandoMapMod.Pins
         }
 
         internal static readonly MetadataProperty<AbstractItem, ISprite> ItemPinSprite = new("PinSprite", GetDefaultItemSprite);
+
+        internal static readonly MetadataProperty<AbstractItem, Vector2Int?> ItemPinSpriteSize = new("PinSpriteSize", (item) => { return null; });
 
         private static ISprite GetDefaultItemSprite(AbstractItem item)
         {
@@ -29,7 +39,7 @@ namespace RandoMapMod.Pins
 
         internal static readonly MetadataProperty<AbstractPlacement, (string, float, float)[]> WorldMapLocations = new("WorldMapLocations", (placement) => { return null; });
 
-        internal static readonly MetadataProperty<AbstractPlacement, (float, float)?> AbsMapLocations = new("AbsMapLocation", (placement) => { return null; });
+        internal static readonly MetadataProperty<AbstractPlacement, Vector2?> AbsMapLocation = new("AbsMapLocation", (placement) => { return null; });
 
         internal static (string, float, float)[] GetDefaultMapLocations(string name)
         {

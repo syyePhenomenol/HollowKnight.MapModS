@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ConnectionMetadataInjector.Util;
 using ItemChanger;
 using MapChanger;
+using MapChanger.Defs;
 using RandomizerCore;
 using UnityEngine;
 using L = RandomizerMod.Localization;
@@ -28,7 +29,18 @@ namespace RandoMapMod.Pins
             LocationPoolGroup = SubcategoryFinder.GetLocationPoolGroup(placement.Location.Name).FriendlyName();
             locationSprite = new PinLocationSprite(LocationPoolGroup);
 
-            Initialize(InteropProperties.GetDefaultMapLocations(name));
+            if (InteropProperties.GetDefaultMapLocations(name) is (string, float, float)[] mapLocations)
+            {
+                MapPosition mlp = new(mapLocations);
+                MapPosition = mlp;
+                MapZone = mlp.MapZone;
+            }
+            else
+            {
+                PlaceToMiscGrid();
+            }
+
+            Initialize();
         }
 
         private protected override bool ActiveByPoolSetting()

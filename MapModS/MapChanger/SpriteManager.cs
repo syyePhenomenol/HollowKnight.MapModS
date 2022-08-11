@@ -14,6 +14,11 @@ namespace MapChanger
     /// </summary>
     public class SpriteManager
     {
+        /// <summary>
+        /// Effective length/height in pixels of the built in pins, not including shadow.
+        /// </summary>
+        public static readonly int DEFAULT_PIN_SPRITE_SIZE = 59;
+
         private readonly Assembly _assembly;
         private readonly Dictionary<string, string> _resourcePaths;
         private readonly Dictionary<string, Sprite> _cachedSprites = new();

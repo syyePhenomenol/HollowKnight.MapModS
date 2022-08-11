@@ -1,4 +1,5 @@
-﻿using MapChanger;
+﻿using System;
+using MapChanger;
 using MapChanger.Defs;
 
 namespace RandoMapMod
@@ -19,8 +20,8 @@ namespace RandoMapMod
                 },
             });
 
-            RandoMapMod.Instance.LogDebug($"Absolute offset on map: {wmp.X}, {wmp.Y}");
-            RandoMapMod.Instance.LogDebug($"Relative offset from center of map room: {wmp.RelativeX}, {wmp.RelativeY}");
+            RandoMapMod.Instance.LogDebug($"Absolute offset on map, snapped to 0.1: {Math.Round(wmp.X, 1)}, {Math.Round(wmp.Y, 1)}");
+            RandoMapMod.Instance.LogDebug($"Relative offset from center of map room, snapped to 0.1: {Math.Round(wmp.RelativeX, 1)}, {Math.Round(wmp.RelativeY, 1)}");
         }
     }
 }
