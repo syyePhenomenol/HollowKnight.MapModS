@@ -15,12 +15,6 @@ namespace RandoMapMod.Pins
 {
     internal abstract class RmmPin : BorderedPin, ISelectable
     {
-        /// <summary>
-        /// The number of pins that don't belong anywhere on the map, and will get placed
-        /// into an arbitrary grid
-        /// </summary>
-        internal static int MiscPinsCount { get; set; } = 0;
-
         private const float MISC_BASE_OFFSET_X = -11.5f;
         private const float MISC_BASE_OFFSET_Y = -11f;
         private const float MISC_SPACING = 0.5f;
@@ -63,6 +57,7 @@ namespace RandoMapMod.Pins
         internal string SceneName { get; protected private set; }
         internal MapZone MapZone { get; protected private set; } = MapZone.NONE;
         internal string Logic { get; private set; }
+        internal int PinGridIndex { get; protected private set; }
 
         public override void Initialize()
         {
@@ -90,14 +85,11 @@ namespace RandoMapMod.Pins
             BorderPlacement = BorderPlacement.InFront;
         }
 
-        private protected void PlaceToMiscGrid()
+        internal void PlaceToMiscGrid(int x)
         {
-            RandoMapMod.Instance.LogDebug($"Adding to misc grid: {MiscPinsCount}");
-
-            AbsMapPosition amp = new((MISC_BASE_OFFSET_X + MiscPinsCount % MISC_ROW_COUNT * MISC_SPACING,
-                    MISC_BASE_OFFSET_Y - MiscPinsCount / MISC_ROW_COUNT * MISC_SPACING));
+            AbsMapPosition amp = new((MISC_BASE_OFFSET_X + x % MISC_ROW_COUNT * MISC_SPACING,
+                    MISC_BASE_OFFSET_Y - x / MISC_ROW_COUNT * MISC_SPACING));
             MapPosition = amp;
-            MiscPinsCount++;
         }
 
         public bool CanSelect()

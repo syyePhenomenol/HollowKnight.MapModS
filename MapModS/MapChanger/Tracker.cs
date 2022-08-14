@@ -42,10 +42,11 @@ namespace MapChanger
             {
                 if (grd.id.Contains("-")) return;
                 AddVanillaItem(grd.id, grd.sceneName);
-                //MapModS.LS.geoRockCounter ++;
                 MapChangerMod.Instance.LogDebug("Geo Rock broken");
                 MapChangerMod.Instance.LogDebug(" ID: " + grd.id);
                 MapChangerMod.Instance.LogDebug(" Scene: " + grd.sceneName);
+
+                Finish();
             }
         }
 
@@ -60,12 +61,14 @@ namespace MapChanger
 
             public override void OnEnter()
             {
-                string scene = Utils.CurrentScene() ?? "";
                 if (name.Contains("-")) return;
+                string scene = Utils.CurrentScene() ?? "";
                 AddVanillaItem(name, scene);
                 MapChangerMod.Instance.LogDebug("Item picked up");
                 MapChangerMod.Instance.LogDebug(" Name: " + name);
                 MapChangerMod.Instance.LogDebug(" Scene: " + scene);
+
+                Finish();
             }
         }
 
@@ -230,6 +233,7 @@ namespace MapChanger
             {
                 if (!FsmUtil.TryGetState(self, "Open", out state)) return;
             }
+            // TODO: use SendDeathEvent instead
             else if (name.Contains("Mimic") && self.FsmName == "Bottle Control")
             {
                 if (!FsmUtil.TryGetState(self, "Shatter", out state)) return; 

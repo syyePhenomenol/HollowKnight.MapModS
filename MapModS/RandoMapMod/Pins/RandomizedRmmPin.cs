@@ -90,17 +90,6 @@ namespace RandoMapMod.Pins
                 }
             }
 
-            //if (counter%2 is 0)
-            //{
-            //    HighlightScenes = new string[] { "Town", "White_Palace_01", "Fungus1_35", "Ruins2_04" };
-            //}
-            //else
-            //{
-            //    HighlightScenes = new string[] { "Town", "Crossroads_04", "Fungus2_01", "Cliffs_02", "Room_nailmaster_01", "Waterways_02", "Ruins2_04" };
-            //}
-
-            //counter++;
-
             if (SD.OfPlacementAndLocations(placement).Get(InteropProperties.MapLocations) is (string, float, float)[] mapLocations)
             {
                 MapPosition mlp = new(mapLocations);
@@ -119,7 +108,8 @@ namespace RandoMapMod.Pins
             }
             else
             {
-                PlaceToMiscGrid();
+                PinGridIndex = SD.OfPlacementAndLocations(placement).Get(InteropProperties.PinGridIndex);
+                RmmPinManager.MiscPins.Add(this);
             }
 
             periodicUpdate = PeriodicUpdate();

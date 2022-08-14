@@ -5,7 +5,6 @@ using ConnectionMetadataInjector;
 using ConnectionMetadataInjector.Util;
 using ItemChanger;
 using MapChanger;
-using MapChanger.Defs;
 using MapChanger.MonoBehaviours;
 using RandomizerCore;
 using RandomizerMod.IC;
@@ -22,6 +21,7 @@ namespace RandoMapMod.Pins
 
         internal static MapObject MoPins { get; private set; }
         internal static Dictionary<string, RmmPin> Pins { get; private set; } = new();
+        internal static List<RmmPin> MiscPins { get; private set; } = new();
 
         internal static List<string> AllPoolGroups { get; private set; }
         internal static HashSet<string> RandoLocationPoolGroups { get; private set; }
@@ -41,9 +41,8 @@ namespace RandoMapMod.Pins
 
         internal static void Make(GameObject goMap)
         {
-            RmmPin.MiscPinsCount = 0;
-
             Pins = new();
+            MiscPins = new();
 
             MoPins = Utils.MakeMonoBehaviour<MapObject>(goMap, "RandoMapMod Pins");
             MoPins.Initialize();
@@ -67,9 +66,9 @@ namespace RandoMapMod.Pins
                 }
             }
 
+            ArrangeMiscPinGrid();
             StaggerPins();
             InitializePoolGroups();
-
             UpdateRandoPins();
 
             RmmPinSelector pinSelector = Utils.MakeMonoBehaviour<RmmPinSelector>(null, "RandoMapMod Pin Selector");
@@ -140,6 +139,20 @@ namespace RandoMapMod.Pins
                 {
                     randoPin.UpdatePlacementState();
                 }
+            }
+        }
+
+        /// <summary>
+        /// Places all the pins that don't have a well-defined place on the map
+        /// in a sorted grid.
+        /// </summary>
+        private static void ArrangeMiscPinGrid()
+        {
+            MiscPins = MiscPins.OrderBy(pin => pin.LocationPoolGroup).ThenBy(pin => pin.PinGridIndex).ThenBy(pin => pin.name).ToList();
+
+            for (int i = 0; i < MiscPins.Count; i++)
+            {
+                MiscPins[i].PlaceToMiscGrid(i);
             }
         }
 

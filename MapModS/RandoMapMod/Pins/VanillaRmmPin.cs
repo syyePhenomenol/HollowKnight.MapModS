@@ -39,7 +39,7 @@ namespace RandoMapMod.Pins
             }
             else
             {
-                PlaceToMiscGrid();
+                RmmPinManager.MiscPins.Add(this);
             }
         }
 
