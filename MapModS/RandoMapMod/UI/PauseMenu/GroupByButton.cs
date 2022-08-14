@@ -12,7 +12,7 @@ namespace RandoMapMod.UI
 
         }
 
-        internal override void Make()
+        public override void Make()
         {
             base.Make();
 

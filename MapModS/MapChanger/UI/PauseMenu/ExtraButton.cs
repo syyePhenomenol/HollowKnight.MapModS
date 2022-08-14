@@ -12,7 +12,7 @@ namespace MapChanger.UI
             Mod = mod;
         }
 
-        internal override void Make()
+        public override void Make()
         {
             Button = new(PauseMenu.Root, Name)
             {

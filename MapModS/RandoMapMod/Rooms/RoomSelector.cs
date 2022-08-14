@@ -12,8 +12,6 @@ namespace RandoMapMod.Rooms
 
         public override float SpriteSize { get; } = 0.6f;
 
-        protected private Stopwatch attackHoldTimer = new();
-
         internal virtual void Initialize(IEnumerable<MapObject> rooms)
         {
             base.Initialize();
@@ -55,7 +53,6 @@ namespace RandoMapMod.Rooms
             base.OnMainUpdate(active);
 
             SpriteObject.SetActive(RandoMapMod.GS.ShowReticle);
-            attackHoldTimer.Reset();
         }
 
         protected override void Select(ISelectable selectable)
@@ -75,11 +72,11 @@ namespace RandoMapMod.Rooms
 
         protected override void Deselect(ISelectable selectable)
         {
-            if (RmmPinSelector.HighlightedRooms.Contains(selectable))
-            {
-                RandoMapMod.Instance.LogDebug($"Did not deselect {selectable.GetKeyAndPosition().Item1} as it is highlighted by a pin selection");
-                return;
-            }
+            //if (RmmPinSelector.HighlightedRooms.Contains(selectable))
+            //{
+            //    RandoMapMod.Instance.LogDebug($"Did not deselect {selectable.GetKeyAndPosition().Item1} as it is highlighted by a pin selection");
+            //    return;
+            //}
 
             selectable.Selected = false;
 

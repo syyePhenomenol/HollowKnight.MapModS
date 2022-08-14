@@ -8,7 +8,7 @@ namespace RandoMapMod.UI
     /// <summary>
     /// Points from some entity to the nearest of a group of objects, during gameplay.
     /// </summary>
-    internal class DirectionalCompass : MonoBehaviour
+    public class DirectionalCompass : MonoBehaviour
     {
         private GameObject entity;
 

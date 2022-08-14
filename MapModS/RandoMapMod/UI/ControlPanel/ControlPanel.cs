@@ -19,7 +19,7 @@ namespace RandoMapMod.UI
             new ShiftPanText(),
             new MapKeyText(),
             new PinSelectionText(),
-            new BenchwarpSelectionText(),
+            new BenchwarpPinsText(),
             new RoomSelectionText(),
             new ShowReticleText(),
             new PathfinderBenchwarpText(),

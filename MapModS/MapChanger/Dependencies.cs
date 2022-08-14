@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace MapChanger
 {
-    internal static class Dependencies
+    public static class Dependencies
     {
         private const string MAGIC_UI = "MagicUI";
         private const string VASI = "Vasi";

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Benchwarp;
@@ -9,22 +10,27 @@ using UnityEngine;
 
 namespace RandoMapMod
 {
-    internal class BenchwarpInterop : HookModule
+    internal class BenchwarpInterop
     {
+        internal const string BENCH_EXTRA_SUFFIX = "_Extra";
+        internal const string BENCH_WARP_START = "Warp-Start";
+
         // Forward and reverse lookup
-        internal static Dictionary<(string, string), string> benchTransitions = new();
+        private static Dictionary<BenchKey, string> benchNames = new();
 
-        internal static Dictionary<string, (string, string)> benchKeys = new();
+        private static Dictionary<string, BenchKey> benchKeys = new();
 
-        internal static Dictionary<string, List<WorldMapBenchDef>> Benches { get; private set; }
         internal static string selectedBenchScene = "";
         internal static int benchPointer = 0;
 
-        public static void Load()
+        internal static void Load()
         {
+            benchNames = new();
+            benchKeys = new();
+
             if (Interop.HasBenchRando() && BenchRandoInterop.IsBenchRandoEnabled())
             {
-                benchTransitions = BenchRandoInterop.GetBenchTransitions();
+                benchNames = BenchRandoInterop.GetBenchTransitions();
             }
             else
             {
@@ -36,82 +42,66 @@ namespace RandoMapMod
 
                     if (bench is null) continue;
 
-                    benchTransitions.Add((bench.sceneName, bench.respawnMarker), kvp.Value);
+                    benchNames.Add(new(bench.sceneName, bench.respawnMarker), kvp.Value);
                 }
             }
 
-            (string, string) startKey = new(ItemChanger.Internal.Ref.Settings.Start.SceneName, "ITEMCHANGER_RESPAWN_MARKER");
-
-            benchTransitions.Add(startKey, "Warp-Start");
-
-            benchKeys = benchTransitions.ToDictionary(t => t.Value, t => t.Key);
-        }
-
-        public override void OnEnterGame()
-        {
-            RandomizerMod.IC.TrackerUpdate.OnFinishedUpdate += UpdateVisitedBenches;
-            UnityEngine.SceneManagement.SceneManager.activeSceneChanged += OnSceneChanged;
-
-            UpdateVisitedBenches();
-        }
-
-        public override void OnQuitToMenu()
-        {
-            benchTransitions = new();
-            benchKeys = new();
-
-            RandomizerMod.IC.TrackerUpdate.OnFinishedUpdate -= UpdateVisitedBenches;
-            UnityEngine.SceneManagement.SceneManager.activeSceneChanged -= OnSceneChanged;
-        }
-
-        private static void OnSceneChanged(UnityEngine.SceneManagement.Scene arg0, UnityEngine.SceneManagement.Scene arg1)
-        {
-            UpdateVisitedBenches();
-        }
-
-        public static void UpdateVisitedBenches()
-        {
-            Benches = Benchwarp.Benchwarp.LS.visitedBenchScenes
-                .Select(b => new WorldMapBenchDef(b))
-                .GroupBy(b => b.mappedSceneName)
-                .ToDictionary(b => b.First().mappedSceneName, b => b.ToList());
-
             BenchKey startKey = new(ItemChanger.Internal.Ref.Settings.Start.SceneName, "ITEMCHANGER_RESPAWN_MARKER");
-            WorldMapBenchDef startDef = new(startKey);
 
-            if (Benches.ContainsKey(startDef.mappedSceneName))
-            {
-                Benches[startDef.mappedSceneName].Insert(0, startDef);
-            }
-            else
-            {
-                Benches[startDef.mappedSceneName] = new List<WorldMapBenchDef>() { startDef };
-            }
+            benchNames.Add(startKey, BENCH_WARP_START);
+
+            benchKeys = benchNames.ToDictionary(t => t.Value, t => t.Key);
         }
 
-        public static IEnumerable<string> GetVisitedBenchTransitions()
+        internal static IEnumerable<string> GetAllBenchNames()
+        {
+            return benchNames.Values;
+        }
+
+        internal static IEnumerable<string> GetAllBenchMappedScenes()
+        {
+            return benchKeys.Values.Select(benchKey => Finder.GetMappedScene(benchKey.SceneName));
+        }
+
+        internal static bool IsVisitedBench(string benchName)
+        {
+            return benchName is BENCH_WARP_START or $"{BENCH_WARP_START}{BENCH_EXTRA_SUFFIX}"
+                || ((benchKeys.TryGetValue(benchName, out BenchKey benchKey)
+                    || benchKeys.TryGetValue(benchName.Substring(0, benchName.Length - BENCH_EXTRA_SUFFIX.Length), out benchKey))
+                && Benchwarp.Benchwarp.LS.visitedBenchScenes.Contains(benchKey));
+        }
+
+        internal static IEnumerable<string> GetVisitedBenchTransitions()
         {
             return Benchwarp.Benchwarp.LS.visitedBenchScenes
-                .Where(b => benchTransitions.ContainsKey((b.SceneName, b.RespawnMarkerName)))
-                .Select(b => benchTransitions[(b.SceneName, b.RespawnMarkerName)])
-                .Concat(new List<string>() { "Warp-Start" });
+                .Where(b => benchNames.ContainsKey(b))
+                .Select(b => benchNames[b])
+                .Concat(new List<string>() { BENCH_WARP_START });
         }
 
-        internal static IEnumerator DoBenchwarp(string transition)
+        internal static (string, string) GetBenchKey(string transition)
         {
-            (string, string) benchKey = benchKeys[transition];
+            if (benchKeys.TryGetValue(transition, out BenchKey benchKey))
+            {
+                return (benchKey.SceneName, benchKey.RespawnMarkerName);
+            }
 
-            yield return DoBenchwarpInternal(benchKey.Item1, benchKey.Item2);
+            return ("", "");
         }
 
-        internal static IEnumerator DoBenchwarp(string mappedScene, int benchPointer)
+        internal static IEnumerator DoBenchwarp(string benchName)
         {
-            WorldMapBenchDef bench = Benches[mappedScene][benchPointer];
-
-            yield return DoBenchwarpInternal(bench.sceneName, bench.respawnMarker);
+            if (benchKeys.TryGetValue(benchName, out BenchKey benchKey))
+            {
+                yield return DoBenchwarpInternal(benchKey);
+            }
+            else if (benchKeys.TryGetValue(benchName.Substring(0, benchName.Length - BENCH_EXTRA_SUFFIX.Length), out benchKey))
+            {
+                yield return DoBenchwarpInternal(benchKey);
+            }
         }
 
-        private static IEnumerator DoBenchwarpInternal(string scene, string respawnMarker)
+        private static IEnumerator DoBenchwarpInternal(BenchKey benchKey)
         {
             SetInventoryButton(true);
             yield return new WaitWhile(() => GameManager.instance.inventoryFSM.ActiveStateName != "Closed");
@@ -122,7 +112,7 @@ namespace RandoMapMod
 
             if (GameManager.instance.IsGamePaused())
             {
-                Bench bench = Bench.Benches.FirstOrDefault(b => b.sceneName == scene && b.respawnMarker == respawnMarker);
+                Bench bench = Bench.Benches.FirstOrDefault(b => b.sceneName == benchKey.SceneName && b.respawnMarker == benchKey.RespawnMarkerName);
 
                 if (bench != null)
                 {
@@ -137,34 +127,30 @@ namespace RandoMapMod
             }
         }
 
+        internal static void AddBenchScenes(Dictionary<string, string> adjacentScenes)
+        {
+            foreach (KeyValuePair<BenchKey, string> kvp in benchNames)
+            {
+                adjacentScenes[kvp.Value] = kvp.Key.SceneName;
+            }
+        }
+
+        internal static void AddBenchTerms(Dictionary<string, string> adjacentTerms)
+        {
+            foreach (KeyValuePair<BenchKey, string> kvp in benchNames)
+            {
+                adjacentTerms[kvp.Value] = kvp.Value;
+            }
+        }
+
+        internal static bool IsBenchName(string benchName)
+        {
+            return benchKeys.ContainsKey(benchName) || benchKeys.ContainsKey(benchName.Substring(0, benchName.Length - BENCH_EXTRA_SUFFIX.Length));
+        }
+
         private static void SetInventoryButton(bool value)
         {
             InputHandler.Instance.inputActions.openInventory.CommitWithState(value, ReflectionHelper.GetField<OneAxisInputControl, ulong>(InputHandler.Instance.inputActions.openInventory, "pendingTick") + 1, 0);
         }
-    }
-
-    public class WorldMapBenchDef
-    {
-        public WorldMapBenchDef(BenchKey benchKey)
-        {
-            sceneName = benchKey.SceneName;
-            respawnMarker = benchKey.RespawnMarkerName;
-
-            if (BenchwarpInterop.benchTransitions.ContainsKey((sceneName, respawnMarker)))
-            {
-                benchName = BenchwarpInterop.benchTransitions[(sceneName, respawnMarker)].ToCleanName();
-            }
-            else
-            {
-                benchName = sceneName + " " + respawnMarker;
-            }
-
-            mappedSceneName = Finder.GetMappedScene(sceneName);
-        }
-
-        public readonly string sceneName;
-        public readonly string respawnMarker;
-        public readonly string benchName;
-        public readonly string mappedSceneName;
     }
 }

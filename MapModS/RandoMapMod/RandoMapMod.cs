@@ -71,10 +71,13 @@ namespace RandoMapMod
 
         private static readonly List<HookModule> hookModules = new()
         {
+            new RmmColors(),
+            new TransitionData(),
+            new PathfinderData(),
             new RmmPinManager(),
             new TransitionTracker(),
             new RouteTracker(),
-            new RouteCompass()
+            new RouteCompass(),
         };
 
         internal static RandoMapMod Instance;
@@ -84,7 +87,7 @@ namespace RandoMapMod
             Instance = this;
         }
 
-        public override string GetVersion() => "MC PRERELEASE 5";
+        public override string GetVersion() => "MC PRERELEASE 6";
 
         public override int LoadPriority() => 10;
 
@@ -110,6 +113,8 @@ namespace RandoMapMod
             }
 
             Interop.FindInteropMods();
+            RmmRoomManager.Load();
+            PathfinderData.Load();
             Finder.InjectLocations(JsonUtil.Deserialize<Dictionary<string, MapLocationDef>>("MapModS.RandoMapMod.Resources.locations.json"));
 
             Events.OnEnterGame += OnEnterGame;
@@ -125,15 +130,10 @@ namespace RandoMapMod
             MapChanger.Settings.AddModes(modes);
             Events.OnSetGameMap += OnSetGameMap;
 
-            RmmColors.Load();
-            RmmRoomManager.Load();
             if (Interop.HasBenchwarp())
             {
                 BenchwarpInterop.Load();
-                hookModules.Add(new BenchwarpInterop());
             }
-            TransitionData.Load();
-            PathfinderData.Load();
 
             foreach (HookModule hookModule in hookModules)
             {

@@ -62,14 +62,14 @@ namespace RandoMapMod.UI
             if (CompassC != null && RouteTracker.SelectedRoute.Any())
             {
                 string transition = RouteTracker.SelectedRoute.First();
-                string scene = PD.GetScene(transition);
+                string scene = transition.GetScene();
                 string gate = "";
 
                 if (Utils.CurrentScene() == scene)
                 {
-                    if (PD.doorObjectsByTransition.ContainsKey(transition))
+                    if (PD.DoorObjectsByTransition.ContainsKey(transition))
                     {
-                        gate = PD.doorObjectsByTransition[transition];
+                        gate = PD.DoorObjectsByTransition[transition];
                     }
                     else if (TransitionData.IsInTransitionLookup(transition))
                     {
@@ -81,9 +81,9 @@ namespace RandoMapMod.UI
                     }
                 }
                 else if ((transition.IsStagTransition() || transition.IsTramTransition())
-                    && PD.doorObjectsByScene.ContainsKey(Utils.CurrentScene()))
+                    && PD.DoorObjectsByScene.ContainsKey(Utils.CurrentScene()))
                 {
-                    gate = PD.doorObjectsByScene[Utils.CurrentScene()];
+                    gate = PD.DoorObjectsByScene[Utils.CurrentScene()];
                 }
 
                 if (gate == "")

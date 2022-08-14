@@ -15,7 +15,7 @@ namespace RandoMapMod.Transition
 
         internal static void Initialize()
         {
-            localPm = new(PD.lm, RM.RS.Context);
+            localPm = new(PD.Lm, RM.RS.Context);
 
             // Remove start terms
             foreach (string term in PD.GetStartTerms())
@@ -38,7 +38,7 @@ namespace RandoMapMod.Transition
             }
 
             // Emulate a transition being possibly available via having the required term
-            foreach (KeyValuePair<string, string> pair in PD.conditionalTerms)
+            foreach (KeyValuePair<string, string> pair in PD.ConditionalTerms)
             {
                 if (Td.pm.Get(pair.Key) > 0)
                 {
@@ -138,7 +138,7 @@ namespace RandoMapMod.Transition
                 localPm.Set(node.lastAdjacentTerm, 1);
 
                 // It is important we use all the reachable transitions in the room for correct logic, even if they are unchecked
-                candidateReachableTransitions = new(PD.GetTransitionsInScene(searchScene));
+                candidateReachableTransitions = new(searchScene.GetTransitionsInScene());
 
                 while (UpdateReachableTransitions(searchScene, candidateReachableTransitions)) { }
 
@@ -180,7 +180,7 @@ namespace RandoMapMod.Transition
                         localPm.Set(transition, 1);
                     }
                     searchScene = start;
-                    candidateReachableTransitions = PD.GetTransitionsInScene(start);
+                    candidateReachableTransitions = start.GetTransitionsInScene();
 
                     while (UpdateReachableTransitions(searchScene, candidateReachableTransitions)) { }
                 }
@@ -193,7 +193,7 @@ namespace RandoMapMod.Transition
                             localPm.Set(start, 1);
                         }
                         searchScene = start.GetScene();
-                        candidateReachableTransitions = PD.GetTransitionsInScene(start.GetScene());
+                        candidateReachableTransitions = start.GetScene().GetTransitionsInScene();
 
                         while (UpdateReachableTransitions(searchScene, candidateReachableTransitions)) { }
                     }
@@ -319,7 +319,7 @@ namespace RandoMapMod.Transition
             IEnumerable<string> seedTransitions = TransitionData.GetTransitionsByScene(scene)
                         .Where(t => normalTransitionSpace.Contains(t) || localPm.lm.TransitionLookup[t].CanGet(localPm));
 
-            HashSet<string> candidateReachableTransitions = PD.GetTransitionsInScene(scene);
+            HashSet<string> candidateReachableTransitions = scene.GetTransitionsInScene();
 
             localPm.StartTemp();
 
@@ -356,9 +356,9 @@ namespace RandoMapMod.Transition
             foreach (string transition in Td.lm.TransitionLookup.Keys)
             {
                 if (Td.uncheckedReachableTransitions.Contains(transition)
-                    || PD.GetAdjacentTerm(transition) == null) continue;
+                    || transition.GetAdjacentTerm() == null) continue;
 
-                string scene = PD.GetScene(transition);
+                string scene = transition.GetScene();
 
                 if (MapChanger.Settings.CurrentMode() is TransitionVisitedOnlyMode
                     && !PlayerData.instance.scenesVisited.Contains(scene)) continue;
@@ -395,7 +395,7 @@ namespace RandoMapMod.Transition
                 }
             }
 
-            if (PD.TryGetSceneWaypoint(searchScene, out LogicWaypoint waypoint)
+            if (searchScene.TryGetSceneWaypoint(out LogicWaypoint waypoint)
                 && !localPm.Has(waypoint.term) && waypoint.CanGet(localPm))
             {
                 localPm.Add(waypoint);
@@ -423,7 +423,7 @@ namespace RandoMapMod.Transition
 
                 localPm.Set(term, 1);
 
-                HashSet<string> candidateReachableTransitions = new(PD.GetTransitionsInScene(scene));
+                HashSet<string> candidateReachableTransitions = new(scene.GetTransitionsInScene());
 
                 while (UpdateReachableTransitions(scene, candidateReachableTransitions)) { }
 

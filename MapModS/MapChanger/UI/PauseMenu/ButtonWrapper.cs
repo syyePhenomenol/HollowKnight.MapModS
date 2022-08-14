@@ -12,7 +12,7 @@ namespace MapChanger.UI
             Name = name;
         }
 
-        internal abstract void Make();
+        public abstract void Make();
 
         private protected virtual void OnClickInternal(Button button)
         {

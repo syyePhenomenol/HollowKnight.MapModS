@@ -23,6 +23,7 @@ namespace RandoMapMod
         Pin_Previewed,
         Pin_Out_of_logic,
         Pin_Persistent,
+        Pin_Cleared,
 
         Map_Ancient_Basin,
         Map_City_of_Tears,
@@ -58,7 +59,7 @@ namespace RandoMapMod
         Room_Debug
     }
 
-    internal static class RmmColors
+    internal class RmmColors : HookModule
     {
         internal static bool HasCustomColors { get; private set; } = false;
 
@@ -67,7 +68,8 @@ namespace RandoMapMod
             RmmColorSetting.Pin_Normal,
             RmmColorSetting.Pin_Previewed,
             RmmColorSetting.Pin_Out_of_logic,
-            RmmColorSetting.Pin_Persistent
+            RmmColorSetting.Pin_Persistent,
+            RmmColorSetting.Pin_Cleared
         };
 
         internal static readonly RmmColorSetting[] RoomColors =
@@ -107,6 +109,7 @@ namespace RandoMapMod
             { RmmColorSetting.Pin_Previewed, Color.green },
             { RmmColorSetting.Pin_Out_of_logic, Color.red },
             { RmmColorSetting.Pin_Persistent, Color.cyan },
+            { RmmColorSetting.Pin_Cleared, Color.magenta },
             { RmmColorSetting.Room_Normal, new(1f, 1f, 1f, 0.3f) }, // white
             { RmmColorSetting.Room_Current, new(0, 1f, 0, 0.4f) }, // green
             { RmmColorSetting.Room_Adjacent, new(0, 1f, 1f, 0.4f) }, // cyan
@@ -117,13 +120,13 @@ namespace RandoMapMod
             { RmmColorSetting.UI_Compass, new(1f, 1f, 1f, 0.83f) }
         };
 
-        internal static void Load()
+        public override void OnEnterGame()
         {
             Dictionary<string, float[]> customColorsRaw;
 
             try
             {
-                 customColorsRaw = JsonUtil.DeserializeFromExternalFile<Dictionary<string, float[]>>("colors.json");
+                customColorsRaw = JsonUtil.DeserializeFromExternalFile<Dictionary<string, float[]>>("colors.json");
             }
             catch (Exception)
             {
@@ -131,14 +134,12 @@ namespace RandoMapMod
                 return;
             }
 
-            customColors = new();
-
             if (customColorsRaw != null)
             {
                 foreach (string colorSettingRaw in customColorsRaw.Keys)
                 {
                     if (!Enum.TryParse(colorSettingRaw, out RmmColorSetting colorSetting)) continue;
-                    
+
                     if (customColors.ContainsKey(colorSetting)) continue;
 
                     float[] rgba = customColorsRaw[colorSettingRaw];
@@ -157,6 +158,11 @@ namespace RandoMapMod
             {
                 MapChangerMod.Instance.Log("No colors.json found. Using default colors");
             }
+        }
+
+        public override void OnQuitToMenu()
+        {
+            customColors = new();
         }
 
         internal static Vector4 GetColor(RmmColorSetting rmmColor)

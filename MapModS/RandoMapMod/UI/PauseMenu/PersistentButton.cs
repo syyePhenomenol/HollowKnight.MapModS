@@ -11,7 +11,7 @@ namespace RandoMapMod.UI
 
         }
 
-        internal override void Make()
+        public override void Make()
         {
             base.Make();
 
@@ -33,7 +33,7 @@ namespace RandoMapMod.UI
 
             string text = $"{L.Localize("Persistent\nitems")}: ";
 
-            if (RandoMapMod.GS.PersistentOn)
+            if (RandoMapMod.GS.ShowPersistentPins)
             {
                 text += L.Localize("On");
                 Button.ContentColor = RmmColors.GetColor(RmmColorSetting.UI_On);

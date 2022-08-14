@@ -2,6 +2,7 @@
 using ConnectionMetadataInjector;
 using ItemChanger;
 using MapChanger.Defs;
+using MapChanger;
 using UnityEngine;
 
 namespace RandoMapMod.Pins
@@ -17,7 +18,7 @@ namespace RandoMapMod.Pins
         /// The effective length and height of the pin sprite, not including transparent pixels
         /// that may be in the texture.
         /// </summary>
-        internal static readonly MetadataProperty<AbstractPlacement, Vector2Int?> LocationPinSpriteSize = new("PinSpriteSize", (placement) => { return null; });
+        internal static readonly MetadataProperty<AbstractPlacement, (int, int)?> LocationPinSpriteSize = new("PinSpriteSize", (placement) => { return null; });
 
         private static ISprite GetDefaultLocationSprite(AbstractPlacement placement)
         {
@@ -26,7 +27,7 @@ namespace RandoMapMod.Pins
 
         internal static readonly MetadataProperty<AbstractItem, ISprite> ItemPinSprite = new("PinSprite", GetDefaultItemSprite);
 
-        internal static readonly MetadataProperty<AbstractItem, Vector2Int?> ItemPinSpriteSize = new("PinSpriteSize", (item) => { return null; });
+        internal static readonly MetadataProperty<AbstractItem, (int, int)?> ItemPinSpriteSize = new("PinSpriteSize", (item) => { return null; });
 
         private static ISprite GetDefaultItemSprite(AbstractItem item)
         {
@@ -39,7 +40,7 @@ namespace RandoMapMod.Pins
 
         internal static readonly MetadataProperty<AbstractPlacement, (string, float, float)[]> WorldMapLocations = new("WorldMapLocations", (placement) => { return null; });
 
-        internal static readonly MetadataProperty<AbstractPlacement, Vector2?> AbsMapLocation = new("AbsMapLocation", (placement) => { return null; });
+        internal static readonly MetadataProperty<AbstractPlacement, (float, float)?> AbsMapLocation = new("AbsMapLocation", (placement) => { return null; });
 
         internal static (string, float, float)[] GetDefaultMapLocations(string name)
         {
@@ -55,7 +56,7 @@ namespace RandoMapMod.Pins
                 return new (string, float, float)[] { new MapLocation() { MappedScene = MapChanger.Finder.GetMappedScene(al.sceneName) } };
             }
 
-            RandoMapMod.Instance.LogWarn($"No MapLocation found for {name}!");
+            RandoMapMod.Instance.LogDebug($"No MapLocation found for {name}.");
 
             return null;
         }

@@ -9,7 +9,7 @@ using Vasi;
 
 namespace MapChanger
 {
-    internal class Tracker : HookModule
+    public class Tracker : HookModule
     {
         internal record TrackingDef
         {
@@ -142,12 +142,12 @@ namespace MapChanger
             return false;
         }
 
-        internal static bool HasObtainedItem(string objectName, string scene)
+        public static bool HasObtainedItem(string objectName, string scene)
         {
             return clearedLocations.Contains($"{objectName}-{scene}");
         }
 
-        internal static bool HasVisitedScene(string scene)
+        public static bool HasVisitedScene(string scene)
         {
             return ScenesVisited.Contains(scene);
         }

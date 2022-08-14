@@ -11,25 +11,26 @@ namespace RandoMapMod.UI
     {
         internal static InstructionText Instance;
 
-        private static TextObject instruction;
+        //private static TextObject instruction;
         private static TextObject routeSummary;
 
         protected override bool Condition()
         {
-            return Conditions.RandoMapModEnabled() && MapChanger.States.WorldMapOpen;
+            //return Conditions.RandoMapModEnabled() && MapChanger.States.WorldMapOpen;
+            return Conditions.TransitionRandoModeEnabled() && MapChanger.States.WorldMapOpen;
         }
 
         public override void BuildLayout()
         {
             Instance = this;
 
-            instruction = UIExtensions.TextFromEdge(Root, "Instruction", false);
+            //instruction = UIExtensions.TextFromEdge(Root, "Instruction", false);
             routeSummary = UIExtensions.TextFromEdge(Root, "Route Summary", true);
         }
 
         public override void Update()
         {
-            string text = "";
+            //string text = "";
 
             //if (Conditions.ItemRandoModeEnabled())
             //{
@@ -39,9 +40,11 @@ namespace RandoMapMod.UI
             //    }
             //}
 
+            routeSummary.Text = RouteTracker.GetSummaryText();
+
             //if (Conditions.TransitionRandoModeEnabled())
             //{
-            //    text += RouteTracker.GetInstructionText();
+            //    //text += RouteTracker.GetInstructionText();
 
             //    routeSummary.Visibility = Visibility.Visible;
             //    routeSummary.Text = RouteTracker.GetSummaryText();

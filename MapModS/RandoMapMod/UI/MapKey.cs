@@ -51,6 +51,7 @@ namespace RandoMapMod.UI
                         new GridDimension(1, GridUnit.Proportional),
                         new GridDimension(1, GridUnit.Proportional),
                         new GridDimension(1, GridUnit.Proportional),
+                        new GridDimension(1, GridUnit.Proportional),
                         new GridDimension(1, GridUnit.Proportional)
                     },
                 ColumnDefinitions =

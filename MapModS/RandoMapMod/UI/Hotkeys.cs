@@ -34,7 +34,8 @@ namespace RandoMapMod.UI
             {
                 Root.ListenForHotkey(KeyCode.W, () =>
                 {
-                    RandoMapMod.GS.ToggleBenchwarpSelection();
+                    RandoMapMod.GS.ToggleBenchwarpPins();
+                    RmmPinManager.Update();
                     UpdateSelectors();
                 }, ModifierKeys.Ctrl, () => Conditions.ItemRandoModeEnabled());
             }
@@ -51,13 +52,13 @@ namespace RandoMapMod.UI
                 UpdateSelectors();
             }, ModifierKeys.Ctrl, () => MapChanger.Settings.MapModEnabled());
 
-            Root.ListenForHotkey(KeyCode.L, () =>
-            {
-                RmmPinSelector.Instance.ToggleLockSelection();
-                BenchwarpRoomSelector.Instance.ToggleLockSelection();
-                TransitionRoomSelector.Instance.ToggleLockSelection();
-                MapUILayerUpdater.Update();
-            }, ModifierKeys.Ctrl, () => MapChanger.Settings.MapModEnabled());
+            //Root.ListenForHotkey(KeyCode.L, () =>
+            //{
+            //    RmmPinSelector.Instance.ToggleLockSelection();
+            //    BenchwarpRoomSelector.Instance.ToggleLockSelection();
+            //    TransitionRoomSelector.Instance.ToggleLockSelection();
+            //    MapUILayerUpdater.Update();
+            //}, ModifierKeys.Ctrl, () => MapChanger.Settings.MapModEnabled());
 
             if (Interop.HasBenchwarp())
             {
@@ -121,7 +122,7 @@ namespace RandoMapMod.UI
             Root.ListenForHotkey(KeyCode.D, () =>
             {
                 Debugger.LogMapPosition();
-            });
+            }, ModifierKeys.Ctrl);
         }
 
         protected override bool Condition()
@@ -132,7 +133,7 @@ namespace RandoMapMod.UI
         private void UpdateSelectors()
         {
             RmmPinSelector.Instance.MainUpdate();
-            BenchwarpRoomSelector.Instance.MainUpdate();
+            //BenchwarpRoomSelector.Instance.MainUpdate();
             TransitionRoomSelector.Instance.MainUpdate();
             MapUILayerUpdater.Update();
         }

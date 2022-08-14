@@ -149,7 +149,7 @@ namespace RandoMapMod.Transition
             // Check adjacent transition matches the route's transition
             if (lastTransition.GateName == "" && transition.IsBenchwarpTransition())
             {
-                (string scene, string respawnMarker) = BenchwarpInterop.benchKeys[transition];
+                (string scene, string respawnMarker) = BenchwarpInterop.GetBenchKey(transition);
 
                 if (lastTransition.SceneName == scene && PlayerData.instance.respawnMarkerName == respawnMarker)
                 {

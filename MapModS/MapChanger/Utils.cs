@@ -21,8 +21,7 @@ namespace MapChanger
             GameObject go = new(name);
             if (parent is not null)
             {
-                go.transform.SetParent(parent.transform);
-                go.transform.localScale = Vector3.one;
+                go.transform.SetParent(parent.transform, false);
             }
             go.SetActive(false);
             return go.AddComponent<T>();

@@ -76,7 +76,7 @@ namespace RandoMapMod.Pins
                 {
                     CorrectMapOpen,
                     ActiveByCurrentMode,
-                    ActiveByPoolSetting,
+                    ActiveBySettings,
                     LocationNotCleared
                 }
             );
@@ -92,7 +92,9 @@ namespace RandoMapMod.Pins
 
         private protected void PlaceToMiscGrid()
         {
-            AbsMapPosition amp = new(new Vector2(MISC_BASE_OFFSET_X + MiscPinsCount % MISC_ROW_COUNT * MISC_SPACING,
+            RandoMapMod.Instance.LogDebug($"Adding to misc grid: {MiscPinsCount}");
+
+            AbsMapPosition amp = new((MISC_BASE_OFFSET_X + MiscPinsCount % MISC_ROW_COUNT * MISC_SPACING,
                     MISC_BASE_OFFSET_Y - MiscPinsCount / MISC_ROW_COUNT * MISC_SPACING));
             MapPosition = amp;
             MiscPinsCount++;
@@ -103,7 +105,7 @@ namespace RandoMapMod.Pins
             return Sr.isVisible;
         }
 
-        public (string, Vector2) GetKeyAndPosition()
+        public virtual (string, Vector2) GetKeyAndPosition()
         {
             return (name, transform.position);
         }
@@ -138,11 +140,11 @@ namespace RandoMapMod.Pins
                 || (Conditions.TransitionRandoModeEnabled() && (SceneName is null || TransitionTracker.GetRoomActive(SceneName)));
         }
 
-        protected private abstract bool ActiveByPoolSetting();
+        protected private abstract bool ActiveBySettings();
 
         protected private abstract bool LocationNotCleared();
 
-        internal virtual string GetLookupText()
+        internal virtual string GetSelectionText()
         {;
             string text = $"{name.ToCleanName()}";
 

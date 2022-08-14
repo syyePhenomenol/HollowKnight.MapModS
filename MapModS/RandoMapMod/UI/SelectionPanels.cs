@@ -22,8 +22,8 @@ namespace RandoMapMod.UI
         private static Panel roomPanel;
         private static TextObject roomPanelText;
 
-        private static Panel benchwarpPanel;
-        private static TextObject benchwarpPanelText;
+        //private static Panel benchwarpPanel;
+        //private static TextObject benchwarpPanelText;
 
         protected override bool Condition()
         {
@@ -57,30 +57,30 @@ namespace RandoMapMod.UI
 
             Stack.Children.Add(lookupPanel);
 
-            benchwarpPanel = new(Root, SpriteManager.Instance.GetTexture("GUI.PanelRight").ToSlicedSprite(100f, 50f, 250f, 50f), "Benchwarp Panel")
-            {
-                Borders = new(30f, 30f, 30f, 30f),
-                MinWidth = 200f,
-                MinHeight = 100f,
-                HorizontalAlignment = HorizontalAlignment.Right,
-                VerticalAlignment = VerticalAlignment.Center
-            };
+            //benchwarpPanel = new(Root, SpriteManager.Instance.GetTexture("GUI.PanelRight").ToSlicedSprite(100f, 50f, 250f, 50f), "Benchwarp Panel")
+            //{
+            //    Borders = new(30f, 30f, 30f, 30f),
+            //    MinWidth = 200f,
+            //    MinHeight = 100f,
+            //    HorizontalAlignment = HorizontalAlignment.Right,
+            //    VerticalAlignment = VerticalAlignment.Center
+            //};
 
-            ((Image)Root.GetElement("Benchwarp Panel Background")).Tint = RmmColors.GetColor(RmmColorSetting.UI_Borders);
+            //((Image)Root.GetElement("Benchwarp Panel Background")).Tint = RmmColors.GetColor(RmmColorSetting.UI_Borders);
 
-            benchwarpPanelText = new(Root, "Benchwarp Panel Text")
-            {
-                ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Neutral),
-                HorizontalAlignment = HorizontalAlignment.Left,
-                VerticalAlignment = VerticalAlignment.Center,
-                Font = MagicUI.Core.UI.TrajanNormal,
-                FontSize = 14,
-                MaxWidth = 450f
-            };
+            //benchwarpPanelText = new(Root, "Benchwarp Panel Text")
+            //{
+            //    ContentColor = RmmColors.GetColor(RmmColorSetting.UI_Neutral),
+            //    HorizontalAlignment = HorizontalAlignment.Left,
+            //    VerticalAlignment = VerticalAlignment.Center,
+            //    Font = MagicUI.Core.UI.TrajanNormal,
+            //    FontSize = 14,
+            //    MaxWidth = 450f
+            //};
 
-            benchwarpPanel.Child = benchwarpPanelText;
+            //benchwarpPanel.Child = benchwarpPanelText;
 
-            Stack.Children.Add(benchwarpPanel);
+            //Stack.Children.Add(benchwarpPanel);
 
             roomPanel = new(Root, SpriteManager.Instance.GetTexture("GUI.PanelRight").ToSlicedSprite(100f, 50f, 250f, 50f), "Room Panel")
             {
@@ -111,7 +111,7 @@ namespace RandoMapMod.UI
         public override void Update()
         {
             UpdatePinPanel();
-            UpdateBenchwarpPanel();
+            //UpdateBenchwarpPanel();
             UpdateRoomPanel();
         }
 
@@ -128,20 +128,20 @@ namespace RandoMapMod.UI
             }
         }
 
-        internal static void UpdateBenchwarpPanel()
-        {
-            if (Conditions.ItemRandoModeEnabled()
-                && RandoMapMod.GS.BenchwarpSelectionOn
-                && BenchwarpRoomSelector.Instance.SelectedObjectKey is not Selector.NONE_SELECTED)
-            {
-                benchwarpPanelText.Text = BenchwarpRoomSelector.Instance.GetText();
-                benchwarpPanel.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                benchwarpPanel.Visibility = Visibility.Collapsed;
-            }
-        }
+        //internal static void UpdateBenchwarpPanel()
+        //{
+        //    if (Conditions.ItemRandoModeEnabled()
+        //        && RandoMapMod.GS.BenchwarpSelectionOn
+        //        && BenchwarpRoomSelector.Instance.SelectedObjectKey is not Selector.NONE_SELECTED)
+        //    {
+        //        benchwarpPanelText.Text = BenchwarpRoomSelector.Instance.GetText();
+        //        benchwarpPanel.Visibility = Visibility.Visible;
+        //    }
+        //    else
+        //    {
+        //        benchwarpPanel.Visibility = Visibility.Collapsed;
+        //    }
+        //}
 
         internal static void UpdateRoomPanel()
         {

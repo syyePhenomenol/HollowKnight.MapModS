@@ -56,15 +56,31 @@ namespace MapChanger.MonoBehaviours
         /// If LockSelection is on, the player can pan away from the selected object but maintain
         /// its selection. Resets on MainUpdate.
         /// </summary>
-        public bool LockSelection { get; private set; } = false;
+        private bool lockSelection = false;
+        public bool LockSelection
+        {
+            get => lockSelection;
+            set
+            {
+                if (lockSelection != value)
+                {
+                    if (value && selectedObjectKey is not NONE_SELECTED)
+                    {
+                        lockSelection = true;
+                        StopCoroutine(periodicUpdate);
+                    }
+                    else
+                    {
+                        lockSelection = false;
+                        StartCoroutine(periodicUpdate);
+                    }
+                }
+            }
+        }
+
         public void ToggleLockSelection()
         {
-            if (!gameObject.activeSelf) return;
             LockSelection = !LockSelection;
-            StopAllCoroutines();
-
-            if (LockSelection) return;
-            StartCoroutine(PeriodicUpdate());
         }
 
         private void SelectInternal(string objectKey)
@@ -89,9 +105,7 @@ namespace MapChanger.MonoBehaviours
             }
         }
 
-        private static int noOfCalculations = 0;
-        private static double totalTime = 0;
-        private static readonly Stopwatch stopwatch = new();
+        private IEnumerator periodicUpdate;
 
         // Coroutines stop when the GameObject is set inactive!
         public IEnumerator PeriodicUpdate()
@@ -140,8 +154,7 @@ namespace MapChanger.MonoBehaviours
             ActiveModifiers.Add(WorldMapOpen);
 
             SpriteObject = new("Selector Sprite");
-            SpriteObject.transform.SetParent(transform);
-            SpriteObject.transform.localScale = Vector3.one;
+            SpriteObject.transform.SetParent(transform, false);
             SpriteObject.layer = UI_LAYER;
 
             Sr = SpriteObject.AddComponent<SpriteRenderer>();
@@ -153,6 +166,8 @@ namespace MapChanger.MonoBehaviours
             transform.localPosition = new Vector3(0, 0, MAP_FRONT_Z);
 
             MapObjectUpdater.Add(this);
+
+            periodicUpdate = PeriodicUpdate();
         }
 
         private bool WorldMapOpen()
@@ -162,14 +177,11 @@ namespace MapChanger.MonoBehaviours
 
         public override void OnMainUpdate(bool active)
         {
-            LockSelection = false;
-
-            noOfCalculations = 0;
-            totalTime = 0;
+            lockSelection = false;
 
             if (active)
             {
-                StartCoroutine(PeriodicUpdate());
+                StartCoroutine(periodicUpdate);
             }
             else
             {

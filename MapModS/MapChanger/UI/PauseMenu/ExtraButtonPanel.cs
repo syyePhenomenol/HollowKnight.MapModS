@@ -23,7 +23,7 @@ namespace MapChanger.UI
             this.rowSize = rowSize;
         }
 
-        internal void Make()
+        public void Make()
         {
             ExtraButtonsGrid = new(PauseMenu.Root, $"{Mod} {Name}")
             {

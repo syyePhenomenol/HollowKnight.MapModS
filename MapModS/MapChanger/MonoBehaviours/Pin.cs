@@ -68,7 +68,12 @@ namespace MapChanger.MonoBehaviours
         {
             base.Initialize();
 
-            Sr = gameObject.AddComponent<SpriteRenderer>();
+            GameObject goPinSprite = new($"{transform.name} Pin Sprite");
+
+            goPinSprite.layer = UI_LAYER;
+            goPinSprite.transform.SetParent(transform, false);
+
+            Sr = goPinSprite.AddComponent<SpriteRenderer>();
             Sr.sortingLayerName = HUD;
         }
 

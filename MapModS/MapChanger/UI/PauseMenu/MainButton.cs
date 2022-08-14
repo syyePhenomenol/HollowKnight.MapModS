@@ -16,7 +16,7 @@ namespace MapChanger.UI
             Column = column;
         }
 
-        internal override void Make()
+        public override void Make()
         {
             Button = new Button(PauseMenu.Root, Name)
             {

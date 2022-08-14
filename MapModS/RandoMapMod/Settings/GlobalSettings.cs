@@ -7,7 +7,6 @@ namespace RandoMapMod.Settings
         public bool ControlPanelOn = true;
         public bool MapKeyOn = false;
         public bool PinSelectionOn = false;
-        public bool BenchwarpSelectionOn = true;
         public bool RoomSelectionOn = true;
         public bool ShowReticle = true;
         public bool PathfinderBenchwarp = true;
@@ -16,7 +15,9 @@ namespace RandoMapMod.Settings
         public bool ShowRouteCompass = true;
         public PinStyle PinStyle = PinStyle.Normal;
         public PinSize PinSize = PinSize.Medium;
-        public bool PersistentOn = false;
+        public bool ShowPersistentPins = false;
+        //TODO: reset to false
+        public bool ShowBenchwarpPins = false;
 
         /// <summary>
         /// By default, the mode is set to Full Map in item rando, and Transition in a transition rando (at
@@ -41,9 +42,9 @@ namespace RandoMapMod.Settings
             PinSelectionOn = !PinSelectionOn;
         }
 
-        internal void ToggleBenchwarpSelection()
+        internal void ToggleBenchwarpPins()
         {
-            BenchwarpSelectionOn = !BenchwarpSelectionOn;
+            ShowBenchwarpPins = !ShowBenchwarpPins;
         }
 
         internal void ToggleRoomSelection()
@@ -88,7 +89,12 @@ namespace RandoMapMod.Settings
 
         internal void TogglePersistent()
         {
-            PersistentOn = !PersistentOn;
+            ShowPersistentPins = !ShowPersistentPins;
+        }
+
+        internal void ToggleBenchPins()
+        {
+            ShowBenchwarpPins = !ShowBenchwarpPins;
         }
     }
 }

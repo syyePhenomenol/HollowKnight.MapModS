@@ -980,6 +980,17 @@
       }
     ]
   },
+  "Bench-Black_Egg_Temple": {
+    "Name": "Bench-Black_Egg_Temple",
+    "SceneName": "Room_Final_Boss_Atrium",
+    "MapLocations": [
+      {
+        "MappedScene": "Crossroads_02",
+        "X": 0.0,
+        "Y": 0.2
+      }
+    ]
+  },
   "Bench-Waterfall": {
     "Name": "Bench-Waterfall",
     "SceneName": "Fungus1_01b",
@@ -1185,11 +1196,27 @@
       {
         "MappedScene": "GG_Atrium",
         "X": 0.5,
-        "Y": 0.5
+        "Y": 0.6
       },
       {
         "MappedScene": "GG_Waterways",
         "X": -1.1,
+        "Y": -0.1
+      }
+    ]
+  },
+  "Bench-Godhome_Roof": {
+    "Name": "Bench-Godhome_Roof",
+    "SceneName": "GG_Atrium_Roof",
+    "MapLocations": [
+      {
+        "MappedScene": "GG_Atrium_Roof",
+        "X": 1.3,
+        "Y": -0.3
+      },
+      {
+        "MappedScene": "GG_Waterways",
+        "X": -0.5,
         "Y": -0.1
       }
     ]

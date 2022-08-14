@@ -11,7 +11,7 @@ namespace MapChanger.Defs
         public float X { get; init; }
         public float Y { get; init; }
 
-        public AbsMapPosition(Vector2 offset)
+        public AbsMapPosition((float x, float y) offset)
         {
             X = offset.x;
             Y = offset.y;

@@ -59,6 +59,13 @@ namespace RandoMapMod.Pins
             {
                 MakeVanillaPin(placement);
             }
+            if (Interop.HasBenchwarp())
+            {
+                foreach (string benchName in BenchwarpInterop.GetAllBenchNames())
+                {
+                    MakeBenchPin(benchName);
+                }
+            }
 
             StaggerPins();
             InitializePoolGroups();
@@ -106,6 +113,15 @@ namespace RandoMapMod.Pins
             vanillaPin.Initialize(placement);
             MoPins.AddChild(vanillaPin);
             Pins[placement.Location.Name] = vanillaPin;
+        }
+
+        private static void MakeBenchPin(string benchName)
+        {
+            string objectName = $"{benchName}{BenchwarpInterop.BENCH_EXTRA_SUFFIX}";
+            BenchPin benchPin = Utils.MakeMonoBehaviour<BenchPin>(MoPins.gameObject, objectName);
+            benchPin.Initialize(benchName);
+            MoPins.AddChild(benchPin);
+            Pins[objectName] = benchPin;
         }
 
         internal static void Update()

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using MapChanger;
 using RandomizerCore;
 using RandomizerCore.Logic;
 using RandomizerMod;
@@ -10,14 +11,14 @@ using TM = RandomizerMod.Settings.TransitionSettings.TransitionMode;
 
 namespace RandoMapMod.Transition
 {
-    internal static class TransitionData
+    internal class TransitionData : HookModule
     {
         private static RandoModContext Ctx => RM.RS?.Context;
         private static LogicManager Lm => Ctx?.LM;
 
-        private static HashSet<string> _randomizedTransitions = new();
-        private static Dictionary<string, TransitionPlacement> _transitionLookup = new();
-        private static Dictionary<string, HashSet<string>> _transitionsByScene = new();
+        private static HashSet<string> randomizedTransitions = new();
+        private static Dictionary<string, TransitionPlacement> transitionLookup = new();
+        private static Dictionary<string, HashSet<string>> transitionsByScene = new();
 
         internal static bool IsTransitionRando()
         {
@@ -27,15 +28,15 @@ namespace RandoMapMod.Transition
 
         internal static bool IsRandomizedTransition(string source)
         {
-            return _randomizedTransitions.Contains(source);
+            return randomizedTransitions.Contains(source);
         }
 
         internal static bool IsInTransitionLookup(string source)
         {
-            return _transitionLookup.ContainsKey(source);
+            return transitionLookup.ContainsKey(source);
         }
 
-        internal static bool IsSpecialRoom(this string room)
+        internal static bool IsSpecialRoom(string room)
         {
             // Rooms that we care about that aren't randomized
             return room == "Room_Tram_RG"
@@ -47,7 +48,7 @@ namespace RandoMapMod.Transition
 
         internal static string GetScene(string source)
         {
-            if (_transitionLookup.TryGetValue(source, out TransitionPlacement placement))
+            if (transitionLookup.TryGetValue(source, out TransitionPlacement placement))
             {
                 return placement.Source.TransitionDef.SceneName;
             }
@@ -59,7 +60,7 @@ namespace RandoMapMod.Transition
 
         internal static string GetTransitionDoor(string source)
         {
-            if (_transitionLookup.TryGetValue(source, out TransitionPlacement placement))
+            if (transitionLookup.TryGetValue(source, out TransitionPlacement placement))
             {
                 return placement.Source.TransitionDef.DoorName;
             }
@@ -81,7 +82,7 @@ namespace RandoMapMod.Transition
                 return GetAdjacentTransition("Fungus2_15[top3]");
             }
 
-            if (_transitionLookup.TryGetValue(source, out TransitionPlacement placement)
+            if (transitionLookup.TryGetValue(source, out TransitionPlacement placement)
                 && placement.Target != null)
             {
                 return placement.Target.Name;
@@ -94,7 +95,7 @@ namespace RandoMapMod.Transition
 
         internal static string GetAdjacentScene(string source)
         {
-            if (_transitionLookup.TryGetValue(source, out TransitionPlacement placement)
+            if (transitionLookup.TryGetValue(source, out TransitionPlacement placement)
                 && placement.Target != null && placement.Target.TransitionDef != null)
             {
                 return placement.Target.TransitionDef.SceneName;
@@ -107,9 +108,9 @@ namespace RandoMapMod.Transition
 
         internal static HashSet<string> GetTransitionsByScene(string scene)
         {
-            if (scene != null && _transitionsByScene.ContainsKey(scene))
+            if (scene != null && transitionsByScene.ContainsKey(scene))
             {
-                return _transitionsByScene[scene];
+                return transitionsByScene[scene];
             }
 
             //MapModS.Instance.LogWarn("No transitions found for scene " + scene);
@@ -214,18 +215,14 @@ namespace RandoMapMod.Transition
             return text;
         }
 
-        internal static void Load()
+        public override void OnEnterGame()
         {
-            _randomizedTransitions = new();
-            _transitionLookup = new();
-            _transitionsByScene = new();
-
             if (Ctx.transitionPlacements != null)
             {
-                _randomizedTransitions = new(Ctx.transitionPlacements.Select(tp => tp.Source.Name));
-                _transitionLookup = Ctx.transitionPlacements.ToDictionary(tp => tp.Source.Name, tp => tp);
+                randomizedTransitions = new(Ctx.transitionPlacements.Select(tp => tp.Source.Name));
+                transitionLookup = Ctx.transitionPlacements.ToDictionary(tp => tp.Source.Name, tp => tp);
             }
-            
+
             foreach (GeneralizedPlacement gp in Ctx.Vanilla.Where(gp => RD.IsTransition(gp.Location.Name)))
             {
                 RandoModTransition target = new(Lm.GetTransition(gp.Item.Name))
@@ -238,7 +235,7 @@ namespace RandoMapMod.Transition
                     TransitionDef = RD.GetTransitionDef(gp.Location.Name)
                 };
 
-                _transitionLookup.Add(gp.Location.Name, new(target, source));
+                transitionLookup.Add(gp.Location.Name, new(target, source));
             }
 
             if (Ctx.transitionPlacements != null)
@@ -246,42 +243,49 @@ namespace RandoMapMod.Transition
                 // Add impossible transitions (because we still need info like scene name etc.)
                 foreach (TransitionPlacement tp in Ctx.transitionPlacements)
                 {
-                    if (!_transitionLookup.ContainsKey(tp.Target.Name))
+                    if (!transitionLookup.ContainsKey(tp.Target.Name))
                     {
-                        _transitionLookup.Add(tp.Target.Name, new(null, tp.Target));
+                        transitionLookup.Add(tp.Target.Name, new(null, tp.Target));
                     }
                 }
             }
 
             foreach (GeneralizedPlacement gp in Ctx.Vanilla.Where(gp => RD.IsTransition(gp.Location.Name)))
             {
-                if (!_transitionLookup.ContainsKey(gp.Item.Name))
+                if (!transitionLookup.ContainsKey(gp.Item.Name))
                 {
                     RandoModTransition source = new(Lm.GetTransition(gp.Item.Name))
                     {
                         TransitionDef = RD.GetTransitionDef(gp.Item.Name)
                     };
 
-                    _transitionLookup.Add(gp.Item.Name, new(null, source));
+                    transitionLookup.Add(gp.Item.Name, new(null, source));
                 }
             }
 
             // Get transitions sorted by scene
-            _transitionsByScene = new();
+            transitionsByScene = new();
 
-            foreach (TransitionPlacement tp in _transitionLookup.Values.Where(tp => tp.Target != null))
+            foreach (TransitionPlacement tp in transitionLookup.Values.Where(tp => tp.Target != null))
             {
                 string scene = tp.Source.TransitionDef.SceneName;
 
-                if (!_transitionsByScene.ContainsKey(scene))
+                if (!transitionsByScene.ContainsKey(scene))
                 {
-                    _transitionsByScene.Add(scene, new() { tp.Source.Name });
+                    transitionsByScene.Add(scene, new() { tp.Source.Name });
                 }
                 else
                 {
-                    _transitionsByScene[scene].Add(tp.Source.Name);
+                    transitionsByScene[scene].Add(tp.Source.Name);
                 }
             }
+        }
+
+        public override void OnQuitToMenu()
+        {
+            randomizedTransitions = new();
+            transitionLookup = new();
+            transitionsByScene = new();
         }
     }
 }

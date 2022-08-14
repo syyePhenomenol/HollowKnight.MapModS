@@ -22,6 +22,8 @@ namespace RandoMapMod.Pins
 
         internal void Initialize(GeneralizedPlacement placement)
         {
+            Initialize();
+
             this.placement = placement;
 
             SceneName = RandomizerMod.RandomizerData.Data.GetLocationDef(name)?.SceneName ?? ItemChanger.Finder.GetLocation(name)?.sceneName;
@@ -39,11 +41,9 @@ namespace RandoMapMod.Pins
             {
                 PlaceToMiscGrid();
             }
-
-            Initialize();
         }
 
-        private protected override bool ActiveByPoolSetting()
+        private protected override bool ActiveBySettings()
         {
             Settings.PoolState poolState = RandoMapMod.LS.GetPoolGroupSetting(LocationPoolGroup);
 
@@ -84,9 +84,9 @@ namespace RandoMapMod.Pins
             BorderColor = vanillaColor;
         }
 
-        internal override string GetLookupText()
+        internal override string GetSelectionText()
         {
-            string text = base.GetLookupText();
+            string text = base.GetSelectionText();
 
             text += $"\n\n{L.Localize("Status")}:";
 

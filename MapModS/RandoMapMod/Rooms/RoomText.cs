@@ -93,7 +93,7 @@ namespace RandoMapMod.Rooms
             UpdateColor();
         }
 
-        private void UpdateColor()
+        internal void UpdateColor()
         {
             if (selected)
             {

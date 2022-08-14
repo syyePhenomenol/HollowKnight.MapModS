@@ -18,6 +18,15 @@ namespace RandoMapMod.Rooms
             base.Initialize(rooms);
         }
 
+        public override void OnMainUpdate(bool active)
+        {
+            base.OnMainUpdate(active);
+
+            attackHoldTimer.Reset();
+        }
+
+        private Stopwatch attackHoldTimer = new();
+
         private void Update()
         {
             if (InputHandler.Instance.inputActions.menuSubmit.WasPressed

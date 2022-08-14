@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MapChanger.UI
 {
-    internal class Title
+    public class Title
     {
         public readonly string Mod;
         public TextObject TitleText { get; private set; }
@@ -14,7 +14,7 @@ namespace MapChanger.UI
             Mod = mod;
         }
 
-        internal void Make()
+        public void Make()
         {
             TitleText = new(PauseMenu.Root, $"{Mod} Title")
             {

@@ -4,7 +4,7 @@ using MagicUI.Elements;
 
 namespace MapChanger.UI
 {
-    internal class PauseMenu : HookModule
+    public class PauseMenu : HookModule
     {
         internal static LayoutRoot Root { get; private set; }
         internal static GridLayout MainButtonsGrid { get; private set; }
