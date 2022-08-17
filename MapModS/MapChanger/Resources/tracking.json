@@ -756,16 +756,16 @@
     "PdListName": "scenesGrubRescued"
   },
   "Mimic_Grub-Deepnest_1": {
-    "ObjectName": "Grub Mimic Bottle"
+    "ObjectName": "Grub Mimic 1"
   },
   "Mimic_Grub-Deepnest_2": {
-    "ObjectName": "Grub Mimic Bottle (1)"
+    "ObjectName": "Grub Mimic 2"
   },
   "Mimic_Grub-Deepnest_3": {
-    "ObjectName": "Grub Mimic Bottle (2)"
+    "ObjectName": "Grub Mimic 3"
   },
   "Mimic_Grub-Crystal_Peak": {
-    "ObjectName": "Grub Mimic Bottle"
+    "ObjectName": "Grub Mimic"
   },
   "Crossroads_Map": {
     "PdBoolName": "mapCrossroads"

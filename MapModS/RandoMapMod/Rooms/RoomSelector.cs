@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using MapChanger.MonoBehaviours;
-using RandoMapMod.Pins;
 
 namespace RandoMapMod.Rooms
 {
@@ -72,12 +70,6 @@ namespace RandoMapMod.Rooms
 
         protected override void Deselect(ISelectable selectable)
         {
-            //if (RmmPinSelector.HighlightedRooms.Contains(selectable))
-            //{
-            //    RandoMapMod.Instance.LogDebug($"Did not deselect {selectable.GetKeyAndPosition().Item1} as it is highlighted by a pin selection");
-            //    return;
-            //}
-
             selectable.Selected = false;
 
             if (selectable is RoomSprite roomSprite)

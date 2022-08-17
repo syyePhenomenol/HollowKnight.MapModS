@@ -82,6 +82,7 @@ namespace MapChanger
             try { OnEnterGame?.Invoke(); }
             catch (Exception e) { MapChangerMod.Instance.LogError(e); }
 
+            // Disable all changes if no modes were added
             if (!Settings.HasModes()) return;
 
             On.GameManager.SetGameMap += SetGameMap;

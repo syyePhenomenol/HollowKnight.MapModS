@@ -12,8 +12,6 @@ namespace RandoMapMod.Pins
 {
     internal sealed class VanillaRmmPin : RmmPin
     {
-        private GeneralizedPlacement placement;
-
         private static readonly Vector4 vanillaColor = new(UNREACHABLE_COLOR_MULTIPLIER, UNREACHABLE_COLOR_MULTIPLIER, UNREACHABLE_COLOR_MULTIPLIER, 1f);
 
         internal override HashSet<string> ItemPoolGroups => new() { LocationPoolGroup };
@@ -23,8 +21,6 @@ namespace RandoMapMod.Pins
         internal void Initialize(GeneralizedPlacement placement)
         {
             Initialize();
-
-            this.placement = placement;
 
             SceneName = RandomizerMod.RandomizerData.Data.GetLocationDef(name)?.SceneName ?? ItemChanger.Finder.GetLocation(name)?.sceneName;
 

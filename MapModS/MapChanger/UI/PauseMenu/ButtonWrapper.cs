@@ -2,6 +2,9 @@
 
 namespace MapChanger.UI
 {
+    /// <summary>
+    /// A wrapper for MagicUI's Button class.
+    /// </summary>
     public abstract class ButtonWrapper
     {
         public readonly string Name;

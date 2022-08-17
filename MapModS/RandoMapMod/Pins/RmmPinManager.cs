@@ -24,11 +24,6 @@ namespace RandoMapMod.Pins
         private const float WORLD_MAP_GRID_SPACING = 0.5f;
         private const int WORLD_MAP_GRID_ROW_COUNT = 25;
 
-        private const float QUICK_MAP_GRID_BASE_OFFSET_X = -9.5f;
-        private const float QUICK_MAP_GRID_BASE_OFFSET_Y = 3f;
-        private const float QUICK_MAP_GRID_SPACING = 0.5f;
-        private const int QUICK_MAP_GRID_COLUMN_COUNT = 5;
-
         private const float OFFSETZ_BASE = -1.4f;
         private const float OFFSETZ_RANGE = 0.4f;
 
@@ -92,7 +87,6 @@ namespace RandoMapMod.Pins
 
             GridPins = GridPins.OrderBy(pin => pin.ModSource).ThenBy(pin => pin.PinGridIndex).OrderBy(pin => pin.LocationPoolGroup).ThenBy(pin => pin.name).ToList();
 
-            ArrangeWorldMapPinGrid(null);
             StaggerPins();
             InitializePoolGroups();
             UpdateRandoPins();

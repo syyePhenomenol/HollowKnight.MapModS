@@ -31,11 +31,6 @@ namespace RandoMapMod.Modes
             return GetCustomColor(roomSprite.Rsd.ColorSetting);
         }
 
-        //public override bool? RoomCanSelectOverride(RoomSprite roomSprite)
-        //{
-        //    return roomSprite.gameObject.activeInHierarchy && BenchwarpInterop.VisitedBenchLookup.ContainsKey(roomSprite.Rsd.SceneName);
-        //}
-
         public override Vector4? AreaNameColorOverride(AreaName areaName) { return GetCustomColor(areaName.MiscObjectDef.ColorSetting); }
 
         public override Vector4? NextAreaColorOverride(NextArea nextArea) { return GetCustomColor(nextArea.MiscObjectDef.ColorSetting); }

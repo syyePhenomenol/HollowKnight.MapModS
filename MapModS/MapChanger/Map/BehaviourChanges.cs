@@ -13,6 +13,9 @@ namespace MapChanger.Map
     /// </summary>
     internal class BehaviourChanges : HookModule
     {
+        /// <summary>
+        /// Displays the map key based on the current MapChanger setting.
+        /// </summary>
         private class MapKeyUpCheck : FsmStateAction
         {
             public override void OnEnter()
@@ -26,22 +29,9 @@ namespace MapChanger.Map
             }
         }
 
-        private class ActivateGoCheck : FsmStateAction
-        {
-            private readonly GameObject gameObject;
-
-            internal ActivateGoCheck(GameObject gameObject)
-            {
-                this.gameObject = gameObject;
-            }
-
-            public override void OnEnter()
-            {
-                gameObject?.SetActive(!Settings.MapModEnabled() || Settings.CurrentMode().VanillaPins != OverrideType.ForceOff);
-                Finish();
-            }
-        }
-
+        /// <summary>
+        /// A copy of the rough map sprite in order to reset mapped rooms later.
+        /// </summary>
         private class RoughMapCopy : MonoBehaviour
         {
             internal Sprite RoughMap { get; private set; }
@@ -137,9 +127,13 @@ namespace MapChanger.Map
             orig(self);
         }
 
+        /// <summary>
+        /// Normally, this sets whether the next area object is active or not. However, MapChanger does it
+        /// through the NextArea MapObject.
+        /// </summary>
         private void NextAreaOverride(On.MapNextAreaDisplay.orig_OnEnable orig, MapNextAreaDisplay self)
         {
-            // Do nothing
+            
         }
 
         private static void SetupMarkersOverride(On.GameMap.orig_SetupMapMarkers orig, GameMap self)
@@ -149,6 +143,10 @@ namespace MapChanger.Map
             self.gameObject.Child(MAP_MARKERS).SetActive(PlayerData.instance.GetBool("hasMarker"));
         }
 
+        /// <summary>
+        /// The game doesn't normally set the MapMarkers gameObject to false when the map is closed, which
+        /// leads to some visual bugs.
+        /// </summary>
         private static void DisableMarkersOverride(On.GameMap.orig_DisableMarkers orig, GameMap self)
         {
             orig(self);
@@ -170,7 +168,9 @@ namespace MapChanger.Map
             }
         }
 
-        // The following fixes loading the Quick Map for some of the special areas (like Ancestral Mound)
+        /// <summary>
+        /// This fixes loading the Quick Map in some of the non-mapped areas (like Ancestral Mound).
+        /// </summary>
         private static string DoorMapZoneOverride(On.GameMap.orig_GetDoorMapZone orig, GameMap self)
         {
             if (!Settings.MapModEnabled()) return orig(self);
@@ -225,6 +225,9 @@ namespace MapChanger.Map
             orig(self);
         }
 
+        /// <summary>
+        /// QoL improvement which prevents the "Map Updated" prompt from occurring in most cases.
+        /// </summary>
         private static bool DisableUpdatedMapPrompt(On.GameManager.orig_UpdateGameMap orig, GameManager self)
         {
             if (Settings.MapModEnabled())
@@ -235,6 +238,9 @@ namespace MapChanger.Map
             return orig(self);
         }
 
+        /// <summary>
+        /// Increases the range of panning so that objects on the map can be selected properly.
+        /// </summary>
         private static void IncreasePanningRange(GameMap gameMap)
         {
             gameMap.panMinX = -29f;

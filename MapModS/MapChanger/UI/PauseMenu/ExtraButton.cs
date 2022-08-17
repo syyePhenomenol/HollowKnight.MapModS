@@ -3,6 +3,9 @@ using MagicUI.Elements;
 
 namespace MapChanger.UI
 {
+    /// <summary>
+    /// Buttons that belong in a toggleable panel in the pause menu.
+    /// </summary>
     public abstract class ExtraButton : ButtonWrapper
     {
         public readonly string Mod;

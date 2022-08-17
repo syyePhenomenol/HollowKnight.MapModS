@@ -11,7 +11,7 @@ namespace MapChanger.Defs
     public record MiscObjectDef
     {
         [JsonProperty]
-        internal MiscObjectType Type { get; init; }
+        public MiscObjectType Type { get; init; }
         [JsonProperty]
         public ColorSetting ColorSetting { get; init; }
     }

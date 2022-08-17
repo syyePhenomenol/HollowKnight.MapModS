@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 
 namespace MapChanger.MonoBehaviours
@@ -106,8 +105,6 @@ namespace MapChanger.MonoBehaviours
         }
 
         private Coroutine periodicUpdate;
-
-        // Coroutines stop when the GameObject is set inactive!
         public IEnumerator PeriodicUpdate()
         {
             while (true)

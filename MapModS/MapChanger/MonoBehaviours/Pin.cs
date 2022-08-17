@@ -1,5 +1,4 @@
-﻿using GlobalEnums;
-using MapChanger.Defs;
+﻿using MapChanger.Defs;
 using UnityEngine;
 
 namespace MapChanger.MonoBehaviours

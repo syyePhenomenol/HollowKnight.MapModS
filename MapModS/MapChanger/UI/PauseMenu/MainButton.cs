@@ -3,6 +3,9 @@ using MagicUI.Elements;
 
 namespace MapChanger.UI
 {
+    /// <summary>
+    /// A button that is persistently displayed in the main buttons grid on the pause menu.
+    /// </summary>
     public abstract class MainButton : ButtonWrapper
     {
         public readonly string Mod;

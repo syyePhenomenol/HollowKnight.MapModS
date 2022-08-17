@@ -97,7 +97,7 @@ namespace MapChanger
             GetPreviouslyObtainedItems();
 
             On.PlayMakerFSM.OnEnable += AddItemTrackers;
-            On.HealthManager.SendDeathEvent += TrackBossGeo;
+            On.HealthManager.SendDeathEvent += TrackEnemy;
             On.GeoRock.SetMyID += RenameDupeGeoRockIds;
 
             UnityEngine.SceneManagement.SceneManager.activeSceneChanged += AddSceneVisited;
@@ -106,7 +106,7 @@ namespace MapChanger
         public override void OnQuitToMenu()
         {
             On.PlayMakerFSM.OnEnable -= AddItemTrackers;
-            On.HealthManager.SendDeathEvent -= TrackBossGeo;
+            On.HealthManager.SendDeathEvent -= TrackEnemy;
             On.GeoRock.SetMyID -= RenameDupeGeoRockIds;
 
             UnityEngine.SceneManagement.SceneManager.activeSceneChanged -= AddSceneVisited;
@@ -197,12 +197,16 @@ namespace MapChanger
             }
         }
 
-        private static void TrackBossGeo(On.HealthManager.orig_SendDeathEvent orig, HealthManager self)
+        private static void TrackEnemy(On.HealthManager.orig_SendDeathEvent orig, HealthManager self)
         {
             orig(self);
 
             switch (self.gameObject.name)
             {
+                case "Grub Mimic":
+                case "Grub Mimic 1":
+                case "Grub Mimic 2":
+                case "Grub Mimic 3":
                 case "Mage Knight":
                 case "Mega Zombie Beam Miner (1)":
                 case "Zombie Beam Miner Rematch":
@@ -232,11 +236,6 @@ namespace MapChanger
             else if (self.FsmName == "Chest Control")
             {
                 if (!FsmUtil.TryGetState(self, "Open", out state)) return;
-            }
-            // TODO: use SendDeathEvent instead
-            else if (name.Contains("Mimic") && self.FsmName == "Bottle Control")
-            {
-                if (!FsmUtil.TryGetState(self, "Shatter", out state)) return;
             }
             else if (self.FsmName == "Geo Rock")
             {

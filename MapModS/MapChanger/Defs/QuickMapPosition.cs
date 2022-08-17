@@ -7,6 +7,8 @@ namespace MapChanger.Defs
     /// <summary>
     /// Interprets the x and y values of the input MapLocations
     /// as the unscaled offset from the center of the Quick Map.
+    /// Kingdom's Edge is scaled differently to the other quick maps.
+    /// You might need to account for this.
     /// </summary>
     public record QuickMapPosition : IMapPosition
     {

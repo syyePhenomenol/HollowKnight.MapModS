@@ -11,8 +11,8 @@ namespace RandoMapMod.UI
 {
     internal class RouteCompass : HookModule
     {
-        private static GameObject compass;
-        private static DirectionalCompass CompassC => compass.GetComponent<DirectionalCompass>();
+        private static GameObject goCompass;
+        private static DirectionalCompass Compass => goCompass.GetComponent<DirectionalCompass>();
         private static GameObject Knight => HeroController.instance?.gameObject;
 
         public override void OnEnterGame()
@@ -33,13 +33,13 @@ namespace RandoMapMod.UI
 
         private static void CreateRouteCompass()
         {
-            if (compass != null && CompassC != null) CompassC.Destroy();
+            if (goCompass != null && Compass != null) Compass.Destroy();
 
             if (Knight == null || GameManager.instance.IsNonGameplayScene()) return;
 
             Sprite arrow = new EmbeddedSprite("GUI.Arrow").Value;
 
-            compass = DirectionalCompass.Create
+            goCompass = DirectionalCompass.Create
             (
                 "Route Compass", // name
                 Knight, // parent entity
@@ -52,14 +52,14 @@ namespace RandoMapMod.UI
                 0.5f // lerp duration
             );
 
-            compass.SetActive(false);
+            goCompass.SetActive(false);
         }
 
         public static void Update()
         {
-            if (compass == null) return;
+            if (goCompass == null) return;
 
-            if (CompassC != null && RouteTracker.SelectedRoute.Any())
+            if (Compass != null && RouteTracker.SelectedRoute.Any())
             {
                 string transition = RouteTracker.SelectedRoute.First();
                 string scene = transition.GetScene();
@@ -88,7 +88,7 @@ namespace RandoMapMod.UI
 
                 if (gate == "")
                 {
-                    compass.SetActive(false);
+                    goCompass.SetActive(false);
                     return;
                 }
 
@@ -96,8 +96,8 @@ namespace RandoMapMod.UI
 
                 if (gateObject != null)
                 {
-                    CompassC.TrackedObjects = new() { gateObject };
-                    compass.SetActive(true);
+                    Compass.TrackedObjects = new() { gateObject };
+                    goCompass.SetActive(true);
                     return;
                 }
 
@@ -105,13 +105,13 @@ namespace RandoMapMod.UI
 
                 if (gateObject2 != null)
                 {
-                    CompassC.TrackedObjects = new() { gateObject2 };
-                    compass.SetActive(true);
+                    Compass.TrackedObjects = new() { gateObject2 };
+                    goCompass.SetActive(true);
                 }
             }
             else
             {
-                compass.SetActive(false);
+                goCompass.SetActive(false);
             }
         }
 
