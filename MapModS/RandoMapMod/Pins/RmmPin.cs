@@ -15,11 +15,6 @@ namespace RandoMapMod.Pins
 {
     internal abstract class RmmPin : BorderedPin, ISelectable
     {
-        private const float MISC_BASE_OFFSET_X = -11.5f;
-        private const float MISC_BASE_OFFSET_Y = -11f;
-        private const float MISC_SPACING = 0.5f;
-        private const int MISC_ROW_COUNT = 25;
-
         private const float SMALL_SCALE = 0.56f;
         private const float MEDIUM_SCALE = 0.67f;
         private const float LARGE_SCALE = 0.8f;
@@ -52,6 +47,7 @@ namespace RandoMapMod.Pins
             }
         }
 
+        internal string ModSource { get; protected private set; } = $"{char.MaxValue}RandoMapMod";
         internal string LocationPoolGroup { get; protected private set; }
         internal abstract HashSet<string> ItemPoolGroups { get; }
         internal string SceneName { get; protected private set; }
@@ -72,7 +68,7 @@ namespace RandoMapMod.Pins
                     CorrectMapOpen,
                     ActiveByCurrentMode,
                     ActiveBySettings,
-                    LocationNotCleared
+                    ActiveByProgress
                 }
             );
 
@@ -83,13 +79,6 @@ namespace RandoMapMod.Pins
 
             BorderSprite = new EmbeddedSprite("Pins.Border").Value;
             BorderPlacement = BorderPlacement.InFront;
-        }
-
-        internal void PlaceToMiscGrid(int x)
-        {
-            AbsMapPosition amp = new((MISC_BASE_OFFSET_X + x % MISC_ROW_COUNT * MISC_SPACING,
-                    MISC_BASE_OFFSET_Y - x / MISC_ROW_COUNT * MISC_SPACING));
-            MapPosition = amp;
         }
 
         public bool CanSelect()
@@ -122,19 +111,20 @@ namespace RandoMapMod.Pins
 
         protected private bool CorrectMapOpen()
         {
-            return States.WorldMapOpen || (States.QuickMapOpen && States.CurrentMapZone == MapZone);
+            return States.WorldMapOpen || (States.QuickMapOpen && (States.CurrentMapZone == MapZone || MapZone is MapZone.NONE));
         }
 
         protected private bool ActiveByCurrentMode()
         {
-            return MapChanger.Settings.CurrentMode() is FullMapMode or AllPinsMode
+            return MapZone is MapZone.NONE
+                || MapChanger.Settings.CurrentMode() is FullMapMode or AllPinsMode
                 || (MapChanger.Settings.CurrentMode() is PinsOverMapMode && Utils.HasMapSetting(MapZone))
-                || (Conditions.TransitionRandoModeEnabled() && (SceneName is null || TransitionTracker.GetRoomActive(SceneName)));
+                || (Conditions.TransitionRandoModeEnabled() && TransitionTracker.GetRoomActive(SceneName));
         }
 
         protected private abstract bool ActiveBySettings();
 
-        protected private abstract bool LocationNotCleared();
+        protected private abstract bool ActiveByProgress();
 
         internal virtual string GetSelectionText()
         {;

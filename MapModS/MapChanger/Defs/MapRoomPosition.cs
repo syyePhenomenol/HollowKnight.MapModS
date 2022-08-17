@@ -8,14 +8,14 @@ namespace MapChanger.Defs
     /// as the unscaled offset from the center of the mapped room.
     /// The first MapLocation that has a MappedScene corresponding to a room sprite is used.
     /// </summary>
-    public record MapPosition : IMapPosition
+    public record MapRoomPosition : IMapPosition
     {
         public float X { get; protected private set; }
         public float Y { get; protected private set; }
         public string MappedScene { get; private set; }
         public MapZone MapZone { get; private set; }
 
-        public MapPosition((string, float, float)[] mapLocations)
+        public MapRoomPosition((string, float, float)[] mapLocations)
         {
             foreach (MapLocation mapLocation in mapLocations)
             {
@@ -27,7 +27,7 @@ namespace MapChanger.Defs
             }
         }
 
-        public MapPosition(MapLocation[] mapLocations)
+        public MapRoomPosition(MapLocation[] mapLocations)
         {
             foreach (MapLocation mapLocation in mapLocations)
             {

@@ -16,7 +16,6 @@ namespace RandoMapMod.Settings
         public PinStyle PinStyle = PinStyle.Normal;
         public PinSize PinSize = PinSize.Medium;
         public bool ShowPersistentPins = false;
-        //TODO: reset to false
         public bool ShowBenchwarpPins = false;
 
         /// <summary>

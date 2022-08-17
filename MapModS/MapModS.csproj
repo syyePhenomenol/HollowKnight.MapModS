@@ -186,6 +186,7 @@
 	  <None Remove="RandoMapMod\Resources\Pathfinder\Logic\macros.json" />
 	  <None Remove="RandoMapMod\Resources\Pathfinder\Logic\transitions.json" />
 	  <None Remove="RandoMapMod\Resources\Pathfinder\Logic\waypoints.json" />
+	  <None Remove="RandoMapMod\Resources\quickMapGrids.json" />
 	  <None Remove="RandoMapMod\Resources\roomTexts.json" />
 	  <None Remove="RandoMapMod\Resources\roomTextsAM.json" />
 	</ItemGroup>
@@ -314,6 +315,7 @@
 	  <EmbeddedResource Include="RandoMapMod\Resources\Pathfinder\Logic\macros.json" />
 	  <EmbeddedResource Include="RandoMapMod\Resources\Pathfinder\Logic\transitions.json" />
 	  <EmbeddedResource Include="RandoMapMod\Resources\Pathfinder\Logic\waypoints.json" />
+	  <EmbeddedResource Include="RandoMapMod\Resources\quickMapGrids.json" />
 	  <EmbeddedResource Include="RandoMapMod\Resources\roomTexts.json" />
 	  <EmbeddedResource Include="RandoMapMod\Resources\roomTextsAM.json" />
 	</ItemGroup>

@@ -9,21 +9,15 @@ namespace RandoMapMod
 {
     internal class BenchRandoInterop
     {
-        internal static Dictionary<BenchKey, string> GetBenchTransitions()
+        internal static Dictionary<RmmBenchKey, string> GetBenchTransitions()
         {
-            return BenchLookup.ToDictionary(kvp => new BenchKey(kvp.Value.SceneName, kvp.Value.GetRespawnMarkerName()), kvp => kvp.Key);
+            return BenchLookup.ToDictionary(kvp => new RmmBenchKey(kvp.Value.SceneName, kvp.Value.GetRespawnMarkerName()), kvp => kvp.Key);
         }
 
         internal static bool IsBenchRandoEnabled()
         {
             BRLocalSettingsModule bsm = ItemChangerMod.Modules.Get<BRLocalSettingsModule>();
             return bsm != null && bsm.LS.Settings.IsEnabled();
-        }
-
-        internal static bool HasBenchPlacements()
-        {
-            BRLocalSettingsModule bsm = ItemChangerMod.Modules.Get<BRLocalSettingsModule>();
-            return bsm != null && bsm.LS.Settings.RandomizedItems is not BenchRando.Rando.ItemRandoMode.None;
         }
     }
 }

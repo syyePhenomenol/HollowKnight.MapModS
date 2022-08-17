@@ -114,6 +114,7 @@ namespace RandoMapMod
 
             Interop.FindInteropMods();
             RmmRoomManager.Load();
+            RmmPinManager.Load();
             PathfinderData.Load();
             Finder.InjectLocations(JsonUtil.Deserialize<Dictionary<string, MapLocationDef>>("MapModS.RandoMapMod.Resources.locations.json"));
 
@@ -125,7 +126,7 @@ namespace RandoMapMod
 
         private static void OnEnterGame()
         {
-            if (RandomizerMod.RandomizerMod.RS.GenerationSettings is null) return;
+            if (!RandomizerMod.RandomizerMod.IsRandoSave) return;
 
             MapChanger.Settings.AddModes(modes);
             Events.OnSetGameMap += OnSetGameMap;

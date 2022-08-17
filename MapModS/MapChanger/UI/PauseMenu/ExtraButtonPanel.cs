@@ -32,7 +32,7 @@ namespace MapChanger.UI
                 Orientation = Orientation.Vertical,
                 Padding = new(leftPadding, 865f, 10f, 10f),
                 HorizontalSpacing = 0f,
-                VerticalSpacing = 5f
+                VerticalSpacing = 0f
             };
 
             ExtraButtonsGrid.ChildrenBeforeRollover = rowSize;

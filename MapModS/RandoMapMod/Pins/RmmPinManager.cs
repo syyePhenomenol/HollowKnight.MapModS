@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using ConnectionMetadataInjector;
 using ConnectionMetadataInjector.Util;
+using GlobalEnums;
 using ItemChanger;
 using MapChanger;
+using MapChanger.Defs;
 using MapChanger.MonoBehaviours;
+using Newtonsoft.Json;
 using RandomizerCore;
 using RandomizerMod.IC;
 using UnityEngine;
@@ -16,12 +19,24 @@ namespace RandoMapMod.Pins
 {
     internal class RmmPinManager : HookModule
     {
+        private const float WORLD_MAP_GRID_BASE_OFFSET_X = -11.5f;
+        private const float WORLD_MAP_GRID_BASE_OFFSET_Y = -11f;
+        private const float WORLD_MAP_GRID_SPACING = 0.5f;
+        private const int WORLD_MAP_GRID_ROW_COUNT = 25;
+
+        private const float QUICK_MAP_GRID_BASE_OFFSET_X = -9.5f;
+        private const float QUICK_MAP_GRID_BASE_OFFSET_Y = 3f;
+        private const float QUICK_MAP_GRID_SPACING = 0.5f;
+        private const int QUICK_MAP_GRID_COLUMN_COUNT = 5;
+
         private const float OFFSETZ_BASE = -1.4f;
         private const float OFFSETZ_RANGE = 0.4f;
 
+        private static Dictionary<MapZone, QuickMapGridDef> quickMapGridDefs;
+
         internal static MapObject MoPins { get; private set; }
         internal static Dictionary<string, RmmPin> Pins { get; private set; } = new();
-        internal static List<RmmPin> MiscPins { get; private set; } = new();
+        internal static List<RmmPin> GridPins { get; private set; } = new();
 
         internal static List<string> AllPoolGroups { get; private set; }
         internal static HashSet<string> RandoLocationPoolGroups { get; private set; }
@@ -29,20 +44,29 @@ namespace RandoMapMod.Pins
         internal static HashSet<string> VanillaLocationPoolGroups { get; private set; }
         internal static HashSet<string> VanillaItemPoolGroups { get; private set; }
 
+        internal static void Load()
+        {
+            quickMapGridDefs = JsonUtil.Deserialize<Dictionary<MapZone, QuickMapGridDef>>("MapModS.RandoMapMod.Resources.quickMapGrids.json");
+        }
+
         public override void OnEnterGame()
         {
             TrackerUpdate.OnFinishedUpdate += UpdateRandoPins;
+            MapChanger.Events.OnWorldMap += ArrangeWorldMapPinGrid;
+            MapChanger.Events.OnQuickMap += ArrangeQuickMapPinGrid;
         }
 
         public override void OnQuitToMenu()
         {
             TrackerUpdate.OnFinishedUpdate -= UpdateRandoPins;
+            MapChanger.Events.OnWorldMap -= ArrangeWorldMapPinGrid;
+            MapChanger.Events.OnQuickMap -= ArrangeQuickMapPinGrid;
         }
 
         internal static void Make(GameObject goMap)
         {
             Pins = new();
-            MiscPins = new();
+            GridPins = new();
 
             MoPins = Utils.MakeMonoBehaviour<MapObject>(goMap, "RandoMapMod Pins");
             MoPins.Initialize();
@@ -60,13 +84,15 @@ namespace RandoMapMod.Pins
             }
             if (Interop.HasBenchwarp())
             {
-                foreach (string benchName in BenchwarpInterop.GetAllBenchNames())
+                foreach ((string benchName, string sceneName) in BenchwarpInterop.BenchNames.Select(kvp => (kvp.Value, kvp.Key.SceneName)))
                 {
-                    MakeBenchPin(benchName);
+                    MakeBenchPin(benchName, sceneName);
                 }
             }
 
-            ArrangeMiscPinGrid();
+            GridPins = GridPins.OrderBy(pin => pin.ModSource).ThenBy(pin => pin.PinGridIndex).OrderBy(pin => pin.LocationPoolGroup).ThenBy(pin => pin.name).ToList();
+
+            ArrangeWorldMapPinGrid(null);
             StaggerPins();
             InitializePoolGroups();
             UpdateRandoPins();
@@ -114,11 +140,11 @@ namespace RandoMapMod.Pins
             Pins[placement.Location.Name] = vanillaPin;
         }
 
-        private static void MakeBenchPin(string benchName)
+        private static void MakeBenchPin(string benchName, string sceneName)
         {
             string objectName = $"{benchName}{BenchwarpInterop.BENCH_EXTRA_SUFFIX}";
             BenchPin benchPin = Utils.MakeMonoBehaviour<BenchPin>(MoPins.gameObject, objectName);
-            benchPin.Initialize(benchName);
+            benchPin.Initialize(benchName, sceneName);
             MoPins.AddChild(benchPin);
             Pins[objectName] = benchPin;
         }
@@ -133,6 +159,8 @@ namespace RandoMapMod.Pins
 
         internal static void UpdateRandoPins()
         {
+            RandoMapMod.Instance.LogDebug("UpdateRandoPins");
+
             foreach (RmmPin pin in Pins.Values)
             {
                 if (pin is RandomizedRmmPin randoPin)
@@ -144,15 +172,43 @@ namespace RandoMapMod.Pins
 
         /// <summary>
         /// Places all the pins that don't have a well-defined place on the map
-        /// in a sorted grid.
+        /// in a sorted grid on the world map.
         /// </summary>
-        private static void ArrangeMiscPinGrid()
+        private static void ArrangeWorldMapPinGrid(GameMap gameMap)
         {
-            MiscPins = MiscPins.OrderBy(pin => pin.LocationPoolGroup).ThenBy(pin => pin.PinGridIndex).ThenBy(pin => pin.name).ToList();
-
-            for (int i = 0; i < MiscPins.Count; i++)
+            for (int i = 0; i < GridPins.Count; i++)
             {
-                MiscPins[i].PlaceToMiscGrid(i);
+                GridPins[i].MapPosition = new AbsMapPosition((WORLD_MAP_GRID_BASE_OFFSET_X + i % WORLD_MAP_GRID_ROW_COUNT * WORLD_MAP_GRID_SPACING,
+                            WORLD_MAP_GRID_BASE_OFFSET_Y - i / WORLD_MAP_GRID_ROW_COUNT * WORLD_MAP_GRID_SPACING));
+            }
+        }
+
+        /// <summary>
+        /// Places all the pins that include the current scene in its HighlightScenes
+        /// in a sorted grid on the quick map.
+        /// </summary>
+        private static void ArrangeQuickMapPinGrid(GameMap gameMap, MapZone mapZone)
+        {
+            if (!quickMapGridDefs.TryGetValue(mapZone, out QuickMapGridDef qmgd)) return;
+
+            string currentScene = Utils.CurrentScene();
+
+            IEnumerable<RandomizedRmmPin> highlightScenePins = GridPins.Where(pin => pin is RandomizedRmmPin)
+                .Select(pin => (RandomizedRmmPin)pin)
+                .Where(pin => pin.HighlightScenes is not null);
+
+            int gridIndex = 0;
+
+            foreach (RandomizedRmmPin pin in highlightScenePins)
+            {
+                if (!pin.HighlightScenes.Contains(currentScene))
+                {
+                    qmgd.SetPinHidden(pin);
+                    continue;
+                }
+
+                qmgd.SetPinPosition(pin, gridIndex);
+                gridIndex++;
             }
         }
 
@@ -236,5 +292,45 @@ namespace RandoMapMod.Pins
         //        }
         //    }
         //}
+
+        private record QuickMapGridDef
+        {
+            [JsonProperty]
+            internal MapZone MapZone { get; init; }
+            [JsonProperty]
+            internal bool OrientateVertical { get; init; }
+            [JsonProperty]
+            internal float GridBaseX { get; init; }
+            [JsonProperty]
+            internal float GridBaseY { get; init; }
+            [JsonProperty]
+            internal float Spacing { get; init; } = 0.5f;
+            [JsonProperty]
+            internal int RollOverCount { get; init; }
+
+            internal void SetPinPosition(RandomizedRmmPin randoPin, int gridIndex)
+            {
+                float x;
+                float y;
+
+                if (OrientateVertical)
+                {
+                    x = GridBaseX + gridIndex / RollOverCount * Spacing;
+                    y = GridBaseY - gridIndex % RollOverCount * Spacing;
+                }
+                else
+                {
+                    x = GridBaseX + gridIndex % RollOverCount * Spacing;
+                    y = GridBaseY - gridIndex / RollOverCount * Spacing;
+                }
+
+                randoPin.MapPosition = new QuickMapPosition(new Vector2(x, y));
+            }
+
+            internal void SetPinHidden(RandomizedRmmPin randoPin)
+            {
+                randoPin.MapPosition = new QuickMapPosition(new Vector2(-11f, 11f));
+            }
+        }
     }
 }

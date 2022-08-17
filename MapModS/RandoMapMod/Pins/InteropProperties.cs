@@ -7,6 +7,8 @@ namespace RandoMapMod.Pins
 {
     internal static class InteropProperties
     {
+        internal static readonly MetadataProperty<AbstractPlacement, string> ModSource = new("ModSource", (placement) => { return $"{char.MaxValue}"; });
+
         internal static readonly MetadataProperty<AbstractPlacement, bool> DoNotMakePin = new("DoNotMakePin", (placement) => { return false; });
 
         internal static readonly MetadataProperty<AbstractPlacement, ISprite> LocationPinSprite = new("PinSprite", GetDefaultLocationSprite);

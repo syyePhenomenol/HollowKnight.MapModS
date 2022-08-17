@@ -236,7 +236,7 @@ namespace MapChanger
             // TODO: use SendDeathEvent instead
             else if (name.Contains("Mimic") && self.FsmName == "Bottle Control")
             {
-                if (!FsmUtil.TryGetState(self, "Shatter", out state)) return; 
+                if (!FsmUtil.TryGetState(self, "Shatter", out state)) return;
             }
             else if (self.FsmName == "Geo Rock")
             {

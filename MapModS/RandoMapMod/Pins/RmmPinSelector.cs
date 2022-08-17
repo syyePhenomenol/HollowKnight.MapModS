@@ -45,8 +45,6 @@ namespace RandoMapMod.Pins
                     Objects[pin.name] = new() { pin };
                 }
             }
-
-            animateHighlightedRooms = AnimateHighlightedRooms();
         }
 
         private Stopwatch attackHoldTimer = new();
@@ -84,8 +82,14 @@ namespace RandoMapMod.Pins
 
             SpriteObject.SetActive(RandoMapMod.GS.ShowReticle);
 
-            StopCoroutine(animateHighlightedRooms);
-            StartCoroutine(animateHighlightedRooms);
+            if (active)
+            {
+                StartAnimateHighlightedRooms();
+            }
+            else
+            {
+                StopAnimateHighlightedRooms();
+            }
         }
 
         protected override void Select(ISelectable selectable)
@@ -138,7 +142,7 @@ namespace RandoMapMod.Pins
 
         private static int highlightAnimationTick = 0;
 
-        private IEnumerator animateHighlightedRooms;
+        private Coroutine animateHighlightedRooms;
         private IEnumerator AnimateHighlightedRooms()
         {
             while (true)
@@ -147,7 +151,7 @@ namespace RandoMapMod.Pins
 
                 highlightAnimationTick = (highlightAnimationTick + 1) % HIGHLIGHT_PERIOD;
 
-                Vector4 color = RmmColors.GetColor(RmmColorSetting.Room_Benchwarp_Selected);
+                Vector4 color = RmmColors.GetColor(RmmColorSetting.Room_Highlighted);
                 color.w = 0.3f + TriangleWave(highlightAnimationTick) * 0.7f;
 
                 foreach (ISelectable room in HighlightedRooms)
@@ -166,6 +170,23 @@ namespace RandoMapMod.Pins
             static float TriangleWave(float x)
             {
                 return Math.Abs(x - HIGHLIGHT_HALF_PERIOD) / HIGHLIGHT_HALF_PERIOD;
+            }
+        }
+
+        private void StartAnimateHighlightedRooms()
+        {
+            if (animateHighlightedRooms is null)
+            {
+                animateHighlightedRooms = StartCoroutine(AnimateHighlightedRooms());
+            }
+        }
+
+        private void StopAnimateHighlightedRooms()
+        {
+            if (animateHighlightedRooms is not null)
+            {
+                StopCoroutine(AnimateHighlightedRooms());
+                animateHighlightedRooms = null;
             }
         }
 
@@ -190,15 +211,22 @@ namespace RandoMapMod.Pins
             {
                 string text = pin.GetSelectionText();
 
-                List<InControl.BindingSource> bindings = new(InputHandler.Instance.inputActions.dreamNail.Bindings);
+                List<InControl.BindingSource> attackBindings = new(InputHandler.Instance.inputActions.attack.Bindings);
+
+                if (RandoMapMod.GS.ShowBenchwarpPins && BenchwarpInterop.IsVisitedBench(SelectedObjectKey))
+                {
+                    text += $"\n\n{L.Localize("Hold")} {Utils.GetBindingsText(attackBindings)} {L.Localize("to benchwarp")}.";
+                }
+
+                List<InControl.BindingSource> dreamNailBindings = new(InputHandler.Instance.inputActions.dreamNail.Bindings);
 
                 if (LockSelection)
                 {
-                    text += $"\n\n{L.Localize("Press")} {Utils.GetBindingsText(bindings)} {L.Localize("to unlock pin selection")}.";
+                    text += $"\n\n{L.Localize("Press")} {Utils.GetBindingsText(dreamNailBindings)} {L.Localize("to unlock pin selection")}.";
                 }
                 else
                 {
-                    text += $"\n\n{L.Localize("Press")} {Utils.GetBindingsText(bindings)} {L.Localize("to lock pin selection")}.";
+                    text += $"\n\n{L.Localize("Press")} {Utils.GetBindingsText(dreamNailBindings)} {L.Localize("to lock pin selection")}.";
                 }
 
                 return text;

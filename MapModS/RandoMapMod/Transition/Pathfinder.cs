@@ -161,7 +161,7 @@ namespace RandoMapMod.Transition
                 // Add initial bench warp transitions if setting is enabled
                 if (RandoMapMod.GS.PathfinderBenchwarp && Interop.HasBenchwarp())
                 {
-                    foreach (string transition in BenchwarpInterop.GetVisitedBenchTransitions())
+                    foreach (string transition in BenchwarpInterop.GetVisitedBenchNames())
                     {
                         TryAddNode(null, transition);
                     }

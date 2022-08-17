@@ -25,7 +25,7 @@ namespace RandoMapMod.Modes
         {
             if (roomSprite.Selected)
             {
-                return RmmColors.GetColor(RmmColorSetting.Room_Benchwarp_Selected);
+                return RmmColors.GetColor(RmmColorSetting.Room_Highlighted);
             }
 
             return GetCustomColor(roomSprite.Rsd.ColorSetting);

@@ -37,20 +37,33 @@ namespace RandoMapMod.Pins
 
         public float UpdateWaitSeconds { get; } = 1f;
 
-        private IEnumerator periodicUpdate;
+        private Coroutine periodicUpdate;
         public IEnumerator PeriodicUpdate()
         {
             while (true)
             {
                 yield return new WaitForSecondsRealtime(UpdateWaitSeconds);
-
                 itemIndex = (itemIndex + 1) % remainingItems.Count();
                 UpdatePinSprite();
-                UpdatePinSize();
             }
         }
 
-        //static int counter = 0;
+        private void StartPeriodicUpdate()
+        {
+            if (periodicUpdate is null)
+            {
+                periodicUpdate = StartCoroutine(PeriodicUpdate());
+            }
+        }
+
+        private void StopPeriodicUpdate()
+        {
+            if (periodicUpdate is not null)
+            {
+                StopCoroutine(periodicUpdate);
+                periodicUpdate = null;
+            }
+        }
 
         internal void Initialize(AbstractPlacement placement)
         {
@@ -59,6 +72,8 @@ namespace RandoMapMod.Pins
             this.placement = placement;
 
             SceneName = placement.RandoModLocation()?.LocationDef?.SceneName ?? ItemChanger.Finder.GetLocation(name)?.sceneName;
+
+            ModSource = SD.OfPlacementAndLocations(placement).Get(InteropProperties.ModSource);
 
             LocationPoolGroup = SD.OfPlacementAndLocations(placement).Get(InjectedProps.LocationPoolGroup);
             locationSprite = SD.OfPlacementAndLocations(placement).Get(InteropProperties.LocationPinSprite);
@@ -92,7 +107,7 @@ namespace RandoMapMod.Pins
 
             if (SD.OfPlacementAndLocations(placement).Get(InteropProperties.MapLocations) is (string, float, float)[] mapLocations)
             {
-                MapPosition mlp = new(mapLocations);
+                MapRoomPosition mlp = new(mapLocations);
                 MapPosition = mlp;
                 MapZone = mlp.MapZone;
             }
@@ -109,10 +124,8 @@ namespace RandoMapMod.Pins
             else
             {
                 PinGridIndex = SD.OfPlacementAndLocations(placement).Get(InteropProperties.PinGridIndex);
-                RmmPinManager.MiscPins.Add(this);
+                RmmPinManager.GridPins.Add(this);
             }
-
-            periodicUpdate = PeriodicUpdate();
         }
 
         private float GetPinSpriteScale(ISprite sprite, (int, int)? interopSize)
@@ -157,7 +170,7 @@ namespace RandoMapMod.Pins
             }
         }
 
-        protected private override bool LocationNotCleared()
+        protected private override bool ActiveByProgress()
         {
             return (placementState != RandoPlacementState.Cleared)
                 && (placementState != RandoPlacementState.ClearedPersistent || RandoMapMod.GS.ShowPersistentPins);
@@ -165,8 +178,6 @@ namespace RandoMapMod.Pins
 
         public override void OnMainUpdate(bool active)
         {
-            if (!active) return;
-
             itemIndex = 0;
 
             if (RandoMapMod.GS.ShowPersistentPins)
@@ -178,29 +189,15 @@ namespace RandoMapMod.Pins
                 remainingItems = placement.Items.Where(item => !item.WasEverObtained());
             }
 
-            if (RandoMapMod.LS.SpoilerOn)
-            {
-                showItemSprite = true;
-            }
-            else
-            {
-                showItemSprite = placementState switch
-                {
-                    RandoPlacementState.UncheckedUnreachable
-                    or RandoPlacementState.UncheckedReachable
-                    or RandoPlacementState.OutOfLogicReachable
-                    or RandoPlacementState.Cleared => false,
-                    RandoPlacementState.Previewed
-                    or RandoPlacementState.ClearedPersistent => true,
-                    _ => false,
-                };
-            }
+            showItemSprite = RandoMapMod.LS.SpoilerOn
+                || (placementState is RandoPlacementState.Previewed && placement.CanPreview())
+                || placementState is RandoPlacementState.ClearedPersistent;
 
-            StopCoroutine(periodicUpdate);
+            StopPeriodicUpdate();
 
-            if (showItemSprite)
+            if (showItemSprite && active)
             {
-                StartCoroutine(periodicUpdate);
+                StartPeriodicUpdate();
             }
 
             base.OnMainUpdate(active);
@@ -225,18 +222,18 @@ namespace RandoMapMod.Pins
 
         protected private override void UpdatePinSize()
         {
-            float globalSize = pinSizes[RandoMapMod.GS.PinSize];
+            float size = pinSizes[RandoMapMod.GS.PinSize];
 
             if (Selected)
             {
-                globalSize *= SELECTED_MULTIPLIER;
+                size *= SELECTED_MULTIPLIER;
             }
-            else if (placementState is RandoPlacementState.UncheckedUnreachable)
+            else if (placementState is RandoPlacementState.UncheckedUnreachable or RandoPlacementState.ClearedPersistent)
             {
-                globalSize *= UNREACHABLE_SIZE_MULTIPLIER;
+                size *= UNREACHABLE_SIZE_MULTIPLIER;
             }
 
-            Size = globalSize;
+            Size = size;
         }
 
         protected private override void UpdatePinColor()
@@ -286,7 +283,8 @@ namespace RandoMapMod.Pins
                     placementState = RandoPlacementState.Cleared;
                 }
             }
-            else if (placement.CanPreview() && placement.IsPreviewed())
+            // Does not guarantee the item sprites should show (for a cost-only or a "none" preview)
+            else if (RM.RS.TrackerData.previewedLocations.Contains(name))
             {
                 placementState = RandoPlacementState.Previewed;
             }
@@ -335,7 +333,7 @@ namespace RandoMapMod.Pins
 
             text += $"\n\n{L.Localize("Logic")}: {Logic?? "not found"}";
 
-            if (RM.RS.TrackerData.previewedLocations.Contains(name) && placement.TryGetPreviewText(out string[] previewText))
+            if (placementState is RandoPlacementState.Previewed && placement.TryGetPreviewText(out List<string> previewText))
             {
                 text += $"\n\n{L.Localize("Previewed item(s)")}:";
 
@@ -347,14 +345,30 @@ namespace RandoMapMod.Pins
                 text = text.Substring(0, text.Length - 1);
             }
 
-            if (RandoMapMod.LS.SpoilerOn
-                && !(RM.RS.TrackerData.previewedLocations.Contains(name) && placement.CanPreview()))
+            IEnumerable<AbstractItem> obtainedItems = placement.Items.Where(item => item.WasEverObtained());
+
+            if (obtainedItems.Any())
+            {
+                text += $"\n\n{L.Localize("Obtained item(s)")}:";
+
+                foreach (AbstractItem item in obtainedItems)
+                {
+                    text += $" {item.GetPreviewName()},";
+                }
+
+                text = text.Substring(0, text.Length - 1);
+            }
+
+            IEnumerable<AbstractItem> spoilerItems = placement.Items.Where(item => !item.WasEverObtained());
+
+            if (spoilerItems.Any() && RandoMapMod.LS.SpoilerOn
+                && !(placementState is RandoPlacementState.Previewed && placement.CanPreview()))
             {
                 text += $"\n\n{L.Localize("Spoiler item(s)")}:";
 
-                foreach (AbstractItem item in placement.Items)
+                foreach (AbstractItem item in spoilerItems)
                 {
-                    text += $" {Utils.ToCleanName(item.name)},";
+                    text += $" {item.GetPreviewName()},";
                 }
 
                 text = text.Substring(0, text.Length - 1);

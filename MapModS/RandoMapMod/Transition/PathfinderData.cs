@@ -84,8 +84,11 @@ namespace RandoMapMod.Transition
             // Use BenchRando's BenchDefs if it is enabled for this save
             if (Interop.HasBenchRando() && BenchRandoInterop.IsBenchRandoEnabled())
             {
-                BenchwarpInterop.AddBenchScenes(AdjacentScenes);
-                BenchwarpInterop.AddBenchTerms(AdjacentTerms);
+                foreach (KeyValuePair<RmmBenchKey, string> kvp in BenchwarpInterop.BenchNames)
+                {
+                    AdjacentScenes[kvp.Value] = kvp.Key.SceneName;
+                    AdjacentTerms[kvp.Value] = kvp.Value;
+                }
 
                 if (lmb.TermLookup.ContainsKey("Bench-Upper_Tram"))
                 {

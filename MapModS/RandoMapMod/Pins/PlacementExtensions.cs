@@ -2,6 +2,7 @@
 using RandomizerCore;
 using RandomizerMod.IC;
 using RandomizerMod.RC;
+using System.Collections.Generic;
 using System.Linq;
 using RM = RandomizerMod.RandomizerMod;
 
@@ -72,69 +73,37 @@ namespace RandoMapMod.Pins
             return placement.Items.First().RandoPlacement().Location;
         }
 
-        //internal static string RandoItemName(this AbstractItem item)
-        //{
-        //    return item.RandoPlacement().Item.Name ?? default;
-        //}
-
-        //internal static string RandoLocationName(this AbstractItem item)
-        //{
-        //    return item.RandoPlacement().Location.Name ?? default;
-        //}
-
-        //internal static int RandoItemId(this AbstractItem item)
-        //{
-        //    if (item.GetTag(out RandoItemTag tag))
-        //    {
-        //        return tag.id;
-        //    }
-        //    return default;
-        //}
-
-        internal static bool IsPreviewed(this AbstractPlacement placement)
-        {
-            return placement.CheckVisitedAll(VisitState.Previewed);
-        }
-
         internal static bool CanPreview(this AbstractPlacement placement)
         {
             return !placement.HasTag<ItemChanger.Tags.DisableItemPreviewTag>();
         }
 
-        internal static bool TryGetPreviewText(this AbstractPlacement placement, out string[] text)
+        internal static bool TryGetPreviewText(this AbstractPlacement placement, out List<string> text)
         {
-            if (placement.GetTag(out ItemChanger.Tags.MultiPreviewRecordTag multiTag))
+            text = new();
+
+            if (placement.GetTag<ItemChanger.Tags.MultiPreviewRecordTag>() is ItemChanger.Tags.MultiPreviewRecordTag mprt
+                    && mprt.previewTexts != null)
             {
-                text = multiTag.previewTexts;
+                for (int i = 0; i < mprt.previewTexts.Length; i++)
+                {
+                    string t = mprt.previewTexts[i];
+                    if (!string.IsNullOrEmpty(t) && i < placement.Items.Count && !placement.Items[i].WasEverObtained())
+                    {
+                        text.Add(t);
+                    }
+                }
+
                 return true;
             }
-
-            if (placement.GetTag(out ItemChanger.Tags.PreviewRecordTag tag))
+            else if (placement.GetTag<ItemChanger.Tags.PreviewRecordTag>() is ItemChanger.Tags.PreviewRecordTag prt
+                    && !string.IsNullOrEmpty(prt.previewText) && !placement.Items.All(i => i.WasEverObtained()))
             {
-                text = new[] { tag.previewText };
-                return true;
+                text.Add(prt.previewText);
             }
 
-            text = null;
-            return false;
+            return text.Any();
         }
-
-        //internal static string[] PreviewText(this string name)
-        //{
-        //    if (!ItemChanger.Internal.Ref.Settings.Placements.TryGetValue(name, out AbstractPlacement placement)) return default;
-
-        //    if (placement.GetTag(out ItemChanger.Tags.MultiPreviewRecordTag multiTag))
-        //    {
-        //        return multiTag.previewTexts;
-        //    }
-
-        //    if (placement.GetTag(out ItemChanger.Tags.PreviewRecordTag tag))
-        //    {
-        //        return new[] { tag.previewText };
-        //    }
-
-        //    return default;
-        //}
 
         internal static bool IsPersistent(this AbstractPlacement placement)
         {

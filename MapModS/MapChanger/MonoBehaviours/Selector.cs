@@ -67,12 +67,12 @@ namespace MapChanger.MonoBehaviours
                     if (value && selectedObjectKey is not NONE_SELECTED)
                     {
                         lockSelection = true;
-                        StopCoroutine(periodicUpdate);
+                        StopPeriodicUpdate();
                     }
                     else
                     {
                         lockSelection = false;
-                        StartCoroutine(periodicUpdate);
+                        StartPeriodicUpdate();
                     }
                 }
             }
@@ -105,7 +105,7 @@ namespace MapChanger.MonoBehaviours
             }
         }
 
-        private IEnumerator periodicUpdate;
+        private Coroutine periodicUpdate;
 
         // Coroutines stop when the GameObject is set inactive!
         public IEnumerator PeriodicUpdate()
@@ -145,6 +145,23 @@ namespace MapChanger.MonoBehaviours
             }
         }
 
+        private void StartPeriodicUpdate()
+        {
+            if (periodicUpdate is null)
+            {
+                periodicUpdate = StartCoroutine(PeriodicUpdate());
+            }
+        }
+
+        private void StopPeriodicUpdate()
+        {
+            if (periodicUpdate is not null)
+            {
+                StopCoroutine(periodicUpdate);
+                periodicUpdate = null;
+            }
+        }
+
         public override void Initialize()
         {
             base.Initialize();
@@ -166,8 +183,6 @@ namespace MapChanger.MonoBehaviours
             transform.localPosition = new Vector3(0, 0, MAP_FRONT_Z);
 
             MapObjectUpdater.Add(this);
-
-            periodicUpdate = PeriodicUpdate();
         }
 
         private bool WorldMapOpen()
@@ -181,10 +196,11 @@ namespace MapChanger.MonoBehaviours
 
             if (active)
             {
-                StartCoroutine(periodicUpdate);
+                StartPeriodicUpdate();
             }
             else
             {
+                StopPeriodicUpdate();
                 SelectedObjectKey = NONE_SELECTED;
             }
         }

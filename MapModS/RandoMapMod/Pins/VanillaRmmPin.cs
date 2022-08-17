@@ -33,13 +33,13 @@ namespace RandoMapMod.Pins
 
             if (InteropProperties.GetDefaultMapLocations(name) is (string, float, float)[] mapLocations)
             {
-                MapPosition mlp = new(mapLocations);
+                MapRoomPosition mlp = new(mapLocations);
                 MapPosition = mlp;
                 MapZone = mlp.MapZone;
             }
             else
             {
-                RmmPinManager.MiscPins.Add(this);
+                RmmPinManager.GridPins.Add(this);
             }
         }
 
@@ -50,7 +50,7 @@ namespace RandoMapMod.Pins
             return poolState == Settings.PoolState.On || (poolState == Settings.PoolState.Mixed && RandoMapMod.LS.VanillaOn);
         }
 
-        protected private override bool LocationNotCleared()
+        protected private override bool ActiveByProgress()
         {
             return !Tracker.HasClearedLocation(name);
         }

@@ -11,7 +11,7 @@ namespace MapChanger.Defs
     /// correctly to the room on the map.
     /// The first MapLocation that has a MappedScene corresponding to a room sprite is used.
     /// </summary>
-    public record WorldMapPosition : MapPosition
+    public record WorldMapPosition : MapRoomPosition
     {
         /// <summary>
         /// The unscaled relative x offset of the object from the center of the mapped room.

@@ -76,7 +76,7 @@ namespace RandoMapMod.Transition
 
         internal static bool IsBenchwarpTransition(this string transition)
         {
-            return BenchwarpInterop.IsBenchName(transition);
+            return BenchwarpInterop.BenchKeys.ContainsKey(transition);
         }
 
         internal static bool IsStagTransition(this string transition)

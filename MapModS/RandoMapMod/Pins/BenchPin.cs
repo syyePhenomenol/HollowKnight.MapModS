@@ -10,28 +10,24 @@ namespace RandoMapMod.Pins
 {
     internal sealed class BenchPin : RmmPin
     {
-        private static readonly Vector4 unvisitedColor = new(UNREACHABLE_COLOR_MULTIPLIER, UNREACHABLE_COLOR_MULTIPLIER, UNREACHABLE_COLOR_MULTIPLIER, 1f);
-        private static readonly Vector4 visitedColor = UnityEngine.Color.white;
-
         internal override HashSet<string> ItemPoolGroups => new() { "Benches" };
 
         private static readonly ISprite benchSprite = new PinLocationSprite("Benches");
 
         internal string BenchName { get; private set; }
 
-        internal void Initialize(string benchName)
+        internal void Initialize(string benchName, string sceneName)
         {
             Initialize();
 
             BenchName = benchName;
-
-            SceneName = BenchwarpInterop.GetBenchKey(benchName).Item1;
+            SceneName = sceneName;
 
             LocationPoolGroup = "Benches";
 
             if (InteropProperties.GetDefaultMapLocations(benchName) is (string, float, float)[] mapLocations)
             {
-                MapPosition mapPosition = new(mapLocations);
+                MapRoomPosition mapPosition = new(mapLocations);
                 MapPosition = mapPosition;
                 MapZone = mapPosition.MapZone;
             }
@@ -48,25 +44,25 @@ namespace RandoMapMod.Pins
                 else
                 {
                     string mappedScene = MapChanger.Finder.GetMappedScene(SceneName);
-                    MapPosition mapPosition = new(new (string, float, float)[] { (mappedScene, 0, 0) });
+                    MapRoomPosition mapPosition = new(new (string, float, float)[] { (mappedScene, 0, 0) });
                     MapPosition = mapPosition;
                     MapZone = mapPosition.MapZone;
                 }
             }
             else
             {
-                RmmPinManager.MiscPins.Add(this);
+                RmmPinManager.GridPins.Add(this);
             }
         }
 
         private protected override bool ActiveBySettings()
         {
-            return Conditions.ItemRandoModeEnabled() && RandoMapMod.GS.ShowBenchwarpPins && (!BenchRandoInterop.HasBenchPlacements() || IsVisited());
+            return Conditions.ItemRandoModeEnabled() && RandoMapMod.GS.ShowBenchwarpPins;
         }
 
-        protected private override bool LocationNotCleared()
+        protected private override bool ActiveByProgress()
         {
-            return true;
+            return !Interop.HasBenchRando() || !ItemChanger.Internal.Ref.Settings.Placements.ContainsKey(BenchName) || IsCleared();
         }
 
         private protected override void UpdatePinSprite()
@@ -92,11 +88,11 @@ namespace RandoMapMod.Pins
         {
             if (IsVisited())
             {
-                Color = visitedColor;
+                Color = UnityEngine.Color.white;
             }
             else
             {
-                Color = unvisitedColor;
+                Color = new(UNREACHABLE_COLOR_MULTIPLIER, UNREACHABLE_COLOR_MULTIPLIER, UNREACHABLE_COLOR_MULTIPLIER, 1f);
             }
         }
 
@@ -104,13 +100,17 @@ namespace RandoMapMod.Pins
         {
             Vector4 color;
 
-            if (IsVisited())
+            if (IsCleared())
             {
                 color = RmmColors.GetColor(RmmColorSetting.Pin_Cleared);
             }
             else
             {
                 color = RmmColors.GetColor(RmmColorSetting.Pin_Normal);
+            }
+
+            if (!IsVisited())
+            {
                 color.x *= UNREACHABLE_COLOR_MULTIPLIER;
                 color.y *= UNREACHABLE_COLOR_MULTIPLIER;
                 color.z *= UNREACHABLE_COLOR_MULTIPLIER;
@@ -132,21 +132,24 @@ namespace RandoMapMod.Pins
 
             if (IsVisited())
             {
-                text += $" {L.Localize("Visited")}";
+                text += $" {L.Localize("Can warp")}";
             }
             else
             {
-                text += $" {L.Localize("Not visited")}";
+                text += $" {L.Localize("Cannot warp")}";
             }
 
-            if (IsVisited())
+            if (IsCleared())
             {
-                List<InControl.BindingSource> bindings = new(InputHandler.Instance.inputActions.attack.Bindings);
-
-                text += $"\n\n{L.Localize("Hold")} {Utils.GetBindingsText(bindings)} {L.Localize("to benchwarp")}.";
+                text += $", {L.Localize("location cleared")}";
             }
 
             return text; 
+        }
+
+        private bool IsCleared()
+        {
+            return RandomizerMod.RandomizerMod.RS.TrackerData.clearedLocations.Contains(BenchName);
         }
 
         private bool IsVisited()

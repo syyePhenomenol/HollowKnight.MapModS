@@ -149,9 +149,8 @@ namespace RandoMapMod.Transition
             // Check adjacent transition matches the route's transition
             if (lastTransition.GateName == "" && transition.IsBenchwarpTransition())
             {
-                (string scene, string respawnMarker) = BenchwarpInterop.GetBenchKey(transition);
-
-                if (lastTransition.SceneName == scene && PlayerData.instance.respawnMarkerName == respawnMarker)
+                if (BenchwarpInterop.BenchKeys.TryGetValue(transition, out RmmBenchKey key)
+                    && lastTransition.SceneName == key.SceneName && PlayerData.instance.respawnMarkerName == key.RespawnMarkerName)
                 {
                     UpdateRoute();
                     return;

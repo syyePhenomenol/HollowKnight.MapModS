@@ -187,6 +187,9 @@ namespace MapChanger.Map
         {
             if (!Settings.MapModEnabled()) return orig(self);
 
+            // Modifying the MapZone in colosseum results in a softlock
+            if (Utils.CurrentScene() is "Room_Colosseum_Bronze" or "Room_Colosseum_Silver" or "Room_Colosseum_Gold") return orig(self);
+
             MapZone mapZone = Finder.GetCurrentMapZone();
             if (mapZone != MapZone.NONE)
             {
