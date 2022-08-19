@@ -1,3 +1,5 @@
+**This repository is outdated. The latest version is [here](https://github.com/syyePhenomenol/RandoMapMod).**
+
 # Randomizer Map S
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/syyePhenomenol/HollowKnight.MapModS)
 ![Downloads GitHub all releases](https://img.shields.io/github/downloads/syyePhenomenol/HollowKnight.MapModS/total)
